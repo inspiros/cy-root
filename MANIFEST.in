@@ -1,5 +1,7 @@
-include cyroot/*.c
-include cyroot/*.cpp
-include cyroot/*.pxd
+recursive-include cyroot *.c
+recursive-include cyroot *.cpp
+recursive-include cyroot *.pxd
+recursive-include cyroot *.pyx
 include README.md
 include LICENSE.txt
+include requirements*.txt

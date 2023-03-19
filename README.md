@@ -8,16 +8,16 @@
 </div>
 
 A simple root-finding package written in Cython.
-Not a serious one so please only use these codes as learning materials.
 Many of the implemented methods here can't be found in common Python libraries.
+Not a serious one so please only use these codes as learning materials.
 
 **Context:**
 
-I had to find root of this beast of a function, which has no known bound, and Sidi's method came to rescue:
+I had to find root of this beast of a function, which has no known bound.
 
-```math
-f(x) = \frac{1}{\sum\limits_{j=1}^{\infty} \left(\prod\limits_{k=j}^{\infty} \frac{1}{k \cdot x + 1} \right) } - p
-```
+$$ f(x) = \frac{1}{\sum\limits_{j=1}^{\infty} \left(\prod\limits_{k=j}^{\infty} \frac{1}{k \cdot x + 1} \right) } - p $$
+
+Fortunately, Sidi's method came to the rescue.
 
 ## Requirements
 
@@ -140,7 +140,9 @@ because the precision tolerance is satisfied. I will add another flag for optima
 For more examples, please refer to the `examples` folder.
 
 ## License
+
 The code is released under the MIT license. See `LICENSE.txt` for details.
 
 ## References
+
 _T.B.D._

@@ -342,4 +342,5 @@ healthchecksdb
 
 # for this project only
 build/
+dist/
 *.egg-info/
