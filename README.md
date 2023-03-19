@@ -9,7 +9,11 @@ Many of the implemented methods here can't be found in common Python libraries.
 
 I had to find root of this beast of a function, and Sidi's method came to rescue:
 
-$$ f(x) = \frac{1}{\sum_{j=1}^{\infty}{\left(\prod_{k=j}^{\infty}{\frac{1}{k \cdot x + 1}}\right)}} - p $$
+```math
+f(x) = \frac{1}{\sum_{j=1}^{\infty} \left(\prod_{k=j}^{\infty} \frac{1}{k \cdot x + 1} \right) } - p
+```
+
+[//]: # ($$ f&#40;x&#41; = \frac{1}{\sum_{j=1}^{\infty} \left&#40;\prod_{k=j}^{\infty} \frac{1}{k \cdot x + 1} \right&#41; } - p $$)
 
 ## Requirements
 
