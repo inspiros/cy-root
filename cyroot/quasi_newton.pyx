@@ -22,7 +22,7 @@ cdef extern from '_defaults.h':
 
 cdef extern from '<complex.h>':
     double complex sqrt(double complex x) nogil
-    double cabs(double complex x) nogil
+    # double cabs(double complex x) nogil
 # from numpy.lib.scimath import sqrt
 
 __all__ = [
@@ -553,7 +553,7 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = cabs(x2 - x0), error = math.INFINITY
+    cdef double precision = abs(x2 - x0), error = math.INFINITY
     cdef long step = 0
     cdef double complex div_diff_01, div_diff_12, div_diff_02, a, b, s_delta, d1, d2, d, x3
     cdef converged = True
@@ -570,15 +570,15 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
         s_delta = sqrt(b ** 2 - 4 * a * f_x2)  # \sqrt{b^2 - 4ac}
         d1, d2 = b + s_delta, b - s_delta
         # take the higher-magnitude denominator
-        d = d1 if cabs(d1) > cabs(d2) else d2
+        d = d1 if abs(d1) > abs(d2) else d2
 
         x3 = x2 - 2 * f_x2 / d
         x0, f_x0 = x1, f_x1
         x1, f_x1 = x2, f_x2
         x2, f_x2 = x3, f(x3)
 
-        precision = cabs(x2 - x0)
-        error = cabs(f_x2)
+        precision = abs(x2 - x0)
+        error = abs(f_x2)
     cdef bint optimal = error <= etol
     return x2, f_x2, step, precision, error, converged, optimal
 

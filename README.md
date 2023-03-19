@@ -63,6 +63,7 @@ pip uninstall cy-root
     - Chandrupatla
     - Ridders
     - TOMS748
+    - Wu
     - ITP
 - **Newton-like methods:** (methods that require derivative and higher order derivatives)
     - Newton-Raphson
@@ -134,7 +135,7 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
 - Exclusive to Newton-like methods:
     - `df_root`: derivative or tuple of derivatives (of increasing orders) evaluated at root
 
-**Note**: `result.converged` might sometimes be `True` even if the solution is not optimal, which means the routine
+**Note**: `converged` might sometimes be `True` even if the solution is not optimal, which means the routine
 stopped because the precision tolerance is satisfied.
 
 For more examples, please refer to the `examples` folder.
