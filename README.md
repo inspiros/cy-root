@@ -4,6 +4,7 @@
   <img src="https://www.austintexas.gov/sites/default/files/images/dsd/Community_Trees/tree-root-distruibution-1.jpg" width="300"/>
   <br>
   <i><span style="font-size: xx-small; ">(Not this root)</span></i>
+  <br>
 </div>
 
 A simple root-finding package written in Cython.
