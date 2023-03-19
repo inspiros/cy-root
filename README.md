@@ -8,7 +8,7 @@
 </div>
 
 A simple root-finding package written in Cython.
-Many of the implemented methods here can't be found in common Python libraries.
+Many of the implemented methods can't be found in common Python libraries.
 Not a serious one so please only use these codes as learning materials.
 
 **Context:**
