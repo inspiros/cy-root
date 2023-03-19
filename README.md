@@ -1,11 +1,14 @@
-## cy-root
+cy-root
+========
+![PyPI](https://img.shields.io/pypi/v/cy-root)
+![GitHub](https://img.shields.io/github/license/inspiros/cy-root)
 
-<div align="center">
+<p align="center">
   <img src="https://www.austintexas.gov/sites/default/files/images/dsd/Community_Trees/tree-root-distruibution-1.jpg" width="300"/>
   <br>
   <i><font size="1">(Not this root)</font></i>
-  <div>&nbsp;</div>
-</div>
+  <p>&nbsp;</p>
+</p>
 
 A simple root-finding package written in Cython.
 Many of the implemented methods can't be found in common Python libraries.
