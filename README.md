@@ -21,7 +21,7 @@ f(x) = \frac{1}{\sum\limits_{j=1}^{\infty} \left(\prod\limits_{k=j}^{\infty} \fr
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.7+
 - Cython (if you want to build from `.pyx` files)
 - numpy
 - sympy

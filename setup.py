@@ -1,7 +1,6 @@
 import codecs
 import os
 
-import _version
 from setuptools import Extension, setup, find_packages
 
 try:
@@ -12,19 +11,29 @@ except ImportError:
 else:
     use_cython = True
 
+PACKAGE_ROOT = 'cyroot'
+
+
+def get_version(version_file='_version.py'):
+    import importlib.util
+    version_file_path = os.path.abspath(os.path.join(PACKAGE_ROOT, version_file))
+    spec = importlib.util.spec_from_file_location('_version', version_file_path)
+    version_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(version_module)
+    return str(version_module.__version__)
+
 
 def get_ext_modules():
     import numpy
     # Find all includes
-    package_root = 'cyroot'
     include_dirs = [
-        package_root,
+        PACKAGE_ROOT,
         numpy.get_include(),
     ]
 
     ext_modules = []
     ext = '.pyx' if use_cython else '.c'
-    for root, dirs, files in os.walk(package_root):
+    for root, dirs, files in os.walk(PACKAGE_ROOT):
         for f in filter(lambda f: f.endswith(ext), files):
             f_path = os.path.join(root, f)
             ext_modules.append(
@@ -42,7 +51,7 @@ def get_ext_modules():
 def setup_package():
     setup(
         name='cy-root',
-        version=_version.__version__,
+        version=get_version(),
         description='A Cython implementation of multiple root-finding methods.',
         long_description=codecs.open('README.md', mode='r', encoding='utf-8').read(),
         url='https://github.com/inspiros/cy-root',
@@ -56,8 +65,10 @@ def setup_package():
             'License :: OSI Approved :: MIT License',
             'Programming Language :: Python',
             'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
+            'Programming Language :: Python :: 3.10',
             'Programming Language :: Cython',
             'Topic :: Scientific/Engineering :: Mathematics',
         ],
@@ -65,7 +76,7 @@ def setup_package():
         project_urls={
             'Source': 'https://github.com/inspiros/cy-root',
         },
-        python_requires='>=3.8',
+        python_requires='>=3.7',
         install_requires=[
             'numpy',
             'sympy',
