@@ -1,6 +1,7 @@
-import time
-from tqdm import trange
 import sys
+import time
+
+from tqdm import trange
 
 __all__ = [
     'TimeMeter',
@@ -32,7 +33,8 @@ class TimeMeter:
 def timeit(func, args=(), kwargs={}, name=None, number=100, warmup=False):
     name = name if name is not None else func.__name__
     time_meter = TimeMeter()
-    for _ in (pbar := trange(number, desc=f'[{name}]', file=sys.stdout)):
+    pbar = trange(number, desc=f'[{name}]', file=sys.stdout)
+    for _ in pbar:
         if warmup and _ == 1:
             time_meter.reset()
         with time_meter:
