@@ -2,6 +2,7 @@
 A simple root-finding package written in Cython.
 """
 
+# Uncomment this for automatic compiling during development
 # from ._cython_extension import _has_ext
 from ._scalar_root import *
 from .bracketing import *

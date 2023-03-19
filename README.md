@@ -3,7 +3,7 @@
 <div align="center">
   <img src="https://www.austintexas.gov/sites/default/files/images/dsd/Community_Trees/tree-root-distruibution-1.jpg" width="300"/>
   <br>
-  <i><span style="font-size: xx-small; ">(Not this root)</span></i>
+  <i><font size="1">(Not this root)</font></i>
   <div>&nbsp;</div>
 </div>
 
@@ -138,3 +138,9 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
 because the precision tolerance is satisfied. I will add another flag for optimality of the root later.
 
 For more examples, please refer to the `examples` folder.
+
+## License
+The code is released under the MIT license. See `LICENSE.txt` for details.
+
+## References
+_T.B.D._

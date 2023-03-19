@@ -1,0 +1,5 @@
+include cyroot/*.c
+include cyroot/*.cpp
+include cyroot/*.pxd
+include README.md
+include LICENSE.txt
