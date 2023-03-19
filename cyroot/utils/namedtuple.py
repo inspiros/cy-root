@@ -13,5 +13,6 @@ def namedtuple(typename, field_names, *, rename=False, defaults=None, module=Non
         result = _namedtuple(typename, field_names, rename=rename, defaults=defaults, module=module)
     else:
         result = _namedtuple(typename, field_names, rename=rename, module=module)
-        result.__new__.__defaults__ = defaults
+        if defaults is not None:
+            result.__new__.__defaults__ = tuple(defaults)
     return result
