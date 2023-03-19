@@ -1,5 +1,9 @@
-cy-root
-========
+## cy-root
+
+<div align="center">
+  <img src="https://www.austintexas.gov/sites/default/files/images/dsd/Community_Trees/tree-root-distruibution-1.jpg" width="250"/>
+  <div>&nbsp;</div>
+</div>
 
 A simple root-finding package written in Cython.
 Not a serious one so please only use these codes as learning materials.
@@ -129,6 +133,6 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
     - `df_root`: derivative or tuple of derivatives (of increasing orders) evaluated at root
 
 **Note**: `result.converged` might be `True` even if the solution is not optimal, which means the routine stopped
-because the precision tolerance is met. I will add another flag for optimality of the root later.
+because the precision tolerance is satisfied. I will add another flag for optimality of the root later.
 
 For more examples, please refer to the `examples` folder.
