@@ -7,7 +7,7 @@ Many of the implemented methods here can't be found in common Python libraries.
 
 **Context:**
 
-I had to find root of this beast of a function, and Sidi's method came to rescue:
+I had to find root of this beast of a function, which has no known bound, and Sidi's method came to rescue:
 
 ```math
 f(x) = \frac{1}{\sum\limits_{j=1}^{\infty} \left(\prod\limits_{k=j}^{\infty} \frac{1}{k \cdot x + 1} \right) } - p
@@ -127,5 +127,8 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
     - `f_b`: value evaluated at final upper bound
 - Exclusive to Newton-like methods:
     - `df_root`: derivative or tuple of derivatives (of increasing orders) evaluated at root
+
+**Note**: `result.converged` might be `True` even if the solution is not optimal, which means the routine stopped
+because the precision tolerance is met. I will add another flag for optimality of the root later.
 
 For more examples, please refer to the `examples` folder.
