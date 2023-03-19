@@ -1,0 +1,58 @@
+import codecs
+import os
+
+from setuptools import Extension, setup, find_packages
+
+import _version
+
+try:
+    from Cython.Distutils import build_ext
+    from Cython.Build import cythonize
+except ImportError:
+    use_cython = False
+else:
+    use_cython = True
+
+
+def get_ext_modules():
+    import numpy
+    # Find all includes
+    package_root = 'cyroot'
+    include_dirs = [
+        package_root,
+        numpy.get_include(),
+    ]
+
+    ext_modules = []
+    ext = '.pyx' if use_cython else '.c'
+    for root, dirs, files in os.walk(package_root):
+        for f in filter(lambda f: f.endswith(ext), files):
+            f_path = os.path.join(root, f)
+            ext_modules.append(
+                Extension(name=os.path.splitext(f_path)[0].replace(os.sep, '.'),
+                          sources=[f_path],
+                          include_dirs=include_dirs)
+            )
+    if use_cython:
+        ext_modules = cythonize(ext_modules,
+                                language_level='3')
+    # Set up the ext_modules for Cython or not, depending
+    return ext_modules
+
+
+def setup_package():
+    setup(
+        name='cy-root',
+        description='A Cython implementation of multiple root-finding methods.',
+        long_description=codecs.open('README.md', mode='r', encoding='utf-8').read(),
+        author='inspiros',
+        author_email='hnhat.tran@gmail.com',
+        version=_version.__version__,
+        packages=find_packages(),
+        ext_modules=get_ext_modules(),
+        cmdclass={'build_ext': build_ext} if use_cython else {},
+    )
+
+
+if __name__ == '__main__':
+    setup_package()

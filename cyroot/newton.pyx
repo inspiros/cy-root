@@ -1,0 +1,567 @@
+# distutils: language=c++
+# cython: cdivision = True
+# cython: boundscheck = False
+# cython: profile = False
+
+from typing import Callable, Sequence, Optional
+
+import cython
+import numpy as np
+cimport numpy as np
+import sympy
+import sympy.utilities.autowrap
+from cython cimport view
+from libc cimport math
+
+from ._defaults cimport ETOL, PTOL
+from ._return_types import NewtonMethodReturnType
+from .fptr cimport (
+    func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
+    mv_func_type, DoubleMemoryViewFPtr, PyDoubleMemoryViewFPtr,
+)
+
+__all__ = [
+    'newton',
+    'halley',
+    'householder',
+]
+
+################################################################################
+# Newton
+################################################################################
+# noinspection DuplicatedCode
+cdef (double, double, double, long, double, double, bint) newton_kernel(
+        func_type f,
+        func_type df,
+        double x0,
+        double f_x0,
+        double df_x0,
+        double etol=ETOL,
+        double ptol=PTOL,
+        long max_iter=0):
+    cdef double precision = math.INFINITY, error = math.INFINITY
+    cdef long step = 0
+    cdef double x1
+    cdef bint converged = True
+    while error > etol and precision > ptol:
+        if step > max_iter > 0 or df_x0 == 0:
+            converged = False
+        step += 1
+        x1 = x0 - f_x0 / df_x0
+        precision = math.fabs(x1 - x0)
+        x0, f_x0, df_x0 = x1, f(x1), df(x1)
+        error = math.fabs(f_x0)
+    return x0, f_x0, df_x0, step, precision, error, converged
+
+# noinspection DuplicatedCode
+def newton(f: Callable[[float], float],
+           df: Callable[[float], float],
+           x0: float,
+           f_x0: Optional[float] = None,
+           df_x0: Optional[float] = None,
+           etol: float = ETOL,
+           ptol: float = PTOL,
+           max_iter: int = 0) -> NewtonMethodReturnType:
+    f"""
+    Newton method for root-finding.
+
+    Args:
+        f: Function for which the root is sought.
+        df: Function return derivative of f.
+        x0: Initial point.
+        f_x0: Value evald at initial point.
+        df_x0: First order derivative at initial point.
+        etol: Error tolerance, indicating the desired precision
+         of the root. Defaults to {ETOL}.
+        ptol: Precision tolerance, indicating the minimum change
+         of root approximations or width of brackets (in bracketing
+         methods) after each iteration. Defaults to {PTOL}.
+        max_iter: Maximum number of iterations. Defaults to 0.
+
+    Returns:
+        solution: The solution represented as a ``RootResults`` object.
+    """
+    # check params
+    if etol <= 0:
+        raise ValueError(f'etol must be positive. Got {etol}.')
+    if ptol <= 0:
+        raise ValueError(f'ptol must be positive. Got {ptol}.')
+    if not isinstance(max_iter, int):
+        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+
+    if f_x0 is None:
+        f_x0 = f(x0)
+    if df_x0 is None:
+        df_x0 = df(x0)
+
+    f_wrapper = PyDoubleScalarFPtr(f)
+    df_wrapper = PyDoubleScalarFPtr(df)
+    r, f_r, df_r, step, precision, error, converged = newton_kernel[DoubleScalarFPtr](
+        f_wrapper, df_wrapper, x0, f_x0, df_x0, etol, ptol, max_iter)
+    return NewtonMethodReturnType(r, f_r, df_r, step,
+                                  (f_wrapper.n_f_calls, df_wrapper.n_f_calls),
+                                  precision, error, converged)
+
+################################################################################
+# Halley
+################################################################################
+# noinspection DuplicatedCode
+cdef (double, double, double, double, long, double, double, bint) halley_kernel(
+        func_type f,
+        func_type df,
+        func_type d2f,
+        double x0,
+        double f_x0,
+        double df_x0,
+        double d2f_x0,
+        double etol=ETOL,
+        double ptol=PTOL,
+        long max_iter=0):
+    cdef double precision = math.INFINITY, error = math.INFINITY
+    cdef long step = 0
+    cdef double x1, denom
+    cdef bint converged = True
+    while error > etol and precision > ptol:
+        if step > max_iter > 0:
+            converged = False
+            break
+        step += 1
+        denom = 2 * math.fabs(df_x0) ** 2 - f_x0 * d2f_x0
+        if denom == 0:
+            converged = False
+            break
+        x1 = x0 - 2 * f_x0 * df_x0 / denom
+        precision = math.fabs(x1 - x0)
+        x0, f_x0, df_x0, d2f_x0 = x1, f(x1), df(x1), d2f(x1)
+        error = math.fabs(f_x0)
+    return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged
+
+# noinspection DuplicatedCode
+def halley(f: Callable[[float], float],
+           df: Callable[[float], float],
+           d2f: Callable[[float], float],
+           x0: float,
+           f_x0: Optional[float] = None,
+           df_x0: Optional[float] = None,
+           d2f_x0: Optional[float] = None,
+           etol: float = ETOL,
+           ptol: float = PTOL,
+           max_iter: int = 0) -> NewtonMethodReturnType:
+    f"""
+    Halley's method for root-finding.
+
+    Args:
+        f: Function for which the root is sought.
+        df: Function return derivative of f.
+        d2f: Function return second order derivative of f.
+        x0: Initial point.
+        f_x0: Value evald at initial point.
+        df_x0: First order derivative at initial point.
+        d2f_x0: Second order derivative at initial point.
+        etol: Error tolerance, indicating the desired precision
+         of the root. Defaults to {ETOL}.
+        ptol: Precision tolerance, indicating the minimum change
+         of root approximations or width of brackets (in bracketing
+         methods) after each iteration. Defaults to {PTOL}.
+        max_iter: Maximum number of iterations. Defaults to 0.
+
+    Returns:
+        solution: The solution represented as a ``RootResults`` object.
+    """
+    # check params
+    if etol <= 0:
+        raise ValueError(f'etol must be positive. Got {etol}.')
+    if ptol <= 0:
+        raise ValueError(f'ptol must be positive. Got {ptol}.')
+    if not isinstance(max_iter, int):
+        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+
+    if f_x0 is None:
+        f_x0 = f(x0)
+    if df_x0 is None:
+        df_x0 = df(x0)
+    if d2f_x0 is None:
+        d2f_x0 = d2f(x0)
+
+    f_wrapper = PyDoubleScalarFPtr(f)
+    df_wrapper = PyDoubleScalarFPtr(df)
+    d2f_wrapper = PyDoubleScalarFPtr(d2f)
+    root, f_root, df_root, d2f_root, step, precision, error, converged = halley_kernel[DoubleScalarFPtr](
+        f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, etol, ptol, max_iter)
+    return NewtonMethodReturnType(root, f_root, (df_root, d2f_root), step,
+                                  (f_wrapper.n_f_calls, df_wrapper.n_f_calls, d2f_wrapper.n_f_calls),
+                                  precision, error, converged)
+
+################################################################################
+# Householder
+################################################################################
+# noinspection DuplicatedCode
+@cython.returns((double, double[:], int, double, double, bint))
+cdef householder_kernel(
+        DoubleScalarFPtr[:] fs,  # sadly, can't have memory view of C functions
+        mv_func_type nom_f,
+        mv_func_type denom_f,
+        int d,
+        double x0_,
+        double etol=ETOL,
+        double ptol=PTOL,
+        long max_iter=0):
+    cdef double precision = math.INFINITY, error = math.INFINITY
+    cdef long step = 0
+    cdef int i
+    cdef double[:] x0 = view.array(shape=(1,),
+                                   itemsize=sizeof(double),
+                                   format='d')
+    cdef double[:] x1 = view.array(shape=(1,),
+                                   itemsize=sizeof(double),
+                                   format='d')
+    x0[0] = x0_
+    # cdef double[:] fs_x0 = fs(x0)
+    cdef double[:] fs_x0 = view.array(shape=(d + 1,),
+                                      itemsize=sizeof(double),
+                                      format='d')
+    for i in range(d + 1):
+        fs_x0[i] = fs[i](x0[0])
+    cdef double[:] nom_x0 = nom_f(fs_x0[:-1]), denom_x0 = denom_f(fs_x0)
+    cdef bint converged = True
+    while error > etol and precision > ptol:
+        if step > max_iter > 0 or denom_x0[0] == 0:
+            converged = False
+            break
+        step += 1
+        x1[0] = x0[0] + d * nom_x0[0] / denom_x0[0]
+        precision = math.fabs(x1[0] - x0[0])
+        # advance
+        x0[0] = x1[0]
+        # fs_x0 = fs(x0)
+        for i in range(d + 1):
+            fs_x0[i] = fs[i](x0[0])
+        error = math.fabs(fs_x0[0])
+        nom_x0, denom_x0 = nom_f(fs_x0[:-1]), denom_f(fs_x0)
+    return x0[0], fs_x0, step, precision, error, converged
+
+#########################
+# Sympy Expr Evaluators
+#########################
+cdef class _Expr:
+    cdef double eval(self, double[:] args):
+        raise NotImplementedError
+
+    def __call__(self, double[:] args) -> double:
+        return self.eval(args)
+
+cdef class _AtomicExpr(_Expr):
+    pass
+
+cdef class _Number(_AtomicExpr):
+    cdef double value
+    def __init__(self, number: sympy.core.numbers.Number):
+        self.value = float(number.n())
+
+    cdef inline double eval(self, double[:] args):
+        return self.value
+
+cdef class _Arg(_AtomicExpr):
+    cdef int index
+    def __init__(self, indexed: sympy.Indexed):
+        self.index = int(indexed.indices[0])
+
+    cdef inline double eval(self, double[:] args):
+        return args[self.index]
+
+cdef class _ParameterizedExpr(_Expr):
+    cdef readonly _Expr[:] args
+    cdef _Expr _arg_i  # used for iterating args
+    cdef unsigned int n_args
+    def __init__(self, args):
+        self.args = np.array([CyExprEvaluator.parse_symbolic_func(_) for _ in args])
+        self.n_args = <unsigned int> len(self.args)
+
+cdef class _Negate(_ParameterizedExpr):
+    cdef _Expr arg
+    def __init__(self, negative_one: sympy.core.numbers.NegativeOne):
+        super().__init__(negative_one.args)
+        self.arg = self.args[0]
+
+    cdef inline double eval(self, double[:] args):
+        return -self.arg.eval(args)
+
+cdef class _Add(_ParameterizedExpr):
+    def __init__(self, mul: sympy.core.Add):
+        super().__init__(mul.args)
+
+    cdef inline double eval(self, double[:] args):
+        cdef double res = 0.0
+        cdef unsigned int i
+        for i in range(self.n_args):
+            self._arg_i = self.args[i]
+            res += self._arg_i.eval(args)
+            self._arg_i = None
+        return res
+
+cdef class _Mul(_ParameterizedExpr):
+    def __init__(self, mul: sympy.core.Mul):
+        super().__init__(mul.args)
+
+    cdef inline double eval(self, double[:] args):
+        cdef double res = 1.0
+        cdef unsigned int i
+        for i in range(self.n_args):
+            self._arg_i = self.args[i]
+            res *= self._arg_i.eval(args)
+            self._arg_i = None
+        return res
+
+cdef class _Pow(_ParameterizedExpr):
+    cdef _Expr arg, exp
+    def __init__(self, pow: sympy.core.Pow):
+        super().__init__(pow.args)
+        self.arg = self.args[0]
+        self.exp = self.args[1]
+
+    cdef inline double eval(self, double[:] args):
+        return self.arg.eval(args) ** self.exp.eval(args)
+
+#########################
+# Reciprocal Derivative
+#########################
+from .fptr import DoubleMemoryViewFPtr, PyDoubleMemoryViewFPtr
+
+# Some implementations up to 10th order
+cdef class R0DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = 1/fs[0]
+        return res
+
+cdef class R1DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = -fs[1]/fs[0]**2
+        return res
+
+cdef class R2DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = (-fs[0]*fs[2] + 2*fs[1]**2)/fs[0]**3
+        return res
+
+cdef class R3DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = (-fs[0]**2*fs[3] + 6*fs[0]*fs[1]*fs[2] - 6*fs[1]**3)/fs[0]**4
+        return res
+
+cdef class R4DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = ((8*fs[1]*fs[3] + 6*fs[2]**2)*fs[0]**2 - fs[0]**3*fs[4] -
+                  36*fs[0]*fs[1]**2*fs[2] + 24*fs[1]**4)/fs[0]**5
+        return res
+
+cdef class R5DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = (-30*(2*fs[1]*fs[3] + 3*fs[2]**2)*fs[0]**2*fs[1] +
+                  10*(fs[1]*fs[4] + 2*fs[2]*fs[3])*fs[0]**3 - fs[0]**4*fs[5] +
+                  240*fs[0]*fs[1]**3*fs[2] - 120*fs[1]**5)/fs[0]**6
+        return res
+
+cdef class R6DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = ((480*fs[1]*fs[3] + 1080*fs[2]**2)*fs[0]**2*fs[1]**2 +
+                  (12*fs[1]*fs[5] + 30*fs[2]*fs[4] + 20*fs[3]**2)*fs[0]**4 +
+                  (-90*fs[1]**2*fs[4] - 360*fs[1]*fs[2]*fs[3] - 90*fs[2]**3)*fs[0]**3 -
+                  fs[0]**5*fs[6] - 1800*fs[0]*fs[1]**4*fs[2] + 720*fs[1]**6)/fs[0]**7
+        return res
+
+cdef class R7DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = (-4200*(fs[1]*fs[3] + 3*fs[2]**2)*fs[0]**2*fs[1]**3 +
+                  14*(fs[1]*fs[6] + 3*fs[2]*fs[5] + 5*fs[3]*fs[4])*fs[0]**5 +
+                  840*(fs[1]**2*fs[4] + 6*fs[1]*fs[2]*fs[3] + 3*fs[2]**3)*fs[0]**3*fs[1] -
+                  42*(3*fs[1]**2*fs[5] + 15*fs[1]*fs[2]*fs[4] + 10*fs[1]*fs[3]**2 + 15*fs[2]**2*fs[3])*fs[0]**4 -
+                  fs[0]**6*fs[7] + 15120*fs[0]*fs[1]**5*fs[2] - 5040*fs[1]**7)/fs[0]**8
+        return res
+
+cdef class R8DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = ((40320*fs[1]*fs[3] + 151200*fs[2]**2)*fs[0]**2*fs[1]**4 + (-8400*fs[1]**2*fs[4] -
+                  67200*fs[1]*fs[2]*fs[3] - 50400*fs[2]**3)*fs[0]**3*fs[1]**2 + (16*fs[1]*fs[7] + 56*fs[2]*fs[6] +
+                  112*fs[3]*fs[5] + 70*fs[4]**2)*fs[0]**6 + (-168*fs[1]**2*fs[6] - 1008*fs[1]*fs[2]*fs[5] -
+                  1680*fs[1]*fs[3]*fs[4] - 1260*fs[2]**2*fs[4] - 1680*fs[2]*fs[3]**2)*fs[0]**5 +
+                  (1344*fs[1]**3*fs[5] + 10080*fs[1]**2*fs[2]*fs[4] + 6720*fs[1]**2*fs[3]**2 +
+                   20160*fs[1]*fs[2]**2*fs[3] + 2520*fs[2]**4)*fs[0]**4 - fs[0]**7*fs[8] -
+                  141120*fs[0]*fs[1]**6*fs[2] + 40320*fs[1]**8)/fs[0]**9
+        return res
+
+cdef class R9DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = ((-423360*fs[1]*fs[3] - 1905120*fs[2]**2)*fs[0]**2*fs[1]**5 + (90720*fs[1]**2*fs[4] +
+                  907200*fs[1]*fs[2]*fs[3] + 907200*fs[2]**3)*fs[0]**3*fs[1]**3 + (18*fs[1]*fs[8] + 72*fs[2]*fs[7] +
+                  168*fs[3]*fs[6] + 252*fs[4]*fs[5])*fs[0]**7 + 2520*(-6*fs[1]**3*fs[5] - 60*fs[1]**2*fs[2]*fs[4] -
+                  40*fs[1]**2*fs[3]**2 - 180*fs[1]*fs[2]**2*fs[3] - 45*fs[2]**4)*fs[0]**4*fs[1] + (2016*fs[1]**3*fs[6] +
+                  18144*fs[1]**2*fs[2]*fs[5] + 30240*fs[1]**2*fs[3]*fs[4] + 45360*fs[1]*fs[2]**2*fs[4] +
+                  60480*fs[1]*fs[2]*fs[3]**2 + 30240*fs[2]**3*fs[3])*fs[0]**5 + (-216*fs[1]**2*fs[7] -
+                  1512*fs[1]*fs[2]*fs[6] - 3024*fs[1]*fs[3]*fs[5] - 1890*fs[1]*fs[4]**2 - 2268*fs[2]**2*fs[5] -
+                  7560*fs[2]*fs[3]*fs[4] - 1680*fs[3]**3)*fs[0]**6 - fs[0]**8*fs[9] + 1451520*fs[0]*fs[1]**7*fs[2] -
+                  362880*fs[1]**9)/fs[0]**10
+        return res
+
+cdef class R10DFPtr(DoubleMemoryViewFPtr):
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = ((4838400*fs[1]*fs[3] + 25401600*fs[2]**2)*fs[0]**2*fs[1]**6 + (-1058400*fs[1]**2*fs[4] -
+                  12700800*fs[1]*fs[2]*fs[3] - 15876000*fs[2]**3)*fs[0]**3*fs[1]**4 + (20*fs[1]*fs[9] +
+                  90*fs[2]*fs[8] + 240*fs[3]*fs[7] + 420*fs[4]*fs[6] + 252*fs[5]**2)*fs[0]**8 + (181440*fs[1]**3*fs[5] +
+                  2268000*fs[1]**2*fs[2]*fs[4] + 1512000*fs[1]**2*fs[3]**2 + 9072000*fs[1]*fs[2]**2*fs[3] +
+                  3402000*fs[2]**4)*fs[0]**4*fs[1]**2 + (-25200*fs[1]**4*fs[6] - 302400*fs[1]**3*fs[2]*fs[5] -
+                  504000*fs[1]**3*fs[3]*fs[4] - 1134000*fs[1]**2*fs[2]**2*fs[4] - 1512000*fs[1]**2*fs[2]*fs[3]**2 -
+                  1512000*fs[1]*fs[2]**3*fs[3] - 113400*fs[2]**5)*fs[0]**5 + (-270*fs[1]**2*fs[8] -
+                  2160*fs[1]*fs[2]*fs[7] - 5040*fs[1]*fs[3]*fs[6] - 7560*fs[1]*fs[4]*fs[5] - 3780*fs[2]**2*fs[6] -
+                  15120*fs[2]*fs[3]*fs[5] - 9450*fs[2]*fs[4]**2 - 12600*fs[3]**2*fs[4])*fs[0]**7 +
+                  (2880*fs[1]**3*fs[7] + 30240*fs[1]**2*fs[2]*fs[6] + 60480*fs[1]**2*fs[3]*fs[5] +
+                  37800*fs[1]**2*fs[4]**2 + 90720*fs[1]*fs[2]**2*fs[5] + 302400*fs[1]*fs[2]*fs[3]*fs[4] +
+                  67200*fs[1]*fs[3]**3 + 75600*fs[2]**3*fs[4] + 151200*fs[2]**2*fs[3]**2)*fs[0]**6 - fs[0]**9*fs[10] -
+                  16329600*fs[0]*fs[1]**8*fs[2] + 3628800*fs[1]**10)/fs[0]**11
+        return res
+
+# For functions of higher order derivatives, use this class to eval expression
+# Warning: Very slow, but somehow still slightly faster than Sympy's wrapped function
+# (if someone goes this far, they must be insane)
+cdef class CyExprEvaluator(DoubleMemoryViewFPtr):
+    cdef _Expr cy_expr
+    type_map = {
+        sympy.core.Number: _Number,
+        sympy.Indexed: _Arg,
+        sympy.core.numbers.NegativeOne: _Negate,
+        sympy.core.Add: _Add,
+        sympy.core.Mul: _Mul,
+        sympy.core.Pow: _Pow,
+    }
+    def __init__(self, expr: sympy.core.Expr):
+        self.cy_expr = self.parse_symbolic_func(expr)
+
+    @staticmethod
+    def parse_symbolic_func(expr):
+        if isinstance(expr, sympy.Expr):
+            if isinstance(expr, sympy.core.Number):
+                return _Number(expr)
+            evaluator_cls = CyExprEvaluator.type_map.get(type(expr))
+            if evaluator_cls is not None:
+                return evaluator_cls(expr)
+            else:
+                raise NotImplementedError(f'No implementation found for {type(expr)}.')
+
+    cdef inline double[:] eval(self, double[:] fs):
+        cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
+        res[0] = self.cy_expr.eval(fs)
+        return res
+
+# noinspection DuplicatedCode
+class ReciprocalDerivativeFuncFactory:
+    """
+    References:
+        https://math.stackexchange.com/questions/5357/whats-the-generalisation-of-the-quotient-rule-for-higher-derivatives
+    """
+    # dictionary of known functions
+    rd_c_funcs: dict[int, DoubleMemoryViewFPtr] = {
+        0: R0DFPtr(),
+        1: R1DFPtr(),
+        2: R2DFPtr(),
+        3: R3DFPtr(),
+        4: R4DFPtr(),
+        5: R5DFPtr(),
+        6: R6DFPtr(),
+        7: R7DFPtr(),
+        8: R8DFPtr(),
+        9: R9DFPtr(),
+        10: R10DFPtr(),
+    }
+    rd_py_funcs: dict[int, DoubleMemoryViewFPtr] = dict(
+        enumerate(map(lambda o: PyDoubleMemoryViewFPtr(o.__call__), rd_c_funcs.values())))
+    def __init__(self):
+        raise RuntimeError('Do not initialize this class.')
+
+    @classmethod
+    def get(cls, d: int, max_d: int = None, c_code=False):
+        if (not c_code and d not in cls.rd_py_funcs.keys()) or (c_code and d not in cls.rd_c_funcs):
+            if max_d is None:
+                max_d = d
+            sym_x = sympy.Symbol('x')
+            sym_f = sympy.Function('f')
+            sym_fs = sympy.IndexedBase('fs', shape=(max_d + 1,))
+
+            expr = 1 / sym_f(sym_x)
+            sym_rd_f = expr.diff(sym_x, d).simplify()
+            for i in range(d, -1, -1):
+                sym_rd_f = sym_rd_f.subs(sympy.Derivative(sym_f(sym_x), (sym_x, i)), sym_fs[i])
+
+            if not c_code:
+                rd_f = sympy.lambdify(sym_fs, sympy.Array([sym_rd_f]), modules='numpy')
+                cls.rd_py_funcs[d] = PyDoubleMemoryViewFPtr(rd_f)
+            else:
+                rd_f = <DoubleMemoryViewFPtr> CyExprEvaluator(sym_rd_f)
+                cls.rd_c_funcs[d] = rd_f
+                # sympy autowrap does not support array
+                # sym_fs_mat = sympy.MatrixSymbol('fs', d + 1, 1)
+                # for i in range(d, -1, -1):
+                #     sym_rd_f = sym_rd_f.subs(sym_fs[i], sym_fs_mat[i])
+                # rd_f = sympy.utilities.autowrap.autowrap(sym_rd_f, backend='cython')
+                # cls.rd_c_funcs[d] = PyDoubleMemoryViewFPtr(
+                #     lambda fs: np.reshape(rd_f(np.reshape(fs, (-1, 1))), (-1,)))
+        return cls.rd_py_funcs[d] if not c_code else cls.rd_c_funcs[d]
+
+# noinspection DuplicatedCode
+def householder(f: Callable[[float], float],
+                dfs: Sequence[Callable[[float], float]],
+                x0: float,
+                etol: float = ETOL,
+                ptol: float = PTOL,
+                max_iter: int = 0,
+                c_code: bool = True) -> NewtonMethodReturnType:
+    f"""
+    Householder's method for root-finding.
+
+    Args:
+        f: Function for which the root is sought.
+        dfs: Sequence of derivative functions of f in incremental
+         order.
+        x0: Initial point.
+        etol: Error tolerance, indicating the desired precision
+         of the root. Defaults to {ETOL}.
+        ptol: Precision tolerance, indicating the minimum change
+         of root approximations or width of brackets (in bracketing
+         methods) after each iteration. Defaults to {PTOL}.
+        max_iter: Maximum number of iterations. Defaults to 0.
+        c_code: Use C implementation of reciprocal derivative
+         function or not. Defaults to True.
+
+    Returns:
+        solution: The solution represented as a ``RootResults`` object.
+    """
+    # check params
+    if len(dfs) < 2:
+        raise ValueError(f'Requires at least second order derivative. Got {len(dfs)}.')
+
+    if etol <= 0:
+        raise ValueError(f'etol must be positive. Got {etol}.')
+    if ptol <= 0:
+        raise ValueError(f'ptol must be positive. Got {ptol}.')
+    if not isinstance(max_iter, int):
+        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+
+    d = len(dfs)
+    fs_wrappers = np.asarray([PyDoubleScalarFPtr(f)] + [PyDoubleScalarFPtr(df) for df in dfs])
+    x0, fs_x0, step, precision, error, converged = householder_kernel[DoubleMemoryViewFPtr](
+        fs_wrappers,
+        <DoubleMemoryViewFPtr>ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
+        <DoubleMemoryViewFPtr>ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
+        d, x0, etol, ptol, max_iter)
+    return NewtonMethodReturnType(x0, float(fs_x0[0]), tuple(fs_x0[1:]), step,
+                                  tuple(_.n_f_calls for _ in fs_wrappers),
+                                  precision, error, converged)
