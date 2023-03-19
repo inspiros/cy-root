@@ -84,7 +84,7 @@ def bisect(f: Callable[[float], float],
            etol: float = ETOL,
            ptol: float = PTOL,
            max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Bisection method for root-finding.
 
     Args:
@@ -96,7 +96,9 @@ def bisect(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -168,7 +170,7 @@ def regula_falsi(f: Callable[[float], float],
                  etol: float = ETOL,
                  ptol: float = PTOL,
                  max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Regula Falsi (or False Position) method for root-finding.
 
     Args:
@@ -182,7 +184,9 @@ def regula_falsi(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -221,7 +225,7 @@ def illinois(f: Callable[[float], float],
              etol: float = ETOL,
              ptol: float = PTOL,
              max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Illinois method for root-finding.
 
     Args:
@@ -235,7 +239,9 @@ def illinois(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -274,7 +280,7 @@ def pegasus(f: Callable[[float], float],
             etol: float = ETOL,
             ptol: float = PTOL,
             max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Pegasus method for root-finding.
 
     Args:
@@ -288,7 +294,9 @@ def pegasus(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -330,7 +338,7 @@ def anderson_bjorck(f: Callable[[float], float],
                     etol: float = ETOL,
                     ptol: float = PTOL,
                     max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Anderson–Björck method for root-finding.
 
     Args:
@@ -344,7 +352,9 @@ def anderson_bjorck(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -421,7 +431,7 @@ def dekker(f: Callable[[float], float],
            etol: float = ETOL,
            ptol: float = PTOL,
            max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Dekker's method for root-finding.
 
     Args:
@@ -435,7 +445,9 @@ def dekker(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -552,7 +564,7 @@ def brent(f: Callable[[float], float],
           etol: float = ETOL,
           ptol: float = PTOL,
           max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Brent's method for root-finding.
 
     Args:
@@ -570,7 +582,9 @@ def brent(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -671,7 +685,7 @@ def chandrupatla(f: Callable[[float], float],
                  etol: float = ETOL,
                  ptol: float = PTOL,
                  max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Chandrupatla's method for root-finding.
 
     Args:
@@ -686,7 +700,9 @@ def chandrupatla(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -762,7 +778,7 @@ def ridders(f: Callable[[float], float],
             etol: float = ETOL,
             ptol: float = PTOL,
             max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Ridders method for root-finding.
 
     Args:
@@ -776,7 +792,9 @@ def ridders(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -996,7 +1014,7 @@ def toms748(f: Callable[[float], float],
             etol: float = ETOL,
             ptol: float = PTOL,
             max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     TOMS Algorithm 748.
 
     Args:
@@ -1012,7 +1030,9 @@ def toms748(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1112,7 +1132,7 @@ def itp(f: Callable[[float], float],
         etol: float = ETOL,
         ptol: float = PTOL,
         max_iter: int = 0) -> BracketingMethodsReturnType:
-    f"""
+    """
     Implementation of the ITP (Interpolate Truncate and Project) method for root-finding
     presented in the paper "An Enhancement of the Bisection Method Average Performance Preserving Minmax convergedity".
 
@@ -1135,7 +1155,9 @@ def itp(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.

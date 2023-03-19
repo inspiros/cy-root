@@ -74,7 +74,7 @@ def secant(f: Callable[[float], float],
            etol: float = ETOL,
            ptol: float = PTOL,
            max_iter: int = 0) -> QuasiNewtonMethodReturnType:
-    f"""
+    """
     Secant method for root-finding.
 
     Args:
@@ -88,7 +88,9 @@ def secant(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -221,7 +223,7 @@ def sidi(f: Callable[[float], float],
          etol: float = ETOL,
          ptol: float = PTOL,
          max_iter: int = 0) -> QuasiNewtonMethodReturnType:
-    f"""
+    """
     Sidi's Generalized Secant method for root-finding.
 
     Args:
@@ -233,7 +235,9 @@ def sidi(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -306,7 +310,7 @@ def steffensen(f: Callable[[float], float],
                etol: float = ETOL,
                ptol: float = PTOL,
                max_iter: int = 0) -> QuasiNewtonMethodReturnType:
-    f"""
+    """
     Steffensen's method for root-finding.
 
     Args:
@@ -318,7 +322,9 @@ def steffensen(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -393,7 +399,7 @@ def inverse_quadratic_interp(
         etol: float = ETOL,
         ptol: float = PTOL,
         max_iter: int = 0) -> QuasiNewtonMethodReturnType:
-    f"""
+    """
     Inverse Quadratic Interpolation method for root-finding.
 
     Args:
@@ -409,7 +415,9 @@ def inverse_quadratic_interp(
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -499,7 +507,7 @@ def hyperbolic_interp(
         etol: float = ETOL,
         ptol: float = PTOL,
         max_iter: int = 0) -> QuasiNewtonMethodReturnType:
-    f"""
+    """
     Hyperbolic Interpolation method for root-finding.
 
     Args:
@@ -515,7 +523,9 @@ def hyperbolic_interp(
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -602,7 +612,7 @@ def muller(f: Callable[[complex], complex],
            etol: float = ETOL,
            ptol: float = PTOL,
            max_iter: int = 0) -> QuasiNewtonMethodReturnType:
-    f"""
+    """
     Muller's method for root-finding.
 
     Args:
@@ -618,7 +628,9 @@ def muller(f: Callable[[complex], complex],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.

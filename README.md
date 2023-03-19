@@ -2,12 +2,14 @@ cy-root
 ========
 
 A simple root-finding package written in Cython.
+Not a serious one so please only use these codes as learning materials.
+Many of the implemented methods here can't be found in common Python libraries.
 
-## Context
+**Context:**
 
-I had to find root of this beast of a function:
+I had to find root of this beast of a function, and Sidi's method came to rescue:
 
-$$ f(x) = \frac{1}{\sum_{j=1}^{\inf}{\prod_{k=j}^{\inf}{\frac{1}{k * x + 1}}}} - p $$
+$$ f(x) = \frac{1}{\sum_{j=1}^{\infty}{\left(\prod_{k=j}^{\infty}{\frac{1}{k \cdot x + 1}}\right)}} - p $$
 
 ## Requirements
 
@@ -35,7 +37,7 @@ pip uninstall cy-root
 
 ## Supported algorithms
 
-For more information about the listed algorithms, please use Google until I update the references.
+**Note:** For more information about the listed algorithms, please use Google until I update the references.
 
 ### Scalar root:
 
@@ -61,25 +63,51 @@ For more information about the listed algorithms, please use Google until I upda
     - Steffensen
     - Inverse Quadratic Interpolation
     - Hyperbolic Interpolation
-    - Muller
+    - Muller _(for complex root)_
 
-### Tensor root:
+### Vector root:
 
 Not yet.
 
 ## Usage
 
-Example:
+**Some examples:**
+
+Use `find_root_scalar` and pass method name as first argument.
 
 ```python
 from cyroot import find_root_scalar
 
 f = lambda x: x ** 2 - 612
-result = find_root_scalar('bisect', f, a=-50, b=50)
+result = find_root_scalar(method='itp', f=f, a=-50, b=50)
 print(result)
 ```
 
-The returned `result` is a tuple with elements depend on the type of methods used:
+Output:
+
+```console
+RootResults(root=24.738633753705507, f_root=-2.262368070660159e-11, iters=47, f_calls=48, a=24.73863375370501, b=24.738633753706008, f_a=-4.718003765447065e-11, f_b=2.1600499167107046e-12, precision=4.991562718714704e-13, error=2.262368070660159e-11, converged=True)
+```
+
+Alternatively, import the function directly. You can also see the full input arguments of by using `help()` on them.
+
+```python
+from cyroot import muller
+
+# This function has no real root
+f = lambda x: x ** 4 + 4 * x ** 2 + 5
+# But Muller's method can be used to find complex root
+result = muller(f, x0=0, x1=10, x2=20)
+print(result)
+```
+
+Output:
+
+```console
+RootResults(root=(0.34356074972251255+1.4553466902253551j), f_root=(-8.881784197001252e-16-1.7763568394002505e-15j), iters=43, f_calls=43, precision=3.177770418807502e-08, error=1.9860273225978185e-15, converged=True)
+```
+
+The returned `result` is a namedtuple whose elements depend on the type of the method:
 
 - Common:
     - `root`: the solved root

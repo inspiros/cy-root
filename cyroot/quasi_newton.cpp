@@ -1474,7 +1474,7 @@ struct __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   int f5;
 };
 
-/* "cyroot/quasi_newton.pyx":163
+/* "cyroot/quasi_newton.pyx":165
  *         return self.dnf(x, 1)
  * 
  *     cdef double dnf(self, double x, int order=1):             # <<<<<<<<<<<<<<
@@ -1486,7 +1486,7 @@ struct __pyx_opt_args_6cyroot_12quasi_newton_16NewtonPolynomial_dnf {
   int order;
 };
 
-/* "cyroot/quasi_newton.pyx":554
+/* "cyroot/quasi_newton.pyx":564
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double complex, double complex, long, double, double, bint) muller_kernel(             # <<<<<<<<<<<<<<
@@ -1522,7 +1522,7 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel {
   long max_iter;
 };
 
-/* "cyroot/quasi_newton.pyx":177
+/* "cyroot/quasi_newton.pyx":179
  * 
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) sidi_kernel(             # <<<<<<<<<<<<<<
@@ -1542,7 +1542,7 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel {
   long max_iter;
 };
 
-/* "cyroot/quasi_newton.pyx":272
+/* "cyroot/quasi_newton.pyx":276
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
@@ -1562,7 +1562,7 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_steffensen_kernel {
   long max_iter;
 };
 
-/* "cyroot/quasi_newton.pyx":347
+/* "cyroot/quasi_newton.pyx":353
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
@@ -1582,7 +1582,7 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_inverse_quadratic_inter
   long max_iter;
 };
 
-/* "cyroot/quasi_newton.pyx":448
+/* "cyroot/quasi_newton.pyx":456
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
@@ -1602,7 +1602,7 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_hyperbolic_interp_kerne
   long max_iter;
 };
 
-/* "cyroot/quasi_newton.pyx":554
+/* "cyroot/quasi_newton.pyx":564
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double complex, double complex, long, double, double, bint) muller_kernel(             # <<<<<<<<<<<<<<
@@ -1791,7 +1791,7 @@ struct __pyx_obj_6cyroot_4fptr_PyComplexMemoryViewFPtr {
 };
 
 
-/* "cyroot/quasi_newton.pyx":122
+/* "cyroot/quasi_newton.pyx":124
  * # Sidi
  * ################################################################################
  * cdef class NewtonPolynomial:             # <<<<<<<<<<<<<<
@@ -2061,7 +2061,7 @@ struct __pyx_vtabstruct_6cyroot_4fptr_PyComplexMemoryViewFPtr {
 static struct __pyx_vtabstruct_6cyroot_4fptr_PyComplexMemoryViewFPtr *__pyx_vtabptr_6cyroot_4fptr_PyComplexMemoryViewFPtr;
 
 
-/* "cyroot/quasi_newton.pyx":122
+/* "cyroot/quasi_newton.pyx":124
  * # Sidi
  * ################################################################################
  * cdef class NewtonPolynomial:             # <<<<<<<<<<<<<<
@@ -3205,18 +3205,10 @@ static const char __pyx_k_f_xs_must_be_a_sequence_Got[] = "f_xs must be a sequen
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
 static const char __pyx_k_pyx_unpickle_NewtonPolynomial[] = "__pyx_unpickle_NewtonPolynomial";
 static const char __pyx_k_unable_to_allocate_array_data[] = "unable to allocate array data.";
-static const char __pyx_k_Secant_method_for_root_finding[] = "\n    Secant method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        x1: Second initial point.\n        f_x0: Value evaluated at first initial point.\n        f_x1: Value evaluated at second initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to ";
 static const char __pyx_k_strided_and_direct_or_indirect[] = "<strided and direct or indirect>";
-static const char __pyx_k_Hyperbolic_Interpolation_method[] = "\n    Hyperbolic Interpolation method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        x1: Second initial point.\n        x2: Third initial point.\n        f_x0: Value evaluated at first initial point.\n        f_x1: Value evaluated at second initial point.\n        f_x2: Value evaluated at third initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to ";
-static const char __pyx_k_Inverse_Quadratic_Interpolation[] = "\n    Inverse Quadratic Interpolation method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        x1: Second initial point.\n        x2: Third initial point.\n        f_x0: Value evaluated at first initial point.\n        f_x1: Value evaluated at second initial point.\n        f_x2: Value evaluated at third initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to ";
-static const char __pyx_k_Muller_s_method_for_root_findin[] = "\n    Muller's method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        x1: Second initial point.\n        x2: Third initial point.\n        f_x0: Value evaluated at first initial point.\n        f_x1: Value evaluated at second initial point.\n        f_x2: Value evaluated at third initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to ";
-static const char __pyx_k_Sidi_s_Generalized_Secant_metho[] = "\n    Sidi's Generalized Secant method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        xs: List of initial points.\n        f_xs: Values evaluated at initial points.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to ";
-static const char __pyx_k_Steffensen_s_method_for_root_fi[] = "\n    Steffensen's method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        f_x0: Value evaluated at first initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to ";
 static const char __pyx_k_f_x0_and_f_x1_must_be_different[] = "f_x0 and f_x1 must be different. Got ";
-static const char __pyx_k_max_iter_Maximum_number_of_iter[] = ".\n        max_iter: Maximum number of iterations. Defaults to 0.\n\n    Returns:\n        solution: The solution represented as a ``RootResults`` object.\n    ";
 static const char __pyx_k_max_iter_must_be_an_integer_Got[] = "max_iter must be an integer. Got ";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
-static const char __pyx_k_ptol_Precision_tolerance_indica[] = ".\n        ptol: Precision tolerance, indicating the minimum change\n         of root approximations or width of brackets (in bracketing\n         methods) after each iteration. Defaults to ";
 static const char __pyx_k_x0_and_x1_must_be_different_Got[] = "x0 and x1 must be different. Got ";
 static const char __pyx_k_xs_and_f_xs_must_have_same_size[] = "xs and f_xs must have same size. Got ";
 static const char __pyx_k_Buffer_view_does_not_expose_stri[] = "Buffer view does not expose strides";
@@ -3246,7 +3238,6 @@ static PyObject *__pyx_kp_s_Cannot_create_writable_memory_vi;
 static PyObject *__pyx_kp_s_Cannot_index_with_type_s;
 static PyObject *__pyx_n_s_Ellipsis;
 static PyObject *__pyx_kp_s_Empty_shape_tuple_for_cython_arr;
-static PyObject *__pyx_kp_u_Hyperbolic_Interpolation_method;
 static PyObject *__pyx_n_s_ImportError;
 static PyObject *__pyx_kp_s_Incompatible_checksums_0x_x_vs_0;
 static PyObject *__pyx_kp_s_Incompatible_checksums_0x_x_vs_0_2;
@@ -3254,11 +3245,9 @@ static PyObject *__pyx_n_s_IndexError;
 static PyObject *__pyx_kp_s_Indirect_dimensions_not_supporte;
 static PyObject *__pyx_kp_s_Invalid_mode_expected_c_or_fortr;
 static PyObject *__pyx_kp_s_Invalid_shape_in_axis_d_d;
-static PyObject *__pyx_kp_u_Inverse_Quadratic_Interpolation;
 static PyObject *__pyx_n_s_MemoryError;
 static PyObject *__pyx_kp_s_MemoryView_of_r_at_0x_x;
 static PyObject *__pyx_kp_s_MemoryView_of_r_object;
-static PyObject *__pyx_kp_u_Muller_s_method_for_root_findin;
 static PyObject *__pyx_n_s_NewtonPolynomial;
 static PyObject *__pyx_n_b_O;
 static PyObject *__pyx_n_s_Optional;
@@ -3266,10 +3255,7 @@ static PyObject *__pyx_kp_s_Out_of_bounds_on_buffer_access_a;
 static PyObject *__pyx_n_s_PickleError;
 static PyObject *__pyx_n_s_QuasiNewtonMethodReturnType;
 static PyObject *__pyx_kp_u_Requires_at_least_2_initial_gues;
-static PyObject *__pyx_kp_u_Secant_method_for_root_finding;
 static PyObject *__pyx_n_s_Sequence;
-static PyObject *__pyx_kp_u_Sidi_s_Generalized_Secant_metho;
-static PyObject *__pyx_kp_u_Steffensen_s_method_for_root_fi;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_kp_s_Unable_to_convert_item_to_object;
 static PyObject *__pyx_n_s_ValueError;
@@ -3331,7 +3317,6 @@ static PyObject *__pyx_n_s_itemsize;
 static PyObject *__pyx_kp_s_itemsize_0_for_cython_array;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_max_iter;
-static PyObject *__pyx_kp_u_max_iter_Maximum_number_of_iter;
 static PyObject *__pyx_kp_u_max_iter_must_be_an_integer_Got;
 static PyObject *__pyx_n_s_memview;
 static PyObject *__pyx_n_s_mode;
@@ -3351,7 +3336,6 @@ static PyObject *__pyx_n_s_pack;
 static PyObject *__pyx_n_s_pickle;
 static PyObject *__pyx_n_s_precision;
 static PyObject *__pyx_n_s_ptol;
-static PyObject *__pyx_kp_u_ptol_Precision_tolerance_indica;
 static PyObject *__pyx_kp_u_ptol_must_be_positive_Got;
 static PyObject *__pyx_n_s_pyx_PickleError;
 static PyObject *__pyx_n_s_pyx_checksum;
@@ -3876,7 +3860,8 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_1secant(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_1secant = {"secant", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_1secant, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_6cyroot_12quasi_newton_secant[] = "\n    Secant method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        x1: Second initial point.\n        f_x0: Value evaluated at first initial point.\n        f_x1: Value evaluated at second initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to {ETOL}.\n        ptol: Precision tolerance, indicating the minimum change\n         of root approximations or width of brackets (in bracketing\n         methods) after each iteration. Defaults to {PTOL}.\n        max_iter: Maximum number of iterations. If set to 0, the\n         procedure will run indefinitely until stopping condition is\n         met. Defaults to 0.\n\n    Returns:\n        solution: The solution represented as a ``RootResults`` object.\n    ";
+static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_1secant = {"secant", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_1secant, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6cyroot_12quasi_newton_secant};
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_1secant(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_f = 0;
   double __pyx_v_x0;
@@ -4057,12 +4042,12 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   PyObject *__pyx_v_converged = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  Py_ssize_t __pyx_t_2;
-  Py_UCS4 __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  Py_ssize_t __pyx_t_3;
+  Py_UCS4 __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
+  PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
   PyObject *__pyx_t_8 = NULL;
   double __pyx_t_9;
@@ -4080,104 +4065,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   __Pyx_INCREF(__pyx_v_f_x0);
   __Pyx_INCREF(__pyx_v_f_x1);
 
-  /* "cyroot/quasi_newton.pyx":77
- *            ptol: float = PTOL,
- *            max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""             # <<<<<<<<<<<<<<
- *     Secant method for root-finding.
- * 
- */
-  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = 0;
-  __pyx_t_3 = 127;
-  __Pyx_INCREF(__pyx_kp_u_Secant_method_for_root_finding);
-  __pyx_t_2 += 372;
-  __Pyx_GIVEREF(__pyx_kp_u_Secant_method_for_root_finding);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_Secant_method_for_root_finding);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_ETOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __Pyx_INCREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_2 += 187;
-  __Pyx_GIVEREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_PTOL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __Pyx_INCREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_2 += 155;
-  __Pyx_GIVEREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "cyroot/quasi_newton.pyx":97
+  /* "cyroot/quasi_newton.pyx":99
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  */
-  __pyx_t_6 = ((__pyx_v_etol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_etol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":98
+    /* "cyroot/quasi_newton.pyx":100
  *     # check params
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')             # <<<<<<<<<<<<<<
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 98, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 100, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_etol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 98, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_etol_must_be_positive_Got);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 100, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
-    __pyx_t_5 = 0;
-    __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
-    __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 98, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 98, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 100, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 98, __pyx_L1_error)
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
+    __Pyx_INCREF(__pyx_kp_u__6);
+    __pyx_t_3 += 1;
+    __Pyx_GIVEREF(__pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 100, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 100, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 100, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":97
+    /* "cyroot/quasi_newton.pyx":99
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
@@ -4186,56 +4123,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":99
+  /* "cyroot/quasi_newton.pyx":101
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  */
-  __pyx_t_6 = ((__pyx_v_ptol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_ptol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":100
+    /* "cyroot/quasi_newton.pyx":102
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')             # <<<<<<<<<<<<<<
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 100, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 102, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 100, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_ptol_must_be_positive_Got);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 102, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 102, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 100, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 100, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 100, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 100, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 102, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 102, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 102, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":99
+    /* "cyroot/quasi_newton.pyx":101
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
@@ -4244,54 +4181,54 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":101
+  /* "cyroot/quasi_newton.pyx":103
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  */
-  __pyx_t_6 = PyInt_Check(__pyx_v_max_iter); 
-  __pyx_t_7 = ((!(__pyx_t_6 != 0)) != 0);
+  __pyx_t_1 = PyInt_Check(__pyx_v_max_iter); 
+  __pyx_t_7 = ((!(__pyx_t_1 != 0)) != 0);
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":102
+    /* "cyroot/quasi_newton.pyx":104
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')             # <<<<<<<<<<<<<<
  * 
  *     if x0 == x1:
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 102, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_2 += 33;
+    __pyx_t_3 += 33;
     __Pyx_GIVEREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 102, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 102, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 102, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 102, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 104, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":101
+    /* "cyroot/quasi_newton.pyx":103
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
@@ -4300,7 +4237,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":104
+  /* "cyroot/quasi_newton.pyx":106
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if x0 == x1:             # <<<<<<<<<<<<<<
@@ -4310,60 +4247,60 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   __pyx_t_7 = ((__pyx_v_x0 == __pyx_v_x1) != 0);
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":105
+    /* "cyroot/quasi_newton.pyx":107
  * 
  *     if x0 == x1:
  *         raise ValueError(f'x0 and x1 must be different. Got {x0} and {x1}.')             # <<<<<<<<<<<<<<
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  */
-    __pyx_t_4 = PyTuple_New(5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 105, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_x0_and_x1_must_be_different_Got);
-    __pyx_t_2 += 33;
+    __pyx_t_3 += 33;
     __Pyx_GIVEREF(__pyx_kp_u_x0_and_x1_must_be_different_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_x0_and_x1_must_be_different_Got);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 105, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 105, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_x0_and_x1_must_be_different_Got);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 107, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
-    __pyx_t_5 = 0;
-    __Pyx_INCREF(__pyx_kp_u_and);
-    __pyx_t_2 += 5;
-    __Pyx_GIVEREF(__pyx_kp_u_and);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u_and);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 105, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 105, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 3, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
+    __Pyx_INCREF(__pyx_kp_u_and);
+    __pyx_t_3 += 5;
+    __Pyx_GIVEREF(__pyx_kp_u_and);
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u_and);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 4, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 105, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 105, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 105, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 107, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":104
+    /* "cyroot/quasi_newton.pyx":106
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if x0 == x1:             # <<<<<<<<<<<<<<
@@ -4372,7 +4309,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":106
+  /* "cyroot/quasi_newton.pyx":108
  *     if x0 == x1:
  *         raise ValueError(f'x0 and x1 must be different. Got {x0} and {x1}.')
  *     if f_x0 is None:             # <<<<<<<<<<<<<<
@@ -4380,18 +4317,67 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
  *     if f_x1 is None:
  */
   __pyx_t_7 = (__pyx_v_f_x0 == Py_None);
-  __pyx_t_6 = (__pyx_t_7 != 0);
-  if (__pyx_t_6) {
+  __pyx_t_1 = (__pyx_t_7 != 0);
+  if (__pyx_t_1) {
 
-    /* "cyroot/quasi_newton.pyx":107
+    /* "cyroot/quasi_newton.pyx":109
  *         raise ValueError(f'x0 and x1 must be different. Got {x0} and {x1}.')
  *     if f_x0 is None:
  *         f_x0 = f(x0)             # <<<<<<<<<<<<<<
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_INCREF(__pyx_v_f);
+    __pyx_t_6 = __pyx_v_f; __pyx_t_8 = NULL;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
+      __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_6);
+      if (likely(__pyx_t_8)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+        __Pyx_INCREF(__pyx_t_8);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_6, function);
+      }
+    }
+    __pyx_t_2 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_8, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_2);
+    __pyx_t_2 = 0;
+
+    /* "cyroot/quasi_newton.pyx":108
+ *     if x0 == x1:
+ *         raise ValueError(f'x0 and x1 must be different. Got {x0} and {x1}.')
+ *     if f_x0 is None:             # <<<<<<<<<<<<<<
+ *         f_x0 = f(x0)
+ *     if f_x1 is None:
+ */
+  }
+
+  /* "cyroot/quasi_newton.pyx":110
+ *     if f_x0 is None:
+ *         f_x0 = f(x0)
+ *     if f_x1 is None:             # <<<<<<<<<<<<<<
+ *         f_x1 = f(x1)
+ *     if f_x0 == f_x1:
+ */
+  __pyx_t_1 = (__pyx_v_f_x1 == Py_None);
+  __pyx_t_7 = (__pyx_t_1 != 0);
+  if (__pyx_t_7) {
+
+    /* "cyroot/quasi_newton.pyx":111
+ *         f_x0 = f(x0)
+ *     if f_x1 is None:
+ *         f_x1 = f(x1)             # <<<<<<<<<<<<<<
+ *     if f_x0 == f_x1:
+ *         raise ValueError(f'f_x0 and f_x1 must be different. Got {f_x0} and {f_x1}.')
+ */
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 111, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_INCREF(__pyx_v_f);
     __pyx_t_5 = __pyx_v_f; __pyx_t_8 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
@@ -4403,65 +4389,16 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
         __Pyx_DECREF_SET(__pyx_t_5, function);
       }
     }
-    __pyx_t_4 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_8, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_1);
+    __pyx_t_2 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_8, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_6);
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 107, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_4);
-    __pyx_t_4 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x1, __pyx_t_2);
+    __pyx_t_2 = 0;
 
-    /* "cyroot/quasi_newton.pyx":106
- *     if x0 == x1:
- *         raise ValueError(f'x0 and x1 must be different. Got {x0} and {x1}.')
- *     if f_x0 is None:             # <<<<<<<<<<<<<<
- *         f_x0 = f(x0)
- *     if f_x1 is None:
- */
-  }
-
-  /* "cyroot/quasi_newton.pyx":108
- *     if f_x0 is None:
- *         f_x0 = f(x0)
- *     if f_x1 is None:             # <<<<<<<<<<<<<<
- *         f_x1 = f(x1)
- *     if f_x0 == f_x1:
- */
-  __pyx_t_6 = (__pyx_v_f_x1 == Py_None);
-  __pyx_t_7 = (__pyx_t_6 != 0);
-  if (__pyx_t_7) {
-
-    /* "cyroot/quasi_newton.pyx":109
- *         f_x0 = f(x0)
- *     if f_x1 is None:
- *         f_x1 = f(x1)             # <<<<<<<<<<<<<<
- *     if f_x0 == f_x1:
- *         raise ValueError(f'f_x0 and f_x1 must be different. Got {f_x0} and {f_x1}.')
- */
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 109, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_1 = __pyx_v_f; __pyx_t_8 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-      __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_1);
-      if (likely(__pyx_t_8)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-        __Pyx_INCREF(__pyx_t_8);
-        __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_1, function);
-      }
-    }
-    __pyx_t_4 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_8, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_5);
-    __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 109, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x1, __pyx_t_4);
-    __pyx_t_4 = 0;
-
-    /* "cyroot/quasi_newton.pyx":108
+    /* "cyroot/quasi_newton.pyx":110
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  *     if f_x1 is None:             # <<<<<<<<<<<<<<
@@ -4470,66 +4407,66 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":110
+  /* "cyroot/quasi_newton.pyx":112
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  *     if f_x0 == f_x1:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'f_x0 and f_x1 must be different. Got {f_x0} and {f_x1}.')
  * 
  */
-  __pyx_t_4 = PyObject_RichCompare(__pyx_v_f_x0, __pyx_v_f_x1, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 110, __pyx_L1_error)
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 110, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_2 = PyObject_RichCompare(__pyx_v_f_x0, __pyx_v_f_x1, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":111
+    /* "cyroot/quasi_newton.pyx":113
  *         f_x1 = f(x1)
  *     if f_x0 == f_x1:
  *         raise ValueError(f'f_x0 and f_x1 must be different. Got {f_x0} and {f_x1}.')             # <<<<<<<<<<<<<<
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  */
-    __pyx_t_4 = PyTuple_New(5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_f_x0_and_f_x1_must_be_different);
-    __pyx_t_2 += 37;
+    __pyx_t_3 += 37;
     __Pyx_GIVEREF(__pyx_kp_u_f_x0_and_f_x1_must_be_different);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_f_x0_and_f_x1_must_be_different);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x0, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_f_x0_and_f_x1_must_be_different);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x0, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u_and);
-    __pyx_t_2 += 5;
+    __pyx_t_3 += 5;
     __Pyx_GIVEREF(__pyx_kp_u_and);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u_and);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x1, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 3, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u_and);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x1, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 4, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 111, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 113, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":110
+    /* "cyroot/quasi_newton.pyx":112
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  *     if f_x0 == f_x1:             # <<<<<<<<<<<<<<
@@ -4538,30 +4475,30 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":113
+  /* "cyroot/quasi_newton.pyx":115
  *         raise ValueError(f'f_x0 and f_x1 must be different. Got {f_x0} and {f_x1}.')
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)             # <<<<<<<<<<<<<<
  *     r, f_r, step, precision, error, converged = secant_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, x1, f_x0, f_x1, etol, ptol, max_iter)
  */
-  __pyx_t_4 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_4);
-  __pyx_t_4 = 0;
+  __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_2);
+  __pyx_t_2 = 0;
 
-  /* "cyroot/quasi_newton.pyx":115
+  /* "cyroot/quasi_newton.pyx":117
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = secant_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, x1, f_x0, f_x1, etol, ptol, max_iter)             # <<<<<<<<<<<<<<
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)
  */
-  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_f_x0); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
-  __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_v_f_x1); if (unlikely((__pyx_t_10 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
-  __pyx_t_11 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_11 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_f_x0); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_v_f_x1); if (unlikely((__pyx_t_10 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_11 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":114
+  /* "cyroot/quasi_newton.pyx":116
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = secant_kernel[DoubleScalarFPtr](             # <<<<<<<<<<<<<<
@@ -4573,24 +4510,24 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   __pyx_t_13.ptol = __pyx_v_ptol;
   __pyx_t_13.max_iter = __pyx_t_11;
   __pyx_t_12 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_secant_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_v_x1, __pyx_t_9, __pyx_t_10, &__pyx_t_13); 
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_12.f0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 114, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_t_12.f1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_t_12.f2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_12.f0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_t_12.f1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_t_12.f3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_long(__pyx_t_12.f2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_t_12.f3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_14 = PyFloat_FromDouble(__pyx_t_12.f4); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_14 = PyFloat_FromDouble(__pyx_t_12.f4); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_14);
-  __pyx_t_15 = __Pyx_PyBool_FromLong(__pyx_t_12.f5); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_15 = __Pyx_PyBool_FromLong(__pyx_t_12.f5); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __pyx_v_r = __pyx_t_4;
-  __pyx_t_4 = 0;
-  __pyx_v_f_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  __pyx_v_step = __pyx_t_5;
+  __pyx_v_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  __pyx_v_f_r = __pyx_t_5;
   __pyx_t_5 = 0;
+  __pyx_v_step = __pyx_t_6;
+  __pyx_t_6 = 0;
   __pyx_v_precision = __pyx_t_8;
   __pyx_t_8 = 0;
   __pyx_v_error = __pyx_t_14;
@@ -4598,7 +4535,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   __pyx_v_converged = __pyx_t_15;
   __pyx_t_15 = 0;
 
-  /* "cyroot/quasi_newton.pyx":116
+  /* "cyroot/quasi_newton.pyx":118
  *     r, f_r, step, precision, error, converged = secant_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, x1, f_x0, f_x1, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,             # <<<<<<<<<<<<<<
@@ -4606,25 +4543,25 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_14);
-  __pyx_t_8 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
 
-  /* "cyroot/quasi_newton.pyx":117
+  /* "cyroot/quasi_newton.pyx":119
  *         f_wrapper, x0, x1, f_x0, f_x1, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)             # <<<<<<<<<<<<<<
  * 
  * ################################################################################
  */
-  __pyx_t_5 = NULL;
+  __pyx_t_6 = NULL;
   __pyx_t_16 = 0;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_14))) {
-    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_14);
-    if (likely(__pyx_t_5)) {
+    __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_14);
+    if (likely(__pyx_t_6)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_14);
-      __Pyx_INCREF(__pyx_t_5);
+      __Pyx_INCREF(__pyx_t_6);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_14, function);
       __pyx_t_16 = 1;
@@ -4632,52 +4569,52 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_14)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_8, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_15 = __Pyx_PyFunction_FastCall(__pyx_t_14, __pyx_temp+1-__pyx_t_16, 7+__pyx_t_16); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 116, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_6, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_8, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_15 = __Pyx_PyFunction_FastCall(__pyx_t_14, __pyx_temp+1-__pyx_t_16, 7+__pyx_t_16); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 118, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_15);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_14)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_8, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_15 = __Pyx_PyCFunction_FastCall(__pyx_t_14, __pyx_temp+1-__pyx_t_16, 7+__pyx_t_16); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 116, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_6, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_8, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_15 = __Pyx_PyCFunction_FastCall(__pyx_t_14, __pyx_temp+1-__pyx_t_16, 7+__pyx_t_16); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 118, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_15);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   } else
   #endif
   {
-    __pyx_t_1 = PyTuple_New(7+__pyx_t_16); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    if (__pyx_t_5) {
-      __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_5); __pyx_t_5 = NULL;
+    __pyx_t_5 = PyTuple_New(7+__pyx_t_16); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (__pyx_t_6) {
+      __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_6); __pyx_t_6 = NULL;
     }
     __Pyx_INCREF(__pyx_v_r);
     __Pyx_GIVEREF(__pyx_v_r);
-    PyTuple_SET_ITEM(__pyx_t_1, 0+__pyx_t_16, __pyx_v_r);
+    PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_16, __pyx_v_r);
     __Pyx_INCREF(__pyx_v_f_r);
     __Pyx_GIVEREF(__pyx_v_f_r);
-    PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_16, __pyx_v_f_r);
+    PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_16, __pyx_v_f_r);
     __Pyx_INCREF(__pyx_v_step);
     __Pyx_GIVEREF(__pyx_v_step);
-    PyTuple_SET_ITEM(__pyx_t_1, 2+__pyx_t_16, __pyx_v_step);
+    PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_16, __pyx_v_step);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_1, 3+__pyx_t_16, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_5, 3+__pyx_t_16, __pyx_t_8);
     __Pyx_INCREF(__pyx_v_precision);
     __Pyx_GIVEREF(__pyx_v_precision);
-    PyTuple_SET_ITEM(__pyx_t_1, 4+__pyx_t_16, __pyx_v_precision);
+    PyTuple_SET_ITEM(__pyx_t_5, 4+__pyx_t_16, __pyx_v_precision);
     __Pyx_INCREF(__pyx_v_error);
     __Pyx_GIVEREF(__pyx_v_error);
-    PyTuple_SET_ITEM(__pyx_t_1, 5+__pyx_t_16, __pyx_v_error);
+    PyTuple_SET_ITEM(__pyx_t_5, 5+__pyx_t_16, __pyx_v_error);
     __Pyx_INCREF(__pyx_v_converged);
     __Pyx_GIVEREF(__pyx_v_converged);
-    PyTuple_SET_ITEM(__pyx_t_1, 6+__pyx_t_16, __pyx_v_converged);
+    PyTuple_SET_ITEM(__pyx_t_5, 6+__pyx_t_16, __pyx_v_converged);
     __pyx_t_8 = 0;
-    __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_14, __pyx_t_1, NULL); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_14, __pyx_t_5, NULL); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 118, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
   __pyx_r = __pyx_t_15;
@@ -4694,9 +4631,9 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_14);
   __Pyx_XDECREF(__pyx_t_15);
@@ -4717,7 +4654,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":126
+/* "cyroot/quasi_newton.pyx":128
  *     cdef double[:] x, a
  * 
  *     def __init__(self, xs: double[:], ys: double[:]):             # <<<<<<<<<<<<<<
@@ -4759,11 +4696,11 @@ static int __pyx_pw_6cyroot_12quasi_newton_16NewtonPolynomial_1__init__(PyObject
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ys)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 126, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 128, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 126, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 128, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -4771,12 +4708,12 @@ static int __pyx_pw_6cyroot_12quasi_newton_16NewtonPolynomial_1__init__(PyObject
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_xs = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_xs.memview)) __PYX_ERR(0, 126, __pyx_L3_error)
-    __pyx_v_ys = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ys.memview)) __PYX_ERR(0, 126, __pyx_L3_error)
+    __pyx_v_xs = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_xs.memview)) __PYX_ERR(0, 128, __pyx_L3_error)
+    __pyx_v_ys = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ys.memview)) __PYX_ERR(0, 128, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 126, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 128, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.quasi_newton.NewtonPolynomial.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4821,7 +4758,7 @@ static int __pyx_pf_6cyroot_12quasi_newton_16NewtonPolynomial___init__(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "cyroot/quasi_newton.pyx":127
+  /* "cyroot/quasi_newton.pyx":129
  * 
  *     def __init__(self, xs: double[:], ys: double[:]):
  *         self.n = <int> len(xs)             # <<<<<<<<<<<<<<
@@ -4831,56 +4768,56 @@ static int __pyx_pf_6cyroot_12quasi_newton_16NewtonPolynomial___init__(struct __
   __pyx_t_1 = __Pyx_MemoryView_Len(__pyx_v_xs); 
   __pyx_v_self->n = ((int)__pyx_t_1);
 
-  /* "cyroot/quasi_newton.pyx":128
+  /* "cyroot/quasi_newton.pyx":130
  *     def __init__(self, xs: double[:], ys: double[:]):
  *         self.n = <int> len(xs)
  *         self.x = view.array(shape=(self.n - 1,),             # <<<<<<<<<<<<<<
  *                             itemsize=sizeof(double),
  *                             format='d')
  */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 130, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_long((__pyx_v_self->n - 1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_long((__pyx_v_self->n - 1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 130, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 130, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
   __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_shape, __pyx_t_4) < 0) __PYX_ERR(0, 128, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_shape, __pyx_t_4) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "cyroot/quasi_newton.pyx":129
+  /* "cyroot/quasi_newton.pyx":131
  *         self.n = <int> len(xs)
  *         self.x = view.array(shape=(self.n - 1,),
  *                             itemsize=sizeof(double),             # <<<<<<<<<<<<<<
  *                             format='d')
  *         self.x[:] = xs[:-1]
  */
-  __pyx_t_4 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_itemsize, __pyx_t_4) < 0) __PYX_ERR(0, 128, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_itemsize, __pyx_t_4) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 128, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":128
+  /* "cyroot/quasi_newton.pyx":130
  *     def __init__(self, xs: double[:], ys: double[:]):
  *         self.n = <int> len(xs)
  *         self.x = view.array(shape=(self.n - 1,),             # <<<<<<<<<<<<<<
  *                             itemsize=sizeof(double),
  *                             format='d')
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 130, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 130, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __PYX_XDEC_MEMVIEW(&__pyx_v_self->x, 0);
   __pyx_v_self->x = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "cyroot/quasi_newton.pyx":131
+  /* "cyroot/quasi_newton.pyx":133
  *                             itemsize=sizeof(double),
  *                             format='d')
  *         self.x[:] = xs[:-1]             # <<<<<<<<<<<<<<
@@ -4905,78 +4842,78 @@ static int __pyx_pf_6cyroot_12quasi_newton_16NewtonPolynomial___init__(struct __
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 131, __pyx_L1_error)
+    __PYX_ERR(0, 133, __pyx_L1_error)
 }
 
-if (unlikely(!__pyx_v_self->x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 131, __pyx_L1_error)}
-  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_5, __pyx_v_self->x, 1, 1, 0) < 0)) __PYX_ERR(0, 131, __pyx_L1_error)
+if (unlikely(!__pyx_v_self->x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 133, __pyx_L1_error)}
+  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_5, __pyx_v_self->x, 1, 1, 0) < 0)) __PYX_ERR(0, 133, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "cyroot/quasi_newton.pyx":132
+  /* "cyroot/quasi_newton.pyx":134
  *                             format='d')
  *         self.x[:] = xs[:-1]
  *         self.a = view.array(shape=(self.n,),             # <<<<<<<<<<<<<<
  *                             itemsize=sizeof(double),
  *                             format='d')
  */
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->n); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->n); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "cyroot/quasi_newton.pyx":133
+  /* "cyroot/quasi_newton.pyx":135
  *         self.x[:] = xs[:-1]
  *         self.a = view.array(shape=(self.n,),
  *                             itemsize=sizeof(double),             # <<<<<<<<<<<<<<
  *                             format='d')
  * 
  */
-  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 133, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 134, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":132
+  /* "cyroot/quasi_newton.pyx":134
  *                             format='d')
  *         self.x[:] = xs[:-1]
  *         self.a = view.array(shape=(self.n,),             # <<<<<<<<<<<<<<
  *                             itemsize=sizeof(double),
  *                             format='d')
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __PYX_XDEC_MEMVIEW(&__pyx_v_self->a, 0);
   __pyx_v_self->a = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "cyroot/quasi_newton.pyx":136
+  /* "cyroot/quasi_newton.pyx":138
  *                             format='d')
  * 
  *         cdef double[:, :] DD = view.array(shape=(self.n, self.n),             # <<<<<<<<<<<<<<
  *                                           itemsize=sizeof(double),
  *                                           format='d')
  */
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->n); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->n); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->n); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->n); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_4);
@@ -4984,39 +4921,39 @@ if (unlikely(!__pyx_v_self->x.memview)) {PyErr_SetString(PyExc_AttributeError,"M
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_2);
   __pyx_t_4 = 0;
   __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_shape, __pyx_t_7) < 0) __PYX_ERR(0, 136, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_shape, __pyx_t_7) < 0) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "cyroot/quasi_newton.pyx":137
+  /* "cyroot/quasi_newton.pyx":139
  * 
  *         cdef double[:, :] DD = view.array(shape=(self.n, self.n),
  *                                           itemsize=sizeof(double),             # <<<<<<<<<<<<<<
  *                                           format='d')
  *         DD[:, 0] = ys
  */
-  __pyx_t_7 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_itemsize, __pyx_t_7) < 0) __PYX_ERR(0, 136, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_itemsize, __pyx_t_7) < 0) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 136, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 138, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":136
+  /* "cyroot/quasi_newton.pyx":138
  *                             format='d')
  * 
  *         cdef double[:, :] DD = view.array(shape=(self.n, self.n),             # <<<<<<<<<<<<<<
  *                                           itemsize=sizeof(double),
  *                                           format='d')
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(__pyx_t_7, PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(__pyx_t_7, PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_v_DD = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "cyroot/quasi_newton.pyx":139
+  /* "cyroot/quasi_newton.pyx":141
  *                                           itemsize=sizeof(double),
  *                                           format='d')
  *         DD[:, 0] = ys             # <<<<<<<<<<<<<<
@@ -5039,12 +4976,12 @@ __pyx_t_5.strides[0] = __pyx_v_DD.strides[0];
         __pyx_t_5.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)) __PYX_ERR(0, 139, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)) __PYX_ERR(0, 141, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "cyroot/quasi_newton.pyx":142
+  /* "cyroot/quasi_newton.pyx":144
  *         cdef int i, j
  *         # Fill in divided differences
  *         for j in range(1, self.n):             # <<<<<<<<<<<<<<
@@ -5056,7 +4993,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)
   for (__pyx_t_10 = 1; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
     __pyx_v_j = __pyx_t_10;
 
-    /* "cyroot/quasi_newton.pyx":143
+    /* "cyroot/quasi_newton.pyx":145
  *         # Fill in divided differences
  *         for j in range(1, self.n):
  *             DD[:j, j] = 0             # <<<<<<<<<<<<<<
@@ -5081,7 +5018,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 143, __pyx_L1_error)
+    __PYX_ERR(0, 145, __pyx_L1_error)
 }
 
 {
@@ -5111,7 +5048,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)
     __pyx_t_5.memview = NULL;
     __pyx_t_5.data = NULL;
 
-    /* "cyroot/quasi_newton.pyx":144
+    /* "cyroot/quasi_newton.pyx":146
  *         for j in range(1, self.n):
  *             DD[:j, j] = 0
  *             for i in range(j, self.n):             # <<<<<<<<<<<<<<
@@ -5123,7 +5060,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)
     for (__pyx_t_13 = __pyx_v_j; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
       __pyx_v_i = __pyx_t_13;
 
-      /* "cyroot/quasi_newton.pyx":145
+      /* "cyroot/quasi_newton.pyx":147
  *             DD[:j, j] = 0
  *             for i in range(j, self.n):
  *                 DD[i, j] = (DD[i, j - 1] - DD[i - 1, j - 1]) / (xs[i] - xs[i - j])             # <<<<<<<<<<<<<<
@@ -5150,7 +5087,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)
     }
   }
 
-  /* "cyroot/quasi_newton.pyx":147
+  /* "cyroot/quasi_newton.pyx":149
  *                 DD[i, j] = (DD[i, j - 1] - DD[i - 1, j - 1]) / (xs[i] - xs[i - j])
  *         # Copy diagonal elements into array for returning
  *         for j in range(self.n):             # <<<<<<<<<<<<<<
@@ -5162,7 +5099,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)
   for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
     __pyx_v_j = __pyx_t_10;
 
-    /* "cyroot/quasi_newton.pyx":148
+    /* "cyroot/quasi_newton.pyx":150
  *         # Copy diagonal elements into array for returning
  *         for j in range(self.n):
  *             self.a[j] = DD[j, j]             # <<<<<<<<<<<<<<
@@ -5173,13 +5110,13 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)
     __pyx_t_18 = __pyx_v_j;
     if (__pyx_t_19 < 0) __pyx_t_19 += __pyx_v_DD.shape[0];
     if (__pyx_t_18 < 0) __pyx_t_18 += __pyx_v_DD.shape[1];
-    if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 148, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 150, __pyx_L1_error)}
     __pyx_t_17 = __pyx_v_j;
     if (__pyx_t_17 < 0) __pyx_t_17 += __pyx_v_self->a.shape[0];
     *((double *) ( /* dim=0 */ (__pyx_v_self->a.data + __pyx_t_17 * __pyx_v_self->a.strides[0]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_DD.data + __pyx_t_19 * __pyx_v_DD.strides[0]) ) + __pyx_t_18 * __pyx_v_DD.strides[1]) )));
   }
 
-  /* "cyroot/quasi_newton.pyx":126
+  /* "cyroot/quasi_newton.pyx":128
  *     cdef double[:] x, a
  * 
  *     def __init__(self, xs: double[:], ys: double[:]):             # <<<<<<<<<<<<<<
@@ -5207,7 +5144,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_5, 1, 1, 0) < 0)
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":150
+/* "cyroot/quasi_newton.pyx":152
  *             self.a[j] = DD[j, j]
  * 
  *     def __call__(self, double x):             # <<<<<<<<<<<<<<
@@ -5244,18 +5181,18 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_16NewtonPolynomial_3__call__(Py
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__call__") < 0)) __PYX_ERR(0, 150, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__call__") < 0)) __PYX_ERR(0, 152, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
     }
-    __pyx_v_x = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L3_error)
+    __pyx_v_x = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 152, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__call__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 150, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__call__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 152, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.quasi_newton.NewtonPolynomial.__call__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5277,7 +5214,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_16NewtonPolynomial_2__call__(st
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__call__", 0);
 
-  /* "cyroot/quasi_newton.pyx":151
+  /* "cyroot/quasi_newton.pyx":153
  * 
  *     def __call__(self, double x):
  *         return self.f(x)             # <<<<<<<<<<<<<<
@@ -5285,13 +5222,13 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_16NewtonPolynomial_2__call__(st
  *     cdef double f(self, double x):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(((struct __pyx_vtabstruct_6cyroot_12quasi_newton_NewtonPolynomial *)__pyx_v_self->__pyx_vtab)->f(__pyx_v_self, __pyx_v_x)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(((struct __pyx_vtabstruct_6cyroot_12quasi_newton_NewtonPolynomial *)__pyx_v_self->__pyx_vtab)->f(__pyx_v_self, __pyx_v_x)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":150
+  /* "cyroot/quasi_newton.pyx":152
  *             self.a[j] = DD[j, j]
  * 
  *     def __call__(self, double x):             # <<<<<<<<<<<<<<
@@ -5310,7 +5247,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_16NewtonPolynomial_2__call__(st
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":153
+/* "cyroot/quasi_newton.pyx":155
  *         return self.f(x)
  * 
  *     cdef double f(self, double x):             # <<<<<<<<<<<<<<
@@ -5331,19 +5268,19 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_f(struct __pyx_o
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("f", 0);
 
-  /* "cyroot/quasi_newton.pyx":154
+  /* "cyroot/quasi_newton.pyx":156
  * 
  *     cdef double f(self, double x):
  *         cdef double f_x = self.a[-1]             # <<<<<<<<<<<<<<
  *         cdef int k
  *         for k in range(self.n - 2, -1, -1):
  */
-  if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 154, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 156, __pyx_L1_error)}
   __pyx_t_1 = -1L;
   if (__pyx_t_1 < 0) __pyx_t_1 += __pyx_v_self->a.shape[0];
   __pyx_v_f_x = (*((double *) ( /* dim=0 */ (__pyx_v_self->a.data + __pyx_t_1 * __pyx_v_self->a.strides[0]) )));
 
-  /* "cyroot/quasi_newton.pyx":156
+  /* "cyroot/quasi_newton.pyx":158
  *         cdef double f_x = self.a[-1]
  *         cdef int k
  *         for k in range(self.n - 2, -1, -1):             # <<<<<<<<<<<<<<
@@ -5353,23 +5290,23 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_f(struct __pyx_o
   for (__pyx_t_2 = (__pyx_v_self->n - 2); __pyx_t_2 > -1; __pyx_t_2-=1) {
     __pyx_v_k = __pyx_t_2;
 
-    /* "cyroot/quasi_newton.pyx":157
+    /* "cyroot/quasi_newton.pyx":159
  *         cdef int k
  *         for k in range(self.n - 2, -1, -1):
  *             f_x = f_x * (x - self.x[k]) + self.a[k]             # <<<<<<<<<<<<<<
  *         return f_x
  * 
  */
-    if (unlikely(!__pyx_v_self->x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 157, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 159, __pyx_L1_error)}
     __pyx_t_1 = __pyx_v_k;
     if (__pyx_t_1 < 0) __pyx_t_1 += __pyx_v_self->x.shape[0];
-    if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 157, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 159, __pyx_L1_error)}
     __pyx_t_3 = __pyx_v_k;
     if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_self->a.shape[0];
     __pyx_v_f_x = ((__pyx_v_f_x * (__pyx_v_x - (*((double *) ( /* dim=0 */ (__pyx_v_self->x.data + __pyx_t_1 * __pyx_v_self->x.strides[0]) ))))) + (*((double *) ( /* dim=0 */ (__pyx_v_self->a.data + __pyx_t_3 * __pyx_v_self->a.strides[0]) ))));
   }
 
-  /* "cyroot/quasi_newton.pyx":158
+  /* "cyroot/quasi_newton.pyx":160
  *         for k in range(self.n - 2, -1, -1):
  *             f_x = f_x * (x - self.x[k]) + self.a[k]
  *         return f_x             # <<<<<<<<<<<<<<
@@ -5379,7 +5316,7 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_f(struct __pyx_o
   __pyx_r = __pyx_v_f_x;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":153
+  /* "cyroot/quasi_newton.pyx":155
  *         return self.f(x)
  * 
  *     cdef double f(self, double x):             # <<<<<<<<<<<<<<
@@ -5396,7 +5333,7 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_f(struct __pyx_o
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":160
+/* "cyroot/quasi_newton.pyx":162
  *         return f_x
  * 
  *     cdef inline double df(self, double x):             # <<<<<<<<<<<<<<
@@ -5411,7 +5348,7 @@ static CYTHON_INLINE double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_df
   struct __pyx_opt_args_6cyroot_12quasi_newton_16NewtonPolynomial_dnf __pyx_t_2;
   __Pyx_RefNannySetupContext("df", 0);
 
-  /* "cyroot/quasi_newton.pyx":161
+  /* "cyroot/quasi_newton.pyx":163
  * 
  *     cdef inline double df(self, double x):
  *         return self.dnf(x, 1)             # <<<<<<<<<<<<<<
@@ -5424,7 +5361,7 @@ static CYTHON_INLINE double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_df
   __pyx_r = __pyx_t_1;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":160
+  /* "cyroot/quasi_newton.pyx":162
  *         return f_x
  * 
  *     cdef inline double df(self, double x):             # <<<<<<<<<<<<<<
@@ -5438,7 +5375,7 @@ static CYTHON_INLINE double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_df
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":163
+/* "cyroot/quasi_newton.pyx":165
  *         return self.dnf(x, 1)
  * 
  *     cdef double dnf(self, double x, int order=1):             # <<<<<<<<<<<<<<
@@ -5473,53 +5410,53 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf(struct __pyx
     }
   }
 
-  /* "cyroot/quasi_newton.pyx":164
+  /* "cyroot/quasi_newton.pyx":166
  * 
  *     cdef double dnf(self, double x, int order=1):
  *         cdef double[:] dfs = view.array(shape=(order + 1,), itemsize=sizeof(double), format='d')             # <<<<<<<<<<<<<<
  *         dfs[0] = self.a[-1]
  *         dfs[1:] = 0
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 164, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_order + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 164, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_order + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 164, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 164, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 164, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 164, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 164, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 164, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 166, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 164, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_dfs = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "cyroot/quasi_newton.pyx":165
+  /* "cyroot/quasi_newton.pyx":167
  *     cdef double dnf(self, double x, int order=1):
  *         cdef double[:] dfs = view.array(shape=(order + 1,), itemsize=sizeof(double), format='d')
  *         dfs[0] = self.a[-1]             # <<<<<<<<<<<<<<
  *         dfs[1:] = 0
  *         cdef int i, k
  */
-  if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 165, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 167, __pyx_L1_error)}
   __pyx_t_5 = -1L;
   if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_self->a.shape[0];
   __pyx_t_6 = 0;
   if (__pyx_t_6 < 0) __pyx_t_6 += __pyx_v_dfs.shape[0];
   *((double *) ( /* dim=0 */ (__pyx_v_dfs.data + __pyx_t_6 * __pyx_v_dfs.strides[0]) )) = (*((double *) ( /* dim=0 */ (__pyx_v_self->a.data + __pyx_t_5 * __pyx_v_self->a.strides[0]) )));
 
-  /* "cyroot/quasi_newton.pyx":166
+  /* "cyroot/quasi_newton.pyx":168
  *         cdef double[:] dfs = view.array(shape=(order + 1,), itemsize=sizeof(double), format='d')
  *         dfs[0] = self.a[-1]
  *         dfs[1:] = 0             # <<<<<<<<<<<<<<
@@ -5544,7 +5481,7 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf(struct __pyx
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 166, __pyx_L1_error)
+    __PYX_ERR(0, 168, __pyx_L1_error)
 }
 
 {
@@ -5565,7 +5502,7 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf(struct __pyx
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "cyroot/quasi_newton.pyx":169
+  /* "cyroot/quasi_newton.pyx":171
  *         cdef int i, k
  *         cdef double v
  *         for k in range(self.n - 2, -1, -1):             # <<<<<<<<<<<<<<
@@ -5575,19 +5512,19 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf(struct __pyx
   for (__pyx_t_7 = (__pyx_v_self->n - 2); __pyx_t_7 > -1; __pyx_t_7-=1) {
     __pyx_v_k = __pyx_t_7;
 
-    /* "cyroot/quasi_newton.pyx":170
+    /* "cyroot/quasi_newton.pyx":172
  *         cdef double v
  *         for k in range(self.n - 2, -1, -1):
  *             v = x - self.x[k]             # <<<<<<<<<<<<<<
  *             for i in range(order, 0, -1):
  *                 dfs[i] = dfs[i] * v + dfs[i - 1]
  */
-    if (unlikely(!__pyx_v_self->x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 170, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 172, __pyx_L1_error)}
     __pyx_t_5 = __pyx_v_k;
     if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_self->x.shape[0];
     __pyx_v_v = (__pyx_v_x - (*((double *) ( /* dim=0 */ (__pyx_v_self->x.data + __pyx_t_5 * __pyx_v_self->x.strides[0]) ))));
 
-    /* "cyroot/quasi_newton.pyx":171
+    /* "cyroot/quasi_newton.pyx":173
  *         for k in range(self.n - 2, -1, -1):
  *             v = x - self.x[k]
  *             for i in range(order, 0, -1):             # <<<<<<<<<<<<<<
@@ -5597,7 +5534,7 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf(struct __pyx
     for (__pyx_t_8 = __pyx_v_order; __pyx_t_8 > 0; __pyx_t_8-=1) {
       __pyx_v_i = __pyx_t_8;
 
-      /* "cyroot/quasi_newton.pyx":172
+      /* "cyroot/quasi_newton.pyx":174
  *             v = x - self.x[k]
  *             for i in range(order, 0, -1):
  *                 dfs[i] = dfs[i] * v + dfs[i - 1]             # <<<<<<<<<<<<<<
@@ -5613,7 +5550,7 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf(struct __pyx
       *((double *) ( /* dim=0 */ (__pyx_v_dfs.data + __pyx_t_9 * __pyx_v_dfs.strides[0]) )) = (((*((double *) ( /* dim=0 */ (__pyx_v_dfs.data + __pyx_t_5 * __pyx_v_dfs.strides[0]) ))) * __pyx_v_v) + (*((double *) ( /* dim=0 */ (__pyx_v_dfs.data + __pyx_t_6 * __pyx_v_dfs.strides[0]) ))));
     }
 
-    /* "cyroot/quasi_newton.pyx":173
+    /* "cyroot/quasi_newton.pyx":175
  *             for i in range(order, 0, -1):
  *                 dfs[i] = dfs[i] * v + dfs[i - 1]
  *             dfs[0] = dfs[0] * v + self.a[k]             # <<<<<<<<<<<<<<
@@ -5622,7 +5559,7 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf(struct __pyx
  */
     __pyx_t_6 = 0;
     if (__pyx_t_6 < 0) __pyx_t_6 += __pyx_v_dfs.shape[0];
-    if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 173, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 175, __pyx_L1_error)}
     __pyx_t_5 = __pyx_v_k;
     if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_self->a.shape[0];
     __pyx_t_9 = 0;
@@ -5630,7 +5567,7 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf(struct __pyx
     *((double *) ( /* dim=0 */ (__pyx_v_dfs.data + __pyx_t_9 * __pyx_v_dfs.strides[0]) )) = (((*((double *) ( /* dim=0 */ (__pyx_v_dfs.data + __pyx_t_6 * __pyx_v_dfs.strides[0]) ))) * __pyx_v_v) + (*((double *) ( /* dim=0 */ (__pyx_v_self->a.data + __pyx_t_5 * __pyx_v_self->a.strides[0]) ))));
   }
 
-  /* "cyroot/quasi_newton.pyx":174
+  /* "cyroot/quasi_newton.pyx":176
  *                 dfs[i] = dfs[i] * v + dfs[i - 1]
  *             dfs[0] = dfs[0] * v + self.a[k]
  *         return dfs[-1]             # <<<<<<<<<<<<<<
@@ -5642,7 +5579,7 @@ static double __pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf(struct __pyx
   __pyx_r = (*((double *) ( /* dim=0 */ (__pyx_v_dfs.data + __pyx_t_5 * __pyx_v_dfs.strides[0]) )));
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":163
+  /* "cyroot/quasi_newton.pyx":165
  *         return self.dnf(x, 1)
  * 
  *     cdef double dnf(self, double x, int order=1):             # <<<<<<<<<<<<<<
@@ -5972,7 +5909,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_16NewtonPolynomial_6__setstate_
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":177
+/* "cyroot/quasi_newton.pyx":179
  * 
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) sidi_kernel(             # <<<<<<<<<<<<<<
@@ -6038,29 +5975,29 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_pybuffernd_inds.data = NULL;
   __pyx_pybuffernd_inds.rcbuffer = &__pyx_pybuffer_inds;
 
-  /* "cyroot/quasi_newton.pyx":185
+  /* "cyroot/quasi_newton.pyx":187
  *         long max_iter=0):
  *     # sort by absolute value of f
  *     cdef np.ndarray[np.int64_t, ndim=1] inds = np.flip(np.argsort(np.abs(f_x0s)))             # <<<<<<<<<<<<<<
  *     cdef double[:] xs = np.take_along_axis(np.array(x0s), inds, 0)
  *     cdef double[:] f_xs = np.take_along_axis(np.array(f_x0s), inds, 0)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_flip); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_flip); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_argsort); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_argsort); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_abs); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_abs); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_f_x0s, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_f_x0s, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_8 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
@@ -6075,7 +6012,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_t_4 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_8, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_6);
   __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 185, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_t_7 = NULL;
@@ -6091,7 +6028,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_t_2 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_7, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_4);
   __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 185, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_5 = NULL;
@@ -6107,16 +6044,16 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 185, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 187, __pyx_L1_error)
   __pyx_t_9 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inds.rcbuffer->pybuffer, (PyObject*)__pyx_t_9, &__Pyx_TypeInfo_nn___pyx_t_5numpy_int64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_inds = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_inds.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 185, __pyx_L1_error)
+      __PYX_ERR(0, 187, __pyx_L1_error)
     } else {__pyx_pybuffernd_inds.diminfo[0].strides = __pyx_pybuffernd_inds.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_inds.diminfo[0].shape = __pyx_pybuffernd_inds.rcbuffer->pybuffer.shape[0];
     }
   }
@@ -6124,24 +6061,24 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_v_inds = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cyroot/quasi_newton.pyx":186
+  /* "cyroot/quasi_newton.pyx":188
  *     # sort by absolute value of f
  *     cdef np.ndarray[np.int64_t, ndim=1] inds = np.flip(np.argsort(np.abs(f_x0s)))
  *     cdef double[:] xs = np.take_along_axis(np.array(x0s), inds, 0)             # <<<<<<<<<<<<<<
  *     cdef double[:] f_xs = np.take_along_axis(np.array(f_x0s), inds, 0)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 186, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_take_along_axis); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 186, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_take_along_axis); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 186, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 186, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_x0s, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 186, __pyx_L1_error)
+  __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_x0s, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_7 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -6156,7 +6093,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_t_3 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_7, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5);
   __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 186, __pyx_L1_error)
+  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -6174,7 +6111,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_t_3, ((PyObject *)__pyx_v_inds), __pyx_int_0};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -6183,14 +6120,14 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_t_3, ((PyObject *)__pyx_v_inds), __pyx_int_0};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 186, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 188, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -6204,35 +6141,35 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __Pyx_GIVEREF(__pyx_int_0);
     PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_10, __pyx_int_0);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 186, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_xs = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "cyroot/quasi_newton.pyx":187
+  /* "cyroot/quasi_newton.pyx":189
  *     cdef np.ndarray[np.int64_t, ndim=1] inds = np.flip(np.argsort(np.abs(f_x0s)))
  *     cdef double[:] xs = np.take_along_axis(np.array(x0s), inds, 0)
  *     cdef double[:] f_xs = np.take_along_axis(np.array(f_x0s), inds, 0)             # <<<<<<<<<<<<<<
  * 
  *     cdef double precision = math.fabs(f_xs[-1] - f_xs[-2]), error = math.fabs(f_xs[-1])
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_take_along_axis); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_take_along_axis); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_v_f_x0s, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_v_f_x0s, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_7 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -6247,7 +6184,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_t_2 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_7, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3);
   __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 187, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -6265,7 +6202,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_5)) {
     PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_t_2, ((PyObject *)__pyx_v_inds), __pyx_int_0};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 187, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 189, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -6274,14 +6211,14 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
     PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_t_2, ((PyObject *)__pyx_v_inds), __pyx_int_0};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 187, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 189, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_3 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 187, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 189, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -6295,18 +6232,18 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __Pyx_GIVEREF(__pyx_int_0);
     PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_10, __pyx_int_0);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 187, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 189, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_f_xs = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "cyroot/quasi_newton.pyx":189
+  /* "cyroot/quasi_newton.pyx":191
  *     cdef double[:] f_xs = np.take_along_axis(np.array(f_x0s), inds, 0)
  * 
  *     cdef double precision = math.fabs(f_xs[-1] - f_xs[-2]), error = math.fabs(f_xs[-1])             # <<<<<<<<<<<<<<
@@ -6322,7 +6259,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   if (__pyx_t_13 < 0) __pyx_t_13 += __pyx_v_f_xs.shape[0];
   __pyx_v_error = fabs((*((double *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_13 * __pyx_v_f_xs.strides[0]) ))));
 
-  /* "cyroot/quasi_newton.pyx":190
+  /* "cyroot/quasi_newton.pyx":192
  * 
  *     cdef double precision = math.fabs(f_xs[-1] - f_xs[-2]), error = math.fabs(f_xs[-1])
  *     cdef long step = 0             # <<<<<<<<<<<<<<
@@ -6331,7 +6268,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
   __pyx_v_step = 0;
 
-  /* "cyroot/quasi_newton.pyx":192
+  /* "cyroot/quasi_newton.pyx":194
  *     cdef long step = 0
  *     cdef double xn, f_xn, dp_xn
  *     cdef converged = True             # <<<<<<<<<<<<<<
@@ -6341,7 +6278,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __Pyx_INCREF(Py_True);
   __pyx_v_converged = Py_True;
 
-  /* "cyroot/quasi_newton.pyx":194
+  /* "cyroot/quasi_newton.pyx":196
  *     cdef converged = True
  *     cdef NewtonPolynomial poly
  *     while error > etol and precision > ptol:             # <<<<<<<<<<<<<<
@@ -6360,7 +6297,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_L5_bool_binop_done:;
     if (!__pyx_t_14) break;
 
-    /* "cyroot/quasi_newton.pyx":195
+    /* "cyroot/quasi_newton.pyx":197
  *     cdef NewtonPolynomial poly
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:             # <<<<<<<<<<<<<<
@@ -6374,7 +6311,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_15 = (__pyx_t_14 != 0);
     if (__pyx_t_15) {
 
-      /* "cyroot/quasi_newton.pyx":196
+      /* "cyroot/quasi_newton.pyx":198
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -6384,7 +6321,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":197
+      /* "cyroot/quasi_newton.pyx":199
  *         if step > max_iter > 0:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -6393,7 +6330,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":195
+      /* "cyroot/quasi_newton.pyx":197
  *     cdef NewtonPolynomial poly
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:             # <<<<<<<<<<<<<<
@@ -6402,7 +6339,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":198
+    /* "cyroot/quasi_newton.pyx":200
  *             converged = False
  *             break
  *         step += 1             # <<<<<<<<<<<<<<
@@ -6411,18 +6348,18 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_step = (__pyx_v_step + 1);
 
-    /* "cyroot/quasi_newton.pyx":199
+    /* "cyroot/quasi_newton.pyx":201
  *             break
  *         step += 1
  *         poly = NewtonPolynomial(xs, f_xs)             # <<<<<<<<<<<<<<
  * 
  *         dp_xn = poly.dnf(xs[-1], 1)
  */
-    __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_xs, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 199, __pyx_L1_error)
+    __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_xs, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_f_xs, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L1_error)
+    __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_f_xs, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 201, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 199, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 201, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_1);
     PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
@@ -6430,13 +6367,13 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_5);
     __pyx_t_1 = 0;
     __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_6cyroot_12quasi_newton_NewtonPolynomial), __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_6cyroot_12quasi_newton_NewtonPolynomial), __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 201, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_XDECREF_SET(__pyx_v_poly, ((struct __pyx_obj_6cyroot_12quasi_newton_NewtonPolynomial *)__pyx_t_5));
     __pyx_t_5 = 0;
 
-    /* "cyroot/quasi_newton.pyx":201
+    /* "cyroot/quasi_newton.pyx":203
  *         poly = NewtonPolynomial(xs, f_xs)
  * 
  *         dp_xn = poly.dnf(xs[-1], 1)             # <<<<<<<<<<<<<<
@@ -6450,7 +6387,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_16 = ((struct __pyx_vtabstruct_6cyroot_12quasi_newton_NewtonPolynomial *)__pyx_v_poly->__pyx_vtab)->dnf(__pyx_v_poly, (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_13 * __pyx_v_xs.strides[0]) ))), &__pyx_t_17); 
     __pyx_v_dp_xn = __pyx_t_16;
 
-    /* "cyroot/quasi_newton.pyx":202
+    /* "cyroot/quasi_newton.pyx":204
  * 
  *         dp_xn = poly.dnf(xs[-1], 1)
  *         if dp_xn == 0:             # <<<<<<<<<<<<<<
@@ -6460,7 +6397,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_15 = ((__pyx_v_dp_xn == 0.0) != 0);
     if (__pyx_t_15) {
 
-      /* "cyroot/quasi_newton.pyx":203
+      /* "cyroot/quasi_newton.pyx":205
  *         dp_xn = poly.dnf(xs[-1], 1)
  *         if dp_xn == 0:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -6470,7 +6407,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":204
+      /* "cyroot/quasi_newton.pyx":206
  *         if dp_xn == 0:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -6479,7 +6416,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":202
+      /* "cyroot/quasi_newton.pyx":204
  * 
  *         dp_xn = poly.dnf(xs[-1], 1)
  *         if dp_xn == 0:             # <<<<<<<<<<<<<<
@@ -6488,7 +6425,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":205
+    /* "cyroot/quasi_newton.pyx":207
  *             converged = False
  *             break
  *         xn = xs[-1] - f_xs[-1] / dp_xn             # <<<<<<<<<<<<<<
@@ -6501,14 +6438,14 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     if (__pyx_t_12 < 0) __pyx_t_12 += __pyx_v_f_xs.shape[0];
     __pyx_v_xn = ((*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_13 * __pyx_v_xs.strides[0]) ))) - ((*((double *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_12 * __pyx_v_f_xs.strides[0]) ))) / __pyx_v_dp_xn));
 
-    /* "cyroot/quasi_newton.pyx":206
+    /* "cyroot/quasi_newton.pyx":208
  *             break
  *         xn = xs[-1] - f_xs[-1] / dp_xn
  *         f_xn = f(xn)             # <<<<<<<<<<<<<<
  *         # remove x0 and add xn
  *         xs[:-1] = xs[1:]
  */
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_xn); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 206, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_xn); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 208, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(((PyObject *)__pyx_v_f));
     __pyx_t_1 = ((PyObject *)__pyx_v_f); __pyx_t_2 = NULL;
@@ -6524,14 +6461,14 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_5 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_2, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_3);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 206, __pyx_L1_error)
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 208, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 206, __pyx_L1_error)
+    __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 208, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_f_xn = __pyx_t_16;
 
-    /* "cyroot/quasi_newton.pyx":208
+    /* "cyroot/quasi_newton.pyx":210
  *         f_xn = f(xn)
  *         # remove x0 and add xn
  *         xs[:-1] = xs[1:]             # <<<<<<<<<<<<<<
@@ -6556,7 +6493,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 208, __pyx_L1_error)
+    __PYX_ERR(0, 210, __pyx_L1_error)
 }
 
 __pyx_t_18.data = __pyx_v_xs.data;
@@ -6577,10 +6514,10 @@ __pyx_t_18.data = __pyx_v_xs.data;
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 208, __pyx_L1_error)
+    __PYX_ERR(0, 210, __pyx_L1_error)
 }
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0)) __PYX_ERR(0, 208, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0)) __PYX_ERR(0, 210, __pyx_L1_error)
     __PYX_XDEC_MEMVIEW(&__pyx_t_18, 1);
     __pyx_t_18.memview = NULL;
     __pyx_t_18.data = NULL;
@@ -6588,7 +6525,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
     __pyx_t_11.memview = NULL;
     __pyx_t_11.data = NULL;
 
-    /* "cyroot/quasi_newton.pyx":209
+    /* "cyroot/quasi_newton.pyx":211
  *         # remove x0 and add xn
  *         xs[:-1] = xs[1:]
  *         xs[-1] = xn             # <<<<<<<<<<<<<<
@@ -6599,7 +6536,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
     if (__pyx_t_12 < 0) __pyx_t_12 += __pyx_v_xs.shape[0];
     *((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_12 * __pyx_v_xs.strides[0]) )) = __pyx_v_xn;
 
-    /* "cyroot/quasi_newton.pyx":210
+    /* "cyroot/quasi_newton.pyx":212
  *         xs[:-1] = xs[1:]
  *         xs[-1] = xn
  *         f_xs[:-1] = f_xs[1:]             # <<<<<<<<<<<<<<
@@ -6624,7 +6561,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 210, __pyx_L1_error)
+    __PYX_ERR(0, 212, __pyx_L1_error)
 }
 
 __pyx_t_18.data = __pyx_v_f_xs.data;
@@ -6645,10 +6582,10 @@ __pyx_t_18.data = __pyx_v_f_xs.data;
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 210, __pyx_L1_error)
+    __PYX_ERR(0, 212, __pyx_L1_error)
 }
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0)) __PYX_ERR(0, 210, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0)) __PYX_ERR(0, 212, __pyx_L1_error)
     __PYX_XDEC_MEMVIEW(&__pyx_t_18, 1);
     __pyx_t_18.memview = NULL;
     __pyx_t_18.data = NULL;
@@ -6656,7 +6593,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
     __pyx_t_11.memview = NULL;
     __pyx_t_11.data = NULL;
 
-    /* "cyroot/quasi_newton.pyx":211
+    /* "cyroot/quasi_newton.pyx":213
  *         xs[-1] = xn
  *         f_xs[:-1] = f_xs[1:]
  *         f_xs[-1] = f_xn             # <<<<<<<<<<<<<<
@@ -6667,7 +6604,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
     if (__pyx_t_12 < 0) __pyx_t_12 += __pyx_v_f_xs.shape[0];
     *((double *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_12 * __pyx_v_f_xs.strides[0]) )) = __pyx_v_f_xn;
 
-    /* "cyroot/quasi_newton.pyx":213
+    /* "cyroot/quasi_newton.pyx":215
  *         f_xs[-1] = f_xn
  * 
  *         precision = math.fabs(f_xn - f_xs[-2])             # <<<<<<<<<<<<<<
@@ -6678,7 +6615,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
     if (__pyx_t_12 < 0) __pyx_t_12 += __pyx_v_f_xs.shape[0];
     __pyx_v_precision = fabs((__pyx_v_f_xn - (*((double *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_12 * __pyx_v_f_xs.strides[0]) )))));
 
-    /* "cyroot/quasi_newton.pyx":214
+    /* "cyroot/quasi_newton.pyx":216
  * 
  *         precision = math.fabs(f_xn - f_xs[-2])
  *         error = math.fabs(f_xn)             # <<<<<<<<<<<<<<
@@ -6689,14 +6626,14 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
   }
   __pyx_L4_break:;
 
-  /* "cyroot/quasi_newton.pyx":215
+  /* "cyroot/quasi_newton.pyx":217
  *         precision = math.fabs(f_xn - f_xs[-2])
  *         error = math.fabs(f_xn)
  *     return xn, f_xn, step, precision, error, converged             # <<<<<<<<<<<<<<
  * 
  * # noinspection DuplicatedCode
  */
-  __pyx_t_15 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_15 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_t_15 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_15 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 217, __pyx_L1_error)
   __pyx_t_19.f0 = __pyx_v_xn;
   __pyx_t_19.f1 = __pyx_v_f_xn;
   __pyx_t_19.f2 = __pyx_v_step;
@@ -6706,7 +6643,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
   __pyx_r = __pyx_t_19;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":177
+  /* "cyroot/quasi_newton.pyx":179
  * 
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) sidi_kernel(             # <<<<<<<<<<<<<<
@@ -6747,7 +6684,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":218
+/* "cyroot/quasi_newton.pyx":220
  * 
  * # noinspection DuplicatedCode
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
@@ -6757,7 +6694,8 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_11, __pyx_t_18, 1, 1, 0) < 0
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_3sidi(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_3sidi = {"sidi", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_3sidi, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_6cyroot_12quasi_newton_2sidi[] = "\n    Sidi's Generalized Secant method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        xs: List of initial points.\n        f_xs: Values evaluated at initial points.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to {ETOL}.\n        ptol: Precision tolerance, indicating the minimum change\n         of root approximations or width of brackets (in bracketing\n         methods) after each iteration. Defaults to {PTOL}.\n        max_iter: Maximum number of iterations. If set to 0, the\n         procedure will run indefinitely until stopping condition is\n         met. Defaults to 0.\n\n    Returns:\n        solution: The solution represented as a ``RootResults`` object.\n    ";
+static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_3sidi = {"sidi", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_3sidi, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6cyroot_12quasi_newton_2sidi};
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_3sidi(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_f = 0;
   PyObject *__pyx_v_xs = 0;
@@ -6775,7 +6713,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_3sidi(PyObject *__pyx_self, PyO
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_f,&__pyx_n_s_xs,&__pyx_n_s_f_xs,&__pyx_n_s_etol,&__pyx_n_s_ptol,&__pyx_n_s_max_iter,0};
     PyObject* values[6] = {0,0,0,0,0,0};
 
-    /* "cyroot/quasi_newton.pyx":220
+    /* "cyroot/quasi_newton.pyx":222
  * def sidi(f: Callable[[float], float],
  *          xs: Sequence[float],
  *          f_xs: Sequence[float] = None,             # <<<<<<<<<<<<<<
@@ -6812,7 +6750,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_3sidi(PyObject *__pyx_self, PyO
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_xs)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("sidi", 0, 2, 6, 1); __PYX_ERR(0, 218, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("sidi", 0, 2, 6, 1); __PYX_ERR(0, 220, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -6840,7 +6778,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_3sidi(PyObject *__pyx_self, PyO
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "sidi") < 0)) __PYX_ERR(0, 218, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "sidi") < 0)) __PYX_ERR(0, 220, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -6862,12 +6800,12 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_3sidi(PyObject *__pyx_self, PyO
     __pyx_v_xs = values[1];
     __pyx_v_f_xs = values[2];
     if (values[3]) {
-      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 221, __pyx_L3_error)
+      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 223, __pyx_L3_error)
     } else {
       __pyx_v_etol = __pyx_k__10;
     }
     if (values[4]) {
-      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 222, __pyx_L3_error)
+      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 224, __pyx_L3_error)
     } else {
       __pyx_v_ptol = __pyx_k__11;
     }
@@ -6875,7 +6813,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_3sidi(PyObject *__pyx_self, PyO
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("sidi", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 218, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("sidi", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 220, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.quasi_newton.sidi", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6883,7 +6821,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_3sidi(PyObject *__pyx_self, PyO
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_6cyroot_12quasi_newton_2sidi(__pyx_self, __pyx_v_f, __pyx_v_xs, __pyx_v_f_xs, __pyx_v_etol, __pyx_v_ptol, __pyx_v_max_iter);
 
-  /* "cyroot/quasi_newton.pyx":218
+  /* "cyroot/quasi_newton.pyx":220
  * 
  * # noinspection DuplicatedCode
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
@@ -6908,14 +6846,14 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  Py_ssize_t __pyx_t_2;
-  Py_UCS4 __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  Py_ssize_t __pyx_t_8;
-  PyObject *(*__pyx_t_9)(PyObject *);
+  int __pyx_t_2;
+  int __pyx_t_3;
+  Py_ssize_t __pyx_t_4;
+  Py_UCS4 __pyx_t_5;
+  PyObject *__pyx_t_6 = NULL;
+  Py_ssize_t __pyx_t_7;
+  PyObject *(*__pyx_t_8)(PyObject *);
+  PyObject *__pyx_t_9 = NULL;
   PyObject *__pyx_t_10 = NULL;
   PyObject *__pyx_t_11 = NULL;
   __Pyx_memviewslice __pyx_t_12 = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -6932,105 +6870,57 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
   __Pyx_INCREF(__pyx_v_xs);
   __Pyx_INCREF(__pyx_v_f_xs);
 
-  /* "cyroot/quasi_newton.pyx":224
- *          ptol: float = PTOL,
- *          max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""             # <<<<<<<<<<<<<<
- *     Sidi's Generalized Secant method for root-finding.
- * 
- */
-  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = 0;
-  __pyx_t_3 = 127;
-  __Pyx_INCREF(__pyx_kp_u_Sidi_s_Generalized_Secant_metho);
-  __pyx_t_2 += 301;
-  __Pyx_GIVEREF(__pyx_kp_u_Sidi_s_Generalized_Secant_metho);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_Sidi_s_Generalized_Secant_metho);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_ETOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __Pyx_INCREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_2 += 187;
-  __Pyx_GIVEREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_PTOL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __Pyx_INCREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_2 += 155;
-  __Pyx_GIVEREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "cyroot/quasi_newton.pyx":242
+  /* "cyroot/quasi_newton.pyx":246
  *     """
  *     # check params
  *     if not isinstance(xs, Sequence):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'xs must be a sequence. Got {type(xs)}.')
  *     if len(xs) < 2:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_Sequence); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 242, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_6 = PyObject_IsInstance(__pyx_v_xs, __pyx_t_4); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 242, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_7 = ((!(__pyx_t_6 != 0)) != 0);
-  if (unlikely(__pyx_t_7)) {
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Sequence); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 246, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyObject_IsInstance(__pyx_v_xs, __pyx_t_1); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(0, 246, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!(__pyx_t_2 != 0)) != 0);
+  if (unlikely(__pyx_t_3)) {
 
-    /* "cyroot/quasi_newton.pyx":243
+    /* "cyroot/quasi_newton.pyx":247
  *     # check params
  *     if not isinstance(xs, Sequence):
  *         raise ValueError(f'xs must be a sequence. Got {type(xs)}.')             # <<<<<<<<<<<<<<
  *     if len(xs) < 2:
  *         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 243, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 247, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_4 = 0;
+    __pyx_t_5 = 127;
     __Pyx_INCREF(__pyx_kp_u_xs_must_be_a_sequence_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_4 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_xs_must_be_a_sequence_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_xs_must_be_a_sequence_Got);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(((PyObject *)Py_TYPE(__pyx_v_xs)), __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_xs_must_be_a_sequence_Got);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(((PyObject *)Py_TYPE(__pyx_v_xs)), __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 247, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_5) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_5;
+    __pyx_t_4 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_4 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 243, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_1, 3, __pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 247, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 243, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 247, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __PYX_ERR(0, 247, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":242
+    /* "cyroot/quasi_newton.pyx":246
  *     """
  *     # check params
  *     if not isinstance(xs, Sequence):             # <<<<<<<<<<<<<<
@@ -7039,54 +6929,54 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":244
+  /* "cyroot/quasi_newton.pyx":248
  *     if not isinstance(xs, Sequence):
  *         raise ValueError(f'xs must be a sequence. Got {type(xs)}.')
  *     if len(xs) < 2:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
  *     if f_xs is None:
  */
-  __pyx_t_2 = PyObject_Length(__pyx_v_xs); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 244, __pyx_L1_error)
-  __pyx_t_7 = ((__pyx_t_2 < 2) != 0);
-  if (unlikely(__pyx_t_7)) {
+  __pyx_t_4 = PyObject_Length(__pyx_v_xs); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 248, __pyx_L1_error)
+  __pyx_t_3 = ((__pyx_t_4 < 2) != 0);
+  if (unlikely(__pyx_t_3)) {
 
-    /* "cyroot/quasi_newton.pyx":245
+    /* "cyroot/quasi_newton.pyx":249
  *         raise ValueError(f'xs must be a sequence. Got {type(xs)}.')
  *     if len(xs) < 2:
  *         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')             # <<<<<<<<<<<<<<
  *     if f_xs is None:
  *         f_xs = [f(x) for x in xs]
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 245, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 249, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_4 = 0;
+    __pyx_t_5 = 127;
     __Pyx_INCREF(__pyx_kp_u_Requires_at_least_2_initial_gues);
-    __pyx_t_2 += 41;
+    __pyx_t_4 += 41;
     __Pyx_GIVEREF(__pyx_kp_u_Requires_at_least_2_initial_gues);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_Requires_at_least_2_initial_gues);
-    __pyx_t_8 = PyObject_Length(__pyx_v_xs); if (unlikely(__pyx_t_8 == ((Py_ssize_t)-1))) __PYX_ERR(0, 245, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_8, 0, ' ', 'd'); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 245, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_Requires_at_least_2_initial_gues);
+    __pyx_t_7 = PyObject_Length(__pyx_v_xs); if (unlikely(__pyx_t_7 == ((Py_ssize_t)-1))) __PYX_ERR(0, 249, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_7, 0, ' ', 'd'); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 249, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_4 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_4 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 245, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 245, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_1, 3, __pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 249, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 245, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 249, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __PYX_ERR(0, 249, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":244
+    /* "cyroot/quasi_newton.pyx":248
  *     if not isinstance(xs, Sequence):
  *         raise ValueError(f'xs must be a sequence. Got {type(xs)}.')
  *     if len(xs) < 2:             # <<<<<<<<<<<<<<
@@ -7095,18 +6985,18 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":246
+  /* "cyroot/quasi_newton.pyx":250
  *     if len(xs) < 2:
  *         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
  *     if f_xs is None:             # <<<<<<<<<<<<<<
  *         f_xs = [f(x) for x in xs]
  *     elif not isinstance(f_xs, Sequence):
  */
-  __pyx_t_7 = (__pyx_v_f_xs == Py_None);
-  __pyx_t_6 = (__pyx_t_7 != 0);
-  if (__pyx_t_6) {
+  __pyx_t_3 = (__pyx_v_f_xs == Py_None);
+  __pyx_t_2 = (__pyx_t_3 != 0);
+  if (__pyx_t_2) {
 
-    /* "cyroot/quasi_newton.pyx":247
+    /* "cyroot/quasi_newton.pyx":251
  *         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
  *     if f_xs is None:
  *         f_xs = [f(x) for x in xs]             # <<<<<<<<<<<<<<
@@ -7114,49 +7004,49 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
  *         raise ValueError(f'f_xs must be a sequence. Got {type(f_xs)}.')
  */
     { /* enter inner scope */
-      __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 247, __pyx_L8_error)
-      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 251, __pyx_L8_error)
+      __Pyx_GOTREF(__pyx_t_1);
       if (likely(PyList_CheckExact(__pyx_v_xs)) || PyTuple_CheckExact(__pyx_v_xs)) {
-        __pyx_t_1 = __pyx_v_xs; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
-        __pyx_t_9 = NULL;
+        __pyx_t_6 = __pyx_v_xs; __Pyx_INCREF(__pyx_t_6); __pyx_t_4 = 0;
+        __pyx_t_8 = NULL;
       } else {
-        __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_xs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 247, __pyx_L8_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_9 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 247, __pyx_L8_error)
+        __pyx_t_4 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_v_xs); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 251, __pyx_L8_error)
+        __Pyx_GOTREF(__pyx_t_6);
+        __pyx_t_8 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 251, __pyx_L8_error)
       }
       for (;;) {
-        if (likely(!__pyx_t_9)) {
-          if (likely(PyList_CheckExact(__pyx_t_1))) {
-            if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
+        if (likely(!__pyx_t_8)) {
+          if (likely(PyList_CheckExact(__pyx_t_6))) {
+            if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_6)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_5 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_5); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 247, __pyx_L8_error)
+            __pyx_t_9 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_4); __Pyx_INCREF(__pyx_t_9); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 251, __pyx_L8_error)
             #else
-            __pyx_t_5 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 247, __pyx_L8_error)
-            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_9 = PySequence_ITEM(__pyx_t_6, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 251, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_9);
             #endif
           } else {
-            if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
+            if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_6)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_5); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 247, __pyx_L8_error)
+            __pyx_t_9 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_4); __Pyx_INCREF(__pyx_t_9); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 251, __pyx_L8_error)
             #else
-            __pyx_t_5 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 247, __pyx_L8_error)
-            __Pyx_GOTREF(__pyx_t_5);
+            __pyx_t_9 = PySequence_ITEM(__pyx_t_6, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 251, __pyx_L8_error)
+            __Pyx_GOTREF(__pyx_t_9);
             #endif
           }
         } else {
-          __pyx_t_5 = __pyx_t_9(__pyx_t_1);
-          if (unlikely(!__pyx_t_5)) {
+          __pyx_t_9 = __pyx_t_8(__pyx_t_6);
+          if (unlikely(!__pyx_t_9)) {
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 247, __pyx_L8_error)
+              else __PYX_ERR(0, 251, __pyx_L8_error)
             }
             break;
           }
-          __Pyx_GOTREF(__pyx_t_5);
+          __Pyx_GOTREF(__pyx_t_9);
         }
-        __Pyx_XDECREF_SET(__pyx_7genexpr__pyx_v_x, __pyx_t_5);
-        __pyx_t_5 = 0;
+        __Pyx_XDECREF_SET(__pyx_7genexpr__pyx_v_x, __pyx_t_9);
+        __pyx_t_9 = 0;
         __Pyx_INCREF(__pyx_v_f);
         __pyx_t_10 = __pyx_v_f; __pyx_t_11 = NULL;
         if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_10))) {
@@ -7168,15 +7058,15 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
             __Pyx_DECREF_SET(__pyx_t_10, function);
           }
         }
-        __pyx_t_5 = (__pyx_t_11) ? __Pyx_PyObject_Call2Args(__pyx_t_10, __pyx_t_11, __pyx_7genexpr__pyx_v_x) : __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_7genexpr__pyx_v_x);
+        __pyx_t_9 = (__pyx_t_11) ? __Pyx_PyObject_Call2Args(__pyx_t_10, __pyx_t_11, __pyx_7genexpr__pyx_v_x) : __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_7genexpr__pyx_v_x);
         __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 247, __pyx_L8_error)
-        __Pyx_GOTREF(__pyx_t_5);
+        if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 251, __pyx_L8_error)
+        __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_t_5))) __PYX_ERR(0, 247, __pyx_L8_error)
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_9))) __PYX_ERR(0, 251, __pyx_L8_error)
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       }
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_XDECREF(__pyx_7genexpr__pyx_v_x); __pyx_7genexpr__pyx_v_x = 0;
       goto __pyx_L11_exit_scope;
       __pyx_L8_error:;
@@ -7184,10 +7074,10 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
       goto __pyx_L1_error;
       __pyx_L11_exit_scope:;
     } /* exit inner scope */
-    __Pyx_DECREF_SET(__pyx_v_f_xs, __pyx_t_4);
-    __pyx_t_4 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_xs, __pyx_t_1);
+    __pyx_t_1 = 0;
 
-    /* "cyroot/quasi_newton.pyx":246
+    /* "cyroot/quasi_newton.pyx":250
  *     if len(xs) < 2:
  *         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
  *     if f_xs is None:             # <<<<<<<<<<<<<<
@@ -7197,57 +7087,57 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
     goto __pyx_L5;
   }
 
-  /* "cyroot/quasi_newton.pyx":248
+  /* "cyroot/quasi_newton.pyx":252
  *     if f_xs is None:
  *         f_xs = [f(x) for x in xs]
  *     elif not isinstance(f_xs, Sequence):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'f_xs must be a sequence. Got {type(f_xs)}.')
  *     elif len(f_xs) != len(xs):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_Sequence); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 248, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_6 = PyObject_IsInstance(__pyx_v_f_xs, __pyx_t_4); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 248, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_7 = ((!(__pyx_t_6 != 0)) != 0);
-  if (unlikely(__pyx_t_7)) {
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Sequence); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyObject_IsInstance(__pyx_v_f_xs, __pyx_t_1); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(0, 252, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!(__pyx_t_2 != 0)) != 0);
+  if (unlikely(__pyx_t_3)) {
 
-    /* "cyroot/quasi_newton.pyx":249
+    /* "cyroot/quasi_newton.pyx":253
  *         f_xs = [f(x) for x in xs]
  *     elif not isinstance(f_xs, Sequence):
  *         raise ValueError(f'f_xs must be a sequence. Got {type(f_xs)}.')             # <<<<<<<<<<<<<<
  *     elif len(f_xs) != len(xs):
  *         raise ValueError(f'xs and f_xs must have same size. Got {len(xs)} and {len(f_xs)}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 249, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_4 = 0;
+    __pyx_t_5 = 127;
     __Pyx_INCREF(__pyx_kp_u_f_xs_must_be_a_sequence_Got);
-    __pyx_t_2 += 29;
+    __pyx_t_4 += 29;
     __Pyx_GIVEREF(__pyx_kp_u_f_xs_must_be_a_sequence_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_f_xs_must_be_a_sequence_Got);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(((PyObject *)Py_TYPE(__pyx_v_f_xs)), __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 249, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_f_xs_must_be_a_sequence_Got);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(((PyObject *)Py_TYPE(__pyx_v_f_xs)), __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 253, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_5) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_5;
+    __pyx_t_4 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_4 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 249, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 249, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_1, 3, __pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 253, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 249, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __PYX_ERR(0, 253, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":248
+    /* "cyroot/quasi_newton.pyx":252
  *     if f_xs is None:
  *         f_xs = [f(x) for x in xs]
  *     elif not isinstance(f_xs, Sequence):             # <<<<<<<<<<<<<<
@@ -7256,66 +7146,66 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":250
+  /* "cyroot/quasi_newton.pyx":254
  *     elif not isinstance(f_xs, Sequence):
  *         raise ValueError(f'f_xs must be a sequence. Got {type(f_xs)}.')
  *     elif len(f_xs) != len(xs):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'xs and f_xs must have same size. Got {len(xs)} and {len(f_xs)}.')
  * 
  */
-  __pyx_t_2 = PyObject_Length(__pyx_v_f_xs); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 250, __pyx_L1_error)
-  __pyx_t_8 = PyObject_Length(__pyx_v_xs); if (unlikely(__pyx_t_8 == ((Py_ssize_t)-1))) __PYX_ERR(0, 250, __pyx_L1_error)
-  __pyx_t_7 = ((__pyx_t_2 != __pyx_t_8) != 0);
-  if (unlikely(__pyx_t_7)) {
+  __pyx_t_4 = PyObject_Length(__pyx_v_f_xs); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_t_7 = PyObject_Length(__pyx_v_xs); if (unlikely(__pyx_t_7 == ((Py_ssize_t)-1))) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_t_3 = ((__pyx_t_4 != __pyx_t_7) != 0);
+  if (unlikely(__pyx_t_3)) {
 
-    /* "cyroot/quasi_newton.pyx":251
+    /* "cyroot/quasi_newton.pyx":255
  *         raise ValueError(f'f_xs must be a sequence. Got {type(f_xs)}.')
  *     elif len(f_xs) != len(xs):
  *         raise ValueError(f'xs and f_xs must have same size. Got {len(xs)} and {len(f_xs)}.')             # <<<<<<<<<<<<<<
  * 
  *     if etol <= 0:
  */
-    __pyx_t_4 = PyTuple_New(5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 251, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_8 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 255, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_7 = 0;
+    __pyx_t_5 = 127;
     __Pyx_INCREF(__pyx_kp_u_xs_and_f_xs_must_have_same_size);
-    __pyx_t_8 += 37;
+    __pyx_t_7 += 37;
     __Pyx_GIVEREF(__pyx_kp_u_xs_and_f_xs_must_have_same_size);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_xs_and_f_xs_must_have_same_size);
-    __pyx_t_2 = PyObject_Length(__pyx_v_xs); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 251, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_2, 0, ' ', 'd'); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 251, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_xs_and_f_xs_must_have_same_size);
+    __pyx_t_4 = PyObject_Length(__pyx_v_xs); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 255, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_4, 0, ' ', 'd'); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 255, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_7 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
     __Pyx_INCREF(__pyx_kp_u_and);
-    __pyx_t_8 += 5;
+    __pyx_t_7 += 5;
     __Pyx_GIVEREF(__pyx_kp_u_and);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u_and);
-    __pyx_t_2 = PyObject_Length(__pyx_v_f_xs); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 251, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_2, 0, ' ', 'd'); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 251, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 3, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_and);
+    __pyx_t_4 = PyObject_Length(__pyx_v_f_xs); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 255, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_4, 0, ' ', 'd'); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 255, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_7 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_6);
+    __pyx_t_6 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_8 += 1;
+    __pyx_t_7 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 4, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 5, __pyx_t_8, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 251, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 251, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_7, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 255, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 251, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 255, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __PYX_ERR(0, 255, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":250
+    /* "cyroot/quasi_newton.pyx":254
  *     elif not isinstance(f_xs, Sequence):
  *         raise ValueError(f'f_xs must be a sequence. Got {type(f_xs)}.')
  *     elif len(f_xs) != len(xs):             # <<<<<<<<<<<<<<
@@ -7325,56 +7215,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
   }
   __pyx_L5:;
 
-  /* "cyroot/quasi_newton.pyx":253
+  /* "cyroot/quasi_newton.pyx":257
  *         raise ValueError(f'xs and f_xs must have same size. Got {len(xs)} and {len(f_xs)}.')
  * 
  *     if etol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  */
-  __pyx_t_7 = ((__pyx_v_etol <= 0.0) != 0);
-  if (unlikely(__pyx_t_7)) {
+  __pyx_t_3 = ((__pyx_v_etol <= 0.0) != 0);
+  if (unlikely(__pyx_t_3)) {
 
-    /* "cyroot/quasi_newton.pyx":254
+    /* "cyroot/quasi_newton.pyx":258
  * 
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')             # <<<<<<<<<<<<<<
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_8 = 0;
-    __pyx_t_3 = 127;
-    __Pyx_INCREF(__pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_8 += 27;
-    __Pyx_GIVEREF(__pyx_kp_u_etol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 254, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-    __pyx_t_8 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
-    __pyx_t_5 = 0;
+    __pyx_t_7 = 0;
+    __pyx_t_5 = 127;
+    __Pyx_INCREF(__pyx_kp_u_etol_must_be_positive_Got);
+    __pyx_t_7 += 27;
+    __Pyx_GIVEREF(__pyx_kp_u_etol_must_be_positive_Got);
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_etol_must_be_positive_Got);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 258, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_9 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_empty_unicode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 258, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_5 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_9) > __pyx_t_5) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_9) : __pyx_t_5;
+    __pyx_t_7 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_9);
+    __Pyx_GIVEREF(__pyx_t_9);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_9);
+    __pyx_t_9 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_8 += 1;
+    __pyx_t_7 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_8, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 254, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 254, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u__6);
+    __pyx_t_9 = __Pyx_PyUnicode_Join(__pyx_t_1, 3, __pyx_t_7, __pyx_t_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 258, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __PYX_ERR(0, 258, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":253
+    /* "cyroot/quasi_newton.pyx":257
  *         raise ValueError(f'xs and f_xs must have same size. Got {len(xs)} and {len(f_xs)}.')
  * 
  *     if etol <= 0:             # <<<<<<<<<<<<<<
@@ -7383,56 +7273,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":255
+  /* "cyroot/quasi_newton.pyx":259
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  */
-  __pyx_t_7 = ((__pyx_v_ptol <= 0.0) != 0);
-  if (unlikely(__pyx_t_7)) {
+  __pyx_t_3 = ((__pyx_v_ptol <= 0.0) != 0);
+  if (unlikely(__pyx_t_3)) {
 
-    /* "cyroot/quasi_newton.pyx":256
+    /* "cyroot/quasi_newton.pyx":260
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')             # <<<<<<<<<<<<<<
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 256, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_8 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 260, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_7 = 0;
+    __pyx_t_5 = 127;
     __Pyx_INCREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_8 += 27;
+    __pyx_t_7 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 256, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 256, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_8 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_ptol_must_be_positive_Got);
+    __pyx_t_9 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 260, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_9, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 260, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __pyx_t_5 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_5) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_5;
+    __pyx_t_7 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_8 += 1;
+    __pyx_t_7 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_8, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 256, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 256, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_1, 3, __pyx_t_7, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 260, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 260, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __PYX_ERR(0, 260, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":255
+    /* "cyroot/quasi_newton.pyx":259
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
@@ -7441,54 +7331,54 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":257
+  /* "cyroot/quasi_newton.pyx":261
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  */
-  __pyx_t_7 = PyInt_Check(__pyx_v_max_iter); 
-  __pyx_t_6 = ((!(__pyx_t_7 != 0)) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_3 = PyInt_Check(__pyx_v_max_iter); 
+  __pyx_t_2 = ((!(__pyx_t_3 != 0)) != 0);
+  if (unlikely(__pyx_t_2)) {
 
-    /* "cyroot/quasi_newton.pyx":258
+    /* "cyroot/quasi_newton.pyx":262
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')             # <<<<<<<<<<<<<<
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 258, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_8 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 262, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_7 = 0;
+    __pyx_t_5 = 127;
     __Pyx_INCREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_8 += 33;
+    __pyx_t_7 += 33;
     __Pyx_GIVEREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_8 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 262, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_5) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_5;
+    __pyx_t_7 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_8 += 1;
+    __pyx_t_7 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_8, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 258, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_1, 3, __pyx_t_7, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 262, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 258, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 262, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __PYX_ERR(0, 262, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":257
+    /* "cyroot/quasi_newton.pyx":261
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
@@ -7497,98 +7387,98 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":260
+  /* "cyroot/quasi_newton.pyx":264
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)             # <<<<<<<<<<<<<<
  *     xs = np.array(xs, dtype=np.float64)
  *     f_xs = np.array(f_xs, dtype=np.float64)
  */
-  __pyx_t_4 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 260, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_4);
-  __pyx_t_4 = 0;
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 264, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_1);
+  __pyx_t_1 = 0;
 
-  /* "cyroot/quasi_newton.pyx":261
+  /* "cyroot/quasi_newton.pyx":265
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     xs = np.array(xs, dtype=np.float64)             # <<<<<<<<<<<<<<
  *     f_xs = np.array(f_xs, dtype=np.float64)
  *     r, f_r, step, precision, error, converged = sidi_kernel[DoubleScalarFPtr](
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 261, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_array); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 261, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 261, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_array); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_xs);
   __Pyx_GIVEREF(__pyx_v_xs);
-  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_xs);
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 261, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 261, __pyx_L1_error)
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_xs);
+  __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_float64); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 261, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_float64); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_11) < 0) __PYX_ERR(0, 261, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_dtype, __pyx_t_11) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-  __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 261, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_1, __pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF_SET(__pyx_v_xs, __pyx_t_11);
   __pyx_t_11 = 0;
 
-  /* "cyroot/quasi_newton.pyx":262
+  /* "cyroot/quasi_newton.pyx":266
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     xs = np.array(xs, dtype=np.float64)
  *     f_xs = np.array(f_xs, dtype=np.float64)             # <<<<<<<<<<<<<<
  *     r, f_r, step, precision, error, converged = sidi_kernel[DoubleScalarFPtr](
  *         f_wrapper, xs, f_xs, etol, ptol, max_iter)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_n_s_np); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_n_s_np); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_array); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_array); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 266, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-  __pyx_t_11 = PyTuple_New(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_11 = PyTuple_New(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_INCREF(__pyx_v_f_xs);
   __Pyx_GIVEREF(__pyx_v_f_xs);
   PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_v_f_xs);
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float64); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 266, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_float64); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_10) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_10) < 0) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_11, __pyx_t_4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_11, __pyx_t_1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF_SET(__pyx_v_f_xs, __pyx_t_10);
   __pyx_t_10 = 0;
 
-  /* "cyroot/quasi_newton.pyx":264
+  /* "cyroot/quasi_newton.pyx":268
  *     f_xs = np.array(f_xs, dtype=np.float64)
  *     r, f_r, step, precision, error, converged = sidi_kernel[DoubleScalarFPtr](
  *         f_wrapper, xs, f_xs, etol, ptol, max_iter)             # <<<<<<<<<<<<<<
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)
  */
-  __pyx_t_12 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_xs, PyBUF_WRITABLE); if (unlikely(!__pyx_t_12.memview)) __PYX_ERR(0, 264, __pyx_L1_error)
-  __pyx_t_13 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_f_xs, PyBUF_WRITABLE); if (unlikely(!__pyx_t_13.memview)) __PYX_ERR(0, 264, __pyx_L1_error)
-  __pyx_t_14 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_14 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 264, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_xs, PyBUF_WRITABLE); if (unlikely(!__pyx_t_12.memview)) __PYX_ERR(0, 268, __pyx_L1_error)
+  __pyx_t_13 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_f_xs, PyBUF_WRITABLE); if (unlikely(!__pyx_t_13.memview)) __PYX_ERR(0, 268, __pyx_L1_error)
+  __pyx_t_14 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_14 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 268, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":263
+  /* "cyroot/quasi_newton.pyx":267
  *     xs = np.array(xs, dtype=np.float64)
  *     f_xs = np.array(f_xs, dtype=np.float64)
  *     r, f_r, step, precision, error, converged = sidi_kernel[DoubleScalarFPtr](             # <<<<<<<<<<<<<<
@@ -7606,32 +7496,32 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
   __PYX_XDEC_MEMVIEW(&__pyx_t_13, 1);
   __pyx_t_13.memview = NULL;
   __pyx_t_13.data = NULL;
-  __pyx_t_10 = PyFloat_FromDouble(__pyx_t_15.f0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 263, __pyx_L1_error)
+  __pyx_t_10 = PyFloat_FromDouble(__pyx_t_15.f0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 267, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_15.f1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 263, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_11 = __Pyx_PyInt_From_long(__pyx_t_15.f2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 263, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_11);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_t_15.f3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 263, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_t_15.f4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_t_15.f1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 267, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_17 = __Pyx_PyBool_FromLong(__pyx_t_15.f5); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 263, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyInt_From_long(__pyx_t_15.f2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 267, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __pyx_t_9 = PyFloat_FromDouble(__pyx_t_15.f3); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 267, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_t_15.f4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 267, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_17 = __Pyx_PyBool_FromLong(__pyx_t_15.f5); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 267, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_17);
   __pyx_v_r = __pyx_t_10;
   __pyx_t_10 = 0;
-  __pyx_v_f_r = __pyx_t_4;
-  __pyx_t_4 = 0;
+  __pyx_v_f_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   __pyx_v_step = __pyx_t_11;
   __pyx_t_11 = 0;
-  __pyx_v_precision = __pyx_t_5;
-  __pyx_t_5 = 0;
-  __pyx_v_error = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_v_precision = __pyx_t_9;
+  __pyx_t_9 = 0;
+  __pyx_v_error = __pyx_t_6;
+  __pyx_t_6 = 0;
   __pyx_v_converged = __pyx_t_17;
   __pyx_t_17 = 0;
 
-  /* "cyroot/quasi_newton.pyx":265
+  /* "cyroot/quasi_newton.pyx":269
  *     r, f_r, step, precision, error, converged = sidi_kernel[DoubleScalarFPtr](
  *         f_wrapper, xs, f_xs, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,             # <<<<<<<<<<<<<<
@@ -7639,12 +7529,12 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 265, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 269, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_9 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 269, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
 
-  /* "cyroot/quasi_newton.pyx":266
+  /* "cyroot/quasi_newton.pyx":270
  *         f_wrapper, xs, f_xs, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)             # <<<<<<<<<<<<<<
@@ -7653,71 +7543,71 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
  */
   __pyx_t_11 = NULL;
   __pyx_t_18 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-    __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_1);
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
+    __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_6);
     if (likely(__pyx_t_11)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
       __Pyx_INCREF(__pyx_t_11);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_1, function);
+      __Pyx_DECREF_SET(__pyx_t_6, function);
       __pyx_t_18 = 1;
     }
   }
   #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_1)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_11, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_5, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_18, 7+__pyx_t_18); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 265, __pyx_L1_error)
+  if (PyFunction_Check(__pyx_t_6)) {
+    PyObject *__pyx_temp[8] = {__pyx_t_11, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_9, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_18, 7+__pyx_t_18); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 269, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
     __Pyx_GOTREF(__pyx_t_17);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_11, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_5, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_18, 7+__pyx_t_18); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 265, __pyx_L1_error)
+  if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
+    PyObject *__pyx_temp[8] = {__pyx_t_11, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_9, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_18, 7+__pyx_t_18); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 269, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
     __Pyx_GOTREF(__pyx_t_17);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   } else
   #endif
   {
-    __pyx_t_4 = PyTuple_New(7+__pyx_t_18); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 265, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_1 = PyTuple_New(7+__pyx_t_18); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 269, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
     if (__pyx_t_11) {
-      __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_11); __pyx_t_11 = NULL;
+      __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_11); __pyx_t_11 = NULL;
     }
     __Pyx_INCREF(__pyx_v_r);
     __Pyx_GIVEREF(__pyx_v_r);
-    PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_18, __pyx_v_r);
+    PyTuple_SET_ITEM(__pyx_t_1, 0+__pyx_t_18, __pyx_v_r);
     __Pyx_INCREF(__pyx_v_f_r);
     __Pyx_GIVEREF(__pyx_v_f_r);
-    PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_18, __pyx_v_f_r);
+    PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_18, __pyx_v_f_r);
     __Pyx_INCREF(__pyx_v_step);
     __Pyx_GIVEREF(__pyx_v_step);
-    PyTuple_SET_ITEM(__pyx_t_4, 2+__pyx_t_18, __pyx_v_step);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_4, 3+__pyx_t_18, __pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_1, 2+__pyx_t_18, __pyx_v_step);
+    __Pyx_GIVEREF(__pyx_t_9);
+    PyTuple_SET_ITEM(__pyx_t_1, 3+__pyx_t_18, __pyx_t_9);
     __Pyx_INCREF(__pyx_v_precision);
     __Pyx_GIVEREF(__pyx_v_precision);
-    PyTuple_SET_ITEM(__pyx_t_4, 4+__pyx_t_18, __pyx_v_precision);
+    PyTuple_SET_ITEM(__pyx_t_1, 4+__pyx_t_18, __pyx_v_precision);
     __Pyx_INCREF(__pyx_v_error);
     __Pyx_GIVEREF(__pyx_v_error);
-    PyTuple_SET_ITEM(__pyx_t_4, 5+__pyx_t_18, __pyx_v_error);
+    PyTuple_SET_ITEM(__pyx_t_1, 5+__pyx_t_18, __pyx_v_error);
     __Pyx_INCREF(__pyx_v_converged);
     __Pyx_GIVEREF(__pyx_v_converged);
-    PyTuple_SET_ITEM(__pyx_t_4, 6+__pyx_t_18, __pyx_v_converged);
-    __pyx_t_5 = 0;
-    __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 265, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_1, 6+__pyx_t_18, __pyx_v_converged);
+    __pyx_t_9 = 0;
+    __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_1, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 269, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_17);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_r = __pyx_t_17;
   __pyx_t_17 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":218
+  /* "cyroot/quasi_newton.pyx":220
  * 
  * # noinspection DuplicatedCode
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
@@ -7728,8 +7618,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_10);
   __Pyx_XDECREF(__pyx_t_11);
   __PYX_XDEC_MEMVIEW(&__pyx_t_12, 1);
@@ -7753,7 +7643,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":272
+/* "cyroot/quasi_newton.pyx":276
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
@@ -7801,7 +7691,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     }
   }
 
-  /* "cyroot/quasi_newton.pyx":279
+  /* "cyroot/quasi_newton.pyx":283
  *         double ptol=PTOL,
  *         long max_iter=0):
  *     cdef double precision = math.INFINITY, error = math.INFINITY             # <<<<<<<<<<<<<<
@@ -7811,7 +7701,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_v_precision = INFINITY;
   __pyx_v_error = INFINITY;
 
-  /* "cyroot/quasi_newton.pyx":280
+  /* "cyroot/quasi_newton.pyx":284
  *         long max_iter=0):
  *     cdef double precision = math.INFINITY, error = math.INFINITY
  *     cdef long step = 0             # <<<<<<<<<<<<<<
@@ -7820,7 +7710,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
   __pyx_v_step = 0;
 
-  /* "cyroot/quasi_newton.pyx":282
+  /* "cyroot/quasi_newton.pyx":286
  *     cdef long step = 0
  *     cdef double x1, x2, x3, denom
  *     cdef converged = True             # <<<<<<<<<<<<<<
@@ -7830,7 +7720,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __Pyx_INCREF(Py_True);
   __pyx_v_converged = Py_True;
 
-  /* "cyroot/quasi_newton.pyx":283
+  /* "cyroot/quasi_newton.pyx":287
  *     cdef double x1, x2, x3, denom
  *     cdef converged = True
  *     while error > etol and precision > ptol:             # <<<<<<<<<<<<<<
@@ -7849,7 +7739,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_L5_bool_binop_done:;
     if (!__pyx_t_1) break;
 
-    /* "cyroot/quasi_newton.pyx":284
+    /* "cyroot/quasi_newton.pyx":288
  *     cdef converged = True
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:             # <<<<<<<<<<<<<<
@@ -7863,7 +7753,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_2 = (__pyx_t_1 != 0);
     if (__pyx_t_2) {
 
-      /* "cyroot/quasi_newton.pyx":285
+      /* "cyroot/quasi_newton.pyx":289
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -7873,7 +7763,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":286
+      /* "cyroot/quasi_newton.pyx":290
  *         if step > max_iter > 0:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -7882,7 +7772,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":284
+      /* "cyroot/quasi_newton.pyx":288
  *     cdef converged = True
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:             # <<<<<<<<<<<<<<
@@ -7891,7 +7781,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":287
+    /* "cyroot/quasi_newton.pyx":291
  *             converged = False
  *             break
  *         step += 1             # <<<<<<<<<<<<<<
@@ -7900,7 +7790,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_step = (__pyx_v_step + 1);
 
-    /* "cyroot/quasi_newton.pyx":288
+    /* "cyroot/quasi_newton.pyx":292
  *             break
  *         step += 1
  *         x1 = x0 + f_x0             # <<<<<<<<<<<<<<
@@ -7909,16 +7799,16 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_x1 = (__pyx_v_x0 + __pyx_v_f_x0);
 
-    /* "cyroot/quasi_newton.pyx":289
+    /* "cyroot/quasi_newton.pyx":293
  *         step += 1
  *         x1 = x0 + f_x0
  *         x2 = x1 + f(x1)             # <<<<<<<<<<<<<<
  *         # Use Aitken's delta squared method to find a better approximation to x0.
  *         denom = x2 - 2 * x1 + x0
  */
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 289, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 293, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 289, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 293, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(((PyObject *)__pyx_v_f));
     __pyx_t_6 = ((PyObject *)__pyx_v_f); __pyx_t_7 = NULL;
@@ -7934,18 +7824,18 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_4 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_7, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5);
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 289, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 293, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = PyNumber_Add(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 289, __pyx_L1_error)
+    __pyx_t_6 = PyNumber_Add(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 293, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_6); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 289, __pyx_L1_error)
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_6); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 293, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_v_x2 = __pyx_t_8;
 
-    /* "cyroot/quasi_newton.pyx":291
+    /* "cyroot/quasi_newton.pyx":295
  *         x2 = x1 + f(x1)
  *         # Use Aitken's delta squared method to find a better approximation to x0.
  *         denom = x2 - 2 * x1 + x0             # <<<<<<<<<<<<<<
@@ -7954,7 +7844,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_denom = ((__pyx_v_x2 - (2.0 * __pyx_v_x1)) + __pyx_v_x0);
 
-    /* "cyroot/quasi_newton.pyx":292
+    /* "cyroot/quasi_newton.pyx":296
  *         # Use Aitken's delta squared method to find a better approximation to x0.
  *         denom = x2 - 2 * x1 + x0
  *         if denom == 0:             # <<<<<<<<<<<<<<
@@ -7964,7 +7854,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_2 = ((__pyx_v_denom == 0.0) != 0);
     if (__pyx_t_2) {
 
-      /* "cyroot/quasi_newton.pyx":293
+      /* "cyroot/quasi_newton.pyx":297
  *         denom = x2 - 2 * x1 + x0
  *         if denom == 0:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -7974,7 +7864,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":294
+      /* "cyroot/quasi_newton.pyx":298
  *         if denom == 0:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -7983,7 +7873,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":292
+      /* "cyroot/quasi_newton.pyx":296
  *         # Use Aitken's delta squared method to find a better approximation to x0.
  *         denom = x2 - 2 * x1 + x0
  *         if denom == 0:             # <<<<<<<<<<<<<<
@@ -7992,7 +7882,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":295
+    /* "cyroot/quasi_newton.pyx":299
  *             converged = False
  *             break
  *         x3 = x0 - (x1 - x0) ** 2 / (x2 - 2 * x1 + x0)             # <<<<<<<<<<<<<<
@@ -8001,7 +7891,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_x3 = (__pyx_v_x0 - (pow((__pyx_v_x1 - __pyx_v_x0), 2.0) / ((__pyx_v_x2 - (2.0 * __pyx_v_x1)) + __pyx_v_x0)));
 
-    /* "cyroot/quasi_newton.pyx":297
+    /* "cyroot/quasi_newton.pyx":301
  *         x3 = x0 - (x1 - x0) ** 2 / (x2 - 2 * x1 + x0)
  *         # x3 = x2 - (x2 - x1) ** 2 / (x2 - 2 * x1 + x0)
  *         precision = math.fabs(x3 - x0)             # <<<<<<<<<<<<<<
@@ -8010,7 +7900,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_precision = fabs((__pyx_v_x3 - __pyx_v_x0));
 
-    /* "cyroot/quasi_newton.pyx":298
+    /* "cyroot/quasi_newton.pyx":302
  *         # x3 = x2 - (x2 - x1) ** 2 / (x2 - 2 * x1 + x0)
  *         precision = math.fabs(x3 - x0)
  *         error = math.fabs(f_x0)             # <<<<<<<<<<<<<<
@@ -8019,7 +7909,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_error = fabs(__pyx_v_f_x0);
 
-    /* "cyroot/quasi_newton.pyx":299
+    /* "cyroot/quasi_newton.pyx":303
  *         precision = math.fabs(x3 - x0)
  *         error = math.fabs(f_x0)
  *         x0, f_x0 = x3, f(x3)             # <<<<<<<<<<<<<<
@@ -8027,7 +7917,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  * 
  */
     __pyx_t_8 = __pyx_v_x3;
-    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_x3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 299, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_x3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 303, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_INCREF(((PyObject *)__pyx_v_f));
     __pyx_t_3 = ((PyObject *)__pyx_v_f); __pyx_t_5 = NULL;
@@ -8043,24 +7933,24 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_6 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 299, __pyx_L1_error)
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 303, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_6); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 299, __pyx_L1_error)
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_6); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 303, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_v_x0 = __pyx_t_8;
     __pyx_v_f_x0 = __pyx_t_9;
   }
   __pyx_L4_break:;
 
-  /* "cyroot/quasi_newton.pyx":300
+  /* "cyroot/quasi_newton.pyx":304
  *         error = math.fabs(f_x0)
  *         x0, f_x0 = x3, f(x3)
  *     return x0, f_x0, step, precision, error, converged             # <<<<<<<<<<<<<<
  * 
  * # noinspection DuplicatedCode
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 300, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 304, __pyx_L1_error)
   __pyx_t_10.f0 = __pyx_v_x0;
   __pyx_t_10.f1 = __pyx_v_f_x0;
   __pyx_t_10.f2 = __pyx_v_step;
@@ -8070,7 +7960,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_r = __pyx_t_10;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":272
+  /* "cyroot/quasi_newton.pyx":276
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
@@ -8093,7 +7983,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":303
+/* "cyroot/quasi_newton.pyx":307
  * 
  * # noinspection DuplicatedCode
  * def steffensen(f: Callable[[float], float],             # <<<<<<<<<<<<<<
@@ -8103,7 +7993,8 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_5steffensen(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_5steffensen = {"steffensen", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_5steffensen, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_6cyroot_12quasi_newton_4steffensen[] = "\n    Steffensen's method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        f_x0: Value evaluated at first initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to {ETOL}.\n        ptol: Precision tolerance, indicating the minimum change\n         of root approximations or width of brackets (in bracketing\n         methods) after each iteration. Defaults to {PTOL}.\n        max_iter: Maximum number of iterations. If set to 0, the\n         procedure will run indefinitely until stopping condition is\n         met. Defaults to 0.\n\n    Returns:\n        solution: The solution represented as a ``RootResults`` object.\n    ";
+static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_5steffensen = {"steffensen", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_5steffensen, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6cyroot_12quasi_newton_4steffensen};
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_5steffensen(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_f = 0;
   double __pyx_v_x0;
@@ -8121,7 +8012,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_5steffensen(PyObject *__pyx_sel
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_f,&__pyx_n_s_x0,&__pyx_n_s_f_x0,&__pyx_n_s_etol,&__pyx_n_s_ptol,&__pyx_n_s_max_iter,0};
     PyObject* values[6] = {0,0,0,0,0,0};
 
-    /* "cyroot/quasi_newton.pyx":305
+    /* "cyroot/quasi_newton.pyx":309
  * def steffensen(f: Callable[[float], float],
  *                x0: float,
  *                f_x0: Optional[float] = None,             # <<<<<<<<<<<<<<
@@ -8158,7 +8049,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_5steffensen(PyObject *__pyx_sel
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x0)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("steffensen", 0, 2, 6, 1); __PYX_ERR(0, 303, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("steffensen", 0, 2, 6, 1); __PYX_ERR(0, 307, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -8186,7 +8077,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_5steffensen(PyObject *__pyx_sel
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "steffensen") < 0)) __PYX_ERR(0, 303, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "steffensen") < 0)) __PYX_ERR(0, 307, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -8205,15 +8096,15 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_5steffensen(PyObject *__pyx_sel
       }
     }
     __pyx_v_f = values[0];
-    __pyx_v_x0 = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_x0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 304, __pyx_L3_error)
+    __pyx_v_x0 = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_x0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 308, __pyx_L3_error)
     __pyx_v_f_x0 = values[2];
     if (values[3]) {
-      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 306, __pyx_L3_error)
+      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 310, __pyx_L3_error)
     } else {
       __pyx_v_etol = __pyx_k__15;
     }
     if (values[4]) {
-      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 307, __pyx_L3_error)
+      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 311, __pyx_L3_error)
     } else {
       __pyx_v_ptol = __pyx_k__16;
     }
@@ -8221,7 +8112,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_5steffensen(PyObject *__pyx_sel
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("steffensen", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 303, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("steffensen", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 307, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.quasi_newton.steffensen", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -8229,7 +8120,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_5steffensen(PyObject *__pyx_sel
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_6cyroot_12quasi_newton_4steffensen(__pyx_self, __pyx_v_f, __pyx_v_x0, __pyx_v_f_x0, __pyx_v_etol, __pyx_v_ptol, __pyx_v_max_iter);
 
-  /* "cyroot/quasi_newton.pyx":303
+  /* "cyroot/quasi_newton.pyx":307
  * 
  * # noinspection DuplicatedCode
  * def steffensen(f: Callable[[float], float],             # <<<<<<<<<<<<<<
@@ -8252,12 +8143,12 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
   PyObject *__pyx_v_converged = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  Py_ssize_t __pyx_t_2;
-  Py_UCS4 __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  Py_ssize_t __pyx_t_3;
+  Py_UCS4 __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
+  PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
   PyObject *__pyx_t_8 = NULL;
   double __pyx_t_9;
@@ -8273,104 +8164,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
   __Pyx_RefNannySetupContext("steffensen", 0);
   __Pyx_INCREF(__pyx_v_f_x0);
 
-  /* "cyroot/quasi_newton.pyx":309
- *                ptol: float = PTOL,
- *                max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""             # <<<<<<<<<<<<<<
- *     Steffensen's method for root-finding.
- * 
- */
-  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = 0;
-  __pyx_t_3 = 127;
-  __Pyx_INCREF(__pyx_kp_u_Steffensen_s_method_for_root_fi);
-  __pyx_t_2 += 289;
-  __Pyx_GIVEREF(__pyx_kp_u_Steffensen_s_method_for_root_fi);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_Steffensen_s_method_for_root_fi);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_ETOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 309, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 309, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __Pyx_INCREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_2 += 187;
-  __Pyx_GIVEREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_PTOL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 309, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 309, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __Pyx_INCREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_2 += 155;
-  __Pyx_GIVEREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 309, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "cyroot/quasi_newton.pyx":327
+  /* "cyroot/quasi_newton.pyx":333
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  */
-  __pyx_t_6 = ((__pyx_v_etol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_etol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":328
+    /* "cyroot/quasi_newton.pyx":334
  *     # check params
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')             # <<<<<<<<<<<<<<
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 328, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 334, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_etol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 328, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 328, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_etol_must_be_positive_Got);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 334, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
-    __pyx_t_5 = 0;
-    __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
-    __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 328, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 328, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 334, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 328, __pyx_L1_error)
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
+    __Pyx_INCREF(__pyx_kp_u__6);
+    __pyx_t_3 += 1;
+    __Pyx_GIVEREF(__pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 334, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 334, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 334, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":327
+    /* "cyroot/quasi_newton.pyx":333
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
@@ -8379,56 +8222,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":329
+  /* "cyroot/quasi_newton.pyx":335
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  */
-  __pyx_t_6 = ((__pyx_v_ptol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_ptol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":330
+    /* "cyroot/quasi_newton.pyx":336
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')             # <<<<<<<<<<<<<<
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 330, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 330, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_ptol_must_be_positive_Got);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 336, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 330, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 330, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 330, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 330, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 336, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":329
+    /* "cyroot/quasi_newton.pyx":335
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
@@ -8437,54 +8280,54 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":331
+  /* "cyroot/quasi_newton.pyx":337
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  */
-  __pyx_t_6 = PyInt_Check(__pyx_v_max_iter); 
-  __pyx_t_7 = ((!(__pyx_t_6 != 0)) != 0);
+  __pyx_t_1 = PyInt_Check(__pyx_v_max_iter); 
+  __pyx_t_7 = ((!(__pyx_t_1 != 0)) != 0);
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":332
+    /* "cyroot/quasi_newton.pyx":338
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')             # <<<<<<<<<<<<<<
  * 
  *     if f_x0 is None:
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 332, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 338, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_2 += 33;
+    __pyx_t_3 += 33;
     __Pyx_GIVEREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 332, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 338, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 332, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 332, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 332, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 338, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 338, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 338, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":331
+    /* "cyroot/quasi_newton.pyx":337
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
@@ -8493,7 +8336,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":334
+  /* "cyroot/quasi_newton.pyx":340
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if f_x0 is None:             # <<<<<<<<<<<<<<
@@ -8501,39 +8344,39 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
  * 
  */
   __pyx_t_7 = (__pyx_v_f_x0 == Py_None);
-  __pyx_t_6 = (__pyx_t_7 != 0);
-  if (__pyx_t_6) {
+  __pyx_t_1 = (__pyx_t_7 != 0);
+  if (__pyx_t_1) {
 
-    /* "cyroot/quasi_newton.pyx":335
+    /* "cyroot/quasi_newton.pyx":341
  * 
  *     if f_x0 is None:
  *         f_x0 = f(x0)             # <<<<<<<<<<<<<<
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 335, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 341, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_5 = __pyx_v_f; __pyx_t_8 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
-      __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_5);
+    __pyx_t_6 = __pyx_v_f; __pyx_t_8 = NULL;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
+      __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_6);
       if (likely(__pyx_t_8)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
         __Pyx_INCREF(__pyx_t_8);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_5, function);
+        __Pyx_DECREF_SET(__pyx_t_6, function);
       }
     }
-    __pyx_t_4 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_8, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_1);
+    __pyx_t_2 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_8, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5);
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 335, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_4);
-    __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 341, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_2);
+    __pyx_t_2 = 0;
 
-    /* "cyroot/quasi_newton.pyx":334
+    /* "cyroot/quasi_newton.pyx":340
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if f_x0 is None:             # <<<<<<<<<<<<<<
@@ -8542,29 +8385,29 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":337
+  /* "cyroot/quasi_newton.pyx":343
  *         f_x0 = f(x0)
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)             # <<<<<<<<<<<<<<
  *     r, f_r, step, precision, error, converged = steffensen_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, f_x0, etol, ptol, max_iter)
  */
-  __pyx_t_4 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 337, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_4);
-  __pyx_t_4 = 0;
+  __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_2);
+  __pyx_t_2 = 0;
 
-  /* "cyroot/quasi_newton.pyx":339
+  /* "cyroot/quasi_newton.pyx":345
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = steffensen_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, f_x0, etol, ptol, max_iter)             # <<<<<<<<<<<<<<
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)
  */
-  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_f_x0); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 339, __pyx_L1_error)
-  __pyx_t_10 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_10 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 339, __pyx_L1_error)
+  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_f_x0); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_10 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 345, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":338
+  /* "cyroot/quasi_newton.pyx":344
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = steffensen_kernel[DoubleScalarFPtr](             # <<<<<<<<<<<<<<
@@ -8576,24 +8419,24 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
   __pyx_t_12.ptol = __pyx_v_ptol;
   __pyx_t_12.max_iter = __pyx_t_10;
   __pyx_t_11 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_steffensen_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_t_9, &__pyx_t_12); 
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_11.f0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 338, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_t_11.f1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 338, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_11.f0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_t_11.f1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_t_11.f2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_t_11.f2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 338, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_t_11.f3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 338, __pyx_L1_error)
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_t_11.f3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_13 = PyFloat_FromDouble(__pyx_t_11.f4); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 338, __pyx_L1_error)
+  __pyx_t_13 = PyFloat_FromDouble(__pyx_t_11.f4); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
-  __pyx_t_14 = __Pyx_PyBool_FromLong(__pyx_t_11.f5); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 338, __pyx_L1_error)
+  __pyx_t_14 = __Pyx_PyBool_FromLong(__pyx_t_11.f5); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_14);
-  __pyx_v_r = __pyx_t_4;
-  __pyx_t_4 = 0;
-  __pyx_v_f_r = __pyx_t_5;
+  __pyx_v_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  __pyx_v_f_r = __pyx_t_6;
+  __pyx_t_6 = 0;
+  __pyx_v_step = __pyx_t_5;
   __pyx_t_5 = 0;
-  __pyx_v_step = __pyx_t_1;
-  __pyx_t_1 = 0;
   __pyx_v_precision = __pyx_t_8;
   __pyx_t_8 = 0;
   __pyx_v_error = __pyx_t_13;
@@ -8601,7 +8444,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
   __pyx_v_converged = __pyx_t_14;
   __pyx_t_14 = 0;
 
-  /* "cyroot/quasi_newton.pyx":340
+  /* "cyroot/quasi_newton.pyx":346
  *     r, f_r, step, precision, error, converged = steffensen_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, f_x0, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,             # <<<<<<<<<<<<<<
@@ -8609,25 +8452,25 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_13, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_13, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
-  __pyx_t_8 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
 
-  /* "cyroot/quasi_newton.pyx":341
+  /* "cyroot/quasi_newton.pyx":347
  *         f_wrapper, x0, f_x0, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)             # <<<<<<<<<<<<<<
  * 
  * ################################################################################
  */
-  __pyx_t_1 = NULL;
+  __pyx_t_5 = NULL;
   __pyx_t_15 = 0;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_13))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_13);
-    if (likely(__pyx_t_1)) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_13);
+    if (likely(__pyx_t_5)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_13);
-      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_13, function);
       __pyx_t_15 = 1;
@@ -8635,59 +8478,59 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_13)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_1, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_8, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_14 = __Pyx_PyFunction_FastCall(__pyx_t_13, __pyx_temp+1-__pyx_t_15, 7+__pyx_t_15); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 340, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_8, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_14 = __Pyx_PyFunction_FastCall(__pyx_t_13, __pyx_temp+1-__pyx_t_15, 7+__pyx_t_15); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 346, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_14);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_13)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_1, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_8, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_14 = __Pyx_PyCFunction_FastCall(__pyx_t_13, __pyx_temp+1-__pyx_t_15, 7+__pyx_t_15); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 340, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_8, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_14 = __Pyx_PyCFunction_FastCall(__pyx_t_13, __pyx_temp+1-__pyx_t_15, 7+__pyx_t_15); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 346, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_14);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(7+__pyx_t_15); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 340, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    if (__pyx_t_1) {
-      __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1); __pyx_t_1 = NULL;
+    __pyx_t_6 = PyTuple_New(7+__pyx_t_15); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 346, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    if (__pyx_t_5) {
+      __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
     }
     __Pyx_INCREF(__pyx_v_r);
     __Pyx_GIVEREF(__pyx_v_r);
-    PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_15, __pyx_v_r);
+    PyTuple_SET_ITEM(__pyx_t_6, 0+__pyx_t_15, __pyx_v_r);
     __Pyx_INCREF(__pyx_v_f_r);
     __Pyx_GIVEREF(__pyx_v_f_r);
-    PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_15, __pyx_v_f_r);
+    PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_15, __pyx_v_f_r);
     __Pyx_INCREF(__pyx_v_step);
     __Pyx_GIVEREF(__pyx_v_step);
-    PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_15, __pyx_v_step);
+    PyTuple_SET_ITEM(__pyx_t_6, 2+__pyx_t_15, __pyx_v_step);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 3+__pyx_t_15, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 3+__pyx_t_15, __pyx_t_8);
     __Pyx_INCREF(__pyx_v_precision);
     __Pyx_GIVEREF(__pyx_v_precision);
-    PyTuple_SET_ITEM(__pyx_t_5, 4+__pyx_t_15, __pyx_v_precision);
+    PyTuple_SET_ITEM(__pyx_t_6, 4+__pyx_t_15, __pyx_v_precision);
     __Pyx_INCREF(__pyx_v_error);
     __Pyx_GIVEREF(__pyx_v_error);
-    PyTuple_SET_ITEM(__pyx_t_5, 5+__pyx_t_15, __pyx_v_error);
+    PyTuple_SET_ITEM(__pyx_t_6, 5+__pyx_t_15, __pyx_v_error);
     __Pyx_INCREF(__pyx_v_converged);
     __Pyx_GIVEREF(__pyx_v_converged);
-    PyTuple_SET_ITEM(__pyx_t_5, 6+__pyx_t_15, __pyx_v_converged);
+    PyTuple_SET_ITEM(__pyx_t_6, 6+__pyx_t_15, __pyx_v_converged);
     __pyx_t_8 = 0;
-    __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_13, __pyx_t_5, NULL); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 340, __pyx_L1_error)
+    __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_13, __pyx_t_6, NULL); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 346, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
   __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
   __pyx_r = __pyx_t_14;
   __pyx_t_14 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":303
+  /* "cyroot/quasi_newton.pyx":307
  * 
  * # noinspection DuplicatedCode
  * def steffensen(f: Callable[[float], float],             # <<<<<<<<<<<<<<
@@ -8697,9 +8540,9 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_13);
   __Pyx_XDECREF(__pyx_t_14);
@@ -8719,7 +8562,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":347
+/* "cyroot/quasi_newton.pyx":353
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
@@ -8766,7 +8609,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     }
   }
 
-  /* "cyroot/quasi_newton.pyx":358
+  /* "cyroot/quasi_newton.pyx":364
  *         double ptol=PTOL,
  *         long max_iter=0):
  *     cdef double precision = math.INFINITY, error = math.INFINITY             # <<<<<<<<<<<<<<
@@ -8776,7 +8619,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_v_precision = INFINITY;
   __pyx_v_error = INFINITY;
 
-  /* "cyroot/quasi_newton.pyx":359
+  /* "cyroot/quasi_newton.pyx":365
  *         long max_iter=0):
  *     cdef double precision = math.INFINITY, error = math.INFINITY
  *     cdef long step = 0             # <<<<<<<<<<<<<<
@@ -8785,7 +8628,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
   __pyx_v_step = 0;
 
-  /* "cyroot/quasi_newton.pyx":361
+  /* "cyroot/quasi_newton.pyx":367
  *     cdef long step = 0
  *     cdef double x3, df_01, df_02, df_12
  *     cdef converged = True             # <<<<<<<<<<<<<<
@@ -8795,7 +8638,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __Pyx_INCREF(Py_True);
   __pyx_v_converged = Py_True;
 
-  /* "cyroot/quasi_newton.pyx":362
+  /* "cyroot/quasi_newton.pyx":368
  *     cdef double x3, df_01, df_02, df_12
  *     cdef converged = True
  *     while error > etol and precision > ptol:             # <<<<<<<<<<<<<<
@@ -8814,7 +8657,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_L5_bool_binop_done:;
     if (!__pyx_t_1) break;
 
-    /* "cyroot/quasi_newton.pyx":363
+    /* "cyroot/quasi_newton.pyx":369
  *     cdef converged = True
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:             # <<<<<<<<<<<<<<
@@ -8828,7 +8671,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_2 = (__pyx_t_1 != 0);
     if (__pyx_t_2) {
 
-      /* "cyroot/quasi_newton.pyx":364
+      /* "cyroot/quasi_newton.pyx":370
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -8838,7 +8681,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":365
+      /* "cyroot/quasi_newton.pyx":371
  *         if step > max_iter > 0:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -8847,7 +8690,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":363
+      /* "cyroot/quasi_newton.pyx":369
  *     cdef converged = True
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:             # <<<<<<<<<<<<<<
@@ -8856,7 +8699,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":366
+    /* "cyroot/quasi_newton.pyx":372
  *             converged = False
  *             break
  *         step += 1             # <<<<<<<<<<<<<<
@@ -8865,7 +8708,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_step = (__pyx_v_step + 1);
 
-    /* "cyroot/quasi_newton.pyx":367
+    /* "cyroot/quasi_newton.pyx":373
  *             break
  *         step += 1
  *         df_01 = f_x0 - f_x1             # <<<<<<<<<<<<<<
@@ -8874,7 +8717,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_df_01 = (__pyx_v_f_x0 - __pyx_v_f_x1);
 
-    /* "cyroot/quasi_newton.pyx":368
+    /* "cyroot/quasi_newton.pyx":374
  *         step += 1
  *         df_01 = f_x0 - f_x1
  *         df_02 = f_x0 - f_x2             # <<<<<<<<<<<<<<
@@ -8883,7 +8726,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_df_02 = (__pyx_v_f_x0 - __pyx_v_f_x2);
 
-    /* "cyroot/quasi_newton.pyx":369
+    /* "cyroot/quasi_newton.pyx":375
  *         df_01 = f_x0 - f_x1
  *         df_02 = f_x0 - f_x2
  *         df_12 = f_x1 - f_x2             # <<<<<<<<<<<<<<
@@ -8892,7 +8735,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_df_12 = (__pyx_v_f_x1 - __pyx_v_f_x2);
 
-    /* "cyroot/quasi_newton.pyx":370
+    /* "cyroot/quasi_newton.pyx":376
  *         df_02 = f_x0 - f_x2
  *         df_12 = f_x1 - f_x2
  *         if df_01 == 0 or df_02 == 0 or df_12 == 0:             # <<<<<<<<<<<<<<
@@ -8916,7 +8759,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_L9_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "cyroot/quasi_newton.pyx":371
+      /* "cyroot/quasi_newton.pyx":377
  *         df_12 = f_x1 - f_x2
  *         if df_01 == 0 or df_02 == 0 or df_12 == 0:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -8926,7 +8769,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":372
+      /* "cyroot/quasi_newton.pyx":378
  *         if df_01 == 0 or df_02 == 0 or df_12 == 0:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -8935,7 +8778,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":370
+      /* "cyroot/quasi_newton.pyx":376
  *         df_02 = f_x0 - f_x2
  *         df_12 = f_x1 - f_x2
  *         if df_01 == 0 or df_02 == 0 or df_12 == 0:             # <<<<<<<<<<<<<<
@@ -8944,7 +8787,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":373
+    /* "cyroot/quasi_newton.pyx":379
  *             converged = False
  *             break
  *         x3 = x0 * f_x1 * f_x2 / (df_01 * df_02)             # <<<<<<<<<<<<<<
@@ -8953,7 +8796,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_x3 = (((__pyx_v_x0 * __pyx_v_f_x1) * __pyx_v_f_x2) / (__pyx_v_df_01 * __pyx_v_df_02));
 
-    /* "cyroot/quasi_newton.pyx":374
+    /* "cyroot/quasi_newton.pyx":380
  *             break
  *         x3 = x0 * f_x1 * f_x2 / (df_01 * df_02)
  *         x3 += x1 * f_x0 * f_x2 / (-df_01 * df_12)             # <<<<<<<<<<<<<<
@@ -8962,7 +8805,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_x3 = (__pyx_v_x3 + (((__pyx_v_x1 * __pyx_v_f_x0) * __pyx_v_f_x2) / ((-__pyx_v_df_01) * __pyx_v_df_12)));
 
-    /* "cyroot/quasi_newton.pyx":375
+    /* "cyroot/quasi_newton.pyx":381
  *         x3 = x0 * f_x1 * f_x2 / (df_01 * df_02)
  *         x3 += x1 * f_x0 * f_x2 / (-df_01 * df_12)
  *         x3 += x2 * f_x0 * f_x1 / (df_02 * df_12)             # <<<<<<<<<<<<<<
@@ -8971,7 +8814,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_x3 = (__pyx_v_x3 + (((__pyx_v_x2 * __pyx_v_f_x0) * __pyx_v_f_x1) / (__pyx_v_df_02 * __pyx_v_df_12)));
 
-    /* "cyroot/quasi_newton.pyx":376
+    /* "cyroot/quasi_newton.pyx":382
  *         x3 += x1 * f_x0 * f_x2 / (-df_01 * df_12)
  *         x3 += x2 * f_x0 * f_x1 / (df_02 * df_12)
  *         x0, f_x0 = x1, f_x1             # <<<<<<<<<<<<<<
@@ -8983,7 +8826,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_v_x0 = __pyx_t_3;
     __pyx_v_f_x0 = __pyx_t_4;
 
-    /* "cyroot/quasi_newton.pyx":377
+    /* "cyroot/quasi_newton.pyx":383
  *         x3 += x2 * f_x0 * f_x1 / (df_02 * df_12)
  *         x0, f_x0 = x1, f_x1
  *         x1, f_x1 = x2, f_x2             # <<<<<<<<<<<<<<
@@ -8995,7 +8838,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_v_x1 = __pyx_t_4;
     __pyx_v_f_x1 = __pyx_t_3;
 
-    /* "cyroot/quasi_newton.pyx":378
+    /* "cyroot/quasi_newton.pyx":384
  *         x0, f_x0 = x1, f_x1
  *         x1, f_x1 = x2, f_x2
  *         x2, f_x2 = x3, f(x3)             # <<<<<<<<<<<<<<
@@ -9003,7 +8846,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  *         precision = math.fabs(x2 - x1)
  */
     __pyx_t_3 = __pyx_v_x3;
-    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_x3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 378, __pyx_L1_error)
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_x3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 384, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_INCREF(((PyObject *)__pyx_v_f));
     __pyx_t_7 = ((PyObject *)__pyx_v_f); __pyx_t_8 = NULL;
@@ -9019,15 +8862,15 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_5 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_8, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_6);
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 378, __pyx_L1_error)
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 384, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_4 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_4 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 378, __pyx_L1_error)
+    __pyx_t_4 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_4 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 384, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_x2 = __pyx_t_3;
     __pyx_v_f_x2 = __pyx_t_4;
 
-    /* "cyroot/quasi_newton.pyx":380
+    /* "cyroot/quasi_newton.pyx":386
  *         x2, f_x2 = x3, f(x3)
  * 
  *         precision = math.fabs(x2 - x1)             # <<<<<<<<<<<<<<
@@ -9036,7 +8879,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_precision = fabs((__pyx_v_x2 - __pyx_v_x1));
 
-    /* "cyroot/quasi_newton.pyx":381
+    /* "cyroot/quasi_newton.pyx":387
  * 
  *         precision = math.fabs(x2 - x1)
  *         error = math.fabs(f_x2)             # <<<<<<<<<<<<<<
@@ -9047,14 +8890,14 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   }
   __pyx_L4_break:;
 
-  /* "cyroot/quasi_newton.pyx":382
+  /* "cyroot/quasi_newton.pyx":388
  *         precision = math.fabs(x2 - x1)
  *         error = math.fabs(f_x2)
  *     return x2, f_x2, step, precision, error, converged             # <<<<<<<<<<<<<<
  * 
  * # noinspection DuplicatedCode
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 382, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 388, __pyx_L1_error)
   __pyx_t_9.f0 = __pyx_v_x2;
   __pyx_t_9.f1 = __pyx_v_f_x2;
   __pyx_t_9.f2 = __pyx_v_step;
@@ -9064,7 +8907,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_r = __pyx_t_9;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":347
+  /* "cyroot/quasi_newton.pyx":353
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
@@ -9086,7 +8929,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":385
+/* "cyroot/quasi_newton.pyx":391
  * 
  * # noinspection DuplicatedCode
  * def inverse_quadratic_interp(             # <<<<<<<<<<<<<<
@@ -9096,7 +8939,8 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_7inverse_quadratic_interp = {"inverse_quadratic_interp", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_6cyroot_12quasi_newton_6inverse_quadratic_interp[] = "\n    Inverse Quadratic Interpolation method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        x1: Second initial point.\n        x2: Third initial point.\n        f_x0: Value evaluated at first initial point.\n        f_x1: Value evaluated at second initial point.\n        f_x2: Value evaluated at third initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to {ETOL}.\n        ptol: Precision tolerance, indicating the minimum change\n         of root approximations or width of brackets (in bracketing\n         methods) after each iteration. Defaults to {PTOL}.\n        max_iter: Maximum number of iterations. If set to 0, the\n         procedure will run indefinitely until stopping condition is\n         met. Defaults to 0.\n\n    Returns:\n        solution: The solution represented as a ``RootResults`` object.\n    ";
+static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_7inverse_quadratic_interp = {"inverse_quadratic_interp", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6cyroot_12quasi_newton_6inverse_quadratic_interp};
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_f = 0;
   double __pyx_v_x0;
@@ -9118,7 +8962,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObj
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_f,&__pyx_n_s_x0,&__pyx_n_s_x1,&__pyx_n_s_x2,&__pyx_n_s_f_x0,&__pyx_n_s_f_x1,&__pyx_n_s_f_x2,&__pyx_n_s_etol,&__pyx_n_s_ptol,&__pyx_n_s_max_iter,0};
     PyObject* values[10] = {0,0,0,0,0,0,0,0,0,0};
 
-    /* "cyroot/quasi_newton.pyx":390
+    /* "cyroot/quasi_newton.pyx":396
  *         x1: float,
  *         x2: float,
  *         f_x0: Optional[float] = None,             # <<<<<<<<<<<<<<
@@ -9127,7 +8971,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObj
  */
     values[4] = ((PyObject *)Py_None);
 
-    /* "cyroot/quasi_newton.pyx":391
+    /* "cyroot/quasi_newton.pyx":397
  *         x2: float,
  *         f_x0: Optional[float] = None,
  *         f_x1: Optional[float] = None,             # <<<<<<<<<<<<<<
@@ -9136,7 +8980,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObj
  */
     values[5] = ((PyObject *)Py_None);
 
-    /* "cyroot/quasi_newton.pyx":392
+    /* "cyroot/quasi_newton.pyx":398
  *         f_x0: Optional[float] = None,
  *         f_x1: Optional[float] = None,
  *         f_x2: Optional[float] = None,             # <<<<<<<<<<<<<<
@@ -9181,19 +9025,19 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObj
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x0)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("inverse_quadratic_interp", 0, 4, 10, 1); __PYX_ERR(0, 385, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("inverse_quadratic_interp", 0, 4, 10, 1); __PYX_ERR(0, 391, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("inverse_quadratic_interp", 0, 4, 10, 2); __PYX_ERR(0, 385, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("inverse_quadratic_interp", 0, 4, 10, 2); __PYX_ERR(0, 391, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("inverse_quadratic_interp", 0, 4, 10, 3); __PYX_ERR(0, 385, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("inverse_quadratic_interp", 0, 4, 10, 3); __PYX_ERR(0, 391, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
@@ -9233,7 +9077,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObj
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "inverse_quadratic_interp") < 0)) __PYX_ERR(0, 385, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "inverse_quadratic_interp") < 0)) __PYX_ERR(0, 391, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -9258,19 +9102,19 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObj
       }
     }
     __pyx_v_f = values[0];
-    __pyx_v_x0 = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_x0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 387, __pyx_L3_error)
-    __pyx_v_x1 = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_x1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 388, __pyx_L3_error)
-    __pyx_v_x2 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_x2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 389, __pyx_L3_error)
+    __pyx_v_x0 = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_x0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
+    __pyx_v_x1 = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_x1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 394, __pyx_L3_error)
+    __pyx_v_x2 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_x2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 395, __pyx_L3_error)
     __pyx_v_f_x0 = values[4];
     __pyx_v_f_x1 = values[5];
     __pyx_v_f_x2 = values[6];
     if (values[7]) {
-      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
+      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 399, __pyx_L3_error)
     } else {
       __pyx_v_etol = __pyx_k__20;
     }
     if (values[8]) {
-      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 394, __pyx_L3_error)
+      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 400, __pyx_L3_error)
     } else {
       __pyx_v_ptol = __pyx_k__21;
     }
@@ -9278,7 +9122,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObj
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("inverse_quadratic_interp", 0, 4, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 385, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("inverse_quadratic_interp", 0, 4, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 391, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.quasi_newton.inverse_quadratic_interp", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9286,7 +9130,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_7inverse_quadratic_interp(PyObj
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(__pyx_self, __pyx_v_f, __pyx_v_x0, __pyx_v_x1, __pyx_v_x2, __pyx_v_f_x0, __pyx_v_f_x1, __pyx_v_f_x2, __pyx_v_etol, __pyx_v_ptol, __pyx_v_max_iter);
 
-  /* "cyroot/quasi_newton.pyx":385
+  /* "cyroot/quasi_newton.pyx":391
  * 
  * # noinspection DuplicatedCode
  * def inverse_quadratic_interp(             # <<<<<<<<<<<<<<
@@ -9309,12 +9153,12 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
   PyObject *__pyx_v_converged = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  Py_ssize_t __pyx_t_2;
-  Py_UCS4 __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  Py_ssize_t __pyx_t_3;
+  Py_UCS4 __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
+  PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
   PyObject *__pyx_t_8 = NULL;
   double __pyx_t_9;
@@ -9334,104 +9178,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
   __Pyx_INCREF(__pyx_v_f_x1);
   __Pyx_INCREF(__pyx_v_f_x2);
 
-  /* "cyroot/quasi_newton.pyx":396
- *         ptol: float = PTOL,
- *         max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""             # <<<<<<<<<<<<<<
- *     Inverse Quadratic Interpolation method for root-finding.
- * 
- */
-  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 396, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = 0;
-  __pyx_t_3 = 127;
-  __Pyx_INCREF(__pyx_kp_u_Inverse_Quadratic_Interpolation);
-  __pyx_t_2 += 484;
-  __Pyx_GIVEREF(__pyx_kp_u_Inverse_Quadratic_Interpolation);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_Inverse_Quadratic_Interpolation);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_ETOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 396, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 396, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __Pyx_INCREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_2 += 187;
-  __Pyx_GIVEREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_PTOL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 396, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 396, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __Pyx_INCREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_2 += 155;
-  __Pyx_GIVEREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 396, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "cyroot/quasi_newton.pyx":418
+  /* "cyroot/quasi_newton.pyx":426
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  */
-  __pyx_t_6 = ((__pyx_v_etol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_etol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":419
+    /* "cyroot/quasi_newton.pyx":427
  *     # check params
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')             # <<<<<<<<<<<<<<
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 419, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 427, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_etol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 419, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 419, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_etol_must_be_positive_Got);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 427, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
-    __pyx_t_5 = 0;
-    __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
-    __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 419, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 419, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 427, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 419, __pyx_L1_error)
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
+    __Pyx_INCREF(__pyx_kp_u__6);
+    __pyx_t_3 += 1;
+    __Pyx_GIVEREF(__pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 427, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 427, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 427, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":418
+    /* "cyroot/quasi_newton.pyx":426
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
@@ -9440,56 +9236,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":420
+  /* "cyroot/quasi_newton.pyx":428
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  */
-  __pyx_t_6 = ((__pyx_v_ptol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_ptol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":421
+    /* "cyroot/quasi_newton.pyx":429
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')             # <<<<<<<<<<<<<<
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 421, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 429, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 421, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_ptol_must_be_positive_Got);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 429, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 429, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 421, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 421, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 421, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 421, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 429, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 429, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 429, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":420
+    /* "cyroot/quasi_newton.pyx":428
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
@@ -9498,54 +9294,54 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":422
+  /* "cyroot/quasi_newton.pyx":430
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  */
-  __pyx_t_6 = PyInt_Check(__pyx_v_max_iter); 
-  __pyx_t_7 = ((!(__pyx_t_6 != 0)) != 0);
+  __pyx_t_1 = PyInt_Check(__pyx_v_max_iter); 
+  __pyx_t_7 = ((!(__pyx_t_1 != 0)) != 0);
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":423
+    /* "cyroot/quasi_newton.pyx":431
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')             # <<<<<<<<<<<<<<
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 423, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 431, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_2 += 33;
+    __pyx_t_3 += 33;
     __Pyx_GIVEREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 423, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 431, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 423, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 423, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 423, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 431, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 431, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 431, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":422
+    /* "cyroot/quasi_newton.pyx":430
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
@@ -9554,121 +9350,121 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":425
+  /* "cyroot/quasi_newton.pyx":433
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')
  */
-  __pyx_t_4 = __Pyx_PyBool_FromLong((__pyx_v_x0 == __pyx_v_x1)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 425, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyBool_FromLong((__pyx_v_x1 == __pyx_v_x2)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 425, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyBool_FromLong((__pyx_v_x0 == __pyx_v_x2)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 425, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong((__pyx_v_x0 == __pyx_v_x1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 433, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyBool_FromLong((__pyx_v_x1 == __pyx_v_x2)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 433, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 425, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyBool_FromLong((__pyx_v_x0 == __pyx_v_x2)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 433, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 433, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_t_5);
-  __pyx_t_4 = 0;
-  __pyx_t_1 = 0;
+  PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_6);
+  PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_t_6);
+  __pyx_t_2 = 0;
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_any, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 425, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_6 = 0;
+  __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_any, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 433, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 425, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 433, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":426
+    /* "cyroot/quasi_newton.pyx":434
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  *         raise ValueError(f'x0, x1, and x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:
  */
-    __pyx_t_5 = PyTuple_New(7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 426, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_6 = PyTuple_New(7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 434, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_x0_x1_and_x2_must_be_different_G);
-    __pyx_t_2 += 38;
+    __pyx_t_3 += 38;
     __Pyx_GIVEREF(__pyx_kp_u_x0_x1_and_x2_must_be_different_G);
-    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_kp_u_x0_x1_and_x2_must_be_different_G);
+    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_x0_x1_and_x2_must_be_different_G);
 
-    /* "cyroot/quasi_newton.pyx":427
+    /* "cyroot/quasi_newton.pyx":435
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')             # <<<<<<<<<<<<<<
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  */
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 427, __pyx_L1_error)
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 435, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 435, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__22);
-    __pyx_t_2 += 2;
+    __pyx_t_3 += 2;
     __Pyx_GIVEREF(__pyx_kp_u__22);
-    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_kp_u__22);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 427, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_kp_u__22);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 435, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 435, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u_and_2);
-    __pyx_t_2 += 6;
+    __pyx_t_3 += 6;
     __Pyx_GIVEREF(__pyx_kp_u_and_2);
-    PyTuple_SET_ITEM(__pyx_t_5, 4, __pyx_kp_u_and_2);
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 427, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 4, __pyx_kp_u_and_2);
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 435, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 435, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_5, 5, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_6, 5, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_5, 6, __pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_6, 6, __pyx_kp_u__6);
 
-    /* "cyroot/quasi_newton.pyx":426
+    /* "cyroot/quasi_newton.pyx":434
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  *         raise ValueError(f'x0, x1, and x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:
  */
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_5, 7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 426, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 426, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_6, 7, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 434, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_5, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 434, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __PYX_ERR(0, 426, __pyx_L1_error)
+    __Pyx_Raise(__pyx_t_6, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __PYX_ERR(0, 434, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":425
+    /* "cyroot/quasi_newton.pyx":433
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):             # <<<<<<<<<<<<<<
@@ -9677,7 +9473,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":428
+  /* "cyroot/quasi_newton.pyx":436
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:             # <<<<<<<<<<<<<<
@@ -9685,39 +9481,39 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  *     if f_x1 is None:
  */
   __pyx_t_7 = (__pyx_v_f_x0 == Py_None);
-  __pyx_t_6 = (__pyx_t_7 != 0);
-  if (__pyx_t_6) {
+  __pyx_t_1 = (__pyx_t_7 != 0);
+  if (__pyx_t_1) {
 
-    /* "cyroot/quasi_newton.pyx":429
+    /* "cyroot/quasi_newton.pyx":437
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:
  *         f_x0 = f(x0)             # <<<<<<<<<<<<<<
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 429, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 437, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_8 = __pyx_v_f; __pyx_t_4 = NULL;
+    __pyx_t_8 = __pyx_v_f; __pyx_t_2 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_8);
-      if (likely(__pyx_t_4)) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
+      if (likely(__pyx_t_2)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_8, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_4, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_1);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 429, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_6 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 437, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_5);
-    __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "cyroot/quasi_newton.pyx":428
+    /* "cyroot/quasi_newton.pyx":436
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:             # <<<<<<<<<<<<<<
@@ -9726,47 +9522,47 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":430
+  /* "cyroot/quasi_newton.pyx":438
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  *     if f_x1 is None:             # <<<<<<<<<<<<<<
  *         f_x1 = f(x1)
  *     if f_x2 is None:
  */
-  __pyx_t_6 = (__pyx_v_f_x1 == Py_None);
-  __pyx_t_7 = (__pyx_t_6 != 0);
+  __pyx_t_1 = (__pyx_v_f_x1 == Py_None);
+  __pyx_t_7 = (__pyx_t_1 != 0);
   if (__pyx_t_7) {
 
-    /* "cyroot/quasi_newton.pyx":431
+    /* "cyroot/quasi_newton.pyx":439
  *         f_x0 = f(x0)
  *     if f_x1 is None:
  *         f_x1 = f(x1)             # <<<<<<<<<<<<<<
  *     if f_x2 is None:
  *         f_x2 = f(x2)
  */
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 431, __pyx_L1_error)
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 439, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_1 = __pyx_v_f; __pyx_t_4 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_1);
-      if (likely(__pyx_t_4)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-        __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_5 = __pyx_v_f; __pyx_t_2 = NULL;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
+      if (likely(__pyx_t_2)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_1, function);
+        __Pyx_DECREF_SET(__pyx_t_5, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_4, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_8);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_6 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_8);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 431, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x1, __pyx_t_5);
-    __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 439, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x1, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "cyroot/quasi_newton.pyx":430
+    /* "cyroot/quasi_newton.pyx":438
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  *     if f_x1 is None:             # <<<<<<<<<<<<<<
@@ -9775,7 +9571,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":432
+  /* "cyroot/quasi_newton.pyx":440
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  *     if f_x2 is None:             # <<<<<<<<<<<<<<
@@ -9783,39 +9579,39 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  *     if f_x0 == f_x1 == f_x2:
  */
   __pyx_t_7 = (__pyx_v_f_x2 == Py_None);
-  __pyx_t_6 = (__pyx_t_7 != 0);
-  if (__pyx_t_6) {
+  __pyx_t_1 = (__pyx_t_7 != 0);
+  if (__pyx_t_1) {
 
-    /* "cyroot/quasi_newton.pyx":433
+    /* "cyroot/quasi_newton.pyx":441
  *         f_x1 = f(x1)
  *     if f_x2 is None:
  *         f_x2 = f(x2)             # <<<<<<<<<<<<<<
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_x2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 433, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 441, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_8 = __pyx_v_f; __pyx_t_4 = NULL;
+    __pyx_t_8 = __pyx_v_f; __pyx_t_2 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_8);
-      if (likely(__pyx_t_4)) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
+      if (likely(__pyx_t_2)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_8, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_4, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_1);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 433, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_6 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 441, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x2, __pyx_t_5);
-    __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x2, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "cyroot/quasi_newton.pyx":432
+    /* "cyroot/quasi_newton.pyx":440
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  *     if f_x2 is None:             # <<<<<<<<<<<<<<
@@ -9824,97 +9620,97 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":434
+  /* "cyroot/quasi_newton.pyx":442
  *     if f_x2 is None:
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  */
-  __pyx_t_5 = PyObject_RichCompare(__pyx_v_f_x0, __pyx_v_f_x1, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 434, __pyx_L1_error)
-  if (__Pyx_PyObject_IsTrue(__pyx_t_5)) {
-    __Pyx_DECREF(__pyx_t_5);
-    __pyx_t_5 = PyObject_RichCompare(__pyx_v_f_x1, __pyx_v_f_x2, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 434, __pyx_L1_error)
+  __pyx_t_6 = PyObject_RichCompare(__pyx_v_f_x0, __pyx_v_f_x1, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 442, __pyx_L1_error)
+  if (__Pyx_PyObject_IsTrue(__pyx_t_6)) {
+    __Pyx_DECREF(__pyx_t_6);
+    __pyx_t_6 = PyObject_RichCompare(__pyx_v_f_x1, __pyx_v_f_x2, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 442, __pyx_L1_error)
   }
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 434, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 442, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":435
+    /* "cyroot/quasi_newton.pyx":443
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  * 
  */
-    __pyx_t_5 = PyTuple_New(7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 435, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_6 = PyTuple_New(7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
-    __pyx_t_2 += 44;
+    __pyx_t_3 += 44;
     __Pyx_GIVEREF(__pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
-    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
+    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
 
-    /* "cyroot/quasi_newton.pyx":436
+    /* "cyroot/quasi_newton.pyx":444
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')             # <<<<<<<<<<<<<<
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  */
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x0, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 436, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x0, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 444, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u__22);
-    __pyx_t_2 += 2;
+    __pyx_t_3 += 2;
     __Pyx_GIVEREF(__pyx_kp_u__22);
-    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_kp_u__22);
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x1, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 436, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_kp_u__22);
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x1, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 444, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u_and_2);
-    __pyx_t_2 += 6;
+    __pyx_t_3 += 6;
     __Pyx_GIVEREF(__pyx_kp_u_and_2);
-    PyTuple_SET_ITEM(__pyx_t_5, 4, __pyx_kp_u_and_2);
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x2, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 436, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 4, __pyx_kp_u_and_2);
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x2, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 444, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 5, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 5, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_5, 6, __pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_6, 6, __pyx_kp_u__6);
 
-    /* "cyroot/quasi_newton.pyx":435
+    /* "cyroot/quasi_newton.pyx":443
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  * 
  */
-    __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_5, 7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 435, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_6, 7, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 443, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 435, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 443, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_Raise(__pyx_t_5, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __PYX_ERR(0, 435, __pyx_L1_error)
+    __Pyx_Raise(__pyx_t_6, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __PYX_ERR(0, 443, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":434
+    /* "cyroot/quasi_newton.pyx":442
  *     if f_x2 is None:
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:             # <<<<<<<<<<<<<<
@@ -9923,31 +9719,31 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":438
+  /* "cyroot/quasi_newton.pyx":446
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)             # <<<<<<<<<<<<<<
  *     r, f_r, step, precision, error, converged = inverse_quadratic_interp_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
  */
-  __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 438, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_5);
-  __pyx_t_5 = 0;
+  __pyx_t_6 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 446, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_6);
+  __pyx_t_6 = 0;
 
-  /* "cyroot/quasi_newton.pyx":440
+  /* "cyroot/quasi_newton.pyx":448
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = inverse_quadratic_interp_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)             # <<<<<<<<<<<<<<
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)
  */
-  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_f_x0); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 440, __pyx_L1_error)
-  __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_v_f_x1); if (unlikely((__pyx_t_10 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 440, __pyx_L1_error)
-  __pyx_t_11 = __pyx_PyFloat_AsDouble(__pyx_v_f_x2); if (unlikely((__pyx_t_11 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 440, __pyx_L1_error)
-  __pyx_t_12 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_12 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 440, __pyx_L1_error)
+  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_f_x0); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 448, __pyx_L1_error)
+  __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_v_f_x1); if (unlikely((__pyx_t_10 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 448, __pyx_L1_error)
+  __pyx_t_11 = __pyx_PyFloat_AsDouble(__pyx_v_f_x2); if (unlikely((__pyx_t_11 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 448, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_12 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 448, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":439
+  /* "cyroot/quasi_newton.pyx":447
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = inverse_quadratic_interp_kernel[DoubleScalarFPtr](             # <<<<<<<<<<<<<<
@@ -9959,32 +9755,32 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
   __pyx_t_14.ptol = __pyx_v_ptol;
   __pyx_t_14.max_iter = __pyx_t_12;
   __pyx_t_13 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_v_x1, __pyx_v_x2, __pyx_t_9, __pyx_t_10, __pyx_t_11, &__pyx_t_14); 
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_t_13.f0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 439, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_t_13.f1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 439, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_t_13.f0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 447, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_t_13.f1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 447, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_t_13.f2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 439, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_13.f3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 439, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_15 = PyFloat_FromDouble(__pyx_t_13.f4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 439, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_t_13.f2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 447, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_13.f3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 447, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_15 = PyFloat_FromDouble(__pyx_t_13.f4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 447, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __pyx_t_16 = __Pyx_PyBool_FromLong(__pyx_t_13.f5); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 439, __pyx_L1_error)
+  __pyx_t_16 = __Pyx_PyBool_FromLong(__pyx_t_13.f5); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 447, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_16);
-  __pyx_v_r = __pyx_t_5;
-  __pyx_t_5 = 0;
+  __pyx_v_r = __pyx_t_6;
+  __pyx_t_6 = 0;
   __pyx_v_f_r = __pyx_t_8;
   __pyx_t_8 = 0;
-  __pyx_v_step = __pyx_t_1;
-  __pyx_t_1 = 0;
-  __pyx_v_precision = __pyx_t_4;
-  __pyx_t_4 = 0;
+  __pyx_v_step = __pyx_t_5;
+  __pyx_t_5 = 0;
+  __pyx_v_precision = __pyx_t_2;
+  __pyx_t_2 = 0;
   __pyx_v_error = __pyx_t_15;
   __pyx_t_15 = 0;
   __pyx_v_converged = __pyx_t_16;
   __pyx_t_16 = 0;
 
-  /* "cyroot/quasi_newton.pyx":441
+  /* "cyroot/quasi_newton.pyx":449
  *     r, f_r, step, precision, error, converged = inverse_quadratic_interp_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,             # <<<<<<<<<<<<<<
@@ -9992,25 +9788,25 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 441, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 449, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __pyx_t_4 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 441, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 449, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
 
-  /* "cyroot/quasi_newton.pyx":442
+  /* "cyroot/quasi_newton.pyx":450
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)             # <<<<<<<<<<<<<<
  * 
  * ################################################################################
  */
-  __pyx_t_1 = NULL;
+  __pyx_t_5 = NULL;
   __pyx_t_17 = 0;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_15))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_15);
-    if (likely(__pyx_t_1)) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_15);
+    if (likely(__pyx_t_5)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_15);
-      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_15, function);
       __pyx_t_17 = 1;
@@ -10018,27 +9814,27 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_15)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_1, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_4, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_16 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 441, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_2, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_16 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 449, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_16);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_15)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_1, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_4, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_16 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 441, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_2, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_16 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 449, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_16);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(7+__pyx_t_17); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 441, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(7+__pyx_t_17); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 449, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    if (__pyx_t_1) {
-      __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_1); __pyx_t_1 = NULL;
+    if (__pyx_t_5) {
+      __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_5); __pyx_t_5 = NULL;
     }
     __Pyx_INCREF(__pyx_v_r);
     __Pyx_GIVEREF(__pyx_v_r);
@@ -10049,8 +9845,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
     __Pyx_INCREF(__pyx_v_step);
     __Pyx_GIVEREF(__pyx_v_step);
     PyTuple_SET_ITEM(__pyx_t_8, 2+__pyx_t_17, __pyx_v_step);
-    __Pyx_GIVEREF(__pyx_t_4);
-    PyTuple_SET_ITEM(__pyx_t_8, 3+__pyx_t_17, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_8, 3+__pyx_t_17, __pyx_t_2);
     __Pyx_INCREF(__pyx_v_precision);
     __Pyx_GIVEREF(__pyx_v_precision);
     PyTuple_SET_ITEM(__pyx_t_8, 4+__pyx_t_17, __pyx_v_precision);
@@ -10060,8 +9856,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
     __Pyx_INCREF(__pyx_v_converged);
     __Pyx_GIVEREF(__pyx_v_converged);
     PyTuple_SET_ITEM(__pyx_t_8, 6+__pyx_t_17, __pyx_v_converged);
-    __pyx_t_4 = 0;
-    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_8, NULL); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 441, __pyx_L1_error)
+    __pyx_t_2 = 0;
+    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_8, NULL); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 449, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
@@ -10070,7 +9866,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
   __pyx_t_16 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":385
+  /* "cyroot/quasi_newton.pyx":391
  * 
  * # noinspection DuplicatedCode
  * def inverse_quadratic_interp(             # <<<<<<<<<<<<<<
@@ -10080,9 +9876,9 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_15);
   __Pyx_XDECREF(__pyx_t_16);
@@ -10104,7 +9900,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":448
+/* "cyroot/quasi_newton.pyx":456
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
@@ -10154,7 +9950,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     }
   }
 
-  /* "cyroot/quasi_newton.pyx":459
+  /* "cyroot/quasi_newton.pyx":467
  *         double ptol=PTOL,
  *         long max_iter=0):
  *     cdef double precision = math.INFINITY, error = math.INFINITY             # <<<<<<<<<<<<<<
@@ -10164,7 +9960,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_v_precision = INFINITY;
   __pyx_v_error = INFINITY;
 
-  /* "cyroot/quasi_newton.pyx":460
+  /* "cyroot/quasi_newton.pyx":468
  *         long max_iter=0):
  *     cdef double precision = math.INFINITY, error = math.INFINITY
  *     cdef long step = 0             # <<<<<<<<<<<<<<
@@ -10173,7 +9969,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
   __pyx_v_step = 0;
 
-  /* "cyroot/quasi_newton.pyx":462
+  /* "cyroot/quasi_newton.pyx":470
  *     cdef long step = 0
  *     cdef double x3, d_01, d_12, df_01, df_02, df_12
  *     cdef converged = True             # <<<<<<<<<<<<<<
@@ -10183,7 +9979,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __Pyx_INCREF(Py_True);
   __pyx_v_converged = Py_True;
 
-  /* "cyroot/quasi_newton.pyx":463
+  /* "cyroot/quasi_newton.pyx":471
  *     cdef double x3, d_01, d_12, df_01, df_02, df_12
  *     cdef converged = True
  *     while error > etol and precision > ptol:             # <<<<<<<<<<<<<<
@@ -10202,7 +9998,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_L5_bool_binop_done:;
     if (!__pyx_t_1) break;
 
-    /* "cyroot/quasi_newton.pyx":464
+    /* "cyroot/quasi_newton.pyx":472
  *     cdef converged = True
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:             # <<<<<<<<<<<<<<
@@ -10216,7 +10012,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_2 = (__pyx_t_1 != 0);
     if (__pyx_t_2) {
 
-      /* "cyroot/quasi_newton.pyx":465
+      /* "cyroot/quasi_newton.pyx":473
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -10226,7 +10022,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":466
+      /* "cyroot/quasi_newton.pyx":474
  *         if step > max_iter > 0:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -10235,7 +10031,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":464
+      /* "cyroot/quasi_newton.pyx":472
  *     cdef converged = True
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0:             # <<<<<<<<<<<<<<
@@ -10244,7 +10040,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":467
+    /* "cyroot/quasi_newton.pyx":475
  *             converged = False
  *             break
  *         step += 1             # <<<<<<<<<<<<<<
@@ -10253,7 +10049,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_step = (__pyx_v_step + 1);
 
-    /* "cyroot/quasi_newton.pyx":469
+    /* "cyroot/quasi_newton.pyx":477
  *         step += 1
  * 
  *         d_01 = x0 - x1             # <<<<<<<<<<<<<<
@@ -10262,7 +10058,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_d_01 = (__pyx_v_x0 - __pyx_v_x1);
 
-    /* "cyroot/quasi_newton.pyx":470
+    /* "cyroot/quasi_newton.pyx":478
  * 
  *         d_01 = x0 - x1
  *         d_12 = x1 - x2             # <<<<<<<<<<<<<<
@@ -10271,7 +10067,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_d_12 = (__pyx_v_x1 - __pyx_v_x2);
 
-    /* "cyroot/quasi_newton.pyx":471
+    /* "cyroot/quasi_newton.pyx":479
  *         d_01 = x0 - x1
  *         d_12 = x1 - x2
  *         df_01 = f_x0 - f_x1             # <<<<<<<<<<<<<<
@@ -10280,7 +10076,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_df_01 = (__pyx_v_f_x0 - __pyx_v_f_x1);
 
-    /* "cyroot/quasi_newton.pyx":472
+    /* "cyroot/quasi_newton.pyx":480
  *         d_12 = x1 - x2
  *         df_01 = f_x0 - f_x1
  *         df_02 = f_x0 - f_x2             # <<<<<<<<<<<<<<
@@ -10289,7 +10085,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_df_02 = (__pyx_v_f_x0 - __pyx_v_f_x2);
 
-    /* "cyroot/quasi_newton.pyx":473
+    /* "cyroot/quasi_newton.pyx":481
  *         df_01 = f_x0 - f_x1
  *         df_02 = f_x0 - f_x2
  *         df_12 = f_x1 - f_x2             # <<<<<<<<<<<<<<
@@ -10298,7 +10094,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_df_12 = (__pyx_v_f_x1 - __pyx_v_f_x2);
 
-    /* "cyroot/quasi_newton.pyx":474
+    /* "cyroot/quasi_newton.pyx":482
  *         df_02 = f_x0 - f_x2
  *         df_12 = f_x1 - f_x2
  *         if d_01 == 0 or d_12 == 0:             # <<<<<<<<<<<<<<
@@ -10316,7 +10112,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_L9_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "cyroot/quasi_newton.pyx":475
+      /* "cyroot/quasi_newton.pyx":483
  *         df_12 = f_x1 - f_x2
  *         if d_01 == 0 or d_12 == 0:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -10326,7 +10122,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":476
+      /* "cyroot/quasi_newton.pyx":484
  *         if d_01 == 0 or d_12 == 0:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -10335,7 +10131,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":474
+      /* "cyroot/quasi_newton.pyx":482
  *         df_02 = f_x0 - f_x2
  *         df_12 = f_x1 - f_x2
  *         if d_01 == 0 or d_12 == 0:             # <<<<<<<<<<<<<<
@@ -10344,7 +10140,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":477
+    /* "cyroot/quasi_newton.pyx":485
  *             converged = False
  *             break
  *         denom = f_x0 * df_12 / d_12 - f_x2 * df_01 / d_01             # <<<<<<<<<<<<<<
@@ -10353,7 +10149,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_denom = (((__pyx_v_f_x0 * __pyx_v_df_12) / __pyx_v_d_12) - ((__pyx_v_f_x2 * __pyx_v_df_01) / __pyx_v_d_01));
 
-    /* "cyroot/quasi_newton.pyx":478
+    /* "cyroot/quasi_newton.pyx":486
  *             break
  *         denom = f_x0 * df_12 / d_12 - f_x2 * df_01 / d_01
  *         if denom == 0:             # <<<<<<<<<<<<<<
@@ -10363,7 +10159,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_2 = ((__pyx_v_denom == 0.0) != 0);
     if (__pyx_t_2) {
 
-      /* "cyroot/quasi_newton.pyx":479
+      /* "cyroot/quasi_newton.pyx":487
  *         denom = f_x0 * df_12 / d_12 - f_x2 * df_01 / d_01
  *         if denom == 0:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -10373,7 +10169,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":480
+      /* "cyroot/quasi_newton.pyx":488
  *         if denom == 0:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -10382,7 +10178,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":478
+      /* "cyroot/quasi_newton.pyx":486
  *             break
  *         denom = f_x0 * df_12 / d_12 - f_x2 * df_01 / d_01
  *         if denom == 0:             # <<<<<<<<<<<<<<
@@ -10391,7 +10187,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":481
+    /* "cyroot/quasi_newton.pyx":489
  *             converged = False
  *             break
  *         x3 = x1 - f_x1 * df_02 / denom             # <<<<<<<<<<<<<<
@@ -10400,7 +10196,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_x3 = (__pyx_v_x1 - ((__pyx_v_f_x1 * __pyx_v_df_02) / __pyx_v_denom));
 
-    /* "cyroot/quasi_newton.pyx":482
+    /* "cyroot/quasi_newton.pyx":490
  *             break
  *         x3 = x1 - f_x1 * df_02 / denom
  *         x0, f_x0 = x1, f_x1             # <<<<<<<<<<<<<<
@@ -10412,7 +10208,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_v_x0 = __pyx_t_3;
     __pyx_v_f_x0 = __pyx_t_4;
 
-    /* "cyroot/quasi_newton.pyx":483
+    /* "cyroot/quasi_newton.pyx":491
  *         x3 = x1 - f_x1 * df_02 / denom
  *         x0, f_x0 = x1, f_x1
  *         x1, f_x1 = x2, f_x2             # <<<<<<<<<<<<<<
@@ -10424,7 +10220,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_v_x1 = __pyx_t_4;
     __pyx_v_f_x1 = __pyx_t_3;
 
-    /* "cyroot/quasi_newton.pyx":484
+    /* "cyroot/quasi_newton.pyx":492
  *         x0, f_x0 = x1, f_x1
  *         x1, f_x1 = x2, f_x2
  *         x2, f_x2 = x3, f(x3)             # <<<<<<<<<<<<<<
@@ -10432,7 +10228,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  *         precision = math.fabs(x2 - x1)
  */
     __pyx_t_3 = __pyx_v_x3;
-    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_x3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 484, __pyx_L1_error)
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_x3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 492, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_INCREF(((PyObject *)__pyx_v_f));
     __pyx_t_7 = ((PyObject *)__pyx_v_f); __pyx_t_8 = NULL;
@@ -10448,15 +10244,15 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
     __pyx_t_5 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_8, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_6);
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 484, __pyx_L1_error)
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 492, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_4 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_4 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 484, __pyx_L1_error)
+    __pyx_t_4 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_4 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 492, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_x2 = __pyx_t_3;
     __pyx_v_f_x2 = __pyx_t_4;
 
-    /* "cyroot/quasi_newton.pyx":486
+    /* "cyroot/quasi_newton.pyx":494
  *         x2, f_x2 = x3, f(x3)
  * 
  *         precision = math.fabs(x2 - x1)             # <<<<<<<<<<<<<<
@@ -10465,7 +10261,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
  */
     __pyx_v_precision = fabs((__pyx_v_x2 - __pyx_v_x1));
 
-    /* "cyroot/quasi_newton.pyx":487
+    /* "cyroot/quasi_newton.pyx":495
  * 
  *         precision = math.fabs(x2 - x1)
  *         error = math.fabs(f_x2)             # <<<<<<<<<<<<<<
@@ -10476,14 +10272,14 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   }
   __pyx_L4_break:;
 
-  /* "cyroot/quasi_newton.pyx":488
+  /* "cyroot/quasi_newton.pyx":496
  *         precision = math.fabs(x2 - x1)
  *         error = math.fabs(f_x2)
  *     return x2, f_x2, step, precision, error, converged             # <<<<<<<<<<<<<<
  * 
  * # noinspection DuplicatedCode
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 488, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 496, __pyx_L1_error)
   __pyx_t_9.f0 = __pyx_v_x2;
   __pyx_t_9.f1 = __pyx_v_f_x2;
   __pyx_t_9.f2 = __pyx_v_step;
@@ -10493,7 +10289,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   __pyx_r = __pyx_t_9;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":448
+  /* "cyroot/quasi_newton.pyx":456
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
@@ -10515,7 +10311,7 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":491
+/* "cyroot/quasi_newton.pyx":499
  * 
  * # noinspection DuplicatedCode
  * def hyperbolic_interp(             # <<<<<<<<<<<<<<
@@ -10525,7 +10321,8 @@ static __pyx_ctuple_double__and_double__and_long__and_double__and_double__and_in
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_9hyperbolic_interp = {"hyperbolic_interp", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_6cyroot_12quasi_newton_8hyperbolic_interp[] = "\n    Hyperbolic Interpolation method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        x1: Second initial point.\n        x2: Third initial point.\n        f_x0: Value evaluated at first initial point.\n        f_x1: Value evaluated at second initial point.\n        f_x2: Value evaluated at third initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to {ETOL}.\n        ptol: Precision tolerance, indicating the minimum change\n         of root approximations or width of brackets (in bracketing\n         methods) after each iteration. Defaults to {PTOL}.\n        max_iter: Maximum number of iterations. If set to 0, the\n         procedure will run indefinitely until stopping condition is\n         met. Defaults to 0.\n\n    Returns:\n        solution: The solution represented as a ``RootResults`` object.\n    ";
+static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_9hyperbolic_interp = {"hyperbolic_interp", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6cyroot_12quasi_newton_8hyperbolic_interp};
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_f = 0;
   double __pyx_v_x0;
@@ -10547,7 +10344,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_f,&__pyx_n_s_x0,&__pyx_n_s_x1,&__pyx_n_s_x2,&__pyx_n_s_f_x0,&__pyx_n_s_f_x1,&__pyx_n_s_f_x2,&__pyx_n_s_etol,&__pyx_n_s_ptol,&__pyx_n_s_max_iter,0};
     PyObject* values[10] = {0,0,0,0,0,0,0,0,0,0};
 
-    /* "cyroot/quasi_newton.pyx":496
+    /* "cyroot/quasi_newton.pyx":504
  *         x1: float,
  *         x2: float,
  *         f_x0: Optional[float] = None,             # <<<<<<<<<<<<<<
@@ -10556,7 +10353,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__
  */
     values[4] = ((PyObject *)Py_None);
 
-    /* "cyroot/quasi_newton.pyx":497
+    /* "cyroot/quasi_newton.pyx":505
  *         x2: float,
  *         f_x0: Optional[float] = None,
  *         f_x1: Optional[float] = None,             # <<<<<<<<<<<<<<
@@ -10565,7 +10362,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__
  */
     values[5] = ((PyObject *)Py_None);
 
-    /* "cyroot/quasi_newton.pyx":498
+    /* "cyroot/quasi_newton.pyx":506
  *         f_x0: Optional[float] = None,
  *         f_x1: Optional[float] = None,
  *         f_x2: Optional[float] = None,             # <<<<<<<<<<<<<<
@@ -10610,19 +10407,19 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x0)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("hyperbolic_interp", 0, 4, 10, 1); __PYX_ERR(0, 491, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("hyperbolic_interp", 0, 4, 10, 1); __PYX_ERR(0, 499, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("hyperbolic_interp", 0, 4, 10, 2); __PYX_ERR(0, 491, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("hyperbolic_interp", 0, 4, 10, 2); __PYX_ERR(0, 499, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("hyperbolic_interp", 0, 4, 10, 3); __PYX_ERR(0, 491, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("hyperbolic_interp", 0, 4, 10, 3); __PYX_ERR(0, 499, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
@@ -10662,7 +10459,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "hyperbolic_interp") < 0)) __PYX_ERR(0, 491, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "hyperbolic_interp") < 0)) __PYX_ERR(0, 499, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -10687,19 +10484,19 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__
       }
     }
     __pyx_v_f = values[0];
-    __pyx_v_x0 = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_x0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 493, __pyx_L3_error)
-    __pyx_v_x1 = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_x1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 494, __pyx_L3_error)
-    __pyx_v_x2 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_x2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 495, __pyx_L3_error)
+    __pyx_v_x0 = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_x0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 501, __pyx_L3_error)
+    __pyx_v_x1 = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_x1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 502, __pyx_L3_error)
+    __pyx_v_x2 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_x2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 503, __pyx_L3_error)
     __pyx_v_f_x0 = values[4];
     __pyx_v_f_x1 = values[5];
     __pyx_v_f_x2 = values[6];
     if (values[7]) {
-      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 499, __pyx_L3_error)
+      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 507, __pyx_L3_error)
     } else {
       __pyx_v_etol = __pyx_k__26;
     }
     if (values[8]) {
-      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 500, __pyx_L3_error)
+      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 508, __pyx_L3_error)
     } else {
       __pyx_v_ptol = __pyx_k__27;
     }
@@ -10707,7 +10504,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("hyperbolic_interp", 0, 4, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 491, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("hyperbolic_interp", 0, 4, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 499, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.quasi_newton.hyperbolic_interp", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -10715,7 +10512,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_9hyperbolic_interp(PyObject *__
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(__pyx_self, __pyx_v_f, __pyx_v_x0, __pyx_v_x1, __pyx_v_x2, __pyx_v_f_x0, __pyx_v_f_x1, __pyx_v_f_x2, __pyx_v_etol, __pyx_v_ptol, __pyx_v_max_iter);
 
-  /* "cyroot/quasi_newton.pyx":491
+  /* "cyroot/quasi_newton.pyx":499
  * 
  * # noinspection DuplicatedCode
  * def hyperbolic_interp(             # <<<<<<<<<<<<<<
@@ -10738,12 +10535,12 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
   PyObject *__pyx_v_converged = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  Py_ssize_t __pyx_t_2;
-  Py_UCS4 __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  Py_ssize_t __pyx_t_3;
+  Py_UCS4 __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
+  PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
   PyObject *__pyx_t_8 = NULL;
   double __pyx_t_9;
@@ -10763,104 +10560,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
   __Pyx_INCREF(__pyx_v_f_x1);
   __Pyx_INCREF(__pyx_v_f_x2);
 
-  /* "cyroot/quasi_newton.pyx":502
- *         ptol: float = PTOL,
- *         max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""             # <<<<<<<<<<<<<<
- *     Hyperbolic Interpolation method for root-finding.
- * 
- */
-  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 502, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = 0;
-  __pyx_t_3 = 127;
-  __Pyx_INCREF(__pyx_kp_u_Hyperbolic_Interpolation_method);
-  __pyx_t_2 += 477;
-  __Pyx_GIVEREF(__pyx_kp_u_Hyperbolic_Interpolation_method);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_Hyperbolic_Interpolation_method);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_ETOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 502, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 502, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __Pyx_INCREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_2 += 187;
-  __Pyx_GIVEREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_PTOL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 502, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 502, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __Pyx_INCREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_2 += 155;
-  __Pyx_GIVEREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 502, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "cyroot/quasi_newton.pyx":524
+  /* "cyroot/quasi_newton.pyx":534
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  */
-  __pyx_t_6 = ((__pyx_v_etol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_etol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":525
+    /* "cyroot/quasi_newton.pyx":535
  *     # check params
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')             # <<<<<<<<<<<<<<
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 525, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 535, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_etol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 525, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 525, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_etol_must_be_positive_Got);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 535, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
-    __pyx_t_5 = 0;
-    __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
-    __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 525, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 525, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 535, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 525, __pyx_L1_error)
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
+    __Pyx_INCREF(__pyx_kp_u__6);
+    __pyx_t_3 += 1;
+    __Pyx_GIVEREF(__pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 535, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 535, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 535, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":524
+    /* "cyroot/quasi_newton.pyx":534
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
@@ -10869,56 +10618,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":526
+  /* "cyroot/quasi_newton.pyx":536
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  */
-  __pyx_t_6 = ((__pyx_v_ptol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_ptol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":527
+    /* "cyroot/quasi_newton.pyx":537
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')             # <<<<<<<<<<<<<<
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 527, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 537, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 527, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_ptol_must_be_positive_Got);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 537, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 537, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 527, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 527, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 527, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 527, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 537, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 537, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 537, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":526
+    /* "cyroot/quasi_newton.pyx":536
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
@@ -10927,54 +10676,54 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":528
+  /* "cyroot/quasi_newton.pyx":538
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  */
-  __pyx_t_6 = PyInt_Check(__pyx_v_max_iter); 
-  __pyx_t_7 = ((!(__pyx_t_6 != 0)) != 0);
+  __pyx_t_1 = PyInt_Check(__pyx_v_max_iter); 
+  __pyx_t_7 = ((!(__pyx_t_1 != 0)) != 0);
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":529
+    /* "cyroot/quasi_newton.pyx":539
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')             # <<<<<<<<<<<<<<
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 529, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 539, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_2 += 33;
+    __pyx_t_3 += 33;
     __Pyx_GIVEREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 529, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 539, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 529, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 529, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 529, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 539, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 539, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 539, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":528
+    /* "cyroot/quasi_newton.pyx":538
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
@@ -10983,121 +10732,121 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":531
+  /* "cyroot/quasi_newton.pyx":541
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')
  */
-  __pyx_t_4 = __Pyx_PyBool_FromLong((__pyx_v_x0 == __pyx_v_x1)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 531, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyBool_FromLong((__pyx_v_x1 == __pyx_v_x2)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 531, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyBool_FromLong((__pyx_v_x0 == __pyx_v_x2)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 531, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong((__pyx_v_x0 == __pyx_v_x1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 541, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyBool_FromLong((__pyx_v_x1 == __pyx_v_x2)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 541, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 531, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyBool_FromLong((__pyx_v_x0 == __pyx_v_x2)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 541, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 541, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_t_5);
-  __pyx_t_4 = 0;
-  __pyx_t_1 = 0;
+  PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_6);
+  PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_t_6);
+  __pyx_t_2 = 0;
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_any, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 531, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_6 = 0;
+  __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_any, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 541, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 531, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 541, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":532
+    /* "cyroot/quasi_newton.pyx":542
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  *         raise ValueError(f'x0, x1, and x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:
  */
-    __pyx_t_5 = PyTuple_New(7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 532, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_6 = PyTuple_New(7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 542, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_x0_x1_and_x2_must_be_different_G);
-    __pyx_t_2 += 38;
+    __pyx_t_3 += 38;
     __Pyx_GIVEREF(__pyx_kp_u_x0_x1_and_x2_must_be_different_G);
-    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_kp_u_x0_x1_and_x2_must_be_different_G);
+    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_x0_x1_and_x2_must_be_different_G);
 
-    /* "cyroot/quasi_newton.pyx":533
+    /* "cyroot/quasi_newton.pyx":543
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')             # <<<<<<<<<<<<<<
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  */
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 533, __pyx_L1_error)
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 543, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 533, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 543, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__22);
-    __pyx_t_2 += 2;
+    __pyx_t_3 += 2;
     __Pyx_GIVEREF(__pyx_kp_u__22);
-    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_kp_u__22);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 533, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 533, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_kp_u__22);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 543, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 543, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u_and_2);
-    __pyx_t_2 += 6;
+    __pyx_t_3 += 6;
     __Pyx_GIVEREF(__pyx_kp_u_and_2);
-    PyTuple_SET_ITEM(__pyx_t_5, 4, __pyx_kp_u_and_2);
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 533, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 4, __pyx_kp_u_and_2);
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 543, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 533, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 543, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_5, 5, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_6, 5, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_5, 6, __pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_6, 6, __pyx_kp_u__6);
 
-    /* "cyroot/quasi_newton.pyx":532
+    /* "cyroot/quasi_newton.pyx":542
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  *         raise ValueError(f'x0, x1, and x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:
  */
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_5, 7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 532, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 532, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_6, 7, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 542, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_5, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 542, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __PYX_ERR(0, 532, __pyx_L1_error)
+    __Pyx_Raise(__pyx_t_6, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __PYX_ERR(0, 542, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":531
+    /* "cyroot/quasi_newton.pyx":541
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):             # <<<<<<<<<<<<<<
@@ -11106,7 +10855,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":534
+  /* "cyroot/quasi_newton.pyx":544
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:             # <<<<<<<<<<<<<<
@@ -11114,39 +10863,39 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  *     if f_x1 is None:
  */
   __pyx_t_7 = (__pyx_v_f_x0 == Py_None);
-  __pyx_t_6 = (__pyx_t_7 != 0);
-  if (__pyx_t_6) {
+  __pyx_t_1 = (__pyx_t_7 != 0);
+  if (__pyx_t_1) {
 
-    /* "cyroot/quasi_newton.pyx":535
+    /* "cyroot/quasi_newton.pyx":545
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:
  *         f_x0 = f(x0)             # <<<<<<<<<<<<<<
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 535, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 545, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_8 = __pyx_v_f; __pyx_t_4 = NULL;
+    __pyx_t_8 = __pyx_v_f; __pyx_t_2 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_8);
-      if (likely(__pyx_t_4)) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
+      if (likely(__pyx_t_2)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_8, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_4, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_1);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 535, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_6 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 545, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_5);
-    __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "cyroot/quasi_newton.pyx":534
+    /* "cyroot/quasi_newton.pyx":544
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:             # <<<<<<<<<<<<<<
@@ -11155,47 +10904,47 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":536
+  /* "cyroot/quasi_newton.pyx":546
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  *     if f_x1 is None:             # <<<<<<<<<<<<<<
  *         f_x1 = f(x1)
  *     if f_x2 is None:
  */
-  __pyx_t_6 = (__pyx_v_f_x1 == Py_None);
-  __pyx_t_7 = (__pyx_t_6 != 0);
+  __pyx_t_1 = (__pyx_v_f_x1 == Py_None);
+  __pyx_t_7 = (__pyx_t_1 != 0);
   if (__pyx_t_7) {
 
-    /* "cyroot/quasi_newton.pyx":537
+    /* "cyroot/quasi_newton.pyx":547
  *         f_x0 = f(x0)
  *     if f_x1 is None:
  *         f_x1 = f(x1)             # <<<<<<<<<<<<<<
  *     if f_x2 is None:
  *         f_x2 = f(x2)
  */
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 537, __pyx_L1_error)
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_x1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 547, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_1 = __pyx_v_f; __pyx_t_4 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_1);
-      if (likely(__pyx_t_4)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-        __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_5 = __pyx_v_f; __pyx_t_2 = NULL;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
+      if (likely(__pyx_t_2)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_1, function);
+        __Pyx_DECREF_SET(__pyx_t_5, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_4, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_8);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_6 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_8);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 537, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x1, __pyx_t_5);
-    __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 547, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x1, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "cyroot/quasi_newton.pyx":536
+    /* "cyroot/quasi_newton.pyx":546
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  *     if f_x1 is None:             # <<<<<<<<<<<<<<
@@ -11204,7 +10953,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":538
+  /* "cyroot/quasi_newton.pyx":548
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  *     if f_x2 is None:             # <<<<<<<<<<<<<<
@@ -11212,39 +10961,39 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  *     if f_x0 == f_x1 == f_x2:
  */
   __pyx_t_7 = (__pyx_v_f_x2 == Py_None);
-  __pyx_t_6 = (__pyx_t_7 != 0);
-  if (__pyx_t_6) {
+  __pyx_t_1 = (__pyx_t_7 != 0);
+  if (__pyx_t_1) {
 
-    /* "cyroot/quasi_newton.pyx":539
+    /* "cyroot/quasi_newton.pyx":549
  *         f_x1 = f(x1)
  *     if f_x2 is None:
  *         f_x2 = f(x2)             # <<<<<<<<<<<<<<
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_x2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 539, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_x2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 549, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_8 = __pyx_v_f; __pyx_t_4 = NULL;
+    __pyx_t_8 = __pyx_v_f; __pyx_t_2 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_8);
-      if (likely(__pyx_t_4)) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
+      if (likely(__pyx_t_2)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_8, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_4, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_1);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 539, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_6 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 549, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x2, __pyx_t_5);
-    __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x2, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "cyroot/quasi_newton.pyx":538
+    /* "cyroot/quasi_newton.pyx":548
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  *     if f_x2 is None:             # <<<<<<<<<<<<<<
@@ -11253,97 +11002,97 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":540
+  /* "cyroot/quasi_newton.pyx":550
  *     if f_x2 is None:
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  */
-  __pyx_t_5 = PyObject_RichCompare(__pyx_v_f_x0, __pyx_v_f_x1, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 540, __pyx_L1_error)
-  if (__Pyx_PyObject_IsTrue(__pyx_t_5)) {
-    __Pyx_DECREF(__pyx_t_5);
-    __pyx_t_5 = PyObject_RichCompare(__pyx_v_f_x1, __pyx_v_f_x2, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 540, __pyx_L1_error)
+  __pyx_t_6 = PyObject_RichCompare(__pyx_v_f_x0, __pyx_v_f_x1, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 550, __pyx_L1_error)
+  if (__Pyx_PyObject_IsTrue(__pyx_t_6)) {
+    __Pyx_DECREF(__pyx_t_6);
+    __pyx_t_6 = PyObject_RichCompare(__pyx_v_f_x1, __pyx_v_f_x2, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 550, __pyx_L1_error)
   }
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 540, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 550, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":541
+    /* "cyroot/quasi_newton.pyx":551
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  * 
  */
-    __pyx_t_5 = PyTuple_New(7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 541, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_6 = PyTuple_New(7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 551, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
-    __pyx_t_2 += 44;
+    __pyx_t_3 += 44;
     __Pyx_GIVEREF(__pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
-    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
+    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
 
-    /* "cyroot/quasi_newton.pyx":542
+    /* "cyroot/quasi_newton.pyx":552
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')             # <<<<<<<<<<<<<<
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  */
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x0, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 542, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x0, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 552, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u__22);
-    __pyx_t_2 += 2;
+    __pyx_t_3 += 2;
     __Pyx_GIVEREF(__pyx_kp_u__22);
-    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_kp_u__22);
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x1, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 542, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_kp_u__22);
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x1, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 552, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u_and_2);
-    __pyx_t_2 += 6;
+    __pyx_t_3 += 6;
     __Pyx_GIVEREF(__pyx_kp_u_and_2);
-    PyTuple_SET_ITEM(__pyx_t_5, 4, __pyx_kp_u_and_2);
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x2, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 542, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 4, __pyx_kp_u_and_2);
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x2, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 552, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 5, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 5, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_5, 6, __pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_6, 6, __pyx_kp_u__6);
 
-    /* "cyroot/quasi_newton.pyx":541
+    /* "cyroot/quasi_newton.pyx":551
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  * 
  */
-    __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_5, 7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 541, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_6, 7, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 551, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 541, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 551, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_Raise(__pyx_t_5, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __PYX_ERR(0, 541, __pyx_L1_error)
+    __Pyx_Raise(__pyx_t_6, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __PYX_ERR(0, 551, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":540
+    /* "cyroot/quasi_newton.pyx":550
  *     if f_x2 is None:
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:             # <<<<<<<<<<<<<<
@@ -11352,31 +11101,31 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":544
+  /* "cyroot/quasi_newton.pyx":554
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)             # <<<<<<<<<<<<<<
  *     r, f_r, step, precision, error, converged = hyperbolic_interp_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
  */
-  __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 544, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_5);
-  __pyx_t_5 = 0;
+  __pyx_t_6 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyDoubleScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 554, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyDoubleScalarFPtr *)__pyx_t_6);
+  __pyx_t_6 = 0;
 
-  /* "cyroot/quasi_newton.pyx":546
+  /* "cyroot/quasi_newton.pyx":556
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = hyperbolic_interp_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)             # <<<<<<<<<<<<<<
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)
  */
-  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_f_x0); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 546, __pyx_L1_error)
-  __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_v_f_x1); if (unlikely((__pyx_t_10 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 546, __pyx_L1_error)
-  __pyx_t_11 = __pyx_PyFloat_AsDouble(__pyx_v_f_x2); if (unlikely((__pyx_t_11 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 546, __pyx_L1_error)
-  __pyx_t_12 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_12 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 546, __pyx_L1_error)
+  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_f_x0); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 556, __pyx_L1_error)
+  __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_v_f_x1); if (unlikely((__pyx_t_10 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 556, __pyx_L1_error)
+  __pyx_t_11 = __pyx_PyFloat_AsDouble(__pyx_v_f_x2); if (unlikely((__pyx_t_11 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 556, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_12 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 556, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":545
+  /* "cyroot/quasi_newton.pyx":555
  * 
  *     f_wrapper = PyDoubleScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = hyperbolic_interp_kernel[DoubleScalarFPtr](             # <<<<<<<<<<<<<<
@@ -11388,32 +11137,32 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
   __pyx_t_14.ptol = __pyx_v_ptol;
   __pyx_t_14.max_iter = __pyx_t_12;
   __pyx_t_13 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_hyperbolic_interp_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_v_x1, __pyx_v_x2, __pyx_t_9, __pyx_t_10, __pyx_t_11, &__pyx_t_14); 
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_t_13.f0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 545, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_t_13.f1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 545, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_t_13.f0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 555, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_t_13.f1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 555, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_t_13.f2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 545, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_13.f3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 545, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_15 = PyFloat_FromDouble(__pyx_t_13.f4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 545, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_t_13.f2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 555, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_13.f3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 555, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_15 = PyFloat_FromDouble(__pyx_t_13.f4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 555, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __pyx_t_16 = __Pyx_PyBool_FromLong(__pyx_t_13.f5); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 545, __pyx_L1_error)
+  __pyx_t_16 = __Pyx_PyBool_FromLong(__pyx_t_13.f5); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 555, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_16);
-  __pyx_v_r = __pyx_t_5;
-  __pyx_t_5 = 0;
+  __pyx_v_r = __pyx_t_6;
+  __pyx_t_6 = 0;
   __pyx_v_f_r = __pyx_t_8;
   __pyx_t_8 = 0;
-  __pyx_v_step = __pyx_t_1;
-  __pyx_t_1 = 0;
-  __pyx_v_precision = __pyx_t_4;
-  __pyx_t_4 = 0;
+  __pyx_v_step = __pyx_t_5;
+  __pyx_t_5 = 0;
+  __pyx_v_precision = __pyx_t_2;
+  __pyx_t_2 = 0;
   __pyx_v_error = __pyx_t_15;
   __pyx_t_15 = 0;
   __pyx_v_converged = __pyx_t_16;
   __pyx_t_16 = 0;
 
-  /* "cyroot/quasi_newton.pyx":547
+  /* "cyroot/quasi_newton.pyx":557
  *     r, f_r, step, precision, error, converged = hyperbolic_interp_kernel[DoubleScalarFPtr](
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,             # <<<<<<<<<<<<<<
@@ -11421,25 +11170,25 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 547, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 557, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __pyx_t_4 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 547, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 557, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
 
-  /* "cyroot/quasi_newton.pyx":548
+  /* "cyroot/quasi_newton.pyx":558
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)             # <<<<<<<<<<<<<<
  * 
  * ################################################################################
  */
-  __pyx_t_1 = NULL;
+  __pyx_t_5 = NULL;
   __pyx_t_17 = 0;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_15))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_15);
-    if (likely(__pyx_t_1)) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_15);
+    if (likely(__pyx_t_5)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_15);
-      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_15, function);
       __pyx_t_17 = 1;
@@ -11447,27 +11196,27 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_15)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_1, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_4, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_16 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 547, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_2, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_16 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 557, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_16);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_15)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_1, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_4, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_16 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 547, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_2, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_16 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 557, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_16);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(7+__pyx_t_17); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 547, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(7+__pyx_t_17); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 557, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    if (__pyx_t_1) {
-      __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_1); __pyx_t_1 = NULL;
+    if (__pyx_t_5) {
+      __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_5); __pyx_t_5 = NULL;
     }
     __Pyx_INCREF(__pyx_v_r);
     __Pyx_GIVEREF(__pyx_v_r);
@@ -11478,8 +11227,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
     __Pyx_INCREF(__pyx_v_step);
     __Pyx_GIVEREF(__pyx_v_step);
     PyTuple_SET_ITEM(__pyx_t_8, 2+__pyx_t_17, __pyx_v_step);
-    __Pyx_GIVEREF(__pyx_t_4);
-    PyTuple_SET_ITEM(__pyx_t_8, 3+__pyx_t_17, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_8, 3+__pyx_t_17, __pyx_t_2);
     __Pyx_INCREF(__pyx_v_precision);
     __Pyx_GIVEREF(__pyx_v_precision);
     PyTuple_SET_ITEM(__pyx_t_8, 4+__pyx_t_17, __pyx_v_precision);
@@ -11489,8 +11238,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
     __Pyx_INCREF(__pyx_v_converged);
     __Pyx_GIVEREF(__pyx_v_converged);
     PyTuple_SET_ITEM(__pyx_t_8, 6+__pyx_t_17, __pyx_v_converged);
-    __pyx_t_4 = 0;
-    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_8, NULL); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 547, __pyx_L1_error)
+    __pyx_t_2 = 0;
+    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_8, NULL); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 557, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
@@ -11499,7 +11248,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
   __pyx_t_16 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":491
+  /* "cyroot/quasi_newton.pyx":499
  * 
  * # noinspection DuplicatedCode
  * def hyperbolic_interp(             # <<<<<<<<<<<<<<
@@ -11509,9 +11258,9 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_15);
   __Pyx_XDECREF(__pyx_t_16);
@@ -11533,7 +11282,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":554
+/* "cyroot/quasi_newton.pyx":564
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double complex, double complex, long, double, double, bint) muller_kernel(             # <<<<<<<<<<<<<<
@@ -11588,7 +11337,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
     }
   }
 
-  /* "cyroot/quasi_newton.pyx":565
+  /* "cyroot/quasi_newton.pyx":575
  *         double ptol=PTOL,
  *         long max_iter=0):
  *     cdef double precision = cabs(x2 - x0), error = math.INFINITY             # <<<<<<<<<<<<<<
@@ -11598,7 +11347,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
   __pyx_v_precision = cabs(__Pyx_c_diff_double(__pyx_v_x2, __pyx_v_x0));
   __pyx_v_error = INFINITY;
 
-  /* "cyroot/quasi_newton.pyx":566
+  /* "cyroot/quasi_newton.pyx":576
  *         long max_iter=0):
  *     cdef double precision = cabs(x2 - x0), error = math.INFINITY
  *     cdef long step = 0             # <<<<<<<<<<<<<<
@@ -11607,7 +11356,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
   __pyx_v_step = 0;
 
-  /* "cyroot/quasi_newton.pyx":568
+  /* "cyroot/quasi_newton.pyx":578
  *     cdef long step = 0
  *     cdef double complex div_diff_01, div_diff_02, div_diff_12, a, b, c, s_delta, d1, d2, d, x3
  *     cdef converged = True             # <<<<<<<<<<<<<<
@@ -11617,7 +11366,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
   __Pyx_INCREF(Py_True);
   __pyx_v_converged = Py_True;
 
-  /* "cyroot/quasi_newton.pyx":569
+  /* "cyroot/quasi_newton.pyx":579
  *     cdef double complex div_diff_01, div_diff_02, div_diff_12, a, b, c, s_delta, d1, d2, d, x3
  *     cdef converged = True
  *     while error > etol and precision > ptol:             # <<<<<<<<<<<<<<
@@ -11636,7 +11385,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
     __pyx_L5_bool_binop_done:;
     if (!__pyx_t_1) break;
 
-    /* "cyroot/quasi_newton.pyx":570
+    /* "cyroot/quasi_newton.pyx":580
  *     cdef converged = True
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0 or x0 == x1 or x1 == x2 or x0 == x2:             # <<<<<<<<<<<<<<
@@ -11670,7 +11419,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
     __pyx_L8_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "cyroot/quasi_newton.pyx":571
+      /* "cyroot/quasi_newton.pyx":581
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0 or x0 == x1 or x1 == x2 or x0 == x2:
  *             converged = False             # <<<<<<<<<<<<<<
@@ -11680,7 +11429,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_converged, Py_False);
 
-      /* "cyroot/quasi_newton.pyx":572
+      /* "cyroot/quasi_newton.pyx":582
  *         if step > max_iter > 0 or x0 == x1 or x1 == x2 or x0 == x2:
  *             converged = False
  *             break             # <<<<<<<<<<<<<<
@@ -11689,7 +11438,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
       goto __pyx_L4_break;
 
-      /* "cyroot/quasi_newton.pyx":570
+      /* "cyroot/quasi_newton.pyx":580
  *     cdef converged = True
  *     while error > etol and precision > ptol:
  *         if step > max_iter > 0 or x0 == x1 or x1 == x2 or x0 == x2:             # <<<<<<<<<<<<<<
@@ -11698,7 +11447,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     }
 
-    /* "cyroot/quasi_newton.pyx":573
+    /* "cyroot/quasi_newton.pyx":583
  *             converged = False
  *             break
  *         step += 1             # <<<<<<<<<<<<<<
@@ -11707,7 +11456,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_step = (__pyx_v_step + 1);
 
-    /* "cyroot/quasi_newton.pyx":574
+    /* "cyroot/quasi_newton.pyx":584
  *             break
  *         step += 1
  *         div_diff_01 = (f_x1 - f_x0) / (x1 - x0)             # <<<<<<<<<<<<<<
@@ -11716,7 +11465,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_div_diff_01 = __Pyx_c_quot_double(__Pyx_c_diff_double(__pyx_v_f_x1, __pyx_v_f_x0), __Pyx_c_diff_double(__pyx_v_x1, __pyx_v_x0));
 
-    /* "cyroot/quasi_newton.pyx":575
+    /* "cyroot/quasi_newton.pyx":585
  *         step += 1
  *         div_diff_01 = (f_x1 - f_x0) / (x1 - x0)
  *         div_diff_02 = (f_x2 - f_x0) / (x2 - x0)             # <<<<<<<<<<<<<<
@@ -11725,7 +11474,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_div_diff_02 = __Pyx_c_quot_double(__Pyx_c_diff_double(__pyx_v_f_x2, __pyx_v_f_x0), __Pyx_c_diff_double(__pyx_v_x2, __pyx_v_x0));
 
-    /* "cyroot/quasi_newton.pyx":576
+    /* "cyroot/quasi_newton.pyx":586
  *         div_diff_01 = (f_x1 - f_x0) / (x1 - x0)
  *         div_diff_02 = (f_x2 - f_x0) / (x2 - x0)
  *         div_diff_12 = (f_x2 - f_x1) / (x2 - x1)             # <<<<<<<<<<<<<<
@@ -11734,7 +11483,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_div_diff_12 = __Pyx_c_quot_double(__Pyx_c_diff_double(__pyx_v_f_x2, __pyx_v_f_x1), __Pyx_c_diff_double(__pyx_v_x2, __pyx_v_x1));
 
-    /* "cyroot/quasi_newton.pyx":577
+    /* "cyroot/quasi_newton.pyx":587
  *         div_diff_02 = (f_x2 - f_x0) / (x2 - x0)
  *         div_diff_12 = (f_x2 - f_x1) / (x2 - x1)
  *         c = f_x2             # <<<<<<<<<<<<<<
@@ -11743,7 +11492,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_c = __pyx_v_f_x2;
 
-    /* "cyroot/quasi_newton.pyx":578
+    /* "cyroot/quasi_newton.pyx":588
  *         div_diff_12 = (f_x2 - f_x1) / (x2 - x1)
  *         c = f_x2
  *         b = div_diff_01 + div_diff_02 - div_diff_12             # <<<<<<<<<<<<<<
@@ -11752,7 +11501,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_b = __Pyx_c_diff_double(__Pyx_c_sum_double(__pyx_v_div_diff_01, __pyx_v_div_diff_02), __pyx_v_div_diff_12);
 
-    /* "cyroot/quasi_newton.pyx":579
+    /* "cyroot/quasi_newton.pyx":589
  *         c = f_x2
  *         b = div_diff_01 + div_diff_02 - div_diff_12
  *         a = (div_diff_01 - div_diff_12) / (x0 - x2)             # <<<<<<<<<<<<<<
@@ -11761,7 +11510,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_a = __Pyx_c_quot_double(__Pyx_c_diff_double(__pyx_v_div_diff_01, __pyx_v_div_diff_12), __Pyx_c_diff_double(__pyx_v_x0, __pyx_v_x2));
 
-    /* "cyroot/quasi_newton.pyx":580
+    /* "cyroot/quasi_newton.pyx":590
  *         b = div_diff_01 + div_diff_02 - div_diff_12
  *         a = (div_diff_01 - div_diff_12) / (x0 - x2)
  *         s_delta = sqrt(b ** 2 - 4 * a * c)  # \sqrt{b^2 - 4ac}             # <<<<<<<<<<<<<<
@@ -11770,7 +11519,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_s_delta = sqrt(__Pyx_c_diff_double(__Pyx_c_pow_double(__pyx_v_b, __pyx_t_double_complex_from_parts(2, 0)), __Pyx_c_prod_double(__Pyx_c_prod_double(__pyx_t_double_complex_from_parts(4, 0), __pyx_v_a), __pyx_v_c)));
 
-    /* "cyroot/quasi_newton.pyx":581
+    /* "cyroot/quasi_newton.pyx":591
  *         a = (div_diff_01 - div_diff_12) / (x0 - x2)
  *         s_delta = sqrt(b ** 2 - 4 * a * c)  # \sqrt{b^2 - 4ac}
  *         d1, d2 = b + s_delta, b - s_delta             # <<<<<<<<<<<<<<
@@ -11782,7 +11531,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
     __pyx_v_d1 = __pyx_t_4;
     __pyx_v_d2 = __pyx_t_5;
 
-    /* "cyroot/quasi_newton.pyx":583
+    /* "cyroot/quasi_newton.pyx":593
  *         d1, d2 = b + s_delta, b - s_delta
  *         # take the higher-magnitude denominator
  *         d = d1 if cabs(d1) > cabs(d2) else d2             # <<<<<<<<<<<<<<
@@ -11796,7 +11545,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
     }
     __pyx_v_d = __pyx_t_5;
 
-    /* "cyroot/quasi_newton.pyx":585
+    /* "cyroot/quasi_newton.pyx":595
  *         d = d1 if cabs(d1) > cabs(d2) else d2
  * 
  *         x3 = x2 - 2 * f_x2 / d             # <<<<<<<<<<<<<<
@@ -11805,7 +11554,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_x3 = __Pyx_c_diff_double(__pyx_v_x2, __Pyx_c_quot_double(__Pyx_c_prod_double(__pyx_t_double_complex_from_parts(2, 0), __pyx_v_f_x2), __pyx_v_d));
 
-    /* "cyroot/quasi_newton.pyx":586
+    /* "cyroot/quasi_newton.pyx":596
  * 
  *         x3 = x2 - 2 * f_x2 / d
  *         x0, f_x0 = x1, f_x1             # <<<<<<<<<<<<<<
@@ -11817,7 +11566,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
     __pyx_v_x0 = __pyx_t_5;
     __pyx_v_f_x0 = __pyx_t_4;
 
-    /* "cyroot/quasi_newton.pyx":587
+    /* "cyroot/quasi_newton.pyx":597
  *         x3 = x2 - 2 * f_x2 / d
  *         x0, f_x0 = x1, f_x1
  *         x1, f_x1 = x2, f_x2             # <<<<<<<<<<<<<<
@@ -11829,7 +11578,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
     __pyx_v_x1 = __pyx_t_4;
     __pyx_v_f_x1 = __pyx_t_5;
 
-    /* "cyroot/quasi_newton.pyx":588
+    /* "cyroot/quasi_newton.pyx":598
  *         x0, f_x0 = x1, f_x1
  *         x1, f_x1 = x2, f_x2
  *         x2, f_x2 = x3, f(x3)             # <<<<<<<<<<<<<<
@@ -11837,7 +11586,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  *         precision = cabs(x2 - x0)
  */
     __pyx_t_5 = __pyx_v_x3;
-    __pyx_t_7 = __pyx_PyComplex_FromComplex(__pyx_v_x3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 588, __pyx_L1_error)
+    __pyx_t_7 = __pyx_PyComplex_FromComplex(__pyx_v_x3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 598, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_INCREF(((PyObject *)__pyx_v_f));
     __pyx_t_8 = ((PyObject *)__pyx_v_f); __pyx_t_9 = NULL;
@@ -11853,15 +11602,15 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
     __pyx_t_6 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_9, __pyx_t_7) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_7);
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 588, __pyx_L1_error)
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 598, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_4 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_t_6); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 588, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_t_6); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_v_x2 = __pyx_t_5;
     __pyx_v_f_x2 = __pyx_t_4;
 
-    /* "cyroot/quasi_newton.pyx":590
+    /* "cyroot/quasi_newton.pyx":600
  *         x2, f_x2 = x3, f(x3)
  * 
  *         precision = cabs(x2 - x0)             # <<<<<<<<<<<<<<
@@ -11870,7 +11619,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
  */
     __pyx_v_precision = cabs(__Pyx_c_diff_double(__pyx_v_x2, __pyx_v_x0));
 
-    /* "cyroot/quasi_newton.pyx":591
+    /* "cyroot/quasi_newton.pyx":601
  * 
  *         precision = cabs(x2 - x0)
  *         error = cabs(f_x2)             # <<<<<<<<<<<<<<
@@ -11881,22 +11630,22 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
   }
   __pyx_L4_break:;
 
-  /* "cyroot/quasi_newton.pyx":592
+  /* "cyroot/quasi_newton.pyx":602
  *         precision = cabs(x2 - x0)
  *         error = cabs(f_x2)
  *     return x2, f_x2, step, precision, error, converged             # <<<<<<<<<<<<<<
  * 
  * # noinspection DuplicatedCode
  */
-  __pyx_t_6 = __pyx_PyComplex_FromComplex(__pyx_v_x2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 592, __pyx_L1_error)
+  __pyx_t_6 = __pyx_PyComplex_FromComplex(__pyx_v_x2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 602, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_4 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_t_6); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 592, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_t_6); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 602, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __pyx_PyComplex_FromComplex(__pyx_v_f_x2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 592, __pyx_L1_error)
+  __pyx_t_6 = __pyx_PyComplex_FromComplex(__pyx_v_f_x2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 602, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_5 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_t_6); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 592, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_t_6); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 602, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 592, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_converged); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 602, __pyx_L1_error)
   __pyx_t_10.f0 = __pyx_t_4;
   __pyx_t_10.f1 = __pyx_t_5;
   __pyx_t_10.f2 = __pyx_v_step;
@@ -11906,7 +11655,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
   __pyx_r = __pyx_t_10;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":554
+  /* "cyroot/quasi_newton.pyx":564
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double complex, double complex, long, double, double, bint) muller_kernel(             # <<<<<<<<<<<<<<
@@ -11928,7 +11677,7 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
   return __pyx_r;
 }
 
-/* "cyroot/quasi_newton.pyx":595
+/* "cyroot/quasi_newton.pyx":605
  * 
  * # noinspection DuplicatedCode
  * def muller(f: Callable[[complex], complex],             # <<<<<<<<<<<<<<
@@ -11938,7 +11687,8 @@ static __pyx_ctuple_a7a377____dunderpyx_t_double_complex__and___dunderpyx_t_doub
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_11muller = {"muller", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_11muller, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_6cyroot_12quasi_newton_10muller[] = "\n    Muller's method for root-finding.\n\n    Args:\n        f: Function for which the root is sought.\n        x0: First initial point.\n        x1: Second initial point.\n        x2: Third initial point.\n        f_x0: Value evaluated at first initial point.\n        f_x1: Value evaluated at second initial point.\n        f_x2: Value evaluated at third initial point.\n        etol: Error tolerance, indicating the desired precision\n         of the root. Defaults to {ETOL}.\n        ptol: Precision tolerance, indicating the minimum change\n         of root approximations or width of brackets (in bracketing\n         methods) after each iteration. Defaults to {PTOL}.\n        max_iter: Maximum number of iterations. If set to 0, the\n         procedure will run indefinitely until stopping condition is\n         met. Defaults to 0.\n\n    Returns:\n        solution: The solution represented as a ``RootResults`` object.\n    ";
+static PyMethodDef __pyx_mdef_6cyroot_12quasi_newton_11muller = {"muller", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_12quasi_newton_11muller, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6cyroot_12quasi_newton_10muller};
 static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_f = 0;
   __pyx_t_double_complex __pyx_v_x0;
@@ -11960,7 +11710,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, 
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_f,&__pyx_n_s_x0,&__pyx_n_s_x1,&__pyx_n_s_x2,&__pyx_n_s_f_x0,&__pyx_n_s_f_x1,&__pyx_n_s_f_x2,&__pyx_n_s_etol,&__pyx_n_s_ptol,&__pyx_n_s_max_iter,0};
     PyObject* values[10] = {0,0,0,0,0,0,0,0,0,0};
 
-    /* "cyroot/quasi_newton.pyx":599
+    /* "cyroot/quasi_newton.pyx":609
  *            x1: complex,
  *            x2: complex,
  *            f_x0: Optional[complex] = None,             # <<<<<<<<<<<<<<
@@ -11969,7 +11719,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, 
  */
     values[4] = ((PyObject *)Py_None);
 
-    /* "cyroot/quasi_newton.pyx":600
+    /* "cyroot/quasi_newton.pyx":610
  *            x2: complex,
  *            f_x0: Optional[complex] = None,
  *            f_x1: Optional[complex] = None,             # <<<<<<<<<<<<<<
@@ -11978,7 +11728,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, 
  */
     values[5] = ((PyObject *)Py_None);
 
-    /* "cyroot/quasi_newton.pyx":601
+    /* "cyroot/quasi_newton.pyx":611
  *            f_x0: Optional[complex] = None,
  *            f_x1: Optional[complex] = None,
  *            f_x2: Optional[complex] = None,             # <<<<<<<<<<<<<<
@@ -12023,19 +11773,19 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, 
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x0)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("muller", 0, 4, 10, 1); __PYX_ERR(0, 595, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("muller", 0, 4, 10, 1); __PYX_ERR(0, 605, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("muller", 0, 4, 10, 2); __PYX_ERR(0, 595, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("muller", 0, 4, 10, 2); __PYX_ERR(0, 605, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("muller", 0, 4, 10, 3); __PYX_ERR(0, 595, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("muller", 0, 4, 10, 3); __PYX_ERR(0, 605, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
@@ -12075,7 +11825,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "muller") < 0)) __PYX_ERR(0, 595, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "muller") < 0)) __PYX_ERR(0, 605, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -12100,19 +11850,19 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, 
       }
     }
     __pyx_v_f = values[0];
-    __pyx_v_x0 = __Pyx_PyComplex_As___pyx_t_double_complex(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 596, __pyx_L3_error)
-    __pyx_v_x1 = __Pyx_PyComplex_As___pyx_t_double_complex(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 597, __pyx_L3_error)
-    __pyx_v_x2 = __Pyx_PyComplex_As___pyx_t_double_complex(values[3]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L3_error)
+    __pyx_v_x0 = __Pyx_PyComplex_As___pyx_t_double_complex(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 606, __pyx_L3_error)
+    __pyx_v_x1 = __Pyx_PyComplex_As___pyx_t_double_complex(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 607, __pyx_L3_error)
+    __pyx_v_x2 = __Pyx_PyComplex_As___pyx_t_double_complex(values[3]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 608, __pyx_L3_error)
     __pyx_v_f_x0 = values[4];
     __pyx_v_f_x1 = values[5];
     __pyx_v_f_x2 = values[6];
     if (values[7]) {
-      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 602, __pyx_L3_error)
+      __pyx_v_etol = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_etol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 612, __pyx_L3_error)
     } else {
       __pyx_v_etol = __pyx_k__31;
     }
     if (values[8]) {
-      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 603, __pyx_L3_error)
+      __pyx_v_ptol = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_ptol == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L3_error)
     } else {
       __pyx_v_ptol = __pyx_k__32;
     }
@@ -12120,7 +11870,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("muller", 0, 4, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 595, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("muller", 0, 4, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 605, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.quasi_newton.muller", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -12128,7 +11878,7 @@ static PyObject *__pyx_pw_6cyroot_12quasi_newton_11muller(PyObject *__pyx_self, 
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_6cyroot_12quasi_newton_10muller(__pyx_self, __pyx_v_f, __pyx_v_x0, __pyx_v_x1, __pyx_v_x2, __pyx_v_f_x0, __pyx_v_f_x1, __pyx_v_f_x2, __pyx_v_etol, __pyx_v_ptol, __pyx_v_max_iter);
 
-  /* "cyroot/quasi_newton.pyx":595
+  /* "cyroot/quasi_newton.pyx":605
  * 
  * # noinspection DuplicatedCode
  * def muller(f: Callable[[complex], complex],             # <<<<<<<<<<<<<<
@@ -12151,12 +11901,12 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
   PyObject *__pyx_v_converged = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  Py_ssize_t __pyx_t_2;
-  Py_UCS4 __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  Py_ssize_t __pyx_t_3;
+  Py_UCS4 __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
+  PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
   PyObject *__pyx_t_8 = NULL;
   __pyx_t_double_complex __pyx_t_9;
@@ -12176,104 +11926,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
   __Pyx_INCREF(__pyx_v_f_x1);
   __Pyx_INCREF(__pyx_v_f_x2);
 
-  /* "cyroot/quasi_newton.pyx":605
- *            ptol: float = PTOL,
- *            max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""             # <<<<<<<<<<<<<<
- *     Muller's method for root-finding.
- * 
- */
-  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 605, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = 0;
-  __pyx_t_3 = 127;
-  __Pyx_INCREF(__pyx_kp_u_Muller_s_method_for_root_findin);
-  __pyx_t_2 += 461;
-  __Pyx_GIVEREF(__pyx_kp_u_Muller_s_method_for_root_findin);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_Muller_s_method_for_root_findin);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_ETOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 605, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 605, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __Pyx_INCREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_2 += 187;
-  __Pyx_GIVEREF(__pyx_kp_u_ptol_Precision_tolerance_indica);
-  PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_ptol_Precision_tolerance_indica);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_6cyroot_9_defaults_PTOL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 605, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 605, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
-  __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __Pyx_INCREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_2 += 155;
-  __Pyx_GIVEREF(__pyx_kp_u_max_iter_Maximum_number_of_iter);
-  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_max_iter_Maximum_number_of_iter);
-  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 605, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "cyroot/quasi_newton.pyx":627
+  /* "cyroot/quasi_newton.pyx":639
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  */
-  __pyx_t_6 = ((__pyx_v_etol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_etol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":628
+    /* "cyroot/quasi_newton.pyx":640
  *     # check params
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')             # <<<<<<<<<<<<<<
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 628, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 640, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_etol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_etol_must_be_positive_Got);
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 628, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 628, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_etol_must_be_positive_Got);
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_etol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 640, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
-    __pyx_t_5 = 0;
-    __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
-    __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 628, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 628, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 640, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 628, __pyx_L1_error)
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_6) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
+    __pyx_t_6 = 0;
+    __Pyx_INCREF(__pyx_kp_u__6);
+    __pyx_t_3 += 1;
+    __Pyx_GIVEREF(__pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 640, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 640, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 640, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":627
+    /* "cyroot/quasi_newton.pyx":639
  *     """
  *     # check params
  *     if etol <= 0:             # <<<<<<<<<<<<<<
@@ -12282,56 +11984,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":629
+  /* "cyroot/quasi_newton.pyx":641
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  */
-  __pyx_t_6 = ((__pyx_v_ptol <= 0.0) != 0);
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = ((__pyx_v_ptol <= 0.0) != 0);
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":630
+    /* "cyroot/quasi_newton.pyx":642
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')             # <<<<<<<<<<<<<<
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 630, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 642, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_2 += 27;
+    __pyx_t_3 += 27;
     __Pyx_GIVEREF(__pyx_kp_u_ptol_must_be_positive_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_ptol_must_be_positive_Got);
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 630, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_ptol_must_be_positive_Got);
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_ptol); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 642, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 642, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 630, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 630, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 630, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 630, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 642, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 642, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 642, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":629
+    /* "cyroot/quasi_newton.pyx":641
  *     if etol <= 0:
  *         raise ValueError(f'etol must be positive. Got {etol}.')
  *     if ptol <= 0:             # <<<<<<<<<<<<<<
@@ -12340,54 +12042,54 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":631
+  /* "cyroot/quasi_newton.pyx":643
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  */
-  __pyx_t_6 = PyInt_Check(__pyx_v_max_iter); 
-  __pyx_t_7 = ((!(__pyx_t_6 != 0)) != 0);
+  __pyx_t_1 = PyInt_Check(__pyx_v_max_iter); 
+  __pyx_t_7 = ((!(__pyx_t_1 != 0)) != 0);
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":632
+    /* "cyroot/quasi_newton.pyx":644
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')             # <<<<<<<<<<<<<<
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  */
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 632, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 644, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_2 += 33;
+    __pyx_t_3 += 33;
     __Pyx_GIVEREF(__pyx_kp_u_max_iter_must_be_an_integer_Got);
-    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 632, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_max_iter_must_be_an_integer_Got);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_max_iter, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 644, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_kp_u__6);
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 632, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 632, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 632, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u__6);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 644, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 644, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 644, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":631
+    /* "cyroot/quasi_newton.pyx":643
  *     if ptol <= 0:
  *         raise ValueError(f'ptol must be positive. Got {ptol}.')
  *     if not isinstance(max_iter, int):             # <<<<<<<<<<<<<<
@@ -12396,121 +12098,121 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":634
+  /* "cyroot/quasi_newton.pyx":646
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):             # <<<<<<<<<<<<<<
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')
  */
-  __pyx_t_4 = __Pyx_PyBool_FromLong((__Pyx_c_eq_double(__pyx_v_x0, __pyx_v_x1))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 634, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyBool_FromLong((__Pyx_c_eq_double(__pyx_v_x1, __pyx_v_x2))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 634, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyBool_FromLong((__Pyx_c_eq_double(__pyx_v_x0, __pyx_v_x2))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 634, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong((__Pyx_c_eq_double(__pyx_v_x0, __pyx_v_x1))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 646, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyBool_FromLong((__Pyx_c_eq_double(__pyx_v_x1, __pyx_v_x2))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 646, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 634, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyBool_FromLong((__Pyx_c_eq_double(__pyx_v_x0, __pyx_v_x2))); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 646, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 646, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_t_5);
-  __pyx_t_4 = 0;
-  __pyx_t_1 = 0;
+  PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_6);
+  PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_t_6);
+  __pyx_t_2 = 0;
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_any, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 634, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_6 = 0;
+  __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_any, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 646, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 634, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 646, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   if (unlikely(__pyx_t_7)) {
 
-    /* "cyroot/quasi_newton.pyx":635
+    /* "cyroot/quasi_newton.pyx":647
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  *         raise ValueError(f'x0, x1, and x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:
  */
-    __pyx_t_5 = PyTuple_New(7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 635, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_6 = PyTuple_New(7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 647, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_x0_x1_and_x2_must_be_different_G);
-    __pyx_t_2 += 38;
+    __pyx_t_3 += 38;
     __Pyx_GIVEREF(__pyx_kp_u_x0_x1_and_x2_must_be_different_G);
-    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_kp_u_x0_x1_and_x2_must_be_different_G);
+    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_x0_x1_and_x2_must_be_different_G);
 
-    /* "cyroot/quasi_newton.pyx":636
+    /* "cyroot/quasi_newton.pyx":648
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')             # <<<<<<<<<<<<<<
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  */
-    __pyx_t_8 = __pyx_PyComplex_FromComplex(__pyx_v_x0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 636, __pyx_L1_error)
+    __pyx_t_8 = __pyx_PyComplex_FromComplex(__pyx_v_x0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 648, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 636, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 648, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__22);
-    __pyx_t_2 += 2;
+    __pyx_t_3 += 2;
     __Pyx_GIVEREF(__pyx_kp_u__22);
-    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_kp_u__22);
-    __pyx_t_1 = __pyx_PyComplex_FromComplex(__pyx_v_x1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 636, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 636, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_kp_u__22);
+    __pyx_t_5 = __pyx_PyComplex_FromComplex(__pyx_v_x1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 648, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 648, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u_and_2);
-    __pyx_t_2 += 6;
+    __pyx_t_3 += 6;
     __Pyx_GIVEREF(__pyx_kp_u_and_2);
-    PyTuple_SET_ITEM(__pyx_t_5, 4, __pyx_kp_u_and_2);
-    __pyx_t_8 = __pyx_PyComplex_FromComplex(__pyx_v_x2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 636, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 4, __pyx_kp_u_and_2);
+    __pyx_t_8 = __pyx_PyComplex_FromComplex(__pyx_v_x2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 648, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 636, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_8, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 648, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_5, 5, __pyx_t_1);
-    __pyx_t_1 = 0;
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_6, 5, __pyx_t_5);
+    __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_5, 6, __pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_6, 6, __pyx_kp_u__6);
 
-    /* "cyroot/quasi_newton.pyx":635
+    /* "cyroot/quasi_newton.pyx":647
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):
  *         raise ValueError(f'x0, x1, and x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:
  */
-    __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_5, 7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 635, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 635, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_6, 7, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 647, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_Raise(__pyx_t_5, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 647, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __PYX_ERR(0, 635, __pyx_L1_error)
+    __Pyx_Raise(__pyx_t_6, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __PYX_ERR(0, 647, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":634
+    /* "cyroot/quasi_newton.pyx":646
  *         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
  * 
  *     if any((x0 == x1, x1 == x2, x0 == x2)):             # <<<<<<<<<<<<<<
@@ -12519,7 +12221,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":637
+  /* "cyroot/quasi_newton.pyx":649
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:             # <<<<<<<<<<<<<<
@@ -12527,39 +12229,39 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  *     if f_x1 is None:
  */
   __pyx_t_7 = (__pyx_v_f_x0 == Py_None);
-  __pyx_t_6 = (__pyx_t_7 != 0);
-  if (__pyx_t_6) {
+  __pyx_t_1 = (__pyx_t_7 != 0);
+  if (__pyx_t_1) {
 
-    /* "cyroot/quasi_newton.pyx":638
+    /* "cyroot/quasi_newton.pyx":650
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:
  *         f_x0 = f(x0)             # <<<<<<<<<<<<<<
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  */
-    __pyx_t_1 = __pyx_PyComplex_FromComplex(__pyx_v_x0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 638, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __pyx_PyComplex_FromComplex(__pyx_v_x0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 650, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_8 = __pyx_v_f; __pyx_t_4 = NULL;
+    __pyx_t_8 = __pyx_v_f; __pyx_t_2 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_8);
-      if (likely(__pyx_t_4)) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
+      if (likely(__pyx_t_2)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_8, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_4, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_1);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 638, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_6 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 650, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_5);
-    __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x0, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "cyroot/quasi_newton.pyx":637
+    /* "cyroot/quasi_newton.pyx":649
  *         raise ValueError(f'x0, x1, and x2 must be different. '
  *                          f'Got {x0}, {x1}, and {x2}.')
  *     if f_x0 is None:             # <<<<<<<<<<<<<<
@@ -12568,47 +12270,47 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":639
+  /* "cyroot/quasi_newton.pyx":651
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  *     if f_x1 is None:             # <<<<<<<<<<<<<<
  *         f_x1 = f(x1)
  *     if f_x2 is None:
  */
-  __pyx_t_6 = (__pyx_v_f_x1 == Py_None);
-  __pyx_t_7 = (__pyx_t_6 != 0);
+  __pyx_t_1 = (__pyx_v_f_x1 == Py_None);
+  __pyx_t_7 = (__pyx_t_1 != 0);
   if (__pyx_t_7) {
 
-    /* "cyroot/quasi_newton.pyx":640
+    /* "cyroot/quasi_newton.pyx":652
  *         f_x0 = f(x0)
  *     if f_x1 is None:
  *         f_x1 = f(x1)             # <<<<<<<<<<<<<<
  *     if f_x2 is None:
  *         f_x2 = f(x2)
  */
-    __pyx_t_8 = __pyx_PyComplex_FromComplex(__pyx_v_x1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 640, __pyx_L1_error)
+    __pyx_t_8 = __pyx_PyComplex_FromComplex(__pyx_v_x1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 652, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_1 = __pyx_v_f; __pyx_t_4 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_1);
-      if (likely(__pyx_t_4)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-        __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_5 = __pyx_v_f; __pyx_t_2 = NULL;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
+      if (likely(__pyx_t_2)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_1, function);
+        __Pyx_DECREF_SET(__pyx_t_5, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_4, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_8);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_6 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_8);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 640, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x1, __pyx_t_5);
-    __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 652, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x1, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "cyroot/quasi_newton.pyx":639
+    /* "cyroot/quasi_newton.pyx":651
  *     if f_x0 is None:
  *         f_x0 = f(x0)
  *     if f_x1 is None:             # <<<<<<<<<<<<<<
@@ -12617,7 +12319,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":641
+  /* "cyroot/quasi_newton.pyx":653
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  *     if f_x2 is None:             # <<<<<<<<<<<<<<
@@ -12625,39 +12327,39 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  *     if f_x0 == f_x1 == f_x2:
  */
   __pyx_t_7 = (__pyx_v_f_x2 == Py_None);
-  __pyx_t_6 = (__pyx_t_7 != 0);
-  if (__pyx_t_6) {
+  __pyx_t_1 = (__pyx_t_7 != 0);
+  if (__pyx_t_1) {
 
-    /* "cyroot/quasi_newton.pyx":642
+    /* "cyroot/quasi_newton.pyx":654
  *         f_x1 = f(x1)
  *     if f_x2 is None:
  *         f_x2 = f(x2)             # <<<<<<<<<<<<<<
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
  */
-    __pyx_t_1 = __pyx_PyComplex_FromComplex(__pyx_v_x2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 642, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = __pyx_PyComplex_FromComplex(__pyx_v_x2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 654, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(__pyx_v_f);
-    __pyx_t_8 = __pyx_v_f; __pyx_t_4 = NULL;
+    __pyx_t_8 = __pyx_v_f; __pyx_t_2 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_8);
-      if (likely(__pyx_t_4)) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
+      if (likely(__pyx_t_2)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_8, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_4, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_1);
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 642, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_6 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 654, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_x2, __pyx_t_5);
-    __pyx_t_5 = 0;
+    __Pyx_DECREF_SET(__pyx_v_f_x2, __pyx_t_6);
+    __pyx_t_6 = 0;
 
-    /* "cyroot/quasi_newton.pyx":641
+    /* "cyroot/quasi_newton.pyx":653
  *     if f_x1 is None:
  *         f_x1 = f(x1)
  *     if f_x2 is None:             # <<<<<<<<<<<<<<
@@ -12666,97 +12368,97 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":643
+  /* "cyroot/quasi_newton.pyx":655
  *     if f_x2 is None:
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:             # <<<<<<<<<<<<<<
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  */
-  __pyx_t_5 = PyObject_RichCompare(__pyx_v_f_x0, __pyx_v_f_x1, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 643, __pyx_L1_error)
-  if (__Pyx_PyObject_IsTrue(__pyx_t_5)) {
-    __Pyx_DECREF(__pyx_t_5);
-    __pyx_t_5 = PyObject_RichCompare(__pyx_v_f_x1, __pyx_v_f_x2, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 643, __pyx_L1_error)
+  __pyx_t_6 = PyObject_RichCompare(__pyx_v_f_x0, __pyx_v_f_x1, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 655, __pyx_L1_error)
+  if (__Pyx_PyObject_IsTrue(__pyx_t_6)) {
+    __Pyx_DECREF(__pyx_t_6);
+    __pyx_t_6 = PyObject_RichCompare(__pyx_v_f_x1, __pyx_v_f_x2, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 655, __pyx_L1_error)
   }
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 643, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(__pyx_t_6)) {
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 655, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (unlikely(__pyx_t_1)) {
 
-    /* "cyroot/quasi_newton.pyx":644
+    /* "cyroot/quasi_newton.pyx":656
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  * 
  */
-    __pyx_t_5 = PyTuple_New(7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 644, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = 0;
-    __pyx_t_3 = 127;
+    __pyx_t_6 = PyTuple_New(7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 656, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
     __Pyx_INCREF(__pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
-    __pyx_t_2 += 44;
+    __pyx_t_3 += 44;
     __Pyx_GIVEREF(__pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
-    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
+    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_f_x0_f_x1_and_f_x2_must_be_diffe);
 
-    /* "cyroot/quasi_newton.pyx":645
+    /* "cyroot/quasi_newton.pyx":657
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')             # <<<<<<<<<<<<<<
  * 
  *     f_wrapper = PyComplexScalarFPtr(f)
  */
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x0, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 645, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x0, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 657, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u__22);
-    __pyx_t_2 += 2;
+    __pyx_t_3 += 2;
     __Pyx_GIVEREF(__pyx_kp_u__22);
-    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_kp_u__22);
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x1, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 645, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_kp_u__22);
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x1, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 657, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u_and_2);
-    __pyx_t_2 += 6;
+    __pyx_t_3 += 6;
     __Pyx_GIVEREF(__pyx_kp_u_and_2);
-    PyTuple_SET_ITEM(__pyx_t_5, 4, __pyx_kp_u_and_2);
-    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x2, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 645, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_6, 4, __pyx_kp_u_and_2);
+    __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_f_x2, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 657, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_3;
-    __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_8);
-    PyTuple_SET_ITEM(__pyx_t_5, 5, __pyx_t_8);
+    PyTuple_SET_ITEM(__pyx_t_6, 5, __pyx_t_8);
     __pyx_t_8 = 0;
     __Pyx_INCREF(__pyx_kp_u__6);
-    __pyx_t_2 += 1;
+    __pyx_t_3 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__6);
-    PyTuple_SET_ITEM(__pyx_t_5, 6, __pyx_kp_u__6);
+    PyTuple_SET_ITEM(__pyx_t_6, 6, __pyx_kp_u__6);
 
-    /* "cyroot/quasi_newton.pyx":644
+    /* "cyroot/quasi_newton.pyx":656
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:
  *         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '             # <<<<<<<<<<<<<<
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  * 
  */
-    __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_5, 7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 644, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_6, 7, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 656, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 644, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 656, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_Raise(__pyx_t_5, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __PYX_ERR(0, 644, __pyx_L1_error)
+    __Pyx_Raise(__pyx_t_6, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __PYX_ERR(0, 656, __pyx_L1_error)
 
-    /* "cyroot/quasi_newton.pyx":643
+    /* "cyroot/quasi_newton.pyx":655
  *     if f_x2 is None:
  *         f_x2 = f(x2)
  *     if f_x0 == f_x1 == f_x2:             # <<<<<<<<<<<<<<
@@ -12765,31 +12467,31 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
  */
   }
 
-  /* "cyroot/quasi_newton.pyx":647
+  /* "cyroot/quasi_newton.pyx":659
  *                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
  * 
  *     f_wrapper = PyComplexScalarFPtr(f)             # <<<<<<<<<<<<<<
  *     r, f_r, step, precision, error, converged = muller_kernel[ComplexScalarFPtr](
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
  */
-  __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyComplexScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 647, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyComplexScalarFPtr *)__pyx_t_5);
-  __pyx_t_5 = 0;
+  __pyx_t_6 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyComplexScalarFPtr), __pyx_v_f); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 659, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_v_f_wrapper = ((struct __pyx_obj_6cyroot_4fptr_PyComplexScalarFPtr *)__pyx_t_6);
+  __pyx_t_6 = 0;
 
-  /* "cyroot/quasi_newton.pyx":649
+  /* "cyroot/quasi_newton.pyx":661
  *     f_wrapper = PyComplexScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = muller_kernel[ComplexScalarFPtr](
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)             # <<<<<<<<<<<<<<
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)
  */
-  __pyx_t_9 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_f_x0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 649, __pyx_L1_error)
-  __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_f_x1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 649, __pyx_L1_error)
-  __pyx_t_11 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_f_x2); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 649, __pyx_L1_error)
-  __pyx_t_12 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_12 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 649, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_f_x0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 661, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_f_x1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 661, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_f_x2); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 661, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_12 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 661, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":648
+  /* "cyroot/quasi_newton.pyx":660
  * 
  *     f_wrapper = PyComplexScalarFPtr(f)
  *     r, f_r, step, precision, error, converged = muller_kernel[ComplexScalarFPtr](             # <<<<<<<<<<<<<<
@@ -12802,56 +12504,56 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
   __pyx_t_14.max_iter = __pyx_t_12;
   __pyx_t_13 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_muller_kernel(((struct __pyx_obj_6cyroot_4fptr_ComplexScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_v_x1, __pyx_v_x2, __pyx_t_9, __pyx_t_10, __pyx_t_11, &__pyx_t_14); 
   __pyx_t_11 = __pyx_t_13.f0;
-  __pyx_t_5 = __pyx_PyComplex_FromComplex(__pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 648, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_6 = __pyx_PyComplex_FromComplex(__pyx_t_11); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 660, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_11 = __pyx_t_13.f1;
-  __pyx_t_8 = __pyx_PyComplex_FromComplex(__pyx_t_11); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 648, __pyx_L1_error)
+  __pyx_t_8 = __pyx_PyComplex_FromComplex(__pyx_t_11); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 660, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_t_13.f2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 648, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_13.f3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 648, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_15 = PyFloat_FromDouble(__pyx_t_13.f4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 648, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_t_13.f2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 660, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_13.f3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 660, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_15 = PyFloat_FromDouble(__pyx_t_13.f4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 660, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __pyx_t_16 = __Pyx_PyBool_FromLong(__pyx_t_13.f5); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 648, __pyx_L1_error)
+  __pyx_t_16 = __Pyx_PyBool_FromLong(__pyx_t_13.f5); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 660, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_16);
-  __pyx_v_r = __pyx_t_5;
-  __pyx_t_5 = 0;
+  __pyx_v_r = __pyx_t_6;
+  __pyx_t_6 = 0;
   __pyx_v_f_r = __pyx_t_8;
   __pyx_t_8 = 0;
-  __pyx_v_step = __pyx_t_1;
-  __pyx_t_1 = 0;
-  __pyx_v_precision = __pyx_t_4;
-  __pyx_t_4 = 0;
+  __pyx_v_step = __pyx_t_5;
+  __pyx_t_5 = 0;
+  __pyx_v_precision = __pyx_t_2;
+  __pyx_t_2 = 0;
   __pyx_v_error = __pyx_t_15;
   __pyx_t_15 = 0;
   __pyx_v_converged = __pyx_t_16;
   __pyx_t_16 = 0;
 
-  /* "cyroot/quasi_newton.pyx":650
+  /* "cyroot/quasi_newton.pyx":662
  *     r, f_r, step, precision, error, converged = muller_kernel[ComplexScalarFPtr](
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,             # <<<<<<<<<<<<<<
  *                                        precision, error, converged)
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 650, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_QuasiNewtonMethodReturnType); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 662, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __pyx_t_4 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 650, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = __Pyx_PyInt_From_unsigned_long(__pyx_v_f_wrapper->__pyx_base.__pyx_base.n_f_calls); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 662, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
 
-  /* "cyroot/quasi_newton.pyx":651
+  /* "cyroot/quasi_newton.pyx":663
  *         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
  *     return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
  *                                        precision, error, converged)             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = NULL;
+  __pyx_t_5 = NULL;
   __pyx_t_17 = 0;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_15))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_15);
-    if (likely(__pyx_t_1)) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_15);
+    if (likely(__pyx_t_5)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_15);
-      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_15, function);
       __pyx_t_17 = 1;
@@ -12859,27 +12561,27 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_15)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_1, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_4, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_16 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 650, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_2, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_16 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 662, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_16);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_15)) {
-    PyObject *__pyx_temp[8] = {__pyx_t_1, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_4, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
-    __pyx_t_16 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 650, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    PyObject *__pyx_temp[8] = {__pyx_t_5, __pyx_v_r, __pyx_v_f_r, __pyx_v_step, __pyx_t_2, __pyx_v_precision, __pyx_v_error, __pyx_v_converged};
+    __pyx_t_16 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_17, 7+__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 662, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_16);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(7+__pyx_t_17); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 650, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(7+__pyx_t_17); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 662, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    if (__pyx_t_1) {
-      __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_1); __pyx_t_1 = NULL;
+    if (__pyx_t_5) {
+      __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_5); __pyx_t_5 = NULL;
     }
     __Pyx_INCREF(__pyx_v_r);
     __Pyx_GIVEREF(__pyx_v_r);
@@ -12890,8 +12592,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
     __Pyx_INCREF(__pyx_v_step);
     __Pyx_GIVEREF(__pyx_v_step);
     PyTuple_SET_ITEM(__pyx_t_8, 2+__pyx_t_17, __pyx_v_step);
-    __Pyx_GIVEREF(__pyx_t_4);
-    PyTuple_SET_ITEM(__pyx_t_8, 3+__pyx_t_17, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_8, 3+__pyx_t_17, __pyx_t_2);
     __Pyx_INCREF(__pyx_v_precision);
     __Pyx_GIVEREF(__pyx_v_precision);
     PyTuple_SET_ITEM(__pyx_t_8, 4+__pyx_t_17, __pyx_v_precision);
@@ -12901,8 +12603,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
     __Pyx_INCREF(__pyx_v_converged);
     __Pyx_GIVEREF(__pyx_v_converged);
     PyTuple_SET_ITEM(__pyx_t_8, 6+__pyx_t_17, __pyx_v_converged);
-    __pyx_t_4 = 0;
-    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_8, NULL); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 650, __pyx_L1_error)
+    __pyx_t_2 = 0;
+    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_8, NULL); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 662, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
@@ -12911,7 +12613,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
   __pyx_t_16 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/quasi_newton.pyx":595
+  /* "cyroot/quasi_newton.pyx":605
  * 
  * # noinspection DuplicatedCode
  * def muller(f: Callable[[complex], complex],             # <<<<<<<<<<<<<<
@@ -12921,9 +12623,9 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_15);
   __Pyx_XDECREF(__pyx_t_16);
@@ -28306,7 +28008,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Cannot_index_with_type_s, __pyx_k_Cannot_index_with_type_s, sizeof(__pyx_k_Cannot_index_with_type_s), 0, 0, 1, 0},
   {&__pyx_n_s_Ellipsis, __pyx_k_Ellipsis, sizeof(__pyx_k_Ellipsis), 0, 0, 1, 1},
   {&__pyx_kp_s_Empty_shape_tuple_for_cython_arr, __pyx_k_Empty_shape_tuple_for_cython_arr, sizeof(__pyx_k_Empty_shape_tuple_for_cython_arr), 0, 0, 1, 0},
-  {&__pyx_kp_u_Hyperbolic_Interpolation_method, __pyx_k_Hyperbolic_Interpolation_method, sizeof(__pyx_k_Hyperbolic_Interpolation_method), 0, 1, 0, 0},
   {&__pyx_n_s_ImportError, __pyx_k_ImportError, sizeof(__pyx_k_ImportError), 0, 0, 1, 1},
   {&__pyx_kp_s_Incompatible_checksums_0x_x_vs_0, __pyx_k_Incompatible_checksums_0x_x_vs_0, sizeof(__pyx_k_Incompatible_checksums_0x_x_vs_0), 0, 0, 1, 0},
   {&__pyx_kp_s_Incompatible_checksums_0x_x_vs_0_2, __pyx_k_Incompatible_checksums_0x_x_vs_0_2, sizeof(__pyx_k_Incompatible_checksums_0x_x_vs_0_2), 0, 0, 1, 0},
@@ -28314,11 +28015,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Indirect_dimensions_not_supporte, __pyx_k_Indirect_dimensions_not_supporte, sizeof(__pyx_k_Indirect_dimensions_not_supporte), 0, 0, 1, 0},
   {&__pyx_kp_s_Invalid_mode_expected_c_or_fortr, __pyx_k_Invalid_mode_expected_c_or_fortr, sizeof(__pyx_k_Invalid_mode_expected_c_or_fortr), 0, 0, 1, 0},
   {&__pyx_kp_s_Invalid_shape_in_axis_d_d, __pyx_k_Invalid_shape_in_axis_d_d, sizeof(__pyx_k_Invalid_shape_in_axis_d_d), 0, 0, 1, 0},
-  {&__pyx_kp_u_Inverse_Quadratic_Interpolation, __pyx_k_Inverse_Quadratic_Interpolation, sizeof(__pyx_k_Inverse_Quadratic_Interpolation), 0, 1, 0, 0},
   {&__pyx_n_s_MemoryError, __pyx_k_MemoryError, sizeof(__pyx_k_MemoryError), 0, 0, 1, 1},
   {&__pyx_kp_s_MemoryView_of_r_at_0x_x, __pyx_k_MemoryView_of_r_at_0x_x, sizeof(__pyx_k_MemoryView_of_r_at_0x_x), 0, 0, 1, 0},
   {&__pyx_kp_s_MemoryView_of_r_object, __pyx_k_MemoryView_of_r_object, sizeof(__pyx_k_MemoryView_of_r_object), 0, 0, 1, 0},
-  {&__pyx_kp_u_Muller_s_method_for_root_findin, __pyx_k_Muller_s_method_for_root_findin, sizeof(__pyx_k_Muller_s_method_for_root_findin), 0, 1, 0, 0},
   {&__pyx_n_s_NewtonPolynomial, __pyx_k_NewtonPolynomial, sizeof(__pyx_k_NewtonPolynomial), 0, 0, 1, 1},
   {&__pyx_n_b_O, __pyx_k_O, sizeof(__pyx_k_O), 0, 0, 0, 1},
   {&__pyx_n_s_Optional, __pyx_k_Optional, sizeof(__pyx_k_Optional), 0, 0, 1, 1},
@@ -28326,10 +28025,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_PickleError, __pyx_k_PickleError, sizeof(__pyx_k_PickleError), 0, 0, 1, 1},
   {&__pyx_n_s_QuasiNewtonMethodReturnType, __pyx_k_QuasiNewtonMethodReturnType, sizeof(__pyx_k_QuasiNewtonMethodReturnType), 0, 0, 1, 1},
   {&__pyx_kp_u_Requires_at_least_2_initial_gues, __pyx_k_Requires_at_least_2_initial_gues, sizeof(__pyx_k_Requires_at_least_2_initial_gues), 0, 1, 0, 0},
-  {&__pyx_kp_u_Secant_method_for_root_finding, __pyx_k_Secant_method_for_root_finding, sizeof(__pyx_k_Secant_method_for_root_finding), 0, 1, 0, 0},
   {&__pyx_n_s_Sequence, __pyx_k_Sequence, sizeof(__pyx_k_Sequence), 0, 0, 1, 1},
-  {&__pyx_kp_u_Sidi_s_Generalized_Secant_metho, __pyx_k_Sidi_s_Generalized_Secant_metho, sizeof(__pyx_k_Sidi_s_Generalized_Secant_metho), 0, 1, 0, 0},
-  {&__pyx_kp_u_Steffensen_s_method_for_root_fi, __pyx_k_Steffensen_s_method_for_root_fi, sizeof(__pyx_k_Steffensen_s_method_for_root_fi), 0, 1, 0, 0},
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_kp_s_Unable_to_convert_item_to_object, __pyx_k_Unable_to_convert_item_to_object, sizeof(__pyx_k_Unable_to_convert_item_to_object), 0, 0, 1, 0},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
@@ -28391,7 +28087,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_itemsize_0_for_cython_array, __pyx_k_itemsize_0_for_cython_array, sizeof(__pyx_k_itemsize_0_for_cython_array), 0, 0, 1, 0},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_max_iter, __pyx_k_max_iter, sizeof(__pyx_k_max_iter), 0, 0, 1, 1},
-  {&__pyx_kp_u_max_iter_Maximum_number_of_iter, __pyx_k_max_iter_Maximum_number_of_iter, sizeof(__pyx_k_max_iter_Maximum_number_of_iter), 0, 1, 0, 0},
   {&__pyx_kp_u_max_iter_must_be_an_integer_Got, __pyx_k_max_iter_must_be_an_integer_Got, sizeof(__pyx_k_max_iter_must_be_an_integer_Got), 0, 1, 0, 0},
   {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
   {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
@@ -28411,7 +28106,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_pickle, __pyx_k_pickle, sizeof(__pyx_k_pickle), 0, 0, 1, 1},
   {&__pyx_n_s_precision, __pyx_k_precision, sizeof(__pyx_k_precision), 0, 0, 1, 1},
   {&__pyx_n_s_ptol, __pyx_k_ptol, sizeof(__pyx_k_ptol), 0, 0, 1, 1},
-  {&__pyx_kp_u_ptol_Precision_tolerance_indica, __pyx_k_ptol_Precision_tolerance_indica, sizeof(__pyx_k_ptol_Precision_tolerance_indica), 0, 1, 0, 0},
   {&__pyx_kp_u_ptol_must_be_positive_Got, __pyx_k_ptol_must_be_positive_Got, sizeof(__pyx_k_ptol_must_be_positive_Got), 0, 1, 0, 0},
   {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_checksum, __pyx_k_pyx_checksum, sizeof(__pyx_k_pyx_checksum), 0, 0, 1, 1},
@@ -28466,9 +28160,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 98, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 142, __pyx_L1_error)
-  __pyx_builtin_any = __Pyx_GetBuiltinName(__pyx_n_s_any); if (!__pyx_builtin_any) __PYX_ERR(0, 425, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 100, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 144, __pyx_L1_error)
+  __pyx_builtin_any = __Pyx_GetBuiltinName(__pyx_n_s_any); if (!__pyx_builtin_any) __PYX_ERR(0, 433, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(2, 944, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 149, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 152, __pyx_L1_error)
@@ -28725,65 +28419,65 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__58);
   __pyx_codeobj__59 = (PyObject*)__Pyx_PyCode_New(8, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__58, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_secant, 69, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__59)) __PYX_ERR(0, 69, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":218
+  /* "cyroot/quasi_newton.pyx":220
  * 
  * # noinspection DuplicatedCode
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *          xs: Sequence[float],
  *          f_xs: Sequence[float] = None,
  */
-  __pyx_tuple__63 = PyTuple_Pack(14, __pyx_n_s_f, __pyx_n_s_xs, __pyx_n_s_f_xs, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged, __pyx_n_s_x); if (unlikely(!__pyx_tuple__63)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_tuple__63 = PyTuple_Pack(14, __pyx_n_s_f, __pyx_n_s_xs, __pyx_n_s_f_xs, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged, __pyx_n_s_x); if (unlikely(!__pyx_tuple__63)) __PYX_ERR(0, 220, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__63);
   __Pyx_GIVEREF(__pyx_tuple__63);
-  __pyx_codeobj__64 = (PyObject*)__Pyx_PyCode_New(6, 0, 14, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__63, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_sidi, 218, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__64)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_codeobj__64 = (PyObject*)__Pyx_PyCode_New(6, 0, 14, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__63, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_sidi, 220, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__64)) __PYX_ERR(0, 220, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":303
+  /* "cyroot/quasi_newton.pyx":307
  * 
  * # noinspection DuplicatedCode
  * def steffensen(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *                x0: float,
  *                f_x0: Optional[float] = None,
  */
-  __pyx_tuple__68 = PyTuple_Pack(13, __pyx_n_s_f, __pyx_n_s_x0, __pyx_n_s_f_x0, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged); if (unlikely(!__pyx_tuple__68)) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_tuple__68 = PyTuple_Pack(13, __pyx_n_s_f, __pyx_n_s_x0, __pyx_n_s_f_x0, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged); if (unlikely(!__pyx_tuple__68)) __PYX_ERR(0, 307, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__68);
   __Pyx_GIVEREF(__pyx_tuple__68);
-  __pyx_codeobj__69 = (PyObject*)__Pyx_PyCode_New(6, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__68, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_steffensen, 303, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__69)) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_codeobj__69 = (PyObject*)__Pyx_PyCode_New(6, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__68, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_steffensen, 307, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__69)) __PYX_ERR(0, 307, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":385
+  /* "cyroot/quasi_newton.pyx":391
  * 
  * # noinspection DuplicatedCode
  * def inverse_quadratic_interp(             # <<<<<<<<<<<<<<
  *         f: Callable[[float], float],
  *         x0: float,
  */
-  __pyx_tuple__73 = PyTuple_Pack(17, __pyx_n_s_f, __pyx_n_s_x0, __pyx_n_s_x1, __pyx_n_s_x2, __pyx_n_s_f_x0, __pyx_n_s_f_x1, __pyx_n_s_f_x2, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged); if (unlikely(!__pyx_tuple__73)) __PYX_ERR(0, 385, __pyx_L1_error)
+  __pyx_tuple__73 = PyTuple_Pack(17, __pyx_n_s_f, __pyx_n_s_x0, __pyx_n_s_x1, __pyx_n_s_x2, __pyx_n_s_f_x0, __pyx_n_s_f_x1, __pyx_n_s_f_x2, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged); if (unlikely(!__pyx_tuple__73)) __PYX_ERR(0, 391, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__73);
   __Pyx_GIVEREF(__pyx_tuple__73);
-  __pyx_codeobj__74 = (PyObject*)__Pyx_PyCode_New(10, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__73, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_inverse_quadratic_interp, 385, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__74)) __PYX_ERR(0, 385, __pyx_L1_error)
+  __pyx_codeobj__74 = (PyObject*)__Pyx_PyCode_New(10, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__73, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_inverse_quadratic_interp, 391, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__74)) __PYX_ERR(0, 391, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":491
+  /* "cyroot/quasi_newton.pyx":499
  * 
  * # noinspection DuplicatedCode
  * def hyperbolic_interp(             # <<<<<<<<<<<<<<
  *         f: Callable[[float], float],
  *         x0: float,
  */
-  __pyx_tuple__78 = PyTuple_Pack(17, __pyx_n_s_f, __pyx_n_s_x0, __pyx_n_s_x1, __pyx_n_s_x2, __pyx_n_s_f_x0, __pyx_n_s_f_x1, __pyx_n_s_f_x2, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged); if (unlikely(!__pyx_tuple__78)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __pyx_tuple__78 = PyTuple_Pack(17, __pyx_n_s_f, __pyx_n_s_x0, __pyx_n_s_x1, __pyx_n_s_x2, __pyx_n_s_f_x0, __pyx_n_s_f_x1, __pyx_n_s_f_x2, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged); if (unlikely(!__pyx_tuple__78)) __PYX_ERR(0, 499, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__78);
   __Pyx_GIVEREF(__pyx_tuple__78);
-  __pyx_codeobj__79 = (PyObject*)__Pyx_PyCode_New(10, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__78, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_hyperbolic_interp, 491, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__79)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __pyx_codeobj__79 = (PyObject*)__Pyx_PyCode_New(10, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__78, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_hyperbolic_interp, 499, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__79)) __PYX_ERR(0, 499, __pyx_L1_error)
 
-  /* "cyroot/quasi_newton.pyx":595
+  /* "cyroot/quasi_newton.pyx":605
  * 
  * # noinspection DuplicatedCode
  * def muller(f: Callable[[complex], complex],             # <<<<<<<<<<<<<<
  *            x0: complex,
  *            x1: complex,
  */
-  __pyx_tuple__83 = PyTuple_Pack(17, __pyx_n_s_f, __pyx_n_s_x0, __pyx_n_s_x1, __pyx_n_s_x2, __pyx_n_s_f_x0, __pyx_n_s_f_x1, __pyx_n_s_f_x2, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged); if (unlikely(!__pyx_tuple__83)) __PYX_ERR(0, 595, __pyx_L1_error)
+  __pyx_tuple__83 = PyTuple_Pack(17, __pyx_n_s_f, __pyx_n_s_x0, __pyx_n_s_x1, __pyx_n_s_x2, __pyx_n_s_f_x0, __pyx_n_s_f_x1, __pyx_n_s_f_x2, __pyx_n_s_etol, __pyx_n_s_ptol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_r, __pyx_n_s_f_r, __pyx_n_s_step, __pyx_n_s_precision, __pyx_n_s_error, __pyx_n_s_converged); if (unlikely(!__pyx_tuple__83)) __PYX_ERR(0, 605, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__83);
   __Pyx_GIVEREF(__pyx_tuple__83);
-  __pyx_codeobj__84 = (PyObject*)__Pyx_PyCode_New(10, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__83, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_muller, 595, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__84)) __PYX_ERR(0, 595, __pyx_L1_error)
+  __pyx_codeobj__84 = (PyObject*)__Pyx_PyCode_New(10, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__83, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_quasi_newton_pyx, __pyx_n_s_muller, 605, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__84)) __PYX_ERR(0, 605, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_NewtonPolynomial(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
@@ -28930,16 +28624,16 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_6cyroot_12quasi_newton_NewtonPolynomial.f = (double (*)(struct __pyx_obj_6cyroot_12quasi_newton_NewtonPolynomial *, double))__pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_f;
   __pyx_vtable_6cyroot_12quasi_newton_NewtonPolynomial.df = (double (*)(struct __pyx_obj_6cyroot_12quasi_newton_NewtonPolynomial *, double))__pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_df;
   __pyx_vtable_6cyroot_12quasi_newton_NewtonPolynomial.dnf = (double (*)(struct __pyx_obj_6cyroot_12quasi_newton_NewtonPolynomial *, double, struct __pyx_opt_args_6cyroot_12quasi_newton_16NewtonPolynomial_dnf *__pyx_optional_args))__pyx_f_6cyroot_12quasi_newton_16NewtonPolynomial_dnf;
-  if (PyType_Ready(&__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial) < 0) __PYX_ERR(0, 124, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_6cyroot_12quasi_newton_NewtonPolynomial.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial.tp_dictoffset && __pyx_type_6cyroot_12quasi_newton_NewtonPolynomial.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_6cyroot_12quasi_newton_NewtonPolynomial.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial.tp_dict, __pyx_vtabptr_6cyroot_12quasi_newton_NewtonPolynomial) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_NewtonPolynomial, (PyObject *)&__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial.tp_dict, __pyx_vtabptr_6cyroot_12quasi_newton_NewtonPolynomial) < 0) __PYX_ERR(0, 124, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_NewtonPolynomial, (PyObject *)&__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial) < 0) __PYX_ERR(0, 124, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial) < 0) __PYX_ERR(0, 124, __pyx_L1_error)
   __pyx_ptype_6cyroot_12quasi_newton_NewtonPolynomial = &__pyx_type_6cyroot_12quasi_newton_NewtonPolynomial;
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;
@@ -29458,7 +29152,7 @@ if (!__Pyx_RefNanny) {
  *            etol: float = ETOL,
  *            ptol: float = PTOL,             # <<<<<<<<<<<<<<
  *            max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""
+ *     """
  */
   __pyx_k__5 = __pyx_v_6cyroot_9_defaults_PTOL;
 
@@ -29474,7 +29168,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_secant, __pyx_t_1) < 0) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/quasi_newton.pyx":177
+  /* "cyroot/quasi_newton.pyx":179
  * 
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) sidi_kernel(             # <<<<<<<<<<<<<<
@@ -29488,7 +29182,7 @@ if (!__Pyx_RefNanny) {
   __pyx_k__8 = __pyx_v_6cyroot_9_defaults_PTOL;
   __pyx_k__9 = 0;
 
-  /* "cyroot/quasi_newton.pyx":221
+  /* "cyroot/quasi_newton.pyx":223
  *          xs: Sequence[float],
  *          f_xs: Sequence[float] = None,
  *          etol: float = ETOL,             # <<<<<<<<<<<<<<
@@ -29497,28 +29191,28 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_k__10 = __pyx_v_6cyroot_9_defaults_ETOL;
 
-  /* "cyroot/quasi_newton.pyx":222
+  /* "cyroot/quasi_newton.pyx":224
  *          f_xs: Sequence[float] = None,
  *          etol: float = ETOL,
  *          ptol: float = PTOL,             # <<<<<<<<<<<<<<
  *          max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""
+ *     """
  */
   __pyx_k__11 = __pyx_v_6cyroot_9_defaults_PTOL;
 
-  /* "cyroot/quasi_newton.pyx":218
+  /* "cyroot/quasi_newton.pyx":220
  * 
  * # noinspection DuplicatedCode
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *          xs: Sequence[float],
  *          f_xs: Sequence[float] = None,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_3sidi, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_3sidi, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 220, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_sidi, __pyx_t_1) < 0) __PYX_ERR(0, 218, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_sidi, __pyx_t_1) < 0) __PYX_ERR(0, 220, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/quasi_newton.pyx":272
+  /* "cyroot/quasi_newton.pyx":276
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
@@ -29532,7 +29226,7 @@ if (!__Pyx_RefNanny) {
   __pyx_k__13 = __pyx_v_6cyroot_9_defaults_PTOL;
   __pyx_k__14 = 0;
 
-  /* "cyroot/quasi_newton.pyx":306
+  /* "cyroot/quasi_newton.pyx":310
  *                x0: float,
  *                f_x0: Optional[float] = None,
  *                etol: float = ETOL,             # <<<<<<<<<<<<<<
@@ -29541,28 +29235,28 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_k__15 = __pyx_v_6cyroot_9_defaults_ETOL;
 
-  /* "cyroot/quasi_newton.pyx":307
+  /* "cyroot/quasi_newton.pyx":311
  *                f_x0: Optional[float] = None,
  *                etol: float = ETOL,
  *                ptol: float = PTOL,             # <<<<<<<<<<<<<<
  *                max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""
+ *     """
  */
   __pyx_k__16 = __pyx_v_6cyroot_9_defaults_PTOL;
 
-  /* "cyroot/quasi_newton.pyx":303
+  /* "cyroot/quasi_newton.pyx":307
  * 
  * # noinspection DuplicatedCode
  * def steffensen(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *                x0: float,
  *                f_x0: Optional[float] = None,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_5steffensen, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_5steffensen, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_steffensen, __pyx_t_1) < 0) __PYX_ERR(0, 303, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_steffensen, __pyx_t_1) < 0) __PYX_ERR(0, 307, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/quasi_newton.pyx":347
+  /* "cyroot/quasi_newton.pyx":353
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
@@ -29576,7 +29270,7 @@ if (!__Pyx_RefNanny) {
   __pyx_k__18 = __pyx_v_6cyroot_9_defaults_PTOL;
   __pyx_k__19 = 0;
 
-  /* "cyroot/quasi_newton.pyx":393
+  /* "cyroot/quasi_newton.pyx":399
  *         f_x1: Optional[float] = None,
  *         f_x2: Optional[float] = None,
  *         etol: float = ETOL,             # <<<<<<<<<<<<<<
@@ -29585,28 +29279,28 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_k__20 = __pyx_v_6cyroot_9_defaults_ETOL;
 
-  /* "cyroot/quasi_newton.pyx":394
+  /* "cyroot/quasi_newton.pyx":400
  *         f_x2: Optional[float] = None,
  *         etol: float = ETOL,
  *         ptol: float = PTOL,             # <<<<<<<<<<<<<<
  *         max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""
+ *     """
  */
   __pyx_k__21 = __pyx_v_6cyroot_9_defaults_PTOL;
 
-  /* "cyroot/quasi_newton.pyx":385
+  /* "cyroot/quasi_newton.pyx":391
  * 
  * # noinspection DuplicatedCode
  * def inverse_quadratic_interp(             # <<<<<<<<<<<<<<
  *         f: Callable[[float], float],
  *         x0: float,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_7inverse_quadratic_interp, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 385, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_7inverse_quadratic_interp, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 391, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_inverse_quadratic_interp, __pyx_t_1) < 0) __PYX_ERR(0, 385, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_inverse_quadratic_interp, __pyx_t_1) < 0) __PYX_ERR(0, 391, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/quasi_newton.pyx":448
+  /* "cyroot/quasi_newton.pyx":456
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double, double, long, double, double, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
@@ -29620,7 +29314,7 @@ if (!__Pyx_RefNanny) {
   __pyx_k__24 = __pyx_v_6cyroot_9_defaults_PTOL;
   __pyx_k__25 = 0;
 
-  /* "cyroot/quasi_newton.pyx":499
+  /* "cyroot/quasi_newton.pyx":507
  *         f_x1: Optional[float] = None,
  *         f_x2: Optional[float] = None,
  *         etol: float = ETOL,             # <<<<<<<<<<<<<<
@@ -29629,28 +29323,28 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_k__26 = __pyx_v_6cyroot_9_defaults_ETOL;
 
-  /* "cyroot/quasi_newton.pyx":500
+  /* "cyroot/quasi_newton.pyx":508
  *         f_x2: Optional[float] = None,
  *         etol: float = ETOL,
  *         ptol: float = PTOL,             # <<<<<<<<<<<<<<
  *         max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""
+ *     """
  */
   __pyx_k__27 = __pyx_v_6cyroot_9_defaults_PTOL;
 
-  /* "cyroot/quasi_newton.pyx":491
+  /* "cyroot/quasi_newton.pyx":499
  * 
  * # noinspection DuplicatedCode
  * def hyperbolic_interp(             # <<<<<<<<<<<<<<
  *         f: Callable[[float], float],
  *         x0: float,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_9hyperbolic_interp, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_9hyperbolic_interp, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 499, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_hyperbolic_interp, __pyx_t_1) < 0) __PYX_ERR(0, 491, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_hyperbolic_interp, __pyx_t_1) < 0) __PYX_ERR(0, 499, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/quasi_newton.pyx":554
+  /* "cyroot/quasi_newton.pyx":564
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef (double complex, double complex, long, double, double, bint) muller_kernel(             # <<<<<<<<<<<<<<
@@ -29664,7 +29358,7 @@ if (!__Pyx_RefNanny) {
   __pyx_k__29 = __pyx_v_6cyroot_9_defaults_PTOL;
   __pyx_k__30 = 0;
 
-  /* "cyroot/quasi_newton.pyx":602
+  /* "cyroot/quasi_newton.pyx":612
  *            f_x1: Optional[complex] = None,
  *            f_x2: Optional[complex] = None,
  *            etol: float = ETOL,             # <<<<<<<<<<<<<<
@@ -29673,25 +29367,25 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_k__31 = __pyx_v_6cyroot_9_defaults_ETOL;
 
-  /* "cyroot/quasi_newton.pyx":603
+  /* "cyroot/quasi_newton.pyx":613
  *            f_x2: Optional[complex] = None,
  *            etol: float = ETOL,
  *            ptol: float = PTOL,             # <<<<<<<<<<<<<<
  *            max_iter: int = 0) -> QuasiNewtonMethodReturnType:
- *     f"""
+ *     """
  */
   __pyx_k__32 = __pyx_v_6cyroot_9_defaults_PTOL;
 
-  /* "cyroot/quasi_newton.pyx":595
+  /* "cyroot/quasi_newton.pyx":605
  * 
  * # noinspection DuplicatedCode
  * def muller(f: Callable[[complex], complex],             # <<<<<<<<<<<<<<
  *            x0: complex,
  *            x1: complex,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_11muller, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 595, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_12quasi_newton_11muller, NULL, __pyx_n_s_cyroot_quasi_newton); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 605, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_muller, __pyx_t_1) < 0) __PYX_ERR(0, 595, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_muller, __pyx_t_1) < 0) __PYX_ERR(0, 605, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "(tree fragment)":1

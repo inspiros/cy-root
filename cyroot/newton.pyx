@@ -62,7 +62,7 @@ def newton(f: Callable[[float], float],
            etol: float = ETOL,
            ptol: float = PTOL,
            max_iter: int = 0) -> NewtonMethodReturnType:
-    f"""
+    """
     Newton method for root-finding.
 
     Args:
@@ -76,7 +76,9 @@ def newton(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -147,7 +149,7 @@ def halley(f: Callable[[float], float],
            etol: float = ETOL,
            ptol: float = PTOL,
            max_iter: int = 0) -> NewtonMethodReturnType:
-    f"""
+    """
     Halley's method for root-finding.
 
     Args:
@@ -163,7 +165,9 @@ def halley(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -524,7 +528,7 @@ def householder(f: Callable[[float], float],
                 ptol: float = PTOL,
                 max_iter: int = 0,
                 c_code: bool = True) -> NewtonMethodReturnType:
-    f"""
+    """
     Householder's method for root-finding.
 
     Args:
@@ -537,7 +541,9 @@ def householder(f: Callable[[float], float],
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
-        max_iter: Maximum number of iterations. Defaults to 0.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
         c_code: Use C implementation of reciprocal derivative
          function or not. Defaults to True.
 

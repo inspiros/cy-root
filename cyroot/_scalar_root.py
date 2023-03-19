@@ -15,12 +15,12 @@ for module in [bracketing, newton, quasi_newton]:
 
 
 def find_root_scalar(method: str, *args, **kwargs):
-    f"""
+    """
     Find the root of a scalar function.
 
     Args:
-        method: Name of the method. List of available methods:
-         {', '.join(SCALAR_ROOT_FINDING_METHODS.keys())}
+        method: Name of the method. A full list of supported
+         methods is stored in ``SCALAR_ROOT_FINDING_METHODS``.
         *args: Extra argument to be passed.
         **kwargs: Extra keywords arguments to be passed.
 
