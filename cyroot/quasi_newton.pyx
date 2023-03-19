@@ -10,12 +10,15 @@ cimport numpy as np
 from cython cimport view
 from libc cimport math
 
+from ._check_args import _check_stopping_condition_args
 from ._return_types import QuasiNewtonMethodReturnType
-from ._defaults cimport ETOL, PTOL
 from .fptr cimport (
     func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     complex_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
 )
+
+cdef extern from '_defaults.h':
+    cdef double PHI, ETOL, PTOL
 
 cdef extern from '<complex.h>':
     double complex sqrt(double complex x) nogil
@@ -35,7 +38,7 @@ __all__ = [
 # Secant
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint) secant_kernel(
+cdef (double, double, long, double, double, bint, bint) secant_kernel(
         func_type f,
         double x0,
         double x1,
@@ -63,7 +66,8 @@ cdef (double, double, long, double, double, bint) secant_kernel(
 
         precision = math.fabs(x1 - x0)
         error = math.fabs(f_x1)
-    return x1, f_x1, step, precision, error, converged
+    cdef bint optimal = error <= etol
+    return x1, f_x1, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def secant(f: Callable[[float], float],
@@ -96,27 +100,22 @@ def secant(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     if x0 == x1:
         raise ValueError(f'x0 and x1 must be different. Got {x0} and {x1}.')
+
+    f_wrapper = PyDoubleScalarFPtr(f)
     if f_x0 is None:
-        f_x0 = f(x0)
+        f_x0 = f_wrapper(x0)
     if f_x1 is None:
-        f_x1 = f(x1)
+        f_x1 = f_wrapper(x1)
     if f_x0 == f_x1:
         raise ValueError(f'f_x0 and f_x1 must be different. Got {f_x0} and {f_x1}.')
 
-    f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, precision, error, converged = secant_kernel[DoubleScalarFPtr](
+    res = secant_kernel[DoubleScalarFPtr](
         f_wrapper, x0, x1, f_x0, f_x1, etol, ptol, max_iter)
-    return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       precision, error, converged)
+    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Sidi
@@ -176,7 +175,7 @@ cdef class NewtonPolynomial:
         return dfs[-1]
 
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint) sidi_kernel(
+cdef (double, double, long, double, double, bint, bint) sidi_kernel(
         func_type f,
         double[:] x0s,
         double[:] f_x0s,
@@ -214,7 +213,8 @@ cdef (double, double, long, double, double, bint) sidi_kernel(
 
         precision = math.fabs(f_xn - f_xs[-2])
         error = math.fabs(f_xn)
-    return xn, f_xn, step, precision, error, converged
+    cdef bint optimal = error <= etol
+    return xn, f_xn, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def sidi(f: Callable[[float], float],
@@ -247,33 +247,27 @@ def sidi(f: Callable[[float], float],
         raise ValueError(f'xs must be a sequence. Got {type(xs)}.')
     if len(xs) < 2:
         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
+
+    _check_stopping_condition_args(etol, ptol, max_iter)
+
+    f_wrapper = PyDoubleScalarFPtr(f)
     if f_xs is None:
-        f_xs = [f(x) for x in xs]
+        f_xs = [f_wrapper(x) for x in xs]
     elif not isinstance(f_xs, Sequence):
         raise ValueError(f'f_xs must be a sequence. Got {type(f_xs)}.')
     elif len(f_xs) != len(xs):
         raise ValueError(f'xs and f_xs must have same size. Got {len(xs)} and {len(f_xs)}.')
 
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    f_wrapper = PyDoubleScalarFPtr(f)
     xs = np.array(xs, dtype=np.float64)
     f_xs = np.array(f_xs, dtype=np.float64)
-    r, f_r, step, precision, error, converged = sidi_kernel[DoubleScalarFPtr](
-        f_wrapper, xs, f_xs, etol, ptol, max_iter)
-    return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       precision, error, converged)
+    res = sidi_kernel[DoubleScalarFPtr](f_wrapper, xs, f_xs, etol, ptol, max_iter)
+    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Steffensen
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint) steffensen_kernel(
+cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
         func_type f,
         double x0,
         double f_x0,
@@ -301,7 +295,8 @@ cdef (double, double, long, double, double, bint) steffensen_kernel(
         precision = math.fabs(x3 - x0)
         error = math.fabs(f_x0)
         x0, f_x0 = x3, f(x3)
-    return x0, f_x0, step, precision, error, converged
+    cdef bint optimal = error <= etol
+    return x0, f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def steffensen(f: Callable[[float], float],
@@ -330,27 +325,21 @@ def steffensen(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_x0 is None:
-        f_x0 = f(x0)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, precision, error, converged = steffensen_kernel[DoubleScalarFPtr](
+    if f_x0 is None:
+        f_x0 = f_wrapper(x0)
+
+    res = steffensen_kernel[DoubleScalarFPtr](
         f_wrapper, x0, f_x0, etol, ptol, max_iter)
-    return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       precision, error, converged)
+    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Inverse Quadratic Interpolation
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint) inverse_quadratic_interp_kernel(
+cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp_kernel(
         func_type f,
         double x0,
         double x1,
@@ -385,7 +374,8 @@ cdef (double, double, long, double, double, bint) inverse_quadratic_interp_kerne
 
         precision = math.fabs(x2 - x1)
         error = math.fabs(f_x2)
-    return x2, f_x2, step, precision, error, converged
+    cdef bint optimal = error <= etol
+    return x2, f_x2, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def inverse_quadratic_interp(
@@ -423,37 +413,32 @@ def inverse_quadratic_interp(
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     if any((x0 == x1, x1 == x2, x0 == x2)):
         raise ValueError(f'x0, x1, and x2 must be different. '
                          f'Got {x0}, {x1}, and {x2}.')
+
+    f_wrapper = PyDoubleScalarFPtr(f)
     if f_x0 is None:
-        f_x0 = f(x0)
+        f_x0 = f_wrapper(x0)
     if f_x1 is None:
-        f_x1 = f(x1)
+        f_x1 = f_wrapper(x1)
     if f_x2 is None:
-        f_x2 = f(x2)
+        f_x2 = f_wrapper(x2)
     if f_x0 == f_x1 == f_x2:
         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
 
-    f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, precision, error, converged = inverse_quadratic_interp_kernel[DoubleScalarFPtr](
+    res = inverse_quadratic_interp_kernel[DoubleScalarFPtr](
         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
-    return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       precision, error, converged)
+    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Hyperbolic Interpolation
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint) hyperbolic_interp_kernel(
+cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel(
         func_type f,
         double x0,
         double x1,
@@ -493,7 +478,8 @@ cdef (double, double, long, double, double, bint) hyperbolic_interp_kernel(
 
         precision = math.fabs(x2 - x1)
         error = math.fabs(f_x2)
-    return x2, f_x2, step, precision, error, converged
+    cdef bint optimal = error <= etol
+    return x2, f_x2, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def hyperbolic_interp(
@@ -531,37 +517,32 @@ def hyperbolic_interp(
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     if any((x0 == x1, x1 == x2, x0 == x2)):
         raise ValueError(f'x0, x1, and x2 must be different. '
                          f'Got {x0}, {x1}, and {x2}.')
+
+    f_wrapper = PyDoubleScalarFPtr(f)
     if f_x0 is None:
-        f_x0 = f(x0)
+        f_x0 = f_wrapper(x0)
     if f_x1 is None:
-        f_x1 = f(x1)
+        f_x1 = f_wrapper(x1)
     if f_x2 is None:
-        f_x2 = f(x2)
+        f_x2 = f_wrapper(x2)
     if f_x0 == f_x1 == f_x2:
         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
 
-    f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, precision, error, converged = hyperbolic_interp_kernel[DoubleScalarFPtr](
+    res = hyperbolic_interp_kernel[DoubleScalarFPtr](
         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
-    return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       precision, error, converged)
+    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Muller
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double complex, double complex, long, double, double, bint) muller_kernel(
+cdef (double complex, double complex, long, double, double, bint, bint) muller_kernel(
         complex_func_type f,
         double complex x0,
         double complex x1,
@@ -574,7 +555,7 @@ cdef (double complex, double complex, long, double, double, bint) muller_kernel(
         long max_iter=0):
     cdef double precision = cabs(x2 - x0), error = math.INFINITY
     cdef long step = 0
-    cdef double complex div_diff_01, div_diff_02, div_diff_12, a, b, c, s_delta, d1, d2, d, x3
+    cdef double complex div_diff_01, div_diff_12, div_diff_02, a, b, s_delta, d1, d2, d, x3
     cdef converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0 or x0 == x1 or x1 == x2 or x0 == x2:
@@ -584,10 +565,9 @@ cdef (double complex, double complex, long, double, double, bint) muller_kernel(
         div_diff_01 = (f_x1 - f_x0) / (x1 - x0)
         div_diff_02 = (f_x2 - f_x0) / (x2 - x0)
         div_diff_12 = (f_x2 - f_x1) / (x2 - x1)
-        c = f_x2
         b = div_diff_01 + div_diff_02 - div_diff_12
         a = (div_diff_01 - div_diff_12) / (x0 - x2)
-        s_delta = sqrt(b ** 2 - 4 * a * c)  # \sqrt{b^2 - 4ac}
+        s_delta = sqrt(b ** 2 - 4 * a * f_x2)  # \sqrt{b^2 - 4ac}
         d1, d2 = b + s_delta, b - s_delta
         # take the higher-magnitude denominator
         d = d1 if cabs(d1) > cabs(d2) else d2
@@ -599,7 +579,8 @@ cdef (double complex, double complex, long, double, double, bint) muller_kernel(
 
         precision = cabs(x2 - x0)
         error = cabs(f_x2)
-    return x2, f_x2, step, precision, error, converged
+    cdef bint optimal = error <= etol
+    return x2, f_x2, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def muller(f: Callable[[complex], complex],
@@ -636,28 +617,23 @@ def muller(f: Callable[[complex], complex],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     if any((x0 == x1, x1 == x2, x0 == x2)):
         raise ValueError(f'x0, x1, and x2 must be different. '
                          f'Got {x0}, {x1}, and {x2}.')
+
+    f_wrapper = PyComplexScalarFPtr(f)
     if f_x0 is None:
-        f_x0 = f(x0)
+        f_x0 = f_wrapper(x0)
     if f_x1 is None:
-        f_x1 = f(x1)
+        f_x1 = f_wrapper(x1)
     if f_x2 is None:
-        f_x2 = f(x2)
+        f_x2 = f_wrapper(x2)
     if f_x0 == f_x1 == f_x2:
         raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
                          f'Got {f_x0}, {f_x1}, and {f_x2}.')
 
-    f_wrapper = PyComplexScalarFPtr(f)
-    r, f_r, step, precision, error, converged = muller_kernel[ComplexScalarFPtr](
+    res = muller_kernel[ComplexScalarFPtr](
         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
-    return QuasiNewtonMethodReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       precision, error, converged)
+    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)

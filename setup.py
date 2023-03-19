@@ -42,8 +42,7 @@ def get_ext_modules():
             )
     if use_cython:
         # Set up the ext_modules for Cython or not, depending
-        ext_modules = cythonize(ext_modules,
-                                language_level='3')
+        ext_modules = cythonize(ext_modules, language_level='3')
     return ext_modules
 
 

@@ -13,12 +13,15 @@ import sympy.utilities.autowrap
 from cython cimport view
 from libc cimport math
 
-from ._defaults cimport ETOL, PTOL
+from ._check_args import _check_stopping_condition_args
 from ._return_types import NewtonMethodReturnType
 from .fptr cimport (
     func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     mv_func_type, DoubleMemoryViewFPtr, PyDoubleMemoryViewFPtr,
 )
+
+cdef extern from '_defaults.h':
+    cdef double PHI, ETOL, PTOL
 
 __all__ = [
     'newton',
@@ -30,7 +33,7 @@ __all__ = [
 # Newton
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, double, long, double, double, bint) newton_kernel(
+cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
         func_type f,
         func_type df,
         double x0,
@@ -51,7 +54,8 @@ cdef (double, double, double, long, double, double, bint) newton_kernel(
         precision = math.fabs(x1 - x0)
         x0, f_x0, df_x0 = x1, f(x1), df(x1)
         error = math.fabs(f_x0)
-    return x0, f_x0, df_x0, step, precision, error, converged
+    cdef bint optimal = error <= etol
+    return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def newton(f: Callable[[float], float],
@@ -84,31 +88,24 @@ def newton(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_x0 is None:
-        f_x0 = f(x0)
-    if df_x0 is None:
-        df_x0 = df(x0)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     df_wrapper = PyDoubleScalarFPtr(df)
-    r, f_r, df_r, step, precision, error, converged = newton_kernel[DoubleScalarFPtr](
+    if f_x0 is None:
+        f_x0 = f_wrapper(x0)
+    if df_x0 is None:
+        df_x0 = df_wrapper(x0)
+
+    res = newton_kernel[DoubleScalarFPtr](
         f_wrapper, df_wrapper, x0, f_x0, df_x0, etol, ptol, max_iter)
-    return NewtonMethodReturnType(r, f_r, df_r, step,
-                                  (f_wrapper.n_f_calls, df_wrapper.n_f_calls),
-                                  precision, error, converged)
+    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls, df_wrapper.n_f_calls))
 
 ################################################################################
 # Halley
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, double, double, long, double, double, bint) halley_kernel(
+cdef (double, double, double, double, long, double, double, bint, bint) halley_kernel(
         func_type f,
         func_type df,
         func_type d2f,
@@ -136,7 +133,8 @@ cdef (double, double, double, double, long, double, double, bint) halley_kernel(
         precision = math.fabs(x1 - x0)
         x0, f_x0, df_x0, d2f_x0 = x1, f(x1), df(x1), d2f(x1)
         error = math.fabs(f_x0)
-    return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged
+    cdef bint optimal = error <= etol
+    return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def halley(f: Callable[[float], float],
@@ -173,34 +171,29 @@ def halley(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_x0 is None:
-        f_x0 = f(x0)
-    if df_x0 is None:
-        df_x0 = df(x0)
-    if d2f_x0 is None:
-        d2f_x0 = d2f(x0)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     df_wrapper = PyDoubleScalarFPtr(df)
     d2f_wrapper = PyDoubleScalarFPtr(d2f)
-    root, f_root, df_root, d2f_root, step, precision, error, converged = halley_kernel[DoubleScalarFPtr](
+    if f_x0 is None:
+        f_x0 = f_wrapper(x0)
+    if df_x0 is None:
+        df_x0 = df_wrapper(x0)
+    if d2f_x0 is None:
+        d2f_x0 = d2f_wrapper(x0)
+
+    r, f_r, df_r, d2f_r, step, precision, error, converged, optimal = halley_kernel[DoubleScalarFPtr](
         f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, etol, ptol, max_iter)
-    return NewtonMethodReturnType(root, f_root, (df_root, d2f_root), step,
+    return NewtonMethodReturnType(r, f_r, (df_r, d2f_r), step,
                                   (f_wrapper.n_f_calls, df_wrapper.n_f_calls, d2f_wrapper.n_f_calls),
-                                  precision, error, converged)
+                                  precision, error, converged, optimal)
 
 ################################################################################
 # Householder
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((double, double[:], int, double, double, bint))
+@cython.returns((double, double[:], int, double, double, bint, bint))
 cdef householder_kernel(
         DoubleScalarFPtr[:] fs,  # sadly, can't have memory view of C functions
         mv_func_type nom_f,
@@ -242,7 +235,8 @@ cdef householder_kernel(
             fs_x0[i] = fs[i](x0[0])
         error = math.fabs(fs_x0[0])
         nom_x0, denom_x0 = nom_f(fs_x0[:-1]), denom_f(fs_x0)
-    return x0[0], fs_x0, step, precision, error, converged
+    cdef bint optimal = error <= etol
+    return x0[0], fs_x0, step, precision, error, converged, optimal
 
 #########################
 # Sympy Expr Evaluators
@@ -554,20 +548,16 @@ def householder(f: Callable[[float], float],
     if len(dfs) < 2:
         raise ValueError(f'Requires at least second order derivative. Got {len(dfs)}.')
 
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+    _check_stopping_condition_args(etol, ptol, max_iter)
+
+    fs_wrappers = np.asarray([PyDoubleScalarFPtr(f)] + [PyDoubleScalarFPtr(df) for df in dfs])
 
     d = len(dfs)
-    fs_wrappers = np.asarray([PyDoubleScalarFPtr(f)] + [PyDoubleScalarFPtr(df) for df in dfs])
-    x0, fs_x0, step, precision, error, converged = householder_kernel[DoubleMemoryViewFPtr](
+    r, fs_r, step, precision, error, converged, optimal = householder_kernel[DoubleMemoryViewFPtr](
         fs_wrappers,
         <DoubleMemoryViewFPtr>ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
         <DoubleMemoryViewFPtr>ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
         d, x0, etol, ptol, max_iter)
-    return NewtonMethodReturnType(x0, float(fs_x0[0]), tuple(fs_x0[1:]), step,
+    return NewtonMethodReturnType(r, float(fs_r[0]), tuple(fs_r[1:]), step,
                                   tuple(_.n_f_calls for _ in fs_wrappers),
-                                  precision, error, converged)
+                                  precision, error, converged, optimal)

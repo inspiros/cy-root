@@ -9,9 +9,12 @@ from cpython cimport array
 from cython cimport view
 from libc cimport math
 
-from ._defaults cimport ETOL, PTOL, PHI
+from ._check_args import _check_stopping_condition_args, _check_bracket
 from ._return_types import BracketingMethodsReturnType
 from .fptr cimport func_type, DoubleScalarFPtr, PyDoubleScalarFPtr
+
+cdef extern from '_defaults.h':
+    cdef double PHI, ETOL, PTOL
 
 __all__ = [
     'bisect',
@@ -25,6 +28,7 @@ __all__ = [
     'ridders',
     'toms748',
     'itp',
+    'wu',
 ]
 
 cdef inline (double, double, double, double, double, double)  _update_bracket(
@@ -45,7 +49,7 @@ cdef inline (double, double, double, double, double, double)  _update_bracket(
 ctypedef bint (*stop_func_type)(long, double, double, double, double)
 
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint) bisect_kernel(
+cdef (double, double, long, double, double, double, double, double, double, bint, bint) bisect_kernel(
         func_type f,
         double a,
         double b,
@@ -53,7 +57,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ptol=PTOL,
         long max_iter=0,
         stop_func_type extra_stop_criteria=NULL):
-    cdef double precision = math.INFINITY, error = math.INFINITY
+    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
     cdef double c, f_c, f_a = math.NAN, f_b = math.NAN
     cdef bint converged = True
@@ -67,15 +71,13 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         step += 1
         c = (a + b) / 2
         f_c = f(c)
-        precision = math.fabs(c - a)
         error = math.fabs(f_c)
         if f_c == 0:
             break
-        elif f_c > 0:
-            b, f_b = c, f_c
-        else:
-            a, f_a = c, f_c
-    return c, f_c, step, a, b, f_a, f_b, precision, error, converged
+        a, b, _, f_a, f_b, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
+        precision = b - a
+    cdef bint optimal = error <= etol
+    return c, f_c, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def bisect(f: Callable[[float], float],
@@ -104,19 +106,14 @@ def bisect(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+    _check_bracket(a, b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     a, b = min(a, b), max(a, b)
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = bisect_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, etol, ptol, max_iter)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+
+    res = bisect_kernel[DoubleScalarFPtr](f_wrapper, a, b, etol, ptol, max_iter)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # False position
@@ -124,7 +121,7 @@ def bisect(f: Callable[[float], float],
 ctypedef double (*scale_func_type)(double, double)
 
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint) regula_falsi_kernel(
+cdef (double, double, long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(
         func_type f,
         double a,
         double b,
@@ -134,9 +131,9 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ptol=PTOL,
         long max_iter=0,
         scale_func_type scale_func=NULL):
-    cdef double precision = math.INFINITY, error = math.INFINITY
+    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
-    cdef double c, f_c, c_prev, m = 1
+    cdef double c, f_c, m = 1
     cdef bint converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0 or f_a == f_b:
@@ -145,9 +142,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         step += 1
         c = (a * f_b - b * f_a) / (f_b - f_a)
         f_c = f(c)
-        precision = math.fabs(f_c)
-        error = math.fabs(c - c_prev)
-        c_prev = c
+        precision = math.fabs(b - a)
+        error = math.fabs(f_c)
 
         if scale_func is not NULL:
             m = scale_func(f_b, f_c)
@@ -159,7 +155,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         else:
             f_a = m * f_a
         b, f_b = c, f_c
-    return c, f_c, step, a, b, f_a, f_b, precision, error, converged
+    cdef bint optimal = error <= etol
+    return c, f_c, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def regula_falsi(f: Callable[[float], float],
@@ -192,23 +189,18 @@ def regula_falsi(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_a is None:
-        f_a = f(a)
-    if f_b is None:
-        f_b = f(b)
+    _check_bracket(a, b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = regula_falsi_kernel[DoubleScalarFPtr](
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+
+    res = regula_falsi_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, etol, ptol, max_iter)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Illinois
@@ -247,23 +239,18 @@ def illinois(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_a is None:
-        f_a = f(a)
-    if f_b is None:
-        f_b = f(b)
+    _check_bracket(a, b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = regula_falsi_kernel[DoubleScalarFPtr](
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+
+    res = regula_falsi_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, etol, ptol, max_iter, illinois_scale)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Pegasus
@@ -302,23 +289,18 @@ def pegasus(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_a is None:
-        f_a = f(a)
-    if f_b is None:
-        f_b = f(b)
+    _check_bracket(a, b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = regula_falsi_kernel[DoubleScalarFPtr](
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+
+    res = regula_falsi_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, etol, ptol, max_iter, pegasus_scale)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Anderson–Björck
@@ -360,29 +342,24 @@ def anderson_bjorck(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_a is None:
-        f_a = f(a)
-    if f_b is None:
-        f_b = f(b)
+    _check_bracket(a, b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = regula_falsi_kernel[DoubleScalarFPtr](
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+
+    res = regula_falsi_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, etol, ptol, max_iter, anderson_bjorck_scale)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Dekker
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint) dekker_kernel(
+cdef (double, double, long, double, double, double, double, double, double, bint, bint) dekker_kernel(
         func_type f,
         double a,
         double b,
@@ -391,7 +368,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.fabs(b - a), error = math.INFINITY
+    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
     cdef double b_prev = a, f_b_prev = f_a, b_next, f_b_next, c, s
     cdef bint converged = True
@@ -418,9 +395,10 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         if math.fabs(f_a) < math.fabs(f_b):  # swap
             a, f_a, b, f_b = b, f_b, a, f_a
 
-        precision = math.fabs(a - b)
+        precision = math.fabs(b - a)
         error = math.fabs(f_b)
-    return b, f_b, step, a, b, f_a, f_b, precision, error, converged
+    cdef bint optimal = error <= etol
+    return b, f_b, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def dekker(f: Callable[[float], float],
@@ -453,29 +431,24 @@ def dekker(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_a is None:
-        f_a = f(a)
-    if f_b is None:
-        f_b = f(b)
+    _check_bracket(a, b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = dekker_kernel[DoubleScalarFPtr](
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+
+    res = dekker_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, etol, ptol, max_iter)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Brent
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint) brent_kernel(
+cdef (double, double, long, double, double, double, double, double, double, bint, bint) brent_kernel(
         func_type f,
         double a,
         double b,
@@ -486,7 +459,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.fabs(b - a), error = math.INFINITY
+    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
     cdef double b_prev = a, f_b_prev = f_a, b_prev_prev = a, b_next, f_b_next, c, s
     cdef double d_ab, d_abp, d_bbp, df_ab, df_abp, df_bbp, denom
@@ -544,9 +517,10 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         if math.fabs(f_a) < math.fabs(f_b):  # swap
             a, f_a, b, f_b = b, f_b, a, f_a
 
-        precision = math.fabs(a - b)
+        precision = math.fabs(b - a)
         error = math.fabs(f_b)
-    return b, f_b, step, a, b, f_a, f_b, precision, error, converged
+    cdef bint optimal = error <= etol
+    return b, f_b, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 BRENT_INTERP_METHODS: dict[str, int] = {
     'quadratic': 0,
@@ -590,6 +564,7 @@ def brent(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
+    _check_bracket(a, b)
     if ((isinstance(interp_method, int) and interp_method not in BRENT_INTERP_METHODS.values()) or
             (isinstance(interp_method, str) and interp_method not in BRENT_INTERP_METHODS.keys())):
         raise ValueError(f'interp_method can be {BRENT_INTERP_METHODS}. '
@@ -599,29 +574,23 @@ def brent(f: Callable[[float], float],
     if sigma <= 0:
         raise ValueError(f'sigma must be positive. Got {sigma}.')
 
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
+    f_wraper = PyDoubleScalarFPtr(f)
     if f_a is None:
         f_a = f(a)
     if f_b is None:
         f_b = f(b)
 
-    f_wraper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = brent_kernel[DoubleScalarFPtr](
+    res = brent_kernel[DoubleScalarFPtr](
         f_wraper, a, b, f_a, f_b, interp_method, sigma, etol, ptol, max_iter)
-    return BracketingMethodsReturnType(r, f_r, step, f_wraper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wraper.n_f_calls)
 
 ################################################################################
 # Chandrupatla
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint) chandrupatla_kernel(
+cdef (double, double, long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(
         func_type f,
         double a,
         double b,
@@ -631,7 +600,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.fabs(b - a), error = math.INFINITY
+    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
     cdef double c, f_c, d, f_d, d_ab, d_fa_fb, d_ad, d_fa_fd, d_bd, d_fb_fd, tl, t = 0.5
     cdef double r, f_r
@@ -649,7 +618,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         else:
             d, b, a = b, a, c
             f_d, f_b, f_a = f_b, f_a, f_c
-        precision = math.fabs(a - b)
+        precision = math.fabs(b - a)
         r, f_r = (a, f_a) if math.fabs(f_a) < math.fabs(f_b) else (b, f_b)
         error = math.fabs(f_r)
         tl = (2 * ptol * math.fabs(r) + 0.5 * sigma) / precision
@@ -672,8 +641,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
             t = tl
         if t > 1 - tl:
             t = 1 - tl
-
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged
+    cdef bint optimal = error <= etol
+    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def chandrupatla(f: Callable[[float], float],
@@ -708,29 +677,24 @@ def chandrupatla(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_a is None:
-        f_a = f(a)
-    if f_b is None:
-        f_b = f(b)
+    _check_bracket(a, b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = chandrupatla_kernel[DoubleScalarFPtr](
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+
+    res = chandrupatla_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, sigma, etol, ptol, max_iter)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Ridders
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint) ridders_kernel(
+cdef (double, double, long, double, double, double, double, double, double, bint, bint) ridders_kernel(
         func_type f,
         double a,
         double b,
@@ -739,7 +703,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.fabs(b - a), error = math.INFINITY
+    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
     cdef double c, f_c, d, f_d, denom
     cdef bint converged = True
@@ -767,7 +731,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         error = math.fabs(f_d)
     if b < a:
         a, f_a = b, f_b
-    return d, f_d, step, a, b, f_a, f_b, precision, error, converged
+    cdef bint optimal = error <= etol
+    return d, f_d, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def ridders(f: Callable[[float], float],
@@ -800,25 +765,21 @@ def ridders(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_a is None:
-        f_a = f(a)
-    if f_b is None:
-        f_b = f(b)
-    if f_a * f_b >= 0:
-        raise ValueError('f_a and f_b must have opposite sign.')
+    _check_bracket(a, b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = ridders_kernel[DoubleScalarFPtr](
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+    if f_a * f_b >= 0:
+        raise ValueError('f_a and f_b must have opposite sign. '
+                         f'Got f_a={f_a} and f_b={f_b}.')
+
+    res = ridders_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, etol, ptol, max_iter)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # TOMS748
@@ -918,7 +879,7 @@ cdef double _inverse_poly_zero(double a, double b, double c, double d,
     return a + Q31 + Q32 + Q33
 
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint) toms748_kernel(
+cdef (double, double, long, double, double, double, double, double, double, bint, bint) toms748_kernel(
         func_type f,
         double a,
         double b,
@@ -929,7 +890,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.fabs(b - a)
+    cdef double precision = b - a, error
     cdef long step = 0, n
     cdef double c, f_c, d, f_d, e, f_e, u, f_u, z, f_z, A
     cdef bint use_newton_quadratic, converged = True
@@ -939,10 +900,11 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         c = (a + b) / 2
     f_c = f(c)
     step += 1
-    cdef double error = math.fabs(f_c)
+    error = math.fabs(f_c)
     if f_c == 0:
-        return c, f_c, step, a, b, f_a, f_b, precision, error, True
+        return c, f_c, step, a, b, f_a, f_b, precision, error, converged, True
     a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
+    precision = b - a
     e = f_e = math.NAN
     while error > etol and precision > ptol:
         if step > max_iter > 0:
@@ -966,11 +928,13 @@ cdef (double, double, long, double, double, double, double, double, double, bint
                 c = _newton_quadratic(a, b, d, f_a, f_b, f_d, n)
             f_c = f(c)
             if f_c == 0:
+                error = 0
                 break
 
             # re-bracket
             e, f_e = d, f_d
             a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
+            precision = b - a
         # u is the endpoint with the smallest f-value
         if math.fabs(f_a) < math.fabs(f_b):
             u, f_u = a, f_a
@@ -983,11 +947,13 @@ cdef (double, double, long, double, double, double, double, double, double, bint
             c = (a + b) / 2
         f_c = f(c)
         if f_c == 0:
+            error = 0
             break
 
         # re-bracket
         e, f_e = d, f_d
         a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
+        precision = b - a
 
         # If the width of the new interval did not decrease enough, bisect
         if b - a > mu * ab_width:
@@ -996,12 +962,14 @@ cdef (double, double, long, double, double, double, double, double, double, bint
             f_z = f(z)
             if f_z == 0:
                 c, f_c = z, f_z
+                error = 0
                 break
             a, b, d, f_a, f_b, f_d = _update_bracket(a, b, z, f_a, f_b, f_z)
 
-        precision = math.fabs(b - a)
+        precision = b - a
         error = math.fabs(f_c)
-    return c, f_c, step, a, b, f_a, f_b, precision, error, converged
+    cdef bint optimal = error <= etol
+    return c, f_c, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def toms748(f: Callable[[float], float],
@@ -1038,36 +1006,144 @@ def toms748(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
+    _check_bracket(a, b)
+
     if not isinstance(k, int) or k <= 0:
         raise ValueError(f'k must be positive integer. Got {k}.')
     if not 0 < mu < 1:
         raise ValueError(f'mu must be in range (0, 1). Got {mu}.')
 
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_a is None:
-        f_a = f(a)
-    if f_b is None:
-        f_b = f(b)
-    if f_a * f_b >= 0:
-        raise ValueError('f_a and f_b must have opposite sign.')
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = toms748_kernel[DoubleScalarFPtr](
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+    if f_a * f_b >= 0:
+        raise ValueError('f_a and f_b must have opposite sign. '
+                         f'Got f_a={f_a} and f_b={f_b}.')
+
+    res = toms748_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, k, mu, etol, ptol, max_iter)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+
+################################################################################
+# Wu
+################################################################################
+# noinspection DuplicatedCode
+cdef (double, double, long, double, double, double, double, double, double, bint, bint) wu_kernel(
+        func_type f,
+        double a,
+        double b,
+        double f_a,
+        double f_b,
+        double etol=ETOL,
+        double ptol=PTOL,
+        long max_iter=0):
+    cdef double precision = b - a, error = math.INFINITY
+    cdef long step = 0
+    cdef double c, f_c, a_bar, f_a_bar, b_bar, f_b_bar, c_bar
+    cdef double div_diff_ab, div_diff_bc, div_diff_ac, alpha, beta, delta, s_delta, d1, d2, d
+    cdef bint converged = True
+    # initialize
+    c = (a + b) / 2
+    f_c = f(c)
+    a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
+    while error > etol and precision > ptol:
+        if step > max_iter > 0:
+            converged = False
+            break
+        step += 1
+
+        # Muller step for calculating c_bar
+        if a == b or b == c or c == a:
+            converged = False
+            break
+        div_diff_ab = (f_b - f_a) / (b - a)
+        div_diff_ac = (f_c - f_a) / (c - a)
+        div_diff_bc = (f_c - f_b) / (c - b)
+        beta = div_diff_ab + div_diff_ac - div_diff_bc
+        alpha = (div_diff_ab - div_diff_bc) / (a - c)
+        delta = beta ** 2 - 4 * alpha * f_c
+        if delta < 0:
+            converged = False
+            break
+        s_delta = math.sqrt(delta)  # \sqrt{b^2 - 4ac}
+        d1, d2 = b + s_delta, b - s_delta
+        # take the higher-magnitude denominator
+        d = d1 if math.fabs(d1) > math.fabs(d2) else d2
+        c_bar = c - 2 * f_c / d
+
+        a, b, f_a, f_b = a_bar, b_bar, f_a_bar, f_b_bar
+        if a < c_bar < b:
+            c, f_c = c_bar, f(c_bar)
+        else:
+            c = (a + b) / 2
+            f_c = f(c)
+        precision = b - a
+        error = math.fabs(f_c)
+        if f_c == 0:
+            error = 0
+            break
+        a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
+    cdef bint optimal = error <= etol
+    return c, f_c, step, a, b, f_a, f_b, precision, error, converged, optimal
+
+# noinspection DuplicatedCode
+def wu(f: Callable[[float], float],
+       a: float,
+       b: float,
+       f_a: Optional[float] = None,
+       f_b: Optional[float] = None,
+       etol: float = ETOL,
+       ptol: float = PTOL,
+       max_iter: int = 0) -> BracketingMethodsReturnType:
+    """
+    Wu's (Muller-Bisection) method for root-finding presented in the paper
+    "Improved Muller method and Bisection method with global and asymptotic
+    superlinear convergence of both point and interval for solving nonlinear equations".
+
+    Args:
+        f: Function for which the root is sought.
+        a: Lower bound of the interval to be searched.
+        b: Upper bound of the interval to be searched.
+        f_a: Value evaluated at lower bound.
+        f_b: Value evaluated at upper bound.
+        etol: Error tolerance, indicating the desired precision
+         of the root. Defaults to {ETOL}.
+        ptol: Precision tolerance, indicating the minimum change
+         of root approximations or width of brackets (in bracketing
+         methods) after each iteration. Defaults to {PTOL}.
+        max_iter: Maximum number of iterations. If set to 0, the
+         procedure will run indefinitely until stopping condition is
+         met. Defaults to 0.
+
+    Returns:
+        solution: The solution represented as a ``RootResults`` object.
+
+    References:
+        https://doi.org/10.1016/j.amc.2004.04.120
+    """
+    # check params
+    _check_bracket(a, b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
+
+    f_wrapper = PyDoubleScalarFPtr(f)
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+
+    res = wu_kernel[DoubleScalarFPtr](
+        f_wrapper, a, b, f_a, f_b, etol, ptol, max_iter)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # ITP
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint) itp_kernel(
+cdef (double, double, long, double, double, double, double, double, double, bint, bint) itp_kernel(
         func_type f,
         double a,
         double b,
@@ -1076,7 +1152,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double k1,
         double k2,
         long n0,
-        double etol=ETOL,
+        double etol=0,
         double ptol=PTOL,
         long max_iter=0):
     # preprocessing
@@ -1086,7 +1162,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     cdef long step = 0
     cdef double x_m, f_m, r, delta, x_f, sigma, x_t, x_itp, f_itp
     cdef bint converged = True
-    while precision > ptol:
+    while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
             break
@@ -1104,21 +1180,20 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         x_itp = x_t if math.fabs(x_t - x_m) <= r else x_m - sigma * r
         # update interval
         f_itp = f(x_itp)
-        if f_itp > 0:
-            b = x_itp
-            f_b = f_itp
-        elif f_itp < 0:
-            a = x_itp
-            f_a = f_itp
-        else:
-            a = b = x_itp
+        if f_itp == 0:
+            error = 0
+            break
+        a, b, _, f_a, f_b, _ = _update_bracket(a, b, x_itp, f_a, f_b, f_itp)
         precision = (b - a) / 2
-        # error = math.fabs(f_itp)
-    x_m = (a + b) / 2
-    f_m = f(x_m)
-    precision = (b - a) / 2
-    error = math.fabs(f_m)
-    return x_m, f_m, step, a, b, f_a, f_b, precision, error, converged
+        error = math.fabs(f_itp)
+    if error > etol:
+        x_m = (a + b) / 2
+        f_m = f(x_m)
+        error = math.fabs(f_m)
+    else:
+        x_m, f_m = x_itp, f_itp
+    cdef bint optimal = error <= etol
+    return x_m, f_m, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def itp(f: Callable[[float], float],
@@ -1133,11 +1208,8 @@ def itp(f: Callable[[float], float],
         ptol: float = PTOL,
         max_iter: int = 0) -> BracketingMethodsReturnType:
     """
-    Implementation of the ITP (Interpolate Truncate and Project) method for root-finding
-    presented in the paper "An Enhancement of the Bisection Method Average Performance Preserving Minmax convergedity".
-
-    References:
-        https://dl.acm.org/doi/10.1145/3423597
+    Interpolate, Truncate, and Project (ITP) method for root-finding presented in the paper
+    "An Enhancement of the Bisection Method Average Performance Preserving Minmax convergedity".
 
     Args:
         f: Function for which the root is sought.
@@ -1151,7 +1223,7 @@ def itp(f: Callable[[float], float],
             Defaults to 2.
         n0: Tuning parameter. Defaults to 1.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {ETOl}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
@@ -1161,8 +1233,12 @@ def itp(f: Callable[[float], float],
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
+
+    References:
+        https://dl.acm.org/doi/10.1145/3423597
     """
     # check params
+    _check_bracket(a, b)
     if k1 is None:
         k1 = 0.2 / (b - a)
     elif k1 <= 0:
@@ -1177,20 +1253,14 @@ def itp(f: Callable[[float], float],
     elif n0 < 0:
         raise ValueError(f'n0 must be non-negative integer. Got {n0}.')
 
-    if etol <= 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol <= 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int):
-        raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-
-    if f_a is None:
-        f_a = f(a)
-    if f_b is None:
-        f_b = f(b)
+    _check_stopping_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
-    r, f_r, step, a, b, f_a, f_b, precision, error, converged = itp_kernel[DoubleScalarFPtr](
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
+
+    res = itp_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, k1, k2, n0, etol, ptol, max_iter)
-    return BracketingMethodsReturnType(r, f_r, step, f_wrapper.n_f_calls,
-                                       a, b, f_a, f_b, precision, error, converged)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)

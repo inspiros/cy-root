@@ -96,9 +96,7 @@ print(result)
 
 Output:
 
-```console
-RootResults(root=24.738633753705507, f_root=-2.262368070660159e-11, iters=47, f_calls=48, a=24.73863375370501, b=24.738633753706008, f_a=-4.718003765447065e-11, f_b=2.1600499167107046e-12, precision=4.991562718714704e-13, error=2.262368070660159e-11, converged=True)
-```
+> ```RootResults(root=-24.73863375370596, f_root=-1.1368683772161603e-13, iters=8, f_calls=10, a=-24.738633753715717, b=-24.73863375370596, f_a=4.8260062612826e-10, f_b=-1.1368683772161603e-13, precision=4.877875880993088e-12, error=1.1368683772161603e-13, converged=True, optimal=True)```
 
 Alternatively, import the function directly. You can also see the full input arguments of by using `help()` on them.
 
@@ -114,9 +112,7 @@ print(result)
 
 Output:
 
-```console
-RootResults(root=(0.34356074972251255+1.4553466902253551j), f_root=(-8.881784197001252e-16-1.7763568394002505e-15j), iters=43, f_calls=43, precision=3.177770418807502e-08, error=1.9860273225978185e-15, converged=True)
-```
+> ```RootResults(root=(0.34356074972251255+1.4553466902253551j), f_root=(-8.881784197001252e-16-1.7763568394002505e-15j), iters=43, f_calls=43, precision=3.177770418807502e-08, error=1.9860273225978185e-15, converged=True, optimal=True)```
 
 The returned `result` is a namedtuple whose elements depend on the type of the method:
 
@@ -129,6 +125,7 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
       estimation
     - `error`: absolute value of f_root
     - `converged`: `True` if the stopping criterion is met, `False` if the procedure terminated early.
+    - `optimal`: `True` only if the error tolerance is satisfied.
 - Exclusive to bracketing methods:
     - `a`: final lower bound
     - `b`: final upper bound
@@ -137,8 +134,8 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
 - Exclusive to Newton-like methods:
     - `df_root`: derivative or tuple of derivatives (of increasing orders) evaluated at root
 
-**Note**: `result.converged` might be `True` even if the solution is not optimal, which means the routine stopped
-because the precision tolerance is satisfied. I will add another flag for optimality of the root later.
+**Note**: `result.converged` might sometimes be `True` even if the solution is not optimal, which means the routine
+stopped because the precision tolerance is satisfied.
 
 For more examples, please refer to the `examples` folder.
 

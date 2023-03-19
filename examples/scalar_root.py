@@ -23,6 +23,7 @@ def test_output(etol=1e-8, ptol=1e-10):
     print('[Chandrupatla]', chandrupatla(f, -10, 10, etol=etol, ptol=ptol))
     print('[Ridders]', ridders(f, -10, 10, etol=etol, ptol=ptol))
     print('[Toms748]', toms748(f, -10, 10, k=1, etol=etol, ptol=ptol))
+    print('[Wu]', wu(f, -10, 10, etol=etol, ptol=ptol))
     print('[ITP]', itp(f, -10, 10, etol=etol, ptol=ptol))
 
     print(f'\n{"Quasi-Newton":-^50}')
@@ -54,6 +55,7 @@ def test_speed(etol=1e-8, ptol=1e-10, times=100):
     timeit(chandrupatla, args=(f, -10, 10), kwargs=dict(etol=etol, ptol=ptol), name='Chandrupatla', number=times)
     timeit(ridders, args=(f, -10, 10), kwargs=dict(etol=etol, ptol=ptol), name='Ridders', number=times)
     timeit(toms748, args=(f, -10, 10), kwargs=dict(etol=etol, ptol=ptol), name='Toms748', number=times)
+    timeit(wu, args=(f, -10, 10), kwargs=dict(etol=etol, ptol=ptol), name='Wu', number=times)
     timeit(itp, args=(f, -10, 10), kwargs=dict(etol=etol, ptol=ptol), name='ITP', number=times)
 
     print(f'\n{"Quasi-Newton":-^50}')
