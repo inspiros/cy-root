@@ -340,7 +340,8 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-# for this project only
+# build directories
 build/
 dist/
+wheelhouse/
 *.egg-info/
