@@ -1,0 +1,12 @@
+[tool.cibuildwheel]
+build = "cp36-*"
+# Skip building on Mac and Win32
+
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "Cython",
+    "numpy",
+    "sympy",
+]
