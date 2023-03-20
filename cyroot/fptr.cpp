@@ -5,7 +5,8 @@
     "distutils": {
         "include_dirs": [
             "cyroot",
-            "C:\\Python\\Python38\\lib\\site-packages\\numpy\\core\\include"
+            "C:\\Python\\Python38\\lib\\site-packages\\numpy\\core\\include",
+            "cyroot\\utils"
         ],
         "language": "c++",
         "name": "cyroot.fptr",

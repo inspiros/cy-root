@@ -14,8 +14,8 @@ import sympy.utilities.autowrap
 from cython cimport view
 from libc cimport math
 
-from ._check_args cimport _check_initial_guess
-from ._check_args import _check_stopping_condition_args
+from ._check_args cimport _check_stop_condition_initial_guess
+from ._check_args import _check_stop_condition_args
 from ._return_types import NewtonMethodReturnType
 from .fptr cimport (
     func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
@@ -24,6 +24,7 @@ from .fptr cimport (
 
 cdef extern from '_defaults.h':
     cdef double PHI, ETOL, PTOL
+    cdef unsigned long MAX_ITER
 
 __all__ = [
     'newton',
@@ -43,11 +44,11 @@ cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
         double df_x0,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_initial_guess(x0, f_x0, etol, ptol,
+    if _check_stop_condition_initial_guess(x0, f_x0, etol, ptol,
                             &precision, &error, &converged, &optimal):
         return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
@@ -73,7 +74,7 @@ def newton(f: Callable[[float], float],
            df_x0: Optional[float] = None,
            etol: float = ETOL,
            ptol: float = PTOL,
-           max_iter: int = 0) -> NewtonMethodReturnType:
+           max_iter: int = MAX_ITER) -> NewtonMethodReturnType:
     """
     Newton method for root-finding.
 
@@ -90,13 +91,13 @@ def newton(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     df_wrapper = PyDoubleScalarFPtr(df)
@@ -123,11 +124,11 @@ cdef (double, double, double, double, long, double, double, bint, bint) halley_k
         double d2f_x0,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_initial_guess(x0, f_x0, etol, ptol,
+    if _check_stop_condition_initial_guess(x0, f_x0, etol, ptol,
                             &precision, &error, &converged, &optimal):
         return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
 
@@ -160,7 +161,7 @@ def halley(f: Callable[[float], float],
            d2f_x0: Optional[float] = None,
            etol: float = ETOL,
            ptol: float = PTOL,
-           max_iter: int = 0) -> NewtonMethodReturnType:
+           max_iter: int = MAX_ITER) -> NewtonMethodReturnType:
     """
     Halley's method for root-finding.
 
@@ -179,13 +180,13 @@ def halley(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     df_wrapper = PyDoubleScalarFPtr(df)
@@ -217,11 +218,11 @@ cdef householder_kernel(
         unsigned int d,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_initial_guess(x0_, fs_x0[0], etol, ptol,
+    if _check_stop_condition_initial_guess(x0_, fs_x0[0], etol, ptol,
                             &precision, &error, &converged, &optimal):
         return x0_, fs_x0, step, precision, error, converged, optimal
 
@@ -537,7 +538,7 @@ def householder(f: Callable[[float], float],
                 dfs_x0: Optional[Sequence[float]] = None,
                 etol: float = ETOL,
                 ptol: float = PTOL,
-                max_iter: int = 0,
+                max_iter: int = MAX_ITER,
                 c_code: bool = True) -> NewtonMethodReturnType:
     """
     Householder's method for root-finding.
@@ -557,7 +558,7 @@ def householder(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
         c_code: Use C implementation of reciprocal derivative
          function or not. Defaults to True.
 
@@ -568,7 +569,7 @@ def householder(f: Callable[[float], float],
     if len(dfs) < 2:
         raise ValueError(f'Requires at least second order derivative. Got {len(dfs)}.')
 
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     fs_wrappers = np.asarray([PyDoubleScalarFPtr(f)] + [PyDoubleScalarFPtr(df) for df in dfs])
     if f_x0 is None:

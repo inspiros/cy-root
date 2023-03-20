@@ -10,13 +10,18 @@ from cpython cimport array
 from cython cimport view
 from libc cimport math
 
-from ._check_args cimport _check_initial_bracket
-from ._check_args import _check_stopping_condition_args, _check_bracket
+from ._check_args cimport _check_stop_condition_bracket
+from ._check_args import (
+    _check_stop_condition_args,
+    _check_bracket,
+    _check_unique_initial_vals,
+)
 from ._return_types import BracketingMethodsReturnType
 from .fptr cimport func_type, DoubleScalarFPtr, PyDoubleScalarFPtr
 
 cdef extern from '_defaults.h':
     cdef double PHI, ETOL, PTOL
+    cdef long MAX_ITER
 
 __all__ = [
     'bisect',
@@ -59,12 +64,12 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double f_b,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0,
+        long max_iter=MAX_ITER,
         stop_func_type extra_stop_criteria=NULL):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+    if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
@@ -84,7 +89,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         if error <= etol:
             break
         a, b, _, f_a, f_b, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
-        precision = b - a
+        precision = math.fabs(b - a)
 
     r, f_r = c, f_c
     optimal = error <= etol
@@ -98,7 +103,7 @@ def bisect(f: Callable[[float], float],
            f_b: Optional[float] = None,
            etol: float = ETOL,
            ptol: float = PTOL,
-           max_iter: int = 0) -> BracketingMethodsReturnType:
+           max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Bisection method for root-finding.
 
@@ -115,14 +120,14 @@ def bisect(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
     _check_bracket(a, b)
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -147,12 +152,12 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double f_b,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0,
+        long max_iter=MAX_ITER,
         scale_func_type scale_func=NULL):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+    if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
@@ -188,7 +193,7 @@ def regula_falsi(f: Callable[[float], float],
                  f_b: Optional[float] = None,
                  etol: float = ETOL,
                  ptol: float = PTOL,
-                 max_iter: int = 0) -> BracketingMethodsReturnType:
+                 max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Regula Falsi (or False Position) method for root-finding.
 
@@ -205,14 +210,14 @@ def regula_falsi(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
     _check_bracket(a, b)
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -238,7 +243,7 @@ def illinois(f: Callable[[float], float],
              f_b: Optional[float] = None,
              etol: float = ETOL,
              ptol: float = PTOL,
-             max_iter: int = 0) -> BracketingMethodsReturnType:
+             max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Illinois method for root-finding.
 
@@ -255,14 +260,14 @@ def illinois(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
     _check_bracket(a, b)
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -288,7 +293,7 @@ def pegasus(f: Callable[[float], float],
             f_b: Optional[float] = None,
             etol: float = ETOL,
             ptol: float = PTOL,
-            max_iter: int = 0) -> BracketingMethodsReturnType:
+            max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Pegasus method for root-finding.
 
@@ -305,14 +310,14 @@ def pegasus(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
     _check_bracket(a, b)
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -341,7 +346,7 @@ def anderson_bjorck(f: Callable[[float], float],
                     f_b: Optional[float] = None,
                     etol: float = ETOL,
                     ptol: float = PTOL,
-                    max_iter: int = 0) -> BracketingMethodsReturnType:
+                    max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Anderson–Björck method for root-finding.
 
@@ -358,14 +363,14 @@ def anderson_bjorck(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
     _check_bracket(a, b)
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -389,11 +394,11 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double f_b,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+    if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
@@ -437,7 +442,7 @@ def dekker(f: Callable[[float], float],
            f_b: Optional[float] = None,
            etol: float = ETOL,
            ptol: float = PTOL,
-           max_iter: int = 0) -> BracketingMethodsReturnType:
+           max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Dekker's method for root-finding.
 
@@ -454,14 +459,14 @@ def dekker(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
     _check_bracket(a, b)
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -487,11 +492,11 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double sigma=1e-6,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+    if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
@@ -514,9 +519,9 @@ cdef (double, double, long, double, double, double, double, double, double, bint
             df_ab = f_a - f_b
             df_abp = f_a - f_b_prev
             df_bbp = f_b - f_b_prev
-            s = a * f_b * f_b_prev / (df_ab * df_abp)
-            s += b * f_a * f_b_prev / (-df_ab * df_bbp)
-            s += b_prev * f_a * f_b / (df_abp * df_bbp)
+            s = (a * f_b * f_b_prev / (df_ab * df_abp)
+                 + b * f_a * f_b_prev / (-df_ab * df_bbp)
+                 + b_prev * f_a * f_b / (df_abp * df_bbp))
             use_interp = True
         elif interp_method == 1 and a != b != b_prev:
             # hyperbolic interpolation
@@ -574,7 +579,7 @@ def brent(f: Callable[[float], float],
           sigma: float = 1e-5,
           etol: float = ETOL,
           ptol: float = PTOL,
-          max_iter: int = 0) -> BracketingMethodsReturnType:
+          max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Brent's method for root-finding.
 
@@ -595,7 +600,7 @@ def brent(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -611,7 +616,7 @@ def brent(f: Callable[[float], float],
     if sigma <= 0:
         raise ValueError(f'sigma must be positive. Got {sigma}.')
 
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wraper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -636,11 +641,11 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double sigma=PTOL,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+    if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
@@ -696,7 +701,7 @@ def chandrupatla(f: Callable[[float], float],
                  sigma: float = PTOL,
                  etol: float = ETOL,
                  ptol: float = PTOL,
-                 max_iter: int = 0) -> BracketingMethodsReturnType:
+                 max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Chandrupatla's method for root-finding.
 
@@ -714,14 +719,14 @@ def chandrupatla(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
     _check_bracket(a, b)
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -745,11 +750,11 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double f_b,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+    if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
@@ -792,7 +797,7 @@ def ridders(f: Callable[[float], float],
             f_b: Optional[float] = None,
             etol: float = ETOL,
             ptol: float = PTOL,
-            max_iter: int = 0) -> BracketingMethodsReturnType:
+            max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Ridders method for root-finding.
 
@@ -809,14 +814,14 @@ def ridders(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
     _check_bracket(a, b)
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -936,11 +941,11 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double mu=0.5,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+    if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
@@ -958,7 +963,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         r, f_r = c, f_c
         return r, f_r, step, a, b, f_a, f_b, precision, error, True, True
     a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
-    precision = b - a
+    precision = math.fabs(b - a)
     e = f_e = math.NAN
     converged = True
     while error > etol and precision > ptol:
@@ -989,7 +994,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
             # re-bracket
             e, f_e = d, f_d
             a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
-            precision = b - a
+            precision = math.fabs(b - a)
         # u is the endpoint with the smallest f-value
         if math.fabs(f_a) < math.fabs(f_b):
             u, f_u = a, f_a
@@ -1008,7 +1013,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         # re-bracket
         e, f_e = d, f_d
         a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
-        precision = b - a
+        precision = math.fabs(b - a)
 
         # If the width of the new interval did not decrease enough, bisect
         if precision > mu * ab_width:
@@ -1020,7 +1025,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
                 c, f_c = z, f_z
                 break
             a, b, d, f_a, f_b, f_d = _update_bracket(a, b, z, f_a, f_b, f_z)
-            precision = b - a
+            precision = math.fabs(b - a)
 
     r, f_r = c, f_c
     optimal = error <= etol
@@ -1036,7 +1041,7 @@ def toms748(f: Callable[[float], float],
             mu: float = 0.5,
             etol: float = ETOL,
             ptol: float = PTOL,
-            max_iter: int = 0) -> BracketingMethodsReturnType:
+            max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     TOMS Algorithm 748.
 
@@ -1055,7 +1060,7 @@ def toms748(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1068,7 +1073,7 @@ def toms748(f: Callable[[float], float],
     if not 0 < mu < 1:
         raise ValueError(f'mu must be in range (0, 1). Got {mu}.')
 
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -1092,11 +1097,11 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double f_b,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+    if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
@@ -1143,7 +1148,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         else:
             c = (a + b) / 2
             f_c = f(c)
-        precision = b - a
+        precision = math.fabs(b - a)
         error = math.fabs(f_c)
         a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
 
@@ -1159,7 +1164,7 @@ def wu(f: Callable[[float], float],
        f_b: Optional[float] = None,
        etol: float = ETOL,
        ptol: float = PTOL,
-       max_iter: int = 0) -> BracketingMethodsReturnType:
+       max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Wu's (Muller-Bisection) method for root-finding presented in the paper
     "Improved Muller method and Bisection method with global and asymptotic
@@ -1178,7 +1183,7 @@ def wu(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1188,7 +1193,7 @@ def wu(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -1213,23 +1218,24 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double k1,
         double k2,
         long n0,
-        double etol=0,
+        double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
+    # This slightly differs from the original paper
+    # where stop condition is (b - a) <= 2 * eps
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_bracket(a, b, f_a, f_b, etol, 2 * ptol,
+    if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision / 2, error, converged, optimal
-    precision = (b - a) / 2
+        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
-    cdef long n_1div2 = <long> math.ceil(math.log2((b - a) / (2 * ptol)))
+    cdef long n_1div2 = <long> math.ceil(math.log2((b - a) / ptol))
     cdef long n_max = n_1div2 + n0
     cdef double x_m, f_m, rho, delta, x_f, sigma, x_t, x_itp, f_itp
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step > max_iter > 0 or f_a == f_b:
             converged = False
             break
         step += 1
@@ -1248,15 +1254,17 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         f_itp = f(x_itp)
         error = math.fabs(f_itp)
         if error <= etol:
+            a = b = x_itp
+            f_a = f_b = f_itp
             break
-        a, b, _, f_a, f_b, _ = _update_bracket(a, b, x_itp, f_a, f_b, f_itp)
-        precision = (b - a) / 2
-    if error > etol:
-        x_m = (a + b) / 2
-        f_m = f(x_m)
-        error = math.fabs(f_m)
-    else:
-        x_m, f_m = x_itp, f_itp
+        elif f_itp > 0:
+            b, f_b = x_itp, f_itp
+        elif f_itp < 0:
+            a, f_a = x_itp, f_itp
+        precision = math.fabs(b - a)
+    x_m = (a + b) / 2
+    f_m = f(x_m)
+    error = math.fabs(f_m)
 
     r, f_r = x_m, f_m
     optimal = error <= etol
@@ -1273,7 +1281,7 @@ def itp(f: Callable[[float], float],
         n0: Optional[int] = 1,
         etol: float = ETOL,
         ptol: float = PTOL,
-        max_iter: int = 0) -> BracketingMethodsReturnType:
+        max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
     """
     Interpolate, Truncate, and Project (ITP) method for root-finding presented in the paper
     "An Enhancement of the Bisection Method Average Performance Preserving Minmax convergedity".
@@ -1296,7 +1304,7 @@ def itp(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1310,23 +1318,20 @@ def itp(f: Callable[[float], float],
         k1 = 0.2 / (b - a)
     elif k1 <= 0:
         raise ValueError(f'k1 must be in range (1, inf). Got {k1}.')
-    if k2 is None:
-        k2 = 2
-    elif not 1 <= k2 < 1 + PHI:
+    if not 1 <= k2 < 1 + PHI:
         raise ValueError(f'k2 must be in range [1, 1 + phi), where '
                          f'phi is the golden ratio. Got {k2}.')
-    if n0 is None:
-        n0 = 1
-    elif n0 < 0:
+    if n0 < 0:
         raise ValueError(f'n0 must be non-negative integer. Got {n0}.')
 
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
+    _check_unique_initial_vals(f_a, f_b)
 
     res = itp_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, k1, k2, n0, etol, ptol, max_iter)

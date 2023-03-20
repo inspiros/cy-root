@@ -5,9 +5,9 @@ cy-root
 
 <p align="center">
   <img src="https://www.austintexas.gov/sites/default/files/images/dsd/Community_Trees/tree-root-distruibution-1.jpg" width="300"/>
-  <br>
+  <br/>
   <i><font size="1">(Not this root)</font></i>
-  <p>&nbsp;</p>
+  <p>&nbsp</p>
 </p>
 
 A simple root-finding package written in Cython.
@@ -24,7 +24,7 @@ Fortunately, Sidi's method came to the rescue.
 
 ## Requirements
 
-- Python 3.7+
+- Python 3.6+
 - Cython (if you want to build from `.pyx` files)
 - numpy
 - sympy
@@ -91,13 +91,13 @@ Use `find_root_scalar` and pass method name as first argument.
 from cyroot import find_root_scalar
 
 f = lambda x: x ** 2 - 612
-result = find_root_scalar(method='itp', f=f, a=-50, b=50)
+result = find_root_scalar(method='itp', f=f, a=-10, b=50)
 print(result)
 ```
 
 Output:
 
-> ```RootResults(root=-24.73863375370596, f_root=-1.1368683772161603e-13, iters=8, f_calls=10, a=-24.738633753715717, b=-24.73863375370596, f_a=4.8260062612826e-10, f_b=-1.1368683772161603e-13, precision=4.877875880993088e-12, error=1.1368683772161603e-13, converged=True, optimal=True)```
+> ```RootResults(root=24.73863375370596, f_root=-1.1368683772161603e-13, iters=8, f_calls=11, a=24.73863375370596, b=24.73863375370596, f_a=-1.1368683772161603e-13, f_b=-1.1368683772161603e-13, precision=6.353294779160024e-08, error=1.1368683772161603e-13, converged=True, optimal=True)```
 
 Alternatively, import the function directly. You can also see the full input arguments of by using `help()` on them.
 
@@ -146,4 +146,4 @@ The code is released under the MIT license. See `LICENSE.txt` for details.
 
 ## References
 
-_T.B.D._
+https://en.wikipedia.org/wiki/Root-finding_algorithms

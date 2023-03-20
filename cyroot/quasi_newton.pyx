@@ -11,11 +11,17 @@ cimport numpy as np
 from cython cimport view
 from libc cimport math
 
-from .utils.array_ops cimport fabs, fabs_width, argsort, permute
+from .utils.array_ops cimport fabs, fabs_width, cabs_width, argsort, permute
 from ._check_args cimport (
-    _check_initial_guess, _check_initial_guesses, _check_initial_guesses_complex
+    _check_stop_condition_initial_guess,
+    _check_stop_condition_initial_guesses,
+    _check_stop_condition_initial_guesses_complex,
 )
-from ._check_args import _check_stopping_condition_args
+from ._check_args import (
+    _check_stop_condition_args,
+    _check_unique_initial_guesses,
+    _check_unique_initial_vals,
+)
 from ._return_types import QuasiNewtonMethodReturnType
 from .fptr cimport (
     func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
@@ -25,10 +31,10 @@ from .fptr cimport (
 cdef extern from '<complex>':
     double complex sqrt(double complex x) nogil
     double abs(double complex) nogil
-# from numpy.lib.scimath import sqrt
 
 cdef extern from '_defaults.h':
     cdef double PHI, ETOL, PTOL
+    cdef unsigned long MAX_ITER
 
 __all__ = [
     'secant',
@@ -51,12 +57,12 @@ cdef (double, double, long, double, double, bint, bint) secant_kernel(
         double f_x1,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     cdef double[2] xs = [x0, x1], f_xs = [f_x0, f_x1]
-    if _check_initial_guesses(xs, f_xs, etol, ptol,
+    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
@@ -90,7 +96,7 @@ def secant(f: Callable[[float], float],
            f_x1: Optional[float] = None,
            etol: float = ETOL,
            ptol: float = PTOL,
-           max_iter: int = 0) -> QuasiNewtonMethodReturnType:
+           max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
     """
     Secant method for root-finding.
 
@@ -107,24 +113,21 @@ def secant(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stopping_condition_args(etol, ptol, max_iter)
-
-    if x0 == x1:
-        raise ValueError(f'x0 and x1 must be different. Got {x0} and {x1}.')
+    _check_stop_condition_args(etol, ptol, max_iter)
+    _check_unique_initial_guesses(x0, x1)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_x0 is None:
         f_x0 = f_wrapper(x0)
     if f_x1 is None:
         f_x1 = f_wrapper(x1)
-    if f_x0 == f_x1:
-        raise ValueError(f'f_x0 and f_x1 must be different. Got {f_x0} and {f_x1}.')
+    _check_unique_initial_vals(f_x0, f_x1)
 
     res = secant_kernel[DoubleScalarFPtr](
         f_wrapper, x0, x1, f_x0, f_x1, etol, ptol, max_iter)
@@ -133,60 +136,6 @@ def secant(f: Callable[[float], float],
 ################################################################################
 # Sidi
 ################################################################################
-cdef class NewtonPolynomial:
-    cdef unsigned int n
-    cdef double[:] x, a
-
-    def __init__(self, xs: double[:], ys: double[:]):
-        self.n = <unsigned int> xs.shape[0]
-        self.x = view.array(shape=(self.n - 1,),
-                            itemsize=sizeof(double),
-                            format='d')
-        self.x[:] = xs[:-1]
-        self.a = view.array(shape=(self.n,),
-                            itemsize=sizeof(double),
-                            format='d')
-
-        cdef double[:, :] DD = view.array(shape=(self.n, self.n),
-                                          itemsize=sizeof(double),
-                                          format='d')
-        DD[:, 0] = ys
-        cdef int i, j
-        # Fill in divided differences
-        for j in range(1, self.n):
-            DD[:j, j] = 0
-            for i in range(j, self.n):
-                DD[i, j] = (DD[i, j - 1] - DD[i - 1, j - 1]) / (xs[i] - xs[i - j])
-        # Copy diagonal elements into array for returning
-        for j in range(self.n):
-            self.a[j] = DD[j, j]
-
-    def __call__(self, double x):
-        return self.f(x)
-
-    cdef double f(self, double x):
-        cdef double f_x = self.a[-1]
-        cdef unsigned int k
-        for k in range(self.n - 2, -1, -1):
-            f_x = f_x * (x - self.x[k]) + self.a[k]
-        return f_x
-
-    cdef inline double df(self, double x):
-        return self.dnf(x, 1)
-
-    cdef double dnf(self, double x, int order=1):
-        cdef double[:] dfs = view.array(shape=(order + 1,), itemsize=sizeof(double), format='d')
-        dfs[0] = self.a[-1]
-        dfs[1:] = 0
-        cdef unsigned int i, k
-        cdef double v
-        for k in range(self.n - 2, -1, -1):
-            v = x - self.x[k]
-            for i in range(order, 0, -1):
-                dfs[i] = dfs[i] * v + dfs[i - 1]
-            dfs[0] = dfs[0] * v + self.a[k]
-        return dfs[-1]
-
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, bint, bint) sidi_kernel(
         func_type f,
@@ -194,11 +143,8 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
         double[:] f_x0s,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     # sort by absolute value of f
-    # cdef np.ndarray[np.int64_t, ndim=1] inds = np.flip(np.argsort(np.abs(f_x0s)))
-    # cdef double[:] xs = np.take_along_axis(np.array(x0s), inds, 0)
-    # cdef double[:] f_xs = np.take_along_axis(np.array(f_x0s), inds, 0)
     cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
     cdef double[:] xs = permute(x0s, inds)
     cdef double[:] f_xs = permute(f_x0s, inds)
@@ -206,7 +152,7 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_initial_guesses(xs, f_xs, etol, ptol,
+    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
@@ -239,13 +185,70 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
     optimal = error <= etol
     return r, f_r, step, precision, error, converged, optimal
 
+cdef class NewtonPolynomial:
+    cdef unsigned int n
+    cdef double[:] x, a
+
+    def __cinit__(self, xs: double[:], ys: double[:]):
+        self.n = <unsigned int> xs.shape[0]
+        self.x = view.array(shape=(self.n - 1,),
+                            itemsize=sizeof(double),
+                            format='d')
+        self.x[:] = xs[:-1]
+        self.a = view.array(shape=(self.n,),
+                            itemsize=sizeof(double),
+                            format='d')
+
+        cdef double[:, :] DD = view.array(shape=(self.n, self.n),
+                                          itemsize=sizeof(double),
+                                          format='d')
+        cdef int i, j
+        # Fill in divided differences
+        with nogil:
+            DD[:, 0] = ys
+            for j in range(1, self.n):
+                DD[:j, j] = 0
+                for i in range(j, self.n):
+                    DD[i, j] = (DD[i, j - 1] - DD[i - 1, j - 1]) / (xs[i] - xs[i - j])
+            # Copy diagonal elements into array for returning
+            for j in range(self.n):
+                self.a[j] = DD[j, j]
+
+    def __call__(self, double x):
+        return self.f(x)
+
+    cdef inline double f(self, double x) nogil:
+        cdef double f_x = self.a[-1]
+        cdef unsigned int k
+        for k in range(self.n - 2, -1, -1):
+            f_x = f_x * (x - self.x[k]) + self.a[k]
+        return f_x
+
+    cdef inline double df(self, double x) nogil:
+        return self.dnf(x, 1)
+
+    cdef inline double dnf(self, double x, int order=1) nogil:
+        cdef double[:] dfs
+        with gil:
+            dfs = view.array(shape=(order + 1,), itemsize=sizeof(double), format='d')
+        dfs[0] = self.a[-1]
+        dfs[1:] = 0
+        cdef unsigned int i, k
+        cdef double v
+        for k in range(self.n - 2, -1, -1):
+            v = x - self.x[k]
+            for i in range(order, 0, -1):
+                dfs[i] = dfs[i] * v + dfs[i - 1]
+            dfs[0] = dfs[0] * v + self.a[k]
+        return dfs[-1]
+
 # noinspection DuplicatedCode
 def sidi(f: Callable[[float], float],
          xs: Sequence[float],
          f_xs: Sequence[float] = None,
          etol: float = ETOL,
          ptol: float = PTOL,
-         max_iter: int = 0) -> QuasiNewtonMethodReturnType:
+         max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
     """
     Sidi's Generalized Secant method for root-finding.
 
@@ -260,7 +263,7 @@ def sidi(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -271,7 +274,7 @@ def sidi(f: Callable[[float], float],
     if len(xs) < 2:
         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
 
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_xs is None:
@@ -297,11 +300,11 @@ cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
         bint adsp=True,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_initial_guess(x0, f_x0, etol, ptol,
+    if _check_stop_condition_initial_guess(x0, f_x0, etol, ptol,
                             &precision, &error, &converged, &optimal):
         return x0, f_x0, step, precision, error, converged, optimal
 
@@ -337,7 +340,7 @@ def steffensen(f: Callable[[float], float],
                adsp: bool = True,
                etol: float = ETOL,
                ptol: float = PTOL,
-               max_iter: int = 0) -> QuasiNewtonMethodReturnType:
+               max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
     """
     Steffensen's method for root-finding.
 
@@ -354,13 +357,13 @@ def steffensen(f: Callable[[float], float],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stopping_condition_args(etol, ptol, max_iter)
+    _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_x0 is None:
@@ -384,12 +387,13 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
         double f_x2,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    cdef double[3] xs = [x0, x1, x2], f_xs = [f_x0, f_x1, f_x2]
-    if _check_initial_guesses(xs, f_xs, etol, ptol,
+    cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
+    cdef double[:] xs = x_arr, f_xs = f_arr
+    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
@@ -400,23 +404,23 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
             converged = False
             break
         step += 1
-        df_01 = f_x0 - f_x1
-        df_02 = f_x0 - f_x2
-        df_12 = f_x1 - f_x2
+        df_01 = f_xs[0] - f_xs[1]
+        df_02 = f_xs[0] - f_xs[2]
+        df_12 = f_xs[1] - f_xs[2]
         if df_01 == 0 or df_02 == 0 or df_12 == 0:
             converged = False
             break
-        x3 = x0 * f_x1 * f_x2 / (df_01 * df_02)
-        x3 += x1 * f_x0 * f_x2 / (-df_01 * df_12)
-        x3 += x2 * f_x0 * f_x1 / (df_02 * df_12)
-        x0, f_x0 = x1, f_x1
-        x1, f_x1 = x2, f_x2
-        x2, f_x2 = x3, f(x3)
+        x3 = (xs[0] * f_xs[1] * f_xs[2] / (df_01 * df_02)
+              + xs[1] * f_xs[0] * f_xs[2] / (-df_01 * df_12)
+              + xs[2] * f_xs[0] * f_xs[1] / (df_02 * df_12))
+        xs[0], f_xs[0] = xs[1], f_xs[1]
+        xs[1], f_xs[1] = xs[2], f_xs[2]
+        xs[2], f_xs[2] = x3, f(x3)
 
-        precision = math.fabs(x2 - x1)
-        error = math.fabs(f_x2)
+        precision = fabs_width(xs)
+        error = math.fabs(f_xs[2])
 
-    r, f_r = x2, f_x2
+    r, f_r = xs[2], f_xs[2]
     optimal = error <= etol
     return r, f_r, step, precision, error, converged, optimal
 
@@ -431,7 +435,7 @@ def inverse_quadratic_interp(
         f_x2: Optional[float] = None,
         etol: float = ETOL,
         ptol: float = PTOL,
-        max_iter: int = 0) -> QuasiNewtonMethodReturnType:
+        max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
     """
     Inverse Quadratic Interpolation method for root-finding.
 
@@ -450,17 +454,14 @@ def inverse_quadratic_interp(
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stopping_condition_args(etol, ptol, max_iter)
-
-    if any((x0 == x1, x1 == x2, x0 == x2)):
-        raise ValueError(f'x0, x1, and x2 must be different. '
-                         f'Got {x0}, {x1}, and {x2}.')
+    _check_stop_condition_args(etol, ptol, max_iter)
+    _check_unique_initial_guesses(x0, x1, x2)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_x0 is None:
@@ -469,9 +470,7 @@ def inverse_quadratic_interp(
         f_x1 = f_wrapper(x1)
     if f_x2 is None:
         f_x2 = f_wrapper(x2)
-    if f_x0 == f_x1 == f_x2:
-        raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
-                         f'Got {f_x0}, {f_x1}, and {f_x2}.')
+    _check_unique_initial_vals(f_x0, f_x1, f_x2)
 
     res = inverse_quadratic_interp_kernel[DoubleScalarFPtr](
         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
@@ -491,12 +490,13 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
         double f_x2,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    cdef double[3] xs = [x0, x1, x2], f_xs = [f_x0, f_x1, f_x2]
-    if _check_initial_guesses(xs, f_xs, etol, ptol,
+    cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
+    cdef double[:] xs = x_arr, f_xs = f_arr
+    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ptol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
@@ -508,27 +508,27 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
             break
         step += 1
 
-        d_01 = x0 - x1
-        d_12 = x1 - x2
-        df_01 = f_x0 - f_x1
-        df_02 = f_x0 - f_x2
-        df_12 = f_x1 - f_x2
+        d_01 = xs[0] - xs[1]
+        d_12 = xs[1] - xs[2]
+        df_01 = f_xs[0] - f_xs[1]
+        df_02 = f_xs[0] - f_xs[2]
+        df_12 = f_xs[1] - f_xs[2]
         if d_01 == 0 or d_12 == 0:
             converged = False
             break
-        denom = f_x0 * df_12 / d_12 - f_x2 * df_01 / d_01
+        denom = f_xs[0] * df_12 / d_12 - f_xs[2] * df_01 / d_01
         if denom == 0:
             converged = False
             break
-        x3 = x1 - f_x1 * df_02 / denom
-        x0, f_x0 = x1, f_x1
-        x1, f_x1 = x2, f_x2
-        x2, f_x2 = x3, f(x3)
+        x3 = xs[1] - f_xs[1] * df_02 / denom
+        xs[0], f_xs[0] = xs[1], f_xs[1]
+        xs[1], f_xs[1] = xs[2], f_xs[2]
+        xs[2], f_xs[2] = x3, f(x3)
 
-        precision = math.fabs(x2 - x1)
-        error = math.fabs(f_x2)
+        precision = fabs_width(xs)
+        error = math.fabs(f_xs[2])
 
-    r, f_r = x2, f_x2
+    r, f_r = xs[2], f_xs[2]
     optimal = error <= etol
     return r, f_r, step, precision, error, converged, optimal
 
@@ -543,7 +543,7 @@ def hyperbolic_interp(
         f_x2: Optional[float] = None,
         etol: float = ETOL,
         ptol: float = PTOL,
-        max_iter: int = 0) -> QuasiNewtonMethodReturnType:
+        max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
     """
     Hyperbolic Interpolation method for root-finding.
 
@@ -562,17 +562,14 @@ def hyperbolic_interp(
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stopping_condition_args(etol, ptol, max_iter)
-
-    if any((x0 == x1, x1 == x2, x0 == x2)):
-        raise ValueError(f'x0, x1, and x2 must be different. '
-                         f'Got {x0}, {x1}, and {x2}.')
+    _check_stop_condition_args(etol, ptol, max_iter)
+    _check_unique_initial_guesses(x0, x1, x2)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_x0 is None:
@@ -581,9 +578,7 @@ def hyperbolic_interp(
         f_x1 = f_wrapper(x1)
     if f_x2 is None:
         f_x2 = f_wrapper(x2)
-    if f_x0 == f_x1 == f_x2:
-        raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
-                         f'Got {f_x0}, {f_x1}, and {f_x2}.')
+    _check_unique_initial_vals(f_x0, f_x1, f_x2)
 
     res = hyperbolic_interp_kernel[DoubleScalarFPtr](
         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
@@ -603,42 +598,52 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
         double complex f_x2,
         double etol=ETOL,
         double ptol=PTOL,
-        long max_iter=0):
+        long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double complex r, f_r
     cdef double precision, error
     cdef bint converged, optimal
-    cdef double complex[3] xs = [x0, x1, x2], f_xs = [f_x0, f_x1, f_x2]
-    if _check_initial_guesses_complex(xs, f_xs, etol, ptol,
+    cdef double complex[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
+    cdef double complex[:] xs = x_arr, f_xs = f_arr
+    if _check_stop_condition_initial_guesses_complex(xs, f_xs, etol, ptol,
                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double complex div_diff_01, div_diff_12, div_diff_02, a, b, s_delta, d1, d2, d, x3
+    cdef double complex d_01, d_02, d_12
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0 or x0 == x1 or x1 == x2 or x0 == x2:
+        if step > max_iter > 0:
             converged = False
             break
         step += 1
-        div_diff_01 = (f_x1 - f_x0) / (x1 - x0)
-        div_diff_02 = (f_x2 - f_x0) / (x2 - x0)
-        div_diff_12 = (f_x2 - f_x1) / (x2 - x1)
+
+        d_01 = xs[0] - xs[1]
+        d_02 = xs[0] - xs[2]
+        d_12 = xs[1] - xs[2]
+        if d_01 == 0 or d_02 == 0 or d_12 == 0:
+            converged = False
+            break
+
+        div_diff_01 = (f_xs[0] - f_xs[1]) / d_01
+        div_diff_02 = (f_xs[0] - f_xs[2]) / d_02
+        div_diff_12 = (f_xs[1] - f_xs[2]) / d_12
         b = div_diff_01 + div_diff_02 - div_diff_12
-        a = (div_diff_01 - div_diff_12) / (x0 - x2)
-        s_delta = sqrt(b ** 2 - 4 * a * f_x2)  # \sqrt{b^2 - 4ac}
+        a = (div_diff_01 - div_diff_12) / d_02
+        s_delta = sqrt(b ** 2 - 4 * a * f_xs[2])  # \sqrt{b^2 - 4ac}
         d1, d2 = b + s_delta, b - s_delta
         # take the higher-magnitude denominator
         d = d1 if abs(d1) > abs(d2) else d2
 
-        x3 = x2 - 2 * f_x2 / d
-        x0, f_x0 = x1, f_x1
-        x1, f_x1 = x2, f_x2
-        x2, f_x2 = x3, f(x3)
+        x3 = xs[2] - 2 * f_xs[2] / d
+        xs[0], f_xs[0] = xs[1], f_xs[1]
+        xs[1], f_xs[1] = xs[2], f_xs[2]
+        xs[2], f_xs[2] = x3, f(x3)
 
-        precision = abs(x2 - x0)
-        error = abs(f_x2)
+        precision = cabs_width(xs)
+        error = abs(f_xs[2])
 
-    r, f_r = x2, f_x2
+    r, f_r = xs[2], f_xs[2]
     optimal = error <= etol
     return r, f_r, step, precision, error, converged, optimal
 
@@ -652,7 +657,7 @@ def muller(f: Callable[[complex], complex],
            f_x2: Optional[complex] = None,
            etol: float = ETOL,
            ptol: float = PTOL,
-           max_iter: int = 0) -> QuasiNewtonMethodReturnType:
+           max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
     """
     Muller's method for root-finding.
 
@@ -671,17 +676,14 @@ def muller(f: Callable[[complex], complex],
          methods) after each iteration. Defaults to {PTOL}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to 0.
+         met. Defaults to {MAX_ITER}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stopping_condition_args(etol, ptol, max_iter)
-
-    if any((x0 == x1, x1 == x2, x0 == x2)):
-        raise ValueError(f'x0, x1, and x2 must be different. '
-                         f'Got {x0}, {x1}, and {x2}.')
+    _check_stop_condition_args(etol, ptol, max_iter)
+    _check_unique_initial_guesses(x0, x1, x2)
 
     f_wrapper = PyComplexScalarFPtr(f)
     if f_x0 is None:
@@ -690,9 +692,7 @@ def muller(f: Callable[[complex], complex],
         f_x1 = f_wrapper(x1)
     if f_x2 is None:
         f_x2 = f_wrapper(x2)
-    if f_x0 == f_x1 == f_x2:
-        raise ValueError(f'f_x0, f_x1, and f_x2 must be different. '
-                         f'Got {f_x0}, {f_x1}, and {f_x2}.')
+    _check_unique_initial_vals(f_x0, f_x1, f_x2)
 
     res = muller_kernel[ComplexScalarFPtr](
         f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)

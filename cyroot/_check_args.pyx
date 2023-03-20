@@ -4,6 +4,8 @@
 # cython: boundscheck = False
 # cython: profile = False
 
+from typing import Union
+
 from libc cimport math
 
 from .utils.array_ops cimport fabs, cabs, argmin
@@ -12,15 +14,17 @@ cdef extern from '<complex>':
     double abs(double complex) nogil
 
 __all__ = [
-    '_check_stopping_condition_args',
+    '_check_stop_condition_args',
     '_check_bracket',
     '_check_bracket_val',
+    '_check_unique_initial_guesses',
+    '_check_unique_initial_vals',
 ]
 
 ################################################################################
 # Python
 ################################################################################
-def _check_stopping_condition_args(etol: float, ptol: float, max_iter: int):
+def _check_stop_condition_args(etol: float, ptol: float, max_iter: int):
     if etol < 0:
         raise ValueError(f'etol must be positive. Got {etol}.')
     if ptol < 0:
@@ -44,11 +48,20 @@ def _check_bracket_val(f_a: float, f_b: float, check_nan=True):
         raise ValueError('f_a and f_b must have opposite sign. '
                          f'Got f_a={f_a} and f_b={f_b}.')
 
+def _check_unique_initial_guesses(*xs: Union[float, complex]):
+    if len(set(xs)) < len(xs):
+        raise ValueError(f'Initial guesses must be different. Got {xs}.')
+
+def _check_unique_initial_vals(*f_xs: Union[float, complex]):
+    if len(set(f_xs)) < len(f_xs):
+        raise ValueError(f'Values evaluated at initial guesses must be '
+                         f'different. Got {f_xs}.')
+
 ################################################################################
 # Bracketing methods
 ################################################################################
 # noinspection DuplicatedCode
-cdef inline bint _check_initial_bracket(
+cdef inline bint _check_stop_condition_bracket(
         double a,
         double b,
         double f_a,
@@ -68,8 +81,7 @@ cdef inline bint _check_initial_bracket(
     r[0], f_r[0] = (a, f_a) if error_a < error_b else (b, f_b)
     optimal[0] = error[0] <= etol
     converged[0] = precision[0] <= ptol or optimal[0]
-    return (math.copysign(1, f_a) * math.copysign(1, f_b) > 0
-            and not optimal[0]) or precision[0] <= ptol
+    return optimal[0] or precision[0] <= ptol
 
 ################################################################################
 # Quasi-Newton methods with multiple guesses
@@ -78,7 +90,7 @@ cdef inline bint _check_initial_bracket(
 # Double
 # --------------------------------
 # noinspection DuplicatedCode
-cdef inline bint _check_initial_guess(
+cdef inline bint _check_stop_condition_initial_guess(
         double x0,
         double f_x0,
         double etol,
@@ -95,7 +107,7 @@ cdef inline bint _check_initial_guess(
     return optimal[0]
 
 # noinspection DuplicatedCode
-cdef inline bint _check_initial_guesses(
+cdef inline bint _check_stop_condition_initial_guesses(
         double[:] xs,
         double[:] f_xs,
         double etol,
@@ -130,7 +142,7 @@ cdef inline bint _check_initial_guesses(
 # Double Complex
 # --------------------------------
 # noinspection DuplicatedCode
-cdef inline bint _check_initial_guess_complex(
+cdef inline bint _check_stop_condition_initial_guess_complex(
         double complex x0,
         double complex f_x0,
         double etol,
@@ -147,7 +159,7 @@ cdef inline bint _check_initial_guess_complex(
     return optimal[0]
 
 # noinspection DuplicatedCode
-cdef inline bint _check_initial_guesses_complex(
+cdef inline bint _check_stop_condition_initial_guesses_complex(
         double complex[:] xs,
         double complex[:] f_xs,
         double etol,
