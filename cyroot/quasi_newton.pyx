@@ -1,5 +1,6 @@
 # distutils: language=c++
 # cython: cdivision = True
+# cython: initializedcheck = False
 # cython: boundscheck = False
 # cython: profile = False
 
@@ -10,6 +11,10 @@ cimport numpy as np
 from cython cimport view
 from libc cimport math
 
+from .utils.array_ops cimport fabs, fabs_width, argsort, permute
+from ._check_args cimport (
+    _check_initial_guess, _check_initial_guesses, _check_initial_guesses_complex
+)
 from ._check_args import _check_stopping_condition_args
 from ._return_types import QuasiNewtonMethodReturnType
 from .fptr cimport (
@@ -17,14 +22,13 @@ from .fptr cimport (
     complex_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
 )
 
+cdef extern from '<complex>':
+    double complex sqrt(double complex x) nogil
+    double abs(double complex) nogil
+# from numpy.lib.scimath import sqrt
+
 cdef extern from '_defaults.h':
     cdef double PHI, ETOL, PTOL
-
-cdef extern from '<complex.h>':
-    double complex sqrt(double complex x) nogil
-    # cabs causes error when compiling on linux
-    # double cabs(double complex x) nogil
-# from numpy.lib.scimath import sqrt
 
 __all__ = [
     'secant',
@@ -48,27 +52,35 @@ cdef (double, double, long, double, double, bint, bint) secant_kernel(
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.fabs(x1 - x0), error = math.INFINITY
     cdef long step = 0
-    cdef double x2, df_10
-    cdef converged = True
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    cdef double[2] xs = [x0, x1], f_xs = [f_x0, f_x1]
+    if _check_initial_guesses(xs, f_xs, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, precision, error, converged, optimal
+
+    cdef double x2, df_01
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
             break
         step += 1
-        df_10 = f_x1 - f_x0
-        if df_10 == 0:
+        df_01 = f_x0 - f_x1
+        if df_01 == 0:
             converged = False
             break
-        x2 = x0 - (x1 - x0) * f_x0 / df_10
+        x2 = x0 - f_x0 * (x0 - x1) / df_01
         x0, f_x0 = x1, f_x1
         x1, f_x1 = x2, f(x2)
 
         precision = math.fabs(x1 - x0)
         error = math.fabs(f_x1)
-    cdef bint optimal = error <= etol
-    return x1, f_x1, step, precision, error, converged, optimal
+
+    r, f_r = x1, f_x1
+    optimal = error <= etol
+    return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def secant(f: Callable[[float], float],
@@ -122,11 +134,11 @@ def secant(f: Callable[[float], float],
 # Sidi
 ################################################################################
 cdef class NewtonPolynomial:
-    cdef int n
+    cdef unsigned int n
     cdef double[:] x, a
 
     def __init__(self, xs: double[:], ys: double[:]):
-        self.n = <int> len(xs)
+        self.n = <unsigned int> xs.shape[0]
         self.x = view.array(shape=(self.n - 1,),
                             itemsize=sizeof(double),
                             format='d')
@@ -154,7 +166,7 @@ cdef class NewtonPolynomial:
 
     cdef double f(self, double x):
         cdef double f_x = self.a[-1]
-        cdef int k
+        cdef unsigned int k
         for k in range(self.n - 2, -1, -1):
             f_x = f_x * (x - self.x[k]) + self.a[k]
         return f_x
@@ -166,7 +178,7 @@ cdef class NewtonPolynomial:
         cdef double[:] dfs = view.array(shape=(order + 1,), itemsize=sizeof(double), format='d')
         dfs[0] = self.a[-1]
         dfs[1:] = 0
-        cdef int i, k
+        cdef unsigned int i, k
         cdef double v
         for k in range(self.n - 2, -1, -1):
             v = x - self.x[k]
@@ -184,15 +196,23 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
         double ptol=PTOL,
         long max_iter=0):
     # sort by absolute value of f
-    cdef np.ndarray[np.int64_t, ndim=1] inds = np.flip(np.argsort(np.abs(f_x0s)))
-    cdef double[:] xs = np.take_along_axis(np.array(x0s), inds, 0)
-    cdef double[:] f_xs = np.take_along_axis(np.array(f_x0s), inds, 0)
+    # cdef np.ndarray[np.int64_t, ndim=1] inds = np.flip(np.argsort(np.abs(f_x0s)))
+    # cdef double[:] xs = np.take_along_axis(np.array(x0s), inds, 0)
+    # cdef double[:] f_xs = np.take_along_axis(np.array(f_x0s), inds, 0)
+    cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
+    cdef double[:] xs = permute(x0s, inds)
+    cdef double[:] f_xs = permute(f_x0s, inds)
 
-    cdef double precision = math.fabs(f_xs[-1] - f_xs[-2]), error = math.fabs(f_xs[-1])
     cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_guesses(xs, f_xs, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, precision, error, converged, optimal
+
     cdef double xn, f_xn, dp_xn
-    cdef converged = True
     cdef NewtonPolynomial poly
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -212,10 +232,12 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
         f_xs[:-1] = f_xs[1:]
         f_xs[-1] = f_xn
 
-        precision = math.fabs(f_xn - f_xs[-2])
+        precision = fabs_width(xs)
         error = math.fabs(f_xn)
-    cdef bint optimal = error <= etol
-    return xn, f_xn, step, precision, error, converged, optimal
+
+    r, f_r = xn, f_xn
+    optimal = error <= etol
+    return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def sidi(f: Callable[[float], float],
@@ -272,13 +294,19 @@ cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
         func_type f,
         double x0,
         double f_x0,
+        bint adsp=True,
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.INFINITY, error = math.INFINITY
     cdef long step = 0
+    cdef double precision, error
+    cdef bint converged, optimal
+    if _check_initial_guess(x0, f_x0, etol, ptol,
+                            &precision, &error, &converged, &optimal):
+        return x0, f_x0, step, precision, error, converged, optimal
+
     cdef double x1, x2, x3, denom
-    cdef converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -286,23 +314,27 @@ cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
         step += 1
         x1 = x0 + f_x0
         x2 = x1 + f(x1)
-        # Use Aitken's delta squared method to find a better approximation to x0.
         denom = x2 - 2 * x1 + x0
         if denom == 0:
             converged = False
             break
-        x3 = x0 - (x1 - x0) ** 2 / (x2 - 2 * x1 + x0)
-        # x3 = x2 - (x2 - x1) ** 2 / (x2 - 2 * x1 + x0)
+        # Use Aitken's delta-squared method to find a better approximation
+        if adsp:
+            x3 = x0 - (x1 - x0) ** 2 / denom
+        else:
+            x3 = x2 - (x2 - x1) ** 2 / denom
         precision = math.fabs(x3 - x0)
-        error = math.fabs(f_x0)
         x0, f_x0 = x3, f(x3)
-    cdef bint optimal = error <= etol
+        error = math.fabs(f_x0)
+
+    optimal = error <= etol
     return x0, f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def steffensen(f: Callable[[float], float],
                x0: float,
                f_x0: Optional[float] = None,
+               adsp: bool = True,
                etol: float = ETOL,
                ptol: float = PTOL,
                max_iter: int = 0) -> QuasiNewtonMethodReturnType:
@@ -313,6 +345,8 @@ def steffensen(f: Callable[[float], float],
         f: Function for which the root is sought.
         x0: First initial point.
         f_x0: Value evaluated at first initial point.
+        adsp: Use Aitken's delta-squared process or not.
+         Defaults to True.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {ETOL}.
         ptol: Precision tolerance, indicating the minimum change
@@ -333,7 +367,7 @@ def steffensen(f: Callable[[float], float],
         f_x0 = f_wrapper(x0)
 
     res = steffensen_kernel[DoubleScalarFPtr](
-        f_wrapper, x0, f_x0, etol, ptol, max_iter)
+        f_wrapper, x0, f_x0, adsp, etol, ptol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -351,10 +385,16 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.INFINITY, error = math.INFINITY
     cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    cdef double[3] xs = [x0, x1, x2], f_xs = [f_x0, f_x1, f_x2]
+    if _check_initial_guesses(xs, f_xs, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, precision, error, converged, optimal
+
     cdef double x3, df_01, df_02, df_12
-    cdef converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -375,8 +415,10 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
 
         precision = math.fabs(x2 - x1)
         error = math.fabs(f_x2)
-    cdef bint optimal = error <= etol
-    return x2, f_x2, step, precision, error, converged, optimal
+
+    r, f_r = x2, f_x2
+    optimal = error <= etol
+    return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def inverse_quadratic_interp(
@@ -450,10 +492,16 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.INFINITY, error = math.INFINITY
     cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    cdef double[3] xs = [x0, x1, x2], f_xs = [f_x0, f_x1, f_x2]
+    if _check_initial_guesses(xs, f_xs, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, precision, error, converged, optimal
+
     cdef double x3, d_01, d_12, df_01, df_02, df_12
-    cdef converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -479,8 +527,10 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
 
         precision = math.fabs(x2 - x1)
         error = math.fabs(f_x2)
-    cdef bint optimal = error <= etol
-    return x2, f_x2, step, precision, error, converged, optimal
+
+    r, f_r = x2, f_x2
+    optimal = error <= etol
+    return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def hyperbolic_interp(
@@ -554,10 +604,17 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = abs(x2 - x0), error = math.INFINITY
     cdef long step = 0
+    cdef double complex r, f_r
+    cdef double precision, error
+    cdef bint converged, optimal
+    cdef double complex[3] xs = [x0, x1, x2], f_xs = [f_x0, f_x1, f_x2]
+    if _check_initial_guesses_complex(xs, f_xs, etol, ptol,
+                                      &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, precision, error, converged, optimal
+
     cdef double complex div_diff_01, div_diff_12, div_diff_02, a, b, s_delta, d1, d2, d, x3
-    cdef converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0 or x0 == x1 or x1 == x2 or x0 == x2:
             converged = False
@@ -580,8 +637,10 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
 
         precision = abs(x2 - x0)
         error = abs(f_x2)
-    cdef bint optimal = error <= etol
-    return x2, f_x2, step, precision, error, converged, optimal
+
+    r, f_r = x2, f_x2
+    optimal = error <= etol
+    return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def muller(f: Callable[[complex], complex],

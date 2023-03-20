@@ -1,5 +1,6 @@
 # distutils: language=c++
 # cython: cdivision = True
+# cython: initializedcheck = False
 # cython: boundscheck = False
 # cython: profile = False
 
@@ -9,6 +10,7 @@ from cpython cimport array
 from cython cimport view
 from libc cimport math
 
+from ._check_args cimport _check_initial_bracket
 from ._check_args import _check_stopping_condition_args, _check_bracket
 from ._return_types import BracketingMethodsReturnType
 from .fptr cimport func_type, DoubleScalarFPtr, PyDoubleScalarFPtr
@@ -27,8 +29,8 @@ __all__ = [
     'chandrupatla',
     'ridders',
     'toms748',
-    'itp',
     'wu',
+    'itp',
 ]
 
 cdef inline (double, double, double, double, double, double)  _update_bracket(
@@ -42,17 +44,6 @@ cdef inline (double, double, double, double, double, double)  _update_bracket(
         rx, f_rx = b, f_b
         b, f_b = c, f_c
     return a, b, rx, f_a, f_b, f_rx
-
-cdef inline (double, double, double, bint) _check_inital_bracket(
-        double a, double b, double f_a, double f_b, double etol=ETOL):
-    """Check if inital bracket is feasible."""
-    cdef double error_a = math.fabs(f_a), error_b = math.fabs(f_b)
-    cdef double initial_error = math.fmin(error_a, error_b)
-    cdef bint feasible = (math.copysign(1, f_a) * math.copysign(1, f_b) < 0
-                          or initial_error <= etol)
-    if error_a < error_b:
-        return a, f_a, initial_error, feasible
-    return b, f_b, initial_error, feasible
 
 ################################################################################
 # Bisection
@@ -70,10 +61,15 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ptol=PTOL,
         long max_iter=0,
         stop_func_type extra_stop_criteria=NULL):
-    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+
     cdef double c, f_c
-    cdef bint converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -85,12 +81,14 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         c = (a + b) / 2
         f_c = f(c)
         error = math.fabs(f_c)
-        if f_c == 0:
+        if error <= etol:
             break
         a, b, _, f_a, f_b, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
         precision = b - a
-    cdef bint optimal = error <= etol
-    return c, f_c, step, a, b, f_a, f_b, precision, error, converged, optimal
+
+    r, f_r = c, f_c
+    optimal = error <= etol
+    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def bisect(f: Callable[[float], float],
@@ -132,7 +130,7 @@ def bisect(f: Callable[[float], float],
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = bisect_kernel[DoubleScalarFPtr](f_wrapper, a, b, etol, ptol, max_iter)
+    res = bisect_kernel[DoubleScalarFPtr](f_wrapper, a, b, f_a, f_b, etol, ptol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -151,10 +149,15 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ptol=PTOL,
         long max_iter=0,
         scale_func_type scale_func=NULL):
-    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
-    cdef double c, f_c, m = 1
-    cdef bint converged = True
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+
+    cdef double c, f_c
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0 or f_a == f_b:
             converged = False
@@ -165,18 +168,17 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         precision = math.fabs(b - a)
         error = math.fabs(f_c)
 
-        if scale_func is not NULL:
-            m = scale_func(f_b, f_c)
-
-        if f_c == 0:
+        if error <= etol:
             break
         elif math.copysign(1, f_b) * math.copysign(1, f_c) < 0:
             a, f_a = b, f_b
-        else:
-            f_a = m * f_a
+        elif scale_func is not NULL:
+            f_a *= scale_func(f_b, f_c)
         b, f_b = c, f_c
-    cdef bint optimal = error <= etol
-    return c, f_c, step, a, b, f_a, f_b, precision, error, converged, optimal
+
+    r, f_r = c, f_c
+    optimal = error <= etol
+    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def regula_falsi(f: Callable[[float], float],
@@ -388,10 +390,15 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+
     cdef double b_prev = a, f_b_prev = f_a, b_next, f_b_next, c, s
-    cdef bint converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -417,8 +424,10 @@ cdef (double, double, long, double, double, double, double, double, double, bint
 
         precision = math.fabs(b - a)
         error = math.fabs(f_b)
-    cdef bint optimal = error <= etol
-    return b, f_b, step, a, b, f_a, f_b, precision, error, converged, optimal
+
+    r, f_r = b, f_b
+    optimal = error <= etol
+    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def dekker(f: Callable[[float], float],
@@ -479,12 +488,18 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+
     cdef double b_prev = a, f_b_prev = f_a, b_prev_prev = a, b_next, f_b_next, c, s
     cdef double d_ab, d_abp, d_bbp, df_ab, df_abp, df_bbp, denom
     cdef int last_method = 0  # 0 for bisect, 1 for interp
-    cdef bint use_interp, converged = True
+    cdef bint use_interp
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -539,8 +554,10 @@ cdef (double, double, long, double, double, double, double, double, double, bint
 
         precision = math.fabs(b - a)
         error = math.fabs(f_b)
-    cdef bint optimal = error <= etol
-    return b, f_b, step, a, b, f_a, f_b, precision, error, converged, optimal
+
+    r, f_r = b, f_b
+    optimal = error <= etol
+    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 BRENT_INTERP_METHODS: dict[str, int] = {
     'quadratic': 0,
@@ -620,11 +637,15 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+
     cdef double c, f_c, d, f_d, d_ab, d_fa_fb, d_ad, d_fa_fd, d_bd, d_fb_fd, tl, t = 0.5
-    cdef double r, f_r
-    cdef bint converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -642,7 +663,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         r, f_r = (a, f_a) if math.fabs(f_a) < math.fabs(f_b) else (b, f_b)
         error = math.fabs(f_r)
         tl = (2 * ptol * math.fabs(r) + 0.5 * sigma) / precision
-        if f_r == 0 or tl > 0.5:
+        if error <= etol or tl > 0.5:
             break
         if a != b != d != a and f_a != f_b != f_d != f_a:
             # inverse quadratic interpolation
@@ -661,7 +682,9 @@ cdef (double, double, long, double, double, double, double, double, double, bint
             t = tl
         if t > 1 - tl:
             t = 1 - tl
-    cdef bint optimal = error <= etol
+
+    # this method set r and f_r inside loop
+    optimal = error <= etol
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -723,10 +746,15 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+
     cdef double c, f_c, d, f_d, denom
-    cdef bint converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -749,10 +777,12 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         b, f_b = d, f_d
         precision = math.fabs(b - a)
         error = math.fabs(f_d)
+
     if b < a:
         a, f_a = b, f_b
-    cdef bint optimal = error <= etol
-    return d, f_d, step, a, b, f_a, f_b, precision, error, converged, optimal
+    r, f_r = d, f_d
+    optimal = error <= etol
+    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def ridders(f: Callable[[float], float],
@@ -793,9 +823,6 @@ def ridders(f: Callable[[float], float],
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
-    if f_a * f_b >= 0:
-        raise ValueError('f_a and f_b must have opposite sign. '
-                         f'Got f_a={f_a} and f_b={f_b}.')
 
     res = ridders_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, etol, ptol, max_iter)
@@ -910,10 +937,16 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = b - a, error
-    cdef long step = 0, n
+    cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+
+    cdef long n
     cdef double c, f_c, d, f_d, e, f_e, u, f_u, z, f_z, A
-    cdef bint use_newton_quadratic, converged = True
+    cdef bint use_newton_quadratic
     # secant init
     c = (a - b * f_a / f_b) / (1 - f_a / f_b)
     if not a < c < b:
@@ -921,11 +954,13 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     f_c = f(c)
     step += 1
     error = math.fabs(f_c)
-    if f_c == 0:
-        return c, f_c, step, a, b, f_a, f_b, precision, error, converged, True
+    if error <= etol:
+        r, f_r = c, f_c
+        return r, f_r, step, a, b, f_a, f_b, precision, error, True, True
     a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
     precision = b - a
     e = f_e = math.NAN
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -947,8 +982,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
             if use_newton_quadratic:
                 c = _newton_quadratic(a, b, d, f_a, f_b, f_d, n)
             f_c = f(c)
-            if f_c == 0:
-                error = 0
+            error = math.fabs(f_c)
+            if error <= etol:
                 break
 
             # re-bracket
@@ -966,8 +1001,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         if math.fabs(c - u) > 0.5 * (b - a):
             c = (a + b) / 2
         f_c = f(c)
-        if f_c == 0:
-            error = 0
+        error = math.fabs(f_c)
+        if error <= etol:
             break
 
         # re-bracket
@@ -976,20 +1011,20 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         precision = b - a
 
         # If the width of the new interval did not decrease enough, bisect
-        if b - a > mu * ab_width:
+        if precision > mu * ab_width:
             e, f_e = d, f_d
             z = (a + b) / 2
             f_z = f(z)
-            if f_z == 0:
+            error = math.fabs(f_z)
+            if error <= etol:
                 c, f_c = z, f_z
-                error = 0
                 break
             a, b, d, f_a, f_b, f_d = _update_bracket(a, b, z, f_a, f_b, f_z)
+            precision = b - a
 
-        precision = b - a
-        error = math.fabs(f_c)
-    cdef bint optimal = error <= etol
-    return c, f_c, step, a, b, f_a, f_b, precision, error, converged, optimal
+    r, f_r = c, f_c
+    optimal = error <= etol
+    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def toms748(f: Callable[[float], float],
@@ -1040,9 +1075,6 @@ def toms748(f: Callable[[float], float],
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
-    if f_a * f_b >= 0:
-        raise ValueError('f_a and f_b must have opposite sign. '
-                         f'Got f_a={f_a} and f_b={f_b}.')
 
     res = toms748_kernel[DoubleScalarFPtr](
         f_wrapper, a, b, f_a, f_b, k, mu, etol, ptol, max_iter)
@@ -1061,15 +1093,25 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_bracket(a, b, f_a, f_b, etol, ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+
     cdef double c, f_c, a_bar, f_a_bar, b_bar, f_b_bar, c_bar
     cdef double div_diff_ab, div_diff_bc, div_diff_ac, alpha, beta, delta, s_delta, d1, d2, d
-    cdef bint converged = True
-    # initialize
+    # bisect initialize
     c = (a + b) / 2
     f_c = f(c)
+    step += 1
+    error = math.fabs(f_c)
+    if error <= etol:
+        r, f_r = c, f_c
+        return r, f_r, step, a, b, f_a, f_b, precision, error, True, True
     a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -1103,12 +1145,11 @@ cdef (double, double, long, double, double, double, double, double, double, bint
             f_c = f(c)
         precision = b - a
         error = math.fabs(f_c)
-        if f_c == 0:
-            error = 0
-            break
         a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
-    cdef bint optimal = error <= etol
-    return c, f_c, step, a, b, f_a, f_b, precision, error, converged, optimal
+
+    r, f_r = c, f_c
+    optimal = error <= etol
+    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def wu(f: Callable[[float], float],
@@ -1175,13 +1216,18 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double etol=0,
         double ptol=PTOL,
         long max_iter=0):
-    # preprocessing
-    cdef double precision = (b - a) / 2, error = math.INFINITY
+    cdef long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_initial_bracket(a, b, f_a, f_b, etol, 2 * ptol,
+                              &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, a, b, f_a, f_b, precision / 2, error, converged, optimal
+    precision = (b - a) / 2
+
     cdef long n_1div2 = <long> math.ceil(math.log2((b - a) / (2 * ptol)))
     cdef long n_max = n_1div2 + n0
-    cdef long step = 0
-    cdef double x_m, f_m, r, delta, x_f, sigma, x_t, x_itp, f_itp
-    cdef bint converged = True
+    cdef double x_m, f_m, rho, delta, x_f, sigma, x_t, x_itp, f_itp
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -1189,7 +1235,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         step += 1
         # calculate params
         x_m = (a + b) / 2
-        r = ptol * 2 ** <double> (n_max - step) - (b - a) / 2
+        rho = ptol * 2 ** <double> (n_max - step) - (b - a) / 2
         delta = k1 * (b - a) ** k2
         # interpolation
         x_f = (f_b * a - f_a * b) / (f_b - f_a)
@@ -1197,23 +1243,24 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         sigma = math.copysign(1, x_m - x_f)
         x_t = x_f + sigma * delta if delta <= math.fabs(x_m - x_f) else x_m
         # projection
-        x_itp = x_t if math.fabs(x_t - x_m) <= r else x_m - sigma * r
+        x_itp = x_t if math.fabs(x_t - x_m) <= rho else x_m - sigma * rho
         # update interval
         f_itp = f(x_itp)
-        if f_itp == 0:
-            error = 0
+        error = math.fabs(f_itp)
+        if error <= etol:
             break
         a, b, _, f_a, f_b, _ = _update_bracket(a, b, x_itp, f_a, f_b, f_itp)
         precision = (b - a) / 2
-        error = math.fabs(f_itp)
     if error > etol:
         x_m = (a + b) / 2
         f_m = f(x_m)
         error = math.fabs(f_m)
     else:
         x_m, f_m = x_itp, f_itp
-    cdef bint optimal = error <= etol
-    return x_m, f_m, step, a, b, f_a, f_b, precision, error, converged, optimal
+
+    r, f_r = x_m, f_m
+    optimal = error <= etol
+    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 def itp(f: Callable[[float], float],

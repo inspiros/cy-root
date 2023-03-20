@@ -31,7 +31,13 @@ def get_ext_modules():
     ]
 
     ext_modules = []
-    ext = '.pyx' if use_cython else '.c'
+    ext = '.pyx' if use_cython else '.cpp'
+    for root, dirs, files in os.walk(PACKAGE_ROOT):
+        for d in dirs:
+            dir_path = os.path.join(root, d)
+            if any(_.endswith(ext) for _ in os.listdir(dir_path)):
+                include_dirs.append(dir_path)
+
     for root, dirs, files in os.walk(PACKAGE_ROOT):
         for f in filter(lambda f: f.endswith(ext), files):
             f_path = os.path.join(root, f)

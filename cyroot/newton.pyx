@@ -1,5 +1,6 @@
 # distutils: language=c++
 # cython: cdivision = True
+# cython: initializedcheck = False
 # cython: boundscheck = False
 # cython: profile = False
 
@@ -13,6 +14,7 @@ import sympy.utilities.autowrap
 from cython cimport view
 from libc cimport math
 
+from ._check_args cimport _check_initial_guess
 from ._check_args import _check_stopping_condition_args
 from ._return_types import NewtonMethodReturnType
 from .fptr cimport (
@@ -42,10 +44,15 @@ cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.INFINITY, error = math.INFINITY
     cdef long step = 0
+    cdef double precision, error
+    cdef bint converged, optimal
+    if _check_initial_guess(x0, f_x0, etol, ptol,
+                            &precision, &error, &converged, &optimal):
+        return x0, f_x0, df_x0, step, precision, error, converged, optimal
+
     cdef double x1
-    cdef bint converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0 or df_x0 == 0:
             converged = False
@@ -54,7 +61,8 @@ cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
         precision = math.fabs(x1 - x0)
         x0, f_x0, df_x0 = x1, f(x1), df(x1)
         error = math.fabs(f_x0)
-    cdef bint optimal = error <= etol
+
+    optimal = error <= etol
     return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -116,10 +124,15 @@ cdef (double, double, double, double, long, double, double, bint, bint) halley_k
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.INFINITY, error = math.INFINITY
     cdef long step = 0
+    cdef double precision, error
+    cdef bint converged, optimal
+    if _check_initial_guess(x0, f_x0, etol, ptol,
+                            &precision, &error, &converged, &optimal):
+        return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
+
     cdef double x1, denom
-    cdef bint converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
             converged = False
@@ -133,7 +146,8 @@ cdef (double, double, double, double, long, double, double, bint, bint) halley_k
         precision = math.fabs(x1 - x0)
         x0, f_x0, df_x0, d2f_x0 = x1, f(x1), df(x1), d2f(x1)
         error = math.fabs(f_x0)
-    cdef bint optimal = error <= etol
+
+    optimal = error <= etol
     return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -198,29 +212,29 @@ cdef householder_kernel(
         DoubleScalarFPtr[:] fs,  # sadly, can't have memory view of C functions
         mv_func_type nom_f,
         mv_func_type denom_f,
-        int d,
         double x0_,
+        double[:] fs_x0,
+        unsigned int d,
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
-    cdef double precision = math.INFINITY, error = math.INFINITY
     cdef long step = 0
-    cdef int i
+    cdef double precision, error
+    cdef bint converged, optimal
+    if _check_initial_guess(x0_, fs_x0[0], etol, ptol,
+                            &precision, &error, &converged, &optimal):
+        return x0_, fs_x0, step, precision, error, converged, optimal
+
     cdef double[:] x0 = view.array(shape=(1,),
                                    itemsize=sizeof(double),
                                    format='d')
     cdef double[:] x1 = view.array(shape=(1,),
                                    itemsize=sizeof(double),
                                    format='d')
-    x0[0] = x0_
-    # cdef double[:] fs_x0 = fs(x0)
-    cdef double[:] fs_x0 = view.array(shape=(d + 1,),
-                                      itemsize=sizeof(double),
-                                      format='d')
-    for i in range(d + 1):
-        fs_x0[i] = fs[i](x0[0])
+    x0[0] = x0_  # wrapped in a memory view to be able to pass into mv_func_type
+    cdef unsigned int i
     cdef double[:] nom_x0 = nom_f(fs_x0[:-1]), denom_x0 = denom_f(fs_x0)
-    cdef bint converged = True
+    converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0 or denom_x0[0] == 0:
             converged = False
@@ -235,7 +249,8 @@ cdef householder_kernel(
             fs_x0[i] = fs[i](x0[0])
         error = math.fabs(fs_x0[0])
         nom_x0, denom_x0 = nom_f(fs_x0[:-1]), denom_f(fs_x0)
-    cdef bint optimal = error <= etol
+
+    optimal = error <= etol
     return x0[0], fs_x0, step, precision, error, converged, optimal
 
 #########################
@@ -518,6 +533,8 @@ class ReciprocalDerivativeFuncFactory:
 def householder(f: Callable[[float], float],
                 dfs: Sequence[Callable[[float], float]],
                 x0: float,
+                f_x0: Optional[float] = None,
+                dfs_x0: Optional[Sequence[float]] = None,
                 etol: float = ETOL,
                 ptol: float = PTOL,
                 max_iter: int = 0,
@@ -527,9 +544,12 @@ def householder(f: Callable[[float], float],
 
     Args:
         f: Function for which the root is sought.
-        dfs: Sequence of derivative functions of f in incremental
+        dfs: Sequence of derivative functions of f in increasing
          order.
-        x0: Initial point.
+        x0: Initial guess.
+        f_x0: Value evaluated at initial guess.
+        dfs_x0: Sequence of derivatives in increasing order at
+         initial guess.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {ETOL}.
         ptol: Precision tolerance, indicating the minimum change
@@ -551,13 +571,18 @@ def householder(f: Callable[[float], float],
     _check_stopping_condition_args(etol, ptol, max_iter)
 
     fs_wrappers = np.asarray([PyDoubleScalarFPtr(f)] + [PyDoubleScalarFPtr(df) for df in dfs])
+    if f_x0 is None:
+        f_x0 = fs_wrappers[0](x0)
+    if dfs_x0 is None:
+        dfs_x0 = [f_wrapper(x0) for f_wrapper in fs_wrappers[1:]]
+    fs_x0 = np.asarray([f_x0] + dfs_x0)
 
     d = len(dfs)
     r, fs_r, step, precision, error, converged, optimal = householder_kernel[DoubleMemoryViewFPtr](
         fs_wrappers,
         <DoubleMemoryViewFPtr>ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
         <DoubleMemoryViewFPtr>ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
-        d, x0, etol, ptol, max_iter)
+        x0, fs_x0, d, etol, ptol, max_iter)
     return NewtonMethodReturnType(r, float(fs_r[0]), tuple(fs_r[1:]), step,
                                   tuple(_.n_f_calls for _ in fs_wrappers),
                                   precision, error, converged, optimal)

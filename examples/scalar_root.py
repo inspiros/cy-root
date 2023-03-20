@@ -77,4 +77,4 @@ def test_speed(etol=1e-8, ptol=1e-10, times=100):
 
 if __name__ == '__main__':
     test_output()
-    test_speed()
+    # test_speed()
