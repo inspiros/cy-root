@@ -35,13 +35,24 @@ cdef inline (double, double, double, double, double, double)  _update_bracket(
         double a, double b, double c, double f_a, double f_b, double f_c):
     """Update a bracket given (c, f_c)."""
     cdef double rx, f_rx
-    if math.copysign(1, f_a) * math.copysign(1, f_c) > 0:
+    if math.copysign(1, f_b) * math.copysign(1, f_c) < 0:
         rx, f_rx = a, f_a
         a, f_a = c, f_c
     else:
         rx, f_rx = b, f_b
         b, f_b = c, f_c
     return a, b, rx, f_a, f_b, f_rx
+
+cdef inline (double, double, double, bint) _check_inital_bracket(
+        double a, double b, double f_a, double f_b, double etol=ETOL):
+    """Check if inital bracket is feasible."""
+    cdef double error_a = math.fabs(f_a), error_b = math.fabs(f_b)
+    cdef double initial_error = math.fmin(error_a, error_b)
+    cdef bint feasible = (math.copysign(1, f_a) * math.copysign(1, f_b) < 0
+                          or initial_error <= etol)
+    if error_a < error_b:
+        return a, f_a, initial_error, feasible
+    return b, f_b, initial_error, feasible
 
 ################################################################################
 # Bisection
@@ -53,13 +64,15 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         func_type f,
         double a,
         double b,
+        double f_a,
+        double f_b,
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0,
         stop_func_type extra_stop_criteria=NULL):
     cdef double precision = b - a, error = math.INFINITY
     cdef long step = 0
-    cdef double c, f_c, f_a = math.NAN, f_b = math.NAN
+    cdef double c, f_c
     cdef bint converged = True
     while error > etol and precision > ptol:
         if step > max_iter > 0:
@@ -83,6 +96,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
 def bisect(f: Callable[[float], float],
            a: float,
            b: float,
+           f_a: Optional[float] = None,
+           f_b: Optional[float] = None,
            etol: float = ETOL,
            ptol: float = PTOL,
            max_iter: int = 0) -> BracketingMethodsReturnType:
@@ -93,6 +108,8 @@ def bisect(f: Callable[[float], float],
         f: Function for which the root is sought.
         a: Lower bound of the interval to be searched.
         b: Upper bound of the interval to be searched.
+        f_a: Value evaluated at lower bound.
+        f_b: Value evaluated at upper bound.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {ETOL}.
         ptol: Precision tolerance, indicating the minimum change
@@ -109,8 +126,11 @@ def bisect(f: Callable[[float], float],
     _check_bracket(a, b)
     _check_stopping_condition_args(etol, ptol, max_iter)
 
-    a, b = min(a, b), max(a, b)
     f_wrapper = PyDoubleScalarFPtr(f)
+    if f_a is None:
+        f_a = f_wrapper(a)
+    if f_b is None:
+        f_b = f_wrapper(b)
 
     res = bisect_kernel[DoubleScalarFPtr](f_wrapper, a, b, etol, ptol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
@@ -596,7 +616,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double b,
         double f_a,
         double f_b,
-        double sigma=1e-5,
+        double sigma=PTOL,
         double etol=ETOL,
         double ptol=PTOL,
         long max_iter=0):
@@ -612,7 +632,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         step += 1
         c = a + (b - a) * t
         f_c = f(c)
-        if math.copysign(1, f_c) * math.copysign(1, f_a) > 0:
+        if math.copysign(1, f_a) * math.copysign(1, f_c) > 0:
             d, a = a, c
             f_d, f_a = f_a, f_c
         else:
@@ -650,7 +670,7 @@ def chandrupatla(f: Callable[[float], float],
                  b: float,
                  f_a: Optional[float] = None,
                  f_b: Optional[float] = None,
-                 sigma: float = 1e-5,
+                 sigma: float = PTOL,
                  etol: float = ETOL,
                  ptol: float = PTOL,
                  max_iter: int = 0) -> BracketingMethodsReturnType:
@@ -663,7 +683,7 @@ def chandrupatla(f: Callable[[float], float],
         b: Upper bound of the interval to be searched.
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
-        sigma: Tolerance (not sure what it's for). Defaults to 1e-5.
+        sigma: Tolerance for extra stop condition. Defaults to {PTOL}.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {ETOL}.
         ptol: Precision tolerance, indicating the minimum change

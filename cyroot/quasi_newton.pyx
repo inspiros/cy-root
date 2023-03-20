@@ -22,6 +22,7 @@ cdef extern from '_defaults.h':
 
 cdef extern from '<complex.h>':
     double complex sqrt(double complex x) nogil
+    # cabs causes error when compiling on linux
     # double cabs(double complex x) nogil
 # from numpy.lib.scimath import sqrt
 

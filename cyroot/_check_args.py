@@ -19,12 +19,16 @@ def _check_stopping_condition_args(etol: float, ptol: float, max_iter: int):
                          f'likely cause the algorithm to run indefinitely.')
 
 
-def _check_bracket(a: float, b: float):
+def _check_bracket(a: float, b: float, check_nan=True):
+    if check_nan and (math.isnan(a) or math.isnan(b)):
+        raise ValueError(f'nan value encountered a={a}, b={b}.')
     if a > b:
         raise ValueError(f'Expect a<b. Got a={a}, b={b}.')
 
 
-def _check_bracket_val(f_a: float, f_b: float):
+def _check_bracket_val(f_a: float, f_b: float, check_nan=True):
+    if check_nan and (math.isnan(f_a) or math.isnan(f_b)):
+        raise ValueError(f'nan value encountered a={f_a}, b={f_b}.')
     if math.copysign(1, f_a) == math.copysign(1, f_b):
         raise ValueError('f_a and f_b must have opposite sign. '
                          f'Got f_a={f_a} and f_b={f_b}.')
