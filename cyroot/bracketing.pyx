@@ -10,18 +10,16 @@ from cpython cimport array
 from cython cimport view
 from libc cimport math
 
-from ._check_args cimport _check_stop_condition_bracket
 from ._check_args import (
     _check_stop_condition_args,
     _check_bracket,
     _check_unique_initial_vals,
 )
+from ._check_args cimport _check_stop_condition_bracket
+from ._defaults import ETOL, PTOL, MAX_ITER
 from ._return_types import BracketingMethodsReturnType
-from .fptr cimport func_type, DoubleScalarFPtr, PyDoubleScalarFPtr
-
-cdef extern from '_defaults.h':
-    cdef double PHI, ETOL, PTOL
-    cdef long MAX_ITER
+from .fptr cimport double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr
+from .utils.decorators import cyroot_api
 
 __all__ = [
     'bisect',
@@ -57,7 +55,7 @@ ctypedef bint (*stop_func_type)(long, double, double, double, double)
 
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, double, double, double, double, bint, bint) bisect_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double a,
         double b,
         double f_a,
@@ -76,7 +74,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     cdef double c, f_c
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         if extra_stop_criteria is not NULL and extra_stop_criteria(step, a, b, f_a, f_b):
@@ -96,6 +94,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def bisect(f: Callable[[float], float],
            a: float,
            b: float,
@@ -127,7 +126,7 @@ def bisect(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -145,7 +144,7 @@ ctypedef double (*scale_func_type)(double, double)
 
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double a,
         double b,
         double f_a,
@@ -164,7 +163,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     cdef double c, f_c
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0 or f_a == f_b:
+        if step >= max_iter > 0 or f_a == f_b:
             converged = False
             break
         step += 1
@@ -186,6 +185,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def regula_falsi(f: Callable[[float], float],
                  a: float,
                  b: float,
@@ -217,7 +217,7 @@ def regula_falsi(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -236,6 +236,7 @@ cdef inline double illinois_scale(double f_b, double f_c):
     return 0.5
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def illinois(f: Callable[[float], float],
              a: float,
              b: float,
@@ -267,7 +268,7 @@ def illinois(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -286,6 +287,7 @@ cdef inline double pegasus_scale(double f_b, double f_c):
     return f_b / (f_b + f_c)
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def pegasus(f: Callable[[float], float],
             a: float,
             b: float,
@@ -317,7 +319,7 @@ def pegasus(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -339,6 +341,7 @@ cdef inline double anderson_bjorck_scale(double f_b, double f_c):
     return m
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def anderson_bjorck(f: Callable[[float], float],
                     a: float,
                     b: float,
@@ -370,7 +373,7 @@ def anderson_bjorck(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -387,7 +390,7 @@ def anderson_bjorck(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, double, double, double, double, bint, bint) dekker_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double a,
         double b,
         double f_a,
@@ -405,7 +408,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     cdef double b_prev = a, f_b_prev = f_a, b_next, f_b_next, c, s
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -435,6 +438,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def dekker(f: Callable[[float], float],
            a: float,
            b: float,
@@ -466,7 +470,7 @@ def dekker(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -483,7 +487,7 @@ def dekker(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, double, double, double, double, bint, bint) brent_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double a,
         double b,
         double f_a,
@@ -506,7 +510,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     cdef bint use_interp
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -570,6 +574,7 @@ BRENT_INTERP_METHODS: dict[str, int] = {
 }
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def brent(f: Callable[[float], float],
           a: float,
           b: float,
@@ -616,7 +621,7 @@ def brent(f: Callable[[float], float],
     if sigma <= 0:
         raise ValueError(f'sigma must be positive. Got {sigma}.')
 
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wraper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -633,7 +638,7 @@ def brent(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double a,
         double b,
         double f_a,
@@ -652,7 +657,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     cdef double c, f_c, d, f_d, d_ab, d_fa_fb, d_ad, d_fa_fd, d_bd, d_fb_fd, tl, t = 0.5
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -693,6 +698,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def chandrupatla(f: Callable[[float], float],
                  a: float,
                  b: float,
@@ -726,7 +732,7 @@ def chandrupatla(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -743,7 +749,7 @@ def chandrupatla(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, double, double, double, double, bint, bint) ridders_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double a,
         double b,
         double f_a,
@@ -761,7 +767,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     cdef double c, f_c, d, f_d, denom
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -790,6 +796,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def ridders(f: Callable[[float], float],
             a: float,
             b: float,
@@ -821,7 +828,7 @@ def ridders(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -932,7 +939,7 @@ cdef double _inverse_poly_zero(double a, double b, double c, double d,
 
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, double, double, double, double, bint, bint) toms748_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double a,
         double b,
         double f_a,
@@ -967,7 +974,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     e = f_e = math.NAN
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -1032,6 +1039,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def toms748(f: Callable[[float], float],
             a: float,
             b: float,
@@ -1073,7 +1081,7 @@ def toms748(f: Callable[[float], float],
     if not 0 < mu < 1:
         raise ValueError(f'mu must be in range (0, 1). Got {mu}.')
 
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -1090,7 +1098,7 @@ def toms748(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, double, double, double, double, bint, bint) wu_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double a,
         double b,
         double f_a,
@@ -1118,7 +1126,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -1157,6 +1165,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def wu(f: Callable[[float], float],
        a: float,
        b: float,
@@ -1193,7 +1202,7 @@ def wu(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
@@ -1210,7 +1219,7 @@ def wu(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, double, double, double, double, bint, bint) itp_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double a,
         double b,
         double f_a,
@@ -1235,7 +1244,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     cdef double x_m, f_m, rho, delta, x_f, sigma, x_t, x_itp, f_itp
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0 or f_a == f_b:
+        if step >= max_iter > 0 or f_a == f_b:
             converged = False
             break
         step += 1
@@ -1270,7 +1279,11 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     optimal = error <= etol
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
+# upper bound for k2
+cdef double PHI = (1 + math.sqrt(5)) / 2
+
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def itp(f: Callable[[float], float],
         a: float,
         b: float,
@@ -1298,7 +1311,7 @@ def itp(f: Callable[[float], float],
             Defaults to 2.
         n0: Tuning parameter. Defaults to 1.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOl}.
+         of the root. Defaults to {ETOL}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {PTOL}.
@@ -1324,7 +1337,7 @@ def itp(f: Callable[[float], float],
     if n0 < 0:
         raise ValueError(f'n0 must be non-negative integer. Got {n0}.')
 
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:

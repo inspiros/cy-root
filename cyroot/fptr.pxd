@@ -6,15 +6,15 @@ cdef class TrackedFPtr:
 # --------------------------------
 # Double
 # --------------------------------
-ctypedef double (*f_ptr)(double)
+ctypedef double (*dsf_ptr)(double)
 
 cdef class DoubleScalarFPtr(TrackedFPtr):
     cdef double eval(self, double x) except *
 
 cdef class CyDoubleScalarFPtr(DoubleScalarFPtr):
-    cdef f_ptr f
+    cdef dsf_ptr f
     @staticmethod
-    cdef CyDoubleScalarFPtr from_f(f_ptr f)
+    cdef CyDoubleScalarFPtr from_f(dsf_ptr f)
     cdef double eval(self, double x) except *
 
 cdef class PyDoubleScalarFPtr(DoubleScalarFPtr):
@@ -23,22 +23,22 @@ cdef class PyDoubleScalarFPtr(DoubleScalarFPtr):
     cdef PyDoubleScalarFPtr from_f(object f)
     cdef double eval(self, double x) except *
 
-ctypedef fused func_type:
-    f_ptr
+ctypedef fused double_scalar_func_type:
+    dsf_ptr
     DoubleScalarFPtr
 
 # --------------------------------
 # Complex
 # --------------------------------
-ctypedef double complex (*cf_ptr)(double complex)
+ctypedef double complex (*csf_ptr)(double complex)
 
 cdef class ComplexScalarFPtr(TrackedFPtr):
     cdef double complex eval(self, double complex x) except *
 
 cdef class CyComplexScalarFPtr(ComplexScalarFPtr):
-    cdef cf_ptr f
+    cdef csf_ptr f
     @staticmethod
-    cdef CyComplexScalarFPtr from_f(cf_ptr f)
+    cdef CyComplexScalarFPtr from_f(csf_ptr f)
     cdef double complex eval(self, double complex x) except *
 
 cdef class PyComplexScalarFPtr(ComplexScalarFPtr):
@@ -47,54 +47,54 @@ cdef class PyComplexScalarFPtr(ComplexScalarFPtr):
     cdef PyComplexScalarFPtr from_f(object f)
     cdef double complex eval(self, double complex x) except *
 
-ctypedef fused complex_func_type:
-    cf_ptr
+ctypedef fused complex_scalar_func_type:
+    csf_ptr
     ComplexScalarFPtr
 
 # --------------------------------
 # Double MemoryView
 # --------------------------------
-ctypedef double[:] (*mvf_ptr)(double[:])
+ctypedef double[:] (*dvf_ptr)(double[:])
 
-cdef class DoubleMemoryViewFPtr(TrackedFPtr):
+cdef class DoubleVectorFPtr(TrackedFPtr):
     cdef double[:] eval(self, double[:] x) except *
 
-cdef class CyDoubleMemoryViewFPtr(DoubleMemoryViewFPtr):
-    cdef mvf_ptr f
+cdef class CyDoubleVectorFPtr(DoubleVectorFPtr):
+    cdef dvf_ptr f
     @staticmethod
-    cdef CyDoubleMemoryViewFPtr from_f(mvf_ptr f)
+    cdef CyDoubleVectorFPtr from_f(dvf_ptr f)
     cdef double[:] eval(self, double[:] x) except *
 
-cdef class PyDoubleMemoryViewFPtr(DoubleMemoryViewFPtr):
+cdef class PyDoubleVectorFPtr(DoubleVectorFPtr):
     cdef object f
     @staticmethod
-    cdef PyDoubleMemoryViewFPtr from_f(object f)
+    cdef PyDoubleVectorFPtr from_f(object f)
     cdef double[:] eval(self, double[:] x) except *
 
-ctypedef fused mv_func_type:
-    mvf_ptr
-    DoubleMemoryViewFPtr
+ctypedef fused double_vector_func_type:
+    dvf_ptr
+    DoubleVectorFPtr
 
 # --------------------------------
 # Double Complex MemoryView
 # --------------------------------
-ctypedef double complex[:] (*cmvf_ptr)(double complex[:])
+ctypedef double complex[:] (*cvf_ptr)(double complex[:])
 
-cdef class ComplexMemoryViewFPtr(TrackedFPtr):
+cdef class ComplexVectorFPtr(TrackedFPtr):
     cdef double complex[:] eval(self, double complex[:] x) except *
 
-cdef class CyComplexMemoryViewFPtr(ComplexMemoryViewFPtr):
-    cdef cmvf_ptr f
+cdef class CyComplexVectorFPtr(ComplexVectorFPtr):
+    cdef cvf_ptr f
     @staticmethod
-    cdef CyComplexMemoryViewFPtr from_f(cmvf_ptr f)
+    cdef CyComplexVectorFPtr from_f(cvf_ptr f)
     cdef double complex[:] eval(self, double complex[:] x) except *
 
-cdef class PyComplexMemoryViewFPtr(ComplexMemoryViewFPtr):
+cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
     cdef object f
     @staticmethod
-    cdef PyComplexMemoryViewFPtr from_f(object f)
+    cdef PyComplexVectorFPtr from_f(object f)
     cdef double complex[:] eval(self, double complex[:] x) except *
 
-ctypedef fused complex_mv_func_type:
-    cmvf_ptr
-    ComplexMemoryViewFPtr
+ctypedef fused complex_vector_func_type:
+    cvf_ptr
+    ComplexVectorFPtr

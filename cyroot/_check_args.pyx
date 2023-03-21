@@ -6,6 +6,7 @@
 
 from typing import Union
 
+import math
 from libc cimport math
 
 from .utils.array_ops cimport fabs, cabs, argmin
@@ -24,16 +25,27 @@ __all__ = [
 ################################################################################
 # Python
 ################################################################################
-def _check_stop_condition_args(etol: float, ptol: float, max_iter: int):
-    if etol < 0:
-        raise ValueError(f'etol must be positive. Got {etol}.')
-    if ptol < 0:
-        raise ValueError(f'ptol must be positive. Got {ptol}.')
-    if not isinstance(max_iter, int) or max_iter == float('inf'):
+def _check_stop_condition_args(etol: float,
+                               ptol: float,
+                               max_iter: int):
+    """Check etol, ptol, and max_iter."""
+    if etol is None:
+        etol = 0
+    elif math.isnan(etol) or not math.isfinite(etol) or etol < 0:
+        raise ValueError(f'etol must be non-negative number. Got {etol}.')
+    if ptol is None:
+        ptol = 0
+    elif ptol is None or math.isnan(ptol) or not math.isfinite(ptol) or ptol < 0:
+        raise ValueError(f'ptol must be non-negative number. Got {ptol}.')
+    if max_iter is None or max_iter < 0 or math.isinf(max_iter) or math.isnan(max_iter):
+        max_iter = 0
+    elif not isinstance(max_iter, int):
         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
-    if etol == ptol == 0 and max_iter <= 0:
+
+    if etol == ptol == max_iter == 0:
         raise ValueError(f'Disabling both etol, ptol, and max_iter will '
                          f'likely cause the algorithm to run indefinitely.')
+    return etol, ptol, max_iter
 
 def _check_bracket(a: float, b: float, check_nan=True):
     if check_nan and (math.isnan(a) or math.isnan(b)):

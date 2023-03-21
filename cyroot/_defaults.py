@@ -1,0 +1,3 @@
+ETOL = 1e-10
+PTOL = 1e-12
+MAX_ITER = 1000

@@ -16,15 +16,13 @@ from libc cimport math
 
 from ._check_args cimport _check_stop_condition_initial_guess
 from ._check_args import _check_stop_condition_args
+from ._defaults import ETOL, PTOL, MAX_ITER
 from ._return_types import NewtonMethodReturnType
 from .fptr cimport (
-    func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
-    mv_func_type, DoubleMemoryViewFPtr, PyDoubleMemoryViewFPtr,
+    double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
+    double_vector_func_type, DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
-
-cdef extern from '_defaults.h':
-    cdef double PHI, ETOL, PTOL
-    cdef unsigned long MAX_ITER
+from .utils.decorators import cyroot_api
 
 __all__ = [
     'newton',
@@ -37,8 +35,8 @@ __all__ = [
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
-        func_type f,
-        func_type df,
+        double_scalar_func_type f,
+        double_scalar_func_type df,
         double x0,
         double f_x0,
         double df_x0,
@@ -55,7 +53,7 @@ cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
     cdef double x1
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0 or df_x0 == 0:
+        if step >= max_iter > 0 or df_x0 == 0:
             converged = False
         step += 1
         x1 = x0 - f_x0 / df_x0
@@ -67,6 +65,7 @@ cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
     return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def newton(f: Callable[[float], float],
            df: Callable[[float], float],
            x0: float,
@@ -97,7 +96,7 @@ def newton(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     df_wrapper = PyDoubleScalarFPtr(df)
@@ -115,9 +114,9 @@ def newton(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, double, double, long, double, double, bint, bint) halley_kernel(
-        func_type f,
-        func_type df,
-        func_type d2f,
+        double_scalar_func_type f,
+        double_scalar_func_type df,
+        double_scalar_func_type d2f,
         double x0,
         double f_x0,
         double df_x0,
@@ -135,7 +134,7 @@ cdef (double, double, double, double, long, double, double, bint, bint) halley_k
     cdef double x1, denom
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -152,6 +151,7 @@ cdef (double, double, double, double, long, double, double, bint, bint) halley_k
     return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def halley(f: Callable[[float], float],
            df: Callable[[float], float],
            d2f: Callable[[float], float],
@@ -186,7 +186,7 @@ def halley(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     df_wrapper = PyDoubleScalarFPtr(df)
@@ -211,8 +211,8 @@ def halley(f: Callable[[float], float],
 @cython.returns((double, double[:], int, double, double, bint, bint))
 cdef householder_kernel(
         DoubleScalarFPtr[:] fs,  # sadly, can't have memory view of C functions
-        mv_func_type nom_f,
-        mv_func_type denom_f,
+        double_vector_func_type nom_f,
+        double_vector_func_type denom_f,
         double x0_,
         double[:] fs_x0,
         unsigned int d,
@@ -237,7 +237,7 @@ cdef householder_kernel(
     cdef double[:] nom_x0 = nom_f(fs_x0[:-1]), denom_x0 = denom_f(fs_x0)
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0 or denom_x0[0] == 0:
+        if step >= max_iter > 0 or denom_x0[0] == 0:
             converged = False
             break
         step += 1
@@ -339,41 +339,41 @@ cdef class _Pow(_ParameterizedExpr):
 #########################
 # Reciprocal Derivative
 #########################
-from .fptr import DoubleMemoryViewFPtr, PyDoubleMemoryViewFPtr
+from .fptr import DoubleVectorFPtr, PyDoubleVectorFPtr
 
 # Some implementations up to 10th order
-cdef class R0DFPtr(DoubleMemoryViewFPtr):
+cdef class R0DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = 1/fs[0]
         return res
 
-cdef class R1DFPtr(DoubleMemoryViewFPtr):
+cdef class R1DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = -fs[1]/fs[0]**2
         return res
 
-cdef class R2DFPtr(DoubleMemoryViewFPtr):
+cdef class R2DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = (-fs[0]*fs[2] + 2*fs[1]**2)/fs[0]**3
         return res
 
-cdef class R3DFPtr(DoubleMemoryViewFPtr):
+cdef class R3DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = (-fs[0]**2*fs[3] + 6*fs[0]*fs[1]*fs[2] - 6*fs[1]**3)/fs[0]**4
         return res
 
-cdef class R4DFPtr(DoubleMemoryViewFPtr):
+cdef class R4DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = ((8*fs[1]*fs[3] + 6*fs[2]**2)*fs[0]**2 - fs[0]**3*fs[4] -
                   36*fs[0]*fs[1]**2*fs[2] + 24*fs[1]**4)/fs[0]**5
         return res
 
-cdef class R5DFPtr(DoubleMemoryViewFPtr):
+cdef class R5DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = (-30*(2*fs[1]*fs[3] + 3*fs[2]**2)*fs[0]**2*fs[1] +
@@ -381,7 +381,7 @@ cdef class R5DFPtr(DoubleMemoryViewFPtr):
                   240*fs[0]*fs[1]**3*fs[2] - 120*fs[1]**5)/fs[0]**6
         return res
 
-cdef class R6DFPtr(DoubleMemoryViewFPtr):
+cdef class R6DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = ((480*fs[1]*fs[3] + 1080*fs[2]**2)*fs[0]**2*fs[1]**2 +
@@ -390,7 +390,7 @@ cdef class R6DFPtr(DoubleMemoryViewFPtr):
                   fs[0]**5*fs[6] - 1800*fs[0]*fs[1]**4*fs[2] + 720*fs[1]**6)/fs[0]**7
         return res
 
-cdef class R7DFPtr(DoubleMemoryViewFPtr):
+cdef class R7DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = (-4200*(fs[1]*fs[3] + 3*fs[2]**2)*fs[0]**2*fs[1]**3 +
@@ -400,7 +400,7 @@ cdef class R7DFPtr(DoubleMemoryViewFPtr):
                   fs[0]**6*fs[7] + 15120*fs[0]*fs[1]**5*fs[2] - 5040*fs[1]**7)/fs[0]**8
         return res
 
-cdef class R8DFPtr(DoubleMemoryViewFPtr):
+cdef class R8DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = ((40320*fs[1]*fs[3] + 151200*fs[2]**2)*fs[0]**2*fs[1]**4 + (-8400*fs[1]**2*fs[4] -
@@ -412,7 +412,7 @@ cdef class R8DFPtr(DoubleMemoryViewFPtr):
                   141120*fs[0]*fs[1]**6*fs[2] + 40320*fs[1]**8)/fs[0]**9
         return res
 
-cdef class R9DFPtr(DoubleMemoryViewFPtr):
+cdef class R9DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = ((-423360*fs[1]*fs[3] - 1905120*fs[2]**2)*fs[0]**2*fs[1]**5 + (90720*fs[1]**2*fs[4] +
@@ -426,7 +426,7 @@ cdef class R9DFPtr(DoubleMemoryViewFPtr):
                   362880*fs[1]**9)/fs[0]**10
         return res
 
-cdef class R10DFPtr(DoubleMemoryViewFPtr):
+cdef class R10DFPtr(DoubleVectorFPtr):
     cdef inline double[:] eval(self, double[:] fs):
         cdef double[:] res = view.array(shape=(1,), itemsize=sizeof(double), format='d')
         res[0] = ((4838400*fs[1]*fs[3] + 25401600*fs[2]**2)*fs[0]**2*fs[1]**6 + (-1058400*fs[1]**2*fs[4] -
@@ -447,7 +447,7 @@ cdef class R10DFPtr(DoubleMemoryViewFPtr):
 # For functions of higher order derivatives, use this class to eval expression
 # Warning: Very slow, but somehow still slightly faster than Sympy's wrapped function
 # (if someone goes this far, they must be insane)
-cdef class CyExprEvaluator(DoubleMemoryViewFPtr):
+cdef class CyExprEvaluator(DoubleVectorFPtr):
     cdef _Expr cy_expr
     type_map = {
         sympy.core.Number: _Number,
@@ -483,7 +483,7 @@ class ReciprocalDerivativeFuncFactory:
         https://math.stackexchange.com/questions/5357/whats-the-generalisation-of-the-quotient-rule-for-higher-derivatives
     """
     # dictionary of known functions
-    rd_c_funcs: dict[int, DoubleMemoryViewFPtr] = {
+    rd_c_funcs: dict[int, DoubleVectorFPtr] = {
         0: R0DFPtr(),
         1: R1DFPtr(),
         2: R2DFPtr(),
@@ -496,8 +496,8 @@ class ReciprocalDerivativeFuncFactory:
         9: R9DFPtr(),
         10: R10DFPtr(),
     }
-    rd_py_funcs: dict[int, DoubleMemoryViewFPtr] = dict(
-        enumerate(map(lambda o: PyDoubleMemoryViewFPtr(o.__call__), rd_c_funcs.values())))
+    rd_py_funcs: dict[int, DoubleVectorFPtr] = dict(
+        enumerate(map(lambda o: PyDoubleVectorFPtr(o.__call__), rd_c_funcs.values())))
     def __init__(self):
         raise RuntimeError('Do not initialize this class.')
 
@@ -506,9 +506,9 @@ class ReciprocalDerivativeFuncFactory:
         if (not c_code and d not in cls.rd_py_funcs.keys()) or (c_code and d not in cls.rd_c_funcs):
             if max_d is None:
                 max_d = d
-            sym_x = sympy.Symbol('x')
-            sym_f = sympy.Function('f')
-            sym_fs = sympy.IndexedBase('fs', shape=(max_d + 1,))
+            sym_x = sympy.Symbol(sympy.Dummy('x'))
+            sym_f = sympy.Function(sympy.Dummy('f'))
+            sym_fs = sympy.IndexedBase(sympy.Dummy('fs'), shape=(max_d + 1,))
 
             expr = 1 / sym_f(sym_x)
             sym_rd_f = expr.diff(sym_x, d).simplify()
@@ -517,9 +517,9 @@ class ReciprocalDerivativeFuncFactory:
 
             if not c_code:
                 rd_f = sympy.lambdify(sym_fs, sympy.Array([sym_rd_f]), modules='numpy')
-                cls.rd_py_funcs[d] = PyDoubleMemoryViewFPtr(rd_f)
+                cls.rd_py_funcs[d] = PyDoubleVectorFPtr(rd_f)
             else:
-                rd_f = <DoubleMemoryViewFPtr> CyExprEvaluator(sym_rd_f)
+                rd_f = <DoubleVectorFPtr> CyExprEvaluator(sym_rd_f)
                 cls.rd_c_funcs[d] = rd_f
                 # sympy autowrap does not support array
                 # sym_fs_mat = sympy.MatrixSymbol('fs', d + 1, 1)
@@ -531,6 +531,7 @@ class ReciprocalDerivativeFuncFactory:
         return cls.rd_py_funcs[d] if not c_code else cls.rd_c_funcs[d]
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def householder(f: Callable[[float], float],
                 dfs: Sequence[Callable[[float], float]],
                 x0: float,
@@ -569,7 +570,7 @@ def householder(f: Callable[[float], float],
     if len(dfs) < 2:
         raise ValueError(f'Requires at least second order derivative. Got {len(dfs)}.')
 
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     fs_wrappers = np.asarray([PyDoubleScalarFPtr(f)] + [PyDoubleScalarFPtr(df) for df in dfs])
     if f_x0 is None:
@@ -579,10 +580,10 @@ def householder(f: Callable[[float], float],
     fs_x0 = np.asarray([f_x0] + dfs_x0)
 
     d = len(dfs)
-    r, fs_r, step, precision, error, converged, optimal = householder_kernel[DoubleMemoryViewFPtr](
+    r, fs_r, step, precision, error, converged, optimal = householder_kernel[DoubleVectorFPtr](
         fs_wrappers,
-        <DoubleMemoryViewFPtr>ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
-        <DoubleMemoryViewFPtr>ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
+        <DoubleVectorFPtr>ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
+        <DoubleVectorFPtr>ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
         x0, fs_x0, d, etol, ptol, max_iter)
     return NewtonMethodReturnType(r, float(fs_r[0]), tuple(fs_r[1:]), step,
                                   tuple(_.n_f_calls for _ in fs_wrappers),

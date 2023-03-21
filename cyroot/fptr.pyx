@@ -3,8 +3,8 @@
 __all__ = [
     'DoubleScalarFPtr', 'CyDoubleScalarFPtr', 'PyDoubleScalarFPtr',
     'ComplexScalarFPtr', 'CyComplexScalarFPtr', 'PyComplexScalarFPtr',
-    'DoubleMemoryViewFPtr', 'CyDoubleMemoryViewFPtr', 'PyDoubleMemoryViewFPtr',
-    'ComplexMemoryViewFPtr', 'CyComplexMemoryViewFPtr', 'PyComplexMemoryViewFPtr',
+    'DoubleVectorFPtr', 'CyDoubleVectorFPtr', 'PyDoubleVectorFPtr',
+    'ComplexVectorFPtr', 'CyComplexVectorFPtr', 'PyComplexVectorFPtr',
 ]
 
 cdef class TrackedFPtr:
@@ -27,7 +27,7 @@ cdef class CyDoubleScalarFPtr(DoubleScalarFPtr):
         raise TypeError('This class cannot be instantiated directly.')
 
     @staticmethod
-    cdef CyDoubleScalarFPtr from_f(f_ptr f):
+    cdef CyDoubleScalarFPtr from_f(dsf_ptr f):
         cdef CyDoubleScalarFPtr wrapper = CyDoubleScalarFPtr.__new__(CyDoubleScalarFPtr)
         wrapper.f = f
         return wrapper
@@ -65,7 +65,7 @@ cdef class CyComplexScalarFPtr(ComplexScalarFPtr):
         raise TypeError('This class cannot be instantiated directly.')
 
     @staticmethod
-    cdef CyComplexScalarFPtr from_f(cf_ptr f):
+    cdef CyComplexScalarFPtr from_f(csf_ptr f):
         cdef CyComplexScalarFPtr wrapper = CyComplexScalarFPtr.__new__(CyComplexScalarFPtr)
         wrapper.f = f
         return wrapper
@@ -91,20 +91,20 @@ cdef class PyComplexScalarFPtr(ComplexScalarFPtr):
 # --------------------------------
 # Double MemoryView
 # --------------------------------
-cdef class DoubleMemoryViewFPtr(TrackedFPtr):
+cdef class DoubleVectorFPtr(TrackedFPtr):
     def __call__(self, double[:] x):
         return self.eval(x)
 
     cdef double[:] eval(self, double[:] x) except *:
         raise NotImplementedError
 
-cdef class CyDoubleMemoryViewFPtr(DoubleMemoryViewFPtr):
+cdef class CyDoubleVectorFPtr(DoubleVectorFPtr):
     def __init__(self):
         raise TypeError('This class cannot be instantiated directly.')
 
     @staticmethod
-    cdef CyDoubleMemoryViewFPtr from_f(mvf_ptr f):
-        cdef CyDoubleMemoryViewFPtr wrapper = CyDoubleMemoryViewFPtr.__new__(CyDoubleMemoryViewFPtr)
+    cdef CyDoubleVectorFPtr from_f(dvf_ptr f):
+        cdef CyDoubleVectorFPtr wrapper = CyDoubleVectorFPtr.__new__(CyDoubleVectorFPtr)
         wrapper.f = f
         return wrapper
 
@@ -112,13 +112,13 @@ cdef class CyDoubleMemoryViewFPtr(DoubleMemoryViewFPtr):
         self.n_f_calls += 1
         return self.f(x)
 
-cdef class PyDoubleMemoryViewFPtr(DoubleMemoryViewFPtr):
+cdef class PyDoubleVectorFPtr(DoubleVectorFPtr):
     def __init__(self, f):
         self.f = f
 
     @staticmethod
-    cdef PyDoubleMemoryViewFPtr from_f(object f):
-        cdef PyDoubleMemoryViewFPtr wrapper = PyDoubleMemoryViewFPtr.__new__(PyDoubleMemoryViewFPtr)
+    cdef PyDoubleVectorFPtr from_f(object f):
+        cdef PyDoubleVectorFPtr wrapper = PyDoubleVectorFPtr.__new__(PyDoubleVectorFPtr)
         wrapper.f = f
         return wrapper
 
@@ -129,20 +129,20 @@ cdef class PyDoubleMemoryViewFPtr(DoubleMemoryViewFPtr):
 # --------------------------------
 # Double Complex MemoryView
 # --------------------------------
-cdef class ComplexMemoryViewFPtr(TrackedFPtr):
+cdef class ComplexVectorFPtr(TrackedFPtr):
     def __call__(self, double complex[:] x):
         return self.eval(x)
 
     cdef double complex[:] eval(self, double complex[:] x) except *:
         raise NotImplementedError
 
-cdef class CyComplexMemoryViewFPtr(ComplexMemoryViewFPtr):
+cdef class CyComplexVectorFPtr(ComplexVectorFPtr):
     def __init__(self):
         raise TypeError('This class cannot be instantiated directly.')
 
     @staticmethod
-    cdef CyComplexMemoryViewFPtr from_f(cmvf_ptr f):
-        cdef CyComplexMemoryViewFPtr wrapper = CyComplexMemoryViewFPtr.__new__(CyComplexMemoryViewFPtr)
+    cdef CyComplexVectorFPtr from_f(cvf_ptr f):
+        cdef CyComplexVectorFPtr wrapper = CyComplexVectorFPtr.__new__(CyComplexVectorFPtr)
         wrapper.f = f
         return wrapper
 
@@ -150,13 +150,13 @@ cdef class CyComplexMemoryViewFPtr(ComplexMemoryViewFPtr):
         self.n_f_calls += 1
         return self.f(x)
 
-cdef class PyComplexMemoryViewFPtr(ComplexMemoryViewFPtr):
+cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
     def __init__(self, f):
         self.f = f
 
     @staticmethod
-    cdef PyComplexMemoryViewFPtr from_f(object f):
-        cdef PyComplexMemoryViewFPtr wrapper = PyComplexMemoryViewFPtr.__new__(PyComplexMemoryViewFPtr)
+    cdef PyComplexVectorFPtr from_f(object f):
+        cdef PyComplexVectorFPtr wrapper = PyComplexVectorFPtr.__new__(PyComplexVectorFPtr)
         wrapper.f = f
         return wrapper
 

@@ -1,4 +1,5 @@
-from inspect import getmembers, isbuiltin, isfunction
+from inspect import getmembers
+from .utils.decorators import is_cyroot_api
 
 from . import newton, quasi_newton, bracketing
 
@@ -9,9 +10,7 @@ __all__ = [
 
 SCALAR_ROOT_FINDING_METHODS = {}
 for module in [bracketing, newton, quasi_newton]:
-    funcs = filter(lambda _: not _[0].startswith('_'),
-                   getmembers(module, lambda _: isbuiltin(_) or isfunction(_)))
-    SCALAR_ROOT_FINDING_METHODS.update(funcs)
+    SCALAR_ROOT_FINDING_METHODS.update(getmembers(module, is_cyroot_api))
 
 
 def find_root_scalar(method: str, *args, **kwargs):

@@ -1,14 +1,11 @@
-cy-root
+cy-root ![example workflow](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg) ![PyPI](https://img.shields.io/pypi/v/cy-root) ![GitHub](https://img.shields.io/github/license/inspiros/cy-root)
 ========
-![example workflow](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg)
-![PyPI](https://img.shields.io/pypi/v/cy-root)
-![GitHub](https://img.shields.io/github/license/inspiros/cy-root)
 
 <p align="center">
   <img src="https://www.austintexas.gov/sites/default/files/images/dsd/Community_Trees/tree-root-distruibution-1.jpg" width="300"/>
   <br/>
   <i><font size="1">(Not this root)</font></i>
-  <p>&nbsp</p>
+  <br/>
 </p>
 
 A simple root-finding package written in Cython.
@@ -33,6 +30,13 @@ Fortunately, Sidi's method came to the rescue.
 
 ## Installation
 
+[cy-root](https://pypi.org/project/cy-root/) is available on PyPI.
+
+```bash
+pip install cy-root
+```
+
+Alternatively, you can build from source.
 Make sure you have all the dependencies installed, then clone this repo and run:
 
 ```bash

@@ -22,19 +22,17 @@ from ._check_args import (
     _check_unique_initial_guesses,
     _check_unique_initial_vals,
 )
+from ._defaults import ETOL, PTOL, MAX_ITER
 from ._return_types import QuasiNewtonMethodReturnType
 from .fptr cimport (
-    func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
-    complex_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
+    double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
+    complex_scalar_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
 )
+from .utils.decorators import cyroot_api
 
 cdef extern from '<complex>':
     double complex sqrt(double complex x) nogil
     double abs(double complex) nogil
-
-cdef extern from '_defaults.h':
-    cdef double PHI, ETOL, PTOL
-    cdef unsigned long MAX_ITER
 
 __all__ = [
     'secant',
@@ -50,7 +48,7 @@ __all__ = [
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, bint, bint) secant_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double x0,
         double x1,
         double f_x0,
@@ -69,7 +67,7 @@ cdef (double, double, long, double, double, bint, bint) secant_kernel(
     cdef double x2, df_01
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -89,6 +87,7 @@ cdef (double, double, long, double, double, bint, bint) secant_kernel(
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def secant(f: Callable[[float], float],
            x0: float,
            x1: float,
@@ -119,7 +118,7 @@ def secant(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
     _check_unique_initial_guesses(x0, x1)
 
     f_wrapper = PyDoubleScalarFPtr(f)
@@ -138,7 +137,7 @@ def secant(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, bint, bint) sidi_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double[:] x0s,
         double[:] f_x0s,
         double etol=ETOL,
@@ -160,7 +159,7 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
     cdef NewtonPolynomial poly
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -243,6 +242,7 @@ cdef class NewtonPolynomial:
         return dfs[-1]
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def sidi(f: Callable[[float], float],
          xs: Sequence[float],
          f_xs: Sequence[float] = None,
@@ -274,7 +274,7 @@ def sidi(f: Callable[[float], float],
     if len(xs) < 2:
         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
 
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_xs is None:
@@ -294,7 +294,7 @@ def sidi(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double x0,
         double f_x0,
         bint adsp=True,
@@ -311,7 +311,7 @@ cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
     cdef double x1, x2, x3, denom
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -334,6 +334,7 @@ cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
     return x0, f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def steffensen(f: Callable[[float], float],
                x0: float,
                f_x0: Optional[float] = None,
@@ -363,7 +364,7 @@ def steffensen(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_x0 is None:
@@ -378,7 +379,7 @@ def steffensen(f: Callable[[float], float],
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double x0,
         double x1,
         double x2,
@@ -400,7 +401,7 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
     cdef double x3, df_01, df_02, df_12
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -425,6 +426,7 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def inverse_quadratic_interp(
         f: Callable[[float], float],
         x0: float,
@@ -460,7 +462,7 @@ def inverse_quadratic_interp(
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
     _check_unique_initial_guesses(x0, x1, x2)
 
     f_wrapper = PyDoubleScalarFPtr(f)
@@ -481,7 +483,7 @@ def inverse_quadratic_interp(
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel(
-        func_type f,
+        double_scalar_func_type f,
         double x0,
         double x1,
         double x2,
@@ -503,7 +505,7 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
     cdef double x3, d_01, d_12, df_01, df_02, df_12
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -533,6 +535,7 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def hyperbolic_interp(
         f: Callable[[float], float],
         x0: float,
@@ -568,7 +571,7 @@ def hyperbolic_interp(
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
     _check_unique_initial_guesses(x0, x1, x2)
 
     f_wrapper = PyDoubleScalarFPtr(f)
@@ -589,7 +592,7 @@ def hyperbolic_interp(
 ################################################################################
 # noinspection DuplicatedCode
 cdef (double complex, double complex, long, double, double, bint, bint) muller_kernel(
-        complex_func_type f,
+        complex_scalar_func_type f,
         double complex x0,
         double complex x1,
         double complex x2,
@@ -613,7 +616,7 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
     cdef double complex d_01, d_02, d_12
     converged = True
     while error > etol and precision > ptol:
-        if step > max_iter > 0:
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
@@ -648,6 +651,7 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
 def muller(f: Callable[[complex], complex],
            x0: complex,
            x1: complex,
@@ -682,7 +686,7 @@ def muller(f: Callable[[complex], complex],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
     _check_unique_initial_guesses(x0, x1, x2)
 
     f_wrapper = PyComplexScalarFPtr(f)
