@@ -1,4 +1,4 @@
-cy-root ![example workflow](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg) ![PyPI](https://img.shields.io/pypi/v/cy-root) ![GitHub](https://img.shields.io/github/license/inspiros/cy-root)
+cy-root ![Build wheels](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg) ![PyPI](https://img.shields.io/pypi/v/cy-root) ![GitHub](https://img.shields.io/github/license/inspiros/cy-root)
 ========
 
 <p align="center">

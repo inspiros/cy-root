@@ -29,7 +29,7 @@ class _default(Event):
         self.value = value
 
     def __repr__(self):
-        return f'default({self.value})'
+        return repr(self.value)
 
     @SetterProperty
     def value(self, value):
@@ -66,7 +66,7 @@ class _named_default(_default, metaclass=_NamedDefaultMeta):
         self.name = name
 
     def __repr__(self):
-        return f'default({self.name}={self.value})'
+        return repr(self.value)
 
 
 def default(value: Any) -> Any:
