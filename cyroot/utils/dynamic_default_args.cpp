@@ -1463,7 +1463,7 @@ struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_deco
   PyObject_HEAD
   struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_1_dynamic_default_args *__pyx_outer_scope;
   PyObject *__pyx_v_defaults;
-  __Pyx_memviewslice __pyx_v_format_keys_ids;
+  PyObject *__pyx_v_format_keys_ids;
   int __pyx_v_i;
   PyObject *__pyx_v_names;
   PyObject *__pyx_v_wrapper;
@@ -1471,7 +1471,7 @@ struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_deco
 
 
 /* "cyroot/utils/dynamic_default_args.pyx":347
- *             int[:] format_keys_ids
+ *             list format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -2613,13 +2613,6 @@ static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_nn_
 static CYTHON_INLINE PyObject *__pyx_memview_get_nn___pyx_t_5numpy_int64_t(const char *itemp);
 static CYTHON_INLINE int __pyx_memview_set_nn___pyx_t_5numpy_int64_t(const char *itemp, PyObject *obj);
 
-/* ObjectToMemviewSlice.proto */
-static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_int(PyObject *, int writable_flag);
-
-/* MemviewDtypeToObject.proto */
-static CYTHON_INLINE PyObject *__pyx_memview_get_int(const char *itemp);
-static CYTHON_INLINE int __pyx_memview_set_int(const char *itemp, PyObject *obj);
-
 /* RealImag.proto */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -3005,7 +2998,6 @@ static void __pyx_memoryview__slice_assign_scalar(char *, Py_ssize_t *, Py_ssize
 static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *, PyObject *); /*proto*/
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_int64_t = { "int64_t", NULL, sizeof(__pyx_t_5numpy_int64_t), { 0 }, 0, IS_UNSIGNED(__pyx_t_5numpy_int64_t) ? 'U' : 'I', IS_UNSIGNED(__pyx_t_5numpy_int64_t), 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn_npy_bool = { "npy_bool", NULL, sizeof(npy_bool), { 0 }, 0, IS_UNSIGNED(npy_bool) ? 'U' : 'I', IS_UNSIGNED(npy_bool), 0 };
-static __Pyx_TypeInfo __Pyx_TypeInfo_int = { "int", NULL, sizeof(int), { 0 }, 0, IS_UNSIGNED(int) ? 'U' : 'I', IS_UNSIGNED(int), 0 };
 #define __Pyx_MODULE_NAME "cyroot.utils.dynamic_default_args"
 extern int __pyx_module_is_main_cyroot__utils__dynamic_default_args;
 int __pyx_module_is_main_cyroot__utils__dynamic_default_args = 0;
@@ -9302,7 +9294,7 @@ static PyObject *__pyx_pw_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 }
 
 /* "cyroot/utils/dynamic_default_args.pyx":355
- *                                             if names[i] in format_keys])
+ *                                    if names[i] in format_keys]
  * 
  *                 def update_docstring(*args, **kwargs):             # <<<<<<<<<<<<<<
  *                     wrapper.__doc__ = wrapper.__default_doc__.format_map(format_dict(
@@ -9342,12 +9334,11 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
-  PyObject *__pyx_t_7 = NULL;
-  Py_ssize_t __pyx_t_8;
-  PyObject *(*__pyx_t_9)(PyObject *);
-  int __pyx_t_10;
+  Py_ssize_t __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_t_9;
+  PyObject *__pyx_t_10 = NULL;
   PyObject *__pyx_t_11 = NULL;
-  PyObject *__pyx_t_12 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -9381,87 +9372,58 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
  */
     __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 357, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    if (unlikely(!__pyx_cur_scope->__pyx_v_format_keys_ids.memview)) { __Pyx_RaiseClosureNameError("format_keys_ids"); __PYX_ERR(0, 357, __pyx_L1_error) }
-    __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_cur_scope->__pyx_v_format_keys_ids, 1, (PyObject *(*)(char *)) __pyx_memview_get_int, (int (*)(char *, PyObject *)) __pyx_memview_set_int, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 357, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    if (likely(PyList_CheckExact(__pyx_t_6)) || PyTuple_CheckExact(__pyx_t_6)) {
-      __pyx_t_7 = __pyx_t_6; __Pyx_INCREF(__pyx_t_7); __pyx_t_8 = 0;
-      __pyx_t_9 = NULL;
-    } else {
-      __pyx_t_8 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_9 = Py_TYPE(__pyx_t_7)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 357, __pyx_L1_error)
+    if (unlikely(!__pyx_cur_scope->__pyx_v_format_keys_ids)) { __Pyx_RaiseClosureNameError("format_keys_ids"); __PYX_ERR(0, 357, __pyx_L1_error) }
+    if (unlikely(__pyx_cur_scope->__pyx_v_format_keys_ids == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
+      __PYX_ERR(0, 357, __pyx_L1_error)
     }
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_6 = __pyx_cur_scope->__pyx_v_format_keys_ids; __Pyx_INCREF(__pyx_t_6); __pyx_t_7 = 0;
     for (;;) {
-      if (likely(!__pyx_t_9)) {
-        if (likely(PyList_CheckExact(__pyx_t_7))) {
-          if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_7)) break;
-          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_6 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_6); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 357, __pyx_L1_error)
-          #else
-          __pyx_t_6 = PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 357, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          #endif
-        } else {
-          if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_7)) break;
-          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_6); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 357, __pyx_L1_error)
-          #else
-          __pyx_t_6 = PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 357, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          #endif
-        }
-      } else {
-        __pyx_t_6 = __pyx_t_9(__pyx_t_7);
-        if (unlikely(!__pyx_t_6)) {
-          PyObject* exc_type = PyErr_Occurred();
-          if (exc_type) {
-            if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 357, __pyx_L1_error)
-          }
-          break;
-        }
-        __Pyx_GOTREF(__pyx_t_6);
-      }
-      __pyx_t_10 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_10 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_8genexpr3__pyx_v_i = __pyx_t_10;
+      if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_6)) break;
+      #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+      __pyx_t_8 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_8); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 357, __pyx_L1_error)
+      #else
+      __pyx_t_8 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      #endif
+      __pyx_t_9 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_8genexpr3__pyx_v_i = __pyx_t_9;
       if (unlikely(!__pyx_cur_scope->__pyx_v_names)) { __Pyx_RaiseClosureNameError("names"); __PYX_ERR(0, 357, __pyx_L1_error) }
       if (unlikely(__pyx_cur_scope->__pyx_v_names == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 357, __pyx_L1_error)
       }
-      __pyx_t_6 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_names, __pyx_8genexpr3__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_t_8 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_names, __pyx_8genexpr3__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       if (unlikely(!__pyx_cur_scope->__pyx_v_defaults)) { __Pyx_RaiseClosureNameError("defaults"); __PYX_ERR(0, 357, __pyx_L1_error) }
       if (unlikely(__pyx_cur_scope->__pyx_v_defaults == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 357, __pyx_L1_error)
       }
-      __pyx_t_11 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_defaults, __pyx_8genexpr3__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 357, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_defaults, __pyx_8genexpr3__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_10);
+      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_value); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 357, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
-      __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_value); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+      if (unlikely(PyDict_SetItem(__pyx_t_5, (PyObject*)__pyx_t_8, (PyObject*)__pyx_t_11))) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-      if (unlikely(PyDict_SetItem(__pyx_t_5, (PyObject*)__pyx_t_6, (PyObject*)__pyx_t_12))) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     }
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   } /* exit inner scope */
-  __pyx_t_7 = NULL;
+  __pyx_t_6 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
-    __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_4);
-    if (likely(__pyx_t_7)) {
+    __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_4);
+    if (likely(__pyx_t_6)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-      __Pyx_INCREF(__pyx_t_7);
+      __Pyx_INCREF(__pyx_t_6);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_4, function);
     }
   }
-  __pyx_t_2 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_7, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_2 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_6, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 356, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -9495,7 +9457,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "cyroot/utils/dynamic_default_args.pyx":355
- *                                             if names[i] in format_keys])
+ *                                    if names[i] in format_keys]
  * 
  *                 def update_docstring(*args, **kwargs):             # <<<<<<<<<<<<<<
  *                     wrapper.__doc__ = wrapper.__default_doc__.format_map(format_dict(
@@ -9512,9 +9474,9 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_10);
   __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_XDECREF(__pyx_t_12);
   __Pyx_AddTraceback("cyroot.utils.dynamic_default_args.dynamic_default_args.decorator.update_docstring", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -9525,7 +9487,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 static PyObject *__pyx_gb_6cyroot_5utils_20dynamic_default_args_20dynamic_default_args_9decorator_4generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
 /* "cyroot/utils/dynamic_default_args.pyx":347
- *             int[:] format_keys_ids
+ *             list format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -9697,7 +9659,7 @@ static PyObject *__pyx_gb_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
     if (__pyx_t_8) {
 
       /* "cyroot/utils/dynamic_default_args.pyx":347
- *             int[:] format_keys_ids
+ *             list format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -9718,7 +9680,7 @@ static PyObject *__pyx_gb_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
     }
 
     /* "cyroot/utils/dynamic_default_args.pyx":347
- *             int[:] format_keys_ids
+ *             list format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -9843,8 +9805,6 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   int __pyx_t_34;
   unsigned int __pyx_t_35;
   unsigned int __pyx_t_36;
-  __Pyx_memviewslice __pyx_t_37 = { 0, 0, { 0 }, { 0 }, { 0 } };
-  PyObject *(*__pyx_t_38)(PyObject *);
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -11231,7 +11191,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 
   /* "cyroot/utils/dynamic_default_args.pyx":346
  *             set format_keys
- *             int[:] format_keys_ids
+ *             list format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:             # <<<<<<<<<<<<<<
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)
  *                               if _[1] is not None)
@@ -11253,7 +11213,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   if (__pyx_t_16) {
 
     /* "cyroot/utils/dynamic_default_args.pyx":347
- *             int[:] format_keys_ids
+ *             list format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -11285,8 +11245,8 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
  *             if len(format_keys.intersection(names)):
  *                 # format docstring
  *                 wrapper.__default_doc__ = wrapper.__doc__             # <<<<<<<<<<<<<<
- *                 format_keys_ids = np.array([i for i in range(n_params)
- *                                             if names[i] in format_keys])
+ *                 format_keys_ids = [i for i in range(n_params)
+ *                                    if names[i] in format_keys]
  */
       __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_wrapper, __pyx_n_s_doc); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
@@ -11296,18 +11256,13 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
       /* "cyroot/utils/dynamic_default_args.pyx":352
  *                 # format docstring
  *                 wrapper.__default_doc__ = wrapper.__doc__
- *                 format_keys_ids = np.array([i for i in range(n_params)             # <<<<<<<<<<<<<<
- *                                             if names[i] in format_keys])
+ *                 format_keys_ids = [i for i in range(n_params)             # <<<<<<<<<<<<<<
+ *                                    if names[i] in format_keys]
  * 
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_23, __pyx_n_s_np); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 352, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_23);
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_23, __pyx_n_s_array); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 352, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
       { /* enter inner scope */
-        __pyx_t_23 = PyList_New(0); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 352, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_23);
+        __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 352, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
         __pyx_t_35 = __pyx_v_n_params;
         __pyx_t_36 = __pyx_t_35;
         for (__pyx_t_26 = 0; __pyx_t_26 < __pyx_t_36; __pyx_t_26+=1) {
@@ -11315,76 +11270,50 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 
           /* "cyroot/utils/dynamic_default_args.pyx":353
  *                 wrapper.__default_doc__ = wrapper.__doc__
- *                 format_keys_ids = np.array([i for i in range(n_params)
- *                                             if names[i] in format_keys])             # <<<<<<<<<<<<<<
+ *                 format_keys_ids = [i for i in range(n_params)
+ *                                    if names[i] in format_keys]             # <<<<<<<<<<<<<<
  * 
  *                 def update_docstring(*args, **kwargs):
  */
-          __pyx_t_22 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_names, __pyx_8genexpr2__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 353, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_22);
+          __pyx_t_23 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_names, __pyx_8genexpr2__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 353, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_23);
           if (unlikely(__pyx_v_format_keys == Py_None)) {
             PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
             __PYX_ERR(0, 353, __pyx_L1_error)
           }
-          __pyx_t_16 = (__Pyx_PySet_ContainsTF(__pyx_t_22, __pyx_v_format_keys, Py_EQ)); if (unlikely(__pyx_t_16 < 0)) __PYX_ERR(0, 353, __pyx_L1_error)
-          __Pyx_DECREF(__pyx_t_22); __pyx_t_22 = 0;
+          __pyx_t_16 = (__Pyx_PySet_ContainsTF(__pyx_t_23, __pyx_v_format_keys, Py_EQ)); if (unlikely(__pyx_t_16 < 0)) __PYX_ERR(0, 353, __pyx_L1_error)
+          __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
           __pyx_t_34 = (__pyx_t_16 != 0);
           if (__pyx_t_34) {
 
             /* "cyroot/utils/dynamic_default_args.pyx":352
  *                 # format docstring
  *                 wrapper.__default_doc__ = wrapper.__doc__
- *                 format_keys_ids = np.array([i for i in range(n_params)             # <<<<<<<<<<<<<<
- *                                             if names[i] in format_keys])
+ *                 format_keys_ids = [i for i in range(n_params)             # <<<<<<<<<<<<<<
+ *                                    if names[i] in format_keys]
  * 
  */
-            __pyx_t_22 = __Pyx_PyInt_From_int(__pyx_8genexpr2__pyx_v_i); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 352, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_22);
-            if (unlikely(__Pyx_ListComp_Append(__pyx_t_23, (PyObject*)__pyx_t_22))) __PYX_ERR(0, 352, __pyx_L1_error)
-            __Pyx_DECREF(__pyx_t_22); __pyx_t_22 = 0;
+            __pyx_t_23 = __Pyx_PyInt_From_int(__pyx_8genexpr2__pyx_v_i); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 352, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_23);
+            if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_23))) __PYX_ERR(0, 352, __pyx_L1_error)
+            __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
 
             /* "cyroot/utils/dynamic_default_args.pyx":353
  *                 wrapper.__default_doc__ = wrapper.__doc__
- *                 format_keys_ids = np.array([i for i in range(n_params)
- *                                             if names[i] in format_keys])             # <<<<<<<<<<<<<<
+ *                 format_keys_ids = [i for i in range(n_params)
+ *                                    if names[i] in format_keys]             # <<<<<<<<<<<<<<
  * 
  *                 def update_docstring(*args, **kwargs):
  */
           }
         }
       } /* exit inner scope */
-      __pyx_t_22 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-        __pyx_t_22 = PyMethod_GET_SELF(__pyx_t_2);
-        if (likely(__pyx_t_22)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-          __Pyx_INCREF(__pyx_t_22);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_2, function);
-        }
-      }
-      __pyx_t_1 = (__pyx_t_22) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_22, __pyx_t_23) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_23);
-      __Pyx_XDECREF(__pyx_t_22); __pyx_t_22 = 0;
-      __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 352, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-      /* "cyroot/utils/dynamic_default_args.pyx":352
- *                 # format docstring
- *                 wrapper.__default_doc__ = wrapper.__doc__
- *                 format_keys_ids = np.array([i for i in range(n_params)             # <<<<<<<<<<<<<<
- *                                             if names[i] in format_keys])
- * 
- */
-      __pyx_t_37 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_37.memview)) __PYX_ERR(0, 352, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_cur_scope->__pyx_v_format_keys_ids = __pyx_t_37;
-      __pyx_t_37.memview = NULL;
-      __pyx_t_37.data = NULL;
+      __Pyx_GIVEREF(__pyx_t_1);
+      __pyx_cur_scope->__pyx_v_format_keys_ids = ((PyObject*)__pyx_t_1);
+      __pyx_t_1 = 0;
 
       /* "cyroot/utils/dynamic_default_args.pyx":355
- *                                             if names[i] in format_keys])
+ *                                    if names[i] in format_keys]
  * 
  *                 def update_docstring(*args, **kwargs):             # <<<<<<<<<<<<<<
  *                     wrapper.__doc__ = wrapper.__default_doc__.format_map(format_dict(
@@ -11413,50 +11342,17 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
  *                     defaults[i].connect(update_docstring)
  * 
  */
-      __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_cur_scope->__pyx_v_format_keys_ids, 1, (PyObject *(*)(char *)) __pyx_memview_get_int, (int (*)(char *, PyObject *)) __pyx_memview_set_int, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
-        __pyx_t_2 = __pyx_t_1; __Pyx_INCREF(__pyx_t_2); __pyx_t_11 = 0;
-        __pyx_t_38 = NULL;
-      } else {
-        __pyx_t_11 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 361, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_38 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_38)) __PYX_ERR(0, 361, __pyx_L1_error)
-      }
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_1 = __pyx_cur_scope->__pyx_v_format_keys_ids; __Pyx_INCREF(__pyx_t_1); __pyx_t_11 = 0;
       for (;;) {
-        if (likely(!__pyx_t_38)) {
-          if (likely(PyList_CheckExact(__pyx_t_2))) {
-            if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_2)) break;
-            #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_11); __Pyx_INCREF(__pyx_t_1); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 361, __pyx_L1_error)
-            #else
-            __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_1);
-            #endif
-          } else {
-            if (__pyx_t_11 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
-            #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_11); __Pyx_INCREF(__pyx_t_1); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 361, __pyx_L1_error)
-            #else
-            __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_1);
-            #endif
-          }
-        } else {
-          __pyx_t_1 = __pyx_t_38(__pyx_t_2);
-          if (unlikely(!__pyx_t_1)) {
-            PyObject* exc_type = PyErr_Occurred();
-            if (exc_type) {
-              if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 361, __pyx_L1_error)
-            }
-            break;
-          }
-          __Pyx_GOTREF(__pyx_t_1);
-        }
-        __pyx_t_26 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_26 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 361, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+        __pyx_t_23 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_11); __Pyx_INCREF(__pyx_t_23); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 361, __pyx_L1_error)
+        #else
+        __pyx_t_23 = PySequence_ITEM(__pyx_t_1, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 361, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_23);
+        #endif
+        __pyx_t_26 = __Pyx_PyInt_As_int(__pyx_t_23); if (unlikely((__pyx_t_26 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 361, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
         __pyx_cur_scope->__pyx_v_i = __pyx_t_26;
 
         /* "cyroot/utils/dynamic_default_args.pyx":362
@@ -11466,27 +11362,27 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
  * 
  *         return wrapper
  */
-        __pyx_t_23 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_defaults, __pyx_cur_scope->__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 362, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_23);
-        __pyx_t_22 = __Pyx_PyObject_GetAttrStr(__pyx_t_23, __pyx_n_s_connect); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 362, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_defaults, __pyx_cur_scope->__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 362, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        __pyx_t_22 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_connect); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 362, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_22);
-        __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
-        __pyx_t_23 = NULL;
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+        __pyx_t_2 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_22))) {
-          __pyx_t_23 = PyMethod_GET_SELF(__pyx_t_22);
-          if (likely(__pyx_t_23)) {
+          __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_22);
+          if (likely(__pyx_t_2)) {
             PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_22);
-            __Pyx_INCREF(__pyx_t_23);
+            __Pyx_INCREF(__pyx_t_2);
             __Pyx_INCREF(function);
             __Pyx_DECREF_SET(__pyx_t_22, function);
           }
         }
-        __pyx_t_1 = (__pyx_t_23) ? __Pyx_PyObject_Call2Args(__pyx_t_22, __pyx_t_23, __pyx_v_update_docstring) : __Pyx_PyObject_CallOneArg(__pyx_t_22, __pyx_v_update_docstring);
-        __Pyx_XDECREF(__pyx_t_23); __pyx_t_23 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 362, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
+        __pyx_t_23 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_22, __pyx_t_2, __pyx_v_update_docstring) : __Pyx_PyObject_CallOneArg(__pyx_t_22, __pyx_v_update_docstring);
+        __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+        if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 362, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_23);
         __Pyx_DECREF(__pyx_t_22); __pyx_t_22 = 0;
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
 
         /* "cyroot/utils/dynamic_default_args.pyx":361
  *                 update_docstring()
@@ -11496,7 +11392,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
  * 
  */
       }
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
       /* "cyroot/utils/dynamic_default_args.pyx":349
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)
@@ -11509,7 +11405,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 
     /* "cyroot/utils/dynamic_default_args.pyx":346
  *             set format_keys
- *             int[:] format_keys_ids
+ *             list format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:             # <<<<<<<<<<<<<<
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)
  *                               if _[1] is not None)
@@ -11547,7 +11443,6 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   __Pyx_XDECREF(__pyx_t_22);
   __Pyx_XDECREF(__pyx_t_23);
   __Pyx_XDECREF(__pyx_t_24);
-  __PYX_XDEC_MEMVIEW(&__pyx_t_37, 1);
   { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
@@ -26892,7 +26787,6 @@ static struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct
 static int __pyx_freecount_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator = 0;
 
 static PyObject *__pyx_tp_new_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator *p;
   PyObject *o;
   if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator)))) {
     o = (PyObject*)__pyx_freelist_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator[--__pyx_freecount_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator];
@@ -26903,9 +26797,6 @@ static PyObject *__pyx_tp_new_6cyroot_5utils_20dynamic_default_args___pyx_scope_
     o = (*t->tp_alloc)(t, 0);
     if (unlikely(!o)) return 0;
   }
-  p = ((struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator *)o);
-  p->__pyx_v_format_keys_ids.data = NULL;
-  p->__pyx_v_format_keys_ids.memview = NULL;
   return o;
 }
 
@@ -26914,9 +26805,9 @@ static void __pyx_tp_dealloc_6cyroot_5utils_20dynamic_default_args___pyx_scope_s
   PyObject_GC_UnTrack(o);
   Py_CLEAR(p->__pyx_outer_scope);
   Py_CLEAR(p->__pyx_v_defaults);
+  Py_CLEAR(p->__pyx_v_format_keys_ids);
   Py_CLEAR(p->__pyx_v_names);
   Py_CLEAR(p->__pyx_v_wrapper);
-  __PYX_XDEC_MEMVIEW(&p->__pyx_v_format_keys_ids, 1);
   if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator)))) {
     __pyx_freelist_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator[__pyx_freecount_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator++] = ((struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_decorator *)o);
   } else {
@@ -26932,6 +26823,9 @@ static int __pyx_tp_traverse_6cyroot_5utils_20dynamic_default_args___pyx_scope_s
   }
   if (p->__pyx_v_defaults) {
     e = (*v)(p->__pyx_v_defaults, a); if (e) return e;
+  }
+  if (p->__pyx_v_format_keys_ids) {
+    e = (*v)(p->__pyx_v_format_keys_ids, a); if (e) return e;
   }
   if (p->__pyx_v_names) {
     e = (*v)(p->__pyx_v_names, a); if (e) return e;
@@ -26950,6 +26844,9 @@ static int __pyx_tp_clear_6cyroot_5utils_20dynamic_default_args___pyx_scope_stru
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_defaults);
   p->__pyx_v_defaults = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_format_keys_ids);
+  p->__pyx_v_format_keys_ids = ((PyObject*)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_names);
   p->__pyx_v_names = ((PyObject*)Py_None); Py_INCREF(Py_None);
@@ -28318,7 +28215,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__23);
 
   /* "cyroot/utils/dynamic_default_args.pyx":355
- *                                             if names[i] in format_keys])
+ *                                    if names[i] in format_keys]
  * 
  *                 def update_docstring(*args, **kwargs):             # <<<<<<<<<<<<<<
  *                     wrapper.__doc__ = wrapper.__default_doc__.format_map(format_dict(
@@ -34711,41 +34608,6 @@ static CYTHON_INLINE int __pyx_memview_set_nn___pyx_t_5numpy_int64_t(const char 
     if ((value == ((npy_int64)-1)) && PyErr_Occurred())
         return 0;
     *(__pyx_t_5numpy_int64_t *) itemp = value;
-    return 1;
-}
-
-/* ObjectToMemviewSlice */
-  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_int(PyObject *obj, int writable_flag) {
-    __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
-    __Pyx_BufFmt_StackElem stack[1];
-    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_STRIDED) };
-    int retcode;
-    if (obj == Py_None) {
-        result.memview = (struct __pyx_memoryview_obj *) Py_None;
-        return result;
-    }
-    retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, 0,
-                                                 PyBUF_RECORDS_RO | writable_flag, 1,
-                                                 &__Pyx_TypeInfo_int, stack,
-                                                 &result, obj);
-    if (unlikely(retcode == -1))
-        goto __pyx_fail;
-    return result;
-__pyx_fail:
-    result.memview = NULL;
-    result.data = NULL;
-    return result;
-}
-
-/* MemviewDtypeToObject */
-  static CYTHON_INLINE PyObject *__pyx_memview_get_int(const char *itemp) {
-    return (PyObject *) __Pyx_PyInt_From_int(*(int *) itemp);
-}
-static CYTHON_INLINE int __pyx_memview_set_int(const char *itemp, PyObject *obj) {
-    int value = __Pyx_PyInt_As_int(obj);
-    if ((value == (int)-1) && PyErr_Occurred())
-        return 0;
-    *(int *) itemp = value;
     return 1;
 }
 

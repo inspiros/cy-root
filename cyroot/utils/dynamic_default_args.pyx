@@ -342,15 +342,15 @@ def dynamic_default_args(format_doc: bool = True,
 
         cdef:
             set format_keys
-            int[:] format_keys_ids
+            list format_keys_ids
         if format_doc and wrapper.__doc__ is not None:
             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)
                               if _[1] is not None)
             if len(format_keys.intersection(names)):
                 # format docstring
                 wrapper.__default_doc__ = wrapper.__doc__
-                format_keys_ids = np.array([i for i in range(n_params)
-                                            if names[i] in format_keys])
+                format_keys_ids = [i for i in range(n_params)
+                                   if names[i] in format_keys]
 
                 def update_docstring(*args, **kwargs):
                     wrapper.__doc__ = wrapper.__default_doc__.format_map(format_dict(
