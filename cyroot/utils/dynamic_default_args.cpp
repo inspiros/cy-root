@@ -1463,7 +1463,7 @@ struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_deco
   PyObject_HEAD
   struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_1_dynamic_default_args *__pyx_outer_scope;
   PyObject *__pyx_v_defaults;
-  PyObject *__pyx_v_format_keys_ids;
+  arrayobject *__pyx_v_format_keys_ids;
   int __pyx_v_i;
   PyObject *__pyx_v_names;
   PyObject *__pyx_v_wrapper;
@@ -1471,7 +1471,7 @@ struct __pyx_obj_6cyroot_5utils_20dynamic_default_args___pyx_scope_struct_2_deco
 
 
 /* "cyroot/utils/dynamic_default_args.pyx":347
- *             list format_keys_ids
+ *             array.array format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -9294,7 +9294,7 @@ static PyObject *__pyx_pw_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 }
 
 /* "cyroot/utils/dynamic_default_args.pyx":355
- *                                    if names[i] in format_keys]
+ *                                               if names[i] in format_keys])
  * 
  *                 def update_docstring(*args, **kwargs):             # <<<<<<<<<<<<<<
  *                     wrapper.__doc__ = wrapper.__default_doc__.format_map(format_dict(
@@ -9335,10 +9335,11 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   Py_ssize_t __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
-  int __pyx_t_9;
-  PyObject *__pyx_t_10 = NULL;
+  PyObject *(*__pyx_t_8)(PyObject *);
+  PyObject *__pyx_t_9 = NULL;
+  int __pyx_t_10;
   PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -9373,42 +9374,68 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
     __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 357, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (unlikely(!__pyx_cur_scope->__pyx_v_format_keys_ids)) { __Pyx_RaiseClosureNameError("format_keys_ids"); __PYX_ERR(0, 357, __pyx_L1_error) }
-    if (unlikely(__pyx_cur_scope->__pyx_v_format_keys_ids == Py_None)) {
-      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-      __PYX_ERR(0, 357, __pyx_L1_error)
+    if (likely(PyList_CheckExact(((PyObject *)__pyx_cur_scope->__pyx_v_format_keys_ids))) || PyTuple_CheckExact(((PyObject *)__pyx_cur_scope->__pyx_v_format_keys_ids))) {
+      __pyx_t_6 = ((PyObject *)__pyx_cur_scope->__pyx_v_format_keys_ids); __Pyx_INCREF(__pyx_t_6); __pyx_t_7 = 0;
+      __pyx_t_8 = NULL;
+    } else {
+      __pyx_t_7 = -1; __pyx_t_6 = PyObject_GetIter(((PyObject *)__pyx_cur_scope->__pyx_v_format_keys_ids)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_t_8 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 357, __pyx_L1_error)
     }
-    __pyx_t_6 = __pyx_cur_scope->__pyx_v_format_keys_ids; __Pyx_INCREF(__pyx_t_6); __pyx_t_7 = 0;
     for (;;) {
-      if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_6)) break;
-      #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-      __pyx_t_8 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_8); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 357, __pyx_L1_error)
-      #else
-      __pyx_t_8 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      #endif
-      __pyx_t_9 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_8genexpr3__pyx_v_i = __pyx_t_9;
+      if (likely(!__pyx_t_8)) {
+        if (likely(PyList_CheckExact(__pyx_t_6))) {
+          if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_6)) break;
+          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+          __pyx_t_9 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_9); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 357, __pyx_L1_error)
+          #else
+          __pyx_t_9 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 357, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_9);
+          #endif
+        } else {
+          if (__pyx_t_7 >= PyTuple_GET_SIZE(__pyx_t_6)) break;
+          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+          __pyx_t_9 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_9); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 357, __pyx_L1_error)
+          #else
+          __pyx_t_9 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 357, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_9);
+          #endif
+        }
+      } else {
+        __pyx_t_9 = __pyx_t_8(__pyx_t_6);
+        if (unlikely(!__pyx_t_9)) {
+          PyObject* exc_type = PyErr_Occurred();
+          if (exc_type) {
+            if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+            else __PYX_ERR(0, 357, __pyx_L1_error)
+          }
+          break;
+        }
+        __Pyx_GOTREF(__pyx_t_9);
+      }
+      __pyx_t_10 = __Pyx_PyInt_As_int(__pyx_t_9); if (unlikely((__pyx_t_10 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_8genexpr3__pyx_v_i = __pyx_t_10;
       if (unlikely(!__pyx_cur_scope->__pyx_v_names)) { __Pyx_RaiseClosureNameError("names"); __PYX_ERR(0, 357, __pyx_L1_error) }
       if (unlikely(__pyx_cur_scope->__pyx_v_names == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 357, __pyx_L1_error)
       }
-      __pyx_t_8 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_names, __pyx_8genexpr3__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_9 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_names, __pyx_8genexpr3__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
       if (unlikely(!__pyx_cur_scope->__pyx_v_defaults)) { __Pyx_RaiseClosureNameError("defaults"); __PYX_ERR(0, 357, __pyx_L1_error) }
       if (unlikely(__pyx_cur_scope->__pyx_v_defaults == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 357, __pyx_L1_error)
       }
-      __pyx_t_10 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_defaults, __pyx_8genexpr3__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_value); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 357, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_GetItemInt_List(__pyx_cur_scope->__pyx_v_defaults, __pyx_8genexpr3__pyx_v_i, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 357, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
-      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      if (unlikely(PyDict_SetItem(__pyx_t_5, (PyObject*)__pyx_t_8, (PyObject*)__pyx_t_11))) __PYX_ERR(0, 357, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_value); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_12);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+      if (unlikely(PyDict_SetItem(__pyx_t_5, (PyObject*)__pyx_t_9, (PyObject*)__pyx_t_12))) __PYX_ERR(0, 357, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   } /* exit inner scope */
@@ -9457,7 +9484,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "cyroot/utils/dynamic_default_args.pyx":355
- *                                    if names[i] in format_keys]
+ *                                               if names[i] in format_keys])
  * 
  *                 def update_docstring(*args, **kwargs):             # <<<<<<<<<<<<<<
  *                     wrapper.__doc__ = wrapper.__default_doc__.format_map(format_dict(
@@ -9474,9 +9501,9 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_XDECREF(__pyx_t_12);
   __Pyx_AddTraceback("cyroot.utils.dynamic_default_args.dynamic_default_args.decorator.update_docstring", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -9487,7 +9514,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 static PyObject *__pyx_gb_6cyroot_5utils_20dynamic_default_args_20dynamic_default_args_9decorator_4generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
 /* "cyroot/utils/dynamic_default_args.pyx":347
- *             list format_keys_ids
+ *             array.array format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -9659,7 +9686,7 @@ static PyObject *__pyx_gb_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
     if (__pyx_t_8) {
 
       /* "cyroot/utils/dynamic_default_args.pyx":347
- *             list format_keys_ids
+ *             array.array format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -9680,7 +9707,7 @@ static PyObject *__pyx_gb_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
     }
 
     /* "cyroot/utils/dynamic_default_args.pyx":347
- *             list format_keys_ids
+ *             array.array format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -9805,6 +9832,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   int __pyx_t_34;
   unsigned int __pyx_t_35;
   unsigned int __pyx_t_36;
+  PyObject *(*__pyx_t_37)(PyObject *);
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -11191,7 +11219,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 
   /* "cyroot/utils/dynamic_default_args.pyx":346
  *             set format_keys
- *             list format_keys_ids
+ *             array.array format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:             # <<<<<<<<<<<<<<
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)
  *                               if _[1] is not None)
@@ -11213,7 +11241,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
   if (__pyx_t_16) {
 
     /* "cyroot/utils/dynamic_default_args.pyx":347
- *             list format_keys_ids
+ *             array.array format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)             # <<<<<<<<<<<<<<
  *                               if _[1] is not None)
@@ -11245,8 +11273,8 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
  *             if len(format_keys.intersection(names)):
  *                 # format docstring
  *                 wrapper.__default_doc__ = wrapper.__doc__             # <<<<<<<<<<<<<<
- *                 format_keys_ids = [i for i in range(n_params)
- *                                    if names[i] in format_keys]
+ *                 format_keys_ids = array.array('i', [i for i in range(n_params)
+ *                                               if names[i] in format_keys])
  */
       __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_wrapper, __pyx_n_s_doc); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
@@ -11256,8 +11284,8 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
       /* "cyroot/utils/dynamic_default_args.pyx":352
  *                 # format docstring
  *                 wrapper.__default_doc__ = wrapper.__doc__
- *                 format_keys_ids = [i for i in range(n_params)             # <<<<<<<<<<<<<<
- *                                    if names[i] in format_keys]
+ *                 format_keys_ids = array.array('i', [i for i in range(n_params)             # <<<<<<<<<<<<<<
+ *                                               if names[i] in format_keys])
  * 
  */
       { /* enter inner scope */
@@ -11270,8 +11298,8 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 
           /* "cyroot/utils/dynamic_default_args.pyx":353
  *                 wrapper.__default_doc__ = wrapper.__doc__
- *                 format_keys_ids = [i for i in range(n_params)
- *                                    if names[i] in format_keys]             # <<<<<<<<<<<<<<
+ *                 format_keys_ids = array.array('i', [i for i in range(n_params)
+ *                                               if names[i] in format_keys])             # <<<<<<<<<<<<<<
  * 
  *                 def update_docstring(*args, **kwargs):
  */
@@ -11289,8 +11317,8 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
             /* "cyroot/utils/dynamic_default_args.pyx":352
  *                 # format docstring
  *                 wrapper.__default_doc__ = wrapper.__doc__
- *                 format_keys_ids = [i for i in range(n_params)             # <<<<<<<<<<<<<<
- *                                    if names[i] in format_keys]
+ *                 format_keys_ids = array.array('i', [i for i in range(n_params)             # <<<<<<<<<<<<<<
+ *                                               if names[i] in format_keys])
  * 
  */
             __pyx_t_23 = __Pyx_PyInt_From_int(__pyx_8genexpr2__pyx_v_i); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 352, __pyx_L1_error)
@@ -11300,20 +11328,39 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 
             /* "cyroot/utils/dynamic_default_args.pyx":353
  *                 wrapper.__default_doc__ = wrapper.__doc__
- *                 format_keys_ids = [i for i in range(n_params)
- *                                    if names[i] in format_keys]             # <<<<<<<<<<<<<<
+ *                 format_keys_ids = array.array('i', [i for i in range(n_params)
+ *                                               if names[i] in format_keys])             # <<<<<<<<<<<<<<
  * 
  *                 def update_docstring(*args, **kwargs):
  */
           }
         }
       } /* exit inner scope */
+
+      /* "cyroot/utils/dynamic_default_args.pyx":352
+ *                 # format docstring
+ *                 wrapper.__default_doc__ = wrapper.__doc__
+ *                 format_keys_ids = array.array('i', [i for i in range(n_params)             # <<<<<<<<<<<<<<
+ *                                               if names[i] in format_keys])
+ * 
+ */
+      __pyx_t_23 = PyTuple_New(2); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 352, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_23);
+      __Pyx_INCREF(__pyx_n_u_i);
+      __Pyx_GIVEREF(__pyx_n_u_i);
+      PyTuple_SET_ITEM(__pyx_t_23, 0, __pyx_n_u_i);
       __Pyx_GIVEREF(__pyx_t_1);
-      __pyx_cur_scope->__pyx_v_format_keys_ids = ((PyObject*)__pyx_t_1);
+      PyTuple_SET_ITEM(__pyx_t_23, 1, __pyx_t_1);
+      __pyx_t_1 = 0;
+      __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7cpython_5array_array), __pyx_t_23, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 352, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
+      __Pyx_GIVEREF(__pyx_t_1);
+      __pyx_cur_scope->__pyx_v_format_keys_ids = ((arrayobject *)__pyx_t_1);
       __pyx_t_1 = 0;
 
       /* "cyroot/utils/dynamic_default_args.pyx":355
- *                                    if names[i] in format_keys]
+ *                                               if names[i] in format_keys])
  * 
  *                 def update_docstring(*args, **kwargs):             # <<<<<<<<<<<<<<
  *                     wrapper.__doc__ = wrapper.__default_doc__.format_map(format_dict(
@@ -11342,15 +11389,45 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
  *                     defaults[i].connect(update_docstring)
  * 
  */
-      __pyx_t_1 = __pyx_cur_scope->__pyx_v_format_keys_ids; __Pyx_INCREF(__pyx_t_1); __pyx_t_11 = 0;
+      if (likely(PyList_CheckExact(((PyObject *)__pyx_cur_scope->__pyx_v_format_keys_ids))) || PyTuple_CheckExact(((PyObject *)__pyx_cur_scope->__pyx_v_format_keys_ids))) {
+        __pyx_t_1 = ((PyObject *)__pyx_cur_scope->__pyx_v_format_keys_ids); __Pyx_INCREF(__pyx_t_1); __pyx_t_11 = 0;
+        __pyx_t_37 = NULL;
+      } else {
+        __pyx_t_11 = -1; __pyx_t_1 = PyObject_GetIter(((PyObject *)__pyx_cur_scope->__pyx_v_format_keys_ids)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __pyx_t_37 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_37)) __PYX_ERR(0, 361, __pyx_L1_error)
+      }
       for (;;) {
-        if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_1)) break;
-        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_23 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_11); __Pyx_INCREF(__pyx_t_23); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 361, __pyx_L1_error)
-        #else
-        __pyx_t_23 = PySequence_ITEM(__pyx_t_1, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 361, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_23);
-        #endif
+        if (likely(!__pyx_t_37)) {
+          if (likely(PyList_CheckExact(__pyx_t_1))) {
+            if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_1)) break;
+            #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+            __pyx_t_23 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_11); __Pyx_INCREF(__pyx_t_23); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 361, __pyx_L1_error)
+            #else
+            __pyx_t_23 = PySequence_ITEM(__pyx_t_1, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 361, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_23);
+            #endif
+          } else {
+            if (__pyx_t_11 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
+            #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+            __pyx_t_23 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_11); __Pyx_INCREF(__pyx_t_23); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 361, __pyx_L1_error)
+            #else
+            __pyx_t_23 = PySequence_ITEM(__pyx_t_1, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 361, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_23);
+            #endif
+          }
+        } else {
+          __pyx_t_23 = __pyx_t_37(__pyx_t_1);
+          if (unlikely(!__pyx_t_23)) {
+            PyObject* exc_type = PyErr_Occurred();
+            if (exc_type) {
+              if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+              else __PYX_ERR(0, 361, __pyx_L1_error)
+            }
+            break;
+          }
+          __Pyx_GOTREF(__pyx_t_23);
+        }
         __pyx_t_26 = __Pyx_PyInt_As_int(__pyx_t_23); if (unlikely((__pyx_t_26 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 361, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
         __pyx_cur_scope->__pyx_v_i = __pyx_t_26;
@@ -11405,7 +11482,7 @@ static PyObject *__pyx_pf_6cyroot_5utils_20dynamic_default_args_20dynamic_defaul
 
     /* "cyroot/utils/dynamic_default_args.pyx":346
  *             set format_keys
- *             list format_keys_ids
+ *             array.array format_keys_ids
  *         if format_doc and wrapper.__doc__ is not None:             # <<<<<<<<<<<<<<
  *             format_keys = set(_[1] for _ in string.Formatter().parse(wrapper.__doc__)
  *                               if _[1] is not None)
@@ -26825,7 +26902,7 @@ static int __pyx_tp_traverse_6cyroot_5utils_20dynamic_default_args___pyx_scope_s
     e = (*v)(p->__pyx_v_defaults, a); if (e) return e;
   }
   if (p->__pyx_v_format_keys_ids) {
-    e = (*v)(p->__pyx_v_format_keys_ids, a); if (e) return e;
+    e = (*v)(((PyObject *)p->__pyx_v_format_keys_ids), a); if (e) return e;
   }
   if (p->__pyx_v_names) {
     e = (*v)(p->__pyx_v_names, a); if (e) return e;
@@ -26846,7 +26923,7 @@ static int __pyx_tp_clear_6cyroot_5utils_20dynamic_default_args___pyx_scope_stru
   p->__pyx_v_defaults = ((PyObject*)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_format_keys_ids);
-  p->__pyx_v_format_keys_ids = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_format_keys_ids = ((arrayobject *)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_names);
   p->__pyx_v_names = ((PyObject*)Py_None); Py_INCREF(Py_None);
@@ -28215,7 +28292,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__23);
 
   /* "cyroot/utils/dynamic_default_args.pyx":355
- *                                    if names[i] in format_keys]
+ *                                               if names[i] in format_keys])
  * 
  *                 def update_docstring(*args, **kwargs):             # <<<<<<<<<<<<<<
  *                     wrapper.__doc__ = wrapper.__default_doc__.format_map(format_dict(
