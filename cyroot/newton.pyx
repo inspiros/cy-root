@@ -22,7 +22,8 @@ from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     double_vector_func_type, DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
-from .utils.decorators import cyroot_api
+from .utils.dynamic_default_args import dynamic_default_args, named_default
+from .utils.function_tagging import tag
 
 __all__ = [
     'newton',
@@ -65,15 +66,17 @@ cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
     return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.newton')
+@dynamic_default_args()
+@cython.binding(True)
 def newton(f: Callable[[float], float],
            df: Callable[[float], float],
            x0: float,
            f_x0: Optional[float] = None,
            df_x0: Optional[float] = None,
-           etol: float = ETOL,
-           ptol: float = PTOL,
-           max_iter: int = MAX_ITER) -> NewtonMethodReturnType:
+           etol: float = named_default(ETOL=ETOL),
+           ptol: float = named_default(PTOL=PTOL),
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
     """
     Newton method for root-finding.
 
@@ -84,13 +87,13 @@ def newton(f: Callable[[float], float],
         f_x0: Value evald at initial point.
         df_x0: First order derivative at initial point.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -151,7 +154,9 @@ cdef (double, double, double, double, long, double, double, bint, bint) halley_k
     return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.newton')
+@dynamic_default_args()
+@cython.binding(True)
 def halley(f: Callable[[float], float],
            df: Callable[[float], float],
            d2f: Callable[[float], float],
@@ -159,9 +164,9 @@ def halley(f: Callable[[float], float],
            f_x0: Optional[float] = None,
            df_x0: Optional[float] = None,
            d2f_x0: Optional[float] = None,
-           etol: float = ETOL,
-           ptol: float = PTOL,
-           max_iter: int = MAX_ITER) -> NewtonMethodReturnType:
+           etol: float = named_default(ETOL=ETOL),
+           ptol: float = named_default(PTOL=PTOL),
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
     """
     Halley's method for root-finding.
 
@@ -174,13 +179,13 @@ def halley(f: Callable[[float], float],
         df_x0: First order derivative at initial point.
         d2f_x0: Second order derivative at initial point.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -531,15 +536,17 @@ class ReciprocalDerivativeFuncFactory:
         return cls.rd_py_funcs[d] if not c_code else cls.rd_c_funcs[d]
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.newton')
+@dynamic_default_args()
+@cython.binding(True)
 def householder(f: Callable[[float], float],
                 dfs: Sequence[Callable[[float], float]],
                 x0: float,
                 f_x0: Optional[float] = None,
                 dfs_x0: Optional[Sequence[float]] = None,
-                etol: float = ETOL,
-                ptol: float = PTOL,
-                max_iter: int = MAX_ITER,
+                etol: float = named_default(ETOL=ETOL),
+                ptol: float = named_default(PTOL=PTOL),
+                max_iter: int = named_default(MAX_ITER=MAX_ITER),
                 c_code: bool = True) -> NewtonMethodReturnType:
     """
     Householder's method for root-finding.
@@ -553,13 +560,13 @@ def householder(f: Callable[[float], float],
         dfs_x0: Sequence of derivatives in increasing order at
          initial guess.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
         c_code: Use C implementation of reciprocal derivative
          function or not. Defaults to True.
 

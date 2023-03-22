@@ -1,7 +1,7 @@
 from inspect import getmembers
-from .utils.decorators import is_cyroot_api
 
 from . import newton, quasi_newton, bracketing
+from .utils.function_tagging import has_tag
 
 __all__ = [
     'SCALAR_ROOT_FINDING_METHODS',
@@ -10,7 +10,7 @@ __all__ = [
 
 SCALAR_ROOT_FINDING_METHODS = {}
 for module in [bracketing, newton, quasi_newton]:
-    SCALAR_ROOT_FINDING_METHODS.update(getmembers(module, is_cyroot_api))
+    SCALAR_ROOT_FINDING_METHODS.update(getmembers(module, has_tag))
 
 
 def find_root_scalar(method: str, *args, **kwargs):

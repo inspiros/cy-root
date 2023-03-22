@@ -6,6 +6,7 @@
 
 from typing import Callable, Optional, Union
 
+import cython
 from cpython cimport array
 from cython cimport view
 from libc cimport math
@@ -19,7 +20,8 @@ from ._check_args cimport _check_stop_condition_bracket
 from ._defaults import ETOL, PTOL, MAX_ITER
 from ._return_types import BracketingMethodsReturnType
 from .fptr cimport double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr
-from .utils.decorators import cyroot_api
+from .utils.dynamic_default_args import dynamic_default_args, named_default
+from .utils.function_tagging import tag
 
 __all__ = [
     'bisect',
@@ -94,15 +96,17 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def bisect(f: Callable[[float], float],
            a: float,
            b: float,
            f_a: Optional[float] = None,
            f_b: Optional[float] = None,
-           etol: float = ETOL,
-           ptol: float = PTOL,
-           max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+           etol: float = named_default(ETOL=ETOL),
+           ptol: float = named_default(PTOL=PTOL),
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Bisection method for root-finding.
 
@@ -113,13 +117,13 @@ def bisect(f: Callable[[float], float],
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -185,15 +189,17 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def regula_falsi(f: Callable[[float], float],
                  a: float,
                  b: float,
                  f_a: Optional[float] = None,
                  f_b: Optional[float] = None,
-                 etol: float = ETOL,
-                 ptol: float = PTOL,
-                 max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+                 etol: float = named_default(ETOL=ETOL),
+                 ptol: float = named_default(PTOL=PTOL),
+                 max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Regula Falsi (or False Position) method for root-finding.
 
@@ -204,13 +210,13 @@ def regula_falsi(f: Callable[[float], float],
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -236,15 +242,17 @@ cdef inline double illinois_scale(double f_b, double f_c):
     return 0.5
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def illinois(f: Callable[[float], float],
              a: float,
              b: float,
              f_a: Optional[float] = None,
              f_b: Optional[float] = None,
-             etol: float = ETOL,
-             ptol: float = PTOL,
-             max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+             etol: float = named_default(ETOL=ETOL),
+             ptol: float = named_default(PTOL=PTOL),
+             max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Illinois method for root-finding.
 
@@ -255,13 +263,13 @@ def illinois(f: Callable[[float], float],
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -287,15 +295,17 @@ cdef inline double pegasus_scale(double f_b, double f_c):
     return f_b / (f_b + f_c)
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def pegasus(f: Callable[[float], float],
             a: float,
             b: float,
             f_a: Optional[float] = None,
             f_b: Optional[float] = None,
-            etol: float = ETOL,
-            ptol: float = PTOL,
-            max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+            etol: float = named_default(ETOL=ETOL),
+            ptol: float = named_default(PTOL=PTOL),
+            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Pegasus method for root-finding.
 
@@ -306,13 +316,13 @@ def pegasus(f: Callable[[float], float],
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -341,15 +351,17 @@ cdef inline double anderson_bjorck_scale(double f_b, double f_c):
     return m
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def anderson_bjorck(f: Callable[[float], float],
                     a: float,
                     b: float,
                     f_a: Optional[float] = None,
                     f_b: Optional[float] = None,
-                    etol: float = ETOL,
-                    ptol: float = PTOL,
-                    max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+                    etol: float = named_default(ETOL=ETOL),
+                    ptol: float = named_default(PTOL=PTOL),
+                    max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Anderson–Björck method for root-finding.
 
@@ -360,13 +372,13 @@ def anderson_bjorck(f: Callable[[float], float],
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -438,15 +450,17 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def dekker(f: Callable[[float], float],
            a: float,
            b: float,
            f_a: Optional[float] = None,
            f_b: Optional[float] = None,
-           etol: float = ETOL,
-           ptol: float = PTOL,
-           max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+           etol: float = named_default(ETOL=ETOL),
+           ptol: float = named_default(PTOL=PTOL),
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Dekker's method for root-finding.
 
@@ -457,13 +471,13 @@ def dekker(f: Callable[[float], float],
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -574,7 +588,9 @@ BRENT_INTERP_METHODS: dict[str, int] = {
 }
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def brent(f: Callable[[float], float],
           a: float,
           b: float,
@@ -582,9 +598,9 @@ def brent(f: Callable[[float], float],
           f_b: Optional[float] = None,
           interp_method: Union[str, int] = 'hyperbolic',
           sigma: float = 1e-5,
-          etol: float = ETOL,
-          ptol: float = PTOL,
-          max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+          etol: float = named_default(ETOL=ETOL),
+          ptol: float = named_default(PTOL=PTOL),
+          max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Brent's method for root-finding.
 
@@ -599,13 +615,13 @@ def brent(f: Callable[[float], float],
          Interpolation. Defaults to 1.
         sigma: Numerical tolerance to decide which method to use.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -698,16 +714,18 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def chandrupatla(f: Callable[[float], float],
                  a: float,
                  b: float,
                  f_a: Optional[float] = None,
                  f_b: Optional[float] = None,
                  sigma: float = PTOL,
-                 etol: float = ETOL,
-                 ptol: float = PTOL,
-                 max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+                 etol: float = named_default(ETOL=ETOL),
+                 ptol: float = named_default(PTOL=PTOL),
+                 max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Chandrupatla's method for root-finding.
 
@@ -717,15 +735,15 @@ def chandrupatla(f: Callable[[float], float],
         b: Upper bound of the interval to be searched.
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
-        sigma: Tolerance for extra stop condition. Defaults to {PTOL}.
+        sigma: Tolerance for extra stop condition. Defaults to {ptol}.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -796,15 +814,17 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def ridders(f: Callable[[float], float],
             a: float,
             b: float,
             f_a: Optional[float] = None,
             f_b: Optional[float] = None,
-            etol: float = ETOL,
-            ptol: float = PTOL,
-            max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+            etol: float = named_default(ETOL=ETOL),
+            ptol: float = named_default(PTOL=PTOL),
+            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Ridders method for root-finding.
 
@@ -815,13 +835,13 @@ def ridders(f: Callable[[float], float],
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1039,7 +1059,9 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def toms748(f: Callable[[float], float],
             a: float,
             b: float,
@@ -1047,9 +1069,9 @@ def toms748(f: Callable[[float], float],
             f_b: Optional[float] = None,
             k: int = 2,
             mu: float = 0.5,
-            etol: float = ETOL,
-            ptol: float = PTOL,
-            max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+            etol: float = named_default(ETOL=ETOL),
+            ptol: float = named_default(PTOL=PTOL),
+            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     TOMS Algorithm 748.
 
@@ -1062,13 +1084,13 @@ def toms748(f: Callable[[float], float],
         k: Defaults to 2.
         mu: Defaults to 0.5.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1165,15 +1187,17 @@ cdef (double, double, long, double, double, double, double, double, double, bint
     return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def wu(f: Callable[[float], float],
        a: float,
        b: float,
        f_a: Optional[float] = None,
        f_b: Optional[float] = None,
-       etol: float = ETOL,
-       ptol: float = PTOL,
-       max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+       etol: float = named_default(ETOL=ETOL),
+       ptol: float = named_default(PTOL=PTOL),
+       max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Wu's (Muller-Bisection) method for root-finding presented in the paper
     "Improved Muller method and Bisection method with global and asymptotic
@@ -1186,13 +1210,13 @@ def wu(f: Callable[[float], float],
         f_a: Value evaluated at lower bound.
         f_b: Value evaluated at upper bound.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1283,7 +1307,9 @@ cdef (double, double, long, double, double, double, double, double, double, bint
 cdef double PHI = (1 + math.sqrt(5)) / 2
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
 def itp(f: Callable[[float], float],
         a: float,
         b: float,
@@ -1292,9 +1318,9 @@ def itp(f: Callable[[float], float],
         k1: Optional[float] = None,
         k2: Optional[float] = 2,
         n0: Optional[int] = 1,
-        etol: float = ETOL,
-        ptol: float = PTOL,
-        max_iter: int = MAX_ITER) -> BracketingMethodsReturnType:
+        etol: float = named_default(ETOL=ETOL),
+        ptol: float = named_default(PTOL=PTOL),
+        max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Interpolate, Truncate, and Project (ITP) method for root-finding presented in the paper
     "An Enhancement of the Bisection Method Average Performance Preserving Minmax convergedity".
@@ -1311,13 +1337,13 @@ def itp(f: Callable[[float], float],
             Defaults to 2.
         n0: Tuning parameter. Defaults to 1.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.

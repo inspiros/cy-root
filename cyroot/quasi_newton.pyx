@@ -6,6 +6,7 @@
 
 from typing import Callable, Sequence, Optional
 
+import cython
 import numpy as np
 cimport numpy as np
 from cython cimport view
@@ -28,7 +29,8 @@ from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     complex_scalar_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
 )
-from .utils.decorators import cyroot_api
+from .utils.dynamic_default_args import dynamic_default_args, named_default
+from .utils.function_tagging import tag
 
 cdef extern from '<complex>':
     double complex sqrt(double complex x) nogil
@@ -87,15 +89,17 @@ cdef (double, double, long, double, double, bint, bint) secant_kernel(
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.quasi_newton')
+@dynamic_default_args()
+@cython.binding(True)
 def secant(f: Callable[[float], float],
            x0: float,
            x1: float,
            f_x0: Optional[float] = None,
            f_x1: Optional[float] = None,
-           etol: float = ETOL,
-           ptol: float = PTOL,
-           max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
+           etol: float = named_default(ETOL=ETOL),
+           ptol: float = named_default(PTOL=PTOL),
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Secant method for root-finding.
 
@@ -106,13 +110,13 @@ def secant(f: Callable[[float], float],
         f_x0: Value evaluated at first initial point.
         f_x1: Value evaluated at second initial point.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -242,13 +246,15 @@ cdef class NewtonPolynomial:
         return dfs[-1]
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.quasi_newton')
+@dynamic_default_args()
+@cython.binding(True)
 def sidi(f: Callable[[float], float],
          xs: Sequence[float],
          f_xs: Sequence[float] = None,
-         etol: float = ETOL,
-         ptol: float = PTOL,
-         max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
+         etol: float = named_default(ETOL=ETOL),
+         ptol: float = named_default(PTOL=PTOL),
+         max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Sidi's Generalized Secant method for root-finding.
 
@@ -257,13 +263,13 @@ def sidi(f: Callable[[float], float],
         xs: List of initial points.
         f_xs: Values evaluated at initial points.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -334,14 +340,16 @@ cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
     return x0, f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.quasi_newton')
+@dynamic_default_args()
+@cython.binding(True)
 def steffensen(f: Callable[[float], float],
                x0: float,
                f_x0: Optional[float] = None,
                adsp: bool = True,
-               etol: float = ETOL,
-               ptol: float = PTOL,
-               max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
+               etol: float = named_default(ETOL=ETOL),
+               ptol: float = named_default(PTOL=PTOL),
+               max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Steffensen's method for root-finding.
 
@@ -352,13 +360,13 @@ def steffensen(f: Callable[[float], float],
         adsp: Use Aitken's delta-squared process or not.
          Defaults to True.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -426,7 +434,9 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.quasi_newton')
+@dynamic_default_args()
+@cython.binding(True)
 def inverse_quadratic_interp(
         f: Callable[[float], float],
         x0: float,
@@ -435,9 +445,9 @@ def inverse_quadratic_interp(
         f_x0: Optional[float] = None,
         f_x1: Optional[float] = None,
         f_x2: Optional[float] = None,
-        etol: float = ETOL,
-        ptol: float = PTOL,
-        max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
+        etol: float = named_default(ETOL=ETOL),
+        ptol: float = named_default(PTOL=PTOL),
+        max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Inverse Quadratic Interpolation method for root-finding.
 
@@ -450,13 +460,13 @@ def inverse_quadratic_interp(
         f_x1: Value evaluated at second initial point.
         f_x2: Value evaluated at third initial point.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -535,7 +545,9 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.quasi_newton')
+@dynamic_default_args()
+@cython.binding(True)
 def hyperbolic_interp(
         f: Callable[[float], float],
         x0: float,
@@ -544,9 +556,9 @@ def hyperbolic_interp(
         f_x0: Optional[float] = None,
         f_x1: Optional[float] = None,
         f_x2: Optional[float] = None,
-        etol: float = ETOL,
-        ptol: float = PTOL,
-        max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
+        etol: float = named_default(ETOL=ETOL),
+        ptol: float = named_default(PTOL=PTOL),
+        max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Hyperbolic Interpolation method for root-finding.
 
@@ -559,13 +571,13 @@ def hyperbolic_interp(
         f_x1: Value evaluated at second initial point.
         f_x2: Value evaluated at third initial point.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -651,7 +663,9 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@cyroot_api(docstring_kwargs=dict(ETOL=ETOL, PTOL=PTOL, MAX_ITER=MAX_ITER))
+@tag('cyroot.quasi_newton')
+@dynamic_default_args()
+@cython.binding(True)
 def muller(f: Callable[[complex], complex],
            x0: complex,
            x1: complex,
@@ -659,9 +673,9 @@ def muller(f: Callable[[complex], complex],
            f_x0: Optional[complex] = None,
            f_x1: Optional[complex] = None,
            f_x2: Optional[complex] = None,
-           etol: float = ETOL,
-           ptol: float = PTOL,
-           max_iter: int = MAX_ITER) -> QuasiNewtonMethodReturnType:
+           etol: float = named_default(ETOL=ETOL),
+           ptol: float = named_default(PTOL=PTOL),
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Muller's method for root-finding.
 
@@ -674,13 +688,13 @@ def muller(f: Callable[[complex], complex],
         f_x1: Value evaluated at second initial point.
         f_x2: Value evaluated at third initial point.
         etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {ETOL}.
+         of the root. Defaults to {etol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {PTOL}.
+         methods) after each iteration. Defaults to {ptol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
-         met. Defaults to {MAX_ITER}.
+         met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
