@@ -20,7 +20,3 @@ def find_root_vector(method: str, *args, **kwargs):
         solution: The solution represented as a ``RootResults`` object.
     """
     raise NotImplementedError('Vector root is not supported yet.')
-    if method not in VECTOR_ROOT_FINDING_METHODS.keys():
-        raise ValueError(f'No implementation for {str(method)} found. '
-                         f'Supported methods are: {", ".join(VECTOR_ROOT_FINDING_METHODS.keys())}')
-    return VECTOR_ROOT_FINDING_METHODS[method](*args, **kwargs)
