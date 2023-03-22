@@ -10,7 +10,6 @@ cy-root ![example workflow](https://github.com/inspiros/cy-root/actions/workflow
 
 A simple root-finding package written in Cython.
 Many of the implemented methods can't be found in common Python libraries.
-Not a serious one so please only use these codes as learning materials.
 
 **Context:**
 
@@ -30,7 +29,7 @@ Fortunately, Sidi's method came to the rescue.
 
 ## Installation
 
-[cy-root](https://pypi.org/project/cy-root/) is available on PyPI.
+[cy-root](https://pypi.org/project/cy-root/) is now available on PyPI.
 
 ```bash
 pip install cy-root
@@ -53,7 +52,8 @@ pip uninstall cy-root
 
 ## Supported algorithms
 
-**Note:** For more information about the listed algorithms, please use Google until I update the references.
+**Note:**
+For more information about the listed algorithms, please use Google until I update the references.
 
 ### Scalar root:
 
@@ -88,7 +88,7 @@ Not yet.
 
 ## Usage
 
-**Some examples:**
+#### Some examples:
 
 Use `find_root_scalar` and pass method name as first argument.
 
@@ -104,7 +104,10 @@ Output:
 
 > ```RootResults(root=24.73863375370596, f_root=-1.1368683772161603e-13, iters=8, f_calls=11, a=24.73863375370596, b=24.73863375370596, f_a=-1.1368683772161603e-13, f_b=-1.1368683772161603e-13, precision=6.353294779160024e-08, error=1.1368683772161603e-13, converged=True, optimal=True)```
 
-Alternatively, import the function directly. You can also see the full input arguments of by using `help()` on them.
+A dictionary containing names and pointers to all the (scalar) methods are stored in `SCALAR_ROOT_FINDING_METHODS`.
+
+Alternatively, import the function directly. You can also see the full list of input arguments of by using `help()` on
+them.
 
 ```python
 from cyroot import muller
@@ -120,34 +123,53 @@ Output:
 
 > ```RootResults(root=(0.34356074972251255+1.4553466902253551j), f_root=(-8.881784197001252e-16-1.7763568394002505e-15j), iters=43, f_calls=43, precision=3.177770418807502e-08, error=1.9860273225978185e-15, converged=True, optimal=True)```
 
+#### Output format:
+
 The returned `result` is a namedtuple whose elements depend on the type of the method:
 
 - Common:
-    - `root`: the solved root
-    - `f_root`: value evaluated at root
-    - `iters`: number of iterations
-    - `f_calls`: number of function calls
+    - `root`: the solved root.
+    - `f_root`: value evaluated at root.
+    - `iters`: number of iterations.
+    - `f_calls`: number of function calls.
     - `precision`: width of final bracket (for bracketing methods) or absolute difference of root with the last
-      estimation
-    - `error`: absolute value of f_root
-    - `converged`: `True` if the stopping criterion is met, `False` if the procedure terminated early.
-    - `optimal`: `True` only if the error tolerance is satisfied.
+      estimation.
+    - `error`: absolute value of `f_root`.
+    - `converged`: `True` if the stopping criterion is met, `False` if the procedure terminated prematurely.
+    - `optimal`: `True` only if the error tolerance is satisfied `abs(f_root) <= etol`.
 - Exclusive to bracketing methods:
-    - `a`: final lower bound
-    - `b`: final upper bound
-    - `f_a`: value evaluated at final lower bound
-    - `f_b`: value evaluated at final upper bound
+    - `a`: final lower bound.
+    - `b`: final upper bound.
+    - `f_a`: value evaluated at final lower bound.
+    - `f_b`: value evaluated at final upper bound.
 - Exclusive to Newton-like methods:
-    - `df_root`: derivative or tuple of derivatives (of increasing orders) evaluated at root
+    - `df_root`: derivative or tuple of derivatives (of increasing orders) evaluated at root.
 
 **Note**: `converged` might sometimes be `True` even if the solution is not optimal, which means the routine
 stopped because the precision tolerance is satisfied.
 
-For more examples, please refer to the `examples` folder.
+**Configurations:**
+
+The default values for stop condition arguments (i.e. `etol`, `ptol`, `max_iter`) are globally set to the values defined
+in [`_defaults.py`](cyroot/_defaults.py). They can be modified dynamically, docstrings of all functions using them
+will also be updated automatically.
+
+```python
+import cyroot
+
+cyroot.set_default_stop_condition_args(
+    etol=1e-7,
+    ptol=0,  # disable precision tolerance
+    max_iter=100)
+
+help(cyroot.illinois)  # run to check the updated docstring
+```
+
+For more examples, please check the [`examples`](examples) folder.
 
 ## License
 
-The code is released under the MIT license. See `LICENSE.txt` for details.
+The code is released under the MIT license. See [`LICENSE.txt`](LICENSE.txt) for details.
 
 ## References
 

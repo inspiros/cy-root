@@ -511,7 +511,7 @@ class ReciprocalDerivativeFuncFactory:
         if (not c_code and d not in cls.rd_py_funcs.keys()) or (c_code and d not in cls.rd_c_funcs):
             if max_d is None:
                 max_d = d
-            sym_x = sympy.Symbol(sympy.Dummy('x'))
+            sym_x = sympy.Dummy('x')
             sym_f = sympy.Function(sympy.Dummy('f'))
             sym_fs = sympy.IndexedBase(sympy.Dummy('fs'), shape=(max_d + 1,))
 
