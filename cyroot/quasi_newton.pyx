@@ -10,6 +10,7 @@ import cython
 import numpy as np
 cimport numpy as np
 from cython cimport view
+from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
 
 from .utils.array_ops cimport fabs, fabs_width, cabs_width, argsort, permute
@@ -29,7 +30,6 @@ from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     complex_scalar_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
 )
-from .utils.dynamic_default_args import dynamic_default_args, named_default
 from .utils.function_tagging import tag
 
 cdef extern from '<complex>':

@@ -1,5 +1,6 @@
+from dynamic_default_args import dynamic_default_args, named_default
+
 from ._check_args import _check_stop_condition_args
-from .utils.dynamic_default_args import dynamic_default_args, named_default
 
 __all__ = [
     'set_default_stop_condition_args',

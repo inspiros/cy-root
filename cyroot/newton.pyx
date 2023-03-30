@@ -12,6 +12,7 @@ cimport numpy as np
 import sympy
 import sympy.utilities.autowrap
 from cython cimport view
+from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
 
 from ._check_args cimport _check_stop_condition_initial_guess
@@ -22,7 +23,6 @@ from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     double_vector_func_type, DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
-from .utils.dynamic_default_args import dynamic_default_args, named_default
 from .utils.function_tagging import tag
 
 __all__ = [

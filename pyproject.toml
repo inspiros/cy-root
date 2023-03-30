@@ -3,6 +3,7 @@ requires = [
     "setuptools>=42",
     "wheel",
     "Cython",
+    "dynamic_default_args",
     "numpy",
     "sympy",
 ]
