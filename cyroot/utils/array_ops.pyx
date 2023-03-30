@@ -41,6 +41,15 @@ cdef inline double cabs_width(double complex[:] xs) nogil:
     argmin_i, argmax_i = argminmax(xs_abs)
     return xs_abs[argmax_i] - xs_abs[argmin_i]
 
+cdef inline bint allclose(double[:] a, double[:] b, double rtol=1e-5, double atol=1e-8) nogil:
+    cdef long i
+    for i in range(a.shape[0]):
+        if ((math.isinf(a[i]) and not math.isinf(b[i])) or
+                (math.isinf(b[i]) and not math.isinf(a[i])) or
+                math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):
+            return False
+    return True
+
 cdef inline double[:] permute(double[:] xs, long[:] inds) nogil:
     cdef long i
     cdef double[:] res

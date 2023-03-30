@@ -17,12 +17,13 @@ from libc cimport math
 
 from ._check_args cimport _check_stop_condition_initial_guess
 from ._check_args import _check_stop_condition_args
-from ._defaults import ETOL, PTOL, MAX_ITER
+from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import NewtonMethodReturnType
 from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     double_vector_func_type, DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
+from .utils.scalar_ops cimport isclose
 from .utils.function_tagging import tag
 
 __all__ = [
@@ -42,18 +43,20 @@ cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
         double f_x0,
         double df_x0,
         double etol=ETOL,
+        double ertol=ERTOL,
         double ptol=PTOL,
+        double prtol=PRTOL,
         long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess(x0, f_x0, etol, ptol,
+    if _check_stop_condition_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
                             &precision, &error, &converged, &optimal):
         return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
     cdef double x1
     converged = True
-    while error > etol and precision > ptol:
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or df_x0 == 0:
             converged = False
         step += 1
@@ -62,7 +65,7 @@ cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
         x0, f_x0, df_x0 = x1, f(x1), df(x1)
         error = math.fabs(f_x0)
 
-    optimal = error <= etol
+    optimal = isclose(0, error, ertol, etol)
     return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -75,7 +78,9 @@ def newton(f: Callable[[float], float],
            f_x0: Optional[float] = None,
            df_x0: Optional[float] = None,
            etol: float = named_default(ETOL=ETOL),
+           ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
+           prtol: float = named_default(PRTOL=PRTOL),
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
     """
     Newton method for root-finding.
@@ -88,9 +93,11 @@ def newton(f: Callable[[float], float],
         df_x0: First order derivative at initial point.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {etol}.
+        ertol: Relative error tolerance. Defaults to {ertol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {ptol}.
+        prtol: Relative precision tolerance. Defaults to {prtol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
          met. Defaults to {max_iter}.
@@ -99,7 +106,7 @@ def newton(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     df_wrapper = PyDoubleScalarFPtr(df)
@@ -109,7 +116,7 @@ def newton(f: Callable[[float], float],
         df_x0 = df_wrapper(x0)
 
     res = newton_kernel[DoubleScalarFPtr](
-        f_wrapper, df_wrapper, x0, f_x0, df_x0, etol, ptol, max_iter)
+        f_wrapper, df_wrapper, x0, f_x0, df_x0, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls, df_wrapper.n_f_calls))
 
 ################################################################################
@@ -125,18 +132,20 @@ cdef (double, double, double, double, long, double, double, bint, bint) halley_k
         double df_x0,
         double d2f_x0,
         double etol=ETOL,
+        double ertol=ERTOL,
         double ptol=PTOL,
+        double prtol=PRTOL,
         long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess(x0, f_x0, etol, ptol,
+    if _check_stop_condition_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
                             &precision, &error, &converged, &optimal):
         return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
 
     cdef double x1, denom
     converged = True
-    while error > etol and precision > ptol:
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -150,7 +159,7 @@ cdef (double, double, double, double, long, double, double, bint, bint) halley_k
         x0, f_x0, df_x0, d2f_x0 = x1, f(x1), df(x1), d2f(x1)
         error = math.fabs(f_x0)
 
-    optimal = error <= etol
+    optimal = isclose(0, error, ertol, etol)
     return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -165,7 +174,9 @@ def halley(f: Callable[[float], float],
            df_x0: Optional[float] = None,
            d2f_x0: Optional[float] = None,
            etol: float = named_default(ETOL=ETOL),
+           ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
+           prtol: float = named_default(PRTOL=PRTOL),
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
     """
     Halley's method for root-finding.
@@ -180,9 +191,11 @@ def halley(f: Callable[[float], float],
         d2f_x0: Second order derivative at initial point.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {etol}.
+        ertol: Relative error tolerance. Defaults to {ertol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {ptol}.
+        prtol: Relative precision tolerance. Defaults to {prtol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
          met. Defaults to {max_iter}.
@@ -191,7 +204,7 @@ def halley(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     df_wrapper = PyDoubleScalarFPtr(df)
@@ -204,7 +217,7 @@ def halley(f: Callable[[float], float],
         d2f_x0 = d2f_wrapper(x0)
 
     r, f_r, df_r, d2f_r, step, precision, error, converged, optimal = halley_kernel[DoubleScalarFPtr](
-        f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, etol, ptol, max_iter)
+        f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType(r, f_r, (df_r, d2f_r), step,
                                   (f_wrapper.n_f_calls, df_wrapper.n_f_calls, d2f_wrapper.n_f_calls),
                                   precision, error, converged, optimal)
@@ -222,12 +235,14 @@ cdef householder_kernel(
         double[:] fs_x0,
         unsigned int d,
         double etol=ETOL,
+        double ertol=ERTOL,
         double ptol=PTOL,
+        double prtol=PRTOL,
         long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess(x0_, fs_x0[0], etol, ptol,
+    if _check_stop_condition_initial_guess(x0_, fs_x0[0], etol, ertol, ptol, prtol,
                             &precision, &error, &converged, &optimal):
         return x0_, fs_x0, step, precision, error, converged, optimal
 
@@ -241,7 +256,7 @@ cdef householder_kernel(
     cdef unsigned int i
     cdef double[:] nom_x0 = nom_f(fs_x0[:-1]), denom_x0 = denom_f(fs_x0)
     converged = True
-    while error > etol and precision > ptol:
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or denom_x0[0] == 0:
             converged = False
             break
@@ -256,7 +271,7 @@ cdef householder_kernel(
         error = math.fabs(fs_x0[0])
         nom_x0, denom_x0 = nom_f(fs_x0[:-1]), denom_f(fs_x0)
 
-    optimal = error <= etol
+    optimal = isclose(0, error, ertol, etol)
     return x0[0], fs_x0, step, precision, error, converged, optimal
 
 #########################
@@ -545,7 +560,9 @@ def householder(f: Callable[[float], float],
                 f_x0: Optional[float] = None,
                 dfs_x0: Optional[Sequence[float]] = None,
                 etol: float = named_default(ETOL=ETOL),
+                ertol: float = named_default(ERTOL=ERTOL),
                 ptol: float = named_default(PTOL=PTOL),
+                prtol: float = named_default(PRTOL=PRTOL),
                 max_iter: int = named_default(MAX_ITER=MAX_ITER),
                 c_code: bool = True) -> NewtonMethodReturnType:
     """
@@ -561,9 +578,11 @@ def householder(f: Callable[[float], float],
          initial guess.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {etol}.
+        ertol: Relative error tolerance. Defaults to {ertol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {ptol}.
+        prtol: Relative precision tolerance. Defaults to {prtol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
          met. Defaults to {max_iter}.
@@ -577,7 +596,7 @@ def householder(f: Callable[[float], float],
     if len(dfs) < 2:
         raise ValueError(f'Requires at least second order derivative. Got {len(dfs)}.')
 
-    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     fs_wrappers = np.asarray([PyDoubleScalarFPtr(f)] + [PyDoubleScalarFPtr(df) for df in dfs])
     if f_x0 is None:
@@ -591,7 +610,7 @@ def householder(f: Callable[[float], float],
         fs_wrappers,
         <DoubleVectorFPtr>ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
         <DoubleVectorFPtr>ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
-        x0, fs_x0, d, etol, ptol, max_iter)
+        x0, fs_x0, d, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType(r, float(fs_r[0]), tuple(fs_r[1:]), step,
                                   tuple(_.n_f_calls for _ in fs_wrappers),
                                   precision, error, converged, optimal)

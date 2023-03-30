@@ -24,12 +24,13 @@ from ._check_args import (
     _check_unique_initial_guesses,
     _check_unique_initial_vals,
 )
-from ._defaults import ETOL, PTOL, MAX_ITER
+from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import QuasiNewtonMethodReturnType
 from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     complex_scalar_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
 )
+from .utils.scalar_ops cimport isclose
 from .utils.function_tagging import tag
 
 cdef extern from '<complex>':
@@ -56,19 +57,21 @@ cdef (double, double, long, double, double, bint, bint) secant_kernel(
         double f_x0,
         double f_x1,
         double etol=ETOL,
+        double ertol=ERTOL,
         double ptol=PTOL,
+        double prtol=PRTOL,
         long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     cdef double[2] xs = [x0, x1], f_xs = [f_x0, f_x1]
-    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ptol,
+    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double x2, df_01
     converged = True
-    while error > etol and precision > ptol:
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -85,7 +88,7 @@ cdef (double, double, long, double, double, bint, bint) secant_kernel(
         error = math.fabs(f_x1)
 
     r, f_r = x1, f_x1
-    optimal = error <= etol
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -98,7 +101,9 @@ def secant(f: Callable[[float], float],
            f_x0: Optional[float] = None,
            f_x1: Optional[float] = None,
            etol: float = named_default(ETOL=ETOL),
+           ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
+           prtol: float = named_default(PRTOL=PRTOL),
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Secant method for root-finding.
@@ -111,9 +116,11 @@ def secant(f: Callable[[float], float],
         f_x1: Value evaluated at second initial point.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {etol}.
+        ertol: Relative error tolerance. Defaults to {ertol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {ptol}.
+        prtol: Relative precision tolerance. Defaults to {prtol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
          met. Defaults to {max_iter}.
@@ -122,7 +129,7 @@ def secant(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_unique_initial_guesses(x0, x1)
 
     f_wrapper = PyDoubleScalarFPtr(f)
@@ -133,7 +140,7 @@ def secant(f: Callable[[float], float],
     _check_unique_initial_vals(f_x0, f_x1)
 
     res = secant_kernel[DoubleScalarFPtr](
-        f_wrapper, x0, x1, f_x0, f_x1, etol, ptol, max_iter)
+        f_wrapper, x0, x1, f_x0, f_x1, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -145,7 +152,9 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
         double[:] x0s,
         double[:] f_x0s,
         double etol=ETOL,
+        double ertol=ERTOL,
         double ptol=PTOL,
+        double prtol=PRTOL,
         long max_iter=MAX_ITER):
     # sort by absolute value of f
     cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
@@ -155,14 +164,14 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ptol,
+    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double xn, f_xn, dp_xn
     cdef NewtonPolynomial poly
     converged = True
-    while error > etol and precision > ptol:
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -185,7 +194,7 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
         error = math.fabs(f_xn)
 
     r, f_r = xn, f_xn
-    optimal = error <= etol
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 cdef class NewtonPolynomial:
@@ -253,7 +262,9 @@ def sidi(f: Callable[[float], float],
          xs: Sequence[float],
          f_xs: Sequence[float] = None,
          etol: float = named_default(ETOL=ETOL),
+         ertol: float = named_default(ERTOL=ERTOL),
          ptol: float = named_default(PTOL=PTOL),
+         prtol: float = named_default(PRTOL=PRTOL),
          max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Sidi's Generalized Secant method for root-finding.
@@ -264,9 +275,11 @@ def sidi(f: Callable[[float], float],
         f_xs: Values evaluated at initial points.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {etol}.
+        ertol: Relative error tolerance. Defaults to {ertol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {ptol}.
+        prtol: Relative precision tolerance. Defaults to {prtol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
          met. Defaults to {max_iter}.
@@ -280,7 +293,7 @@ def sidi(f: Callable[[float], float],
     if len(xs) < 2:
         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
 
-    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_xs is None:
@@ -292,7 +305,7 @@ def sidi(f: Callable[[float], float],
 
     xs = np.array(xs, dtype=np.float64)
     f_xs = np.array(f_xs, dtype=np.float64)
-    res = sidi_kernel[DoubleScalarFPtr](f_wrapper, xs, f_xs, etol, ptol, max_iter)
+    res = sidi_kernel[DoubleScalarFPtr](f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -305,18 +318,20 @@ cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
         double f_x0,
         bint adsp=True,
         double etol=ETOL,
+        double ertol=ERTOL,
         double ptol=PTOL,
+        double prtol=PRTOL,
         long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess(x0, f_x0, etol, ptol,
+    if _check_stop_condition_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
                             &precision, &error, &converged, &optimal):
         return x0, f_x0, step, precision, error, converged, optimal
 
     cdef double x1, x2, x3, denom
     converged = True
-    while error > etol and precision > ptol:
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -336,7 +351,7 @@ cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
         x0, f_x0 = x3, f(x3)
         error = math.fabs(f_x0)
 
-    optimal = error <= etol
+    optimal = isclose(0, error, ertol, etol)
     return x0, f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -348,7 +363,9 @@ def steffensen(f: Callable[[float], float],
                f_x0: Optional[float] = None,
                adsp: bool = True,
                etol: float = named_default(ETOL=ETOL),
+               ertol: float = named_default(ERTOL=ERTOL),
                ptol: float = named_default(PTOL=PTOL),
+               prtol: float = named_default(PRTOL=PRTOL),
                max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Steffensen's method for root-finding.
@@ -361,9 +378,11 @@ def steffensen(f: Callable[[float], float],
          Defaults to True.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {etol}.
+        ertol: Relative error tolerance. Defaults to {ertol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {ptol}.
+        prtol: Relative precision tolerance. Defaults to {prtol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
          met. Defaults to {max_iter}.
@@ -372,14 +391,14 @@ def steffensen(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_x0 is None:
         f_x0 = f_wrapper(x0)
 
     res = steffensen_kernel[DoubleScalarFPtr](
-        f_wrapper, x0, f_x0, adsp, etol, ptol, max_iter)
+        f_wrapper, x0, f_x0, adsp, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -395,20 +414,22 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
         double f_x1,
         double f_x2,
         double etol=ETOL,
+        double ertol=ERTOL,
         double ptol=PTOL,
+        double prtol=PRTOL,
         long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
     cdef double[:] xs = x_arr, f_xs = f_arr
-    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ptol,
+    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double x3, df_01, df_02, df_12
     converged = True
-    while error > etol and precision > ptol:
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -430,7 +451,7 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
         error = math.fabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = error <= etol
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -446,7 +467,9 @@ def inverse_quadratic_interp(
         f_x1: Optional[float] = None,
         f_x2: Optional[float] = None,
         etol: float = named_default(ETOL=ETOL),
+        ertol: float = named_default(ERTOL=ERTOL),
         ptol: float = named_default(PTOL=PTOL),
+        prtol: float = named_default(PRTOL=PRTOL),
         max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Inverse Quadratic Interpolation method for root-finding.
@@ -461,9 +484,11 @@ def inverse_quadratic_interp(
         f_x2: Value evaluated at third initial point.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {etol}.
+        ertol: Relative error tolerance. Defaults to {ertol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {ptol}.
+        prtol: Relative precision tolerance. Defaults to {prtol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
          met. Defaults to {max_iter}.
@@ -472,7 +497,7 @@ def inverse_quadratic_interp(
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_unique_initial_guesses(x0, x1, x2)
 
     f_wrapper = PyDoubleScalarFPtr(f)
@@ -485,7 +510,7 @@ def inverse_quadratic_interp(
     _check_unique_initial_vals(f_x0, f_x1, f_x2)
 
     res = inverse_quadratic_interp_kernel[DoubleScalarFPtr](
-        f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
+        f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -501,20 +526,22 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
         double f_x1,
         double f_x2,
         double etol=ETOL,
+        double ertol=ERTOL,
         double ptol=PTOL,
+        double prtol=PRTOL,
         long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
     cdef double[:] xs = x_arr, f_xs = f_arr
-    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ptol,
+    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double x3, d_01, d_12, df_01, df_02, df_12
     converged = True
-    while error > etol and precision > ptol:
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -541,7 +568,7 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
         error = math.fabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = error <= etol
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -557,7 +584,9 @@ def hyperbolic_interp(
         f_x1: Optional[float] = None,
         f_x2: Optional[float] = None,
         etol: float = named_default(ETOL=ETOL),
+        ertol: float = named_default(ERTOL=ERTOL),
         ptol: float = named_default(PTOL=PTOL),
+        prtol: float = named_default(PRTOL=PRTOL),
         max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Hyperbolic Interpolation method for root-finding.
@@ -572,9 +601,11 @@ def hyperbolic_interp(
         f_x2: Value evaluated at third initial point.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {etol}.
+        ertol: Relative error tolerance. Defaults to {ertol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {ptol}.
+        prtol: Relative precision tolerance. Defaults to {prtol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
          met. Defaults to {max_iter}.
@@ -583,7 +614,7 @@ def hyperbolic_interp(
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_unique_initial_guesses(x0, x1, x2)
 
     f_wrapper = PyDoubleScalarFPtr(f)
@@ -596,7 +627,7 @@ def hyperbolic_interp(
     _check_unique_initial_vals(f_x0, f_x1, f_x2)
 
     res = hyperbolic_interp_kernel[DoubleScalarFPtr](
-        f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
+        f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -612,7 +643,9 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
         double complex f_x1,
         double complex f_x2,
         double etol=ETOL,
+        double ertol=ERTOL,
         double ptol=PTOL,
+        double prtol=PRTOL,
         long max_iter=MAX_ITER):
     cdef long step = 0
     cdef double complex r, f_r
@@ -620,14 +653,14 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
     cdef bint converged, optimal
     cdef double complex[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
     cdef double complex[:] xs = x_arr, f_xs = f_arr
-    if _check_stop_condition_initial_guesses_complex(xs, f_xs, etol, ptol,
+    if _check_stop_condition_initial_guesses_complex(xs, f_xs, etol, ertol, ptol, prtol,
                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double complex div_diff_01, div_diff_12, div_diff_02, a, b, s_delta, d1, d2, d, x3
     cdef double complex d_01, d_02, d_12
     converged = True
-    while error > etol and precision > ptol:
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -659,7 +692,7 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
         error = abs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = error <= etol
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -674,7 +707,9 @@ def muller(f: Callable[[complex], complex],
            f_x1: Optional[complex] = None,
            f_x2: Optional[complex] = None,
            etol: float = named_default(ETOL=ETOL),
+           ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
+           prtol: float = named_default(PRTOL=PRTOL),
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Muller's method for root-finding.
@@ -689,9 +724,11 @@ def muller(f: Callable[[complex], complex],
         f_x2: Value evaluated at third initial point.
         etol: Error tolerance, indicating the desired precision
          of the root. Defaults to {etol}.
+        ertol: Relative error tolerance. Defaults to {ertol}.
         ptol: Precision tolerance, indicating the minimum change
          of root approximations or width of brackets (in bracketing
          methods) after each iteration. Defaults to {ptol}.
+        prtol: Relative precision tolerance. Defaults to {prtol}.
         max_iter: Maximum number of iterations. If set to 0, the
          procedure will run indefinitely until stopping condition is
          met. Defaults to {max_iter}.
@@ -700,7 +737,7 @@ def muller(f: Callable[[complex], complex],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ptol, max_iter = _check_stop_condition_args(etol, ptol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_unique_initial_guesses(x0, x1, x2)
 
     f_wrapper = PyComplexScalarFPtr(f)
@@ -713,5 +750,5 @@ def muller(f: Callable[[complex], complex],
     _check_unique_initial_vals(f_x0, f_x1, f_x2)
 
     res = muller_kernel[ComplexScalarFPtr](
-        f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ptol, max_iter)
+        f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)

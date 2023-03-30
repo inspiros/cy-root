@@ -10,6 +10,7 @@ import math
 from libc cimport math
 
 from .utils.array_ops cimport fabs, cabs, argmin
+from .utils.scalar_ops cimport isclose
 
 cdef extern from '<complex>':
     double abs(double complex) nogil
@@ -25,27 +26,34 @@ __all__ = [
 ################################################################################
 # Python
 ################################################################################
+def _check_stop_condition_arg(tol: float, arg_name='tol'):
+    if tol is None:
+        return 0
+    elif math.isnan(tol) or not math.isfinite(tol) or tol < 0:
+        raise ValueError(f'{arg_name} must be non-negative finite number. Got {tol}.')
+    return tol
+
+
 def _check_stop_condition_args(etol: float,
+                               ertol: float,
                                ptol: float,
+                               prtol: float,
                                max_iter: int):
-    """Check etol, ptol, and max_iter."""
-    if etol is None:
-        etol = 0
-    elif math.isnan(etol) or not math.isfinite(etol) or etol < 0:
-        raise ValueError(f'etol must be non-negative number. Got {etol}.')
-    if ptol is None:
-        ptol = 0
-    elif ptol is None or math.isnan(ptol) or not math.isfinite(ptol) or ptol < 0:
-        raise ValueError(f'ptol must be non-negative number. Got {ptol}.')
+    """Check tolerances and max_iter."""
+    etol = _check_stop_condition_arg(etol, 'etol')
+    ertol = _check_stop_condition_arg(ertol, 'ertol')
+    ptol = _check_stop_condition_arg(ptol, 'ptol')
+    prtol = _check_stop_condition_arg(prtol, 'prtol')
+
     if max_iter is None or max_iter < 0 or math.isinf(max_iter) or math.isnan(max_iter):
         max_iter = 0
     elif not isinstance(max_iter, int):
         raise ValueError(f'max_iter must be an integer. Got {max_iter}.')
 
-    if etol == ptol == max_iter == 0:
-        raise ValueError(f'Disabling both etol, ptol, and max_iter will '
+    if etol == ertol == ptol == prtol == max_iter == 0:
+        raise ValueError(f'Disabling both tolerances and max_iter will '
                          f'likely cause the algorithm to run indefinitely.')
-    return etol, ptol, max_iter
+    return etol, ertol, ptol, prtol, max_iter
 
 def _check_bracket(a: float, b: float, check_nan=True):
     if check_nan and (math.isnan(a) or math.isnan(b)):
@@ -79,7 +87,9 @@ cdef inline bint _check_stop_condition_bracket(
         double f_a,
         double f_b,
         double etol,
+        double ertol,
         double ptol,
+        double prtol,
         double* r,
         double* f_r,
         double* precision,
@@ -91,9 +101,9 @@ cdef inline bint _check_stop_condition_bracket(
     cdef double error_a = math.fabs(f_a), error_b = math.fabs(f_b)
     error[0] = math.fmin(error_a, error_b)
     r[0], f_r[0] = (a, f_a) if error_a < error_b else (b, f_b)
-    optimal[0] = error[0] <= etol
-    converged[0] = precision[0] <= ptol or optimal[0]
-    return optimal[0] or precision[0] <= ptol
+    optimal[0] = isclose(0, error[0], ertol, etol)
+    converged[0] = isclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or isclose(0, precision[0], prtol, ptol)
 
 ################################################################################
 # Quasi-Newton methods with multiple guesses
@@ -106,7 +116,9 @@ cdef inline bint _check_stop_condition_initial_guess(
         double x0,
         double f_x0,
         double etol,
+        double ertol,
         double ptol,
+        double prtol,
         double* precision,
         double* error,
         bint* converged,
@@ -114,7 +126,7 @@ cdef inline bint _check_stop_condition_initial_guess(
     """Check if stop condition is already met."""
     precision[0] = math.INFINITY
     error[0] = math.fabs(f_x0)
-    optimal[0] = error[0] <= etol
+    optimal[0] = isclose(0, error[0], ertol, etol)
     converged[0] = optimal[0]
     return optimal[0]
 
@@ -123,7 +135,9 @@ cdef inline bint _check_stop_condition_initial_guesses(
         double[:] xs,
         double[:] f_xs,
         double etol,
+        double ertol,
         double ptol,
+        double prtol,
         double* r,
         double* f_r,
         double* precision,
@@ -138,7 +152,7 @@ cdef inline bint _check_stop_condition_initial_guesses(
         r[0], f_r[0] = xs[0], f_xs[0]
         precision[0] = math.INFINITY
         error[0] = math.fabs(f_xs[0])
-        optimal[0] = error[0] <= etol
+        optimal[0] = isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
     cdef double[:] errors = fabs(f_xs)
@@ -146,9 +160,9 @@ cdef inline bint _check_stop_condition_initial_guesses(
     r[0], f_r[0] = xs[best_i], f_xs[best_i]
     error[0] = errors[best_i]
     precision[0] = precision_func(xs) if precision_func is not NULL else math.INFINITY
-    optimal[0] = error[0] <= etol
-    converged[0] = precision[0] <= ptol or optimal[0]
-    return optimal[0] or precision[0] <= ptol
+    optimal[0] = isclose(0, error[0], ertol, etol)
+    converged[0] = isclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or isclose(0, precision[0], prtol, ptol)
 
 # --------------------------------
 # Double Complex
@@ -158,7 +172,9 @@ cdef inline bint _check_stop_condition_initial_guess_complex(
         double complex x0,
         double complex f_x0,
         double etol,
+        double ertol,
         double ptol,
+        double prtol,
         double* precision,
         double* error,
         bint* converged,
@@ -166,7 +182,7 @@ cdef inline bint _check_stop_condition_initial_guess_complex(
     """Check if stop condition is already met."""
     precision[0] = math.INFINITY
     error[0] = abs(f_x0)
-    optimal[0] = error[0] <= etol
+    optimal[0] = isclose(0, error[0], ertol, etol)
     converged[0] = optimal[0]
     return optimal[0]
 
@@ -175,7 +191,9 @@ cdef inline bint _check_stop_condition_initial_guesses_complex(
         double complex[:] xs,
         double complex[:] f_xs,
         double etol,
+        double ertol,
         double ptol,
+        double prtol,
         double complex* r,
         double complex* f_r,
         double* precision,
@@ -190,7 +208,7 @@ cdef inline bint _check_stop_condition_initial_guesses_complex(
         r[0], f_r[0] = xs[0], f_xs[0]
         precision[0] = math.INFINITY
         error[0] = abs(f_xs[0])
-        optimal[0] = error[0] <= etol
+        optimal[0] = isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
     cdef double[:] errors = cabs(f_xs)
@@ -198,6 +216,6 @@ cdef inline bint _check_stop_condition_initial_guesses_complex(
     r[0], f_r[0] = xs[best_i], f_xs[best_i]
     error[0] = errors[best_i]
     precision[0] = precision_func(xs) if precision_func is not NULL else math.INFINITY
-    optimal[0] = error[0] <= etol
-    converged[0] = precision[0] <= ptol or optimal[0]
-    return optimal[0] or precision[0] <= ptol
+    optimal[0] = isclose(0, error[0], ertol, etol)
+    converged[0] = isclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or isclose(0, precision[0], prtol, ptol)

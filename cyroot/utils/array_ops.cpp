@@ -1143,12 +1143,26 @@ struct __pyx_array_obj;
 struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
 struct __pyx_memoryviewslice_obj;
+struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose;
 struct __pyx_ctuple_long__and_long;
 typedef struct __pyx_ctuple_long__and_long __pyx_ctuple_long__and_long;
 struct __pyx_opt_args_6cyroot_5utils_9array_ops_argsort;
 struct __pyx_t_6cyroot_5utils_9array_ops__IndexedDouble;
 
-/* "cyroot/utils/array_ops.pxd":8
+/* "cyroot/utils/array_ops.pxd":5
+ * cdef double fabs_width(double[:] xs) nogil
+ * cdef double cabs_width(double complex[:] xs) nogil
+ * cdef bint allclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef double[:] permute(double[:] xs, long[:] inds) nogil
+ * cdef long argmin(double[:] xs) nogil
+ */
+struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose {
+  int __pyx_n;
+  double rtol;
+  double atol;
+};
+
+/* "cyroot/utils/array_ops.pxd":9
  * cdef long argmin(double[:] xs) nogil
  * cdef long argmax(double[:] xs) nogil
  * cdef (long, long) argminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
@@ -1160,7 +1174,7 @@ struct __pyx_ctuple_long__and_long {
   long f1;
 };
 
-/* "cyroot/utils/array_ops.pxd":10
+/* "cyroot/utils/array_ops.pxd":11
  * cdef (long, long) argminmax(double[:] xs) nogil
  * cdef void sort(double[::1] xs) nogil
  * cdef long[:] argsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<
@@ -1170,7 +1184,7 @@ struct __pyx_opt_args_6cyroot_5utils_9array_ops_argsort {
   int reverse;
 };
 
-/* "cyroot/utils/array_ops.pyx":92
+/* "cyroot/utils/array_ops.pyx":101
  *     cpp_sort(&xs[0], (&xs[0]) + xs.shape[0])
  * 
  * cdef struct _IndexedDouble:             # <<<<<<<<<<<<<<
@@ -2017,11 +2031,11 @@ __pyx_memoryview_copy_new_contig(const __Pyx_memviewslice *from_mvs,
 /* CIntFromPy.proto */
 static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
 
-/* CIntFromPy.proto */
-static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
-
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
+/* CIntFromPy.proto */
+static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
@@ -2897,7 +2911,7 @@ static CYTHON_INLINE double __pyx_f_6cyroot_5utils_9array_ops_cabs_width(__Pyx_m
  *     argmin_i, argmax_i = argminmax(xs_abs)
  *     return xs_abs[argmax_i] - xs_abs[argmin_i]             # <<<<<<<<<<<<<<
  * 
- * cdef inline double[:] permute(double[:] xs, long[:] inds) nogil:
+ * cdef inline bint allclose(double[:] a, double[:] b, double rtol=1e-5, double atol=1e-8) nogil:
  */
   __pyx_t_5 = __pyx_v_argmax_i;
   if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_xs_abs.shape[0];
@@ -2927,6 +2941,165 @@ static CYTHON_INLINE double __pyx_f_6cyroot_5utils_9array_ops_cabs_width(__Pyx_m
 /* "cyroot/utils/array_ops.pyx":44
  *     return xs_abs[argmax_i] - xs_abs[argmin_i]
  * 
+ * cdef inline bint allclose(double[:] a, double[:] b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
+ *     cdef long i
+ *     for i in range(a.shape[0]):
+ */
+
+static CYTHON_INLINE int __pyx_f_6cyroot_5utils_9array_ops_allclose(__Pyx_memviewslice __pyx_v_a, __Pyx_memviewslice __pyx_v_b, struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose *__pyx_optional_args) {
+  double __pyx_v_rtol = ((double)1e-5);
+  double __pyx_v_atol = ((double)1e-8);
+  long __pyx_v_i;
+  int __pyx_r;
+  Py_ssize_t __pyx_t_1;
+  Py_ssize_t __pyx_t_2;
+  long __pyx_t_3;
+  int __pyx_t_4;
+  Py_ssize_t __pyx_t_5;
+  int __pyx_t_6;
+  Py_ssize_t __pyx_t_7;
+  Py_ssize_t __pyx_t_8;
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_rtol = __pyx_optional_args->rtol;
+      if (__pyx_optional_args->__pyx_n > 1) {
+        __pyx_v_atol = __pyx_optional_args->atol;
+      }
+    }
+  }
+
+  /* "cyroot/utils/array_ops.pyx":46
+ * cdef inline bint allclose(double[:] a, double[:] b, double rtol=1e-5, double atol=1e-8) nogil:
+ *     cdef long i
+ *     for i in range(a.shape[0]):             # <<<<<<<<<<<<<<
+ *         if ((math.isinf(a[i]) and not math.isinf(b[i])) or
+ *                 (math.isinf(b[i]) and not math.isinf(a[i])) or
+ */
+  __pyx_t_1 = (__pyx_v_a.shape[0]);
+  __pyx_t_2 = __pyx_t_1;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "cyroot/utils/array_ops.pyx":47
+ *     cdef long i
+ *     for i in range(a.shape[0]):
+ *         if ((math.isinf(a[i]) and not math.isinf(b[i])) or             # <<<<<<<<<<<<<<
+ *                 (math.isinf(b[i]) and not math.isinf(a[i])) or
+ *                 math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):
+ */
+    __pyx_t_5 = __pyx_v_i;
+    if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_a.shape[0];
+    __pyx_t_6 = (isinf((*((double *) ( /* dim=0 */ (__pyx_v_a.data + __pyx_t_5 * __pyx_v_a.strides[0]) )))) != 0);
+    if (!__pyx_t_6) {
+      goto __pyx_L7_next_or;
+    } else {
+    }
+    __pyx_t_5 = __pyx_v_i;
+    if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_b.shape[0];
+    __pyx_t_6 = ((!(isinf((*((double *) ( /* dim=0 */ (__pyx_v_b.data + __pyx_t_5 * __pyx_v_b.strides[0]) )))) != 0)) != 0);
+    if (!__pyx_t_6) {
+    } else {
+      __pyx_t_4 = __pyx_t_6;
+      goto __pyx_L6_bool_binop_done;
+    }
+    __pyx_L7_next_or:;
+
+    /* "cyroot/utils/array_ops.pyx":48
+ *     for i in range(a.shape[0]):
+ *         if ((math.isinf(a[i]) and not math.isinf(b[i])) or
+ *                 (math.isinf(b[i]) and not math.isinf(a[i])) or             # <<<<<<<<<<<<<<
+ *                 math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):
+ *             return False
+ */
+    __pyx_t_5 = __pyx_v_i;
+    if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_b.shape[0];
+    __pyx_t_6 = (isinf((*((double *) ( /* dim=0 */ (__pyx_v_b.data + __pyx_t_5 * __pyx_v_b.strides[0]) )))) != 0);
+    if (!__pyx_t_6) {
+      goto __pyx_L9_next_or;
+    } else {
+    }
+    __pyx_t_5 = __pyx_v_i;
+    if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_a.shape[0];
+    __pyx_t_6 = ((!(isinf((*((double *) ( /* dim=0 */ (__pyx_v_a.data + __pyx_t_5 * __pyx_v_a.strides[0]) )))) != 0)) != 0);
+    if (!__pyx_t_6) {
+    } else {
+      __pyx_t_4 = __pyx_t_6;
+      goto __pyx_L6_bool_binop_done;
+    }
+    __pyx_L9_next_or:;
+
+    /* "cyroot/utils/array_ops.pyx":49
+ *         if ((math.isinf(a[i]) and not math.isinf(b[i])) or
+ *                 (math.isinf(b[i]) and not math.isinf(a[i])) or
+ *                 math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):             # <<<<<<<<<<<<<<
+ *             return False
+ *     return True
+ */
+    __pyx_t_5 = __pyx_v_i;
+    if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_a.shape[0];
+    __pyx_t_7 = __pyx_v_i;
+    if (__pyx_t_7 < 0) __pyx_t_7 += __pyx_v_b.shape[0];
+    __pyx_t_8 = __pyx_v_i;
+    if (__pyx_t_8 < 0) __pyx_t_8 += __pyx_v_b.shape[0];
+    __pyx_t_6 = ((fabs(((*((double *) ( /* dim=0 */ (__pyx_v_a.data + __pyx_t_5 * __pyx_v_a.strides[0]) ))) - (*((double *) ( /* dim=0 */ (__pyx_v_b.data + __pyx_t_7 * __pyx_v_b.strides[0]) ))))) > (__pyx_v_atol + (__pyx_v_rtol * fabs((*((double *) ( /* dim=0 */ (__pyx_v_b.data + __pyx_t_8 * __pyx_v_b.strides[0]) ))))))) != 0);
+    __pyx_t_4 = __pyx_t_6;
+    __pyx_L6_bool_binop_done:;
+
+    /* "cyroot/utils/array_ops.pyx":47
+ *     cdef long i
+ *     for i in range(a.shape[0]):
+ *         if ((math.isinf(a[i]) and not math.isinf(b[i])) or             # <<<<<<<<<<<<<<
+ *                 (math.isinf(b[i]) and not math.isinf(a[i])) or
+ *                 math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):
+ */
+    if (__pyx_t_4) {
+
+      /* "cyroot/utils/array_ops.pyx":50
+ *                 (math.isinf(b[i]) and not math.isinf(a[i])) or
+ *                 math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):
+ *             return False             # <<<<<<<<<<<<<<
+ *     return True
+ * 
+ */
+      __pyx_r = 0;
+      goto __pyx_L0;
+
+      /* "cyroot/utils/array_ops.pyx":47
+ *     cdef long i
+ *     for i in range(a.shape[0]):
+ *         if ((math.isinf(a[i]) and not math.isinf(b[i])) or             # <<<<<<<<<<<<<<
+ *                 (math.isinf(b[i]) and not math.isinf(a[i])) or
+ *                 math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):
+ */
+    }
+  }
+
+  /* "cyroot/utils/array_ops.pyx":51
+ *                 math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):
+ *             return False
+ *     return True             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline double[:] permute(double[:] xs, long[:] inds) nogil:
+ */
+  __pyx_r = 1;
+  goto __pyx_L0;
+
+  /* "cyroot/utils/array_ops.pyx":44
+ *     return xs_abs[argmax_i] - xs_abs[argmin_i]
+ * 
+ * cdef inline bint allclose(double[:] a, double[:] b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
+ *     cdef long i
+ *     for i in range(a.shape[0]):
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "cyroot/utils/array_ops.pyx":53
+ *     return True
+ * 
  * cdef inline double[:] permute(double[:] xs, long[:] inds) nogil:             # <<<<<<<<<<<<<<
  *     cdef long i
  *     cdef double[:] res
@@ -2955,7 +3128,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_permut
   #endif
   __Pyx_RefNannySetupContext("permute", 1);
 
-  /* "cyroot/utils/array_ops.pyx":45
+  /* "cyroot/utils/array_ops.pyx":54
  * 
  * cdef inline double[:] permute(double[:] xs, long[:] inds) nogil:
  *     cdef long i             # <<<<<<<<<<<<<<
@@ -2964,7 +3137,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_permut
  */
   /*try:*/ {
 
-    /* "cyroot/utils/array_ops.pyx":47
+    /* "cyroot/utils/array_ops.pyx":56
  *     cdef long i
  *     cdef double[:] res
  *     with gil:             # <<<<<<<<<<<<<<
@@ -2977,40 +3150,40 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_permut
         #endif
         /*try:*/ {
 
-          /* "cyroot/utils/array_ops.pyx":48
+          /* "cyroot/utils/array_ops.pyx":57
  *     cdef double[:] res
  *     with gil:
  *         res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double), format='d')             # <<<<<<<<<<<<<<
  *     for i in range(xs.shape[0]):
  *         res[i] = xs[inds[i]]
  */
-          __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L7_error)
+          __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_2 = PyInt_FromSsize_t((__pyx_v_xs.shape[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L7_error)
+          __pyx_t_2 = PyInt_FromSsize_t((__pyx_v_xs.shape[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_2);
-          __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L7_error)
+          __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_GIVEREF(__pyx_t_2);
           PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
           __pyx_t_2 = 0;
-          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 48, __pyx_L7_error)
+          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 57, __pyx_L7_error)
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L7_error)
+          __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_3);
-          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 48, __pyx_L7_error)
+          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 57, __pyx_L7_error)
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 48, __pyx_L7_error)
-          __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L7_error)
+          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_d) < 0) __PYX_ERR(0, 57, __pyx_L7_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 48, __pyx_L7_error)
+          __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 57, __pyx_L7_error)
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           __pyx_v_res = __pyx_t_4;
           __pyx_t_4.memview = NULL;
           __pyx_t_4.data = NULL;
         }
 
-        /* "cyroot/utils/array_ops.pyx":47
+        /* "cyroot/utils/array_ops.pyx":56
  *     cdef long i
  *     cdef double[:] res
  *     with gil:             # <<<<<<<<<<<<<<
@@ -3034,7 +3207,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_permut
         }
     }
 
-    /* "cyroot/utils/array_ops.pyx":49
+    /* "cyroot/utils/array_ops.pyx":58
  *     with gil:
  *         res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double), format='d')
  *     for i in range(xs.shape[0]):             # <<<<<<<<<<<<<<
@@ -3046,7 +3219,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_permut
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_i = __pyx_t_7;
 
-      /* "cyroot/utils/array_ops.pyx":50
+      /* "cyroot/utils/array_ops.pyx":59
  *         res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double), format='d')
  *     for i in range(xs.shape[0]):
  *         res[i] = xs[inds[i]]             # <<<<<<<<<<<<<<
@@ -3062,7 +3235,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_permut
       *((double *) ( /* dim=0 */ (__pyx_v_res.data + __pyx_t_10 * __pyx_v_res.strides[0]) )) = (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_9 * __pyx_v_xs.strides[0]) )));
     }
 
-    /* "cyroot/utils/array_ops.pyx":51
+    /* "cyroot/utils/array_ops.pyx":60
  *     for i in range(xs.shape[0]):
  *         res[i] = xs[inds[i]]
  *     return res             # <<<<<<<<<<<<<<
@@ -3074,7 +3247,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_permut
     goto __pyx_L3_return;
   }
 
-  /* "cyroot/utils/array_ops.pyx":45
+  /* "cyroot/utils/array_ops.pyx":54
  * 
  * cdef inline double[:] permute(double[:] xs, long[:] inds) nogil:
  *     cdef long i             # <<<<<<<<<<<<<<
@@ -3096,8 +3269,8 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_permut
     }
   }
 
-  /* "cyroot/utils/array_ops.pyx":44
- *     return xs_abs[argmax_i] - xs_abs[argmin_i]
+  /* "cyroot/utils/array_ops.pyx":53
+ *     return True
  * 
  * cdef inline double[:] permute(double[:] xs, long[:] inds) nogil:             # <<<<<<<<<<<<<<
  *     cdef long i
@@ -3128,7 +3301,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_permut
   return __pyx_r;
 }
 
-/* "cyroot/utils/array_ops.pyx":53
+/* "cyroot/utils/array_ops.pyx":62
  *     return res
  * 
  * cdef inline long argmin(double[:] xs) nogil:             # <<<<<<<<<<<<<<
@@ -3156,7 +3329,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
   #endif
   __Pyx_RefNannySetupContext("argmin", 1);
 
-  /* "cyroot/utils/array_ops.pyx":54
+  /* "cyroot/utils/array_ops.pyx":63
  * 
  * cdef inline long argmin(double[:] xs) nogil:
  *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
@@ -3167,7 +3340,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
     __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "cyroot/utils/array_ops.pyx":55
+      /* "cyroot/utils/array_ops.pyx":64
  * cdef inline long argmin(double[:] xs) nogil:
  *     if xs.shape[0] == 0:
  *         raise ValueError('Empty sequence.')             # <<<<<<<<<<<<<<
@@ -3179,11 +3352,11 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
           PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
           #endif
           /*try:*/ {
-            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L8_error)
+            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 64, __pyx_L8_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_Raise(__pyx_t_2, 0, 0, 0);
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-            __PYX_ERR(0, 55, __pyx_L8_error)
+            __PYX_ERR(0, 64, __pyx_L8_error)
           }
           /*finally:*/ {
             __pyx_L8_error: {
@@ -3195,7 +3368,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
           }
       }
 
-      /* "cyroot/utils/array_ops.pyx":54
+      /* "cyroot/utils/array_ops.pyx":63
  * 
  * cdef inline long argmin(double[:] xs) nogil:
  *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
@@ -3204,7 +3377,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
  */
     }
 
-    /* "cyroot/utils/array_ops.pyx":56
+    /* "cyroot/utils/array_ops.pyx":65
  *     if xs.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
  *     cdef long i, argmin_i = -1             # <<<<<<<<<<<<<<
@@ -3213,7 +3386,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
  */
     __pyx_v_argmin_i = -1L;
 
-    /* "cyroot/utils/array_ops.pyx":57
+    /* "cyroot/utils/array_ops.pyx":66
  *         raise ValueError('Empty sequence.')
  *     cdef long i, argmin_i = -1
  *     cdef double minimum = math.INFINITY             # <<<<<<<<<<<<<<
@@ -3222,7 +3395,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
  */
     __pyx_v_minimum = INFINITY;
 
-    /* "cyroot/utils/array_ops.pyx":58
+    /* "cyroot/utils/array_ops.pyx":67
  *     cdef long i, argmin_i = -1
  *     cdef double minimum = math.INFINITY
  *     for i in range(xs.shape[0]):             # <<<<<<<<<<<<<<
@@ -3234,7 +3407,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_i = __pyx_t_5;
 
-      /* "cyroot/utils/array_ops.pyx":59
+      /* "cyroot/utils/array_ops.pyx":68
  *     cdef double minimum = math.INFINITY
  *     for i in range(xs.shape[0]):
  *         if xs[i] < minimum:             # <<<<<<<<<<<<<<
@@ -3246,7 +3419,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
       __pyx_t_1 = (((*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_6 * __pyx_v_xs.strides[0]) ))) < __pyx_v_minimum) != 0);
       if (__pyx_t_1) {
 
-        /* "cyroot/utils/array_ops.pyx":60
+        /* "cyroot/utils/array_ops.pyx":69
  *     for i in range(xs.shape[0]):
  *         if xs[i] < minimum:
  *             minimum = xs[i]             # <<<<<<<<<<<<<<
@@ -3257,7 +3430,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
         if (__pyx_t_6 < 0) __pyx_t_6 += __pyx_v_xs.shape[0];
         __pyx_v_minimum = (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_6 * __pyx_v_xs.strides[0]) )));
 
-        /* "cyroot/utils/array_ops.pyx":61
+        /* "cyroot/utils/array_ops.pyx":70
  *         if xs[i] < minimum:
  *             minimum = xs[i]
  *             argmin_i = i             # <<<<<<<<<<<<<<
@@ -3266,7 +3439,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
  */
         __pyx_v_argmin_i = __pyx_v_i;
 
-        /* "cyroot/utils/array_ops.pyx":59
+        /* "cyroot/utils/array_ops.pyx":68
  *     cdef double minimum = math.INFINITY
  *     for i in range(xs.shape[0]):
  *         if xs[i] < minimum:             # <<<<<<<<<<<<<<
@@ -3276,7 +3449,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
       }
     }
 
-    /* "cyroot/utils/array_ops.pyx":62
+    /* "cyroot/utils/array_ops.pyx":71
  *             minimum = xs[i]
  *             argmin_i = i
  *     return argmin_i             # <<<<<<<<<<<<<<
@@ -3287,7 +3460,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
     goto __pyx_L3_return;
   }
 
-  /* "cyroot/utils/array_ops.pyx":54
+  /* "cyroot/utils/array_ops.pyx":63
  * 
  * cdef inline long argmin(double[:] xs) nogil:
  *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
@@ -3309,7 +3482,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
     }
   }
 
-  /* "cyroot/utils/array_ops.pyx":53
+  /* "cyroot/utils/array_ops.pyx":62
  *     return res
  * 
  * cdef inline long argmin(double[:] xs) nogil:             # <<<<<<<<<<<<<<
@@ -3331,7 +3504,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmin(__Pyx_memview
   return __pyx_r;
 }
 
-/* "cyroot/utils/array_ops.pyx":64
+/* "cyroot/utils/array_ops.pyx":73
  *     return argmin_i
  * 
  * cdef inline long argmax(double[:] xs) nogil:             # <<<<<<<<<<<<<<
@@ -3359,7 +3532,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
   #endif
   __Pyx_RefNannySetupContext("argmax", 1);
 
-  /* "cyroot/utils/array_ops.pyx":65
+  /* "cyroot/utils/array_ops.pyx":74
  * 
  * cdef inline long argmax(double[:] xs) nogil:
  *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
@@ -3370,7 +3543,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
     __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "cyroot/utils/array_ops.pyx":66
+      /* "cyroot/utils/array_ops.pyx":75
  * cdef inline long argmax(double[:] xs) nogil:
  *     if xs.shape[0] == 0:
  *         raise ValueError('Empty sequence.')             # <<<<<<<<<<<<<<
@@ -3382,11 +3555,11 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
           PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
           #endif
           /*try:*/ {
-            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L8_error)
+            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L8_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_Raise(__pyx_t_2, 0, 0, 0);
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-            __PYX_ERR(0, 66, __pyx_L8_error)
+            __PYX_ERR(0, 75, __pyx_L8_error)
           }
           /*finally:*/ {
             __pyx_L8_error: {
@@ -3398,7 +3571,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
           }
       }
 
-      /* "cyroot/utils/array_ops.pyx":65
+      /* "cyroot/utils/array_ops.pyx":74
  * 
  * cdef inline long argmax(double[:] xs) nogil:
  *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
@@ -3407,7 +3580,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
  */
     }
 
-    /* "cyroot/utils/array_ops.pyx":67
+    /* "cyroot/utils/array_ops.pyx":76
  *     if xs.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
  *     cdef long i, argmax_i = -1             # <<<<<<<<<<<<<<
@@ -3416,7 +3589,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
  */
     __pyx_v_argmax_i = -1L;
 
-    /* "cyroot/utils/array_ops.pyx":68
+    /* "cyroot/utils/array_ops.pyx":77
  *         raise ValueError('Empty sequence.')
  *     cdef long i, argmax_i = -1
  *     cdef double maximum = -math.INFINITY             # <<<<<<<<<<<<<<
@@ -3425,7 +3598,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
  */
     __pyx_v_maximum = (-INFINITY);
 
-    /* "cyroot/utils/array_ops.pyx":69
+    /* "cyroot/utils/array_ops.pyx":78
  *     cdef long i, argmax_i = -1
  *     cdef double maximum = -math.INFINITY
  *     for i in range(xs.shape[0]):             # <<<<<<<<<<<<<<
@@ -3437,7 +3610,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_i = __pyx_t_5;
 
-      /* "cyroot/utils/array_ops.pyx":70
+      /* "cyroot/utils/array_ops.pyx":79
  *     cdef double maximum = -math.INFINITY
  *     for i in range(xs.shape[0]):
  *         if xs[i] > maximum:             # <<<<<<<<<<<<<<
@@ -3449,7 +3622,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
       __pyx_t_1 = (((*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_6 * __pyx_v_xs.strides[0]) ))) > __pyx_v_maximum) != 0);
       if (__pyx_t_1) {
 
-        /* "cyroot/utils/array_ops.pyx":71
+        /* "cyroot/utils/array_ops.pyx":80
  *     for i in range(xs.shape[0]):
  *         if xs[i] > maximum:
  *             maximum = xs[i]             # <<<<<<<<<<<<<<
@@ -3460,7 +3633,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
         if (__pyx_t_6 < 0) __pyx_t_6 += __pyx_v_xs.shape[0];
         __pyx_v_maximum = (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_6 * __pyx_v_xs.strides[0]) )));
 
-        /* "cyroot/utils/array_ops.pyx":72
+        /* "cyroot/utils/array_ops.pyx":81
  *         if xs[i] > maximum:
  *             maximum = xs[i]
  *             argmax_i = i             # <<<<<<<<<<<<<<
@@ -3469,7 +3642,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
  */
         __pyx_v_argmax_i = __pyx_v_i;
 
-        /* "cyroot/utils/array_ops.pyx":70
+        /* "cyroot/utils/array_ops.pyx":79
  *     cdef double maximum = -math.INFINITY
  *     for i in range(xs.shape[0]):
  *         if xs[i] > maximum:             # <<<<<<<<<<<<<<
@@ -3479,7 +3652,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
       }
     }
 
-    /* "cyroot/utils/array_ops.pyx":73
+    /* "cyroot/utils/array_ops.pyx":82
  *             maximum = xs[i]
  *             argmax_i = i
  *     return argmax_i             # <<<<<<<<<<<<<<
@@ -3490,7 +3663,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
     goto __pyx_L3_return;
   }
 
-  /* "cyroot/utils/array_ops.pyx":65
+  /* "cyroot/utils/array_ops.pyx":74
  * 
  * cdef inline long argmax(double[:] xs) nogil:
  *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
@@ -3512,7 +3685,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
     }
   }
 
-  /* "cyroot/utils/array_ops.pyx":64
+  /* "cyroot/utils/array_ops.pyx":73
  *     return argmin_i
  * 
  * cdef inline long argmax(double[:] xs) nogil:             # <<<<<<<<<<<<<<
@@ -3534,7 +3707,7 @@ static CYTHON_INLINE long __pyx_f_6cyroot_5utils_9array_ops_argmax(__Pyx_memview
   return __pyx_r;
 }
 
-/* "cyroot/utils/array_ops.pyx":75
+/* "cyroot/utils/array_ops.pyx":84
  *     return argmax_i
  * 
  * cdef inline (long, long) argminmax(double[:] xs) nogil:             # <<<<<<<<<<<<<<
@@ -3565,7 +3738,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
   #endif
   __Pyx_RefNannySetupContext("argminmax", 1);
 
-  /* "cyroot/utils/array_ops.pyx":76
+  /* "cyroot/utils/array_ops.pyx":85
  * 
  * cdef inline (long, long) argminmax(double[:] xs) nogil:
  *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
@@ -3576,7 +3749,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
     __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "cyroot/utils/array_ops.pyx":77
+      /* "cyroot/utils/array_ops.pyx":86
  * cdef inline (long, long) argminmax(double[:] xs) nogil:
  *     if xs.shape[0] == 0:
  *         raise ValueError('Empty sequence.')             # <<<<<<<<<<<<<<
@@ -3588,11 +3761,11 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
           PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
           #endif
           /*try:*/ {
-            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 77, __pyx_L8_error)
+            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L8_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_Raise(__pyx_t_2, 0, 0, 0);
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-            __PYX_ERR(0, 77, __pyx_L8_error)
+            __PYX_ERR(0, 86, __pyx_L8_error)
           }
           /*finally:*/ {
             __pyx_L8_error: {
@@ -3604,7 +3777,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
           }
       }
 
-      /* "cyroot/utils/array_ops.pyx":76
+      /* "cyroot/utils/array_ops.pyx":85
  * 
  * cdef inline (long, long) argminmax(double[:] xs) nogil:
  *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
@@ -3613,7 +3786,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
  */
     }
 
-    /* "cyroot/utils/array_ops.pyx":78
+    /* "cyroot/utils/array_ops.pyx":87
  *     if xs.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
  *     cdef long i, argmin_i = -1, argmax_i = -1             # <<<<<<<<<<<<<<
@@ -3623,7 +3796,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
     __pyx_v_argmin_i = -1L;
     __pyx_v_argmax_i = -1L;
 
-    /* "cyroot/utils/array_ops.pyx":79
+    /* "cyroot/utils/array_ops.pyx":88
  *         raise ValueError('Empty sequence.')
  *     cdef long i, argmin_i = -1, argmax_i = -1
  *     cdef double minimum = math.INFINITY, maximum = -math.INFINITY             # <<<<<<<<<<<<<<
@@ -3633,7 +3806,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
     __pyx_v_minimum = INFINITY;
     __pyx_v_maximum = (-INFINITY);
 
-    /* "cyroot/utils/array_ops.pyx":80
+    /* "cyroot/utils/array_ops.pyx":89
  *     cdef long i, argmin_i = -1, argmax_i = -1
  *     cdef double minimum = math.INFINITY, maximum = -math.INFINITY
  *     for i in range(xs.shape[0]):             # <<<<<<<<<<<<<<
@@ -3645,7 +3818,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_i = __pyx_t_5;
 
-      /* "cyroot/utils/array_ops.pyx":81
+      /* "cyroot/utils/array_ops.pyx":90
  *     cdef double minimum = math.INFINITY, maximum = -math.INFINITY
  *     for i in range(xs.shape[0]):
  *         if xs[i] < minimum:             # <<<<<<<<<<<<<<
@@ -3657,7 +3830,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
       __pyx_t_1 = (((*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_6 * __pyx_v_xs.strides[0]) ))) < __pyx_v_minimum) != 0);
       if (__pyx_t_1) {
 
-        /* "cyroot/utils/array_ops.pyx":82
+        /* "cyroot/utils/array_ops.pyx":91
  *     for i in range(xs.shape[0]):
  *         if xs[i] < minimum:
  *             minimum = xs[i]             # <<<<<<<<<<<<<<
@@ -3668,7 +3841,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
         if (__pyx_t_6 < 0) __pyx_t_6 += __pyx_v_xs.shape[0];
         __pyx_v_minimum = (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_6 * __pyx_v_xs.strides[0]) )));
 
-        /* "cyroot/utils/array_ops.pyx":83
+        /* "cyroot/utils/array_ops.pyx":92
  *         if xs[i] < minimum:
  *             minimum = xs[i]
  *             argmin_i = i             # <<<<<<<<<<<<<<
@@ -3677,7 +3850,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
  */
         __pyx_v_argmin_i = __pyx_v_i;
 
-        /* "cyroot/utils/array_ops.pyx":81
+        /* "cyroot/utils/array_ops.pyx":90
  *     cdef double minimum = math.INFINITY, maximum = -math.INFINITY
  *     for i in range(xs.shape[0]):
  *         if xs[i] < minimum:             # <<<<<<<<<<<<<<
@@ -3686,7 +3859,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
  */
       }
 
-      /* "cyroot/utils/array_ops.pyx":84
+      /* "cyroot/utils/array_ops.pyx":93
  *             minimum = xs[i]
  *             argmin_i = i
  *         if xs[i] > maximum:             # <<<<<<<<<<<<<<
@@ -3698,7 +3871,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
       __pyx_t_1 = (((*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_6 * __pyx_v_xs.strides[0]) ))) > __pyx_v_maximum) != 0);
       if (__pyx_t_1) {
 
-        /* "cyroot/utils/array_ops.pyx":85
+        /* "cyroot/utils/array_ops.pyx":94
  *             argmin_i = i
  *         if xs[i] > maximum:
  *             maximum = xs[i]             # <<<<<<<<<<<<<<
@@ -3709,7 +3882,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
         if (__pyx_t_6 < 0) __pyx_t_6 += __pyx_v_xs.shape[0];
         __pyx_v_maximum = (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_6 * __pyx_v_xs.strides[0]) )));
 
-        /* "cyroot/utils/array_ops.pyx":86
+        /* "cyroot/utils/array_ops.pyx":95
  *         if xs[i] > maximum:
  *             maximum = xs[i]
  *             argmax_i = i             # <<<<<<<<<<<<<<
@@ -3718,7 +3891,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
  */
         __pyx_v_argmax_i = __pyx_v_i;
 
-        /* "cyroot/utils/array_ops.pyx":84
+        /* "cyroot/utils/array_ops.pyx":93
  *             minimum = xs[i]
  *             argmin_i = i
  *         if xs[i] > maximum:             # <<<<<<<<<<<<<<
@@ -3728,7 +3901,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
       }
     }
 
-    /* "cyroot/utils/array_ops.pyx":87
+    /* "cyroot/utils/array_ops.pyx":96
  *             maximum = xs[i]
  *             argmax_i = i
  *     return argmin_i, argmax_i             # <<<<<<<<<<<<<<
@@ -3741,7 +3914,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
     goto __pyx_L3_return;
   }
 
-  /* "cyroot/utils/array_ops.pyx":76
+  /* "cyroot/utils/array_ops.pyx":85
  * 
  * cdef inline (long, long) argminmax(double[:] xs) nogil:
  *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
@@ -3763,7 +3936,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
     }
   }
 
-  /* "cyroot/utils/array_ops.pyx":75
+  /* "cyroot/utils/array_ops.pyx":84
  *     return argmax_i
  * 
  * cdef inline (long, long) argminmax(double[:] xs) nogil:             # <<<<<<<<<<<<<<
@@ -3785,7 +3958,7 @@ static CYTHON_INLINE __pyx_ctuple_long__and_long __pyx_f_6cyroot_5utils_9array_o
   return __pyx_r;
 }
 
-/* "cyroot/utils/array_ops.pyx":89
+/* "cyroot/utils/array_ops.pyx":98
  *     return argmin_i, argmax_i
  * 
  * cdef inline void sort(double[::1] xs) nogil:             # <<<<<<<<<<<<<<
@@ -3797,7 +3970,7 @@ static CYTHON_INLINE void __pyx_f_6cyroot_5utils_9array_ops_sort(__Pyx_memviewsl
   Py_ssize_t __pyx_t_1;
   Py_ssize_t __pyx_t_2;
 
-  /* "cyroot/utils/array_ops.pyx":90
+  /* "cyroot/utils/array_ops.pyx":99
  * 
  * cdef inline void sort(double[::1] xs) nogil:
  *     cpp_sort(&xs[0], (&xs[0]) + xs.shape[0])             # <<<<<<<<<<<<<<
@@ -3810,7 +3983,7 @@ static CYTHON_INLINE void __pyx_f_6cyroot_5utils_9array_ops_sort(__Pyx_memviewsl
   if (__pyx_t_2 < 0) __pyx_t_2 += __pyx_v_xs.shape[0];
   std::sort<double *>((&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_xs.data) + __pyx_t_1)) )))), ((&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_xs.data) + __pyx_t_2)) )))) + (__pyx_v_xs.shape[0])));
 
-  /* "cyroot/utils/array_ops.pyx":89
+  /* "cyroot/utils/array_ops.pyx":98
  *     return argmin_i, argmax_i
  * 
  * cdef inline void sort(double[::1] xs) nogil:             # <<<<<<<<<<<<<<
@@ -3821,7 +3994,7 @@ static CYTHON_INLINE void __pyx_f_6cyroot_5utils_9array_ops_sort(__Pyx_memviewsl
   /* function exit code */
 }
 
-/* "cyroot/utils/array_ops.pyx":96
+/* "cyroot/utils/array_ops.pyx":105
  *     double val
  * 
  * cdef bint _ascending_cmp(_IndexedDouble &lhs, _IndexedDouble &rhs) nogil:             # <<<<<<<<<<<<<<
@@ -3832,7 +4005,7 @@ static CYTHON_INLINE void __pyx_f_6cyroot_5utils_9array_ops_sort(__Pyx_memviewsl
 static int __pyx_f_6cyroot_5utils_9array_ops__ascending_cmp(struct __pyx_t_6cyroot_5utils_9array_ops__IndexedDouble &__pyx_v_lhs, struct __pyx_t_6cyroot_5utils_9array_ops__IndexedDouble &__pyx_v_rhs) {
   int __pyx_r;
 
-  /* "cyroot/utils/array_ops.pyx":97
+  /* "cyroot/utils/array_ops.pyx":106
  * 
  * cdef bint _ascending_cmp(_IndexedDouble &lhs, _IndexedDouble &rhs) nogil:
  *     return lhs.val < rhs.val             # <<<<<<<<<<<<<<
@@ -3842,7 +4015,7 @@ static int __pyx_f_6cyroot_5utils_9array_ops__ascending_cmp(struct __pyx_t_6cyro
   __pyx_r = (__pyx_v_lhs.val < __pyx_v_rhs.val);
   goto __pyx_L0;
 
-  /* "cyroot/utils/array_ops.pyx":96
+  /* "cyroot/utils/array_ops.pyx":105
  *     double val
  * 
  * cdef bint _ascending_cmp(_IndexedDouble &lhs, _IndexedDouble &rhs) nogil:             # <<<<<<<<<<<<<<
@@ -3855,7 +4028,7 @@ static int __pyx_f_6cyroot_5utils_9array_ops__ascending_cmp(struct __pyx_t_6cyro
   return __pyx_r;
 }
 
-/* "cyroot/utils/array_ops.pyx":99
+/* "cyroot/utils/array_ops.pyx":108
  *     return lhs.val < rhs.val
  * 
  * cdef bint _descending_cmp(_IndexedDouble &lhs, _IndexedDouble &rhs) nogil:             # <<<<<<<<<<<<<<
@@ -3866,7 +4039,7 @@ static int __pyx_f_6cyroot_5utils_9array_ops__ascending_cmp(struct __pyx_t_6cyro
 static int __pyx_f_6cyroot_5utils_9array_ops__descending_cmp(struct __pyx_t_6cyroot_5utils_9array_ops__IndexedDouble &__pyx_v_lhs, struct __pyx_t_6cyroot_5utils_9array_ops__IndexedDouble &__pyx_v_rhs) {
   int __pyx_r;
 
-  /* "cyroot/utils/array_ops.pyx":100
+  /* "cyroot/utils/array_ops.pyx":109
  * 
  * cdef bint _descending_cmp(_IndexedDouble &lhs, _IndexedDouble &rhs) nogil:
  *     return lhs.val > rhs.val             # <<<<<<<<<<<<<<
@@ -3876,7 +4049,7 @@ static int __pyx_f_6cyroot_5utils_9array_ops__descending_cmp(struct __pyx_t_6cyr
   __pyx_r = (__pyx_v_lhs.val > __pyx_v_rhs.val);
   goto __pyx_L0;
 
-  /* "cyroot/utils/array_ops.pyx":99
+  /* "cyroot/utils/array_ops.pyx":108
  *     return lhs.val < rhs.val
  * 
  * cdef bint _descending_cmp(_IndexedDouble &lhs, _IndexedDouble &rhs) nogil:             # <<<<<<<<<<<<<<
@@ -3889,7 +4062,7 @@ static int __pyx_f_6cyroot_5utils_9array_ops__descending_cmp(struct __pyx_t_6cyr
   return __pyx_r;
 }
 
-/* "cyroot/utils/array_ops.pyx":102
+/* "cyroot/utils/array_ops.pyx":111
  *     return lhs.val > rhs.val
  * 
  * cdef inline long[:] argsort(double[:] xs, bint reverse=False) nogil:             # <<<<<<<<<<<<<<
@@ -3928,7 +4101,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
     }
   }
 
-  /* "cyroot/utils/array_ops.pyx":103
+  /* "cyroot/utils/array_ops.pyx":112
  * 
  * cdef inline long[:] argsort(double[:] xs, bint reverse=False) nogil:
  *     cdef long i             # <<<<<<<<<<<<<<
@@ -3937,7 +4110,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
  */
   /*try:*/ {
 
-    /* "cyroot/utils/array_ops.pyx":104
+    /* "cyroot/utils/array_ops.pyx":113
  * cdef inline long[:] argsort(double[:] xs, bint reverse=False) nogil:
  *     cdef long i
  *     cdef vector[_IndexedDouble] indexed_xs = vector[_IndexedDouble](xs.shape[0])             # <<<<<<<<<<<<<<
@@ -3954,11 +4127,11 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
       #ifdef WITH_THREAD
       __Pyx_PyGILState_Release(__pyx_gilstate_save);
       #endif
-      __PYX_ERR(0, 104, __pyx_L4_error)
+      __PYX_ERR(0, 113, __pyx_L4_error)
     }
     __pyx_v_indexed_xs = __pyx_t_1;
 
-    /* "cyroot/utils/array_ops.pyx":105
+    /* "cyroot/utils/array_ops.pyx":114
  *     cdef long i
  *     cdef vector[_IndexedDouble] indexed_xs = vector[_IndexedDouble](xs.shape[0])
  *     for i in range(xs.shape[0]):             # <<<<<<<<<<<<<<
@@ -3970,7 +4143,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
     for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "cyroot/utils/array_ops.pyx":106
+      /* "cyroot/utils/array_ops.pyx":115
  *     cdef vector[_IndexedDouble] indexed_xs = vector[_IndexedDouble](xs.shape[0])
  *     for i in range(xs.shape[0]):
  *         indexed_xs[i].id = i             # <<<<<<<<<<<<<<
@@ -3979,7 +4152,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
  */
       (__pyx_v_indexed_xs[__pyx_v_i]).id = __pyx_v_i;
 
-      /* "cyroot/utils/array_ops.pyx":107
+      /* "cyroot/utils/array_ops.pyx":116
  *     for i in range(xs.shape[0]):
  *         indexed_xs[i].id = i
  *         indexed_xs[i].val = xs[i]             # <<<<<<<<<<<<<<
@@ -3991,7 +4164,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
       (__pyx_v_indexed_xs[__pyx_v_i]).val = (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_5 * __pyx_v_xs.strides[0]) )));
     }
 
-    /* "cyroot/utils/array_ops.pyx":108
+    /* "cyroot/utils/array_ops.pyx":117
  *         indexed_xs[i].id = i
  *         indexed_xs[i].val = xs[i]
  *     if not reverse:             # <<<<<<<<<<<<<<
@@ -4001,7 +4174,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
     __pyx_t_6 = ((!(__pyx_v_reverse != 0)) != 0);
     if (__pyx_t_6) {
 
-      /* "cyroot/utils/array_ops.pyx":109
+      /* "cyroot/utils/array_ops.pyx":118
  *         indexed_xs[i].val = xs[i]
  *     if not reverse:
  *         cpp_sort(indexed_xs.begin(), indexed_xs.end(), &_ascending_cmp)             # <<<<<<<<<<<<<<
@@ -4010,7 +4183,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
  */
       std::sort<std::vector<struct __pyx_t_6cyroot_5utils_9array_ops__IndexedDouble> ::iterator,int (*)(struct __pyx_t_6cyroot_5utils_9array_ops__IndexedDouble &, struct __pyx_t_6cyroot_5utils_9array_ops__IndexedDouble &)>(__pyx_v_indexed_xs.begin(), __pyx_v_indexed_xs.end(), (&__pyx_f_6cyroot_5utils_9array_ops__ascending_cmp));
 
-      /* "cyroot/utils/array_ops.pyx":108
+      /* "cyroot/utils/array_ops.pyx":117
  *         indexed_xs[i].id = i
  *         indexed_xs[i].val = xs[i]
  *     if not reverse:             # <<<<<<<<<<<<<<
@@ -4020,7 +4193,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
       goto __pyx_L8;
     }
 
-    /* "cyroot/utils/array_ops.pyx":111
+    /* "cyroot/utils/array_ops.pyx":120
  *         cpp_sort(indexed_xs.begin(), indexed_xs.end(), &_ascending_cmp)
  *     else:
  *         cpp_sort(indexed_xs.begin(), indexed_xs.end(), &_descending_cmp)             # <<<<<<<<<<<<<<
@@ -4032,7 +4205,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
     }
     __pyx_L8:;
 
-    /* "cyroot/utils/array_ops.pyx":114
+    /* "cyroot/utils/array_ops.pyx":123
  * 
  *     cdef long[:] inds
  *     with gil:             # <<<<<<<<<<<<<<
@@ -4045,40 +4218,40 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
         #endif
         /*try:*/ {
 
-          /* "cyroot/utils/array_ops.pyx":115
+          /* "cyroot/utils/array_ops.pyx":124
  *     cdef long[:] inds
  *     with gil:
  *         inds = view.array(shape=(xs.shape[0],), itemsize=sizeof(long), format='l')             # <<<<<<<<<<<<<<
  *     for i in range(xs.shape[0]):
  *         inds[i] = indexed_xs[i].id
  */
-          __pyx_t_7 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 115, __pyx_L10_error)
+          __pyx_t_7 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 124, __pyx_L10_error)
           __Pyx_GOTREF(__pyx_t_7);
-          __pyx_t_8 = PyInt_FromSsize_t((__pyx_v_xs.shape[0])); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 115, __pyx_L10_error)
+          __pyx_t_8 = PyInt_FromSsize_t((__pyx_v_xs.shape[0])); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 124, __pyx_L10_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_9 = PyTuple_New(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 115, __pyx_L10_error)
+          __pyx_t_9 = PyTuple_New(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 124, __pyx_L10_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_GIVEREF(__pyx_t_8);
           PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_8);
           __pyx_t_8 = 0;
-          if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_shape, __pyx_t_9) < 0) __PYX_ERR(0, 115, __pyx_L10_error)
+          if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_shape, __pyx_t_9) < 0) __PYX_ERR(0, 124, __pyx_L10_error)
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-          __pyx_t_9 = __Pyx_PyInt_FromSize_t((sizeof(long))); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 115, __pyx_L10_error)
+          __pyx_t_9 = __Pyx_PyInt_FromSize_t((sizeof(long))); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 124, __pyx_L10_error)
           __Pyx_GOTREF(__pyx_t_9);
-          if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_itemsize, __pyx_t_9) < 0) __PYX_ERR(0, 115, __pyx_L10_error)
+          if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_itemsize, __pyx_t_9) < 0) __PYX_ERR(0, 124, __pyx_L10_error)
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-          if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_format, __pyx_n_u_l) < 0) __PYX_ERR(0, 115, __pyx_L10_error)
-          __pyx_t_9 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 115, __pyx_L10_error)
+          if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_format, __pyx_n_u_l) < 0) __PYX_ERR(0, 124, __pyx_L10_error)
+          __pyx_t_9 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 124, __pyx_L10_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-          __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_ds_long(__pyx_t_9, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 115, __pyx_L10_error)
+          __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_ds_long(__pyx_t_9, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 124, __pyx_L10_error)
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
           __pyx_v_inds = __pyx_t_10;
           __pyx_t_10.memview = NULL;
           __pyx_t_10.data = NULL;
         }
 
-        /* "cyroot/utils/array_ops.pyx":114
+        /* "cyroot/utils/array_ops.pyx":123
  * 
  *     cdef long[:] inds
  *     with gil:             # <<<<<<<<<<<<<<
@@ -4102,7 +4275,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
         }
     }
 
-    /* "cyroot/utils/array_ops.pyx":116
+    /* "cyroot/utils/array_ops.pyx":125
  *     with gil:
  *         inds = view.array(shape=(xs.shape[0],), itemsize=sizeof(long), format='l')
  *     for i in range(xs.shape[0]):             # <<<<<<<<<<<<<<
@@ -4114,7 +4287,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
     for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "cyroot/utils/array_ops.pyx":117
+      /* "cyroot/utils/array_ops.pyx":126
  *         inds = view.array(shape=(xs.shape[0],), itemsize=sizeof(long), format='l')
  *     for i in range(xs.shape[0]):
  *         inds[i] = indexed_xs[i].id             # <<<<<<<<<<<<<<
@@ -4126,7 +4299,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
       *((long *) ( /* dim=0 */ (__pyx_v_inds.data + __pyx_t_5 * __pyx_v_inds.strides[0]) )) = __pyx_t_11;
     }
 
-    /* "cyroot/utils/array_ops.pyx":118
+    /* "cyroot/utils/array_ops.pyx":127
  *     for i in range(xs.shape[0]):
  *         inds[i] = indexed_xs[i].id
  *     return inds             # <<<<<<<<<<<<<<
@@ -4136,7 +4309,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
     goto __pyx_L3_return;
   }
 
-  /* "cyroot/utils/array_ops.pyx":103
+  /* "cyroot/utils/array_ops.pyx":112
  * 
  * cdef inline long[:] argsort(double[:] xs, bint reverse=False) nogil:
  *     cdef long i             # <<<<<<<<<<<<<<
@@ -4158,7 +4331,7 @@ static CYTHON_INLINE __Pyx_memviewslice __pyx_f_6cyroot_5utils_9array_ops_argsor
     }
   }
 
-  /* "cyroot/utils/array_ops.pyx":102
+  /* "cyroot/utils/array_ops.pyx":111
  *     return lhs.val > rhs.val
  * 
  * cdef inline long[:] argsort(double[:] xs, bint reverse=False) nogil:             # <<<<<<<<<<<<<<
@@ -18097,7 +18270,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 20, __pyx_L1_error)
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 64, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 149, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 152, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
@@ -18113,14 +18286,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "cyroot/utils/array_ops.pyx":55
+  /* "cyroot/utils/array_ops.pyx":64
  * cdef inline long argmin(double[:] xs) nogil:
  *     if xs.shape[0] == 0:
  *         raise ValueError('Empty sequence.')             # <<<<<<<<<<<<<<
  *     cdef long i, argmin_i = -1
  *     cdef double minimum = math.INFINITY
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_Empty_sequence); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_Empty_sequence); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
@@ -18443,6 +18616,7 @@ static int __Pyx_modinit_function_export_code(void) {
   if (__Pyx_ExportFunction("cabs", (void (*)(void))__pyx_f_6cyroot_5utils_9array_ops_cabs, "__Pyx_memviewslice (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("fabs_width", (void (*)(void))__pyx_f_6cyroot_5utils_9array_ops_fabs_width, "double (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("cabs_width", (void (*)(void))__pyx_f_6cyroot_5utils_9array_ops_cabs_width, "double (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("allclose", (void (*)(void))__pyx_f_6cyroot_5utils_9array_ops_allclose, "int (__Pyx_memviewslice, __Pyx_memviewslice, struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("permute", (void (*)(void))__pyx_f_6cyroot_5utils_9array_ops_permute, "__Pyx_memviewslice (__Pyx_memviewslice, __Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("argmin", (void (*)(void))__pyx_f_6cyroot_5utils_9array_ops_argmin, "long (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("argmax", (void (*)(void))__pyx_f_6cyroot_5utils_9array_ops_argmax, "long (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -22418,6 +22592,44 @@ raise_neg_overflow:
     return (long) -1;
 }
 
+/* CIntToPy */
+  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const int neg_one = (int) -1, const_zero = (int) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+    }
+}
+
 /* CIntFromPy */
   static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
@@ -22612,44 +22824,6 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to int");
     return (int) -1;
-}
-
-/* CIntToPy */
-  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const int neg_one = (int) -1, const_zero = (int) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(int) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(int) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-#endif
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(int),
-                                     little, !is_unsigned);
-    }
 }
 
 /* CIntToPy */
