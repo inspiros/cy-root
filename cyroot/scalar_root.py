@@ -18,7 +18,7 @@ def find_root_scalar(method: str, *args, **kwargs):
     Find the root of a scalar function.
 
     Args:
-        method: Name of the method. A full list of supported
+        method (str): Name of the method. A full list of supported
          methods is stored in ``SCALAR_ROOT_FINDING_METHODS``.
         *args: Extra argument to be passed.
         **kwargs: Extra keywords arguments to be passed.

@@ -7,7 +7,6 @@
 from typing import Callable, Optional, Union
 
 import cython
-from cpython cimport array
 from cython cimport view
 from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
@@ -116,21 +115,24 @@ def bisect(f: Callable[[float], float],
     Bisection method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -215,21 +217,24 @@ def regula_falsi(f: Callable[[float], float],
     Regula Falsi (or False Position) method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -272,21 +277,24 @@ def illinois(f: Callable[[float], float],
     Illinois method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -329,21 +337,24 @@ def pegasus(f: Callable[[float], float],
     Pegasus method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -389,21 +400,24 @@ def anderson_bjorck(f: Callable[[float], float],
     Anderson–Björck method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -494,21 +508,24 @@ def dekker(f: Callable[[float], float],
     Dekker's method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -538,7 +555,7 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double f_a,
         double f_b,
         int interp_method=1,
-        double sigma=1e-6,
+        double sigma=PTOL,
         double etol=ETOL,
         double ertol=ERTOL,
         double ptol=PTOL,
@@ -640,25 +657,29 @@ def brent(f: Callable[[float], float],
     Brent's method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
         interp_method: Interpolation method, 'quadratic' (or 0) for Inversed
          Quadratic Interpolation and 'hyperbolic' (or 1) for Hyperbolic
          Interpolation. Defaults to 1.
         sigma: Numerical tolerance to decide which method to use.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+         Defaults to {sigma}.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -771,22 +792,25 @@ def chandrupatla(f: Callable[[float], float],
     Chandrupatla's method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        sigma: Tolerance for extra stop condition. Defaults to {ptol}.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        sigma (float, optional): Extra stop condition. Defaults to {sigma}.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -876,21 +900,24 @@ def ridders(f: Callable[[float], float],
     Ridders method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -968,9 +995,8 @@ cdef double _newton_quadratic(
     d is a real number outside [ab, b]
     k is the number of steps to apply
     """
-    cdef double[:] dd = _diag_divided_differences(
-        array.array('d', [a, b, d]),
-        array.array('d', [f_a, f_b, f_d]))
+    cdef double[3] abd = [a, b, d], f_abd = [f_a, f_b, f_d]
+    cdef double[:] dd = _diag_divided_differences(abd, f_abd)
     cdef double B = dd[1], A = dd[2], P, r, r1
 
     if A == 0:
@@ -1129,23 +1155,26 @@ def toms748(f: Callable[[float], float],
     TOMS Algorithm 748.
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        k: Defaults to 2.
-        mu: Defaults to 0.5.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        k (int, optional): Defaults to 2.
+        mu (float, optional): Defaults to 0.5.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1263,21 +1292,24 @@ def wu(f: Callable[[float], float],
     superlinear convergence of both point and interval for solving nonlinear equations".
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1394,26 +1426,30 @@ def itp(f: Callable[[float], float],
     "An Enhancement of the Bisection Method Average Performance Preserving Minmax convergedity".
 
     Args:
-        f: Function for which the root is sought.
-        a: Lower bound of the interval to be searched.
-        b: Upper bound of the interval to be searched.
-        f_a: Value evaluated at lower bound.
-        f_b: Value evaluated at upper bound.
-        k1: Tuning parameter in range (1, :math:`\infty`).
-            Defaults to :math:`\frac{{0.2}}{{b - a}}` as suggested in the original paper.
-        k2: Tuning parameter in range [1, 1 + :math:`\phi`), where :math:`\phi` is the golden ratio.
-            Defaults to 2.
-        n0: Tuning parameter. Defaults to 1.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        f_a (float, optional): Value evaluated at lower bound.
+        f_b (float, optional): Value evaluated at upper bound.
+        k1 (float, optional): Tuning parameter in range (1, :math:`\infty`).
+         Defaults to :math:`\frac{{0.2}}{{b - a}}` as suggested
+         in the original paper.
+        k2 (float, optional): Tuning parameter in range [1, 1 + :math:`\phi`),
+         where :math:`\phi` is the golden ratio. Defaults to 2.
+        n0 (int, optional): Tuning parameter. Defaults to 1.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -1429,7 +1465,7 @@ def itp(f: Callable[[float], float],
         raise ValueError(f'k1 must be in range (1, inf). Got {k1}.')
     if not 1 <= k2 < 1 + PHI:
         raise ValueError(f'k2 must be in range [1, 1 + phi), where '
-                         f'phi is the golden ratio. Got {k2}.')
+                         f'phi={PHI} is the golden ratio. Got {k2}.')
     if n0 < 0:
         raise ValueError(f'n0 must be non-negative integer. Got {n0}.')
 

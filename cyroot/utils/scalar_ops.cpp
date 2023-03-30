@@ -8,6 +8,7 @@
             "C:\\Python\\Python38\\lib\\site-packages\\numpy\\core\\include",
             "cyroot\\utils"
         ],
+        "language": "c++",
         "name": "cyroot.utils.scalar_ops",
         "sources": [
             "cyroot\\utils\\scalar_ops.pyx"
@@ -368,19 +369,33 @@ END: Cython Metadata */
   #endif
 #endif
 
+#ifndef __cplusplus
+  #error "Cython files generated with the C++ option must be compiled with a C++ compiler."
+#endif
 #ifndef CYTHON_INLINE
   #if defined(__clang__)
     #define CYTHON_INLINE __inline__ __attribute__ ((__unused__))
-  #elif defined(__GNUC__)
-    #define CYTHON_INLINE __inline__
-  #elif defined(_MSC_VER)
-    #define CYTHON_INLINE __inline
-  #elif defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
-    #define CYTHON_INLINE inline
   #else
-    #define CYTHON_INLINE
+    #define CYTHON_INLINE inline
   #endif
 #endif
+template<typename T>
+void __Pyx_call_destructor(T& x) {
+    x.~T();
+}
+template<typename T>
+class __Pyx_FakeReference {
+  public:
+    __Pyx_FakeReference() : ptr(NULL) { }
+    __Pyx_FakeReference(const T& ref) : ptr(const_cast<T*>(&ref)) { }
+    T *operator->() { return ptr; }
+    T *operator&() { return ptr; }
+    operator T&() { return *ptr; }
+    template<typename U> bool operator ==(U other) { return *ptr == other; }
+    template<typename U> bool operator !=(U other) { return *ptr != other; }
+  private:
+    T *ptr;
+};
 
 #if CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX < 0x02070600 && !defined(Py_OptimizeFlag)
   #define Py_OptimizeFlag 0
@@ -1199,7 +1214,7 @@ static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_test;
 /* Late includes */
 
-/* "cyroot/utils/scalar_ops.pyx":3
+/* "cyroot/utils/scalar_ops.pyx":9
  * from libc cimport math
  * 
  * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
@@ -1222,7 +1237,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_isclose(double __py
     }
   }
 
-  /* "cyroot/utils/scalar_ops.pyx":4
+  /* "cyroot/utils/scalar_ops.pyx":10
  * 
  * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):             # <<<<<<<<<<<<<<
@@ -1240,7 +1255,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_isclose(double __py
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "cyroot/utils/scalar_ops.pyx":5
+    /* "cyroot/utils/scalar_ops.pyx":11
  * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)             # <<<<<<<<<<<<<<
@@ -1258,7 +1273,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_isclose(double __py
     __pyx_r = __pyx_t_1;
     goto __pyx_L0;
 
-    /* "cyroot/utils/scalar_ops.pyx":4
+    /* "cyroot/utils/scalar_ops.pyx":10
  * 
  * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):             # <<<<<<<<<<<<<<
@@ -1267,7 +1282,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_isclose(double __py
  */
   }
 
-  /* "cyroot/utils/scalar_ops.pyx":6
+  /* "cyroot/utils/scalar_ops.pyx":12
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)             # <<<<<<<<<<<<<<
@@ -1275,7 +1290,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_isclose(double __py
   __pyx_r = (fabs((__pyx_v_a - __pyx_v_b)) <= (__pyx_v_atol + (__pyx_v_rtol * fabs(__pyx_v_b))));
   goto __pyx_L0;
 
-  /* "cyroot/utils/scalar_ops.pyx":3
+  /* "cyroot/utils/scalar_ops.pyx":9
  * from libc cimport math
  * 
  * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
@@ -1630,9 +1645,9 @@ if (!__Pyx_RefNanny) {
   #endif
 
   /* "cyroot/utils/scalar_ops.pyx":1
- * from libc cimport math             # <<<<<<<<<<<<<<
- * 
- * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
+ * # distutils: language=c++             # <<<<<<<<<<<<<<
+ * # cython: cdivision = True
+ * # cython: initializedcheck = False
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);

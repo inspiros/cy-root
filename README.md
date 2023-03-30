@@ -22,9 +22,12 @@ Fortunately, Sidi's method came to the rescue.
 ## Requirements
 
 - Python 3.6+
-- Cython (if you want to build from `.pyx` files)
+- dynamic-default-args
 - numpy
 - sympy
+
+**For compilation:**
+- Cython (if you want to build from `.pyx` files)
 - A C/C++ compiler
 
 ## Installation
@@ -59,7 +62,7 @@ For more information about the listed algorithms, please use Google until I upda
 
 - **Bracketing methods:** (methods that require lower and upper bounds)
     - Bisect
-    - Regula Falsi (False Position)
+    - Regula Falsi
     - Illinois
     - Pegasus
     - Anderson–Björck
@@ -150,9 +153,8 @@ stopped because the precision tolerance is satisfied.
 
 **Configurations:**
 
-The default values for stop condition arguments (i.e. `etol`, `ptol`, `max_iter`) are globally set to the values defined
-in [`_defaults.py`](cyroot/_defaults.py). They can be modified dynamically, docstrings of all functions using them
-will also be updated automatically.
+The default values for stop condition arguments (i.e. `etol`, `ertol`, `ptol`, `prtol`, `max_iter`) are globally set to
+the values defined in [`_defaults.py`](cyroot/_defaults.py), and can be modified dynamically as follows.
 
 ```python
 import cyroot
@@ -170,7 +172,3 @@ For more examples, please check the [`examples`](examples) folder.
 ## License
 
 The code is released under the MIT license. See [`LICENSE.txt`](LICENSE.txt) for details.
-
-## References
-
-https://en.wikipedia.org/wiki/Root-finding_algorithms

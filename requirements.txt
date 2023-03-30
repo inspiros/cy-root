@@ -1,3 +1,3 @@
-dynamic_default_args
+dynamic-default-args
 numpy
 sympy

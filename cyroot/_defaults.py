@@ -26,16 +26,19 @@ def set_default_stop_condition_args(etol=named_default(ETOL=ETOL),
     so None value will be interpreted as disabling the stop condition (set to 0).
 
     Args:
-        etol: Error tolerance, indicating the desired precision
-         of the root. Dynamically defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Dynamically defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Dynamically defaults to {max_iter}.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
     """
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol,
                                                                     ertol,

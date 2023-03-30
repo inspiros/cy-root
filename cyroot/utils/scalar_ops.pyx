@@ -1,3 +1,9 @@
+# distutils: language=c++
+# cython: cdivision = True
+# cython: initializedcheck = False
+# cython: boundscheck = False
+# cython: profile = False
+
 from libc cimport math
 
 cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:

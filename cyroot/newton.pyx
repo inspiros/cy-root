@@ -86,21 +86,26 @@ def newton(f: Callable[[float], float],
     Newton method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        df: Function return derivative of f.
-        x0: Initial point.
-        f_x0: Value evald at initial point.
-        df_x0: First order derivative at initial point.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        df (function): Function return derivative of f.
+        x0 (float): Initial point.
+        f_x0 (float, optional): Value evaluated at
+         initial point.
+        df_x0 (float, optional): First order derivative at
+         initial point.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -182,23 +187,29 @@ def halley(f: Callable[[float], float],
     Halley's method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        df: Function return derivative of f.
-        d2f: Function return second order derivative of f.
-        x0: Initial point.
-        f_x0: Value evald at initial point.
-        df_x0: First order derivative at initial point.
-        d2f_x0: Second order derivative at initial point.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
+        f (function): Function for which the root is sought.
+        df (function): Function return derivative of f.
+        d2f (function): Function return second order derivative
+         of f.
+        x0 (float): Initial point.
+        f_x0 (float, optional): Value evaluated at initial point.
+        df_x0 (float, optional): First order derivative at
+         initial point.
+        d2f_x0 (float, optional): Second order derivative at
+         initial point.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
@@ -569,25 +580,28 @@ def householder(f: Callable[[float], float],
     Householder's method for root-finding.
 
     Args:
-        f: Function for which the root is sought.
-        dfs: Sequence of derivative functions of f in increasing
-         order.
-        x0: Initial guess.
-        f_x0: Value evaluated at initial guess.
-        dfs_x0: Sequence of derivatives in increasing order at
-         initial guess.
-        etol: Error tolerance, indicating the desired precision
-         of the root. Defaults to {etol}.
-        ertol: Relative error tolerance. Defaults to {ertol}.
-        ptol: Precision tolerance, indicating the minimum change
-         of root approximations or width of brackets (in bracketing
-         methods) after each iteration. Defaults to {ptol}.
-        prtol: Relative precision tolerance. Defaults to {prtol}.
-        max_iter: Maximum number of iterations. If set to 0, the
-         procedure will run indefinitely until stopping condition is
-         met. Defaults to {max_iter}.
-        c_code: Use C implementation of reciprocal derivative
-         function or not. Defaults to True.
+        f (function): Function for which the root is sought.
+        dfs (tuple of function): Tuple of derivative functions
+         of f in increasing order.
+        x0 (float): Initial guess.
+        f_x0 (float, optional): Value evaluated at initial guess.
+        dfs_x0 (tuple of float, optional): Tuple of derivatives
+         in increasing order at initial guess.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
+        c_code (bool, optional): Use C implementation of reciprocal
+         derivative function or not. Defaults to {c_code}.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
