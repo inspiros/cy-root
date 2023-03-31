@@ -7713,7 +7713,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_6pegasus(CYTHON_UNUSED PyObject *
  * # AndersonBjrck
  * ################################################################################
  * cdef inline double anderson_bjorck_scale(double f_b, double f_c):             # <<<<<<<<<<<<<<
- *     m = 1 - f_c / f_b
+ *     cdef double m = 1 - f_c / f_b
  *     if m <= 0:
  */
 
@@ -7727,7 +7727,7 @@ static CYTHON_INLINE double __pyx_f_6cyroot_10bracketing_anderson_bjorck_scale(d
   /* "cyroot/bracketing.pyx":380
  * ################################################################################
  * cdef inline double anderson_bjorck_scale(double f_b, double f_c):
- *     m = 1 - f_c / f_b             # <<<<<<<<<<<<<<
+ *     cdef double m = 1 - f_c / f_b             # <<<<<<<<<<<<<<
  *     if m <= 0:
  *         return 0.5
  */
@@ -7735,7 +7735,7 @@ static CYTHON_INLINE double __pyx_f_6cyroot_10bracketing_anderson_bjorck_scale(d
 
   /* "cyroot/bracketing.pyx":381
  * cdef inline double anderson_bjorck_scale(double f_b, double f_c):
- *     m = 1 - f_c / f_b
+ *     cdef double m = 1 - f_c / f_b
  *     if m <= 0:             # <<<<<<<<<<<<<<
  *         return 0.5
  *     return m
@@ -7744,7 +7744,7 @@ static CYTHON_INLINE double __pyx_f_6cyroot_10bracketing_anderson_bjorck_scale(d
   if (__pyx_t_1) {
 
     /* "cyroot/bracketing.pyx":382
- *     m = 1 - f_c / f_b
+ *     cdef double m = 1 - f_c / f_b
  *     if m <= 0:
  *         return 0.5             # <<<<<<<<<<<<<<
  *     return m
@@ -7755,7 +7755,7 @@ static CYTHON_INLINE double __pyx_f_6cyroot_10bracketing_anderson_bjorck_scale(d
 
     /* "cyroot/bracketing.pyx":381
  * cdef inline double anderson_bjorck_scale(double f_b, double f_c):
- *     m = 1 - f_c / f_b
+ *     cdef double m = 1 - f_c / f_b
  *     if m <= 0:             # <<<<<<<<<<<<<<
  *         return 0.5
  *     return m
@@ -7776,7 +7776,7 @@ static CYTHON_INLINE double __pyx_f_6cyroot_10bracketing_anderson_bjorck_scale(d
  * # AndersonBjrck
  * ################################################################################
  * cdef inline double anderson_bjorck_scale(double f_b, double f_c):             # <<<<<<<<<<<<<<
- *     m = 1 - f_c / f_b
+ *     cdef double m = 1 - f_c / f_b
  *     if m <= 0:
  */
 

@@ -377,7 +377,7 @@ def pegasus(f: Callable[[float], float],
 # Anderson–Björck
 ################################################################################
 cdef inline double anderson_bjorck_scale(double f_b, double f_c):
-    m = 1 - f_c / f_b
+    cdef double m = 1 - f_c / f_b
     if m <= 0:
         return 0.5
     return m
