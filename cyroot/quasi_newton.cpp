@@ -1406,16 +1406,16 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
 struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose;
-struct __pyx_ctuple_long__and_long;
-typedef struct __pyx_ctuple_long__and_long __pyx_ctuple_long__and_long;
+struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
+typedef struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
 struct __pyx_opt_args_6cyroot_5utils_9array_ops_argsort;
 
 /* "utils/array_ops.pxd":5
  * cdef double fabs_width(double[:] xs) nogil
  * cdef double cabs_width(double complex[:] xs) nogil
  * cdef bint allclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
- * cdef double[:] permute(double[:] xs, long[:] inds) nogil
- * cdef long argmin(double[:] xs) nogil
+ * cdef double[:] permute(double[:] xs, unsigned long[:] inds) nogil
+ * cdef unsigned long argmin(double[:] xs) nogil
  */
 struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose {
   int __pyx_n;
@@ -1424,21 +1424,21 @@ struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose {
 };
 
 /* "utils/array_ops.pxd":9
- * cdef long argmin(double[:] xs) nogil
- * cdef long argmax(double[:] xs) nogil
- * cdef (long, long) argminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
+ * cdef unsigned long argmin(double[:] xs) nogil
+ * cdef unsigned long argmax(double[:] xs) nogil
+ * cdef (unsigned long, unsigned long) argminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
  * cdef void sort(double[::1] xs) nogil
- * cdef long[:] argsort(double[:] xs, bint reverse=*) nogil
+ * cdef unsigned unsigned long[:] argsort(double[:] xs, bint reverse=*) nogil
  */
-struct __pyx_ctuple_long__and_long {
-  long f0;
-  long f1;
+struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long {
+  unsigned long f0;
+  unsigned long f1;
 };
 
 /* "utils/array_ops.pxd":11
- * cdef (long, long) argminmax(double[:] xs) nogil
+ * cdef (unsigned long, unsigned long) argminmax(double[:] xs) nogil
  * cdef void sort(double[::1] xs) nogil
- * cdef long[:] argsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<
+ * cdef unsigned unsigned long[:] argsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<
  */
 struct __pyx_opt_args_6cyroot_5utils_9array_ops_argsort {
   int __pyx_n;
@@ -1534,11 +1534,11 @@ struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose {
   double rtol;
   double atol;
 };
-struct __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc;
-typedef struct __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc;
+struct __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc;
+typedef struct __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc;
 struct __pyx_opt_args_6cyroot_12quasi_newton_16NewtonPolynomial_dnf;
-struct __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc;
-typedef struct __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc;
+struct __pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc;
+typedef struct __pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc;
 struct __pyx_fuse_0__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel;
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel;
 struct __pyx_fuse_0__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel;
@@ -1567,14 +1567,14 @@ typedef struct __pyx_defaults5 __pyx_defaults5;
 /* "cyroot/quasi_newton.pyx":53
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) secant_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) secant_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
-struct __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc {
+struct __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc {
   double f0;
   double f1;
-  long f2;
+  unsigned long f2;
   double f3;
   double f4;
   int f5;
@@ -1596,14 +1596,14 @@ struct __pyx_opt_args_6cyroot_12quasi_newton_16NewtonPolynomial_dnf {
 /* "cyroot/quasi_newton.pyx":652
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double complex, double complex, long, double, double, bint, bint) muller_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double complex, double complex, unsigned long, double, double, bint, bint) muller_kernel(             # <<<<<<<<<<<<<<
  *         complex_scalar_func_type f,
  *         double complex x0,
  */
-struct __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc {
+struct __pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc {
   __pyx_t_double_complex f0;
   __pyx_t_double_complex f1;
-  long f2;
+  unsigned long f2;
   double f3;
   double f4;
   int f5;
@@ -1613,7 +1613,7 @@ struct __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_doub
 /* "cyroot/quasi_newton.pyx":53
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) secant_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) secant_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -1623,7 +1623,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel {
   int __pyx_n;
@@ -1631,13 +1631,13 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/quasi_newton.pyx":153
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) sidi_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) sidi_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double[:] x0s,
  */
@@ -1647,7 +1647,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel {
   int __pyx_n;
@@ -1655,13 +1655,13 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/quasi_newton.pyx":321
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -1672,7 +1672,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_12quasi_newton_steffensen_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_steffensen_kernel {
   int __pyx_n;
@@ -1681,13 +1681,13 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_steffensen_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/quasi_newton.pyx":417
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -1697,7 +1697,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_12quasi_newton_inverse_quadratic_inter
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel {
   int __pyx_n;
@@ -1705,13 +1705,13 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_inverse_quadratic_inter
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/quasi_newton.pyx":532
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -1721,7 +1721,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_12quasi_newton_hyperbolic_interp_kerne
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_hyperbolic_interp_kernel {
   int __pyx_n;
@@ -1729,13 +1729,13 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_hyperbolic_interp_kerne
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/quasi_newton.pyx":652
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double complex, double complex, long, double, double, bint, bint) muller_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double complex, double complex, unsigned long, double, double, bint, bint) muller_kernel(             # <<<<<<<<<<<<<<
  *         complex_scalar_func_type f,
  *         double complex x0,
  */
@@ -1745,7 +1745,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_12quasi_newton_muller_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_muller_kernel {
   int __pyx_n;
@@ -1753,7 +1753,7 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_muller_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_defaults {
   PyObject *__pyx_arg_etol;
@@ -3115,7 +3115,7 @@ static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_dou
 static __pyx_t_double_complex __Pyx_PyComplex_As___pyx_t_double_complex(PyObject*);
 
 /* ToPyCTupleUtility.proto */
-static PyObject* __pyx_convert__to_py___pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc);
+static PyObject* __pyx_convert__to_py___pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc);
 
 /* MemviewDtypeToObject.proto */
 static CYTHON_INLINE PyObject *__pyx_memview_get_double(const char *itemp);
@@ -3133,7 +3133,7 @@ static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dsds_d
 static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds___pyx_t_double_complex(PyObject *, int writable_flag);
 
 /* ToPyCTupleUtility.proto */
-static PyObject* __pyx_convert__to_py___pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc);
+static PyObject* __pyx_convert__to_py___pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc);
 
 /* Arithmetic.proto */
 #if CYTHON_CCOMPLEX
@@ -3187,25 +3187,28 @@ struct __pyx_typeinfo_string {
 static struct __pyx_typeinfo_string __Pyx_TypeInfoToFormat(__Pyx_TypeInfo *type);
 
 /* CIntFromPy.proto */
-static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
-
-/* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
+static CYTHON_INLINE unsigned long __Pyx_PyInt_As_unsigned_long(PyObject *);
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_long(unsigned long value);
 
 /* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
+
+/* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_int(unsigned int value);
 
 /* CIntFromPy.proto */
-static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
+static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *);
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
 /* CIntFromPy.proto */
-static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *);
+static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
+
+/* CIntFromPy.proto */
+static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
 
 /* CIntFromPy.proto */
 static CYTHON_INLINE char __Pyx_PyInt_As_char(PyObject *);
@@ -3323,12 +3326,12 @@ static PyObject *contiguous = 0;
 static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_secant_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_sidi_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, __Pyx_memviewslice, __Pyx_memviewslice, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_steffensen_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_steffensen_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_hyperbolic_interp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_hyperbolic_interp_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_muller_kernel(struct __pyx_obj_6cyroot_4fptr_ComplexScalarFPtr *, __pyx_t_double_complex, __pyx_t_double_complex, __pyx_t_double_complex, __pyx_t_double_complex, __pyx_t_double_complex, __pyx_t_double_complex, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_muller_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_secant_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_sidi_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, __Pyx_memviewslice, __Pyx_memviewslice, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_steffensen_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_steffensen_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_hyperbolic_interp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_hyperbolic_interp_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_muller_kernel(struct __pyx_obj_6cyroot_4fptr_ComplexScalarFPtr *, __pyx_t_double_complex, __pyx_t_double_complex, __pyx_t_double_complex, __pyx_t_double_complex, __pyx_t_double_complex, __pyx_t_double_complex, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_muller_kernel *__pyx_optional_args); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -3783,64 +3786,64 @@ static double __pyx_k_;
 static double __pyx_k__2;
 static double __pyx_k__3;
 static double __pyx_k__4;
-static long __pyx_k__5;
+static unsigned long __pyx_k__5;
 static double __pyx_k__6;
 static double __pyx_k__7;
 static double __pyx_k__8;
 static double __pyx_k__9;
-static long __pyx_k__10;
+static unsigned long __pyx_k__10;
 static int __pyx_k__14;
 static double __pyx_k__15;
 static double __pyx_k__16;
 static double __pyx_k__17;
 static double __pyx_k__18;
-static long __pyx_k__19;
+static unsigned long __pyx_k__19;
 static double __pyx_k__20;
 static double __pyx_k__21;
 static double __pyx_k__22;
 static double __pyx_k__23;
-static long __pyx_k__24;
+static unsigned long __pyx_k__24;
 static double __pyx_k__25;
 static double __pyx_k__26;
 static double __pyx_k__27;
 static double __pyx_k__28;
-static long __pyx_k__29;
+static unsigned long __pyx_k__29;
 static double __pyx_k__30;
 static double __pyx_k__31;
 static double __pyx_k__32;
 static double __pyx_k__33;
-static long __pyx_k__34;
+static unsigned long __pyx_k__34;
 static double __pyx_k__61;
 static double __pyx_k__62;
 static double __pyx_k__63;
 static double __pyx_k__64;
-static long __pyx_k__65;
+static unsigned long __pyx_k__65;
 static double __pyx_k__69;
 static double __pyx_k__70;
 static double __pyx_k__71;
 static double __pyx_k__72;
-static long __pyx_k__73;
+static unsigned long __pyx_k__73;
 static int __pyx_k__76;
 static double __pyx_k__77;
 static double __pyx_k__78;
 static double __pyx_k__79;
 static double __pyx_k__80;
-static long __pyx_k__81;
+static unsigned long __pyx_k__81;
 static double __pyx_k__84;
 static double __pyx_k__85;
 static double __pyx_k__86;
 static double __pyx_k__87;
-static long __pyx_k__88;
+static unsigned long __pyx_k__88;
 static double __pyx_k__91;
 static double __pyx_k__92;
 static double __pyx_k__93;
 static double __pyx_k__94;
-static long __pyx_k__95;
+static unsigned long __pyx_k__95;
 static double __pyx_k__98;
 static double __pyx_k__99;
 static double __pyx_k__100;
 static double __pyx_k__101;
-static long __pyx_k__102;
+static unsigned long __pyx_k__102;
 static PyObject *__pyx_slice__51;
 static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_tuple__12;
@@ -3889,18 +3892,18 @@ static PyObject *__pyx_codeobj__111;
 /* "cyroot/quasi_newton.pyx":53
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) secant_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) secant_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
 
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_secant_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_x0, double __pyx_v_x1, double __pyx_v_f_x0, double __pyx_v_f_x1, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel *__pyx_optional_args) {
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_secant_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_x0, double __pyx_v_x1, double __pyx_v_f_x0, double __pyx_v_f_x1, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k_;
   double __pyx_v_ertol = __pyx_k__2;
   double __pyx_v_ptol = __pyx_k__3;
   double __pyx_v_prtol = __pyx_k__4;
-  long __pyx_v_max_iter = __pyx_k__5;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__5;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -3911,7 +3914,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   double __pyx_v_f_xs[2];
   double __pyx_v_x2;
   double __pyx_v_df_01;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   double __pyx_t_1[2];
   double __pyx_t_2[2];
@@ -3921,7 +3924,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   __Pyx_memviewslice __pyx_t_6 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_t_7 = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_t_8;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_9;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_9;
   int __pyx_t_10;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_11;
   int __pyx_t_12;
@@ -3953,8 +3956,8 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/quasi_newton.pyx":64
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -4305,7 +4308,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   /* "cyroot/quasi_newton.pyx":53
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) secant_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) secant_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -4600,8 +4603,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_19;
+  unsigned long __pyx_t_18;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_19;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_secant_kernel __pyx_t_20;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -4994,7 +4997,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 146, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 146, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 146, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 146, __pyx_L1_error)
 
   /* "cyroot/quasi_newton.pyx":145
  *     _check_unique_initial_vals(f_x0, f_x1)
@@ -5010,7 +5013,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
   __pyx_t_20.prtol = __pyx_t_17;
   __pyx_t_20.max_iter = __pyx_t_18;
   __pyx_t_19 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_secant_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_v_x1, __pyx_t_12, __pyx_t_13, &__pyx_t_20); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5118,21 +5121,21 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_secant(CYTHON_UNUSED PyObject *
 /* "cyroot/quasi_newton.pyx":153
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) sidi_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) sidi_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double[:] x0s,
  */
 
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_sidi_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, __Pyx_memviewslice __pyx_v_x0s, __Pyx_memviewslice __pyx_v_f_x0s, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel *__pyx_optional_args) {
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_sidi_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, __Pyx_memviewslice __pyx_v_x0s, __Pyx_memviewslice __pyx_v_f_x0s, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k__6;
   double __pyx_v_ertol = __pyx_k__7;
   double __pyx_v_ptol = __pyx_k__8;
   double __pyx_v_prtol = __pyx_k__9;
-  long __pyx_v_max_iter = __pyx_k__10;
+  unsigned long __pyx_v_max_iter = __pyx_k__10;
   __Pyx_memviewslice __pyx_v_inds = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_xs = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_f_xs = { 0, 0, { 0 }, { 0 }, { 0 } };
-  long __pyx_v_step;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -5143,13 +5146,13 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   double __pyx_v_f_xn;
   double __pyx_v_dp_xn;
   struct __pyx_obj_6cyroot_12quasi_newton_NewtonPolynomial *__pyx_v_poly = 0;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_memviewslice __pyx_t_1 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_t_2 = { 0, 0, { 0 }, { 0 }, { 0 } };
   struct __pyx_opt_args_6cyroot_5utils_9array_ops_argsort __pyx_t_3;
   int __pyx_t_4;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_5;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_5;
   int __pyx_t_6;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_7;
   int __pyx_t_8;
@@ -5187,9 +5190,9 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   }
 
   /* "cyroot/quasi_newton.pyx":163
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  *     # sort by absolute value of f
- *     cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)             # <<<<<<<<<<<<<<
+ *     cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)             # <<<<<<<<<<<<<<
  *     cdef double[:] xs = permute(x0s, inds)
  *     cdef double[:] f_xs = permute(f_x0s, inds)
  */
@@ -5206,7 +5209,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/quasi_newton.pyx":164
  *     # sort by absolute value of f
- *     cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
+ *     cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
  *     cdef double[:] xs = permute(x0s, inds)             # <<<<<<<<<<<<<<
  *     cdef double[:] f_xs = permute(f_x0s, inds)
  * 
@@ -5217,11 +5220,11 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   __pyx_t_1.data = NULL;
 
   /* "cyroot/quasi_newton.pyx":165
- *     cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
+ *     cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
  *     cdef double[:] xs = permute(x0s, inds)
  *     cdef double[:] f_xs = permute(f_x0s, inds)             # <<<<<<<<<<<<<<
  * 
- *     cdef long step = 0
+ *     cdef unsigned long step = 0
  */
   __pyx_t_1 = __pyx_f_6cyroot_5utils_9array_ops_permute(__pyx_v_f_x0s, __pyx_v_inds); if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 165, __pyx_L1_error)
   __pyx_v_f_xs = __pyx_t_1;
@@ -5231,7 +5234,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   /* "cyroot/quasi_newton.pyx":167
  *     cdef double[:] f_xs = permute(f_x0s, inds)
  * 
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -5680,7 +5683,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_1, __pyx_t_18, 1, 1, 0) < 0)
   /* "cyroot/quasi_newton.pyx":153
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) sidi_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) sidi_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double[:] x0s,
  */
@@ -5779,8 +5782,8 @@ static int __pyx_pw_6cyroot_12quasi_newton_16NewtonPolynomial_1__cinit__(PyObjec
 
 static int __pyx_pf_6cyroot_12quasi_newton_16NewtonPolynomial___cinit__(struct __pyx_obj_6cyroot_12quasi_newton_NewtonPolynomial *__pyx_v_self, __Pyx_memviewslice __pyx_v_xs, __Pyx_memviewslice __pyx_v_ys) {
   __Pyx_memviewslice __pyx_v_DD = { 0, 0, { 0 }, { 0 }, { 0 } };
-  int __pyx_v_i;
-  int __pyx_v_j;
+  unsigned int __pyx_v_i;
+  unsigned int __pyx_v_j;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5792,17 +5795,18 @@ static int __pyx_pf_6cyroot_12quasi_newton_16NewtonPolynomial___cinit__(struct _
   __Pyx_memviewslice __pyx_t_7 = { 0, 0, { 0 }, { 0 }, { 0 } };
   unsigned int __pyx_t_8;
   unsigned int __pyx_t_9;
-  int __pyx_t_10;
+  unsigned int __pyx_t_10;
   unsigned int __pyx_t_11;
   unsigned int __pyx_t_12;
-  Py_ssize_t __pyx_t_13;
-  Py_ssize_t __pyx_t_14;
+  unsigned int __pyx_t_13;
+  size_t __pyx_t_14;
   Py_ssize_t __pyx_t_15;
   Py_ssize_t __pyx_t_16;
   Py_ssize_t __pyx_t_17;
-  Py_ssize_t __pyx_t_18;
-  Py_ssize_t __pyx_t_19;
-  Py_ssize_t __pyx_t_20;
+  size_t __pyx_t_18;
+  size_t __pyx_t_19;
+  size_t __pyx_t_20;
+  size_t __pyx_t_21;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -5977,7 +5981,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_self->x, 1, 1, 0)
  *         cdef double[:, :] DD = view.array(shape=(self.n, self.n),
  *                                           itemsize=sizeof(double),             # <<<<<<<<<<<<<<
  *                                           format='d')
- *         cdef int i, j
+ *         cdef unsigned int i, j
  */
   __pyx_t_6 = __Pyx_PyInt_FromSize_t((sizeof(double))); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
@@ -6002,7 +6006,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_self->x, 1, 1, 0)
   __pyx_t_7.data = NULL;
 
   /* "cyroot/quasi_newton.pyx":222
- *         cdef int i, j
+ *         cdef unsigned int i, j
  *         # Fill in divided differences
  *         with nogil:             # <<<<<<<<<<<<<<
  *             DD[:, 0] = ys
@@ -6053,8 +6057,8 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_4, 1, 1, 0) < 0)
  */
         __pyx_t_8 = __pyx_v_self->n;
         __pyx_t_9 = __pyx_t_8;
-        for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_9; __pyx_t_5+=1) {
-          __pyx_v_j = __pyx_t_5;
+        for (__pyx_t_10 = 1; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
+          __pyx_v_j = __pyx_t_10;
 
           /* "cyroot/quasi_newton.pyx":225
  *             DD[:, 0] = ys
@@ -6066,13 +6070,13 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_4, 1, 1, 0) < 0)
           __pyx_t_4.data = __pyx_v_DD.data;
           __pyx_t_4.memview = __pyx_v_DD.memview;
           __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
-          __pyx_t_10 = -1;
+          __pyx_t_5 = -1;
           if (unlikely(__pyx_memoryview_slice_memviewslice(
     &__pyx_t_4,
     __pyx_v_DD.shape[0], __pyx_v_DD.strides[0], __pyx_v_DD.suboffsets[0],
     0,
     0,
-    &__pyx_t_10,
+    &__pyx_t_5,
     0,
     __pyx_v_j,
     0,
@@ -6120,8 +6124,8 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_4, 1, 1, 0) < 0)
  */
           __pyx_t_11 = __pyx_v_self->n;
           __pyx_t_12 = __pyx_t_11;
-          for (__pyx_t_10 = __pyx_v_j; __pyx_t_10 < __pyx_t_12; __pyx_t_10+=1) {
-            __pyx_v_i = __pyx_t_10;
+          for (__pyx_t_13 = __pyx_v_j; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
+            __pyx_v_i = __pyx_t_13;
 
             /* "cyroot/quasi_newton.pyx":227
  *                 DD[:j, j] = 0
@@ -6130,23 +6134,18 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_4, 1, 1, 0) < 0)
  *             # Copy diagonal elements into array for returning
  *             for j in range(self.n):
  */
-            __pyx_t_13 = __pyx_v_i;
-            __pyx_t_14 = (__pyx_v_j - 1);
-            if (__pyx_t_13 < 0) __pyx_t_13 += __pyx_v_DD.shape[0];
-            if (__pyx_t_14 < 0) __pyx_t_14 += __pyx_v_DD.shape[1];
-            __pyx_t_15 = (__pyx_v_i - 1);
-            __pyx_t_16 = (__pyx_v_j - 1);
-            if (__pyx_t_15 < 0) __pyx_t_15 += __pyx_v_DD.shape[0];
-            if (__pyx_t_16 < 0) __pyx_t_16 += __pyx_v_DD.shape[1];
-            __pyx_t_17 = __pyx_v_i;
-            if (__pyx_t_17 < 0) __pyx_t_17 += __pyx_v_xs.shape[0];
-            __pyx_t_18 = (__pyx_v_i - __pyx_v_j);
-            if (__pyx_t_18 < 0) __pyx_t_18 += __pyx_v_xs.shape[0];
-            __pyx_t_19 = __pyx_v_i;
-            __pyx_t_20 = __pyx_v_j;
-            if (__pyx_t_19 < 0) __pyx_t_19 += __pyx_v_DD.shape[0];
-            if (__pyx_t_20 < 0) __pyx_t_20 += __pyx_v_DD.shape[1];
-            *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_DD.data + __pyx_t_19 * __pyx_v_DD.strides[0]) ) + __pyx_t_20 * __pyx_v_DD.strides[1]) )) = (((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_DD.data + __pyx_t_13 * __pyx_v_DD.strides[0]) ) + __pyx_t_14 * __pyx_v_DD.strides[1]) ))) - (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_DD.data + __pyx_t_15 * __pyx_v_DD.strides[0]) ) + __pyx_t_16 * __pyx_v_DD.strides[1]) )))) / ((*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_17 * __pyx_v_xs.strides[0]) ))) - (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_18 * __pyx_v_xs.strides[0]) )))));
+            __pyx_t_14 = __pyx_v_i;
+            __pyx_t_15 = (__pyx_v_j - 1);
+            if (__pyx_t_15 < 0) __pyx_t_15 += __pyx_v_DD.shape[1];
+            __pyx_t_16 = (__pyx_v_i - 1);
+            __pyx_t_17 = (__pyx_v_j - 1);
+            if (__pyx_t_16 < 0) __pyx_t_16 += __pyx_v_DD.shape[0];
+            if (__pyx_t_17 < 0) __pyx_t_17 += __pyx_v_DD.shape[1];
+            __pyx_t_18 = __pyx_v_i;
+            __pyx_t_19 = (__pyx_v_i - __pyx_v_j);
+            __pyx_t_20 = __pyx_v_i;
+            __pyx_t_21 = __pyx_v_j;
+            *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_DD.data + __pyx_t_20 * __pyx_v_DD.strides[0]) ) + __pyx_t_21 * __pyx_v_DD.strides[1]) )) = (((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_DD.data + __pyx_t_14 * __pyx_v_DD.strides[0]) ) + __pyx_t_15 * __pyx_v_DD.strides[1]) ))) - (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_DD.data + __pyx_t_16 * __pyx_v_DD.strides[0]) ) + __pyx_t_17 * __pyx_v_DD.strides[1]) )))) / ((*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_18 * __pyx_v_xs.strides[0]) ))) - (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_19 * __pyx_v_xs.strides[0]) )))));
           }
         }
 
@@ -6159,8 +6158,8 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_4, 1, 1, 0) < 0)
  */
         __pyx_t_8 = __pyx_v_self->n;
         __pyx_t_9 = __pyx_t_8;
-        for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_9; __pyx_t_5+=1) {
-          __pyx_v_j = __pyx_t_5;
+        for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
+          __pyx_v_j = __pyx_t_10;
 
           /* "cyroot/quasi_newton.pyx":230
  *             # Copy diagonal elements into array for returning
@@ -6169,18 +6168,15 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v_ys, __pyx_t_4, 1, 1, 0) < 0)
  * 
  *     def __call__(self, double x):
  */
+          __pyx_t_19 = __pyx_v_j;
           __pyx_t_18 = __pyx_v_j;
-          __pyx_t_17 = __pyx_v_j;
-          if (__pyx_t_18 < 0) __pyx_t_18 += __pyx_v_DD.shape[0];
-          if (__pyx_t_17 < 0) __pyx_t_17 += __pyx_v_DD.shape[1];
-          __pyx_t_16 = __pyx_v_j;
-          if (__pyx_t_16 < 0) __pyx_t_16 += __pyx_v_self->a.shape[0];
-          *((double *) ( /* dim=0 */ (__pyx_v_self->a.data + __pyx_t_16 * __pyx_v_self->a.strides[0]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_DD.data + __pyx_t_18 * __pyx_v_DD.strides[0]) ) + __pyx_t_17 * __pyx_v_DD.strides[1]) )));
+          __pyx_t_14 = __pyx_v_j;
+          *((double *) ( /* dim=0 */ (__pyx_v_self->a.data + __pyx_t_14 * __pyx_v_self->a.strides[0]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_DD.data + __pyx_t_19 * __pyx_v_DD.strides[0]) ) + __pyx_t_18 * __pyx_v_DD.strides[1]) )));
         }
       }
 
       /* "cyroot/quasi_newton.pyx":222
- *         cdef int i, j
+ *         cdef unsigned int i, j
  *         # Fill in divided differences
  *         with nogil:             # <<<<<<<<<<<<<<
  *             DD[:, 0] = ys
@@ -7114,8 +7110,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
   double __pyx_t_19;
   double __pyx_t_20;
   double __pyx_t_21;
-  long __pyx_t_22;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_23;
+  unsigned long __pyx_t_22;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_23;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_sidi_kernel __pyx_t_24;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -7703,7 +7699,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
   __pyx_t_19 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_19 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 314, __pyx_L1_error)
   __pyx_t_20 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_20 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 314, __pyx_L1_error)
   __pyx_t_21 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_21 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 314, __pyx_L1_error)
-  __pyx_t_22 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_22 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 314, __pyx_L1_error)
+  __pyx_t_22 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_22 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 314, __pyx_L1_error)
   __pyx_t_24.__pyx_n = 5;
   __pyx_t_24.etol = __pyx_t_18;
   __pyx_t_24.ertol = __pyx_t_19;
@@ -7717,7 +7713,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
   __PYX_XDEC_MEMVIEW(&__pyx_t_17, 1);
   __pyx_t_17.memview = NULL;
   __pyx_t_17.data = NULL;
-  __pyx_t_8 = __pyx_convert__to_py___pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc(__pyx_t_23); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 314, __pyx_L1_error)
+  __pyx_t_8 = __pyx_convert__to_py___pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_t_23); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 314, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_v_res = __pyx_t_8;
   __pyx_t_8 = 0;
@@ -7828,19 +7824,19 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_2sidi(CYTHON_UNUSED PyObject *_
 /* "cyroot/quasi_newton.pyx":321
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
 
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_steffensen_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_x0, double __pyx_v_f_x0, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_steffensen_kernel *__pyx_optional_args) {
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_steffensen_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_x0, double __pyx_v_f_x0, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_steffensen_kernel *__pyx_optional_args) {
   int __pyx_v_adsp = __pyx_k__14;
   double __pyx_v_etol = __pyx_k__15;
   double __pyx_v_ertol = __pyx_k__16;
   double __pyx_v_ptol = __pyx_k__17;
   double __pyx_v_prtol = __pyx_k__18;
-  long __pyx_v_max_iter = __pyx_k__19;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__19;
+  unsigned long __pyx_v_step;
   double __pyx_v_precision;
   double __pyx_v_error;
   int __pyx_v_converged;
@@ -7849,10 +7845,10 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   double __pyx_v_x2;
   double __pyx_v_x3;
   double __pyx_v_denom;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   int __pyx_t_3;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_4;
   int __pyx_t_5;
@@ -7890,8 +7886,8 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/quasi_newton.pyx":331
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double precision, error
  *     cdef bint converged, optimal
  */
@@ -8237,7 +8233,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   /* "cyroot/quasi_newton.pyx":321
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -8518,8 +8514,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
   double __pyx_t_14;
   double __pyx_t_15;
   double __pyx_t_16;
-  long __pyx_t_17;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_18;
+  unsigned long __pyx_t_17;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_18;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_steffensen_kernel __pyx_t_19;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -8742,7 +8738,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
   __pyx_t_14 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_14 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 410, __pyx_L1_error)
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 410, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 410, __pyx_L1_error)
-  __pyx_t_17 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_17 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 410, __pyx_L1_error)
+  __pyx_t_17 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_17 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 410, __pyx_L1_error)
 
   /* "cyroot/quasi_newton.pyx":409
  *         f_x0 = f_wrapper(x0)
@@ -8759,7 +8755,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
   __pyx_t_19.prtol = __pyx_t_16;
   __pyx_t_19.max_iter = __pyx_t_17;
   __pyx_t_18 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_steffensen_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_t_12, &__pyx_t_19); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc(__pyx_t_18); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 409, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_t_18); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 409, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8866,18 +8862,18 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_4steffensen(CYTHON_UNUSED PyObj
 /* "cyroot/quasi_newton.pyx":417
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
 
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_x0, double __pyx_v_x1, double __pyx_v_x2, double __pyx_v_f_x0, double __pyx_v_f_x1, double __pyx_v_f_x2, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel *__pyx_optional_args) {
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_x0, double __pyx_v_x1, double __pyx_v_x2, double __pyx_v_f_x0, double __pyx_v_f_x1, double __pyx_v_f_x2, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k__20;
   double __pyx_v_ertol = __pyx_k__21;
   double __pyx_v_ptol = __pyx_k__22;
   double __pyx_v_prtol = __pyx_k__23;
-  long __pyx_v_max_iter = __pyx_k__24;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__24;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -8892,7 +8888,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   double __pyx_v_df_01;
   double __pyx_v_df_02;
   double __pyx_v_df_12;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   double __pyx_t_1[3];
   double __pyx_t_2[3];
@@ -8901,7 +8897,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   PyObject *__pyx_t_5 = NULL;
   __Pyx_memviewslice __pyx_t_6 = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_t_7;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_8;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_8;
   int __pyx_t_9;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_10;
   int __pyx_t_11;
@@ -8942,8 +8938,8 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/quasi_newton.pyx":430
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -9404,7 +9400,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   /* "cyroot/quasi_newton.pyx":417
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) inverse_quadratic_interp_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -9728,8 +9724,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
   double __pyx_t_16;
   double __pyx_t_17;
   double __pyx_t_18;
-  long __pyx_t_19;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_20;
+  unsigned long __pyx_t_19;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_20;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel __pyx_t_21;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -10183,7 +10179,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 525, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 525, __pyx_L1_error)
   __pyx_t_18 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_18 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 525, __pyx_L1_error)
-  __pyx_t_19 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_19 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 525, __pyx_L1_error)
+  __pyx_t_19 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_19 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 525, __pyx_L1_error)
 
   /* "cyroot/quasi_newton.pyx":524
  *     _check_unique_initial_vals(f_x0, f_x1, f_x2)
@@ -10199,7 +10195,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
   __pyx_t_21.prtol = __pyx_t_18;
   __pyx_t_21.max_iter = __pyx_t_19;
   __pyx_t_20 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_inverse_quadratic_interp_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_v_x1, __pyx_v_x2, __pyx_t_12, __pyx_t_13, __pyx_t_14, &__pyx_t_21); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc(__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 524, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 524, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -10308,18 +10304,18 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_6inverse_quadratic_interp(CYTHO
 /* "cyroot/quasi_newton.pyx":532
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
 
-static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_hyperbolic_interp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_x0, double __pyx_v_x1, double __pyx_v_x2, double __pyx_v_f_x0, double __pyx_v_f_x1, double __pyx_v_f_x2, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_hyperbolic_interp_kernel *__pyx_optional_args) {
+static __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_hyperbolic_interp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_x0, double __pyx_v_x1, double __pyx_v_x2, double __pyx_v_f_x0, double __pyx_v_f_x1, double __pyx_v_f_x2, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_hyperbolic_interp_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k__25;
   double __pyx_v_ertol = __pyx_k__26;
   double __pyx_v_ptol = __pyx_k__27;
   double __pyx_v_prtol = __pyx_k__28;
-  long __pyx_v_max_iter = __pyx_k__29;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__29;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -10337,7 +10333,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   double __pyx_v_df_02;
   double __pyx_v_df_12;
   PyObject *__pyx_v_denom = NULL;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   double __pyx_t_1[3];
   double __pyx_t_2[3];
@@ -10346,7 +10342,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   PyObject *__pyx_t_5 = NULL;
   __Pyx_memviewslice __pyx_t_6 = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_t_7;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_8;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_8;
   int __pyx_t_9;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_10;
   int __pyx_t_11;
@@ -10380,8 +10376,8 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/quasi_newton.pyx":545
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -10901,7 +10897,7 @@ static __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double
   /* "cyroot/quasi_newton.pyx":532
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) hyperbolic_interp_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -11226,8 +11222,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
   double __pyx_t_16;
   double __pyx_t_17;
   double __pyx_t_18;
-  long __pyx_t_19;
-  __pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_20;
+  unsigned long __pyx_t_19;
+  __pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_20;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_hyperbolic_interp_kernel __pyx_t_21;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -11681,7 +11677,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 645, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 645, __pyx_L1_error)
   __pyx_t_18 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_18 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 645, __pyx_L1_error)
-  __pyx_t_19 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_19 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 645, __pyx_L1_error)
+  __pyx_t_19 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_19 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 645, __pyx_L1_error)
 
   /* "cyroot/quasi_newton.pyx":644
  *     _check_unique_initial_vals(f_x0, f_x1, f_x2)
@@ -11697,7 +11693,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
   __pyx_t_21.prtol = __pyx_t_18;
   __pyx_t_21.max_iter = __pyx_t_19;
   __pyx_t_20 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_hyperbolic_interp_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_v_x1, __pyx_v_x2, __pyx_t_12, __pyx_t_13, __pyx_t_14, &__pyx_t_21); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc(__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 644, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 644, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -11806,18 +11802,18 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_8hyperbolic_interp(CYTHON_UNUSE
 /* "cyroot/quasi_newton.pyx":652
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double complex, double complex, long, double, double, bint, bint) muller_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double complex, double complex, unsigned long, double, double, bint, bint) muller_kernel(             # <<<<<<<<<<<<<<
  *         complex_scalar_func_type f,
  *         double complex x0,
  */
 
-static __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_muller_kernel(struct __pyx_obj_6cyroot_4fptr_ComplexScalarFPtr *__pyx_v_f, __pyx_t_double_complex __pyx_v_x0, __pyx_t_double_complex __pyx_v_x1, __pyx_t_double_complex __pyx_v_x2, __pyx_t_double_complex __pyx_v_f_x0, __pyx_t_double_complex __pyx_v_f_x1, __pyx_t_double_complex __pyx_v_f_x2, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_muller_kernel *__pyx_optional_args) {
+static __pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_muller_kernel(struct __pyx_obj_6cyroot_4fptr_ComplexScalarFPtr *__pyx_v_f, __pyx_t_double_complex __pyx_v_x0, __pyx_t_double_complex __pyx_v_x1, __pyx_t_double_complex __pyx_v_x2, __pyx_t_double_complex __pyx_v_f_x0, __pyx_t_double_complex __pyx_v_f_x1, __pyx_t_double_complex __pyx_v_f_x2, struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_muller_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k__30;
   double __pyx_v_ertol = __pyx_k__31;
   double __pyx_v_ptol = __pyx_k__32;
   double __pyx_v_prtol = __pyx_k__33;
-  long __pyx_v_max_iter = __pyx_k__34;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__34;
+  unsigned long __pyx_v_step;
   __pyx_t_double_complex __pyx_v_r;
   __pyx_t_double_complex __pyx_v_f_r;
   double __pyx_v_precision;
@@ -11841,7 +11837,7 @@ static __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_doub
   __pyx_t_double_complex __pyx_v_d_01;
   __pyx_t_double_complex __pyx_v_d_02;
   __pyx_t_double_complex __pyx_v_d_12;
-  __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   __pyx_t_double_complex __pyx_t_1[3];
   __pyx_t_double_complex __pyx_t_2[3];
@@ -11850,7 +11846,7 @@ static __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_doub
   PyObject *__pyx_t_5 = NULL;
   __Pyx_memviewslice __pyx_t_6 = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_t_7;
-  __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_8;
+  __pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_8;
   int __pyx_t_9;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_10;
   int __pyx_t_11;
@@ -11884,8 +11880,8 @@ static __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_doub
 
   /* "cyroot/quasi_newton.pyx":665
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double complex r, f_r
  *     cdef double precision, error
  */
@@ -12410,7 +12406,7 @@ static __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_doub
   /* "cyroot/quasi_newton.pyx":652
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double complex, double complex, long, double, double, bint, bint) muller_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double complex, double complex, unsigned long, double, double, bint, bint) muller_kernel(             # <<<<<<<<<<<<<<
  *         complex_scalar_func_type f,
  *         double complex x0,
  */
@@ -12734,8 +12730,8 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
   double __pyx_t_16;
   double __pyx_t_17;
   double __pyx_t_18;
-  long __pyx_t_19;
-  __pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc __pyx_t_20;
+  unsigned long __pyx_t_19;
+  __pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc __pyx_t_20;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_12quasi_newton_muller_kernel __pyx_t_21;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -13188,7 +13184,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 774, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 774, __pyx_L1_error)
   __pyx_t_18 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_18 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 774, __pyx_L1_error)
-  __pyx_t_19 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_19 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 774, __pyx_L1_error)
+  __pyx_t_19 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_19 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 774, __pyx_L1_error)
 
   /* "cyroot/quasi_newton.pyx":773
  *     _check_unique_initial_vals(f_x0, f_x1, f_x2)
@@ -13204,7 +13200,7 @@ static PyObject *__pyx_pf_6cyroot_12quasi_newton_10muller(CYTHON_UNUSED PyObject
   __pyx_t_21.prtol = __pyx_t_18;
   __pyx_t_21.max_iter = __pyx_t_19;
   __pyx_t_20 = __pyx_fuse_1__pyx_f_6cyroot_12quasi_newton_muller_kernel(((struct __pyx_obj_6cyroot_4fptr_ComplexScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_x0, __pyx_v_x1, __pyx_v_x2, __pyx_t_12, __pyx_t_13, __pyx_t_14, &__pyx_t_21); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc(__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 773, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 773, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -29561,7 +29557,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_quasi_newton(PyObject *__pyx_pyini
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   double __pyx_t_6;
-  long __pyx_t_7;
+  unsigned long __pyx_t_7;
   PyObject *__pyx_t_8 = NULL;
   PyObject *__pyx_t_9 = NULL;
   static PyThread_type_lock __pyx_t_10[8];
@@ -29934,7 +29930,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -29943,8 +29939,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -29952,8 +29948,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":63
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
@@ -29984,7 +29980,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 61, __pyx_L1_error)
   __pyx_k__63 = __pyx_t_6;
@@ -29993,8 +29989,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 62, __pyx_L1_error)
   __pyx_k__64 = __pyx_t_6;
@@ -30002,11 +29998,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":63
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 63, __pyx_L1_error)
   __pyx_k__65 = __pyx_t_7;
 
   /* "cyroot/quasi_newton.pyx":59
@@ -30034,7 +30030,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 61, __pyx_L1_error)
   __pyx_k__3 = __pyx_t_6;
@@ -30043,8 +30039,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 62, __pyx_L1_error)
   __pyx_k__4 = __pyx_t_6;
@@ -30052,11 +30048,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":63
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 63, __pyx_L1_error)
   __pyx_k__5 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -30350,7 +30346,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 159, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -30359,7 +30355,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  *     # sort by absolute value of f
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 160, __pyx_L1_error)
@@ -30368,9 +30364,9 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":161
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
  *     # sort by absolute value of f
- *     cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
+ *     cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
@@ -30400,7 +30396,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 159, __pyx_L1_error)
   __pyx_k__71 = __pyx_t_6;
@@ -30409,7 +30405,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  *     # sort by absolute value of f
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
@@ -30418,11 +30414,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":161
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
  *     # sort by absolute value of f
- *     cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
+ *     cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_9); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_9); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 161, __pyx_L1_error)
   __pyx_k__73 = __pyx_t_7;
 
   /* "cyroot/quasi_newton.pyx":157
@@ -30450,7 +30446,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 159, __pyx_L1_error)
   __pyx_k__8 = __pyx_t_6;
@@ -30459,7 +30455,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  *     # sort by absolute value of f
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
@@ -30468,11 +30464,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":161
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
  *     # sort by absolute value of f
- *     cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
+ *     cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_9); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_9); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 161, __pyx_L1_error)
   __pyx_k__10 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -30764,7 +30760,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -30773,8 +30769,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 329, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -30782,8 +30778,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":330
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 330, __pyx_L1_error)
@@ -30792,7 +30788,7 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":321
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -30823,7 +30819,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 328, __pyx_L1_error)
   __pyx_k__79 = __pyx_t_6;
@@ -30832,8 +30828,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 329, __pyx_L1_error)
   __pyx_k__80 = __pyx_t_6;
@@ -30841,17 +30837,17 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":330
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_8); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 330, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_8); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 330, __pyx_L1_error)
   __pyx_k__81 = __pyx_t_7;
 
   /* "cyroot/quasi_newton.pyx":321
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, bint, bint) steffensen_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double x0,
  */
@@ -30882,7 +30878,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 328, __pyx_L1_error)
   __pyx_k__17 = __pyx_t_6;
@@ -30891,8 +30887,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 329, __pyx_L1_error)
   __pyx_k__18 = __pyx_t_6;
@@ -30900,11 +30896,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":330
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_8); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 330, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_8); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 330, __pyx_L1_error)
   __pyx_k__19 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -31191,7 +31187,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 427, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -31200,8 +31196,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 428, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -31209,8 +31205,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":429
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 429, __pyx_L1_error)
@@ -31241,7 +31237,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 427, __pyx_L1_error)
   __pyx_k__86 = __pyx_t_6;
@@ -31250,8 +31246,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 428, __pyx_L1_error)
   __pyx_k__87 = __pyx_t_6;
@@ -31259,11 +31255,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":429
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 429, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 429, __pyx_L1_error)
   __pyx_k__88 = __pyx_t_7;
 
   /* "cyroot/quasi_newton.pyx":425
@@ -31291,7 +31287,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 427, __pyx_L1_error)
   __pyx_k__22 = __pyx_t_6;
@@ -31300,8 +31296,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 428, __pyx_L1_error)
   __pyx_k__23 = __pyx_t_6;
@@ -31309,11 +31305,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":429
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 429, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 429, __pyx_L1_error)
   __pyx_k__24 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -31631,7 +31627,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 542, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -31640,8 +31636,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 543, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -31649,8 +31645,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":544
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 544, __pyx_L1_error)
@@ -31681,7 +31677,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 542, __pyx_L1_error)
   __pyx_k__93 = __pyx_t_6;
@@ -31690,8 +31686,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 543, __pyx_L1_error)
   __pyx_k__94 = __pyx_t_6;
@@ -31699,11 +31695,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":544
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_1); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 544, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_1); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 544, __pyx_L1_error)
   __pyx_k__95 = __pyx_t_7;
 
   /* "cyroot/quasi_newton.pyx":540
@@ -31731,7 +31727,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 542, __pyx_L1_error)
   __pyx_k__27 = __pyx_t_6;
@@ -31740,8 +31736,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 543, __pyx_L1_error)
   __pyx_k__28 = __pyx_t_6;
@@ -31749,11 +31745,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":544
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_1); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 544, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_1); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 544, __pyx_L1_error)
   __pyx_k__29 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -32071,7 +32067,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 662, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -32080,8 +32076,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 663, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -32089,8 +32085,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":664
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double complex r, f_r
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 664, __pyx_L1_error)
@@ -32121,7 +32117,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 662, __pyx_L1_error)
   __pyx_k__100 = __pyx_t_6;
@@ -32130,8 +32126,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 663, __pyx_L1_error)
   __pyx_k__101 = __pyx_t_6;
@@ -32139,11 +32135,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":664
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double complex r, f_r
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 664, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 664, __pyx_L1_error)
   __pyx_k__102 = __pyx_t_7;
 
   /* "cyroot/quasi_newton.pyx":660
@@ -32171,7 +32167,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 662, __pyx_L1_error)
   __pyx_k__32 = __pyx_t_6;
@@ -32180,8 +32176,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 663, __pyx_L1_error)
   __pyx_k__33 = __pyx_t_6;
@@ -32189,11 +32185,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/quasi_newton.pyx":664
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double complex r, f_r
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 664, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 664, __pyx_L1_error)
   __pyx_k__34 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -37014,7 +37010,7 @@ __pyx_fail:
 }
 
 /* ToPyCTupleUtility */
-  static PyObject* __pyx_convert__to_py___pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_2e3c83__double__and_double__and_long__and_double__and_double__and_int__and_int__etc value) {
+  static PyObject* __pyx_convert__to_py___pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_de07d9__double__and_double__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc value) {
     PyObject* item = NULL;
     PyObject* result = PyTuple_New(7);
     if (!result) goto bad;
@@ -37024,7 +37020,7 @@ __pyx_fail:
         item = PyFloat_FromDouble(value.f1);
         if (!item) goto bad;
         PyTuple_SET_ITEM(result, 1, item);
-        item = __Pyx_PyInt_From_long(value.f2);
+        item = __Pyx_PyInt_From_unsigned_long(value.f2);
         if (!item) goto bad;
         PyTuple_SET_ITEM(result, 2, item);
         item = PyFloat_FromDouble(value.f3);
@@ -37105,7 +37101,7 @@ __pyx_fail:
 }
 
 /* ToPyCTupleUtility */
-  static PyObject* __pyx_convert__to_py___pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_1df130____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_long__and_double__and_double__and_int__and_int__etc value) {
+  static PyObject* __pyx_convert__to_py___pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_0d6003____dunderpyx_t_double_complex__and___dunderpyx_t_double_complex__and_unsigned__space_long__and_double__and_double__and_int__and_int__etc value) {
     PyObject* item = NULL;
     PyObject* result = PyTuple_New(7);
     if (!result) goto bad;
@@ -37115,7 +37111,7 @@ __pyx_fail:
         item = __pyx_PyComplex_FromComplex(value.f1);
         if (!item) goto bad;
         PyTuple_SET_ITEM(result, 1, item);
-        item = __Pyx_PyInt_From_long(value.f2);
+        item = __Pyx_PyInt_From_unsigned_long(value.f2);
         if (!item) goto bad;
         PyTuple_SET_ITEM(result, 2, item);
         item = PyFloat_FromDouble(value.f3);
@@ -37403,26 +37399,26 @@ no_fail:
 }
 
 /* CIntFromPy */
-  static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
+  static CYTHON_INLINE unsigned long __Pyx_PyInt_As_unsigned_long(PyObject *x) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 #endif
-    const long neg_one = (long) -1, const_zero = (long) 0;
+    const unsigned long neg_one = (unsigned long) -1, const_zero = (unsigned long) 0;
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
 #pragma GCC diagnostic pop
 #endif
     const int is_unsigned = neg_one > const_zero;
 #if PY_MAJOR_VERSION < 3
     if (likely(PyInt_Check(x))) {
-        if (sizeof(long) < sizeof(long)) {
-            __PYX_VERIFY_RETURN_INT(long, long, PyInt_AS_LONG(x))
+        if (sizeof(unsigned long) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(unsigned long, long, PyInt_AS_LONG(x))
         } else {
             long val = PyInt_AS_LONG(x);
             if (is_unsigned && unlikely(val < 0)) {
                 goto raise_neg_overflow;
             }
-            return (long) val;
+            return (unsigned long) val;
         }
     } else
 #endif
@@ -37431,32 +37427,32 @@ no_fail:
 #if CYTHON_USE_PYLONG_INTERNALS
             const digit* digits = ((PyLongObject*)x)->ob_digit;
             switch (Py_SIZE(x)) {
-                case  0: return (long) 0;
-                case  1: __PYX_VERIFY_RETURN_INT(long, digit, digits[0])
+                case  0: return (unsigned long) 0;
+                case  1: __PYX_VERIFY_RETURN_INT(unsigned long, digit, digits[0])
                 case 2:
-                    if (8 * sizeof(long) > 1 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 1 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) >= 2 * PyLong_SHIFT) {
-                            return (long) (((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) >= 2 * PyLong_SHIFT) {
+                            return (unsigned long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
                         }
                     }
                     break;
                 case 3:
-                    if (8 * sizeof(long) > 2 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) >= 3 * PyLong_SHIFT) {
-                            return (long) (((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) >= 3 * PyLong_SHIFT) {
+                            return (unsigned long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
                         }
                     }
                     break;
                 case 4:
-                    if (8 * sizeof(long) > 3 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) >= 4 * PyLong_SHIFT) {
-                            return (long) (((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) >= 4 * PyLong_SHIFT) {
+                            return (unsigned long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
                         }
                     }
                     break;
@@ -37470,86 +37466,86 @@ no_fail:
             {
                 int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
                 if (unlikely(result < 0))
-                    return (long) -1;
+                    return (unsigned long) -1;
                 if (unlikely(result == 1))
                     goto raise_neg_overflow;
             }
 #endif
-            if (sizeof(long) <= sizeof(unsigned long)) {
-                __PYX_VERIFY_RETURN_INT_EXC(long, unsigned long, PyLong_AsUnsignedLong(x))
+            if (sizeof(unsigned long) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned long, unsigned long, PyLong_AsUnsignedLong(x))
 #ifdef HAVE_LONG_LONG
-            } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT_EXC(long, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+            } else if (sizeof(unsigned long) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned long, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
 #endif
             }
         } else {
 #if CYTHON_USE_PYLONG_INTERNALS
             const digit* digits = ((PyLongObject*)x)->ob_digit;
             switch (Py_SIZE(x)) {
-                case  0: return (long) 0;
-                case -1: __PYX_VERIFY_RETURN_INT(long, sdigit, (sdigit) (-(sdigit)digits[0]))
-                case  1: __PYX_VERIFY_RETURN_INT(long,  digit, +digits[0])
+                case  0: return (unsigned long) 0;
+                case -1: __PYX_VERIFY_RETURN_INT(unsigned long, sdigit, (sdigit) (-(sdigit)digits[0]))
+                case  1: __PYX_VERIFY_RETURN_INT(unsigned long,  digit, +digits[0])
                 case -2:
-                    if (8 * sizeof(long) - 1 > 1 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) - 1 > 1 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
-                            return (long) (((long)-1)*(((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 2 * PyLong_SHIFT) {
+                            return (unsigned long) (((unsigned long)-1)*(((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case 2:
-                    if (8 * sizeof(long) > 1 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 1 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
-                            return (long) ((((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 2 * PyLong_SHIFT) {
+                            return (unsigned long) ((((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case -3:
-                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) - 1 > 2 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
-                            return (long) (((long)-1)*(((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 3 * PyLong_SHIFT) {
+                            return (unsigned long) (((unsigned long)-1)*(((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case 3:
-                    if (8 * sizeof(long) > 2 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
-                            return (long) ((((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 3 * PyLong_SHIFT) {
+                            return (unsigned long) ((((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case -4:
-                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) - 1 > 3 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
-                            return (long) (((long)-1)*(((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 4 * PyLong_SHIFT) {
+                            return (unsigned long) (((unsigned long)-1)*(((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case 4:
-                    if (8 * sizeof(long) > 3 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
-                            return (long) ((((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 4 * PyLong_SHIFT) {
+                            return (unsigned long) ((((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
             }
 #endif
-            if (sizeof(long) <= sizeof(long)) {
-                __PYX_VERIFY_RETURN_INT_EXC(long, long, PyLong_AsLong(x))
+            if (sizeof(unsigned long) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned long, long, PyLong_AsLong(x))
 #ifdef HAVE_LONG_LONG
-            } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT_EXC(long, PY_LONG_LONG, PyLong_AsLongLong(x))
+            } else if (sizeof(unsigned long) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned long, PY_LONG_LONG, PyLong_AsLongLong(x))
 #endif
             }
         }
@@ -37558,7 +37554,7 @@ no_fail:
             PyErr_SetString(PyExc_RuntimeError,
                             "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
 #else
-            long val;
+            unsigned long val;
             PyObject *v = __Pyx_PyNumber_IntOrLong(x);
  #if PY_MAJOR_VERSION < 3
             if (likely(v) && !PyLong_Check(v)) {
@@ -37578,62 +37574,24 @@ no_fail:
                     return val;
             }
 #endif
-            return (long) -1;
+            return (unsigned long) -1;
         }
     } else {
-        long val;
+        unsigned long val;
         PyObject *tmp = __Pyx_PyNumber_IntOrLong(x);
-        if (!tmp) return (long) -1;
-        val = __Pyx_PyInt_As_long(tmp);
+        if (!tmp) return (unsigned long) -1;
+        val = __Pyx_PyInt_As_unsigned_long(tmp);
         Py_DECREF(tmp);
         return val;
     }
 raise_overflow:
     PyErr_SetString(PyExc_OverflowError,
-        "value too large to convert to long");
-    return (long) -1;
+        "value too large to convert to unsigned long");
+    return (unsigned long) -1;
 raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
-        "can't convert negative value to long");
-    return (long) -1;
-}
-
-/* CIntToPy */
-  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const long neg_one = (long) -1, const_zero = (long) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(long) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(long) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-#endif
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(long),
-                                     little, !is_unsigned);
-    }
+        "can't convert negative value to unsigned long");
+    return (unsigned long) -1;
 }
 
 /* CIntToPy */
@@ -37675,6 +37633,44 @@ raise_neg_overflow:
 }
 
 /* CIntToPy */
+  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const long neg_one = (long) -1, const_zero = (long) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(long) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(long) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(long),
+                                     little, !is_unsigned);
+    }
+}
+
+/* CIntToPy */
   static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_int(unsigned int value) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
 #pragma GCC diagnostic push
@@ -37708,6 +37704,240 @@ raise_neg_overflow:
         int one = 1; int little = (int)*(unsigned char *)&one;
         unsigned char *bytes = (unsigned char *)&value;
         return _PyLong_FromByteArray(bytes, sizeof(unsigned int),
+                                     little, !is_unsigned);
+    }
+}
+
+/* CIntFromPy */
+  static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *x) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const unsigned int neg_one = (unsigned int) -1, const_zero = (unsigned int) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if (sizeof(unsigned int) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(unsigned int, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (unsigned int) val;
+        }
+    } else
+#endif
+    if (likely(PyLong_Check(x))) {
+        if (is_unsigned) {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (unsigned int) 0;
+                case  1: __PYX_VERIFY_RETURN_INT(unsigned int, digit, digits[0])
+                case 2:
+                    if (8 * sizeof(unsigned int) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) >= 2 * PyLong_SHIFT) {
+                            return (unsigned int) (((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(unsigned int) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) >= 3 * PyLong_SHIFT) {
+                            return (unsigned int) (((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(unsigned int) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) >= 4 * PyLong_SHIFT) {
+                            return (unsigned int) (((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                        }
+                    }
+                    break;
+            }
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON
+            if (unlikely(Py_SIZE(x) < 0)) {
+                goto raise_neg_overflow;
+            }
+#else
+            {
+                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+                if (unlikely(result < 0))
+                    return (unsigned int) -1;
+                if (unlikely(result == 1))
+                    goto raise_neg_overflow;
+            }
+#endif
+            if (sizeof(unsigned int) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, unsigned long, PyLong_AsUnsignedLong(x))
+#ifdef HAVE_LONG_LONG
+            } else if (sizeof(unsigned int) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+#endif
+            }
+        } else {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (unsigned int) 0;
+                case -1: __PYX_VERIFY_RETURN_INT(unsigned int, sdigit, (sdigit) (-(sdigit)digits[0]))
+                case  1: __PYX_VERIFY_RETURN_INT(unsigned int,  digit, +digits[0])
+                case -2:
+                    if (8 * sizeof(unsigned int) - 1 > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT) {
+                            return (unsigned int) (((unsigned int)-1)*(((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case 2:
+                    if (8 * sizeof(unsigned int) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT) {
+                            return (unsigned int) ((((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case -3:
+                    if (8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT) {
+                            return (unsigned int) (((unsigned int)-1)*(((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(unsigned int) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT) {
+                            return (unsigned int) ((((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case -4:
+                    if (8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 4 * PyLong_SHIFT) {
+                            return (unsigned int) (((unsigned int)-1)*(((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(unsigned int) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 4 * PyLong_SHIFT) {
+                            return (unsigned int) ((((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+            }
+#endif
+            if (sizeof(unsigned int) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, long, PyLong_AsLong(x))
+#ifdef HAVE_LONG_LONG
+            } else if (sizeof(unsigned int) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, PY_LONG_LONG, PyLong_AsLongLong(x))
+#endif
+            }
+        }
+        {
+#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
+            PyErr_SetString(PyExc_RuntimeError,
+                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
+#else
+            unsigned int val;
+            PyObject *v = __Pyx_PyNumber_IntOrLong(x);
+ #if PY_MAJOR_VERSION < 3
+            if (likely(v) && !PyLong_Check(v)) {
+                PyObject *tmp = v;
+                v = PyNumber_Long(tmp);
+                Py_DECREF(tmp);
+            }
+ #endif
+            if (likely(v)) {
+                int one = 1; int is_little = (int)*(unsigned char *)&one;
+                unsigned char *bytes = (unsigned char *)&val;
+                int ret = _PyLong_AsByteArray((PyLongObject *)v,
+                                              bytes, sizeof(val),
+                                              is_little, !is_unsigned);
+                Py_DECREF(v);
+                if (likely(!ret))
+                    return val;
+            }
+#endif
+            return (unsigned int) -1;
+        }
+    } else {
+        unsigned int val;
+        PyObject *tmp = __Pyx_PyNumber_IntOrLong(x);
+        if (!tmp) return (unsigned int) -1;
+        val = __Pyx_PyInt_As_unsigned_int(tmp);
+        Py_DECREF(tmp);
+        return val;
+    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to unsigned int");
+    return (unsigned int) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to unsigned int");
+    return (unsigned int) -1;
+}
+
+/* CIntToPy */
+  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const int neg_one = (int) -1, const_zero = (int) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
                                      little, !is_unsigned);
     }
 }
@@ -37908,65 +38138,27 @@ raise_neg_overflow:
     return (int) -1;
 }
 
-/* CIntToPy */
-  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const int neg_one = (int) -1, const_zero = (int) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(int) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(int) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-#endif
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(int),
-                                     little, !is_unsigned);
-    }
-}
-
 /* CIntFromPy */
-  static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *x) {
+  static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 #endif
-    const unsigned int neg_one = (unsigned int) -1, const_zero = (unsigned int) 0;
+    const long neg_one = (long) -1, const_zero = (long) 0;
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
 #pragma GCC diagnostic pop
 #endif
     const int is_unsigned = neg_one > const_zero;
 #if PY_MAJOR_VERSION < 3
     if (likely(PyInt_Check(x))) {
-        if (sizeof(unsigned int) < sizeof(long)) {
-            __PYX_VERIFY_RETURN_INT(unsigned int, long, PyInt_AS_LONG(x))
+        if (sizeof(long) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(long, long, PyInt_AS_LONG(x))
         } else {
             long val = PyInt_AS_LONG(x);
             if (is_unsigned && unlikely(val < 0)) {
                 goto raise_neg_overflow;
             }
-            return (unsigned int) val;
+            return (long) val;
         }
     } else
 #endif
@@ -37975,32 +38167,32 @@ raise_neg_overflow:
 #if CYTHON_USE_PYLONG_INTERNALS
             const digit* digits = ((PyLongObject*)x)->ob_digit;
             switch (Py_SIZE(x)) {
-                case  0: return (unsigned int) 0;
-                case  1: __PYX_VERIFY_RETURN_INT(unsigned int, digit, digits[0])
+                case  0: return (long) 0;
+                case  1: __PYX_VERIFY_RETURN_INT(long, digit, digits[0])
                 case 2:
-                    if (8 * sizeof(unsigned int) > 1 * PyLong_SHIFT) {
+                    if (8 * sizeof(long) > 1 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(unsigned int) >= 2 * PyLong_SHIFT) {
-                            return (unsigned int) (((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) >= 2 * PyLong_SHIFT) {
+                            return (long) (((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
                         }
                     }
                     break;
                 case 3:
-                    if (8 * sizeof(unsigned int) > 2 * PyLong_SHIFT) {
+                    if (8 * sizeof(long) > 2 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(unsigned int) >= 3 * PyLong_SHIFT) {
-                            return (unsigned int) (((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) >= 3 * PyLong_SHIFT) {
+                            return (long) (((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
                         }
                     }
                     break;
                 case 4:
-                    if (8 * sizeof(unsigned int) > 3 * PyLong_SHIFT) {
+                    if (8 * sizeof(long) > 3 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(unsigned int) >= 4 * PyLong_SHIFT) {
-                            return (unsigned int) (((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) >= 4 * PyLong_SHIFT) {
+                            return (long) (((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
                         }
                     }
                     break;
@@ -38014,86 +38206,86 @@ raise_neg_overflow:
             {
                 int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
                 if (unlikely(result < 0))
-                    return (unsigned int) -1;
+                    return (long) -1;
                 if (unlikely(result == 1))
                     goto raise_neg_overflow;
             }
 #endif
-            if (sizeof(unsigned int) <= sizeof(unsigned long)) {
-                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, unsigned long, PyLong_AsUnsignedLong(x))
+            if (sizeof(long) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(long, unsigned long, PyLong_AsUnsignedLong(x))
 #ifdef HAVE_LONG_LONG
-            } else if (sizeof(unsigned int) <= sizeof(unsigned PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+            } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(long, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
 #endif
             }
         } else {
 #if CYTHON_USE_PYLONG_INTERNALS
             const digit* digits = ((PyLongObject*)x)->ob_digit;
             switch (Py_SIZE(x)) {
-                case  0: return (unsigned int) 0;
-                case -1: __PYX_VERIFY_RETURN_INT(unsigned int, sdigit, (sdigit) (-(sdigit)digits[0]))
-                case  1: __PYX_VERIFY_RETURN_INT(unsigned int,  digit, +digits[0])
+                case  0: return (long) 0;
+                case -1: __PYX_VERIFY_RETURN_INT(long, sdigit, (sdigit) (-(sdigit)digits[0]))
+                case  1: __PYX_VERIFY_RETURN_INT(long,  digit, +digits[0])
                 case -2:
-                    if (8 * sizeof(unsigned int) - 1 > 1 * PyLong_SHIFT) {
+                    if (8 * sizeof(long) - 1 > 1 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT) {
-                            return (unsigned int) (((unsigned int)-1)*(((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                            return (long) (((long)-1)*(((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
                         }
                     }
                     break;
                 case 2:
-                    if (8 * sizeof(unsigned int) > 1 * PyLong_SHIFT) {
+                    if (8 * sizeof(long) > 1 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT) {
-                            return (unsigned int) ((((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                            return (long) ((((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
                         }
                     }
                     break;
                 case -3:
-                    if (8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT) {
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT) {
-                            return (unsigned int) (((unsigned int)-1)*(((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                            return (long) (((long)-1)*(((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
                         }
                     }
                     break;
                 case 3:
-                    if (8 * sizeof(unsigned int) > 2 * PyLong_SHIFT) {
+                    if (8 * sizeof(long) > 2 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT) {
-                            return (unsigned int) ((((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                            return (long) ((((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
                         }
                     }
                     break;
                 case -4:
-                    if (8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT) {
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(unsigned int) - 1 > 4 * PyLong_SHIFT) {
-                            return (unsigned int) (((unsigned int)-1)*(((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                            return (long) (((long)-1)*(((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
                         }
                     }
                     break;
                 case 4:
-                    if (8 * sizeof(unsigned int) > 3 * PyLong_SHIFT) {
+                    if (8 * sizeof(long) > 3 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(unsigned int) - 1 > 4 * PyLong_SHIFT) {
-                            return (unsigned int) ((((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                            return (long) ((((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
                         }
                     }
                     break;
             }
 #endif
-            if (sizeof(unsigned int) <= sizeof(long)) {
-                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, long, PyLong_AsLong(x))
+            if (sizeof(long) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(long, long, PyLong_AsLong(x))
 #ifdef HAVE_LONG_LONG
-            } else if (sizeof(unsigned int) <= sizeof(PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, PY_LONG_LONG, PyLong_AsLongLong(x))
+            } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(long, PY_LONG_LONG, PyLong_AsLongLong(x))
 #endif
             }
         }
@@ -38102,7 +38294,7 @@ raise_neg_overflow:
             PyErr_SetString(PyExc_RuntimeError,
                             "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
 #else
-            unsigned int val;
+            long val;
             PyObject *v = __Pyx_PyNumber_IntOrLong(x);
  #if PY_MAJOR_VERSION < 3
             if (likely(v) && !PyLong_Check(v)) {
@@ -38122,24 +38314,24 @@ raise_neg_overflow:
                     return val;
             }
 #endif
-            return (unsigned int) -1;
+            return (long) -1;
         }
     } else {
-        unsigned int val;
+        long val;
         PyObject *tmp = __Pyx_PyNumber_IntOrLong(x);
-        if (!tmp) return (unsigned int) -1;
-        val = __Pyx_PyInt_As_unsigned_int(tmp);
+        if (!tmp) return (long) -1;
+        val = __Pyx_PyInt_As_long(tmp);
         Py_DECREF(tmp);
         return val;
     }
 raise_overflow:
     PyErr_SetString(PyExc_OverflowError,
-        "value too large to convert to unsigned int");
-    return (unsigned int) -1;
+        "value too large to convert to long");
+    return (long) -1;
 raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
-        "can't convert negative value to unsigned int");
-    return (unsigned int) -1;
+        "can't convert negative value to long");
+    return (long) -1;
 }
 
 /* CIntFromPy */

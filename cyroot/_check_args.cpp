@@ -1138,16 +1138,16 @@ struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
 struct __pyx_memoryviewslice_obj;
 struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose;
-struct __pyx_ctuple_long__and_long;
-typedef struct __pyx_ctuple_long__and_long __pyx_ctuple_long__and_long;
+struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
+typedef struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
 struct __pyx_opt_args_6cyroot_5utils_9array_ops_argsort;
 
 /* "utils/array_ops.pxd":5
  * cdef double fabs_width(double[:] xs) nogil
  * cdef double cabs_width(double complex[:] xs) nogil
  * cdef bint allclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
- * cdef double[:] permute(double[:] xs, long[:] inds) nogil
- * cdef long argmin(double[:] xs) nogil
+ * cdef double[:] permute(double[:] xs, unsigned long[:] inds) nogil
+ * cdef unsigned long argmin(double[:] xs) nogil
  */
 struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose {
   int __pyx_n;
@@ -1156,21 +1156,21 @@ struct __pyx_opt_args_6cyroot_5utils_9array_ops_allclose {
 };
 
 /* "utils/array_ops.pxd":9
- * cdef long argmin(double[:] xs) nogil
- * cdef long argmax(double[:] xs) nogil
- * cdef (long, long) argminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
+ * cdef unsigned long argmin(double[:] xs) nogil
+ * cdef unsigned long argmax(double[:] xs) nogil
+ * cdef (unsigned long, unsigned long) argminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
  * cdef void sort(double[::1] xs) nogil
- * cdef long[:] argsort(double[:] xs, bint reverse=*) nogil
+ * cdef unsigned unsigned long[:] argsort(double[:] xs, bint reverse=*) nogil
  */
-struct __pyx_ctuple_long__and_long {
-  long f0;
-  long f1;
+struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long {
+  unsigned long f0;
+  unsigned long f1;
 };
 
 /* "utils/array_ops.pxd":11
- * cdef (long, long) argminmax(double[:] xs) nogil
+ * cdef (unsigned long, unsigned long) argminmax(double[:] xs) nogil
  * cdef void sort(double[::1] xs) nogil
- * cdef long[:] argsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<
+ * cdef unsigned unsigned long[:] argsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<
  */
 struct __pyx_opt_args_6cyroot_5utils_9array_ops_argsort {
   int __pyx_n;
@@ -2080,7 +2080,7 @@ static PyObject *__pyx_memoryviewslice_assign_item_from_object(struct __pyx_memo
 /* Module declarations from 'cyroot.utils.array_ops' */
 static __Pyx_memviewslice (*__pyx_f_6cyroot_5utils_9array_ops_fabs)(__Pyx_memviewslice); /*proto*/
 static __Pyx_memviewslice (*__pyx_f_6cyroot_5utils_9array_ops_cabs)(__Pyx_memviewslice); /*proto*/
-static long (*__pyx_f_6cyroot_5utils_9array_ops_argmin)(__Pyx_memviewslice); /*proto*/
+static unsigned long (*__pyx_f_6cyroot_5utils_9array_ops_argmin)(__Pyx_memviewslice); /*proto*/
 
 /* Module declarations from 'cyroot.utils.scalar_ops' */
 static int (*__pyx_f_6cyroot_5utils_10scalar_ops_isclose)(double, double, struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose *__pyx_optional_args); /*proto*/
@@ -19580,7 +19580,7 @@ static int __Pyx_modinit_function_import_code(void) {
   __Pyx_GOTREF(__pyx_t_1);
   if (__Pyx_ImportFunction(__pyx_t_1, "fabs", (void (**)(void))&__pyx_f_6cyroot_5utils_9array_ops_fabs, "__Pyx_memviewslice (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction(__pyx_t_1, "cabs", (void (**)(void))&__pyx_f_6cyroot_5utils_9array_ops_cabs, "__Pyx_memviewslice (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction(__pyx_t_1, "argmin", (void (**)(void))&__pyx_f_6cyroot_5utils_9array_ops_argmin, "long (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "argmin", (void (**)(void))&__pyx_f_6cyroot_5utils_9array_ops_argmin, "unsigned long (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = PyImport_ImportModule("cyroot.utils.scalar_ops"); if (!__pyx_t_1) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);

@@ -56,7 +56,7 @@ cdef inline (double, double, double, double, double, double)  _update_bracket(
 ctypedef bint (*stop_func_type)(long, double, double, double, double)
 
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint, bint) bisect_kernel(
+cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) bisect_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -66,9 +66,9 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER,
+        unsigned long max_iter=MAX_ITER,
         stop_func_type extra_stop_criteria=NULL):
-    cdef long step = 0
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
@@ -156,7 +156,7 @@ def bisect(f: Callable[[float], float],
 ctypedef double (*scale_func_type)(double, double)
 
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(
+cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -166,9 +166,9 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER,
+        unsigned long max_iter=MAX_ITER,
         scale_func_type scale_func=NULL):
-    cdef long step = 0
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
@@ -440,7 +440,7 @@ def anderson_bjorck(f: Callable[[float], float],
 # Dekker
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint, bint) dekker_kernel(
+cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) dekker_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -450,8 +450,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
@@ -548,7 +548,7 @@ def dekker(f: Callable[[float], float],
 # Brent
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint, bint) brent_kernel(
+cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) brent_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -560,8 +560,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
@@ -711,7 +711,7 @@ def brent(f: Callable[[float], float],
 # Chandrupatla
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(
+cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -722,8 +722,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
@@ -833,7 +833,7 @@ def chandrupatla(f: Callable[[float], float],
 # Ridders
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint, bint) ridders_kernel(
+cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) ridders_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -843,8 +843,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
@@ -987,7 +987,7 @@ cdef double[:] _diag_divided_differences(
 cdef double _newton_quadratic(
         double a, double b, double d,
         double f_a, double f_b, double f_d,
-        long k):
+        unsigned long k):
     """Apply Newton-Raphson like steps, using divided differences to approximate f'
 
     ab is a real interval [a, b] containing a root,
@@ -1004,7 +1004,7 @@ cdef double _newton_quadratic(
     else:
         r = a if A * f_a > 0 else b
     # Apply k Newton-Raphson steps to P(x), starting from x=r
-    cdef long i
+    cdef unsigned long i
     for i in range(k):
         # P is the quadratic polynomial through the 3 points
         # Horner evaluation of fa + B * (x - a) + A * (x - a) * (x - b)
@@ -1033,27 +1033,27 @@ cdef double _inverse_poly_zero(double a, double b, double c, double d,
     return a + Q31 + Q32 + Q33
 
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint, bint) toms748_kernel(
+cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) toms748_kernel(
         double_scalar_func_type f,
         double a,
         double b,
         double f_a,
         double f_b,
-        long k=2,
+        unsigned long k=2,
         double mu=0.5,
         double etol=ETOL,
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
-    cdef long n
+    cdef unsigned long n
     cdef double c, f_c, d, f_d, e, f_e, u, f_u, z, f_z, A
     cdef bint use_newton_quadratic
     # secant init
@@ -1203,7 +1203,7 @@ def toms748(f: Callable[[float], float],
 # Wu
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint, bint) wu_kernel(
+cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) wu_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -1213,8 +1213,8 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
@@ -1335,7 +1335,7 @@ def wu(f: Callable[[float], float],
 # ITP
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, double, double, double, double, bint, bint) itp_kernel(
+cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) itp_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -1343,23 +1343,23 @@ cdef (double, double, long, double, double, double, double, double, double, bint
         double f_b,
         double k1,
         double k2,
-        long n0,
+        unsigned long n0,
         double etol=ETOL,
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
+        unsigned long max_iter=MAX_ITER):
     # This slightly differs from the original paper
     # where stop condition is (b - a) <= 2 * eps
-    cdef long step = 0
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
 
-    cdef long n_1div2 = <long> math.ceil(math.log2((b - a) / ptol))
-    cdef long n_max = n_1div2 + n0
+    cdef unsigned long n_1div2 = <unsigned long> math.ceil(math.log2((b - a) / ptol))
+    cdef unsigned long n_max = n_1div2 + n0
     cdef double x_m, f_m, rho, rho_i, delta, x_f, sigma, x_t, x_itp, f_itp
     converged = True
     rho_i = ptol * 2 ** <double> n_max

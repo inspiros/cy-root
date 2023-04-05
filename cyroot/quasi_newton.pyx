@@ -50,7 +50,7 @@ __all__ = [
 # Secant
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint, bint) secant_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) secant_kernel(
         double_scalar_func_type f,
         double x0,
         double x1,
@@ -60,8 +60,8 @@ cdef (double, double, long, double, double, bint, bint) secant_kernel(
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     cdef double[2] xs = [x0, x1], f_xs = [f_x0, f_x1]
@@ -150,7 +150,7 @@ def secant(f: Callable[[float], float],
 # Sidi
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint, bint) sidi_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) sidi_kernel(
         double_scalar_func_type f,
         double[:] x0s,
         double[:] f_x0s,
@@ -158,13 +158,13 @@ cdef (double, double, long, double, double, bint, bint) sidi_kernel(
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
+        unsigned long max_iter=MAX_ITER):
     # sort by absolute value of f
-    cdef long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
+    cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
     cdef double[:] xs = permute(x0s, inds)
     cdef double[:] f_xs = permute(f_x0s, inds)
 
-    cdef long step = 0
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     if _check_stop_condition_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
@@ -217,7 +217,7 @@ cdef class NewtonPolynomial:
         cdef double[:, :] DD = view.array(shape=(self.n, self.n),
                                           itemsize=sizeof(double),
                                           format='d')
-        cdef int i, j
+        cdef unsigned int i, j
         # Fill in divided differences
         with nogil:
             DD[:, 0] = ys
@@ -318,7 +318,7 @@ def sidi(f: Callable[[float], float],
 # Steffensen
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) steffensen_kernel(
         double_scalar_func_type f,
         double x0,
         double f_x0,
@@ -327,8 +327,8 @@ cdef (double, double, long, double, double, bint, bint) steffensen_kernel(
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
     if _check_stop_condition_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
@@ -414,7 +414,7 @@ def steffensen(f: Callable[[float], float],
 # Inverse Quadratic Interpolation
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) inverse_quadratic_interp_kernel(
         double_scalar_func_type f,
         double x0,
         double x1,
@@ -426,8 +426,8 @@ cdef (double, double, long, double, double, bint, bint) inverse_quadratic_interp
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
@@ -529,7 +529,7 @@ def inverse_quadratic_interp(
 # Hyperbolic Interpolation
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) hyperbolic_interp_kernel(
         double_scalar_func_type f,
         double x0,
         double x1,
@@ -541,8 +541,8 @@ cdef (double, double, long, double, double, bint, bint) hyperbolic_interp_kernel
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
@@ -649,7 +649,7 @@ def hyperbolic_interp(
 # Muller
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double complex, double complex, long, double, double, bint, bint) muller_kernel(
+cdef (double complex, double complex, unsigned long, double, double, bint, bint) muller_kernel(
         complex_scalar_func_type f,
         double complex x0,
         double complex x1,
@@ -661,8 +661,8 @@ cdef (double complex, double complex, long, double, double, bint, bint) muller_k
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double complex r, f_r
     cdef double precision, error
     cdef bint converged, optimal

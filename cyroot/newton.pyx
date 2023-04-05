@@ -36,7 +36,7 @@ __all__ = [
 # Newton
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
+cdef (double, double, double, unsigned long, double, double, bint, bint) newton_kernel(
         double_scalar_func_type f,
         double_scalar_func_type df,
         double x0,
@@ -46,8 +46,8 @@ cdef (double, double, double, long, double, double, bint, bint) newton_kernel(
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
     if _check_stop_condition_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
@@ -128,7 +128,7 @@ def newton(f: Callable[[float], float],
 # Halley
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, double, double, long, double, double, bint, bint) halley_kernel(
+cdef (double, double, double, double, unsigned long, double, double, bint, bint) halley_kernel(
         double_scalar_func_type f,
         double_scalar_func_type df,
         double_scalar_func_type d2f,
@@ -140,8 +140,8 @@ cdef (double, double, double, double, long, double, double, bint, bint) halley_k
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
     if _check_stop_condition_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
@@ -237,7 +237,7 @@ def halley(f: Callable[[float], float],
 # Householder
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((double, double[:], int, double, double, bint, bint))
+@cython.returns((double, double[:], cython.unsignedlong, double, double, bint, bint))
 cdef householder_kernel(
         DoubleScalarFPtr[:] fs,  # sadly, can't have memory view of C functions
         double_vector_func_type nom_f,
@@ -249,8 +249,8 @@ cdef householder_kernel(
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        long max_iter=MAX_ITER):
-    cdef long step = 0
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
     if _check_stop_condition_initial_guess(x0_, fs_x0[0], etol, ertol, ptol, prtol,
@@ -307,9 +307,9 @@ cdef class _Number(_AtomicExpr):
         return self.value
 
 cdef class _Arg(_AtomicExpr):
-    cdef int index
+    cdef unsigned long index
     def __init__(self, indexed: sympy.Indexed):
-        self.index = int(indexed.indices[0])
+        self.index = <unsigned long> indexed.indices[0]
 
     cdef inline double eval(self, double[:] args):
         return args[self.index]
@@ -533,7 +533,7 @@ class ReciprocalDerivativeFuncFactory:
         raise RuntimeError('Do not initialize this class.')
 
     @classmethod
-    def get(cls, d: int, max_d: int = None, c_code=False):
+    def get(cls, d: int, max_d: int = None, c_code: bool = False):
         if (not c_code and d not in cls.rd_py_funcs.keys()) or (c_code and d not in cls.rd_c_funcs):
             if max_d is None:
                 max_d = d

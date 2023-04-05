@@ -1241,8 +1241,8 @@ struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose {
 };
 struct __pyx_ctuple_ee55be__double__and_double__and_double__and_double__and_double__and_double__etc;
 typedef struct __pyx_ctuple_ee55be__double__and_double__and_double__and_double__and_double__and_double__etc __pyx_ctuple_ee55be__double__and_double__and_double__and_double__and_double__and_double__etc;
-struct __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc;
-typedef struct __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc;
+struct __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc;
+typedef struct __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc;
 struct __pyx_opt_args_6cyroot_10bracketing__divided_differences;
 struct __pyx_opt_args_6cyroot_10bracketing__diag_divided_differences;
 struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_bisect_kernel;
@@ -1318,14 +1318,14 @@ typedef int (*__pyx_t_6cyroot_10bracketing_stop_func_type)(long, double, double,
 /* "cyroot/bracketing.pyx":59
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) bisect_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) bisect_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
-struct __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc {
+struct __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc {
   double f0;
   double f1;
-  long f2;
+  unsigned long f2;
   double f3;
   double f4;
   double f5;
@@ -1374,7 +1374,7 @@ struct __pyx_opt_args_6cyroot_10bracketing__diag_divided_differences {
 /* "cyroot/bracketing.pyx":59
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) bisect_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) bisect_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -1384,7 +1384,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_bisect_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
   __pyx_t_6cyroot_10bracketing_stop_func_type extra_stop_criteria;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_bisect_kernel {
@@ -1393,14 +1393,14 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_bisect_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
   __pyx_t_6cyroot_10bracketing_stop_func_type extra_stop_criteria;
 };
 
 /* "cyroot/bracketing.pyx":159
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -1410,7 +1410,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
   __pyx_t_6cyroot_10bracketing_scale_func_type scale_func;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel {
@@ -1419,14 +1419,14 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
   __pyx_t_6cyroot_10bracketing_scale_func_type scale_func;
 };
 
 /* "cyroot/bracketing.pyx":443
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) dekker_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) dekker_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -1436,7 +1436,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_dekker_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_dekker_kernel {
   int __pyx_n;
@@ -1444,13 +1444,13 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_dekker_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/bracketing.pyx":551
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -1462,7 +1462,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_brent_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_brent_kernel {
   int __pyx_n;
@@ -1472,13 +1472,13 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_brent_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/bracketing.pyx":714
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -1489,7 +1489,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_chandrupatla_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_chandrupatla_kernel {
   int __pyx_n;
@@ -1498,13 +1498,13 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_chandrupatla_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/bracketing.pyx":836
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) ridders_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) ridders_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -1514,7 +1514,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_ridders_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_ridders_kernel {
   int __pyx_n;
@@ -1522,41 +1522,41 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_ridders_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/bracketing.pyx":1036
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_toms748_kernel {
   int __pyx_n;
-  long k;
+  unsigned long k;
   double mu;
   double etol;
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_toms748_kernel {
   int __pyx_n;
-  long k;
+  unsigned long k;
   double mu;
   double etol;
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/bracketing.pyx":1206
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) wu_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) wu_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -1566,7 +1566,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_wu_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_wu_kernel {
   int __pyx_n;
@@ -1574,13 +1574,13 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_wu_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 
 /* "cyroot/bracketing.pyx":1338
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) itp_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) itp_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -1590,7 +1590,7 @@ struct __pyx_fuse_0__pyx_opt_args_6cyroot_10bracketing_itp_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_itp_kernel {
   int __pyx_n;
@@ -1598,7 +1598,7 @@ struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_itp_kernel {
   double ertol;
   double ptol;
   double prtol;
-  long max_iter;
+  unsigned long max_iter;
 };
 struct __pyx_defaults {
   PyObject *__pyx_arg_etol;
@@ -2881,7 +2881,7 @@ static CYTHON_INLINE PyObject *__pyx_capsule_create(void *p, const char *sig);
 #endif
 
 /* ToPyCTupleUtility.proto */
-static PyObject* __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc);
+static PyObject* __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc);
 
 /* MemviewDtypeToObject.proto */
 static CYTHON_INLINE PyObject *__pyx_memview_get_double(const char *itemp);
@@ -2984,10 +2984,7 @@ __pyx_memoryview_copy_new_contig(const __Pyx_memviewslice *from_mvs,
                                  int dtype_is_object);
 
 /* CIntFromPy.proto */
-static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
-
-/* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
+static CYTHON_INLINE unsigned long __Pyx_PyInt_As_unsigned_long(PyObject *);
 
 /* TypeInfoToFormat.proto */
 struct __pyx_typeinfo_string {
@@ -3007,8 +3004,14 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_int(unsigned int value)
 /* CIntFromPy.proto */
 static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *);
 
+/* CIntFromPy.proto */
+static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
+
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 
 /* CIntFromPy.proto */
 static CYTHON_INLINE char __Pyx_PyInt_As_char(PyObject *);
@@ -3082,17 +3085,17 @@ static CYTHON_INLINE double __pyx_f_6cyroot_10bracketing_pegasus_scale(double, d
 static CYTHON_INLINE double __pyx_f_6cyroot_10bracketing_anderson_bjorck_scale(double, double); /*proto*/
 static __Pyx_memviewslice __pyx_f_6cyroot_10bracketing__divided_differences(__Pyx_memviewslice, __Pyx_memviewslice, struct __pyx_opt_args_6cyroot_10bracketing__divided_differences *__pyx_optional_args); /*proto*/
 static __Pyx_memviewslice __pyx_f_6cyroot_10bracketing__diag_divided_differences(__Pyx_memviewslice, __Pyx_memviewslice, struct __pyx_opt_args_6cyroot_10bracketing__diag_divided_differences *__pyx_optional_args); /*proto*/
-static double __pyx_f_6cyroot_10bracketing__newton_quadratic(double, double, double, double, double, double, long); /*proto*/
+static double __pyx_f_6cyroot_10bracketing__newton_quadratic(double, double, double, double, double, double, unsigned long); /*proto*/
 static double __pyx_f_6cyroot_10bracketing__inverse_poly_zero(double, double, double, double, double, double, double, double); /*proto*/
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_bisect_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_bisect_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_regula_falsi_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_dekker_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_dekker_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_brent_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_brent_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_chandrupatla_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_chandrupatla_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_ridders_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_ridders_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_toms748_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_toms748_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_wu_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_wu_kernel *__pyx_optional_args); /*proto*/
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_itp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, double, double, long, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_itp_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_bisect_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_bisect_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_regula_falsi_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_dekker_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_dekker_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_brent_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_brent_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_chandrupatla_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_chandrupatla_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_ridders_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_ridders_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_toms748_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_toms748_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_wu_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_wu_kernel *__pyx_optional_args); /*proto*/
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_itp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *, double, double, double, double, double, double, unsigned long, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_itp_kernel *__pyx_optional_args); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -3571,106 +3574,106 @@ static double __pyx_k_;
 static double __pyx_k__2;
 static double __pyx_k__3;
 static double __pyx_k__4;
-static long __pyx_k__5;
+static unsigned long __pyx_k__5;
 static __pyx_t_6cyroot_10bracketing_stop_func_type __pyx_k__6;
 static double __pyx_k__7;
 static double __pyx_k__8;
 static double __pyx_k__9;
 static double __pyx_k__10;
-static long __pyx_k__11;
+static unsigned long __pyx_k__11;
 static __pyx_t_6cyroot_10bracketing_scale_func_type __pyx_k__12;
 static double __pyx_k__13;
 static double __pyx_k__14;
 static double __pyx_k__15;
 static double __pyx_k__16;
-static long __pyx_k__17;
+static unsigned long __pyx_k__17;
 static int __pyx_k__18;
 static double __pyx_k__19;
 static double __pyx_k__20;
 static double __pyx_k__21;
 static double __pyx_k__22;
 static double __pyx_k__23;
-static long __pyx_k__24;
+static unsigned long __pyx_k__24;
 static double __pyx_k__26;
 static double __pyx_k__27;
 static double __pyx_k__28;
 static double __pyx_k__29;
 static double __pyx_k__30;
-static long __pyx_k__31;
+static unsigned long __pyx_k__31;
 static double __pyx_k__32;
 static double __pyx_k__33;
 static double __pyx_k__34;
 static double __pyx_k__35;
-static long __pyx_k__36;
-static long __pyx_k__37;
+static unsigned long __pyx_k__36;
+static unsigned long __pyx_k__37;
 static double __pyx_k__38;
 static double __pyx_k__39;
 static double __pyx_k__40;
 static double __pyx_k__41;
 static double __pyx_k__42;
-static long __pyx_k__43;
+static unsigned long __pyx_k__43;
 static double __pyx_k__44;
 static double __pyx_k__45;
 static double __pyx_k__46;
 static double __pyx_k__47;
-static long __pyx_k__48;
+static unsigned long __pyx_k__48;
 static double __pyx_k__49;
 static double __pyx_k__50;
 static double __pyx_k__51;
 static double __pyx_k__52;
-static long __pyx_k__53;
+static unsigned long __pyx_k__53;
 static double __pyx_k__78;
 static double __pyx_k__79;
 static double __pyx_k__80;
 static double __pyx_k__81;
-static long __pyx_k__82;
+static unsigned long __pyx_k__82;
 static __pyx_t_6cyroot_10bracketing_stop_func_type __pyx_k__83;
 static double __pyx_k__87;
 static double __pyx_k__88;
 static double __pyx_k__89;
 static double __pyx_k__90;
-static long __pyx_k__91;
+static unsigned long __pyx_k__91;
 static __pyx_t_6cyroot_10bracketing_scale_func_type __pyx_k__92;
 static double __pyx_k__101;
 static double __pyx_k__102;
 static double __pyx_k__103;
 static double __pyx_k__104;
-static long __pyx_k__105;
+static unsigned long __pyx_k__105;
 static int __pyx_k__108;
 static double __pyx_k__109;
 static double __pyx_k__110;
 static double __pyx_k__111;
 static double __pyx_k__112;
 static double __pyx_k__113;
-static long __pyx_k__114;
+static unsigned long __pyx_k__114;
 static double __pyx_k__117;
 static double __pyx_k__118;
 static double __pyx_k__119;
 static double __pyx_k__120;
 static double __pyx_k__121;
-static long __pyx_k__122;
+static unsigned long __pyx_k__122;
 static double __pyx_k__125;
 static double __pyx_k__126;
 static double __pyx_k__127;
 static double __pyx_k__128;
-static long __pyx_k__129;
-static long __pyx_k__132;
+static unsigned long __pyx_k__129;
+static unsigned long __pyx_k__132;
 static double __pyx_k__133;
 static double __pyx_k__134;
 static double __pyx_k__135;
 static double __pyx_k__136;
 static double __pyx_k__137;
-static long __pyx_k__138;
+static unsigned long __pyx_k__138;
 static double __pyx_k__141;
 static double __pyx_k__142;
 static double __pyx_k__143;
 static double __pyx_k__144;
-static long __pyx_k__145;
+static unsigned long __pyx_k__145;
 static double __pyx_k__148;
 static double __pyx_k__149;
 static double __pyx_k__150;
 static double __pyx_k__151;
-static long __pyx_k__152;
+static unsigned long __pyx_k__152;
 static PyObject *__pyx_slice__68;
 static PyObject *__pyx_tuple__54;
 static PyObject *__pyx_tuple__55;
@@ -3847,19 +3850,19 @@ static CYTHON_INLINE __pyx_ctuple_ee55be__double__and_double__and_double__and_do
 /* "cyroot/bracketing.pyx":59
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) bisect_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) bisect_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_bisect_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_bisect_kernel *__pyx_optional_args) {
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_bisect_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_bisect_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k_;
   double __pyx_v_ertol = __pyx_k__2;
   double __pyx_v_ptol = __pyx_k__3;
   double __pyx_v_prtol = __pyx_k__4;
-  long __pyx_v_max_iter = __pyx_k__5;
+  unsigned long __pyx_v_max_iter = __pyx_k__5;
   __pyx_t_6cyroot_10bracketing_stop_func_type __pyx_v_extra_stop_criteria = __pyx_k__6;
-  long __pyx_v_step;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -3869,10 +3872,10 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   double __pyx_v_c;
   double __pyx_v_f_c;
   CYTHON_UNUSED double __pyx_v__;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   int __pyx_t_3;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_4;
   int __pyx_t_5;
@@ -3913,9 +3916,9 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   }
 
   /* "cyroot/bracketing.pyx":71
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  *         stop_func_type extra_stop_criteria=NULL):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -4254,7 +4257,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":59
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) bisect_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) bisect_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -4546,8 +4549,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_bisect(CYTHON_UNUSED PyObject *__
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
+  unsigned long __pyx_t_18;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_bisect_kernel __pyx_t_20;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -4884,7 +4887,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_bisect(CYTHON_UNUSED PyObject *__
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L1_error)
   __pyx_t_20.__pyx_n = 5;
   __pyx_t_20.etol = __pyx_t_14;
   __pyx_t_20.ertol = __pyx_t_15;
@@ -4892,7 +4895,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_bisect(CYTHON_UNUSED PyObject *__
   __pyx_t_20.prtol = __pyx_t_17;
   __pyx_t_20.max_iter = __pyx_t_18;
   __pyx_t_19 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_bisect_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_12, __pyx_t_13, &__pyx_t_20); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5000,19 +5003,19 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_bisect(CYTHON_UNUSED PyObject *__
 /* "cyroot/bracketing.pyx":159
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_regula_falsi_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel *__pyx_optional_args) {
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_regula_falsi_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k__7;
   double __pyx_v_ertol = __pyx_k__8;
   double __pyx_v_ptol = __pyx_k__9;
   double __pyx_v_prtol = __pyx_k__10;
-  long __pyx_v_max_iter = __pyx_k__11;
+  unsigned long __pyx_v_max_iter = __pyx_k__11;
   __pyx_t_6cyroot_10bracketing_scale_func_type __pyx_v_scale_func = __pyx_k__12;
-  long __pyx_v_step;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -5021,10 +5024,10 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   int __pyx_v_optimal;
   double __pyx_v_c;
   double __pyx_v_f_c;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   int __pyx_t_3;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_4;
   int __pyx_t_5;
@@ -5060,9 +5063,9 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   }
 
   /* "cyroot/bracketing.pyx":171
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  *         scale_func_type scale_func=NULL):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -5416,7 +5419,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":159
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -5708,8 +5711,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_2regula_falsi(CYTHON_UNUSED PyObj
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
+  unsigned long __pyx_t_18;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel __pyx_t_20;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -6046,7 +6049,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_2regula_falsi(CYTHON_UNUSED PyObj
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 253, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 253, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 253, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 253, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":252
  *         f_b = f_wrapper(b)
@@ -6062,7 +6065,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_2regula_falsi(CYTHON_UNUSED PyObj
   __pyx_t_20.prtol = __pyx_t_17;
   __pyx_t_20.max_iter = __pyx_t_18;
   __pyx_t_19 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_regula_falsi_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_12, __pyx_t_13, &__pyx_t_20); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -6478,8 +6481,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_4illinois(CYTHON_UNUSED PyObject 
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
+  unsigned long __pyx_t_18;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel __pyx_t_20;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -6816,7 +6819,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_4illinois(CYTHON_UNUSED PyObject 
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 313, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 313, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 313, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 313, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 313, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":312
  *         f_b = f_wrapper(b)
@@ -6833,7 +6836,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_4illinois(CYTHON_UNUSED PyObject 
   __pyx_t_20.max_iter = __pyx_t_18;
   __pyx_t_20.scale_func = __pyx_f_6cyroot_10bracketing_illinois_scale;
   __pyx_t_19 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_regula_falsi_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_12, __pyx_t_13, &__pyx_t_20); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 312, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 312, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -7249,8 +7252,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_6pegasus(CYTHON_UNUSED PyObject *
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
+  unsigned long __pyx_t_18;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel __pyx_t_20;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -7587,7 +7590,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_6pegasus(CYTHON_UNUSED PyObject *
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 373, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 373, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 373, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 373, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 373, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":372
  *         f_b = f_wrapper(b)
@@ -7604,7 +7607,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_6pegasus(CYTHON_UNUSED PyObject *
   __pyx_t_20.max_iter = __pyx_t_18;
   __pyx_t_20.scale_func = __pyx_f_6cyroot_10bracketing_pegasus_scale;
   __pyx_t_19 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_regula_falsi_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_12, __pyx_t_13, &__pyx_t_20); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8060,8 +8063,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_8anderson_bjorck(CYTHON_UNUSED Py
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
+  unsigned long __pyx_t_18;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_regula_falsi_kernel __pyx_t_20;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -8398,7 +8401,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_8anderson_bjorck(CYTHON_UNUSED Py
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 436, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 436, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 436, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 436, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 436, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":435
  *         f_b = f_wrapper(b)
@@ -8415,7 +8418,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_8anderson_bjorck(CYTHON_UNUSED Py
   __pyx_t_20.max_iter = __pyx_t_18;
   __pyx_t_20.scale_func = __pyx_f_6cyroot_10bracketing_anderson_bjorck_scale;
   __pyx_t_19 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_regula_falsi_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_12, __pyx_t_13, &__pyx_t_20); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 435, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 435, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8523,18 +8526,18 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_8anderson_bjorck(CYTHON_UNUSED Py
 /* "cyroot/bracketing.pyx":443
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) dekker_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) dekker_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_dekker_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_dekker_kernel *__pyx_optional_args) {
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_dekker_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_dekker_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k__13;
   double __pyx_v_ertol = __pyx_k__14;
   double __pyx_v_ptol = __pyx_k__15;
   double __pyx_v_prtol = __pyx_k__16;
-  long __pyx_v_max_iter = __pyx_k__17;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__17;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -8547,10 +8550,10 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   double __pyx_v_f_b_next;
   double __pyx_v_c;
   double __pyx_v_s;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   int __pyx_t_3;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_4;
   int __pyx_t_5;
@@ -8586,8 +8589,8 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/bracketing.pyx":454
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -9018,7 +9021,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":443
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) dekker_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) dekker_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -9310,8 +9313,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_10dekker(CYTHON_UNUSED PyObject *
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
+  unsigned long __pyx_t_18;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_dekker_kernel __pyx_t_20;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -9648,7 +9651,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_10dekker(CYTHON_UNUSED PyObject *
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 544, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 544, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 544, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 544, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 544, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":543
  *         f_b = f_wrapper(b)
@@ -9664,7 +9667,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_10dekker(CYTHON_UNUSED PyObject *
   __pyx_t_20.prtol = __pyx_t_17;
   __pyx_t_20.max_iter = __pyx_t_18;
   __pyx_t_19 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_dekker_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_12, __pyx_t_13, &__pyx_t_20); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 543, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 543, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -9772,20 +9775,20 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_10dekker(CYTHON_UNUSED PyObject *
 /* "cyroot/bracketing.pyx":551
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_brent_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_brent_kernel *__pyx_optional_args) {
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_brent_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_brent_kernel *__pyx_optional_args) {
   int __pyx_v_interp_method = __pyx_k__18;
   double __pyx_v_sigma = __pyx_k__19;
   double __pyx_v_etol = __pyx_k__20;
   double __pyx_v_ertol = __pyx_k__21;
   double __pyx_v_ptol = __pyx_k__22;
   double __pyx_v_prtol = __pyx_k__23;
-  long __pyx_v_max_iter = __pyx_k__24;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__24;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -9807,10 +9810,10 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   double __pyx_v_denom;
   int __pyx_v_last_method;
   int __pyx_v_use_interp;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   int __pyx_t_3;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_4;
   int __pyx_t_5;
@@ -9852,8 +9855,8 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/bracketing.pyx":564
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -10625,7 +10628,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":551
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -10957,8 +10960,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_12brent(CYTHON_UNUSED PyObject *_
   double __pyx_t_18;
   double __pyx_t_19;
   double __pyx_t_20;
-  long __pyx_t_21;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_22;
+  unsigned long __pyx_t_21;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_22;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_brent_kernel __pyx_t_23;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -11557,7 +11560,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_12brent(CYTHON_UNUSED PyObject *_
   __pyx_t_18 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_18 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 707, __pyx_L1_error)
   __pyx_t_19 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_19 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 707, __pyx_L1_error)
   __pyx_t_20 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_20 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 707, __pyx_L1_error)
-  __pyx_t_21 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_21 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 707, __pyx_L1_error)
+  __pyx_t_21 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_21 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 707, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":706
  *         f_b = f(b)
@@ -11575,7 +11578,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_12brent(CYTHON_UNUSED PyObject *_
   __pyx_t_23.prtol = __pyx_t_20;
   __pyx_t_23.max_iter = __pyx_t_21;
   __pyx_t_22 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_brent_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wraper), __pyx_v_a, __pyx_v_b, __pyx_t_15, __pyx_t_16, &__pyx_t_23); 
-  __pyx_t_7 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_22); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 706, __pyx_L1_error)
+  __pyx_t_7 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_22); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 706, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_v_res = __pyx_t_7;
   __pyx_t_7 = 0;
@@ -11684,19 +11687,19 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_12brent(CYTHON_UNUSED PyObject *_
 /* "cyroot/bracketing.pyx":714
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_chandrupatla_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_chandrupatla_kernel *__pyx_optional_args) {
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_chandrupatla_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_chandrupatla_kernel *__pyx_optional_args) {
   double __pyx_v_sigma = __pyx_k__26;
   double __pyx_v_etol = __pyx_k__27;
   double __pyx_v_ertol = __pyx_k__28;
   double __pyx_v_ptol = __pyx_k__29;
   double __pyx_v_prtol = __pyx_k__30;
-  long __pyx_v_max_iter = __pyx_k__31;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__31;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -11715,10 +11718,10 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   double __pyx_v_d_fb_fd;
   double __pyx_v_tl;
   double __pyx_v_t;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   int __pyx_t_3;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_4;
   int __pyx_t_5;
@@ -11758,8 +11761,8 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/bracketing.pyx":726
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -12339,7 +12342,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":714
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -12648,8 +12651,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_14chandrupatla(CYTHON_UNUSED PyOb
   double __pyx_t_16;
   double __pyx_t_17;
   double __pyx_t_18;
-  long __pyx_t_19;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_20;
+  unsigned long __pyx_t_19;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_20;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_chandrupatla_kernel __pyx_t_21;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -12987,7 +12990,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_14chandrupatla(CYTHON_UNUSED PyOb
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 829, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 829, __pyx_L1_error)
   __pyx_t_18 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_18 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 829, __pyx_L1_error)
-  __pyx_t_19 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_19 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 829, __pyx_L1_error)
+  __pyx_t_19 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_19 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 829, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":828
  *         f_b = f_wrapper(b)
@@ -13004,7 +13007,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_14chandrupatla(CYTHON_UNUSED PyOb
   __pyx_t_21.prtol = __pyx_t_18;
   __pyx_t_21.max_iter = __pyx_t_19;
   __pyx_t_20 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_chandrupatla_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_12, __pyx_t_13, &__pyx_t_21); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 828, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 828, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -13112,18 +13115,18 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_14chandrupatla(CYTHON_UNUSED PyOb
 /* "cyroot/bracketing.pyx":836
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) ridders_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) ridders_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_ridders_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_ridders_kernel *__pyx_optional_args) {
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_ridders_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_ridders_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k__32;
   double __pyx_v_ertol = __pyx_k__33;
   double __pyx_v_ptol = __pyx_k__34;
   double __pyx_v_prtol = __pyx_k__35;
-  long __pyx_v_max_iter = __pyx_k__36;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__36;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -13135,10 +13138,10 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   double __pyx_v_d;
   double __pyx_v_f_d;
   double __pyx_v_denom;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   int __pyx_t_3;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_4;
   int __pyx_t_5;
@@ -13172,8 +13175,8 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/bracketing.pyx":847
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -13606,7 +13609,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":836
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) ridders_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) ridders_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -13898,8 +13901,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_16ridders(CYTHON_UNUSED PyObject 
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
+  unsigned long __pyx_t_18;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_ridders_kernel __pyx_t_20;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -14236,7 +14239,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_16ridders(CYTHON_UNUSED PyObject 
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 936, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 936, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 936, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 936, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 936, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":935
  *         f_b = f_wrapper(b)
@@ -14252,7 +14255,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_16ridders(CYTHON_UNUSED PyObject 
   __pyx_t_20.prtol = __pyx_t_17;
   __pyx_t_20.max_iter = __pyx_t_18;
   __pyx_t_19 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_ridders_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_12, __pyx_t_13, &__pyx_t_20); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 935, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 935, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -14962,7 +14965,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_10bracketing__diag_divided_differences
  *         double f_a, double f_b, double f_d,
  */
 
-static double __pyx_f_6cyroot_10bracketing__newton_quadratic(double __pyx_v_a, double __pyx_v_b, double __pyx_v_d, double __pyx_v_f_a, double __pyx_v_f_b, double __pyx_v_f_d, long __pyx_v_k) {
+static double __pyx_f_6cyroot_10bracketing__newton_quadratic(double __pyx_v_a, double __pyx_v_b, double __pyx_v_d, double __pyx_v_f_a, double __pyx_v_f_b, double __pyx_v_f_d, unsigned long __pyx_v_k) {
   double __pyx_v_abd[3];
   double __pyx_v_f_abd[3];
   __Pyx_memviewslice __pyx_v_dd = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -14971,7 +14974,7 @@ static double __pyx_f_6cyroot_10bracketing__newton_quadratic(double __pyx_v_a, d
   double __pyx_v_P;
   double __pyx_v_r;
   double __pyx_v_r1;
-  CYTHON_UNUSED long __pyx_v_i;
+  CYTHON_UNUSED unsigned long __pyx_v_i;
   double __pyx_r;
   __Pyx_RefNannyDeclarations
   double __pyx_t_1[3];
@@ -14985,9 +14988,9 @@ static double __pyx_f_6cyroot_10bracketing__newton_quadratic(double __pyx_v_a, d
   Py_ssize_t __pyx_t_9;
   int __pyx_t_10;
   double __pyx_t_11;
-  long __pyx_t_12;
-  long __pyx_t_13;
-  long __pyx_t_14;
+  unsigned long __pyx_t_12;
+  unsigned long __pyx_t_13;
+  unsigned long __pyx_t_14;
   int __pyx_t_15;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -15098,7 +15101,7 @@ static double __pyx_f_6cyroot_10bracketing__newton_quadratic(double __pyx_v_a, d
  *     else:
  *         r = a if A * f_a > 0 else b             # <<<<<<<<<<<<<<
  *     # Apply k Newton-Raphson steps to P(x), starting from x=r
- *     cdef long i
+ *     cdef unsigned long i
  */
   /*else*/ {
     if ((((__pyx_v_A * __pyx_v_f_a) > 0.0) != 0)) {
@@ -15112,7 +15115,7 @@ static double __pyx_f_6cyroot_10bracketing__newton_quadratic(double __pyx_v_a, d
 
   /* "cyroot/bracketing.pyx":1008
  *     # Apply k Newton-Raphson steps to P(x), starting from x=r
- *     cdef long i
+ *     cdef unsigned long i
  *     for i in range(k):             # <<<<<<<<<<<<<<
  *         # P is the quadratic polynomial through the 3 points
  *         # Horner evaluation of fa + B * (x - a) + A * (x - a) * (x - b)
@@ -15389,27 +15392,27 @@ static double __pyx_f_6cyroot_10bracketing__inverse_poly_zero(double __pyx_v_a, 
 /* "cyroot/bracketing.pyx":1036
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_toms748_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_toms748_kernel *__pyx_optional_args) {
-  long __pyx_v_k = __pyx_k__37;
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_toms748_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_toms748_kernel *__pyx_optional_args) {
+  unsigned long __pyx_v_k = __pyx_k__37;
   double __pyx_v_mu = __pyx_k__38;
   double __pyx_v_etol = __pyx_k__39;
   double __pyx_v_ertol = __pyx_k__40;
   double __pyx_v_ptol = __pyx_k__41;
   double __pyx_v_prtol = __pyx_k__42;
-  long __pyx_v_max_iter = __pyx_k__43;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__43;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
   double __pyx_v_error;
   int __pyx_v_converged;
   int __pyx_v_optimal;
-  long __pyx_v_n;
+  unsigned long __pyx_v_n;
   double __pyx_v_c;
   double __pyx_v_f_c;
   double __pyx_v_d;
@@ -15423,10 +15426,10 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   double __pyx_v_A;
   int __pyx_v_use_newton_quadratic;
   double __pyx_v_ab_width;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   int __pyx_t_3;
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
@@ -15441,9 +15444,9 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   double __pyx_t_14;
   double __pyx_t_15;
   int __pyx_t_16;
-  long __pyx_t_17;
-  long __pyx_t_18;
-  long __pyx_t_19;
+  unsigned long __pyx_t_17;
+  unsigned long __pyx_t_18;
+  unsigned long __pyx_t_19;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -15474,8 +15477,8 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/bracketing.pyx":1049
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -15496,7 +15499,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
  *                               &r, &f_r, &precision, &error, &converged, &optimal):
  *         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal             # <<<<<<<<<<<<<<
  * 
- *     cdef long n
+ *     cdef unsigned long n
  */
     __pyx_t_2.f0 = __pyx_v_r;
     __pyx_t_2.f1 = __pyx_v_f_r;
@@ -16508,7 +16511,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":1036
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -16836,13 +16839,13 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_18toms748(CYTHON_UNUSED PyObject 
   PyObject *(*__pyx_t_14)(PyObject *);
   double __pyx_t_15;
   double __pyx_t_16;
-  long __pyx_t_17;
+  unsigned long __pyx_t_17;
   double __pyx_t_18;
   double __pyx_t_19;
   double __pyx_t_20;
   double __pyx_t_21;
-  long __pyx_t_22;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_23;
+  unsigned long __pyx_t_22;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_23;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_toms748_kernel __pyx_t_24;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -17303,12 +17306,12 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_18toms748(CYTHON_UNUSED PyObject 
  */
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_f_a); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_f_b); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
-  __pyx_t_17 = __Pyx_PyInt_As_long(__pyx_v_k); if (unlikely((__pyx_t_17 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
+  __pyx_t_17 = __Pyx_PyInt_As_unsigned_long(__pyx_v_k); if (unlikely((__pyx_t_17 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
   __pyx_t_18 = __pyx_PyFloat_AsDouble(__pyx_v_etol); if (unlikely((__pyx_t_18 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
   __pyx_t_19 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_19 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
   __pyx_t_20 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_20 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
   __pyx_t_21 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_21 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
-  __pyx_t_22 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_22 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
+  __pyx_t_22 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_22 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1199, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":1198
  *         f_b = f_wrapper(b)
@@ -17326,7 +17329,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_18toms748(CYTHON_UNUSED PyObject 
   __pyx_t_24.prtol = __pyx_t_21;
   __pyx_t_24.max_iter = __pyx_t_22;
   __pyx_t_23 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_toms748_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_15, __pyx_t_16, &__pyx_t_24); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_23); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1198, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_23); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1198, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -17434,18 +17437,18 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_18toms748(CYTHON_UNUSED PyObject 
 /* "cyroot/bracketing.pyx":1206
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) wu_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) wu_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_wu_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_wu_kernel *__pyx_optional_args) {
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_wu_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_wu_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k__44;
   double __pyx_v_ertol = __pyx_k__45;
   double __pyx_v_ptol = __pyx_k__46;
   double __pyx_v_prtol = __pyx_k__47;
-  long __pyx_v_max_iter = __pyx_k__48;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__48;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
@@ -17470,10 +17473,10 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   double __pyx_v_d2;
   double __pyx_v_d;
   CYTHON_UNUSED double __pyx_v__;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
@@ -17512,8 +17515,8 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
 
   /* "cyroot/bracketing.pyx":1217
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -18170,7 +18173,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":1206
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) wu_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) wu_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -18462,8 +18465,8 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_20wu(CYTHON_UNUSED PyObject *__py
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
+  unsigned long __pyx_t_18;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_19;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_wu_kernel __pyx_t_20;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -18800,7 +18803,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_20wu(CYTHON_UNUSED PyObject *__py
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1331, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1331, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1331, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1331, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1331, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":1330
  *         f_b = f_wrapper(b)
@@ -18816,7 +18819,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_20wu(CYTHON_UNUSED PyObject *__py
   __pyx_t_20.prtol = __pyx_t_17;
   __pyx_t_20.max_iter = __pyx_t_18;
   __pyx_t_19 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_wu_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_12, __pyx_t_13, &__pyx_t_20); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1330, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -18924,26 +18927,26 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_20wu(CYTHON_UNUSED PyObject *__py
 /* "cyroot/bracketing.pyx":1338
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) itp_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) itp_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
 
-static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_itp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, double __pyx_v_k1, double __pyx_v_k2, long __pyx_v_n0, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_itp_kernel *__pyx_optional_args) {
+static __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_fuse_1__pyx_f_6cyroot_10bracketing_itp_kernel(struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f, double __pyx_v_a, double __pyx_v_b, double __pyx_v_f_a, double __pyx_v_f_b, double __pyx_v_k1, double __pyx_v_k2, unsigned long __pyx_v_n0, struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_itp_kernel *__pyx_optional_args) {
   double __pyx_v_etol = __pyx_k__49;
   double __pyx_v_ertol = __pyx_k__50;
   double __pyx_v_ptol = __pyx_k__51;
   double __pyx_v_prtol = __pyx_k__52;
-  long __pyx_v_max_iter = __pyx_k__53;
-  long __pyx_v_step;
+  unsigned long __pyx_v_max_iter = __pyx_k__53;
+  unsigned long __pyx_v_step;
   double __pyx_v_r;
   double __pyx_v_f_r;
   double __pyx_v_precision;
   double __pyx_v_error;
   int __pyx_v_converged;
   int __pyx_v_optimal;
-  long __pyx_v_n_1div2;
-  long __pyx_v_n_max;
+  unsigned long __pyx_v_n_1div2;
+  unsigned long __pyx_v_n_max;
   double __pyx_v_x_m;
   double __pyx_v_f_m;
   double __pyx_v_rho;
@@ -18954,10 +18957,10 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   double __pyx_v_x_t;
   double __pyx_v_x_itp;
   double __pyx_v_f_itp;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_2;
   int __pyx_t_3;
   struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose __pyx_t_4;
   int __pyx_t_5;
@@ -18992,7 +18995,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":1354
  *     # This slightly differs from the original paper
  *     # where stop condition is (b - a) <= 2 * eps
- *     cdef long step = 0             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0             # <<<<<<<<<<<<<<
  *     cdef double r, f_r, precision, error
  *     cdef bint converged, optimal
  */
@@ -19013,7 +19016,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
  *                               &r, &f_r, &precision, &error, &converged, &optimal):
  *         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal             # <<<<<<<<<<<<<<
  * 
- *     cdef long n_1div2 = <long> math.ceil(math.log2((b - a) / ptol))
+ *     cdef unsigned long n_1div2 = <unsigned long> math.ceil(math.log2((b - a) / ptol))
  */
     __pyx_t_2.f0 = __pyx_v_r;
     __pyx_t_2.f1 = __pyx_v_f_r;
@@ -19041,23 +19044,23 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":1361
  *         return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
  * 
- *     cdef long n_1div2 = <long> math.ceil(math.log2((b - a) / ptol))             # <<<<<<<<<<<<<<
- *     cdef long n_max = n_1div2 + n0
+ *     cdef unsigned long n_1div2 = <unsigned long> math.ceil(math.log2((b - a) / ptol))             # <<<<<<<<<<<<<<
+ *     cdef unsigned long n_max = n_1div2 + n0
  *     cdef double x_m, f_m, rho, rho_i, delta, x_f, sigma, x_t, x_itp, f_itp
  */
-  __pyx_v_n_1div2 = ((long)ceil(log2(((__pyx_v_b - __pyx_v_a) / __pyx_v_ptol))));
+  __pyx_v_n_1div2 = ((unsigned long)ceil(log2(((__pyx_v_b - __pyx_v_a) / __pyx_v_ptol))));
 
   /* "cyroot/bracketing.pyx":1362
  * 
- *     cdef long n_1div2 = <long> math.ceil(math.log2((b - a) / ptol))
- *     cdef long n_max = n_1div2 + n0             # <<<<<<<<<<<<<<
+ *     cdef unsigned long n_1div2 = <unsigned long> math.ceil(math.log2((b - a) / ptol))
+ *     cdef unsigned long n_max = n_1div2 + n0             # <<<<<<<<<<<<<<
  *     cdef double x_m, f_m, rho, rho_i, delta, x_f, sigma, x_t, x_itp, f_itp
  *     converged = True
  */
   __pyx_v_n_max = (__pyx_v_n_1div2 + __pyx_v_n0);
 
   /* "cyroot/bracketing.pyx":1364
- *     cdef long n_max = n_1div2 + n0
+ *     cdef unsigned long n_max = n_1div2 + n0
  *     cdef double x_m, f_m, rho, rho_i, delta, x_f, sigma, x_t, x_itp, f_itp
  *     converged = True             # <<<<<<<<<<<<<<
  *     rho_i = ptol * 2 ** <double> n_max
@@ -19505,7 +19508,7 @@ static __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double
   /* "cyroot/bracketing.pyx":1338
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) itp_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) itp_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -19845,13 +19848,13 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_22itp(CYTHON_UNUSED PyObject *__p
   double __pyx_t_15;
   double __pyx_t_16;
   double __pyx_t_17;
-  long __pyx_t_18;
+  unsigned long __pyx_t_18;
   double __pyx_t_19;
   double __pyx_t_20;
   double __pyx_t_21;
   double __pyx_t_22;
-  long __pyx_t_23;
-  __pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_24;
+  unsigned long __pyx_t_23;
+  __pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc __pyx_t_24;
   struct __pyx_fuse_1__pyx_opt_args_6cyroot_10bracketing_itp_kernel __pyx_t_25;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -20485,12 +20488,12 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_22itp(CYTHON_UNUSED PyObject *__p
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_f_b); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_k1); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
   __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_v_k2); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyInt_As_long(__pyx_v_n0); if (unlikely((__pyx_t_18 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyInt_As_unsigned_long(__pyx_v_n0); if (unlikely((__pyx_t_18 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
   __pyx_t_19 = __pyx_PyFloat_AsDouble(__pyx_v_etol); if (unlikely((__pyx_t_19 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
   __pyx_t_20 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_20 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
   __pyx_t_21 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_21 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
   __pyx_t_22 = __pyx_PyFloat_AsDouble(__pyx_v_prtol); if (unlikely((__pyx_t_22 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
-  __pyx_t_23 = __Pyx_PyInt_As_long(__pyx_v_max_iter); if (unlikely((__pyx_t_23 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
+  __pyx_t_23 = __Pyx_PyInt_As_unsigned_long(__pyx_v_max_iter); if (unlikely((__pyx_t_23 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1482, __pyx_L1_error)
 
   /* "cyroot/bracketing.pyx":1481
  *     _check_unique_initial_vals(f_a, f_b)
@@ -20506,7 +20509,7 @@ static PyObject *__pyx_pf_6cyroot_10bracketing_22itp(CYTHON_UNUSED PyObject *__p
   __pyx_t_25.prtol = __pyx_t_22;
   __pyx_t_25.max_iter = __pyx_t_23;
   __pyx_t_24 = __pyx_fuse_1__pyx_f_6cyroot_10bracketing_itp_kernel(((struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper), __pyx_v_a, __pyx_v_b, __pyx_t_14, __pyx_t_15, __pyx_t_16, __pyx_t_17, __pyx_t_18, &__pyx_t_25); 
-  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_24); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1481, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_t_24); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1481, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -35707,7 +35710,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_bracketing(PyObject *__pyx_pyinit_
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   double __pyx_t_6;
-  long __pyx_t_7;
+  unsigned long __pyx_t_7;
   PyObject *__pyx_t_8 = NULL;
   PyObject *__pyx_t_9 = NULL;
   static PyThread_type_lock __pyx_t_10[8];
@@ -36086,7 +36089,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -36095,7 +36098,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  *         stop_func_type extra_stop_criteria=NULL):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
@@ -36104,9 +36107,9 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":69
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
  *         stop_func_type extra_stop_criteria=NULL):
- *     cdef long step = 0
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -36136,7 +36139,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 67, __pyx_L1_error)
   __pyx_k__80 = __pyx_t_6;
@@ -36145,7 +36148,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  *         stop_func_type extra_stop_criteria=NULL):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 68, __pyx_L1_error)
@@ -36154,11 +36157,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":69
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
  *         stop_func_type extra_stop_criteria=NULL):
- *     cdef long step = 0
+ *     cdef unsigned long step = 0
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L1_error)
   __pyx_k__82 = __pyx_t_7;
   __pyx_k__83 = NULL;
 
@@ -36187,7 +36190,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 67, __pyx_L1_error)
   __pyx_k__3 = __pyx_t_6;
@@ -36196,7 +36199,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  *         stop_func_type extra_stop_criteria=NULL):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 68, __pyx_L1_error)
@@ -36205,11 +36208,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":69
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
  *         stop_func_type extra_stop_criteria=NULL):
- *     cdef long step = 0
+ *     cdef unsigned long step = 0
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L1_error)
   __pyx_k__5 = __pyx_t_7;
   __pyx_k__6 = NULL;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -36504,7 +36507,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 167, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -36513,7 +36516,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  *         scale_func_type scale_func=NULL):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
@@ -36522,9 +36525,9 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":169
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
  *         scale_func_type scale_func=NULL):
- *     cdef long step = 0
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 169, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
@@ -36554,7 +36557,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 167, __pyx_L1_error)
   __pyx_k__89 = __pyx_t_6;
@@ -36563,7 +36566,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  *         scale_func_type scale_func=NULL):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 168, __pyx_L1_error)
@@ -36572,11 +36575,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":169
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
  *         scale_func_type scale_func=NULL):
- *     cdef long step = 0
+ *     cdef unsigned long step = 0
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_9); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_9); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L1_error)
   __pyx_k__91 = __pyx_t_7;
   __pyx_k__92 = NULL;
 
@@ -36605,7 +36608,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 167, __pyx_L1_error)
   __pyx_k__9 = __pyx_t_6;
@@ -36614,7 +36617,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER,
+ *         unsigned long max_iter=MAX_ITER,
  *         scale_func_type scale_func=NULL):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 168, __pyx_L1_error)
@@ -36623,11 +36626,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":169
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER,             # <<<<<<<<<<<<<<
  *         scale_func_type scale_func=NULL):
- *     cdef long step = 0
+ *     cdef unsigned long step = 0
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_9); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_9); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L1_error)
   __pyx_k__11 = __pyx_t_7;
   __pyx_k__12 = NULL;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -37705,7 +37708,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 451, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
@@ -37714,8 +37717,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 452, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -37723,8 +37726,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":453
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 453, __pyx_L1_error)
@@ -37755,7 +37758,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 451, __pyx_L1_error)
   __pyx_k__103 = __pyx_t_6;
@@ -37764,8 +37767,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 452, __pyx_L1_error)
   __pyx_k__104 = __pyx_t_6;
@@ -37773,11 +37776,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":453
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 453, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 453, __pyx_L1_error)
   __pyx_k__105 = __pyx_t_7;
 
   /* "cyroot/bracketing.pyx":449
@@ -37805,7 +37808,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 451, __pyx_L1_error)
   __pyx_k__15 = __pyx_t_6;
@@ -37814,8 +37817,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 452, __pyx_L1_error)
   __pyx_k__16 = __pyx_t_6;
@@ -37823,11 +37826,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":453
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 453, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 453, __pyx_L1_error)
   __pyx_k__17 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -38131,7 +38134,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 561, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
@@ -38140,8 +38143,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 562, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -38149,8 +38152,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":563
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 563, __pyx_L1_error)
@@ -38159,7 +38162,7 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":551
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -38200,7 +38203,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 561, __pyx_L1_error)
   __pyx_k__112 = __pyx_t_6;
@@ -38209,8 +38212,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 562, __pyx_L1_error)
   __pyx_k__113 = __pyx_t_6;
@@ -38218,17 +38221,17 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":563
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 563, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 563, __pyx_L1_error)
   __pyx_k__114 = __pyx_t_7;
 
   /* "cyroot/bracketing.pyx":551
  * ################################################################################
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) brent_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -38269,7 +38272,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 561, __pyx_L1_error)
   __pyx_k__22 = __pyx_t_6;
@@ -38278,8 +38281,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 562, __pyx_L1_error)
   __pyx_k__23 = __pyx_t_6;
@@ -38287,11 +38290,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":563
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 563, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_2); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 563, __pyx_L1_error)
   __pyx_k__24 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -38635,7 +38638,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 723, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
@@ -38644,8 +38647,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 724, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
@@ -38653,8 +38656,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":725
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 725, __pyx_L1_error)
@@ -38695,7 +38698,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 723, __pyx_L1_error)
   __pyx_k__120 = __pyx_t_6;
@@ -38704,8 +38707,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 724, __pyx_L1_error)
   __pyx_k__121 = __pyx_t_6;
@@ -38713,11 +38716,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":725
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 725, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 725, __pyx_L1_error)
   __pyx_k__122 = __pyx_t_7;
 
   /* "cyroot/bracketing.pyx":720
@@ -38755,7 +38758,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 723, __pyx_L1_error)
   __pyx_k__29 = __pyx_t_6;
@@ -38764,8 +38767,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 724, __pyx_L1_error)
   __pyx_k__30 = __pyx_t_6;
@@ -38773,11 +38776,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":725
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 725, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 725, __pyx_L1_error)
   __pyx_k__31 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -39086,7 +39089,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 844, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
@@ -39095,8 +39098,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 845, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
@@ -39104,8 +39107,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":846
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 846, __pyx_L1_error)
@@ -39136,7 +39139,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 844, __pyx_L1_error)
   __pyx_k__127 = __pyx_t_6;
@@ -39145,8 +39148,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 845, __pyx_L1_error)
   __pyx_k__128 = __pyx_t_6;
@@ -39154,11 +39157,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":846
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 846, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 846, __pyx_L1_error)
   __pyx_k__129 = __pyx_t_7;
 
   /* "cyroot/bracketing.pyx":842
@@ -39186,7 +39189,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 844, __pyx_L1_error)
   __pyx_k__34 = __pyx_t_6;
@@ -39195,8 +39198,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 845, __pyx_L1_error)
   __pyx_k__35 = __pyx_t_6;
@@ -39204,11 +39207,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":846
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 846, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_5); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 846, __pyx_L1_error)
   __pyx_k__36 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -39478,7 +39481,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "cyroot/bracketing.pyx":1044
- *         long k=2,
+ *         unsigned long k=2,
  *         double mu=0.5,
  *         double etol=ETOL,             # <<<<<<<<<<<<<<
  *         double ertol=ERTOL,
@@ -39502,7 +39505,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 1046, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
@@ -39511,8 +39514,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 1047, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
@@ -39520,8 +39523,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1048
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1048, __pyx_L1_error)
@@ -39530,7 +39533,7 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1036
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -39538,7 +39541,7 @@ if (!__Pyx_RefNanny) {
   __pyx_k__133 = 0.5;
 
   /* "cyroot/bracketing.pyx":1044
- *         long k=2,
+ *         unsigned long k=2,
  *         double mu=0.5,
  *         double etol=ETOL,             # <<<<<<<<<<<<<<
  *         double ertol=ERTOL,
@@ -39562,7 +39565,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1046, __pyx_L1_error)
   __pyx_k__136 = __pyx_t_6;
@@ -39571,8 +39574,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1047, __pyx_L1_error)
   __pyx_k__137 = __pyx_t_6;
@@ -39580,17 +39583,17 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1048
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_1); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1048, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_1); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1048, __pyx_L1_error)
   __pyx_k__138 = __pyx_t_7;
 
   /* "cyroot/bracketing.pyx":1036
  * 
  * # noinspection DuplicatedCode
- * cdef (double, double, long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
+ * cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) toms748_kernel(             # <<<<<<<<<<<<<<
  *         double_scalar_func_type f,
  *         double a,
  */
@@ -39598,7 +39601,7 @@ if (!__Pyx_RefNanny) {
   __pyx_k__38 = 0.5;
 
   /* "cyroot/bracketing.pyx":1044
- *         long k=2,
+ *         unsigned long k=2,
  *         double mu=0.5,
  *         double etol=ETOL,             # <<<<<<<<<<<<<<
  *         double ertol=ERTOL,
@@ -39622,7 +39625,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1046, __pyx_L1_error)
   __pyx_k__41 = __pyx_t_6;
@@ -39631,8 +39634,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1047, __pyx_L1_error)
   __pyx_k__42 = __pyx_t_6;
@@ -39640,11 +39643,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1048
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_1); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1048, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_1); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1048, __pyx_L1_error)
   __pyx_k__43 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -39940,7 +39943,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 1214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
@@ -39949,8 +39952,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 1215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
@@ -39958,8 +39961,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1216
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_MAX_ITER); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1216, __pyx_L1_error)
@@ -39990,7 +39993,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1214, __pyx_L1_error)
   __pyx_k__143 = __pyx_t_6;
@@ -39999,8 +40002,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1215, __pyx_L1_error)
   __pyx_k__144 = __pyx_t_6;
@@ -40008,11 +40011,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1216
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1216, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1216, __pyx_L1_error)
   __pyx_k__145 = __pyx_t_7;
 
   /* "cyroot/bracketing.pyx":1212
@@ -40040,7 +40043,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1214, __pyx_L1_error)
   __pyx_k__46 = __pyx_t_6;
@@ -40049,8 +40052,8 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):
+ *     cdef unsigned long step = 0
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1215, __pyx_L1_error)
   __pyx_k__47 = __pyx_t_6;
@@ -40058,11 +40061,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1216
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
- *     cdef long step = 0
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *     cdef unsigned long step = 0
  *     cdef double r, f_r, precision, error
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1216, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1216, __pyx_L1_error)
   __pyx_k__48 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -40333,7 +40336,7 @@ if (!__Pyx_RefNanny) {
 
   /* "cyroot/bracketing.pyx":1347
  *         double k2,
- *         long n0,
+ *         unsigned long n0,
  *         double etol=ETOL,             # <<<<<<<<<<<<<<
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
@@ -40342,7 +40345,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_2);
 
   /* "cyroot/bracketing.pyx":1348
- *         long n0,
+ *         unsigned long n0,
  *         double etol=ETOL,
  *         double ertol=ERTOL,             # <<<<<<<<<<<<<<
  *         double ptol=PTOL,
@@ -40356,7 +40359,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_PTOL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 1349, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
@@ -40365,7 +40368,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  *     # This slightly differs from the original paper
  */
   __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_PRTOL); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 1350, __pyx_L1_error)
@@ -40374,7 +40377,7 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1351
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
  *     # This slightly differs from the original paper
  *     # where stop condition is (b - a) <= 2 * eps
  */
@@ -40383,7 +40386,7 @@ if (!__Pyx_RefNanny) {
 
   /* "cyroot/bracketing.pyx":1347
  *         double k2,
- *         long n0,
+ *         unsigned long n0,
  *         double etol=ETOL,             # <<<<<<<<<<<<<<
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
@@ -40392,7 +40395,7 @@ if (!__Pyx_RefNanny) {
   __pyx_k__148 = __pyx_t_6;
 
   /* "cyroot/bracketing.pyx":1348
- *         long n0,
+ *         unsigned long n0,
  *         double etol=ETOL,
  *         double ertol=ERTOL,             # <<<<<<<<<<<<<<
  *         double ptol=PTOL,
@@ -40406,7 +40409,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1349, __pyx_L1_error)
   __pyx_k__150 = __pyx_t_6;
@@ -40415,7 +40418,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  *     # This slightly differs from the original paper
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1350, __pyx_L1_error)
@@ -40424,16 +40427,16 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1351
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
  *     # This slightly differs from the original paper
  *     # where stop condition is (b - a) <= 2 * eps
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1351, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1351, __pyx_L1_error)
   __pyx_k__152 = __pyx_t_7;
 
   /* "cyroot/bracketing.pyx":1347
  *         double k2,
- *         long n0,
+ *         unsigned long n0,
  *         double etol=ETOL,             # <<<<<<<<<<<<<<
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
@@ -40442,7 +40445,7 @@ if (!__Pyx_RefNanny) {
   __pyx_k__49 = __pyx_t_6;
 
   /* "cyroot/bracketing.pyx":1348
- *         long n0,
+ *         unsigned long n0,
  *         double etol=ETOL,
  *         double ertol=ERTOL,             # <<<<<<<<<<<<<<
  *         double ptol=PTOL,
@@ -40456,7 +40459,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,             # <<<<<<<<<<<<<<
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1349, __pyx_L1_error)
   __pyx_k__51 = __pyx_t_6;
@@ -40465,7 +40468,7 @@ if (!__Pyx_RefNanny) {
  *         double ertol=ERTOL,
  *         double ptol=PTOL,
  *         double prtol=PRTOL,             # <<<<<<<<<<<<<<
- *         long max_iter=MAX_ITER):
+ *         unsigned long max_iter=MAX_ITER):
  *     # This slightly differs from the original paper
  */
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1350, __pyx_L1_error)
@@ -40474,11 +40477,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/bracketing.pyx":1351
  *         double ptol=PTOL,
  *         double prtol=PRTOL,
- *         long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
+ *         unsigned long max_iter=MAX_ITER):             # <<<<<<<<<<<<<<
  *     # This slightly differs from the original paper
  *     # where stop condition is (b - a) <= 2 * eps
  */
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1351, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_long(__pyx_t_4); if (unlikely((__pyx_t_7 == (unsigned long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1351, __pyx_L1_error)
   __pyx_k__53 = __pyx_t_7;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -44167,7 +44170,7 @@ __pyx_capsule_create(void *p, CYTHON_UNUSED const char *sig)
     }
 
 /* ToPyCTupleUtility */
-static PyObject* __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_7d3462__double__and_double__and_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc value) {
+static PyObject* __pyx_convert__to_py___pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc(__pyx_ctuple_9f38c2__double__and_double__and_unsigned__space_long__and_double__and_double__and_double__and_double__and_double__and_double__and_int__and_int__etc value) {
     PyObject* item = NULL;
     PyObject* result = PyTuple_New(11);
     if (!result) goto bad;
@@ -44177,7 +44180,7 @@ static PyObject* __pyx_convert__to_py___pyx_ctuple_7d3462__double__and_double__a
         item = PyFloat_FromDouble(value.f1);
         if (!item) goto bad;
         PyTuple_SET_ITEM(result, 1, item);
-        item = __Pyx_PyInt_From_long(value.f2);
+        item = __Pyx_PyInt_From_unsigned_long(value.f2);
         if (!item) goto bad;
         PyTuple_SET_ITEM(result, 2, item);
         item = PyFloat_FromDouble(value.f3);
@@ -45226,26 +45229,26 @@ no_fail:
 }
 
 /* CIntFromPy */
-  static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
+  static CYTHON_INLINE unsigned long __Pyx_PyInt_As_unsigned_long(PyObject *x) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 #endif
-    const long neg_one = (long) -1, const_zero = (long) 0;
+    const unsigned long neg_one = (unsigned long) -1, const_zero = (unsigned long) 0;
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
 #pragma GCC diagnostic pop
 #endif
     const int is_unsigned = neg_one > const_zero;
 #if PY_MAJOR_VERSION < 3
     if (likely(PyInt_Check(x))) {
-        if (sizeof(long) < sizeof(long)) {
-            __PYX_VERIFY_RETURN_INT(long, long, PyInt_AS_LONG(x))
+        if (sizeof(unsigned long) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(unsigned long, long, PyInt_AS_LONG(x))
         } else {
             long val = PyInt_AS_LONG(x);
             if (is_unsigned && unlikely(val < 0)) {
                 goto raise_neg_overflow;
             }
-            return (long) val;
+            return (unsigned long) val;
         }
     } else
 #endif
@@ -45254,32 +45257,32 @@ no_fail:
 #if CYTHON_USE_PYLONG_INTERNALS
             const digit* digits = ((PyLongObject*)x)->ob_digit;
             switch (Py_SIZE(x)) {
-                case  0: return (long) 0;
-                case  1: __PYX_VERIFY_RETURN_INT(long, digit, digits[0])
+                case  0: return (unsigned long) 0;
+                case  1: __PYX_VERIFY_RETURN_INT(unsigned long, digit, digits[0])
                 case 2:
-                    if (8 * sizeof(long) > 1 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 1 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) >= 2 * PyLong_SHIFT) {
-                            return (long) (((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) >= 2 * PyLong_SHIFT) {
+                            return (unsigned long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
                         }
                     }
                     break;
                 case 3:
-                    if (8 * sizeof(long) > 2 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) >= 3 * PyLong_SHIFT) {
-                            return (long) (((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) >= 3 * PyLong_SHIFT) {
+                            return (unsigned long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
                         }
                     }
                     break;
                 case 4:
-                    if (8 * sizeof(long) > 3 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) >= 4 * PyLong_SHIFT) {
-                            return (long) (((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) >= 4 * PyLong_SHIFT) {
+                            return (unsigned long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
                         }
                     }
                     break;
@@ -45293,86 +45296,86 @@ no_fail:
             {
                 int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
                 if (unlikely(result < 0))
-                    return (long) -1;
+                    return (unsigned long) -1;
                 if (unlikely(result == 1))
                     goto raise_neg_overflow;
             }
 #endif
-            if (sizeof(long) <= sizeof(unsigned long)) {
-                __PYX_VERIFY_RETURN_INT_EXC(long, unsigned long, PyLong_AsUnsignedLong(x))
+            if (sizeof(unsigned long) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned long, unsigned long, PyLong_AsUnsignedLong(x))
 #ifdef HAVE_LONG_LONG
-            } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT_EXC(long, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+            } else if (sizeof(unsigned long) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned long, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
 #endif
             }
         } else {
 #if CYTHON_USE_PYLONG_INTERNALS
             const digit* digits = ((PyLongObject*)x)->ob_digit;
             switch (Py_SIZE(x)) {
-                case  0: return (long) 0;
-                case -1: __PYX_VERIFY_RETURN_INT(long, sdigit, (sdigit) (-(sdigit)digits[0]))
-                case  1: __PYX_VERIFY_RETURN_INT(long,  digit, +digits[0])
+                case  0: return (unsigned long) 0;
+                case -1: __PYX_VERIFY_RETURN_INT(unsigned long, sdigit, (sdigit) (-(sdigit)digits[0]))
+                case  1: __PYX_VERIFY_RETURN_INT(unsigned long,  digit, +digits[0])
                 case -2:
-                    if (8 * sizeof(long) - 1 > 1 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) - 1 > 1 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
-                            return (long) (((long)-1)*(((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 2 * PyLong_SHIFT) {
+                            return (unsigned long) (((unsigned long)-1)*(((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case 2:
-                    if (8 * sizeof(long) > 1 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 1 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
-                            return (long) ((((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 2 * PyLong_SHIFT) {
+                            return (unsigned long) ((((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case -3:
-                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) - 1 > 2 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
-                            return (long) (((long)-1)*(((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 3 * PyLong_SHIFT) {
+                            return (unsigned long) (((unsigned long)-1)*(((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case 3:
-                    if (8 * sizeof(long) > 2 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
-                            return (long) ((((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 3 * PyLong_SHIFT) {
+                            return (unsigned long) ((((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case -4:
-                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) - 1 > 3 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
-                            return (long) (((long)-1)*(((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 4 * PyLong_SHIFT) {
+                            return (unsigned long) (((unsigned long)-1)*(((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
                 case 4:
-                    if (8 * sizeof(long) > 3 * PyLong_SHIFT) {
+                    if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
                         if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
-                        } else if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
-                            return (long) ((((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                            __PYX_VERIFY_RETURN_INT(unsigned long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned long) - 1 > 4 * PyLong_SHIFT) {
+                            return (unsigned long) ((((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])));
                         }
                     }
                     break;
             }
 #endif
-            if (sizeof(long) <= sizeof(long)) {
-                __PYX_VERIFY_RETURN_INT_EXC(long, long, PyLong_AsLong(x))
+            if (sizeof(unsigned long) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned long, long, PyLong_AsLong(x))
 #ifdef HAVE_LONG_LONG
-            } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT_EXC(long, PY_LONG_LONG, PyLong_AsLongLong(x))
+            } else if (sizeof(unsigned long) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned long, PY_LONG_LONG, PyLong_AsLongLong(x))
 #endif
             }
         }
@@ -45381,7 +45384,7 @@ no_fail:
             PyErr_SetString(PyExc_RuntimeError,
                             "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
 #else
-            long val;
+            unsigned long val;
             PyObject *v = __Pyx_PyNumber_IntOrLong(x);
  #if PY_MAJOR_VERSION < 3
             if (likely(v) && !PyLong_Check(v)) {
@@ -45401,62 +45404,24 @@ no_fail:
                     return val;
             }
 #endif
-            return (long) -1;
+            return (unsigned long) -1;
         }
     } else {
-        long val;
+        unsigned long val;
         PyObject *tmp = __Pyx_PyNumber_IntOrLong(x);
-        if (!tmp) return (long) -1;
-        val = __Pyx_PyInt_As_long(tmp);
+        if (!tmp) return (unsigned long) -1;
+        val = __Pyx_PyInt_As_unsigned_long(tmp);
         Py_DECREF(tmp);
         return val;
     }
 raise_overflow:
     PyErr_SetString(PyExc_OverflowError,
-        "value too large to convert to long");
-    return (long) -1;
+        "value too large to convert to unsigned long");
+    return (unsigned long) -1;
 raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
-        "can't convert negative value to long");
-    return (long) -1;
-}
-
-/* CIntToPy */
-  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const long neg_one = (long) -1, const_zero = (long) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(long) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(long) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-#endif
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(long),
-                                     little, !is_unsigned);
-    }
+        "can't convert negative value to unsigned long");
+    return (unsigned long) -1;
 }
 
 /* TypeInfoToFormat */
@@ -45971,6 +45936,202 @@ raise_neg_overflow:
     return (unsigned int) -1;
 }
 
+/* CIntFromPy */
+  static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const long neg_one = (long) -1, const_zero = (long) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if (sizeof(long) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(long, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (long) val;
+        }
+    } else
+#endif
+    if (likely(PyLong_Check(x))) {
+        if (is_unsigned) {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (long) 0;
+                case  1: __PYX_VERIFY_RETURN_INT(long, digit, digits[0])
+                case 2:
+                    if (8 * sizeof(long) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) >= 2 * PyLong_SHIFT) {
+                            return (long) (((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(long) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) >= 3 * PyLong_SHIFT) {
+                            return (long) (((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(long) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) >= 4 * PyLong_SHIFT) {
+                            return (long) (((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0]));
+                        }
+                    }
+                    break;
+            }
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON
+            if (unlikely(Py_SIZE(x) < 0)) {
+                goto raise_neg_overflow;
+            }
+#else
+            {
+                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+                if (unlikely(result < 0))
+                    return (long) -1;
+                if (unlikely(result == 1))
+                    goto raise_neg_overflow;
+            }
+#endif
+            if (sizeof(long) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(long, unsigned long, PyLong_AsUnsignedLong(x))
+#ifdef HAVE_LONG_LONG
+            } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(long, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+#endif
+            }
+        } else {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (long) 0;
+                case -1: __PYX_VERIFY_RETURN_INT(long, sdigit, (sdigit) (-(sdigit)digits[0]))
+                case  1: __PYX_VERIFY_RETURN_INT(long,  digit, +digits[0])
+                case -2:
+                    if (8 * sizeof(long) - 1 > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                            return (long) (((long)-1)*(((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                        }
+                    }
+                    break;
+                case 2:
+                    if (8 * sizeof(long) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                            return (long) ((((((long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                        }
+                    }
+                    break;
+                case -3:
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                            return (long) (((long)-1)*(((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(long) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                            return (long) ((((((((long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                        }
+                    }
+                    break;
+                case -4:
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(long, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                            return (long) (((long)-1)*(((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(long) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(long, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                            return (long) ((((((((((long)digits[3]) << PyLong_SHIFT) | (long)digits[2]) << PyLong_SHIFT) | (long)digits[1]) << PyLong_SHIFT) | (long)digits[0])));
+                        }
+                    }
+                    break;
+            }
+#endif
+            if (sizeof(long) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(long, long, PyLong_AsLong(x))
+#ifdef HAVE_LONG_LONG
+            } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(long, PY_LONG_LONG, PyLong_AsLongLong(x))
+#endif
+            }
+        }
+        {
+#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
+            PyErr_SetString(PyExc_RuntimeError,
+                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
+#else
+            long val;
+            PyObject *v = __Pyx_PyNumber_IntOrLong(x);
+ #if PY_MAJOR_VERSION < 3
+            if (likely(v) && !PyLong_Check(v)) {
+                PyObject *tmp = v;
+                v = PyNumber_Long(tmp);
+                Py_DECREF(tmp);
+            }
+ #endif
+            if (likely(v)) {
+                int one = 1; int is_little = (int)*(unsigned char *)&one;
+                unsigned char *bytes = (unsigned char *)&val;
+                int ret = _PyLong_AsByteArray((PyLongObject *)v,
+                                              bytes, sizeof(val),
+                                              is_little, !is_unsigned);
+                Py_DECREF(v);
+                if (likely(!ret))
+                    return val;
+            }
+#endif
+            return (long) -1;
+        }
+    } else {
+        long val;
+        PyObject *tmp = __Pyx_PyNumber_IntOrLong(x);
+        if (!tmp) return (long) -1;
+        val = __Pyx_PyInt_As_long(tmp);
+        Py_DECREF(tmp);
+        return val;
+    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to long");
+    return (long) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to long");
+    return (long) -1;
+}
+
 /* CIntToPy */
   static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
@@ -46005,6 +46166,44 @@ raise_neg_overflow:
         int one = 1; int little = (int)*(unsigned char *)&one;
         unsigned char *bytes = (unsigned char *)&value;
         return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+    }
+}
+
+/* CIntToPy */
+  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const long neg_one = (long) -1, const_zero = (long) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(long) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(long) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(long),
                                      little, !is_unsigned);
     }
 }
