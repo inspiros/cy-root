@@ -1,5 +1,8 @@
 # distutils: language=c++
 
+import numpy as np
+cimport numpy as np
+
 cdef class TrackedFPtr:
     cdef public unsigned long n_f_calls
 
@@ -98,3 +101,27 @@ cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
 ctypedef fused complex_vector_func_type:
     cvf_ptr
     ComplexVectorFPtr
+
+# --------------------------------
+# Double Numpy Array
+# --------------------------------
+ctypedef np.ndarray (*dndarray_f_ptr)(np.ndarray)
+
+cdef class DoubleNpNdArrayFPtr(TrackedFPtr):
+    cdef np.ndarray eval(self, np.ndarray x)
+
+cdef class CyDoubleNpNdArrayFPtr(DoubleNpNdArrayFPtr):
+    cdef dndarray_f_ptr f
+    @staticmethod
+    cdef CyDoubleNpNdArrayFPtr from_f(dndarray_f_ptr f)
+    cdef np.ndarray eval(self, np.ndarray x)
+
+cdef class PyDoubleNpNdArrayFPtr(DoubleNpNdArrayFPtr):
+    cdef object f
+    @staticmethod
+    cdef PyDoubleNpNdArrayFPtr from_f(object f)
+    cdef np.ndarray eval(self, np.ndarray x)
+
+ctypedef fused double_np_ndarray_func_type:
+    dndarray_f_ptr
+    DoubleNpNdArrayFPtr

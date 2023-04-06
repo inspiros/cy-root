@@ -1,6 +1,6 @@
 from inspect import getmembers
 
-from . import newton, quasi_newton, bracketing
+from . import scalar_bracketing, scalar_quasi_newton, scalar_newton
 from .utils.function_tagging import has_tag
 
 __all__ = [
@@ -9,7 +9,7 @@ __all__ = [
 ]
 
 SCALAR_ROOT_FINDING_METHODS = {}
-for module in [bracketing, newton, quasi_newton]:
+for module in [scalar_bracketing, scalar_quasi_newton, scalar_newton]:
     SCALAR_ROOT_FINDING_METHODS.update(getmembers(module, has_tag))
 
 

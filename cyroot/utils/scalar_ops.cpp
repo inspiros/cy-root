@@ -3,6 +3,7 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
+        "depends": [],
         "include_dirs": [
             "cyroot",
             "C:\\Python\\Python38\\lib\\site-packages\\numpy\\core\\include",
@@ -774,6 +775,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 #define __PYX_HAVE_API__cyroot__utils__scalar_ops
 /* Early includes */
 #include <math.h>
+#include <complex>
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -981,18 +983,54 @@ static int __pyx_clineno = 0;
 static const char * __pyx_cfilenm= __FILE__;
 static const char *__pyx_filename;
 
+/* Header.proto */
+#if !defined(CYTHON_CCOMPLEX)
+  #if defined(__cplusplus)
+    #define CYTHON_CCOMPLEX 1
+  #elif defined(_Complex_I)
+    #define CYTHON_CCOMPLEX 1
+  #else
+    #define CYTHON_CCOMPLEX 0
+  #endif
+#endif
+#if CYTHON_CCOMPLEX
+  #ifdef __cplusplus
+    #include <complex>
+  #else
+    #include <complex.h>
+  #endif
+#endif
+#if CYTHON_CCOMPLEX && !defined(__cplusplus) && defined(__sun__) && defined(__GNUC__)
+  #undef _Complex_I
+  #define _Complex_I 1.0fj
+#endif
+
 
 static const char *__pyx_f[] = {
   "cyroot\\utils\\scalar_ops.pyx",
 };
+/* Declarations.proto */
+#if CYTHON_CCOMPLEX
+  #ifdef __cplusplus
+    typedef ::std::complex< double > __pyx_t_double_complex;
+  #else
+    typedef double _Complex __pyx_t_double_complex;
+  #endif
+#else
+    typedef struct { double real, imag; } __pyx_t_double_complex;
+#endif
+static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(double, double);
+
 
 /*--- Type declarations ---*/
-struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose;
+struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_fisclose;
 
 /* "cyroot/utils/scalar_ops.pxd":1
- * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef double fabs(double x) nogil
+ * cdef double cabs(double complex x) nogil
  */
-struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose {
+struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_fisclose {
   int __pyx_n;
   double rtol;
   double atol;
@@ -1157,6 +1195,66 @@ static void __pyx_insert_code_object(int code_line, PyCodeObject* code_object);
 static void __Pyx_AddTraceback(const char *funcname, int c_line,
                                int py_line, const char *filename);
 
+/* RealImag.proto */
+#if CYTHON_CCOMPLEX
+  #ifdef __cplusplus
+    #define __Pyx_CREAL(z) ((z).real())
+    #define __Pyx_CIMAG(z) ((z).imag())
+  #else
+    #define __Pyx_CREAL(z) (__real__(z))
+    #define __Pyx_CIMAG(z) (__imag__(z))
+  #endif
+#else
+    #define __Pyx_CREAL(z) ((z).real)
+    #define __Pyx_CIMAG(z) ((z).imag)
+#endif
+#if defined(__cplusplus) && CYTHON_CCOMPLEX\
+        && (defined(_WIN32) || defined(__clang__) || (defined(__GNUC__) && (__GNUC__ >= 5 || __GNUC__ == 4 && __GNUC_MINOR__ >= 4 )) || __cplusplus >= 201103)
+    #define __Pyx_SET_CREAL(z,x) ((z).real(x))
+    #define __Pyx_SET_CIMAG(z,y) ((z).imag(y))
+#else
+    #define __Pyx_SET_CREAL(z,x) __Pyx_CREAL(z) = (x)
+    #define __Pyx_SET_CIMAG(z,y) __Pyx_CIMAG(z) = (y)
+#endif
+
+/* Arithmetic.proto */
+#if CYTHON_CCOMPLEX
+    #define __Pyx_c_eq_double(a, b)   ((a)==(b))
+    #define __Pyx_c_sum_double(a, b)  ((a)+(b))
+    #define __Pyx_c_diff_double(a, b) ((a)-(b))
+    #define __Pyx_c_prod_double(a, b) ((a)*(b))
+    #define __Pyx_c_quot_double(a, b) ((a)/(b))
+    #define __Pyx_c_neg_double(a)     (-(a))
+  #ifdef __cplusplus
+    #define __Pyx_c_is_zero_double(z) ((z)==(double)0)
+    #define __Pyx_c_conj_double(z)    (::std::conj(z))
+    #if 1
+        #define __Pyx_c_abs_double(z)     (::std::abs(z))
+        #define __Pyx_c_pow_double(a, b)  (::std::pow(a, b))
+    #endif
+  #else
+    #define __Pyx_c_is_zero_double(z) ((z)==0)
+    #define __Pyx_c_conj_double(z)    (conj(z))
+    #if 1
+        #define __Pyx_c_abs_double(z)     (cabs(z))
+        #define __Pyx_c_pow_double(a, b)  (cpow(a, b))
+    #endif
+ #endif
+#else
+    static CYTHON_INLINE int __Pyx_c_eq_double(__pyx_t_double_complex, __pyx_t_double_complex);
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_sum_double(__pyx_t_double_complex, __pyx_t_double_complex);
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_diff_double(__pyx_t_double_complex, __pyx_t_double_complex);
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_prod_double(__pyx_t_double_complex, __pyx_t_double_complex);
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_quot_double(__pyx_t_double_complex, __pyx_t_double_complex);
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_neg_double(__pyx_t_double_complex);
+    static CYTHON_INLINE int __Pyx_c_is_zero_double(__pyx_t_double_complex);
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_conj_double(__pyx_t_double_complex);
+    #if 1
+        static CYTHON_INLINE double __Pyx_c_abs_double(__pyx_t_double_complex);
+        static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_pow_double(__pyx_t_double_complex, __pyx_t_double_complex);
+    #endif
+#endif
+
 /* GCCDiagnostics.proto */
 #if defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
 #define __Pyx_HAS_GCC_DIAGNOSTIC
@@ -1214,15 +1312,15 @@ static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_test;
 /* Late includes */
 
-/* "cyroot/utils/scalar_ops.pyx":9
- * from libc cimport math
+/* "cyroot/utils/scalar_ops.pyx":12
+ *     double _cabs 'abs'(double complex) nogil
  * 
- * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
+ * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)
  */
 
-static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_isclose(double __pyx_v_a, double __pyx_v_b, struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose *__pyx_optional_args) {
+static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_fisclose(double __pyx_v_a, double __pyx_v_b, struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_fisclose *__pyx_optional_args) {
   double __pyx_v_rtol = ((double)1e-5);
   double __pyx_v_atol = ((double)1e-8);
   int __pyx_r;
@@ -1237,9 +1335,9 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_isclose(double __py
     }
   }
 
-  /* "cyroot/utils/scalar_ops.pyx":10
+  /* "cyroot/utils/scalar_ops.pyx":13
  * 
- * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
+ * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):             # <<<<<<<<<<<<<<
  *         return math.isinf(a) and math.isinf(b)
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
@@ -1255,11 +1353,12 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_isclose(double __py
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "cyroot/utils/scalar_ops.pyx":11
- * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
+    /* "cyroot/utils/scalar_ops.pyx":14
+ * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)             # <<<<<<<<<<<<<<
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
+ * 
  */
     __pyx_t_2 = (isinf(__pyx_v_a) != 0);
     if (__pyx_t_2) {
@@ -1273,29 +1372,95 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_isclose(double __py
     __pyx_r = __pyx_t_1;
     goto __pyx_L0;
 
-    /* "cyroot/utils/scalar_ops.pyx":10
+    /* "cyroot/utils/scalar_ops.pyx":13
  * 
- * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
+ * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):             # <<<<<<<<<<<<<<
  *         return math.isinf(a) and math.isinf(b)
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
  */
   }
 
-  /* "cyroot/utils/scalar_ops.pyx":12
+  /* "cyroot/utils/scalar_ops.pyx":15
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline double fabs(double x) nogil:
  */
   __pyx_r = (fabs((__pyx_v_a - __pyx_v_b)) <= (__pyx_v_atol + (__pyx_v_rtol * fabs(__pyx_v_b))));
   goto __pyx_L0;
 
-  /* "cyroot/utils/scalar_ops.pyx":9
- * from libc cimport math
+  /* "cyroot/utils/scalar_ops.pyx":12
+ *     double _cabs 'abs'(double complex) nogil
  * 
- * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
+ * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "cyroot/utils/scalar_ops.pyx":17
+ *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
+ * 
+ * cdef inline double fabs(double x) nogil:             # <<<<<<<<<<<<<<
+ *     return math.fabs(x)
+ * 
+ */
+
+static CYTHON_INLINE double __pyx_f_6cyroot_5utils_10scalar_ops_fabs(double __pyx_v_x) {
+  double __pyx_r;
+
+  /* "cyroot/utils/scalar_ops.pyx":18
+ * 
+ * cdef inline double fabs(double x) nogil:
+ *     return math.fabs(x)             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline double cabs(double complex x) nogil:
+ */
+  __pyx_r = fabs(__pyx_v_x);
+  goto __pyx_L0;
+
+  /* "cyroot/utils/scalar_ops.pyx":17
+ *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
+ * 
+ * cdef inline double fabs(double x) nogil:             # <<<<<<<<<<<<<<
+ *     return math.fabs(x)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "cyroot/utils/scalar_ops.pyx":20
+ *     return math.fabs(x)
+ * 
+ * cdef inline double cabs(double complex x) nogil:             # <<<<<<<<<<<<<<
+ *     return _cabs(x)
+ */
+
+static CYTHON_INLINE double __pyx_f_6cyroot_5utils_10scalar_ops_cabs(__pyx_t_double_complex __pyx_v_x) {
+  double __pyx_r;
+
+  /* "cyroot/utils/scalar_ops.pyx":21
+ * 
+ * cdef inline double cabs(double complex x) nogil:
+ *     return _cabs(x)             # <<<<<<<<<<<<<<
+ */
+  __pyx_r = abs(__pyx_v_x);
+  goto __pyx_L0;
+
+  /* "cyroot/utils/scalar_ops.pyx":20
+ *     return math.fabs(x)
+ * 
+ * cdef inline double cabs(double complex x) nogil:             # <<<<<<<<<<<<<<
+ *     return _cabs(x)
  */
 
   /* function exit code */
@@ -1404,7 +1569,9 @@ static int __Pyx_modinit_function_export_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_export_code", 0);
   /*--- Function export code ---*/
-  if (__Pyx_ExportFunction("isclose", (void (*)(void))__pyx_f_6cyroot_5utils_10scalar_ops_isclose, "int (double, double, struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_isclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("fisclose", (void (*)(void))__pyx_f_6cyroot_5utils_10scalar_ops_fisclose, "int (double, double, struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_fisclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("fabs", (void (*)(void))__pyx_f_6cyroot_5utils_10scalar_ops_fabs, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("cabs", (void (*)(void))__pyx_f_6cyroot_5utils_10scalar_ops_cabs, "double (__pyx_t_double_complex)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -1988,6 +2155,160 @@ bad:
     Py_XDECREF(py_code);
     Py_XDECREF(py_frame);
 }
+
+/* Declarations */
+#if CYTHON_CCOMPLEX
+  #ifdef __cplusplus
+    static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(double x, double y) {
+      return ::std::complex< double >(x, y);
+    }
+  #else
+    static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(double x, double y) {
+      return x + y*(__pyx_t_double_complex)_Complex_I;
+    }
+  #endif
+#else
+    static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(double x, double y) {
+      __pyx_t_double_complex z;
+      z.real = x;
+      z.imag = y;
+      return z;
+    }
+#endif
+
+/* Arithmetic */
+#if CYTHON_CCOMPLEX
+#else
+    static CYTHON_INLINE int __Pyx_c_eq_double(__pyx_t_double_complex a, __pyx_t_double_complex b) {
+       return (a.real == b.real) && (a.imag == b.imag);
+    }
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_sum_double(__pyx_t_double_complex a, __pyx_t_double_complex b) {
+        __pyx_t_double_complex z;
+        z.real = a.real + b.real;
+        z.imag = a.imag + b.imag;
+        return z;
+    }
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_diff_double(__pyx_t_double_complex a, __pyx_t_double_complex b) {
+        __pyx_t_double_complex z;
+        z.real = a.real - b.real;
+        z.imag = a.imag - b.imag;
+        return z;
+    }
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_prod_double(__pyx_t_double_complex a, __pyx_t_double_complex b) {
+        __pyx_t_double_complex z;
+        z.real = a.real * b.real - a.imag * b.imag;
+        z.imag = a.real * b.imag + a.imag * b.real;
+        return z;
+    }
+    #if 1
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_quot_double(__pyx_t_double_complex a, __pyx_t_double_complex b) {
+        if (b.imag == 0) {
+            return __pyx_t_double_complex_from_parts(a.real / b.real, a.imag / b.real);
+        } else if (fabs(b.real) >= fabs(b.imag)) {
+            if (b.real == 0 && b.imag == 0) {
+                return __pyx_t_double_complex_from_parts(a.real / b.real, a.imag / b.imag);
+            } else {
+                double r = b.imag / b.real;
+                double s = (double)(1.0) / (b.real + b.imag * r);
+                return __pyx_t_double_complex_from_parts(
+                    (a.real + a.imag * r) * s, (a.imag - a.real * r) * s);
+            }
+        } else {
+            double r = b.real / b.imag;
+            double s = (double)(1.0) / (b.imag + b.real * r);
+            return __pyx_t_double_complex_from_parts(
+                (a.real * r + a.imag) * s, (a.imag * r - a.real) * s);
+        }
+    }
+    #else
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_quot_double(__pyx_t_double_complex a, __pyx_t_double_complex b) {
+        if (b.imag == 0) {
+            return __pyx_t_double_complex_from_parts(a.real / b.real, a.imag / b.real);
+        } else {
+            double denom = b.real * b.real + b.imag * b.imag;
+            return __pyx_t_double_complex_from_parts(
+                (a.real * b.real + a.imag * b.imag) / denom,
+                (a.imag * b.real - a.real * b.imag) / denom);
+        }
+    }
+    #endif
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_neg_double(__pyx_t_double_complex a) {
+        __pyx_t_double_complex z;
+        z.real = -a.real;
+        z.imag = -a.imag;
+        return z;
+    }
+    static CYTHON_INLINE int __Pyx_c_is_zero_double(__pyx_t_double_complex a) {
+       return (a.real == 0) && (a.imag == 0);
+    }
+    static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_conj_double(__pyx_t_double_complex a) {
+        __pyx_t_double_complex z;
+        z.real =  a.real;
+        z.imag = -a.imag;
+        return z;
+    }
+    #if 1
+        static CYTHON_INLINE double __Pyx_c_abs_double(__pyx_t_double_complex z) {
+          #if !defined(HAVE_HYPOT) || defined(_MSC_VER)
+            return sqrt(z.real*z.real + z.imag*z.imag);
+          #else
+            return hypot(z.real, z.imag);
+          #endif
+        }
+        static CYTHON_INLINE __pyx_t_double_complex __Pyx_c_pow_double(__pyx_t_double_complex a, __pyx_t_double_complex b) {
+            __pyx_t_double_complex z;
+            double r, lnr, theta, z_r, z_theta;
+            if (b.imag == 0 && b.real == (int)b.real) {
+                if (b.real < 0) {
+                    double denom = a.real * a.real + a.imag * a.imag;
+                    a.real = a.real / denom;
+                    a.imag = -a.imag / denom;
+                    b.real = -b.real;
+                }
+                switch ((int)b.real) {
+                    case 0:
+                        z.real = 1;
+                        z.imag = 0;
+                        return z;
+                    case 1:
+                        return a;
+                    case 2:
+                        return __Pyx_c_prod_double(a, a);
+                    case 3:
+                        z = __Pyx_c_prod_double(a, a);
+                        return __Pyx_c_prod_double(z, a);
+                    case 4:
+                        z = __Pyx_c_prod_double(a, a);
+                        return __Pyx_c_prod_double(z, z);
+                }
+            }
+            if (a.imag == 0) {
+                if (a.real == 0) {
+                    return a;
+                } else if ((b.imag == 0) && (a.real >= 0)) {
+                    z.real = pow(a.real, b.real);
+                    z.imag = 0;
+                    return z;
+                } else if (a.real > 0) {
+                    r = a.real;
+                    theta = 0;
+                } else {
+                    r = -a.real;
+                    theta = atan2(0.0, -1.0);
+                }
+            } else {
+                r = __Pyx_c_abs_double(a);
+                theta = atan2(a.imag, a.real);
+            }
+            lnr = log(r);
+            z_r = exp(lnr * b.real - theta * b.imag);
+            z_theta = theta * b.real + lnr * b.imag;
+            z.real = z_r * cos(z_theta);
+            z.imag = z_r * sin(z_theta);
+            return z;
+        }
+    #endif
+#endif
 
 /* CIntToPy */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {

@@ -1,9 +1,16 @@
+from inspect import getmembers
+
+from . import vector_quasi_newton, vector_newton
+from .utils.function_tagging import has_tag
+
 __all__ = [
     'VECTOR_ROOT_FINDING_METHODS',
     'find_root_vector',
 ]
 
 VECTOR_ROOT_FINDING_METHODS = {}
+for module in [vector_quasi_newton, vector_newton]:
+    VECTOR_ROOT_FINDING_METHODS.update(getmembers(module, has_tag))
 
 
 def find_root_vector(method: str, *args, **kwargs):
@@ -19,4 +26,7 @@ def find_root_vector(method: str, *args, **kwargs):
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
-    raise NotImplementedError('Vector root is not supported yet.')
+    if method not in VECTOR_ROOT_FINDING_METHODS.keys():
+        raise ValueError(f'No implementation for {str(method)} found. '
+                         f'Supported methods are: {", ".join(VECTOR_ROOT_FINDING_METHODS.keys())}')
+    return VECTOR_ROOT_FINDING_METHODS[method](*args, **kwargs)

@@ -15,7 +15,7 @@ from cython cimport view
 from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
 
-from ._check_args cimport _check_stop_condition_initial_guess
+from ._check_args cimport _check_stop_condition_initial_guess_scalar
 from ._check_args import _check_stop_condition_args
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import NewtonMethodReturnType
@@ -23,7 +23,7 @@ from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     double_vector_func_type, DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
-from .utils.scalar_ops cimport isclose
+from .utils.scalar_ops cimport fisclose
 from .utils.function_tagging import tag
 
 __all__ = [
@@ -50,26 +50,28 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) newton_
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
-                            &precision, &error, &converged, &optimal):
+    if _check_stop_condition_initial_guess_scalar(x0, f_x0, etol, ertol, ptol, prtol,
+                                                  &precision, &error, &converged, &optimal):
         return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
-    cdef double x1
+    cdef double d_x
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or df_x0 == 0:
             converged = False
         step += 1
-        x1 = x0 - f_x0 / df_x0
-        precision = math.fabs(x1 - x0)
-        x0, f_x0, df_x0 = x1, f(x1), df(x1)
+        d_x = -f_x0 / df_x0
+        x0 = x0 + d_x
+        f_x0 = f(x0)
+        df_x0 = df(x0)
+        precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = fisclose(0, error, ertol, etol)
     return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@tag('cyroot.newton')
+@tag('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def newton(f: Callable[[float], float],
@@ -144,13 +146,13 @@ cdef (double, double, double, double, unsigned long, double, double, bint, bint)
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
-                            &precision, &error, &converged, &optimal):
+    if _check_stop_condition_initial_guess_scalar(x0, f_x0, etol, ertol, ptol, prtol,
+                                                  &precision, &error, &converged, &optimal):
         return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
 
-    cdef double x1, denom
+    cdef double d_x, denom
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -159,16 +161,19 @@ cdef (double, double, double, double, unsigned long, double, double, bint, bint)
         if denom == 0:
             converged = False
             break
-        x1 = x0 - 2 * f_x0 * df_x0 / denom
-        precision = math.fabs(x1 - x0)
-        x0, f_x0, df_x0, d2f_x0 = x1, f(x1), df(x1), d2f(x1)
+        d_x = -2 * f_x0 * df_x0 / denom
+        x0 = x0 + d_x
+        f_x0 = f(x0)
+        df_x0 = df(x0)
+        d2f_x0 = d2f(x0)
+        precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = fisclose(0, error, ertol, etol)
     return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@tag('cyroot.newton')
+@tag('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def halley(f: Callable[[float], float],
@@ -253,36 +258,36 @@ cdef householder_kernel(
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess(x0_, fs_x0[0], etol, ertol, ptol, prtol,
-                            &precision, &error, &converged, &optimal):
+    if _check_stop_condition_initial_guess_scalar(x0_, fs_x0[0], etol, ertol, ptol, prtol,
+                                                  &precision, &error, &converged, &optimal):
         return x0_, fs_x0, step, precision, error, converged, optimal
 
     cdef double[:] x0 = view.array(shape=(1,),
                                    itemsize=sizeof(double),
                                    format='d')
-    cdef double[:] x1 = view.array(shape=(1,),
-                                   itemsize=sizeof(double),
-                                   format='d')
+    cdef double d_x
     x0[0] = x0_  # wrapped in a memory view to be able to pass into mv_func_type
     cdef unsigned int i
-    cdef double[:] nom_x0 = nom_f(fs_x0[:-1]), denom_x0 = denom_f(fs_x0)
+    cdef double[:] nom_x0, denom_x0
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
-        if step >= max_iter > 0 or denom_x0[0] == 0:
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+        if step >= max_iter > 0:
             converged = False
             break
         step += 1
-        x1[0] = x0[0] + d * nom_x0[0] / denom_x0[0]
-        precision = math.fabs(x1[0] - x0[0])
-        # advance
-        x0[0] = x1[0]
-        # fs_x0 = fs(x0)
+        nom_x0 = nom_f(fs_x0[:-1])
+        denom_x0 = denom_f(fs_x0)
+        if denom_x0[0] == 0:
+            converged = False
+            break
+        d_x = d * nom_x0[0] / denom_x0[0]
+        x0[0] = x0[0] + d_x
         for i in range(d + 1):
             fs_x0[i] = fs[i](x0[0])
+        precision = math.fabs(d_x)
         error = math.fabs(fs_x0[0])
-        nom_x0, denom_x0 = nom_f(fs_x0[:-1]), denom_f(fs_x0)
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = fisclose(0, error, ertol, etol)
     return x0[0], fs_x0, step, precision, error, converged, optimal
 
 #########################
@@ -562,7 +567,7 @@ class ReciprocalDerivativeFuncFactory:
         return cls.rd_py_funcs[d] if not c_code else cls.rd_c_funcs[d]
 
 # noinspection DuplicatedCode
-@tag('cyroot.newton')
+@tag('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def householder(f: Callable[[float], float],

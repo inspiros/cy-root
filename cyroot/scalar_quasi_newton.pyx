@@ -13,11 +13,11 @@ from cython cimport view
 from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
 
-from .utils.array_ops cimport fabs, fabs_width, cabs_width, argsort, permute
+from .utils.vector_ops cimport fabs, fabs_width, cabs_width, fargsort, fpermute
 from ._check_args cimport (
-    _check_stop_condition_initial_guess,
-    _check_stop_condition_initial_guesses,
-    _check_stop_condition_initial_guesses_complex,
+    _check_stop_condition_initial_guess_scalar,
+    _check_stop_condition_initial_guesses_scalar,
+    _check_stop_condition_initial_guesses_complex_scalar,
 )
 from ._check_args import (
     _check_stop_condition_args,
@@ -30,7 +30,7 @@ from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     complex_scalar_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
 )
-from .utils.scalar_ops cimport isclose
+from .utils.scalar_ops cimport fisclose
 from .utils.function_tagging import tag
 
 cdef extern from '<complex>':
@@ -65,13 +65,13 @@ cdef (double, double, unsigned long, double, double, bint, bint) secant_kernel(
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     cdef double[2] xs = [x0, x1], f_xs = [f_x0, f_x1]
-    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
-                              &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_condition_initial_guesses_scalar(xs, f_xs, etol, ertol, ptol, prtol,
+                                                    &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double x2, df_01
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -88,11 +88,11 @@ cdef (double, double, unsigned long, double, double, bint, bint) secant_kernel(
         error = math.fabs(f_x1)
 
     r, f_r = x1, f_x1
-    optimal = isclose(0, error, ertol, etol)
+    optimal = fisclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@tag('cyroot.quasi_newton')
+@tag('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def secant(f: Callable[[float], float],
@@ -160,21 +160,21 @@ cdef (double, double, unsigned long, double, double, bint, bint) sidi_kernel(
         double prtol=PRTOL,
         unsigned long max_iter=MAX_ITER):
     # sort by absolute value of f
-    cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
-    cdef double[:] xs = permute(x0s, inds)
-    cdef double[:] f_xs = permute(f_x0s, inds)
+    cdef unsigned long[:] inds = fargsort(fabs(f_x0s), reverse=<bint> True)
+    cdef double[:] xs = fpermute(x0s, inds)
+    cdef double[:] f_xs = fpermute(f_x0s, inds)
 
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
-                              &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_condition_initial_guesses_scalar(xs, f_xs, etol, ertol, ptol, prtol,
+                                                    &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double xn, f_xn, dp_xn
     cdef NewtonPolynomial poly
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -197,7 +197,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) sidi_kernel(
         error = math.fabs(f_xn)
 
     r, f_r = xn, f_xn
-    optimal = isclose(0, error, ertol, etol)
+    optimal = fisclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 cdef class NewtonPolynomial:
@@ -258,7 +258,7 @@ cdef class NewtonPolynomial:
         return dfs[-1]
 
 # noinspection DuplicatedCode
-@tag('cyroot.quasi_newton')
+@tag('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def sidi(f: Callable[[float], float],
@@ -331,13 +331,13 @@ cdef (double, double, unsigned long, double, double, bint, bint) steffensen_kern
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
-                            &precision, &error, &converged, &optimal):
+    if _check_stop_condition_initial_guess_scalar(x0, f_x0, etol, ertol, ptol, prtol,
+                                                  &precision, &error, &converged, &optimal):
         return x0, f_x0, step, precision, error, converged, optimal
 
     cdef double x1, x2, x3, denom
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -357,11 +357,11 @@ cdef (double, double, unsigned long, double, double, bint, bint) steffensen_kern
         x0, f_x0 = x3, f(x3)
         error = math.fabs(f_x0)
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = fisclose(0, error, ertol, etol)
     return x0, f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@tag('cyroot.quasi_newton')
+@tag('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def steffensen(f: Callable[[float], float],
@@ -432,13 +432,13 @@ cdef (double, double, unsigned long, double, double, bint, bint) inverse_quadrat
     cdef bint converged, optimal
     cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
     cdef double[:] xs = x_arr, f_xs = f_arr
-    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
-                              &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_condition_initial_guesses_scalar(xs, f_xs, etol, ertol, ptol, prtol,
+                                                    &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double x3, df_01, df_02, df_12
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -460,11 +460,11 @@ cdef (double, double, unsigned long, double, double, bint, bint) inverse_quadrat
         error = math.fabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = isclose(0, error, ertol, etol)
+    optimal = fisclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@tag('cyroot.quasi_newton')
+@tag('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def inverse_quadratic_interp(
@@ -547,13 +547,13 @@ cdef (double, double, unsigned long, double, double, bint, bint) hyperbolic_inte
     cdef bint converged, optimal
     cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
     cdef double[:] xs = x_arr, f_xs = f_arr
-    if _check_stop_condition_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
-                              &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_condition_initial_guesses_scalar(xs, f_xs, etol, ertol, ptol, prtol,
+                                                    &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double x3, d_01, d_12, df_01, df_02, df_12
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -580,11 +580,11 @@ cdef (double, double, unsigned long, double, double, bint, bint) hyperbolic_inte
         error = math.fabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = isclose(0, error, ertol, etol)
+    optimal = fisclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@tag('cyroot.quasi_newton')
+@tag('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def hyperbolic_interp(
@@ -668,14 +668,14 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
     cdef bint converged, optimal
     cdef double complex[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
     cdef double complex[:] xs = x_arr, f_xs = f_arr
-    if _check_stop_condition_initial_guesses_complex(xs, f_xs, etol, ertol, ptol, prtol,
-                                      &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_condition_initial_guesses_complex_scalar(xs, f_xs, etol, ertol, ptol, prtol,
+                                                            &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double complex div_diff_01, div_diff_12, div_diff_02, a, b, s_delta, d1, d2, d, x3
     cdef double complex d_01, d_02, d_12
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -707,11 +707,11 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
         error = abs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = isclose(0, error, ertol, etol)
+    optimal = fisclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-@tag('cyroot.quasi_newton')
+@tag('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def muller(f: Callable[[complex], complex],

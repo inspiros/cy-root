@@ -27,6 +27,7 @@ Fortunately, Sidi's method came to the rescue.
 - sympy
 
 **For compilation:**
+
 - Cython (if you want to build from `.pyx` files)
 - A C/C++ compiler
 
@@ -61,33 +62,42 @@ For more information about the listed algorithms, please use Google until I upda
 ### Scalar root:
 
 - **Bracketing methods:** (methods that require lower and upper bounds)
-    - Bisect
-    - Regula Falsi
-    - Illinois
-    - Pegasus
-    - Anderson–Björck
-    - Dekker
-    - Brent
-    - Chandrupatla
-    - Ridders
-    - TOMS748
-    - Wu
-    - ITP
+    - [x] Bisect
+    - [x] Regula Falsi
+    - [x] Illinois
+    - [x] Pegasus
+    - [x] Anderson–Björck
+    - [x] Dekker
+    - [x] Brent
+    - [x] Chandrupatla
+    - [x] Ridders
+    - [x] TOMS748
+    - [x] Wu
+    - [x] ITP
 - **Newton-like methods:** (methods that require derivative and higher order derivatives)
-    - Newton-Raphson
-    - Halley
-    - Householder
+    - [x] Newton
+    - [x] Halley
+    - [x] Householder
 - **Quasi-Newton methods:** (methods that approximate derivative or use interpolation)
-    - Secant
-    - Sidi
-    - Steffensen
-    - Inverse Quadratic Interpolation
-    - Hyperbolic Interpolation
-    - Muller _(for complex root)_
+    - [x] Secant
+    - [x] Sidi
+    - [x] Steffensen
+    - [x] Inverse Quadratic Interpolation
+    - [x] Hyperbolic Interpolation
+    - [x] Muller _(for complex root)_
 
 ### Vector root:
 
-Not yet.
+- **Bracketing methods:** (methods that require lower and upper bounds)
+    - [x] Generalized Bisect
+- **Newton-like methods:** (methods that require Jacobian and Hessian)
+    - [x] Generalized Newton
+    - [x] Generalized Halley
+    - [x] Generalized Tangent Hyperbolas
+- **Quasi-Newton methods:** (methods that approximate Jacobian or use interpolation)
+    - [x] Secant (Wolfe-Bittner)
+    - [x] Broyden (Good and Bad)
+    - [x] Klement
 
 ## Usage
 

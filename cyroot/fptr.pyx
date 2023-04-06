@@ -5,6 +5,7 @@ __all__ = [
     'ComplexScalarFPtr', 'CyComplexScalarFPtr', 'PyComplexScalarFPtr',
     'DoubleVectorFPtr', 'CyDoubleVectorFPtr', 'PyDoubleVectorFPtr',
     'ComplexVectorFPtr', 'CyComplexVectorFPtr', 'PyComplexVectorFPtr',
+    'DoubleNpNdArrayFPtr', 'CyDoubleNpNdArrayFPtr', 'PyDoubleNpNdArrayFPtr',
 ]
 
 cdef class TrackedFPtr:
@@ -161,5 +162,43 @@ cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
         return wrapper
 
     cdef inline double complex[:] eval(self, double complex[:] x) except *:
+        self.n_f_calls += 1
+        return self.f(x)
+
+# --------------------------------
+# Double Numpy Array
+# --------------------------------
+cdef class DoubleNpNdArrayFPtr(TrackedFPtr):
+    def __call__(self, np.ndarray x):
+        return self.eval(x)
+
+    cdef np.ndarray eval(self, np.ndarray x):
+        raise NotImplementedError
+
+cdef class CyDoubleNpNdArrayFPtr(DoubleNpNdArrayFPtr):
+    def __init__(self):
+        raise TypeError('This class cannot be instantiated directly.')
+
+    @staticmethod
+    cdef CyDoubleNpNdArrayFPtr from_f(dndarray_f_ptr f):
+        cdef CyDoubleNpNdArrayFPtr wrapper = CyDoubleNpNdArrayFPtr.__new__(CyDoubleNpNdArrayFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef np.ndarray eval(self, np.ndarray x):
+        self.n_f_calls += 1
+        return self.f(x)
+
+cdef class PyDoubleNpNdArrayFPtr(DoubleNpNdArrayFPtr):
+    def __init__(self, f):
+        self.f = f
+
+    @staticmethod
+    cdef PyDoubleNpNdArrayFPtr from_f(object f):
+        cdef PyDoubleNpNdArrayFPtr wrapper = PyDoubleNpNdArrayFPtr.__new__(PyDoubleNpNdArrayFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef inline np.ndarray eval(self, np.ndarray x):
         self.n_f_calls += 1
         return self.f(x)

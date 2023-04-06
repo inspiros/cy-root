@@ -7,10 +7,11 @@
 from typing import Union
 
 import math
+import numpy as np
 from libc cimport math
 
-from .utils.array_ops cimport fabs, cabs, argmin
-from .utils.scalar_ops cimport isclose
+from .utils.scalar_ops cimport fisclose
+from .utils.vector_ops cimport fabs, cabs, fmin, fmax, fargmin
 
 cdef extern from '<complex>':
     double abs(double complex) nogil
@@ -81,7 +82,7 @@ def _check_unique_initial_vals(*f_xs: Union[float, complex]):
 # Bracketing methods
 ################################################################################
 # noinspection DuplicatedCode
-cdef inline bint _check_stop_condition_bracket(
+cdef inline bint _check_stop_condition_bracket_scalar(
         double a,
         double b,
         double f_a,
@@ -101,9 +102,9 @@ cdef inline bint _check_stop_condition_bracket(
     cdef double error_a = math.fabs(f_a), error_b = math.fabs(f_b)
     error[0] = math.fmin(error_a, error_b)
     r[0], f_r[0] = (a, f_a) if error_a < error_b else (b, f_b)
-    optimal[0] = isclose(0, error[0], ertol, etol)
-    converged[0] = isclose(0, precision[0], prtol, ptol) or optimal[0]
-    return optimal[0] or isclose(0, precision[0], prtol, ptol)
+    optimal[0] = fisclose(0, error[0], ertol, etol)
+    converged[0] = fisclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or fisclose(0, precision[0], prtol, ptol)
 
 ################################################################################
 # Quasi-Newton methods with multiple guesses
@@ -112,7 +113,7 @@ cdef inline bint _check_stop_condition_bracket(
 # Double
 # --------------------------------
 # noinspection DuplicatedCode
-cdef inline bint _check_stop_condition_initial_guess(
+cdef inline bint _check_stop_condition_initial_guess_scalar(
         double x0,
         double f_x0,
         double etol,
@@ -126,12 +127,31 @@ cdef inline bint _check_stop_condition_initial_guess(
     """Check if stop condition is already met."""
     precision[0] = math.INFINITY
     error[0] = math.fabs(f_x0)
-    optimal[0] = isclose(0, error[0], ertol, etol)
+    optimal[0] = fisclose(0, error[0], ertol, etol)
     converged[0] = optimal[0]
     return optimal[0]
 
 # noinspection DuplicatedCode
-cdef inline bint _check_stop_condition_initial_guesses(
+cdef inline bint _check_stop_condition_initial_guess_vector(
+        double[:] x0,
+        double[:] F_x0,
+        double etol,
+        double ertol,
+        double ptol,
+        double prtol,
+        double* precision,
+        double* error,
+        bint* converged,
+        bint* optimal):
+    """Check if stop condition is already met."""
+    precision[0] = math.INFINITY
+    error[0] = fmax(fabs(F_x0))
+    optimal[0] = fisclose(0, error[0], ertol, etol)
+    converged[0] = optimal[0]
+    return optimal[0]
+
+# noinspection DuplicatedCode
+cdef inline bint _check_stop_condition_initial_guesses_scalar(
         double[:] xs,
         double[:] f_xs,
         double etol,
@@ -143,8 +163,7 @@ cdef inline bint _check_stop_condition_initial_guesses(
         double* precision,
         double* error,
         bint* converged,
-        bint* optimal,
-        precision_func_type precision_func=NULL):
+        bint* optimal):
     """Check if stop condition is already met."""
     if xs.shape[0] == 0:
         raise ValueError('Empty sequence.')
@@ -152,23 +171,56 @@ cdef inline bint _check_stop_condition_initial_guesses(
         r[0], f_r[0] = xs[0], f_xs[0]
         precision[0] = math.INFINITY
         error[0] = math.fabs(f_xs[0])
-        optimal[0] = isclose(0, error[0], ertol, etol)
+        optimal[0] = fisclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
     cdef double[:] errors = fabs(f_xs)
-    cdef long best_i = argmin(errors)
+    cdef unsigned long best_i = fargmin(errors)
     r[0], f_r[0] = xs[best_i], f_xs[best_i]
     error[0] = errors[best_i]
-    precision[0] = precision_func(xs) if precision_func is not NULL else math.INFINITY
-    optimal[0] = isclose(0, error[0], ertol, etol)
-    converged[0] = isclose(0, precision[0], prtol, ptol) or optimal[0]
-    return optimal[0] or isclose(0, precision[0], prtol, ptol)
+    precision[0] = fmax(xs) - fmin(xs)
+    optimal[0] = fisclose(0, error[0], ertol, etol)
+    converged[0] = fisclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or fisclose(0, precision[0], prtol, ptol)
+
+# noinspection DuplicatedCode
+cdef inline bint _check_stop_condition_initial_guesses_vector(
+        np.ndarray[np.float64_t, ndim=2] xs,
+        np.ndarray[np.float64_t, ndim=2] F_xs,
+        double etol,
+        double ertol,
+        double ptol,
+        double prtol,
+        np.ndarray[np.float64_t, ndim=1] r,
+        np.ndarray[np.float64_t, ndim=1] F_r,
+        double* precision,
+        double* error,
+        bint* converged,
+        bint* optimal):
+    """Check if stop condition is already met."""
+    if xs.shape[0] == 0:
+        raise ValueError('Empty sequence.')
+    if xs.shape[0] == 1:
+        r[0], F_r[0] = xs[0], F_xs[0]
+        precision[0] = math.INFINITY
+        error[0] = np.max(np.abs(F_xs[0]))
+        optimal[0] = fisclose(0, error[0], ertol, etol)
+        converged[0] = optimal[0]
+        return optimal[0]
+    cdef np.ndarray[np.float64_t, ndim=1] errors = np.abs(F_xs).max(1)
+    cdef unsigned long best_i = np.argmin(errors)
+    r[:], F_r[:] = xs[best_i], F_xs[best_i]
+    error[0] = errors[best_i]
+    precision[0] = np.max(xs.max(0) - xs.min(0))
+    optimal[0] = fisclose(0, error[0], ertol, etol)
+    converged[0] = fisclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or fisclose(0, precision[0], prtol, ptol)
 
 # --------------------------------
 # Double Complex
 # --------------------------------
 # noinspection DuplicatedCode
-cdef inline bint _check_stop_condition_initial_guess_complex(
+cdef inline bint _check_stop_condition_initial_guess_complex_scalar(
         double complex x0,
         double complex f_x0,
         double etol,
@@ -182,12 +234,31 @@ cdef inline bint _check_stop_condition_initial_guess_complex(
     """Check if stop condition is already met."""
     precision[0] = math.INFINITY
     error[0] = abs(f_x0)
-    optimal[0] = isclose(0, error[0], ertol, etol)
+    optimal[0] = fisclose(0, error[0], ertol, etol)
     converged[0] = optimal[0]
     return optimal[0]
 
 # noinspection DuplicatedCode
-cdef inline bint _check_stop_condition_initial_guesses_complex(
+cdef inline bint _check_stop_condition_initial_guess_complex_vector(
+        double complex[:] x0,
+        double complex[:] F_x0,
+        double etol,
+        double ertol,
+        double ptol,
+        double prtol,
+        double* precision,
+        double* error,
+        bint* converged,
+        bint* optimal):
+    """Check if stop condition is already met."""
+    precision[0] = math.INFINITY
+    error[0] = fmax(cabs(F_x0))
+    optimal[0] = fisclose(0, error[0], ertol, etol)
+    converged[0] = optimal[0]
+    return optimal[0]
+
+# noinspection DuplicatedCode
+cdef inline bint _check_stop_condition_initial_guesses_complex_scalar(
         double complex[:] xs,
         double complex[:] f_xs,
         double etol,
@@ -199,8 +270,7 @@ cdef inline bint _check_stop_condition_initial_guesses_complex(
         double* precision,
         double* error,
         bint* converged,
-        bint* optimal,
-        precision_func_type_complex precision_func=NULL):
+        bint* optimal):
     """Check if stop condition is already met."""
     if xs.shape[0] == 0:
         raise ValueError('Empty sequence.')
@@ -208,14 +278,15 @@ cdef inline bint _check_stop_condition_initial_guesses_complex(
         r[0], f_r[0] = xs[0], f_xs[0]
         precision[0] = math.INFINITY
         error[0] = abs(f_xs[0])
-        optimal[0] = isclose(0, error[0], ertol, etol)
+        optimal[0] = fisclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
     cdef double[:] errors = cabs(f_xs)
-    cdef long best_i = argmin(errors)
+    cdef unsigned long best_i = fargmin(errors)
     r[0], f_r[0] = xs[best_i], f_xs[best_i]
     error[0] = errors[best_i]
-    precision[0] = precision_func(xs) if precision_func is not NULL else math.INFINITY
-    optimal[0] = isclose(0, error[0], ertol, etol)
-    converged[0] = isclose(0, precision[0], prtol, ptol) or optimal[0]
-    return optimal[0] or isclose(0, precision[0], prtol, ptol)
+    cdef double[:] xs_abs = cabs(xs)
+    precision[0] = fmax(xs_abs) - fmin(xs_abs)
+    optimal[0] = fisclose(0, error[0], ertol, etol)
+    converged[0] = fisclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or fisclose(0, precision[0], prtol, ptol)
