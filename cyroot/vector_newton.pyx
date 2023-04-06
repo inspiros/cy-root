@@ -135,7 +135,7 @@ def generalized_newton(F: Callable[[np.ndarray], np.ndarray],
 # Generalized Halley
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
+@cython.returns((np.ndarray, np.ndarray, tuple[np.ndarray], cython.unsignedlong, double, double, bint, bint))
 cdef generalized_halley_kernel(
         double_np_ndarray_func_type F,
         double_np_ndarray_func_type J,
@@ -178,7 +178,7 @@ cdef generalized_halley_kernel(
         error = fmax(fabs(F_x0))
 
     optimal = fisclose(0, error, ertol, etol)
-    return x0, F_x0, J_x0, H_x0, step, precision, error, converged, optimal
+    return x0, F_x0, (J_x0, H_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.vector.newton')
@@ -244,17 +244,17 @@ def generalized_halley(F: Callable[[np.ndarray], np.ndarray],
     if H_x0 is None:
         H_x0 = H_wrapper(x0)
 
-    r, f_r, J_r, H_r, step, precision, error, converged, optimal = generalized_halley_kernel[DoubleNpNdArrayFPtr](
+    res = generalized_halley_kernel[DoubleNpNdArrayFPtr](
         F_wrapper, J_wrapper, H_wrapper, x0, F_x0, J_x0, H_x0, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType(r, f_r, (J_r, H_r), step,
-                                  (F_wrapper.n_f_calls, J_wrapper.n_f_calls, H_wrapper.n_f_calls),
-                                  precision, error, converged, optimal)
+    return NewtonMethodReturnType.from_results(res, (F_wrapper.n_f_calls,
+                                                     J_wrapper.n_f_calls,
+                                                     H_wrapper.n_f_calls))
 
 ################################################################################
 # Generalized Tangent Hyperbolas
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
+@cython.returns((np.ndarray, np.ndarray, tuple[np.ndarray], cython.unsignedlong, double, double, bint, bint))
 cdef generalized_tangent_hyperbolas_kernel(
         double_np_ndarray_func_type F,
         double_np_ndarray_func_type J,
@@ -301,7 +301,7 @@ cdef generalized_tangent_hyperbolas_kernel(
         error = fmax(fabs(F_x0))
 
     optimal = fisclose(0, error, ertol, etol)
-    return x0, F_x0, J_x0, H_x0, step, precision, error, converged, optimal
+    return x0, F_x0, (J_x0, H_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.vector.newton')
@@ -370,9 +370,8 @@ def generalized_tangent_hyperbolas(F: Callable[[np.ndarray], np.ndarray],
     if H_x0 is None:
         H_x0 = H_wrapper(x0)
 
-    r, f_r, J_r, H_r, step, precision, error, converged, optimal = \
-        generalized_tangent_hyperbolas_kernel[DoubleNpNdArrayFPtr](
+    res = generalized_tangent_hyperbolas_kernel[DoubleNpNdArrayFPtr](
         F_wrapper, J_wrapper, H_wrapper, x0, F_x0, J_x0, H_x0, formula, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType(r, f_r, (J_r, H_r), step,
-                                  (F_wrapper.n_f_calls, J_wrapper.n_f_calls, H_wrapper.n_f_calls),
-                                  precision, error, converged, optimal)
+    return NewtonMethodReturnType.from_results(res, (F_wrapper.n_f_calls,
+                                                     J_wrapper.n_f_calls,
+                                                     H_wrapper.n_f_calls))

@@ -130,7 +130,8 @@ def newton(f: Callable[[float], float],
 # Halley
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, double, double, unsigned long, double, double, bint, bint) halley_kernel(
+@cython.returns((double, double, tuple[double], cython.unsignedlong, double, double, bint, bint))
+cdef halley_kernel(
         double_scalar_func_type f,
         double_scalar_func_type df,
         double_scalar_func_type d2f,
@@ -170,7 +171,7 @@ cdef (double, double, double, double, unsigned long, double, double, bint, bint)
         error = math.fabs(f_x0)
 
     optimal = fisclose(0, error, ertol, etol)
-    return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
+    return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.newton')
@@ -232,17 +233,17 @@ def halley(f: Callable[[float], float],
     if d2f_x0 is None:
         d2f_x0 = d2f_wrapper(x0)
 
-    r, f_r, df_r, d2f_r, step, precision, error, converged, optimal = halley_kernel[DoubleScalarFPtr](
+    res = halley_kernel[DoubleScalarFPtr](
         f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType(r, f_r, (df_r, d2f_r), step,
-                                  (f_wrapper.n_f_calls, df_wrapper.n_f_calls, d2f_wrapper.n_f_calls),
-                                  precision, error, converged, optimal)
+    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
+                                                     df_wrapper.n_f_calls,
+                                                     d2f_wrapper.n_f_calls))
 
 ################################################################################
 # Householder
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((double, double[:], cython.unsignedlong, double, double, bint, bint))
+@cython.returns((double, double, tuple[double], cython.unsignedlong, double, double, bint, bint))
 cdef householder_kernel(
         DoubleScalarFPtr[:] fs,  # sadly, can't have memory view of C functions
         double_vector_func_type nom_f,
@@ -288,7 +289,7 @@ cdef householder_kernel(
         error = math.fabs(fs_x0[0])
 
     optimal = fisclose(0, error, ertol, etol)
-    return x0[0], fs_x0, step, precision, error, converged, optimal
+    return x0[0], fs_x0[0], tuple(fs_x0[1:]), step, precision, error, converged, optimal
 
 #########################
 # Sympy Expr Evaluators
@@ -625,11 +626,9 @@ def householder(f: Callable[[float], float],
     fs_x0 = np.asarray([f_x0] + dfs_x0)
 
     d = len(dfs)
-    r, fs_r, step, precision, error, converged, optimal = householder_kernel[DoubleVectorFPtr](
+    res = householder_kernel[DoubleVectorFPtr](
         fs_wrappers,
         <DoubleVectorFPtr>ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
         <DoubleVectorFPtr>ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
         x0, fs_x0, d, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType(r, float(fs_r[0]), tuple(fs_r[1:]), step,
-                                  tuple(_.n_f_calls for _ in fs_wrappers),
-                                  precision, error, converged, optimal)
+    return NewtonMethodReturnType.from_results(res, tuple(_.n_f_calls for _ in fs_wrappers))
