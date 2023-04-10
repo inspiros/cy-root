@@ -2,10 +2,11 @@
 
 __all__ = [
     'DoubleScalarFPtr', 'CyDoubleScalarFPtr', 'PyDoubleScalarFPtr',
+    'DoubleBiScalarFPtr', 'CyDoubleBiScalarFPtr', 'PyDoubleBiScalarFPtr',
     'ComplexScalarFPtr', 'CyComplexScalarFPtr', 'PyComplexScalarFPtr',
     'DoubleVectorFPtr', 'CyDoubleVectorFPtr', 'PyDoubleVectorFPtr',
     'ComplexVectorFPtr', 'CyComplexVectorFPtr', 'PyComplexVectorFPtr',
-    'DoubleNpNdArrayFPtr', 'CyDoubleNpNdArrayFPtr', 'PyDoubleNpNdArrayFPtr',
+    'NdArrayFPtr', 'CyNdArrayFPtr', 'PyNdArrayFPtr',
 ]
 
 cdef class TrackedFPtr:
@@ -14,7 +15,7 @@ cdef class TrackedFPtr:
         self.n_f_calls = 0
 
 # --------------------------------
-# Double
+# Double Scalar
 # --------------------------------
 cdef class DoubleScalarFPtr(TrackedFPtr):
     def __call__(self, double x):
@@ -50,6 +51,44 @@ cdef class PyDoubleScalarFPtr(DoubleScalarFPtr):
     cdef inline double eval(self, double x) except *:
         self.n_f_calls += 1
         return self.f(x)
+
+# --------------------------------
+# Double Bi-Scalar
+# --------------------------------
+cdef class DoubleBiScalarFPtr(TrackedFPtr):
+    def __call__(self, double a, double b):
+        return self.eval(a, b)
+
+    cdef (double, double) eval(self, double a, double b) except *:
+        raise NotImplementedError
+
+cdef class CyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
+    def __init__(self):
+        raise TypeError('This class cannot be instantiated directly.')
+
+    @staticmethod
+    cdef CyDoubleBiScalarFPtr from_f(dbsf_ptr f):
+        cdef CyDoubleBiScalarFPtr wrapper = CyDoubleBiScalarFPtr.__new__(CyDoubleBiScalarFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef inline (double, double) eval(self, double a, double b) except *:
+        self.n_f_calls += 1
+        return self.f(a, b)
+
+cdef class PyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
+    def __init__(self, f):
+        self.f = f
+
+    @staticmethod
+    cdef PyDoubleBiScalarFPtr from_f(object f):
+        cdef PyDoubleBiScalarFPtr wrapper = PyDoubleBiScalarFPtr.__new__(PyDoubleBiScalarFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef inline (double, double) eval(self, double a, double b) except *:
+        self.n_f_calls += 1
+        return self.f(a, b)
 
 # --------------------------------
 # Complex
@@ -168,20 +207,20 @@ cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
 # --------------------------------
 # Double Numpy Array
 # --------------------------------
-cdef class DoubleNpNdArrayFPtr(TrackedFPtr):
+cdef class NdArrayFPtr(TrackedFPtr):
     def __call__(self, np.ndarray x):
         return self.eval(x)
 
     cdef np.ndarray eval(self, np.ndarray x):
         raise NotImplementedError
 
-cdef class CyDoubleNpNdArrayFPtr(DoubleNpNdArrayFPtr):
+cdef class CyNdArrayFPtr(NdArrayFPtr):
     def __init__(self):
         raise TypeError('This class cannot be instantiated directly.')
 
     @staticmethod
-    cdef CyDoubleNpNdArrayFPtr from_f(dndarray_f_ptr f):
-        cdef CyDoubleNpNdArrayFPtr wrapper = CyDoubleNpNdArrayFPtr.__new__(CyDoubleNpNdArrayFPtr)
+    cdef CyNdArrayFPtr from_f(ndarray_f_ptr f):
+        cdef CyNdArrayFPtr wrapper = CyNdArrayFPtr.__new__(CyNdArrayFPtr)
         wrapper.f = f
         return wrapper
 
@@ -189,13 +228,13 @@ cdef class CyDoubleNpNdArrayFPtr(DoubleNpNdArrayFPtr):
         self.n_f_calls += 1
         return self.f(x)
 
-cdef class PyDoubleNpNdArrayFPtr(DoubleNpNdArrayFPtr):
+cdef class PyNdArrayFPtr(NdArrayFPtr):
     def __init__(self, f):
         self.f = f
 
     @staticmethod
-    cdef PyDoubleNpNdArrayFPtr from_f(object f):
-        cdef PyDoubleNpNdArrayFPtr wrapper = PyDoubleNpNdArrayFPtr.__new__(PyDoubleNpNdArrayFPtr)
+    cdef PyNdArrayFPtr from_f(object f):
+        cdef PyNdArrayFPtr wrapper = PyNdArrayFPtr.__new__(PyNdArrayFPtr)
         wrapper.f = f
         return wrapper
 

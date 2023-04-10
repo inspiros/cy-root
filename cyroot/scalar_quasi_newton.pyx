@@ -13,7 +13,6 @@ from cython cimport view
 from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
 
-from .utils.vector_ops cimport fabs, fabs_width, cabs_width, fargsort, fpermute
 from ._check_args cimport (
     _check_stop_condition_initial_guess_scalar,
     _check_stop_condition_initial_guesses_scalar,
@@ -30,12 +29,9 @@ from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     complex_scalar_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
 )
-from .utils.scalar_ops cimport fisclose
+from .ops.vector_ops cimport fabs, fabs_width, cabs_width, fargsort, fpermute
+from .ops.scalar_ops cimport fisclose, cabs, csqrt
 from .utils.function_tagging import tag
-
-cdef extern from '<complex>':
-    double complex sqrt(double complex x) nogil
-    double abs(double complex) nogil
 
 __all__ = [
     'secant',
@@ -50,7 +46,8 @@ __all__ = [
 # Secant
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) secant_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) \
+        secant_kernel(
         double_scalar_func_type f,
         double x0,
         double x1,
@@ -106,7 +103,7 @@ def secant(f: Callable[[float], float],
            prtol: float = named_default(PRTOL=PRTOL),
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
-    Secant method for root-finding.
+    Secant method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -150,7 +147,8 @@ def secant(f: Callable[[float], float],
 # Sidi
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) sidi_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) \
+        sidi_kernel(
         double_scalar_func_type f,
         double[:] x0s,
         double[:] f_x0s,
@@ -159,29 +157,30 @@ cdef (double, double, unsigned long, double, double, bint, bint) sidi_kernel(
         double ptol=PTOL,
         double prtol=PRTOL,
         unsigned long max_iter=MAX_ITER):
-    # sort by absolute value of f
+    cdef unsigned long step = 0
+    cdef double r, f_r, precision, error
+    cdef bint converged, optimal
+    if _check_stop_condition_initial_guesses_scalar(x0s, f_x0s, etol, ertol, ptol, prtol,
+                                                    &r, &f_r, &precision, &error, &converged, &optimal):
+        return r, f_r, step, precision, error, converged, optimal
+
+    # sort by error of f
     cdef unsigned long[:] inds = fargsort(fabs(f_x0s), reverse=<bint> True)
     cdef double[:] xs = fpermute(x0s, inds)
     cdef double[:] f_xs = fpermute(f_x0s, inds)
 
-    cdef unsigned long step = 0
-    cdef double r, f_r, precision, error
-    cdef bint converged, optimal
-    if _check_stop_condition_initial_guesses_scalar(xs, f_xs, etol, ertol, ptol, prtol,
-                                                    &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, precision, error, converged, optimal
-
     cdef double xn, f_xn, dp_xn
-    cdef NewtonPolynomial poly
+    cdef double[:] dfs = view.array(shape=(1 + 1,), itemsize=sizeof(double), format='d')
+    cdef NewtonPolynomial poly = NewtonPolynomial(x0s.shape[0])
     converged = True
     while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
-        poly = NewtonPolynomial(xs, f_xs)
+        poly.update(xs, f_xs)
 
-        dp_xn = poly.dnf(xs[-1], 1)
+        dp_xn = poly.dnf(xs[-1], 1, dfs)
         if dp_xn == 0:
             converged = False
             break
@@ -203,31 +202,34 @@ cdef (double, double, unsigned long, double, double, bint, bint) sidi_kernel(
 cdef class NewtonPolynomial:
     cdef unsigned int n
     cdef double[:] x, a
+    cdef double[:, :] DD
 
-    def __cinit__(self, xs: double[:], ys: double[:]):
-        self.n = <unsigned int> xs.shape[0]
+    def __cinit__(self, unsigned int n):
+        self.n = n
         self.x = view.array(shape=(self.n - 1,),
                             itemsize=sizeof(double),
                             format='d')
-        self.x[:] = xs[:-1]
         self.a = view.array(shape=(self.n,),
                             itemsize=sizeof(double),
                             format='d')
 
-        cdef double[:, :] DD = view.array(shape=(self.n, self.n),
-                                          itemsize=sizeof(double),
-                                          format='d')
+        self.DD = view.array(shape=(self.n, self.n),
+                             itemsize=sizeof(double),
+                             format='d')
+
+    cdef void update(self, double[:] xs, double[:] ys) nogil:
+        self.x[:] = xs[:-1]
+
         cdef unsigned int i, j
         # Fill in divided differences
-        with nogil:
-            DD[:, 0] = ys
-            for j in range(1, self.n):
-                DD[:j, j] = 0
-                for i in range(j, self.n):
-                    DD[i, j] = (DD[i, j - 1] - DD[i - 1, j - 1]) / (xs[i] - xs[i - j])
-            # Copy diagonal elements into array for returning
-            for j in range(self.n):
-                self.a[j] = DD[j, j]
+        self.DD[:, 0] = ys
+        for j in range(1, self.n):
+            self.DD[:j, j] = 0
+            for i in range(j, self.n):
+                self.DD[i, j] = (self.DD[i, j - 1] - self.DD[i - 1, j - 1]) / (xs[i] - xs[i - j])
+        # Copy diagonal elements into array for returning
+        for j in range(self.n):
+            self.a[j] = self.DD[j, j]
 
     def __call__(self, double x):
         return self.f(x)
@@ -239,23 +241,20 @@ cdef class NewtonPolynomial:
             f_x = f_x * (x - self.x[k]) + self.a[k]
         return f_x
 
-    cdef inline double df(self, double x) nogil:
-        return self.dnf(x, 1)
+    cdef inline double df(self, double x, double[:] out) nogil:
+        return self.dnf(x, 1, out)
 
-    cdef inline double dnf(self, double x, int order=1) nogil:
-        cdef double[:] dfs
-        with gil:
-            dfs = view.array(shape=(order + 1,), itemsize=sizeof(double), format='d')
-        dfs[0] = self.a[-1]
-        dfs[1:] = 0
+    cdef inline double dnf(self, double x, int order, double[:] out) nogil:
+        out[0] = self.a[-1]
+        out[1:] = 0
         cdef unsigned int i, k
         cdef double v
         for k in range(self.n - 2, -1, -1):
             v = x - self.x[k]
             for i in range(order, 0, -1):
-                dfs[i] = dfs[i] * v + dfs[i - 1]
-            dfs[0] = dfs[0] * v + self.a[k]
-        return dfs[-1]
+                out[i] = out[i] * v + out[i - 1]
+            out[0] = out[0] * v + self.a[k]
+        return out[-1]
 
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.quasi_newton')
@@ -270,7 +269,7 @@ def sidi(f: Callable[[float], float],
          prtol: float = named_default(PRTOL=PRTOL),
          max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
-    Sidi's Generalized Secant method for root-finding.
+    Sidi's Generalized Secant method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -318,7 +317,8 @@ def sidi(f: Callable[[float], float],
 # Steffensen
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) steffensen_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) \
+        steffensen_kernel(
         double_scalar_func_type f,
         double x0,
         double f_x0,
@@ -374,7 +374,7 @@ def steffensen(f: Callable[[float], float],
                prtol: float = named_default(PRTOL=PRTOL),
                max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
-    Steffensen's method for root-finding.
+    Steffensen's method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -414,7 +414,8 @@ def steffensen(f: Callable[[float], float],
 # Inverse Quadratic Interpolation
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) inverse_quadratic_interp_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) \
+        inverse_quadratic_interp_kernel(
         double_scalar_func_type f,
         double x0,
         double x1,
@@ -481,7 +482,7 @@ def inverse_quadratic_interp(
         prtol: float = named_default(PRTOL=PRTOL),
         max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
-    Inverse Quadratic Interpolation method for root-finding.
+    Inverse Quadratic Interpolation method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -529,7 +530,8 @@ def inverse_quadratic_interp(
 # Hyperbolic Interpolation
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) hyperbolic_interp_kernel(
+cdef (double, double, unsigned long, double, double, bint, bint) \
+        hyperbolic_interp_kernel(
         double_scalar_func_type f,
         double x0,
         double x1,
@@ -601,7 +603,7 @@ def hyperbolic_interp(
         prtol: float = named_default(PRTOL=PRTOL),
         max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
-    Hyperbolic Interpolation method for root-finding.
+    Hyperbolic Interpolation method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -649,7 +651,8 @@ def hyperbolic_interp(
 # Muller
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double complex, double complex, unsigned long, double, double, bint, bint) muller_kernel(
+cdef (double complex, double complex, unsigned long, double, double, bint, bint) \
+        muller_kernel(
         complex_scalar_func_type f,
         double complex x0,
         double complex x1,
@@ -693,10 +696,10 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
         div_diff_12 = (f_xs[1] - f_xs[2]) / d_12
         b = div_diff_01 + div_diff_02 - div_diff_12
         a = (div_diff_01 - div_diff_12) / d_02
-        s_delta = sqrt(b ** 2 - 4 * a * f_xs[2])  # \sqrt{b^2 - 4ac}
+        s_delta = csqrt(b ** 2 - 4 * a * f_xs[2])  # \sqrt{b^2 - 4ac}
         d1, d2 = b + s_delta, b - s_delta
         # take the higher-magnitude denominator
-        d = d1 if abs(d1) > abs(d2) else d2
+        d = d1 if cabs(d1) > cabs(d2) else d2
 
         x3 = xs[2] - 2 * f_xs[2] / d
         xs[0], f_xs[0] = xs[1], f_xs[1]
@@ -704,7 +707,7 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
         xs[2], f_xs[2] = x3, f(x3)
 
         precision = cabs_width(xs)
-        error = abs(f_xs[2])
+        error = cabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
     optimal = fisclose(0, error, ertol, etol)
@@ -727,7 +730,7 @@ def muller(f: Callable[[complex], complex],
            prtol: float = named_default(PRTOL=PRTOL),
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
-    Muller's method for root-finding.
+    Muller's method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.

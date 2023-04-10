@@ -1,3 +1,5 @@
+import math
+
 from cyroot import *
 from utils import timeit
 
@@ -6,6 +8,10 @@ df = lambda x: 3 * x ** 2 + 4 * x - 3
 d2f = lambda x: 3 * x + 4
 d3f = lambda x: 3
 d4f = lambda x: 0
+interval_f = lambda x_l, x_h: (x_l ** 3 + 2 * (min(abs(x_l), abs(x_h))
+                                               if math.copysign(1, x_l) * math.copysign(1, x_h) > 0
+                                               else 0) ** 2 - 3 * x_h + 1,
+                               x_h ** 3 + 2 * max(abs(x_l), abs(x_h)) ** 2 - 3 * x_l + 1)
 
 
 def test_output(etol=1e-8, ptol=1e-10):
@@ -14,6 +20,8 @@ def test_output(etol=1e-8, ptol=1e-10):
 
     print(f'\n{"Bracketing":-^50}')
     print('[Bisect]', bisect(f, -10, 10, etol=etol, ptol=ptol))
+    print('[Modified Bisect]', bisect(f, -10, 10, algo='modified', etol=etol, ptol=ptol))
+    print('[HyBisect]', hybisect(f, interval_f, -10, 10, etol=etol, ptol=ptol))
     print('[Regula Falsi]', regula_falsi(f, -10, 10, etol=etol, ptol=ptol))
     print('[Illinois]', illinois(f, -10, 10, etol=etol, ptol=ptol))
     print('[Pegasus]', pegasus(f, -10, 10, etol=etol, ptol=ptol))
@@ -37,6 +45,8 @@ def test_output(etol=1e-8, ptol=1e-10):
     print(f'\n{"Newton":-^50}')
     print('[Newton]', newton(f, df, -5, etol=etol, ptol=ptol))
     print('[Halley]', halley(f, df, d2f, -5, etol=etol, ptol=ptol))
+    print('[Super-Halley]', super_halley(f, df, d2f, -5, etol=etol, ptol=ptol))
+    print('[Chebyshev]', chebyshev(f, df, d2f, -5, etol=etol, ptol=ptol))
     print('[Householder]', householder(f, [df, d2f, d3f], -5, etol=etol, ptol=ptol))
 
 
@@ -71,10 +81,12 @@ def test_speed(etol=1e-8, ptol=1e-10, times=100):
     print(f'\n{"Newton":-^50}')
     timeit(newton, args=(f, df, -5), kwargs=dict(etol=etol, ptol=ptol), name='Newton', number=times)
     timeit(halley, args=(f, df, d2f, -5), kwargs=dict(etol=etol, ptol=ptol), name='Halley', number=times)
+    timeit(super_halley, args=(f, df, d2f, -5), kwargs=dict(etol=etol, ptol=ptol), name='Super-Halley', number=times)
+    timeit(chebyshev, args=(f, df, d2f, -5), kwargs=dict(etol=etol, ptol=ptol), name='Chebyshev', number=times)
     timeit(householder, args=(f, [df, d2f, d3f], -5), kwargs=dict(etol=etol, ptol=ptol, c_code=True),
            name='Householder', number=times, warmup=True)
 
 
 if __name__ == '__main__':
     test_output()
-    test_speed()
+    # test_speed()

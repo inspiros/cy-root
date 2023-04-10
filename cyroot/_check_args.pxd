@@ -19,6 +19,20 @@ cdef bint _check_stop_condition_bracket_scalar(
         bint* converged,
         bint* optimal)
 
+cdef bint _check_stop_condition_bracket_vector(
+        np.ndarray[np.float64_t, ndim=2] bs,
+        np.ndarray[np.float64_t, ndim=2] F_bs,
+        double etol,
+        double ertol,
+        double ptol,
+        double prtol,
+        np.ndarray[np.float64_t, ndim=1] r,
+        np.ndarray[np.float64_t, ndim=1] F_r,
+        double* precision,
+        double* error,
+        bint* converged,
+        bint* optimal)
+
 ################################################################################
 # Guessing methods
 ################################################################################

@@ -23,12 +23,14 @@ from .fptr cimport (
     double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
     double_vector_func_type, DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
-from .utils.scalar_ops cimport fisclose
+from .ops.scalar_ops cimport fisclose
 from .utils.function_tagging import tag
 
 __all__ = [
     'newton',
     'halley',
+    'super_halley',
+    'chebyshev',
     'householder',
 ]
 
@@ -36,7 +38,8 @@ __all__ = [
 # Newton
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, double, unsigned long, double, double, bint, bint) newton_kernel(
+cdef (double, double, double, unsigned long, double, double, bint, bint) \
+        newton_kernel(
         double_scalar_func_type f,
         double_scalar_func_type df,
         double x0,
@@ -85,7 +88,7 @@ def newton(f: Callable[[float], float],
            prtol: float = named_default(PRTOL=PRTOL),
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
     """
-    Newton method for root-finding.
+    Newton method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -124,14 +127,15 @@ def newton(f: Callable[[float], float],
 
     res = newton_kernel[DoubleScalarFPtr](
         f_wrapper, df_wrapper, x0, f_x0, df_x0, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls, df_wrapper.n_f_calls))
+    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
+                                                     df_wrapper.n_f_calls))
 
 ################################################################################
 # Halley
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((double, double, tuple[double], cython.unsignedlong, double, double, bint, bint))
-cdef halley_kernel(
+cdef (double, double, (double, double), unsigned long, double, double, bint, bint) \
+        halley_kernel(
         double_scalar_func_type f,
         double_scalar_func_type df,
         double_scalar_func_type d2f,
@@ -149,7 +153,7 @@ cdef halley_kernel(
     cdef bint converged, optimal
     if _check_stop_condition_initial_guess_scalar(x0, f_x0, etol, ertol, ptol, prtol,
                                                   &precision, &error, &converged, &optimal):
-        return x0, f_x0, df_x0, d2f_x0, step, precision, error, converged, optimal
+        return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
     cdef double d_x, denom
     converged = True
@@ -174,6 +178,55 @@ cdef halley_kernel(
     return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
+cdef (double, double, (double, double), unsigned long, double, double, bint, bint) \
+        modified_halley_kernel(
+        double_scalar_func_type f,
+        double_scalar_func_type df,
+        double_scalar_func_type d2f,
+        double x0,
+        double f_x0,
+        double df_x0,
+        double d2f_x0,
+        double alpha=0.5,
+        double etol=ETOL,
+        double ertol=ERTOL,
+        double ptol=PTOL,
+        double prtol=PRTOL,
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
+    cdef double precision, error
+    cdef bint converged, optimal
+    if _check_stop_condition_initial_guess_scalar(x0, f_x0, etol, ertol, ptol, prtol,
+                                                  &precision, &error, &converged, &optimal):
+        return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+
+    cdef double d_x, L_f, denom
+    converged = True
+    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+        if step >= max_iter > 0:
+            converged = False
+            break
+        step += 1
+        if df_x0 == 0:
+            converged = False
+            break
+        L_f = d2f_x0 * f_x0 / (df_x0 * df_x0)
+        denom = 2 * (1 - alpha * L_f)
+        if denom == 0:
+            converged = False
+            break
+        d_x = -(1 + L_f / denom) * f_x0 / df_x0
+        x0 = x0 + d_x
+        f_x0 = f(x0)
+        df_x0 = df(x0)
+        d2f_x0 = d2f(x0)
+        precision = math.fabs(d_x)
+        error = math.fabs(f_x0)
+
+    optimal = fisclose(0, error, ertol, etol)
+    return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+
+# noinspection DuplicatedCode
 @tag('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
@@ -184,13 +237,14 @@ def halley(f: Callable[[float], float],
            f_x0: Optional[float] = None,
            df_x0: Optional[float] = None,
            d2f_x0: Optional[float] = None,
+           alpha: Optional[float] = None,
            etol: float = named_default(ETOL=ETOL),
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
            prtol: float = named_default(PRTOL=PRTOL),
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
     """
-    Halley's method for root-finding.
+    Halley's method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -203,6 +257,8 @@ def halley(f: Callable[[float], float],
          initial point.
         d2f_x0 (float, optional): Second order derivative at
          initial point.
+        alpha (float, optional): If set, the modified halley
+         formula which has parameter alpha will be used.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -233,11 +289,120 @@ def halley(f: Callable[[float], float],
     if d2f_x0 is None:
         d2f_x0 = d2f_wrapper(x0)
 
-    res = halley_kernel[DoubleScalarFPtr](
-        f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol, max_iter)
+    if alpha is None:
+        res = halley_kernel[DoubleScalarFPtr](
+            f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol, max_iter)
+    else:
+        res = modified_halley_kernel[DoubleScalarFPtr](
+            f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, alpha, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
                                                      df_wrapper.n_f_calls,
                                                      d2f_wrapper.n_f_calls))
+
+# noinspection DuplicatedCode
+@tag('cyroot.scalar.newton')
+@dynamic_default_args()
+@cython.binding(True)
+def super_halley(f: Callable[[float], float],
+                 df: Callable[[float], float],
+                 d2f: Callable[[float], float],
+                 x0: float,
+                 f_x0: Optional[float] = None,
+                 df_x0: Optional[float] = None,
+                 d2f_x0: Optional[float] = None,
+                 etol: float = named_default(ETOL=ETOL),
+                 ertol: float = named_default(ERTOL=ERTOL),
+                 ptol: float = named_default(PTOL=PTOL),
+                 prtol: float = named_default(PRTOL=PRTOL),
+                 max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+    """
+    Super-Halley's method for scalar root-finding.
+    This is equivalent to calling ``halley`` with ``alpha=1``.
+
+    References:
+        https://www.sciencedirect.com/science/article/abs/pii/S0096300399001757
+
+    Args:
+        f (function): Function for which the root is sought.
+        df (function): Function return derivative of f.
+        d2f (function): Function return second order derivative
+         of f.
+        x0 (float): Initial point.
+        f_x0 (float, optional): Value evaluated at initial point.
+        df_x0 (float, optional): First order derivative at
+         initial point.
+        d2f_x0 (float, optional): Second order derivative at
+         initial point.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
+
+    Returns:
+        solution: The solution represented as a ``RootResults`` object.
+    """
+    return halley(f, df, d2f, x0, f_x0, df_x0, d2f_x0, 1,
+                  etol, ertol, ptol, prtol, max_iter)
+
+# noinspection DuplicatedCode
+@tag('cyroot.scalar.newton')
+@dynamic_default_args()
+@cython.binding(True)
+def chebyshev(f: Callable[[float], float],
+              df: Callable[[float], float],
+              d2f: Callable[[float], float],
+              x0: float,
+              f_x0: Optional[float] = None,
+              df_x0: Optional[float] = None,
+              d2f_x0: Optional[float] = None,
+              etol: float = named_default(ETOL=ETOL),
+              ertol: float = named_default(ERTOL=ERTOL),
+              ptol: float = named_default(PTOL=PTOL),
+              prtol: float = named_default(PRTOL=PRTOL),
+              max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+    """
+    Chebyshev's method for scalar root-finding.
+    This is equivalent to calling ``halley`` with ``alpha=0``.
+
+    Args:
+        f (function): Function for which the root is sought.
+        df (function): Function return derivative of f.
+        d2f (function): Function return second order derivative
+         of f.
+        x0 (float): Initial point.
+        f_x0 (float, optional): Value evaluated at initial point.
+        df_x0 (float, optional): First order derivative at
+         initial point.
+        d2f_x0 (float, optional): Second order derivative at
+         initial point.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
+
+    Returns:
+        solution: The solution represented as a ``RootResults`` object.
+    """
+    return halley(f, df, d2f, x0, f_x0, df_x0, d2f_x0, 0,
+                  etol, ertol, ptol, prtol, max_iter)
 
 ################################################################################
 # Householder
@@ -267,7 +432,7 @@ cdef householder_kernel(
                                    itemsize=sizeof(double),
                                    format='d')
     cdef double d_x
-    x0[0] = x0_  # wrapped in a memory view to be able to pass into mv_func_type
+    x0[0] = x0_  # wrapped in a memory view to be able to pass into double_vector_func_type
     cdef unsigned int i
     cdef double[:] nom_x0, denom_x0
     converged = True
@@ -583,7 +748,7 @@ def householder(f: Callable[[float], float],
                 max_iter: int = named_default(MAX_ITER=MAX_ITER),
                 c_code: bool = True) -> NewtonMethodReturnType:
     """
-    Householder's method for root-finding.
+    Householder's method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.

@@ -1,6 +1,6 @@
 from inspect import getmembers
 
-from . import vector_quasi_newton, vector_newton
+from . import vector_bracketing, vector_quasi_newton, vector_newton
 from .utils.function_tagging import has_tag
 
 __all__ = [
@@ -8,11 +8,13 @@ __all__ = [
     'find_root_vector',
 ]
 
+# noinspection DuplicatedCode
 VECTOR_ROOT_FINDING_METHODS = {}
-for module in [vector_quasi_newton, vector_newton]:
+for module in [vector_bracketing, vector_quasi_newton, vector_newton]:
     VECTOR_ROOT_FINDING_METHODS.update(getmembers(module, has_tag))
 
 
+# noinspection DuplicatedCode
 def find_root_vector(method: str, *args, **kwargs):
     """
     Find the root of a vector function.

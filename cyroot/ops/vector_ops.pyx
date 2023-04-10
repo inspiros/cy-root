@@ -9,8 +9,7 @@ from libcpp.algorithm cimport sort as cpp_sort
 from libcpp.vector cimport vector
 from libc cimport math
 
-cdef extern from '<complex>':
-    double _cabs 'abs'(double complex) nogil
+from . cimport scalar_ops
 
 cdef inline bint fallclose(double[:] a, double[:] b, double rtol=1e-5, double atol=1e-8) nogil:
     cdef unsigned long i
@@ -20,6 +19,24 @@ cdef inline bint fallclose(double[:] a, double[:] b, double rtol=1e-5, double at
                 math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):
             return False
     return True
+
+cdef inline int[:] sign(double[:] xs) nogil:
+    cdef unsigned long i
+    cdef int[:] res
+    with gil:
+        res = view.array(shape=(xs.shape[0],), itemsize=sizeof(int), format='i')
+    for i in range(xs.shape[0]):
+        res[i] = scalar_ops.sign(xs[i])
+    return res
+
+cdef inline double complex[:] csign(double complex[:] xs) nogil:
+    cdef unsigned long i
+    cdef double complex[:] res
+    with gil:
+        res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double complex), format='c')
+    for i in range(xs.shape[0]):
+        res[i] = scalar_ops.csign(xs[i])
+    return res
 
 cdef inline double[:] fabs(double[:] xs) nogil:
     cdef unsigned long i
@@ -36,7 +53,7 @@ cdef inline double[:] cabs(double complex[:] xs) nogil:
     with gil:
         res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double), format='d')
     for i in range(xs.shape[0]):
-        res[i] = _cabs(xs[i])
+        res[i] = scalar_ops.cabs(xs[i])
     return res
 
 cdef inline double fabs_width(double[:] xs) nogil:
@@ -49,6 +66,54 @@ cdef inline double cabs_width(double complex[:] xs) nogil:
     cdef double[:] xs_abs = cabs(xs)
     argmin_i, argmax_i = fargminmax(xs_abs)
     return xs_abs[argmax_i] - xs_abs[argmin_i]
+
+cdef inline double[:] sqrt(double[:] xs) nogil:
+    cdef unsigned long i
+    cdef double[:] res
+    with gil:
+        res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double), format='d')
+    for i in range(xs.shape[0]):
+        res[i] = scalar_ops.sqrt(xs[i])
+    return res
+
+cdef inline double complex[:] csqrt(double complex[:] xs) nogil:
+    cdef unsigned long i
+    cdef double complex[:] res
+    with gil:
+        res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double complex), format='C')
+    for i in range(xs.shape[0]):
+        res[i] = scalar_ops.csqrt(xs[i])
+    return res
+
+cdef inline double norm(double[:] xs, double order=2) nogil:
+    if order == math.INFINITY:
+        return fmax(fabs(xs))
+    if order == -math.INFINITY:
+        return fmin(fabs(xs))
+    cdef unsigned long i
+    cdef double res = 0
+    if order == 0:
+        for i in range(xs.shape[0]):
+            res += xs[i] != 0
+        return res
+    for i in range(xs.shape[0]):
+        res += scalar_ops.fabs(xs[i]) ** order
+    return res ** (1 / order)
+
+cdef inline double cnorm(double complex[:] xs, double order=2) nogil:
+    if order == math.INFINITY:
+        return fmax(cabs(xs))
+    if order == -math.INFINITY:
+        return fmin(cabs(xs))
+    cdef unsigned long i
+    cdef double res = 0
+    if order == 0:
+        for i in range(xs.shape[0]):
+            res += xs[i] != 0
+        return res
+    for i in range(xs.shape[0]):
+        res += scalar_ops.cabs(xs[i]) ** order
+    return res ** (1 / order)
 
 cdef inline double[:] fpermute(double[:] xs, unsigned long[:] inds) nogil:
     cdef unsigned long i

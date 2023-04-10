@@ -7,7 +7,7 @@ cdef class TrackedFPtr:
     cdef public unsigned long n_f_calls
 
 # --------------------------------
-# Double
+# Double Scalar
 # --------------------------------
 ctypedef double (*dsf_ptr)(double)
 
@@ -29,6 +29,30 @@ cdef class PyDoubleScalarFPtr(DoubleScalarFPtr):
 ctypedef fused double_scalar_func_type:
     dsf_ptr
     DoubleScalarFPtr
+
+# --------------------------------
+# Double Bi-Scalar
+# --------------------------------
+ctypedef (double, double) (*dbsf_ptr)(double, double)
+
+cdef class DoubleBiScalarFPtr(TrackedFPtr):
+    cdef (double, double) eval(self, double a, double b) except *
+
+cdef class CyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
+    cdef dbsf_ptr f
+    @staticmethod
+    cdef CyDoubleBiScalarFPtr from_f(dbsf_ptr f)
+    cdef (double, double) eval(self, double a, double b) except *
+
+cdef class PyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
+    cdef object f
+    @staticmethod
+    cdef PyDoubleBiScalarFPtr from_f(object f)
+    cdef (double, double) eval(self, double a, double b) except *
+
+ctypedef fused double_bi_scalar_func_type:
+    dbsf_ptr
+    DoubleBiScalarFPtr
 
 # --------------------------------
 # Complex
@@ -105,23 +129,23 @@ ctypedef fused complex_vector_func_type:
 # --------------------------------
 # Double Numpy Array
 # --------------------------------
-ctypedef np.ndarray (*dndarray_f_ptr)(np.ndarray)
+ctypedef np.ndarray (*ndarray_f_ptr)(np.ndarray)
 
-cdef class DoubleNpNdArrayFPtr(TrackedFPtr):
+cdef class NdArrayFPtr(TrackedFPtr):
     cdef np.ndarray eval(self, np.ndarray x)
 
-cdef class CyDoubleNpNdArrayFPtr(DoubleNpNdArrayFPtr):
-    cdef dndarray_f_ptr f
+cdef class CyNdArrayFPtr(NdArrayFPtr):
+    cdef ndarray_f_ptr f
     @staticmethod
-    cdef CyDoubleNpNdArrayFPtr from_f(dndarray_f_ptr f)
+    cdef CyNdArrayFPtr from_f(ndarray_f_ptr f)
     cdef np.ndarray eval(self, np.ndarray x)
 
-cdef class PyDoubleNpNdArrayFPtr(DoubleNpNdArrayFPtr):
+cdef class PyNdArrayFPtr(NdArrayFPtr):
     cdef object f
     @staticmethod
-    cdef PyDoubleNpNdArrayFPtr from_f(object f)
+    cdef PyNdArrayFPtr from_f(object f)
     cdef np.ndarray eval(self, np.ndarray x)
 
-ctypedef fused double_np_ndarray_func_type:
-    dndarray_f_ptr
-    DoubleNpNdArrayFPtr
+ctypedef fused ndarray_func_type:
+    ndarray_f_ptr
+    NdArrayFPtr

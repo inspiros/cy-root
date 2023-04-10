@@ -4,27 +4,37 @@
 # cython: boundscheck = False
 # cython: profile = False
 
-from typing import Callable, Optional, Union
+from typing import Callable, Optional, Union, Tuple
 
 import cython
 from cython cimport view
 from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
+from libcpp.vector cimport vector
+from libcpp.pair cimport pair
 
 from ._check_args import (
     _check_stop_condition_args,
     _check_bracket,
     _check_unique_initial_vals,
 )
-from ._check_args cimport _check_stop_condition_bracket_scalar
+from ._check_args cimport (
+    _check_stop_condition_bracket_scalar,
+    _check_stop_condition_initial_guess_scalar,
+)
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
-from ._return_types import BracketingMethodsReturnType
-from .fptr cimport double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr
-from .utils.scalar_ops cimport fisclose
+from ._return_types import (BracketingMethodsReturnType,
+                            SplittingBracketingMethodReturnType)
+from .fptr cimport (
+    double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
+    DoubleBiScalarFPtr, PyDoubleBiScalarFPtr,
+)
+from .ops cimport scalar_ops
 from .utils.function_tagging import tag
 
 __all__ = [
     'bisect',
+    'hybisect',
     'regula_falsi',
     'illinois',
     'pegasus',
@@ -56,7 +66,8 @@ cdef inline (double, double, double, double, double, double)  _update_bracket(
 ctypedef bint (*stop_func_type)(long, double, double, double, double)
 
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) bisect_kernel(
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        bisect_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -73,11 +84,11 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     cdef bint converged, optimal
     if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                             &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
-    cdef double c, f_c
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -85,17 +96,60 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
             converged = False
             break
         step += 1
-        c = (a + b) / 2
-        f_c = f(c)
-        error = math.fabs(f_c)
-        if fisclose(0, error, ertol, etol):
+        r = (a + b) / 2
+        f_r = f(r)
+        error = math.fabs(f_r)
+        if scalar_ops.fisclose(0, error, ertol, etol):
             break
-        a, b, _, f_a, f_b, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
+        a, b, _, f_a, f_b, _ = _update_bracket(a, b, r, f_a, f_b, f_r)
         precision = math.fabs(b - a)
 
-    r, f_r = c, f_c
-    optimal = fisclose(0, error, ertol, etol)
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+
+# noinspection DuplicatedCode
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        vrahatis_bisect_kernel(
+        double_scalar_func_type f,
+        double a,
+        double b,
+        double f_a,
+        double etol=ETOL,
+        double ertol=ERTOL,
+        double ptol=PTOL,
+        double prtol=PRTOL,
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
+    cdef double precision, error
+    cdef bint converged, optimal
+    if _check_stop_condition_initial_guess_scalar(a, f_a, etol, ertol, ptol, prtol,
+                                                  &precision, &error, &converged, &optimal):
+        return a, f_a, step, (a, b), (f_a, math.NAN), precision, error, converged, optimal
+
+    cdef double h = b - a, w, r = a, f_r = f_a, scale = 1.
+    if ptol == prtol == 0:
+        if max_iter > 0:
+            max_iter = <unsigned long> math.fmin(math.ceil(math.log2(h / etol)), max_iter)
+        else:
+            max_iter = <unsigned long> math.ceil(math.log2(h / etol))
+    converged = True
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
+        if step >= max_iter > 0:
+            converged = False
+            break
+        step += 1
+        scale *= 2
+        w = h / scale
+        r += scalar_ops.sign(f_a) * scalar_ops.sign(f_r) * w
+        f_r = f(r)
+        error = math.fabs(f_r)
+        precision = math.fabs(w)
+        if scalar_ops.fisclose(0, error, ertol, etol):
+            break
+
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (r - w / 2, r + w / 2), (math.NAN, math.NAN), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.bracketing')
@@ -106,13 +160,15 @@ def bisect(f: Callable[[float], float],
            b: float,
            f_a: Optional[float] = None,
            f_b: Optional[float] = None,
+           algo: Union[str, int] = 1,
            etol: float = named_default(ETOL=ETOL),
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
            prtol: float = named_default(PRTOL=PRTOL),
-           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)
+           ) -> BracketingMethodsReturnType:
     """
-    Bisection method for root-finding.
+    Bisection method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -120,6 +176,9 @@ def bisect(f: Callable[[float], float],
         b (float): Upper bound of the interval to be searched.
         f_a (float, optional): Value evaluated at lower bound.
         f_b (float, optional): Value evaluated at upper bound.
+        algo (str, int): The algorithm to be used, either
+         ``1``/``'default'`` or ``2``/``'modified'`` (proposed
+          by Vrahatis). Defaults to 1.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -144,11 +203,181 @@ def bisect(f: Callable[[float], float],
     f_wrapper = PyDoubleScalarFPtr(f)
     if f_a is None:
         f_a = f_wrapper(a)
-    if f_b is None:
+    if algo not in [2, 'modified', 'vrahatis'] and f_b is None:
         f_b = f_wrapper(b)
 
-    res = bisect_kernel[DoubleScalarFPtr](f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+    if algo in [1, 'default']:
+        res = bisect_kernel[DoubleScalarFPtr](f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+    elif algo in [2, 'modified', 'vrahatis']:
+        res = vrahatis_bisect_kernel[DoubleScalarFPtr](f_wrapper, a, b, f_a, etol, ertol, ptol, prtol, max_iter)
+    else:
+        raise ValueError(f'algo must be either 1/\'default\' or 2/\'modified\'/\'vrahatis\'. '
+                         f'Got unknown algo {algo}.')
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+
+#------------------------
+# Hybisect
+#------------------------
+# noinspection DuplicatedCode
+cdef bint _hybisect_subroutine(
+        DoubleScalarFPtr f,
+        DoubleBiScalarFPtr interval_f,
+        double a,
+        double b,
+        double etol,
+        double ertol,
+        double ptol,
+        double prtol,
+        unsigned long max_iter,
+        unsigned long max_split_iter,
+        vector[double] &rs,
+        vector[double] &f_rs,
+        unsigned long* split_step,
+        vector[unsigned long] &steps,
+        vector[pair[double, double]] &brackets,
+        vector[double] &precisions,
+        vector[double] &errors,
+        vector[bint] &converged_flags,
+        vector[bint] &optimal_flags):
+    if split_step[0] >= max_iter > 0:
+        return False
+    cdef double f_l, f_h
+    f_l, f_h = interval_f(a, b)
+    if not f_l <= 0 <= f_h:
+        return False
+    cdef double h = b - a
+    cdef precision = h, error = math.INFINITY
+    cdef double f_a = f(a), f_b = f(b), m, f_m, w, scale = 1.
+    cdef unsigned long step = 0
+    cdef bint converged = True
+    if math.copysign(1, f_a) * math.copysign(1, f_b) <= 0:
+        r, f_r = a, f_a
+        w = h
+        if ptol == prtol == 0:
+            if max_iter > 0:
+                max_iter = <unsigned long> math.fmin(math.ceil(math.log2(h / etol)), max_iter)
+            else:
+                max_iter = <unsigned long> math.ceil(math.log2(h / etol))
+        while not (scalar_ops.fisclose(0, error, ertol, etol) or
+                   scalar_ops.fisclose(0, precision, prtol, ptol)):
+            if step >= max_iter > 0:
+                converged = False
+                break
+            step += 1
+            scale *= 2
+            w = h / scale
+            r += math.copysign(1, f_a) * math.copysign(1, f_r) * w
+            f_r = f(r)
+
+            error = math.fabs(f_r)
+            precision = math.fabs(w)
+            if scalar_ops.fisclose(0, error, ertol, etol):
+                break
+        rs.push_back(r)
+        f_rs.push_back(f_r)
+        steps.push_back(step)
+        brackets.push_back(pair[double, double](r - w / 2, r + w / 2))
+        precisions.push_back(precision)
+        errors.push_back(error)
+        converged_flags.push_back(converged)
+        optimal_flags.push_back(scalar_ops.fisclose(0, error, ertol, etol))
+        return True
+    # continue bisecting
+    split_step[0] += 1
+    cdef double c = (a + b) / 2
+    cdef bint has_l_root = _hybisect_subroutine(
+        f, interval_f, a, c, etol, ertol, ptol, prtol, max_iter, max_split_iter,
+        rs, f_rs, split_step, steps, brackets, precisions, errors, converged_flags, optimal_flags)
+    cdef bint has_r_root = _hybisect_subroutine(
+        f, interval_f, c, b, etol, ertol, ptol, prtol, max_iter, max_split_iter,
+        rs, f_rs, split_step, steps, brackets, precisions, errors, converged_flags, optimal_flags)
+    return has_l_root or has_r_root
+
+# noinspection DuplicatedCode
+cdef (vector[double], vector[double], unsigned long, vector[unsigned long],\
+        vector[pair[double, double]], vector[pair[double, double]],\
+        vector[double], vector[double], vector[bint], vector[bint]) \
+        hybisect_kernel(
+        DoubleScalarFPtr f,
+        DoubleBiScalarFPtr interval_f,
+        double a,
+        double b,
+        double etol=ETOL,
+        double ertol=ERTOL,
+        double ptol=PTOL,
+        double prtol=PRTOL,
+        unsigned long max_iter=MAX_ITER,
+        unsigned long max_split_iter=MAX_ITER):
+    cdef unsigned long split_step = 0
+    cdef vector[unsigned long] steps
+    cdef vector[double] precisions, errors
+    cdef vector[bint] converged_flags, optimal_flags
+    cdef vector[double] rs, f_rs
+    cdef vector[pair[double, double]] brackets, f_brackets
+
+    _hybisect_subroutine(
+        f, interval_f, a, b, etol, ertol, ptol, prtol, max_iter, max_split_iter,
+        rs, f_rs, &split_step, steps, brackets, precisions, errors, converged_flags, optimal_flags)
+    cdef unsigned long i
+    for i in range(brackets.size()):
+        f_brackets.push_back(pair[double, double](math.NAN, math.NAN))
+    return rs, f_rs, split_step, steps, brackets, f_brackets, precisions, errors, converged_flags, optimal_flags
+
+# noinspection DuplicatedCode
+@tag('cyroot.scalar.bracketing')
+@dynamic_default_args()
+@cython.binding(True)
+def hybisect(f: Callable[[float], float],
+             interval_f: Callable[[Tuple[float, float]], Tuple[float, float]],
+             a: float,
+             b: float,
+             etol: float = named_default(ETOL=ETOL),
+             ertol: float = named_default(ERTOL=ERTOL),
+             ptol: float = named_default(PTOL=PTOL),
+             prtol: float = named_default(PRTOL=PRTOL),
+             max_iter: int = named_default(MAX_ITER=MAX_ITER),
+             max_split_iter: int = named_default(MAX_ITER=MAX_ITER)) -> SplittingBracketingMethodReturnType:
+    """
+    Hybrid Bisection method for scalar root-finding.
+
+    References:
+        https://dl.acm.org/doi/10.1145/3437120.3437324
+
+    Args:
+        f (function): Function for which the root is sought.
+        interval_f (function): Function performing interval
+         arithmetic in regard to f.
+        a (float): Lower bound of the interval to be searched.
+        b (float): Upper bound of the interval to be searched.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
+        max_split_iter (int, optional): Maximum number of splits.
+         Defaults to {max_split_iter}.
+
+    Returns:
+        solution: The solution represented as a ``RootResults`` object.
+    """
+    # check params
+    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+
+    f_wrapper = PyDoubleScalarFPtr(f)
+    interval_f_wrapper = PyDoubleBiScalarFPtr(interval_f)
+    res = hybisect_kernel(<DoubleScalarFPtr> f_wrapper, <DoubleBiScalarFPtr> interval_f_wrapper,
+                          a, b, etol, ertol, ptol, prtol, max_iter, max_split_iter)
+    return SplittingBracketingMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
+                                                                  interval_f_wrapper.n_f_calls))
 
 ################################################################################
 # False position
@@ -156,7 +385,8 @@ def bisect(f: Callable[[float], float],
 ctypedef double (*scale_func_type)(double, double)
 
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) regula_falsi_kernel(
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        regula_falsi_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -173,31 +403,30 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     cdef bint converged, optimal
     if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                             &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
-    cdef double c, f_c
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or f_a == f_b:
             converged = False
             break
         step += 1
-        c = (a * f_b - b * f_a) / (f_b - f_a)
-        f_c = f(c)
+        r = (a * f_b - b * f_a) / (f_b - f_a)
+        f_r = f(r)
         precision = math.fabs(b - a)
-        error = math.fabs(f_c)
+        error = math.fabs(f_r)
 
-        if fisclose(0, error, ertol, etol):
+        if scalar_ops.fisclose(0, error, ertol, etol):
             break
-        elif math.copysign(1, f_b) * math.copysign(1, f_c) < 0:
+        elif math.copysign(1, f_b) * math.copysign(1, f_r) < 0:
             a, f_a = b, f_b
         elif scale_func is not NULL:
-            f_a *= scale_func(f_b, f_c)
-        b, f_b = c, f_c
+            f_a *= scale_func(f_b, f_r)
+        b, f_b = r, f_r
 
-    r, f_r = c, f_c
-    optimal = fisclose(0, error, ertol, etol)
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.bracketing')
@@ -214,7 +443,7 @@ def regula_falsi(f: Callable[[float], float],
                  prtol: float = named_default(PRTOL=PRTOL),
                  max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Regula Falsi (or False Position) method for root-finding.
+    Regula Falsi (or False Position) method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -274,7 +503,7 @@ def illinois(f: Callable[[float], float],
              prtol: float = named_default(PRTOL=PRTOL),
              max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Illinois method for root-finding.
+    Illinois method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -334,7 +563,7 @@ def pegasus(f: Callable[[float], float],
             prtol: float = named_default(PRTOL=PRTOL),
             max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Pegasus method for root-finding.
+    Pegasus method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -397,7 +626,7 @@ def anderson_bjorck(f: Callable[[float], float],
                     prtol: float = named_default(PRTOL=PRTOL),
                     max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Anderson–Björck method for root-finding.
+    Anderson–Björck method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -440,7 +669,8 @@ def anderson_bjorck(f: Callable[[float], float],
 # Dekker
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) dekker_kernel(
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        dekker_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -456,11 +686,12 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     cdef bint converged, optimal
     if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                             &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double b_prev = a, f_b_prev = f_a, b_next, f_b_next, c, s
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -487,8 +718,8 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
         error = math.fabs(f_b)
 
     r, f_r = b, f_b
-    optimal = fisclose(0, error, ertol, etol)
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.bracketing')
@@ -505,7 +736,7 @@ def dekker(f: Callable[[float], float],
            prtol: float = named_default(PRTOL=PRTOL),
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Dekker's method for root-finding.
+    Dekker's method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -548,7 +779,8 @@ def dekker(f: Callable[[float], float],
 # Brent
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) brent_kernel(
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        brent_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -566,14 +798,15 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     cdef bint converged, optimal
     if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                             &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double b_prev = a, f_b_prev = f_a, b_prev_prev = a, b_next, f_b_next, c, s
     cdef double d_ab, d_abp, d_bbp, df_ab, df_abp, df_bbp, denom
     cdef int last_method = 0  # 0 for bisect, 1 for interp
     cdef bint use_interp
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -629,8 +862,8 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
         error = math.fabs(f_b)
 
     r, f_r = b, f_b
-    optimal = fisclose(0, error, ertol, etol)
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 BRENT_INTERP_METHODS: dict[str, int] = {
     'quadratic': 0,
@@ -654,7 +887,7 @@ def brent(f: Callable[[float], float],
           prtol: float = named_default(PRTOL=PRTOL),
           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Brent's method for root-finding.
+    Brent's method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -711,7 +944,8 @@ def brent(f: Callable[[float], float],
 # Chandrupatla
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) chandrupatla_kernel(
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        chandrupatla_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -728,11 +962,12 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     cdef bint converged, optimal
     if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                             &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double c, f_c, d, f_d, d_ab, d_fa_fb, d_ad, d_fa_fd, d_bd, d_fb_fd, tl, t = 0.5
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -749,7 +984,7 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
         r, f_r = (a, f_a) if math.fabs(f_a) < math.fabs(f_b) else (b, f_b)
         error = math.fabs(f_r)
         tl = (2 * ptol * math.fabs(r) + 0.5 * sigma) / precision
-        if fisclose(0, error, ertol, etol) or tl > 0.5:
+        if scalar_ops.fisclose(0, error, ertol, etol) or tl > 0.5:
             break
         if a != b != d != a and f_a != f_b != f_d != f_a:
             # inverse quadratic interpolation
@@ -770,8 +1005,8 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
             t = 1 - tl
 
     # this method set r and f_r inside loop
-    optimal = fisclose(0, error, ertol, etol)
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.bracketing')
@@ -789,7 +1024,7 @@ def chandrupatla(f: Callable[[float], float],
                  prtol: float = named_default(PRTOL=PRTOL),
                  max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Chandrupatla's method for root-finding.
+    Chandrupatla's method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -833,7 +1068,8 @@ def chandrupatla(f: Callable[[float], float],
 # Ridders
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) ridders_kernel(
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        ridders_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -849,11 +1085,12 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     cdef bint converged, optimal
     if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                             &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double c, f_c, d, f_d, denom
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -879,8 +1116,8 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     if b < a:
         a, f_a = b, f_b
     r, f_r = d, f_d
-    optimal = fisclose(0, error, ertol, etol)
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.bracketing')
@@ -897,7 +1134,7 @@ def ridders(f: Callable[[float], float],
             prtol: float = named_default(PRTOL=PRTOL),
             max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Ridders method for root-finding.
+    Ridders method for scalar root-finding.
 
     Args:
         f (function): Function for which the root is sought.
@@ -1033,7 +1270,8 @@ cdef double _inverse_poly_zero(double a, double b, double c, double d,
     return a + Q31 + Q32 + Q33
 
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) toms748_kernel(
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        toms748_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -1051,7 +1289,7 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     cdef bint converged, optimal
     if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                             &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef unsigned long n
     cdef double c, f_c, d, f_d, e, f_e, u, f_u, z, f_z, A
@@ -1063,14 +1301,15 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     f_c = f(c)
     step += 1
     error = math.fabs(f_c)
-    if fisclose(0, error, ertol, etol):
+    if scalar_ops.fisclose(0, error, ertol, etol):
         r, f_r = c, f_c
-        return r, f_r, step, a, b, f_a, f_b, precision, error, True, True
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, True, True
     a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
     precision = math.fabs(b - a)
     e = f_e = math.NAN
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -1092,7 +1331,7 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
                 c = _newton_quadratic(a, b, d, f_a, f_b, f_d, n)
             f_c = f(c)
             error = math.fabs(f_c)
-            if fisclose(0, error, ertol, etol):
+            if scalar_ops.fisclose(0, error, ertol, etol):
                 break
 
             # re-bracket
@@ -1111,7 +1350,7 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
             c = (a + b) / 2
         f_c = f(c)
         error = math.fabs(f_c)
-        if fisclose(0, error, ertol, etol):
+        if scalar_ops.fisclose(0, error, ertol, etol):
             break
 
         # re-bracket
@@ -1125,15 +1364,15 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
             z = (a + b) / 2
             f_z = f(z)
             error = math.fabs(f_z)
-            if fisclose(0, error, ertol, etol):
+            if scalar_ops.fisclose(0, error, ertol, etol):
                 c, f_c = z, f_z
                 break
             a, b, d, f_a, f_b, f_d = _update_bracket(a, b, z, f_a, f_b, f_z)
             precision = math.fabs(b - a)
 
     r, f_r = c, f_c
-    optimal = fisclose(0, error, ertol, etol)
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.bracketing')
@@ -1203,7 +1442,8 @@ def toms748(f: Callable[[float], float],
 # Wu
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) wu_kernel(
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        wu_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -1219,7 +1459,7 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     cdef bint converged, optimal
     if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                             &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double c, f_c, a_bar, f_a_bar, b_bar, f_b_bar, c_bar
     cdef double div_diff_ab, div_diff_bc, div_diff_ac, alpha, beta, delta, s_delta, d1, d2, d
@@ -1228,12 +1468,13 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     f_c = f(c)
     step += 1
     error = math.fabs(f_c)
-    if fisclose(0, error, ertol, etol):
+    if scalar_ops.fisclose(0, error, ertol, etol):
         r, f_r = c, f_c
-        return r, f_r, step, a, b, f_a, f_b, precision, error, True, True
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, True, True
     a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -1269,8 +1510,8 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
         a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
 
     r, f_r = c, f_c
-    optimal = fisclose(0, error, ertol, etol)
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.bracketing')
@@ -1287,7 +1528,7 @@ def wu(f: Callable[[float], float],
        prtol: float = named_default(PRTOL=PRTOL),
        max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Wu's (Muller-Bisection) method for root-finding presented in the paper
+    Wu's (Muller-Bisection) method for scalar root-finding presented in the paper
     "Improved Muller method and Bisection method with global and asymptotic
     superlinear convergence of both point and interval for solving nonlinear equations".
 
@@ -1335,7 +1576,8 @@ def wu(f: Callable[[float], float],
 # ITP
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, double, double, double, double, bint, bint) itp_kernel(
+cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
+        itp_kernel(
         double_scalar_func_type f,
         double a,
         double b,
@@ -1356,14 +1598,15 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     cdef bint converged, optimal
     if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                             &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef unsigned long n_1div2 = <unsigned long> math.ceil(math.log2((b - a) / ptol))
     cdef unsigned long n_max = n_1div2 + n0
     cdef double x_m, f_m, rho, rho_i, delta, x_f, sigma, x_t, x_itp, f_itp
     converged = True
     rho_i = ptol * 2 ** <double> n_max
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.fisclose(0, error, ertol, etol) or
+               scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or f_a == f_b:
             converged = False
             break
@@ -1384,7 +1627,7 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
         # update interval
         f_itp = f(x_itp)
         error = math.fabs(f_itp)
-        if fisclose(0, error, ertol, etol):
+        if scalar_ops.fisclose(0, error, ertol, etol):
             a = b = x_itp
             f_a = f_b = f_itp
             break
@@ -1398,8 +1641,8 @@ cdef (double, double, unsigned long, double, double, double, double, double, dou
     error = math.fabs(f_m)
 
     r, f_r = x_m, f_m
-    optimal = fisclose(0, error, ertol, etol)
-    return r, f_r, step, a, b, f_a, f_b, precision, error, converged, optimal
+    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # upper bound for k2
 cdef double PHI = (1 + math.sqrt(5)) / 2
@@ -1422,7 +1665,7 @@ def itp(f: Callable[[float], float],
         prtol: float = named_default(PRTOL=PRTOL),
         max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
-    Interpolate, Truncate, and Project (ITP) method for root-finding presented in the paper
+    Interpolate, Truncate, and Project (ITP) method for scalar root-finding presented in the paper
     "An Enhancement of the Bisection Method Average Performance Preserving Minmax convergedity".
 
     References:

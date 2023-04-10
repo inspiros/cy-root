@@ -8,11 +8,13 @@ __all__ = [
     'find_root_scalar',
 ]
 
+# noinspection DuplicatedCode
 SCALAR_ROOT_FINDING_METHODS = {}
 for module in [scalar_bracketing, scalar_quasi_newton, scalar_newton]:
     SCALAR_ROOT_FINDING_METHODS.update(getmembers(module, has_tag))
 
 
+# noinspection DuplicatedCode
 def find_root_scalar(method: str, *args, **kwargs):
     """
     Find the root of a scalar function.

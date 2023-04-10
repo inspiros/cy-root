@@ -28,18 +28,43 @@ def _root_results_type(typename, field_names, *, defaults=None):
 
 BracketingMethodsReturnType = _root_results_type(
     'RootResults',
-    ['root', 'f_root', 'iters', 'f_calls', 'a', 'b', 'f_a', 'f_b', 'precision', 'error', 'converged', 'optimal'],
-    defaults=[None, None, 0, 0, None, None, None, None, None, None, False, False],
-)
-
-NewtonMethodReturnType = _root_results_type(
-    'RootResults',
-    ['root', 'f_root', 'df_root', 'iters', 'f_calls', 'precision', 'error', 'converged', 'optimal'],
-    defaults=[None, None, None, 0, 0, None, None, False, False]
+    ['root', 'f_root', 'iters', 'f_calls', 'bracket', 'f_bracket',
+     'precision', 'error', 'converged', 'optimal'],
+    defaults=[None, None, 0, 0, None, None, None, None, False, False],
 )
 
 QuasiNewtonMethodReturnType = _root_results_type(
     'RootResults',
-    ['root', 'f_root', 'iters', 'f_calls', 'precision', 'error', 'converged', 'optimal'],
+    ['root', 'f_root', 'iters', 'f_calls',
+     'precision', 'error', 'converged', 'optimal'],
     defaults=[None, None, 0, 0, None, None, False, False]
+)
+
+NewtonMethodReturnType = _root_results_type(
+    'RootResults',
+    ['root', 'f_root', 'df_root', 'iters', 'f_calls',
+     'precision', 'error', 'converged', 'optimal'],
+    defaults=[None, None, None, 0, 0, None, None, False, False]
+)
+
+# SplittingBracketingMethodReturnType has additional field split_iters
+SplittingBracketingMethodReturnType = _root_results_type(
+    'RootResults',
+    ['root', 'f_root', 'split_iters', 'iters', 'f_calls', 'bracket', 'f_bracket',
+     'precision', 'error', 'converged', 'optimal'],
+    defaults=[(), (), 0, (), (), (), (), (), (), ()],
+)
+
+SplittingQuasiNewtonMethodReturnType = _root_results_type(
+    'RootResults',
+    ['root', 'f_root', 'split_iters', 'iters', 'f_calls',
+     'precision', 'error', 'converged', 'optimal'],
+    defaults=[(), (), 0, (), (), (), (), (), ()]
+)
+
+SplittingNewtonMethodReturnType = _root_results_type(
+    'RootResults',
+    ['root', 'f_root', 'df_root', 'split_iters', 'iters', 'f_calls',
+     'precision', 'error', 'converged', 'optimal'],
+    defaults=[(), (), 0, (), (), (), (), (), (), ()]
 )

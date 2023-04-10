@@ -7,15 +7,15 @@
         "include_dirs": [
             "cyroot",
             "C:\\Python\\Python38\\lib\\site-packages\\numpy\\core\\include",
-            "cyroot\\utils"
+            "cyroot\\ops"
         ],
         "language": "c++",
-        "name": "cyroot.utils.scalar_ops",
+        "name": "cyroot.ops.scalar_ops",
         "sources": [
-            "cyroot\\utils\\scalar_ops.pyx"
+            "cyroot\\ops\\scalar_ops.pyx"
         ]
     },
-    "module_name": "cyroot.utils.scalar_ops"
+    "module_name": "cyroot.ops.scalar_ops"
 }
 END: Cython Metadata */
 
@@ -771,11 +771,25 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__cyroot__utils__scalar_ops
-#define __PYX_HAVE_API__cyroot__utils__scalar_ops
+#define __PYX_HAVE__cyroot__ops__scalar_ops
+#define __PYX_HAVE_API__cyroot__ops__scalar_ops
 /* Early includes */
 #include <math.h>
 #include <complex>
+
+    #pragma once
+    #include <complex>
+
+    template <typename T>
+    int sign(T val) {
+        return (T(0) < val) - (val < T(0));
+    }
+
+    template <typename T>
+    std::complex<T> csign(std::complex<T> val) {
+        return val / std::norm(val);
+    }
+    
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -1007,7 +1021,7 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "cyroot\\utils\\scalar_ops.pyx",
+  "cyroot\\ops\\scalar_ops.pyx",
 };
 /* Declarations.proto */
 #if CYTHON_CCOMPLEX
@@ -1023,14 +1037,27 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 
 
 /*--- Type declarations ---*/
-struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_fisclose;
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose;
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
 
-/* "cyroot/utils/scalar_ops.pxd":1
+/* "cyroot/ops/scalar_ops.pxd":1
  * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
- * cdef double fabs(double x) nogil
- * cdef double cabs(double complex x) nogil
+ * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
+ * 
  */
-struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_fisclose {
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose {
+  int __pyx_n;
+  double rtol;
+  double atol;
+};
+
+/* "cyroot/ops/scalar_ops.pxd":2
+ * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil
+ * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * 
+ * cdef extern from '<math.h>' nogil:
+ */
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose {
   int __pyx_n;
   double rtol;
   double atol;
@@ -1296,12 +1323,13 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'libc.math' */
 
-/* Module declarations from 'cyroot.utils.scalar_ops' */
-#define __Pyx_MODULE_NAME "cyroot.utils.scalar_ops"
-extern int __pyx_module_is_main_cyroot__utils__scalar_ops;
-int __pyx_module_is_main_cyroot__utils__scalar_ops = 0;
+/* Module declarations from 'cyroot.ops.scalar_ops' */
+static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose *__pyx_optional_args); /*proto*/
+#define __Pyx_MODULE_NAME "cyroot.ops.scalar_ops"
+extern int __pyx_module_is_main_cyroot__ops__scalar_ops;
+int __pyx_module_is_main_cyroot__ops__scalar_ops = 0;
 
-/* Implementation of 'cyroot.utils.scalar_ops' */
+/* Implementation of 'cyroot.ops.scalar_ops' */
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_test[] = "__test__";
@@ -1312,15 +1340,15 @@ static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_test;
 /* Late includes */
 
-/* "cyroot/utils/scalar_ops.pyx":12
- *     double _cabs 'abs'(double complex) nogil
+/* "cyroot/ops/scalar_ops.pyx":9
+ * from libc cimport math
  * 
  * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)
  */
 
-static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_fisclose(double __pyx_v_a, double __pyx_v_b, struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_fisclose *__pyx_optional_args) {
+static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(double __pyx_v_a, double __pyx_v_b, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose *__pyx_optional_args) {
   double __pyx_v_rtol = ((double)1e-5);
   double __pyx_v_atol = ((double)1e-8);
   int __pyx_r;
@@ -1335,7 +1363,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_fisclose(double __p
     }
   }
 
-  /* "cyroot/utils/scalar_ops.pyx":13
+  /* "cyroot/ops/scalar_ops.pyx":10
  * 
  * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):             # <<<<<<<<<<<<<<
@@ -1353,7 +1381,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_fisclose(double __p
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "cyroot/utils/scalar_ops.pyx":14
+    /* "cyroot/ops/scalar_ops.pyx":11
  * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)             # <<<<<<<<<<<<<<
@@ -1372,7 +1400,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_fisclose(double __p
     __pyx_r = __pyx_t_1;
     goto __pyx_L0;
 
-    /* "cyroot/utils/scalar_ops.pyx":13
+    /* "cyroot/ops/scalar_ops.pyx":10
  * 
  * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):             # <<<<<<<<<<<<<<
@@ -1381,18 +1409,18 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_fisclose(double __p
  */
   }
 
-  /* "cyroot/utils/scalar_ops.pyx":15
+  /* "cyroot/ops/scalar_ops.pyx":12
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)             # <<<<<<<<<<<<<<
  * 
- * cdef inline double fabs(double x) nogil:
+ * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:
  */
   __pyx_r = (fabs((__pyx_v_a - __pyx_v_b)) <= (__pyx_v_atol + (__pyx_v_rtol * fabs(__pyx_v_b))));
   goto __pyx_L0;
 
-  /* "cyroot/utils/scalar_ops.pyx":12
- *     double _cabs 'abs'(double complex) nogil
+  /* "cyroot/ops/scalar_ops.pyx":9
+ * from libc cimport math
  * 
  * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
  *     if math.isinf(b) or math.isinf(a):
@@ -1404,63 +1432,60 @@ static CYTHON_INLINE int __pyx_f_6cyroot_5utils_10scalar_ops_fisclose(double __p
   return __pyx_r;
 }
 
-/* "cyroot/utils/scalar_ops.pyx":17
+/* "cyroot/ops/scalar_ops.pyx":14
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
  * 
- * cdef inline double fabs(double x) nogil:             # <<<<<<<<<<<<<<
- *     return math.fabs(x)
- * 
+ * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
+ *     return fisclose(a.real, b.real, rtol, atol) and fisclose(a.imag, b.imag, rtol, atol)
  */
 
-static CYTHON_INLINE double __pyx_f_6cyroot_5utils_10scalar_ops_fabs(double __pyx_v_x) {
-  double __pyx_r;
+static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_cisclose(__pyx_t_double_complex __pyx_v_a, __pyx_t_double_complex __pyx_v_b, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose *__pyx_optional_args) {
+  double __pyx_v_rtol = ((double)1e-5);
+  double __pyx_v_atol = ((double)1e-8);
+  int __pyx_r;
+  int __pyx_t_1;
+  int __pyx_t_2;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_3;
+  int __pyx_t_4;
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_rtol = __pyx_optional_args->rtol;
+      if (__pyx_optional_args->__pyx_n > 1) {
+        __pyx_v_atol = __pyx_optional_args->atol;
+      }
+    }
+  }
 
-  /* "cyroot/utils/scalar_ops.pyx":18
+  /* "cyroot/ops/scalar_ops.pyx":15
  * 
- * cdef inline double fabs(double x) nogil:
- *     return math.fabs(x)             # <<<<<<<<<<<<<<
- * 
- * cdef inline double cabs(double complex x) nogil:
+ * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:
+ *     return fisclose(a.real, b.real, rtol, atol) and fisclose(a.imag, b.imag, rtol, atol)             # <<<<<<<<<<<<<<
  */
-  __pyx_r = fabs(__pyx_v_x);
+  __pyx_t_3.__pyx_n = 2;
+  __pyx_t_3.rtol = __pyx_v_rtol;
+  __pyx_t_3.atol = __pyx_v_atol;
+  __pyx_t_2 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(__Pyx_CREAL(__pyx_v_a), __Pyx_CREAL(__pyx_v_b), &__pyx_t_3); 
+  __pyx_t_4 = (__pyx_t_2 != 0);
+  if (__pyx_t_4) {
+  } else {
+    __pyx_t_1 = __pyx_t_4;
+    goto __pyx_L3_bool_binop_done;
+  }
+  __pyx_t_3.__pyx_n = 2;
+  __pyx_t_3.rtol = __pyx_v_rtol;
+  __pyx_t_3.atol = __pyx_v_atol;
+  __pyx_t_4 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(__Pyx_CIMAG(__pyx_v_a), __Pyx_CIMAG(__pyx_v_b), &__pyx_t_3); 
+  __pyx_t_2 = (__pyx_t_4 != 0);
+  __pyx_t_1 = __pyx_t_2;
+  __pyx_L3_bool_binop_done:;
+  __pyx_r = __pyx_t_1;
   goto __pyx_L0;
 
-  /* "cyroot/utils/scalar_ops.pyx":17
+  /* "cyroot/ops/scalar_ops.pyx":14
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
  * 
- * cdef inline double fabs(double x) nogil:             # <<<<<<<<<<<<<<
- *     return math.fabs(x)
- * 
- */
-
-  /* function exit code */
-  __pyx_L0:;
-  return __pyx_r;
-}
-
-/* "cyroot/utils/scalar_ops.pyx":20
- *     return math.fabs(x)
- * 
- * cdef inline double cabs(double complex x) nogil:             # <<<<<<<<<<<<<<
- *     return _cabs(x)
- */
-
-static CYTHON_INLINE double __pyx_f_6cyroot_5utils_10scalar_ops_cabs(__pyx_t_double_complex __pyx_v_x) {
-  double __pyx_r;
-
-  /* "cyroot/utils/scalar_ops.pyx":21
- * 
- * cdef inline double cabs(double complex x) nogil:
- *     return _cabs(x)             # <<<<<<<<<<<<<<
- */
-  __pyx_r = abs(__pyx_v_x);
-  goto __pyx_L0;
-
-  /* "cyroot/utils/scalar_ops.pyx":20
- *     return math.fabs(x)
- * 
- * cdef inline double cabs(double complex x) nogil:             # <<<<<<<<<<<<<<
- *     return _cabs(x)
+ * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
+ *     return fisclose(a.real, b.real, rtol, atol) and fisclose(a.imag, b.imag, rtol, atol)
  */
 
   /* function exit code */
@@ -1569,9 +1594,8 @@ static int __Pyx_modinit_function_export_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_export_code", 0);
   /*--- Function export code ---*/
-  if (__Pyx_ExportFunction("fisclose", (void (*)(void))__pyx_f_6cyroot_5utils_10scalar_ops_fisclose, "int (double, double, struct __pyx_opt_args_6cyroot_5utils_10scalar_ops_fisclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("fabs", (void (*)(void))__pyx_f_6cyroot_5utils_10scalar_ops_fabs, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("cabs", (void (*)(void))__pyx_f_6cyroot_5utils_10scalar_ops_cabs, "double (__pyx_t_double_complex)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("fisclose", (void (*)(void))__pyx_f_6cyroot_3ops_10scalar_ops_fisclose, "int (double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("cisclose", (void (*)(void))__pyx_f_6cyroot_3ops_10scalar_ops_cisclose, "int (__pyx_t_double_complex, __pyx_t_double_complex, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -1783,14 +1807,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_cyroot__utils__scalar_ops) {
+  if (__pyx_module_is_main_cyroot__ops__scalar_ops) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "cyroot.utils.scalar_ops")) {
-      if (unlikely(PyDict_SetItemString(modules, "cyroot.utils.scalar_ops", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "cyroot.ops.scalar_ops")) {
+      if (unlikely(PyDict_SetItemString(modules, "cyroot.ops.scalar_ops", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -1811,7 +1835,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "cyroot/utils/scalar_ops.pyx":1
+  /* "cyroot/ops/scalar_ops.pyx":1
  * # distutils: language=c++             # <<<<<<<<<<<<<<
  * # cython: cdivision = True
  * # cython: initializedcheck = False
@@ -1828,11 +1852,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init cyroot.utils.scalar_ops", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init cyroot.ops.scalar_ops", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init cyroot.utils.scalar_ops");
+    PyErr_SetString(PyExc_ImportError, "init cyroot.ops.scalar_ops");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
