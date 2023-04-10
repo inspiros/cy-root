@@ -151,14 +151,14 @@ cpdef np.ndarray[np.float64_t, ndim=2] get_M(unsigned int n,
 def compute_admissible_n_polygon(
         F: Callable[[np.ndarray], np.ndarray],
         x: np.ndarray,
-        h: Optional[Union[np.ndarray, float]],
+        h: Optional[Union[np.ndarray, float]] = None,
         eps: float=1e-3) -> Tuple[np.ndarray, np.ndarray]:
     x = x.reshape(-1)
     cdef unsigned int d = x.shape[0]
     if h is None:
         h = np.full(d, np.abs(x).mean(), dtype=np.float64)
     elif isinstance(h, np.ndarray):
-        h = h.reshape(-1)
+        h = h.astype(np.float64).reshape(-1)
         if h.shape[0] != d:
             raise ValueError('x and h must be of the same dimension.')
     else:
@@ -267,8 +267,10 @@ def vrahatis(F: Callable[[np.ndarray], np.ndarray],
     """
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    F_wrapper = PyNdArrayFPtr(F)
 
+    x0s = np.asarray(x0s, dtype=np.float64)
+
+    F_wrapper = PyNdArrayFPtr(F)
     if x0s.ndim == 1 or x0s.shape[0] == 1:
         x0s, S_x0s = compute_admissible_n_polygon(F_wrapper, x0s.reshape(-1), h)
     elif x0s.shape[0] != 2 ** x0s.shape[1]:
@@ -276,6 +278,9 @@ def vrahatis(F: Callable[[np.ndarray], np.ndarray],
 
     if F_x0s is None:
         F_x0s = np.stack([F_wrapper(x0s[i]) for i in range(x0s.shape[0])])
+    else:
+        F_x0s = np.asarray(F_x0s, dtype=np.float64)
+
     S_x0s = np.sign(F_x0s)
     if np.unique(S_x0s, axis=0).shape[0] != x0s.shape[0]:
         raise ValueError('Initial bounds do not form an admissible n-polygon.')
