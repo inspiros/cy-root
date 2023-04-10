@@ -240,4 +240,4 @@ cdef class PyNdArrayFPtr(NdArrayFPtr):
 
     cdef inline np.ndarray eval(self, np.ndarray x):
         self.n_f_calls += 1
-        return self.f(x)
+        return np.asarray(self.f(x), dtype=np.float64)

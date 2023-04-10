@@ -228,7 +228,7 @@ print(result)  # same result
 
 #### Example 5:
 
-Similarly, to find roots of systems of equations with Newton-like methods, you have to define function returning
+Similarly, to find roots of systems of equations with Newton-like methods, you have to define functions returning
 **Jacobian** (and **Hessian**) of `F`.
 
 This example shows the use of `generalized_super_halley` method:
