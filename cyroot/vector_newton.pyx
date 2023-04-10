@@ -119,14 +119,18 @@ def generalized_newton(F: Callable[[np.ndarray], np.ndarray],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    x0 = np.asarray(x0).astype(np.float64)
+    x0 = np.asarray(x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr(F)
     J_wrapper = PyNdArrayFPtr(J)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
+    else:
+        F_x0 = np.asarray(F_x0, dtype=np.float64)
     if J_x0 is None:
         J_x0 = J_wrapper(x0)
+    else:
+        J_x0 = np.asarray(J_x0, dtype=np.float64)
 
     res = generalized_newton_kernel[NdArrayFPtr](
         F_wrapper, J_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
@@ -279,17 +283,23 @@ def generalized_halley(F: Callable[[np.ndarray], np.ndarray],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    x0 = np.asarray(x0).astype(np.float64)
+    x0 = np.asarray(x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr(F)
     J_wrapper = PyNdArrayFPtr(J)
     H_wrapper = PyNdArrayFPtr(H)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
+    else:
+        F_x0 = np.asarray(F_x0, dtype=np.float64)
     if J_x0 is None:
         J_x0 = J_wrapper(x0)
+    else:
+        J_x0 = np.asarray(J_x0, dtype=np.float64)
     if H_x0 is None:
         H_x0 = H_wrapper(x0)
+    else:
+        H_x0 = np.asarray(H_x0, dtype=np.float64)
 
     if alpha is None:
         res = generalized_halley_kernel[NdArrayFPtr](
@@ -512,17 +522,23 @@ def generalized_tangent_hyperbolas(F: Callable[[np.ndarray], np.ndarray],
     if formula not in [1, 2]:
         raise ValueError(f'Unknown formula {formula}.')
 
-    x0 = np.asarray(x0).astype(np.float64)
+    x0 = np.asarray(x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr(F)
     J_wrapper = PyNdArrayFPtr(J)
     H_wrapper = PyNdArrayFPtr(H)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
+    else:
+        F_x0 = np.asarray(F_x0, dtype=np.float64)
     if J_x0 is None:
         J_x0 = J_wrapper(x0)
+    else:
+        J_x0 = np.asarray(J_x0, dtype=np.float64)
     if H_x0 is None:
         H_x0 = H_wrapper(x0)
+    else:
+        H_x0 = np.asarray(H_x0, dtype=np.float64)
 
     res = generalized_tangent_hyperbolas_kernel[NdArrayFPtr](
         F_wrapper, J_wrapper, H_wrapper, x0, F_x0, J_x0, H_x0, formula, etol, ertol, ptol, prtol, max_iter)

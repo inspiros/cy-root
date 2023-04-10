@@ -680,7 +680,8 @@ cdef class CyExprEvaluator(DoubleVectorFPtr):
 
 # noinspection DuplicatedCode
 class ReciprocalDerivativeFuncFactory:
-    """
+    """Factory class containing compiled reciprocal derivative functions for reuse.
+
     References:
         https://math.stackexchange.com/questions/5357/whats-the-generalisation-of-the-quotient-rule-for-higher-derivatives
     """

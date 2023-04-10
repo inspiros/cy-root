@@ -69,7 +69,7 @@ For more information about the listed algorithms, please use Google until I upda
     - [x] Pegasus
     - [x] Anderson–Björck
     - [x] Dekker
-    - [x] Brent
+    - [x] Brent _(with Inverse Quadratic Interpolation and Hyperbolic Interpolation)_
     - [x] Chandrupatla
     - [x] Ridders
     - [x] TOMS748
@@ -98,20 +98,20 @@ For more information about the listed algorithms, please use Google until I upda
     - [x] Generalized Chebyshev
     - [x] Generalized Halley
     - [x] Generalized Super-Halley
-    - [x] Generalized Tangent Hyperbolas
+    - [x] Generalized Tangent Hyperbolas _(similar to Halley method)_
 - **Quasi-Newton methods:** (methods that approximate Jacobian, use interpolation, or successive iteration)
     - [x] Wolfe-Bittner
     - [x] Robinson
     - [x] Barnes
     - [x] Traub-Steffensen
-    - [x] Broyden (Good and Bad)
+    - [x] Broyden _(Good and Bad)_
     - [x] Klement
 
 ## Usage
 
 ### Examples:
 
-**Example 1:**
+#### Example 1:
 
 Use `find_root_scalar` or `find_root_vector` and pass method name as the first argument.
 This example shows the use of `find_root_scalar` function with `itp` method.
@@ -139,11 +139,12 @@ print('scalar root methods:', SCALAR_ROOT_FINDING_METHODS.keys())
 print('vector root methods:', VECTOR_ROOT_FINDING_METHODS.keys())
 ```
 
-**Example 2:**
+#### Example 2:
 
 Alternatively, import the function directly.
 You can also see the full list of input arguments of by using `help()` on them.
-This example shows the use of `muller` method for finding complex root.
+
+This example shows the use of `muller` method for finding complex root:
 
 ```python
 from cyroot import muller
@@ -160,13 +161,13 @@ Output:
 RootResults(root=(0.34356074972251255+1.4553466902253551j), f_root=(-8.881784197001252e-16-1.7763568394002505e-15j), iters=43, f_calls=43, precision=3.177770418807502e-08, error=1.9860273225978185e-15, converged=True, optimal=True)
 ```
 
-**Example 3:**
+#### Example 3:
 
 Considering the parabola $f(x)=x^2-612$ in **Example 1** with initial bounds $(a,b)$ where $a=-b$, many bracketing
 methods will fail to find a root as the values evaluated at initial bracket are identical.
 
-In this example, we use the `hybisect` method which bisect the search regions to multiple parts until
-the Bolzano criterion holds, thus can find multiple roots:
+In this example, we use the `hybisect` method which repeatedly bisects the search regions until the Bolzano criterion
+holds, thus can find multiple roots:
 
 ```python
 import math
@@ -189,7 +190,7 @@ Output:
 RootResults(root=[-24.738633753707973, 24.738633753707973], f_root=[9.936229616869241e-11, 9.936229616869241e-11], split_iters=1, iters=[43, 43], f_calls=(92, 3), bracket=[(-24.738633753710815, -24.73863375370513), (24.73863375370513, 24.738633753710815)], f_bracket=[(nan, nan), (nan, nan)], precision=[5.6843418860808015e-12, 5.6843418860808015e-12], error=[9.936229616869241e-11, 9.936229616869241e-11], converged=[True, True], optimal=[True, True])
 ```
 
-**Example 4:**
+#### Example 4:
 
 This example shows the use of the `halley` method with functions returning first and second order derivatives of `f`:
 
@@ -225,7 +226,7 @@ result = householder(f, dfs=[df, d2f, d3f], x0=1.5)
 print(result)  # same result
 ```
 
-**Example 5:**
+#### Example 5:
 
 Similarly, to find roots of systems of equations with Newton-like methods, you have to define function returning
 **Jacobian** (and **Hessian**) of `F`.
@@ -268,10 +269,10 @@ RootResults(root=array([0.48298601, 1.08951589]), f_root=array([-4.35123049e-11,
         [ 8.71612713, -2.6732073 ]]])), iters=3, f_calls=(4, 4, 4), precision=0.0005808146393164461, error=6.554445874940029e-11, converged=True, optimal=True)
 ```
 
-**Example 6:**
+#### Example 6:
 
-For vector bracketing root methods or vector root methods with multiple initial guesses, the input should be a
-`np.ndarray` of shape `(n, d)`.
+For vector bracketing root methods or vector root methods with multiple initial guesses, the input should be a 2D
+`np.ndarray`.
 
 This example shows the use of `vrahatis` method (a generalized bisection) with the example function in the original
 paper:
@@ -314,8 +315,8 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
     - `f_root`: value evaluated at root.
     - `iters`: number of iterations.
     - `f_calls`: number of function calls.
-    - `precision`: width of final bracket (for bracketing methods) or absolute difference of root with the last
-      estimation.
+    - `precision`: width of final bracket (for bracketing methods), or absolute difference of root with the last
+      estimation, or the span of the set of final estimations.
     - `error`: absolute value of `f_root`.
     - `converged`: `True` if the stopping criterion is met, `False` if the procedure terminated prematurely.
     - `optimal`: `True` only if the error tolerance is satisfied `abs(f_root) <= etol`.
@@ -331,7 +332,7 @@ precision tolerance is satisfied.
 #### Configurations:
 
 The default values for stop condition arguments (i.e. `etol`, `ertol`, `ptol`, `prtol`, `max_iter`) are globally set to
-the values defined in [`_defaults.py`](cyroot/_defaults.py), and can be modified dynamically as follows.
+the values defined in [`_defaults.py`](cyroot/_defaults.py), and can be modified dynamically as follows:
 
 ```python
 import cyroot
@@ -343,6 +344,8 @@ cyroot.set_default_stop_condition_args(
 
 help(cyroot.illinois)  # run to check the updated docstring
 ```
+For `scipy.optimize.root` users, `etol` and `ertol` are equivalent to `f_tol` and `f_rtol`, `ptol` and `prtol` are
+equivalent to `x_tol` and `x_rtol`.
 
 For more examples, please check the [`examples`](examples) folder.
 

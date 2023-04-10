@@ -139,7 +139,7 @@ def wolfe_bittner(F: Callable[[np.ndarray], np.ndarray],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    x0s = np.asarray(x0s).astype(np.float64)
+    x0s = np.asarray(x0s, dtype=np.float64)
     d = x0s.shape[1]
     if x0s.shape[0] != d + 1:
         raise ValueError('Number of initial points must be d + 1. '
@@ -148,6 +148,8 @@ def wolfe_bittner(F: Callable[[np.ndarray], np.ndarray],
     F_wrapper = PyNdArrayFPtr(F)
     if F_x0s is None:
         F_x0s = np.stack([F_wrapper(x0s[i]) for i in range(d + 1)])
+    else:
+        F_x0s = np.asarray(F_x0s, dtype=np.float64)
 
     res = wolfe_bittner_kernel[NdArrayFPtr](
         F_wrapper, x0s, F_x0s, etol, ertol, ptol, prtol, max_iter)
@@ -253,8 +255,7 @@ def robinson(F: Callable[[np.ndarray], np.ndarray],
     Robinson's Secant method for vector root-finding.
 
     References:
-        [1] Robinson, S. M. (1966). Interpolative Solution of Systems of Nonlinear Equations.
-         SIAM Journal on Numerical Analysis, 3(4), 650–658. doi:10.1137/0703057 
+        https://epubs.siam.org/doi/abs/10.1137/0703057
 
     Args:
         F (function): Function for which the root is sought.
@@ -287,14 +288,18 @@ def robinson(F: Callable[[np.ndarray], np.ndarray],
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_unique_initial_guesses(x0, x1)
 
-    x0 = np.asarray(x0).astype(np.float64)
-    x1 = np.asarray(x1).astype(np.float64)
+    x0 = np.asarray(x0, dtype=np.float64)
+    x1 = np.asarray(x1, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr(F)
     if F_x0 is None:
         F_x0 = F(x0)
+    else:
+        F_x0 = np.asarray(F_x0, dtype=np.float64)
     if F_x1 is None:
         F_x1 = F(x1)
+    else:
+        F_x1 = np.asarray(F_x1, dtype=np.float64)
 
     res = robinson_kernel[NdArrayFPtr](
         F_wrapper, x0, x1, F_x0, F_x1, etol, ertol, ptol, prtol, max_iter)
@@ -454,14 +459,17 @@ def barnes(F: Callable[[np.ndarray], np.ndarray],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    x0 = np.asarray(x0).astype(np.float64)
+    x0 = np.asarray(x0, dtype=np.float64)
+
     if J_x0 is None:  # TODO: estimate initial guess with finite difference
         raise ValueError('J_x0 must be explicitly set.')
-    J_x0 = np.asarray(J_x0).astype(np.float64)
+    J_x0 = np.asarray(J_x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr(F)
     if F_x0 is None:
         F_x0 = F(x0)
+    else:
+        F_x0 = np.asarray(F_x0, dtype=np.float64)
 
     res = barnes_kernel[NdArrayFPtr](
         F_wrapper, x0, F_x0, J_x0, formula, etol, ertol, ptol, prtol, max_iter)
@@ -555,11 +563,13 @@ def traub_steffensen(F: Callable[[np.ndarray], np.ndarray],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    x0 = np.asarray(x0).astype(np.float64)
+    x0 = np.asarray(x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr(F)
     if F_x0 is None:
         F_x0 = F(x0)
+    else:
+        F_x0 = np.asarray(F_x0, dtype=np.float64)
 
     res = traub_steffensen_kernel[NdArrayFPtr](
         F_wrapper, x0, F_x0, etol, ertol, ptol, prtol, max_iter)
@@ -711,14 +721,16 @@ def broyden(F: Callable[[np.ndarray], np.ndarray],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    x0 = np.asarray(x0).astype(np.float64)
+    x0 = np.asarray(x0, dtype=np.float64)
     if J_x0 is None:
         raise ValueError('J_x0 must be explicitly set.')
-    J_x0 = np.asarray(J_x0).astype(np.float64)
+    J_x0 = np.asarray(J_x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr(F)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
+    else:
+        F_x0 = np.asarray(F_x0, dtype=np.float64)
 
     if algo in [1, 'good']:
         res = broyden1_kernel[NdArrayFPtr](
@@ -828,14 +840,16 @@ def klement(F: Callable[[np.ndarray], np.ndarray],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    x0 = np.asarray(x0).astype(np.float64)
+    x0 = np.asarray(x0, dtype=np.float64)
     if J_x0 is None:
         raise ValueError('J_x0 must be explicitly set.')
-    J_x0 = np.asarray(J_x0).astype(np.float64)
+    J_x0 = np.asarray(J_x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr(F)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
+    else:
+        F_x0 = np.asarray(F_x0, dtype=np.float64)
 
     res = klement_kernel[NdArrayFPtr](
         F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
