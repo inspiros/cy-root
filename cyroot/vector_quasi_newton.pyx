@@ -26,6 +26,7 @@ from .fptr cimport (
 )
 from .ops.scalar_ops cimport fisclose, sqrt
 from .ops.vector_ops cimport fabs, fmax, norm
+from .typing import ArrayLike
 from .utils.function_tagging import tag
 
 __all__ = [
@@ -46,7 +47,7 @@ __all__ = [
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
 cdef wolfe_bittner_kernel(
-        ndarray_func_type F,
+        NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=2] x0s,
         np.ndarray[np.float64_t, ndim=2] F_x0s,
         double etol=ETOL,
@@ -102,9 +103,9 @@ cdef wolfe_bittner_kernel(
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def wolfe_bittner(F: Callable[[np.ndarray], np.ndarray],
-                  x0s: np.ndarray,
-                  F_x0s: Optional[np.ndarray] = None,
+def wolfe_bittner(F: Callable[[ArrayLike], ArrayLike],
+                  x0s: ArrayLike,
+                  F_x0s: Optional[ArrayLike] = None,
                   etol: float = named_default(ETOL=ETOL),
                   ertol: float = named_default(ERTOL=ERTOL),
                   ptol: float = named_default(PTOL=PTOL),
@@ -145,14 +146,14 @@ def wolfe_bittner(F: Callable[[np.ndarray], np.ndarray],
         raise ValueError('Number of initial points must be d + 1. '
                          f'Got n_points={x0s.shape[0]}, d={d}.')
 
-    F_wrapper = PyNdArrayFPtr(F)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0s is None:
         F_x0s = np.stack([F_wrapper(x0s[i]) for i in range(d + 1)])
     else:
         F_x0s = np.asarray(F_x0s, dtype=np.float64)
 
-    res = wolfe_bittner_kernel[NdArrayFPtr](
-        F_wrapper, x0s, F_x0s, etol, ertol, ptol, prtol, max_iter)
+    res = wolfe_bittner_kernel(
+        <NdArrayFPtr> F_wrapper, x0s, F_x0s, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 #------------------------
@@ -161,11 +162,12 @@ def wolfe_bittner(F: Callable[[np.ndarray], np.ndarray],
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
 cdef robinson_kernel(
-        ndarray_func_type F,
+        NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] x1,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=1] F_x1,
+        int orth=2,
         double etol=ETOL,
         double ertol=ERTOL,
         double ptol=PTOL,
@@ -192,11 +194,14 @@ cdef robinson_kernel(
             converged = False
             break
         step += 1
-        H = norm(d_x) * I  # simple
-        # H = norm(d_x) * _compute_H(d_x)  # efficient
-        # H = norm(d_x) * scipy.stats.ortho_group.rvs(dim=x0.shape[0])  # random
+        if orth == 1:  # simple
+            H = norm(d_x) * I
+        elif orth == 2:  # efficient
+            H = norm(d_x) * _efficient_H(d_x)
+        else:  # random
+            H = norm(d_x) * _random_H(x0.shape[0])
         for i in range(x0.shape[0]):
-            J[i] = F(x1 + H[i]) - F_x1
+            J[:, i] = F(x1 + H[i]) - F_x1
         J = J.dot(np.linalg.solve(H, I))
         d_x = np.linalg.solve(J, -F_x1)  # -J^-1.F_x_n
         r = x1 + d_x
@@ -211,7 +216,7 @@ cdef robinson_kernel(
     return r, F_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
-cdef np.ndarray[np.float64_t, ndim=2] _compute_H(np.ndarray[np.float64_t, ndim=1] d_x):
+cdef np.ndarray[np.float64_t, ndim=2] _efficient_H(np.ndarray[np.float64_t, ndim=1] d_x):
     cdef np.ndarray[np.float64_t, ndim=2] H = np.empty((d_x.shape[0], d_x.shape[0]), dtype=np.float64)
     cdef unsigned long i, j, k
     cdef double[:] d_x_squared = d_x * d_x
@@ -237,15 +242,24 @@ cdef np.ndarray[np.float64_t, ndim=2] _compute_H(np.ndarray[np.float64_t, ndim=1
                     H[i, j] /= scale
     return H
 
+cdef np.ndarray[np.float64_t, ndim=2] _random_H(unsigned int d):
+    cdef np.ndarray[np.float64_t, ndim=2] q, r
+    cdef np.ndarray[np.float64_t, ndim=1] s
+    q, r = np.linalg.qr(np.random.normal(size=(d, d)))
+    s = r.diagonal()
+    q *= (s / np.abs(s)).reshape(1, d)
+    return q
+
 # noinspection DuplicatedCode
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def robinson(F: Callable[[np.ndarray], np.ndarray],
-             x0: np.ndarray,
-             x1: np.ndarray,
-             F_x0: Optional[np.ndarray] = None,
-             F_x1: Optional[np.ndarray] = None,
+def robinson(F: Callable[[ArrayLike], ArrayLike],
+             x0: ArrayLike,
+             x1: ArrayLike,
+             F_x0: Optional[ArrayLike] = None,
+             F_x1: Optional[ArrayLike] = None,
+             orth: Union[str, int] = 'efficient',
              etol: float = named_default(ETOL=ETOL),
              ertol: float = named_default(ERTOL=ERTOL),
              ptol: float = named_default(PTOL=PTOL),
@@ -265,6 +279,11 @@ def robinson(F: Callable[[np.ndarray], np.ndarray],
          initial point.
         F_x1 (np.ndarray, optional): Value evaluated at second
          initial point.
+        orth (int, optional): Strategy to compute the orthogonal
+         matrix, can be either ``1``/``'identity'`` for identity,
+         ``2``/``'efficient'`` for efficient method proposed in
+         the original paper, and ``3``/``'random'`` for random.
+         Defaults to {orth}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -282,27 +301,35 @@ def robinson(F: Callable[[np.ndarray], np.ndarray],
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
-    # TODO: the method for computing the efficient H following the paper
-    #  is bugged and does not converge.
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_unique_initial_guesses(x0, x1)
 
     x0 = np.asarray(x0, dtype=np.float64)
     x1 = np.asarray(x1, dtype=np.float64)
+    _check_unique_initial_guesses(x0, x1)
 
-    F_wrapper = PyNdArrayFPtr(F)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
-        F_x0 = F(x0)
+        F_x0 = F_wrapper(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
     if F_x1 is None:
-        F_x1 = F(x1)
+        F_x1 = F_wrapper(x1)
     else:
         F_x1 = np.asarray(F_x1, dtype=np.float64)
 
-    res = robinson_kernel[NdArrayFPtr](
-        F_wrapper, x0, x1, F_x0, F_x1, etol, ertol, ptol, prtol, max_iter)
+    if orth in ['1', 'identity']:
+        orth = 1
+    elif orth in ['2', 'efficient']:
+        orth = 2
+    elif orth in ['3', 'random']:
+        orth = 3
+    elif orth not in [1, 2, 3]:
+        raise ValueError('orth must be eith 1/identity, 2/efficient, or '
+                         f'3/random. Got {orth}.')
+
+    res = robinson_kernel(
+        <NdArrayFPtr> F_wrapper, x0, x1, F_x0, F_x1, orth, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 #------------------------
@@ -311,7 +338,7 @@ def robinson(F: Callable[[np.ndarray], np.ndarray],
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
 cdef barnes_kernel(
-        ndarray_func_type F,
+        NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=2] J_x0,
@@ -411,10 +438,10 @@ cdef np.ndarray[np.float64_t, ndim=1] _orthogonal_vector(
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def barnes(F: Callable[[np.ndarray], np.ndarray],
-           x0: np.ndarray,
-           F_x0: Optional[np.ndarray] = None,
-           J_x0: np.ndarray = None,
+def barnes(F: Callable[[ArrayLike], ArrayLike],
+           x0: ArrayLike,
+           F_x0: Optional[ArrayLike] = None,
+           J_x0: Optional[ArrayLike] = None,
            formula: int = 2,
            etol: float = named_default(ETOL=ETOL),
            ertol: float = named_default(ERTOL=ERTOL),
@@ -465,14 +492,14 @@ def barnes(F: Callable[[np.ndarray], np.ndarray],
         raise ValueError('J_x0 must be explicitly set.')
     J_x0 = np.asarray(J_x0, dtype=np.float64)
 
-    F_wrapper = PyNdArrayFPtr(F)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
-        F_x0 = F(x0)
+        F_x0 = F_wrapper(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
 
-    res = barnes_kernel[NdArrayFPtr](
-        F_wrapper, x0, F_x0, J_x0, formula, etol, ertol, ptol, prtol, max_iter)
+    res = barnes_kernel(
+        <NdArrayFPtr> F_wrapper, x0, F_x0, J_x0, formula, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 ################################################################################
@@ -481,7 +508,7 @@ def barnes(F: Callable[[np.ndarray], np.ndarray],
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
 cdef traub_steffensen_kernel(
-        ndarray_func_type F,
+        NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         double etol=ETOL,
@@ -508,7 +535,7 @@ cdef traub_steffensen_kernel(
         step += 1
         H = np.diag(F_x0)
         for i in range(x0.shape[0]):
-            J[i] = F(x0 + H[i]) - F_x0
+            J[:, i] = F(x0 + H[i]) - F_x0
         J = np.matmul(J, np.linalg.inv(H))
         d_x = np.linalg.solve(J, -F_x0)  # -J^-1.F_x_n
         x0 = x0 + d_x
@@ -524,9 +551,9 @@ cdef traub_steffensen_kernel(
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def traub_steffensen(F: Callable[[np.ndarray], np.ndarray],
-                     x0: np.ndarray,
-                     F_x0: Optional[np.ndarray] = None,
+def traub_steffensen(F: Callable[[ArrayLike], ArrayLike],
+                     x0: ArrayLike,
+                     F_x0: Optional[ArrayLike] = None,
                      etol: float = named_default(ETOL=ETOL),
                      ertol: float = named_default(ERTOL=ERTOL),
                      ptol: float = named_default(PTOL=PTOL),
@@ -538,10 +565,7 @@ def traub_steffensen(F: Callable[[np.ndarray], np.ndarray],
     Args:
         F (function): Function for which the root is sought.
         x0 (np.ndarray): First initial point.
-        x1 (np.ndarray): Second initial point.
         F_x0 (np.ndarray, optional): Value evaluated at first
-         initial point.
-        F_x1 (np.ndarray, optional): Value evaluated at second
          initial point.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
@@ -565,14 +589,14 @@ def traub_steffensen(F: Callable[[np.ndarray], np.ndarray],
 
     x0 = np.asarray(x0, dtype=np.float64)
 
-    F_wrapper = PyNdArrayFPtr(F)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
-        F_x0 = F(x0)
+        F_x0 = F_wrapper(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
 
-    res = traub_steffensen_kernel[NdArrayFPtr](
-        F_wrapper, x0, F_x0, etol, ertol, ptol, prtol, max_iter)
+    res = traub_steffensen_kernel(
+        <NdArrayFPtr> F_wrapper, x0, F_x0, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 ################################################################################
@@ -581,7 +605,7 @@ def traub_steffensen(F: Callable[[np.ndarray], np.ndarray],
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
 cdef broyden1_kernel(
-        ndarray_func_type F,
+        NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=2] J_x0,
@@ -627,7 +651,7 @@ cdef broyden1_kernel(
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
 cdef broyden2_kernel(
-        ndarray_func_type F,
+        NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=2] J_x0,
@@ -678,10 +702,10 @@ cdef broyden2_kernel(
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def broyden(F: Callable[[np.ndarray], np.ndarray],
-            x0: np.ndarray,
-            F_x0: Optional[np.ndarray] = None,
-            J_x0: Optional[np.ndarray] = None,
+def broyden(F: Callable[[ArrayLike], ArrayLike],
+            x0: ArrayLike,
+            F_x0: Optional[ArrayLike] = None,
+            J_x0: Optional[ArrayLike] = None,
             algo: Union[int, str] = 2,
             etol: float = named_default(ETOL=ETOL),
             ertol: float = named_default(ERTOL=ERTOL),
@@ -726,18 +750,18 @@ def broyden(F: Callable[[np.ndarray], np.ndarray],
         raise ValueError('J_x0 must be explicitly set.')
     J_x0 = np.asarray(J_x0, dtype=np.float64)
 
-    F_wrapper = PyNdArrayFPtr(F)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
 
     if algo in [1, 'good']:
-        res = broyden1_kernel[NdArrayFPtr](
-            F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
+        res = broyden1_kernel(
+            <NdArrayFPtr> F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
     elif algo in [2, 'bad']:
-        res = broyden2_kernel[NdArrayFPtr](
-            F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
+        res = broyden2_kernel(
+            <NdArrayFPtr> F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
     else:
         raise ValueError(f'algo must be either 1/\'good\' or 2/\'bad\'. '
                          f'Got unknown algo {algo}.')
@@ -749,7 +773,7 @@ def broyden(F: Callable[[np.ndarray], np.ndarray],
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
 cdef klement_kernel(
-        ndarray_func_type F,
+        NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=2] J_x0,
@@ -798,10 +822,10 @@ cdef klement_kernel(
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def klement(F: Callable[[np.ndarray], np.ndarray],
-            x0: np.ndarray,
-            F_x0: Optional[np.ndarray] = None,
-            J_x0: Optional[np.ndarray] = None,
+def klement(F: Callable[[ArrayLike], ArrayLike],
+            x0: ArrayLike,
+            F_x0: Optional[ArrayLike] = None,
+            J_x0: Optional[ArrayLike] = None,
             etol: float = named_default(ETOL=ETOL),
             ertol: float = named_default(ERTOL=ERTOL),
             ptol: float = named_default(PTOL=PTOL),
@@ -845,12 +869,12 @@ def klement(F: Callable[[np.ndarray], np.ndarray],
         raise ValueError('J_x0 must be explicitly set.')
     J_x0 = np.asarray(J_x0, dtype=np.float64)
 
-    F_wrapper = PyNdArrayFPtr(F)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
 
-    res = klement_kernel[NdArrayFPtr](
+    res = klement_kernel(
         F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)

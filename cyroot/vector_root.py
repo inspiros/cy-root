@@ -1,7 +1,7 @@
 from inspect import getmembers
-
+from functools import partial
 from . import vector_bracketing, vector_quasi_newton, vector_newton
-from .utils.function_tagging import has_tag
+from .utils.function_tagging import is_tagged_with_any_startswith
 
 __all__ = [
     'VECTOR_ROOT_FINDING_METHODS',
@@ -11,7 +11,8 @@ __all__ = [
 # noinspection DuplicatedCode
 VECTOR_ROOT_FINDING_METHODS = {}
 for module in [vector_bracketing, vector_quasi_newton, vector_newton]:
-    VECTOR_ROOT_FINDING_METHODS.update(getmembers(module, has_tag))
+    VECTOR_ROOT_FINDING_METHODS.update(
+        getmembers(module, partial(is_tagged_with_any_startswith, start='cyroot.vector')))
 
 
 # noinspection DuplicatedCode

@@ -19,9 +19,7 @@ from ._check_args import (
 )
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import NewtonMethodReturnType
-from .fptr cimport (
-ndarray_func_type, NdArrayFPtr, PyNdArrayFPtr,
-)
+from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
 from .ops.scalar_ops cimport fisclose
 from .ops.vector_ops cimport fabs, fmax
 from .utils.function_tagging import tag
@@ -40,8 +38,8 @@ __all__ = [
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
 cdef generalized_newton_kernel(
-        ndarray_func_type F,
-        ndarray_func_type J,
+        NdArrayFPtr F,
+        NdArrayFPtr J,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=2] J_x0,
@@ -121,8 +119,14 @@ def generalized_newton(F: Callable[[np.ndarray], np.ndarray],
 
     x0 = np.asarray(x0, dtype=np.float64)
 
-    F_wrapper = PyNdArrayFPtr(F)
-    J_wrapper = PyNdArrayFPtr(J)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
+    if J is None:
+        pass
+    elif isinstance(J, NdArrayFPtr):
+        J_wrapper = J
+    else:
+        J_wrapper = PyNdArrayFPtr(J)
+
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
     else:
@@ -132,8 +136,9 @@ def generalized_newton(F: Callable[[np.ndarray], np.ndarray],
     else:
         J_x0 = np.asarray(J_x0, dtype=np.float64)
 
-    res = generalized_newton_kernel[NdArrayFPtr](
-        F_wrapper, J_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
+    res = generalized_newton_kernel(
+        <NdArrayFPtr> F_wrapper, <NdArrayFPtr> J_wrapper,
+        x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType.from_results(res, (F_wrapper.n_f_calls, J_wrapper.n_f_calls))
 
 ################################################################################
@@ -142,9 +147,9 @@ def generalized_newton(F: Callable[[np.ndarray], np.ndarray],
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, tuple[np.ndarray], cython.unsignedlong, double, double, bint, bint))
 cdef generalized_halley_kernel(
-        ndarray_func_type F,
-        ndarray_func_type J,
-        ndarray_func_type H,
+        NdArrayFPtr F,
+        NdArrayFPtr J,
+        NdArrayFPtr H,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=2] J_x0,
@@ -185,9 +190,9 @@ cdef generalized_halley_kernel(
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, tuple[np.ndarray], cython.unsignedlong, double, double, bint, bint))
 cdef generalized_modified_halley_kernel(
-        ndarray_func_type F,
-        ndarray_func_type J,
-        ndarray_func_type H,
+        NdArrayFPtr F,
+        NdArrayFPtr J,
+        NdArrayFPtr H,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=2] J_x0,
@@ -285,9 +290,21 @@ def generalized_halley(F: Callable[[np.ndarray], np.ndarray],
 
     x0 = np.asarray(x0, dtype=np.float64)
 
-    F_wrapper = PyNdArrayFPtr(F)
-    J_wrapper = PyNdArrayFPtr(J)
-    H_wrapper = PyNdArrayFPtr(H)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
+    if J is None:
+        pass
+    elif isinstance(J, NdArrayFPtr):
+        J_wrapper = J
+    else:
+        J_wrapper = PyNdArrayFPtr(J)
+
+    if H is None:
+        pass
+    elif isinstance(H, NdArrayFPtr):
+        H_wrapper = H
+    else:
+        H_wrapper = PyNdArrayFPtr(H)
+
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
     else:
@@ -302,11 +319,13 @@ def generalized_halley(F: Callable[[np.ndarray], np.ndarray],
         H_x0 = np.asarray(H_x0, dtype=np.float64)
 
     if alpha is None:
-        res = generalized_halley_kernel[NdArrayFPtr](
-            F_wrapper, J_wrapper, H_wrapper, x0, F_x0, J_x0, H_x0, etol, ertol, ptol, prtol, max_iter)
+        res = generalized_halley_kernel(
+            <NdArrayFPtr> F_wrapper, <NdArrayFPtr> J_wrapper, <NdArrayFPtr> H_wrapper,
+            x0, F_x0, J_x0, H_x0, etol, ertol, ptol, prtol, max_iter)
     else:
-        res = generalized_modified_halley_kernel[NdArrayFPtr](
-            F_wrapper, J_wrapper, H_wrapper, x0, F_x0, J_x0, H_x0, alpha, etol, ertol, ptol, prtol, max_iter)
+        res = generalized_modified_halley_kernel(
+            <NdArrayFPtr> F_wrapper, <NdArrayFPtr> J_wrapper, <NdArrayFPtr> H_wrapper,
+            x0, F_x0, J_x0, H_x0, alpha, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType.from_results(res, (F_wrapper.n_f_calls,
                                                      J_wrapper.n_f_calls,
                                                      H_wrapper.n_f_calls))
@@ -419,9 +438,9 @@ def generalized_chebyshev(F: Callable[[np.ndarray], np.ndarray],
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, tuple[np.ndarray], cython.unsignedlong, double, double, bint, bint))
 cdef generalized_tangent_hyperbolas_kernel(
-        ndarray_func_type F,
-        ndarray_func_type J,
-        ndarray_func_type H,
+        NdArrayFPtr F,
+        NdArrayFPtr J,
+        NdArrayFPtr H,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=2] J_x0,
@@ -524,9 +543,21 @@ def generalized_tangent_hyperbolas(F: Callable[[np.ndarray], np.ndarray],
 
     x0 = np.asarray(x0, dtype=np.float64)
 
-    F_wrapper = PyNdArrayFPtr(F)
-    J_wrapper = PyNdArrayFPtr(J)
-    H_wrapper = PyNdArrayFPtr(H)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
+    if J is None:
+        pass
+    elif isinstance(J, NdArrayFPtr):
+        J_wrapper = J
+    else:
+        J_wrapper = PyNdArrayFPtr(J)
+
+    if H is None:
+        pass
+    elif isinstance(H, NdArrayFPtr):
+        H_wrapper = H
+    else:
+        H_wrapper = PyNdArrayFPtr(H)
+
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
     else:
@@ -540,8 +571,9 @@ def generalized_tangent_hyperbolas(F: Callable[[np.ndarray], np.ndarray],
     else:
         H_x0 = np.asarray(H_x0, dtype=np.float64)
 
-    res = generalized_tangent_hyperbolas_kernel[NdArrayFPtr](
-        F_wrapper, J_wrapper, H_wrapper, x0, F_x0, J_x0, H_x0, formula, etol, ertol, ptol, prtol, max_iter)
+    res = generalized_tangent_hyperbolas_kernel(
+        <NdArrayFPtr> F_wrapper, <NdArrayFPtr> J_wrapper, <NdArrayFPtr> H_wrapper,
+        x0, F_x0, J_x0, H_x0, formula, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType.from_results(res, (F_wrapper.n_f_calls,
                                                      J_wrapper.n_f_calls,
                                                      H_wrapper.n_f_calls))

@@ -238,8 +238,8 @@ import numpy as np
 
 from cyroot import generalized_super_halley
 
-# all functions for vector root methods must take a numpy array as argument,
-# and return a numpy array of the same shape with dtype=np.float64
+# all functions for vector root methods must take a numpy array
+# as argument, and return an array-like object
 F = lambda x: np.array([x[0] ** 2 + 2 * x[0] * np.sin(x[1]) - x[1],
                         4 * x[0] * x[1] ** 2 - x[1] ** 3 - 1])
 # Jacobian

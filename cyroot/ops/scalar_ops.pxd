@@ -11,7 +11,6 @@ cdef extern from '<complex>' nogil:
 
 cdef extern from * nogil:
     """
-    #pragma once
     #include <complex>
 
     template <typename T>
@@ -23,6 +22,28 @@ cdef extern from * nogil:
     std::complex<T> csign(std::complex<T> val) {
         return val / std::norm(val);
     }
+
+    unsigned long factorial(unsigned int n) {
+        unsigned long f = 1;
+        for (unsigned int i = 1; i < n + 1; i++)
+            f *= i;
+        return f;
+    }
+
+    unsigned long binomial_coef(unsigned long n, unsigned long k) {
+        unsigned long bin_coef = 1;
+        unsigned int i;
+        if (k <= n / 2) {
+            for (i = 0; i < k; i++)
+                bin_coef *= n - i;
+            return bin_coef / factorial(k);
+        }
+        for (i = 0; i < n - k; i++)
+            bin_coef *= n - i;
+        return bin_coef / factorial(n - k);
+    }
     """
     int sign(double)
     double complex csign(double complex)
+    unsigned long factorial(unsigned int)
+    unsigned long binomial_coef(unsigned long, unsigned long)

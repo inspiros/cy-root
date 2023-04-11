@@ -1,6 +1,5 @@
 # distutils: language=c++
 
-import numpy as np
 cimport numpy as np
 
 cdef class TrackedFPtr:
@@ -23,7 +22,7 @@ cdef class CyDoubleScalarFPtr(DoubleScalarFPtr):
 cdef class PyDoubleScalarFPtr(DoubleScalarFPtr):
     cdef object f
     @staticmethod
-    cdef PyDoubleScalarFPtr from_f(object f)
+    cdef DoubleScalarFPtr from_f(object f)
     cdef double eval(self, double x) except *
 
 ctypedef fused double_scalar_func_type:
@@ -47,7 +46,7 @@ cdef class CyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
 cdef class PyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
     cdef object f
     @staticmethod
-    cdef PyDoubleBiScalarFPtr from_f(object f)
+    cdef DoubleBiScalarFPtr from_f(object f)
     cdef (double, double) eval(self, double a, double b) except *
 
 ctypedef fused double_bi_scalar_func_type:
@@ -71,12 +70,36 @@ cdef class CyComplexScalarFPtr(ComplexScalarFPtr):
 cdef class PyComplexScalarFPtr(ComplexScalarFPtr):
     cdef object f
     @staticmethod
-    cdef PyComplexScalarFPtr from_f(object f)
+    cdef ComplexScalarFPtr from_f(object f)
     cdef double complex eval(self, double complex x) except *
 
 ctypedef fused complex_scalar_func_type:
     csf_ptr
     ComplexScalarFPtr
+
+# --------------------------------
+# Complex Bi-Scalar
+# --------------------------------
+ctypedef (double complex, double complex) (*cbsf_ptr)(double complex, double complex)
+
+cdef class ComplexBiScalarFPtr(TrackedFPtr):
+    cdef (double complex, double complex) eval(self, double complex a, double complex b) except *
+
+cdef class CyComplexBiScalarFPtr(ComplexBiScalarFPtr):
+    cdef cbsf_ptr f
+    @staticmethod
+    cdef CyComplexBiScalarFPtr from_f(cbsf_ptr f)
+    cdef (double complex, double complex) eval(self, double complex a, double complex b) except *
+
+cdef class PyComplexBiScalarFPtr(ComplexBiScalarFPtr):
+    cdef object f
+    @staticmethod
+    cdef ComplexBiScalarFPtr from_f(object f)
+    cdef (double complex, double complex) eval(self, double complex a, double complex b) except *
+
+ctypedef fused complex_bi_scalar_func_type:
+    cbsf_ptr
+    ComplexBiScalarFPtr
 
 # --------------------------------
 # Double MemoryView
@@ -95,7 +118,7 @@ cdef class CyDoubleVectorFPtr(DoubleVectorFPtr):
 cdef class PyDoubleVectorFPtr(DoubleVectorFPtr):
     cdef object f
     @staticmethod
-    cdef PyDoubleVectorFPtr from_f(object f)
+    cdef DoubleVectorFPtr from_f(object f)
     cdef double[:] eval(self, double[:] x) except *
 
 ctypedef fused double_vector_func_type:
@@ -103,7 +126,7 @@ ctypedef fused double_vector_func_type:
     DoubleVectorFPtr
 
 # --------------------------------
-# Double Complex MemoryView
+# Complex MemoryView
 # --------------------------------
 ctypedef double complex[:] (*cvf_ptr)(double complex[:])
 
@@ -119,7 +142,7 @@ cdef class CyComplexVectorFPtr(ComplexVectorFPtr):
 cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
     cdef object f
     @staticmethod
-    cdef PyComplexVectorFPtr from_f(object f)
+    cdef ComplexVectorFPtr from_f(object f)
     cdef double complex[:] eval(self, double complex[:] x) except *
 
 ctypedef fused complex_vector_func_type:
@@ -127,7 +150,7 @@ ctypedef fused complex_vector_func_type:
     ComplexVectorFPtr
 
 # --------------------------------
-# Double Numpy Array
+# Numpy Array
 # --------------------------------
 ctypedef np.ndarray (*ndarray_f_ptr)(np.ndarray)
 
@@ -143,7 +166,7 @@ cdef class CyNdArrayFPtr(NdArrayFPtr):
 cdef class PyNdArrayFPtr(NdArrayFPtr):
     cdef object f
     @staticmethod
-    cdef PyNdArrayFPtr from_f(object f)
+    cdef NdArrayFPtr from_f(object f)
     cdef np.ndarray eval(self, np.ndarray x)
 
 ctypedef fused ndarray_func_type:

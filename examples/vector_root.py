@@ -39,11 +39,11 @@ def test_output(etol=1e-8, ptol=1e-12):
                                                         [4., 7.],
                                                         [-1., 0.]]),
                                            etol=etol, ptol=ptol))
-    print('[Robinson]', robinson(F, np.array([2., 2.]), np.array([4., 7.]),
+    print('[Robinson]', robinson(F, x0=[2., 2.], x1=[4., 7.],
                                  etol=etol, ptol=ptol))
     print('[Barnes]', barnes(F, x0, J_x0=J_x0 + np.random.rand(*J_x0.shape) * 1e-4,
                              etol=etol, ptol=ptol))
-    print('[Traub-Steffensen]', traub_steffensen(F, np.array([1.5, -2]), etol=etol, ptol=ptol))
+    print('[Traub-Steffensen]', traub_steffensen(F, [3., -2.], etol=etol, ptol=ptol))
     print('[Broyden Good]', broyden(F, x0, J_x0=J_x0, algo='good', etol=etol, ptol=ptol))
     print('[Broyden Bad]', broyden(F, x0, J_x0=J_x0, algo='bad', etol=etol, ptol=ptol))
     print('[Klement]', klement(F, x0, J_x0=J_x0, etol=etol, ptol=ptol))

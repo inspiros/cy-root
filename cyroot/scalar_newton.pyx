@@ -14,15 +14,17 @@ import sympy.utilities.autowrap
 from cython cimport view
 from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
+from libcpp.vector cimport vector
 
 from ._check_args cimport _check_stop_condition_initial_guess_scalar
 from ._check_args import _check_stop_condition_args
-from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
+from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER, FINITE_DIFF_STEP
 from ._return_types import NewtonMethodReturnType
 from .fptr cimport (
-    double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
-    double_vector_func_type, DoubleVectorFPtr, PyDoubleVectorFPtr,
+    DoubleScalarFPtr, PyDoubleScalarFPtr,
+    DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
+from .scalar_derivative_approximation import DerivativeApproximation, FiniteDifference
 from .ops.scalar_ops cimport fisclose
 from .utils.function_tagging import tag
 
@@ -40,8 +42,8 @@ __all__ = [
 # noinspection DuplicatedCode
 cdef (double, double, double, unsigned long, double, double, bint, bint) \
         newton_kernel(
-        double_scalar_func_type f,
-        double_scalar_func_type df,
+        DoubleScalarFPtr f,
+        DoubleScalarFPtr df,
         double x0,
         double f_x0,
         double df_x0,
@@ -57,6 +59,7 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) \
                                                   &precision, &error, &converged, &optimal):
         return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
+    cdef bint use_derivative_approximation = isinstance(df, DerivativeApproximation)
     cdef double d_x
     converged = True
     while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
@@ -66,7 +69,10 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) \
         d_x = -f_x0 / df_x0
         x0 = x0 + d_x
         f_x0 = f(x0)
-        df_x0 = df(x0)
+        if use_derivative_approximation:
+            df_x0 = df.eval_with_f_val(x0, f_x0)
+        else:
+            df_x0 = df.eval(x0)
         precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
@@ -78,10 +84,11 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) \
 @dynamic_default_args()
 @cython.binding(True)
 def newton(f: Callable[[float], float],
-           df: Callable[[float], float],
+           df: Optional[Callable[[float], float]],
            x0: float,
            f_x0: Optional[float] = None,
            df_x0: Optional[float] = None,
+           h: Optional[float] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
            etol: float = named_default(ETOL=ETOL),
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
@@ -92,12 +99,14 @@ def newton(f: Callable[[float], float],
 
     Args:
         f (function): Function for which the root is sought.
-        df (function): Function return derivative of f.
+        df (function): Function return derivative of ``f``.
         x0 (float): Initial point.
         f_x0 (float, optional): Value evaluated at
          initial point.
         df_x0 (float, optional): First order derivative at
          initial point.
+        h (float, optional): Finite difference step size,
+         ignored when ``df`` is not None. Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -118,15 +127,19 @@ def newton(f: Callable[[float], float],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
-    df_wrapper = PyDoubleScalarFPtr(df)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    if df is None:
+        df_wrapper = FiniteDifference(f_wrapper, h=h, order=1)
+    else:
+        df_wrapper = PyDoubleScalarFPtr.from_f(df)
+
     if f_x0 is None:
         f_x0 = f_wrapper(x0)
     if df_x0 is None:
         df_x0 = df_wrapper(x0)
 
-    res = newton_kernel[DoubleScalarFPtr](
-        f_wrapper, df_wrapper, x0, f_x0, df_x0, etol, ertol, ptol, prtol, max_iter)
+    res = newton_kernel(<DoubleScalarFPtr> f_wrapper, <DoubleScalarFPtr> df_wrapper,
+                        x0, f_x0, df_x0, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
                                                      df_wrapper.n_f_calls))
 
@@ -136,9 +149,9 @@ def newton(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, (double, double), unsigned long, double, double, bint, bint) \
         halley_kernel(
-        double_scalar_func_type f,
-        double_scalar_func_type df,
-        double_scalar_func_type d2f,
+        DoubleScalarFPtr f,
+        DoubleScalarFPtr df,
+        DoubleScalarFPtr d2f,
         double x0,
         double f_x0,
         double df_x0,
@@ -155,6 +168,8 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
                                                   &precision, &error, &converged, &optimal):
         return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
+    cdef bint[2] use_derivative_approximation = [isinstance(df, DerivativeApproximation),
+                                                 isinstance(d2f, DerivativeApproximation)]
     cdef double d_x, denom
     converged = True
     while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
@@ -169,8 +184,14 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
         d_x = -2 * f_x0 * df_x0 / denom
         x0 = x0 + d_x
         f_x0 = f(x0)
-        df_x0 = df(x0)
-        d2f_x0 = d2f(x0)
+        if use_derivative_approximation[0]:
+            df_x0 = df.eval_with_f_val(x0, f_x0)
+        else:
+            df_x0 = df.eval(x0)
+        if use_derivative_approximation[1]:
+            d2f_x0 = d2f.eval_with_f_val(x0, f_x0)
+        else:
+            d2f_x0 = d2f(x0)
         precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
@@ -180,9 +201,9 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
 # noinspection DuplicatedCode
 cdef (double, double, (double, double), unsigned long, double, double, bint, bint) \
         modified_halley_kernel(
-        double_scalar_func_type f,
-        double_scalar_func_type df,
-        double_scalar_func_type d2f,
+        DoubleScalarFPtr f,
+        DoubleScalarFPtr df,
+        DoubleScalarFPtr d2f,
         double x0,
         double f_x0,
         double df_x0,
@@ -200,6 +221,8 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
                                                   &precision, &error, &converged, &optimal):
         return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
+    cdef bint[2] use_derivative_approximation = [isinstance(df, DerivativeApproximation),
+                                                 isinstance(d2f, DerivativeApproximation)]
     cdef double d_x, L_f, denom
     converged = True
     while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
@@ -218,8 +241,14 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
         d_x = -(1 + L_f / denom) * f_x0 / df_x0
         x0 = x0 + d_x
         f_x0 = f(x0)
-        df_x0 = df(x0)
-        d2f_x0 = d2f(x0)
+        if use_derivative_approximation[0]:
+            df_x0 = df.eval_with_f_val(x0, f_x0)
+        else:
+            df_x0 = df.eval(x0)
+        if use_derivative_approximation[1]:
+            d2f_x0 = d2f.eval_with_f_val(x0, f_x0)
+        else:
+            d2f_x0 = d2f(x0)
         precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
@@ -231,13 +260,14 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
 @dynamic_default_args()
 @cython.binding(True)
 def halley(f: Callable[[float], float],
-           df: Callable[[float], float],
-           d2f: Callable[[float], float],
+           df: Optional[Callable[[float], float]],
+           d2f: Optional[Callable[[float], float]],
            x0: float,
            f_x0: Optional[float] = None,
            df_x0: Optional[float] = None,
            d2f_x0: Optional[float] = None,
            alpha: Optional[float] = None,
+           h: Optional[float] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
            etol: float = named_default(ETOL=ETOL),
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
@@ -259,6 +289,8 @@ def halley(f: Callable[[float], float],
          initial point.
         alpha (float, optional): If set, the modified halley
          formula which has parameter alpha will be used.
+        h (float, optional): Finite difference step size,
+         ignored when ``df`` is not None. Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -279,9 +311,16 @@ def halley(f: Callable[[float], float],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
-    df_wrapper = PyDoubleScalarFPtr(df)
-    d2f_wrapper = PyDoubleScalarFPtr(d2f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    if df is None:
+        df_wrapper = FiniteDifference(f_wrapper, h=h, order=1)
+    else:
+        df_wrapper = PyDoubleScalarFPtr.from_f(df)
+    if d2f is None:
+        d2f_wrapper = FiniteDifference(f_wrapper, h=h, order=2)
+    else:
+        d2f_wrapper = PyDoubleScalarFPtr.from_f(d2f)
+
     if f_x0 is None:
         f_x0 = f_wrapper(x0)
     if df_x0 is None:
@@ -290,11 +329,13 @@ def halley(f: Callable[[float], float],
         d2f_x0 = d2f_wrapper(x0)
 
     if alpha is None:
-        res = halley_kernel[DoubleScalarFPtr](
-            f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol, max_iter)
+        res = halley_kernel(
+            <DoubleScalarFPtr> f_wrapper, <DoubleScalarFPtr> df_wrapper, <DoubleScalarFPtr> d2f_wrapper,
+            x0, f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol, max_iter)
     else:
-        res = modified_halley_kernel[DoubleScalarFPtr](
-            f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, alpha, etol, ertol, ptol, prtol, max_iter)
+        res = modified_halley_kernel(
+            <DoubleScalarFPtr> f_wrapper, <DoubleScalarFPtr> df_wrapper, <DoubleScalarFPtr> d2f_wrapper,
+            x0, f_x0, df_x0, d2f_x0, alpha, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
                                                      df_wrapper.n_f_calls,
                                                      d2f_wrapper.n_f_calls))
@@ -304,12 +345,13 @@ def halley(f: Callable[[float], float],
 @dynamic_default_args()
 @cython.binding(True)
 def super_halley(f: Callable[[float], float],
-                 df: Callable[[float], float],
-                 d2f: Callable[[float], float],
+                 df: Optional[Callable[[float], float]],
+                 d2f: Optional[Callable[[float], float]],
                  x0: float,
                  f_x0: Optional[float] = None,
                  df_x0: Optional[float] = None,
                  d2f_x0: Optional[float] = None,
+                 h: Optional[float] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
                  etol: float = named_default(ETOL=ETOL),
                  ertol: float = named_default(ERTOL=ERTOL),
                  ptol: float = named_default(PTOL=PTOL),
@@ -333,6 +375,8 @@ def super_halley(f: Callable[[float], float],
          initial point.
         d2f_x0 (float, optional): Second order derivative at
          initial point.
+        h (float, optional): Finite difference step size,
+         ignored when ``df`` is not None. Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -350,7 +394,7 @@ def super_halley(f: Callable[[float], float],
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
-    return halley(f, df, d2f, x0, f_x0, df_x0, d2f_x0, 1,
+    return halley(f, df, d2f, x0, f_x0, df_x0, d2f_x0, 1, h,
                   etol, ertol, ptol, prtol, max_iter)
 
 # noinspection DuplicatedCode
@@ -358,12 +402,13 @@ def super_halley(f: Callable[[float], float],
 @dynamic_default_args()
 @cython.binding(True)
 def chebyshev(f: Callable[[float], float],
-              df: Callable[[float], float],
-              d2f: Callable[[float], float],
+              df: Optional[Callable[[float], float]],
+              d2f: Optional[Callable[[float], float]],
               x0: float,
               f_x0: Optional[float] = None,
               df_x0: Optional[float] = None,
               d2f_x0: Optional[float] = None,
+              h: Optional[float] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
               etol: float = named_default(ETOL=ETOL),
               ertol: float = named_default(ERTOL=ERTOL),
               ptol: float = named_default(PTOL=PTOL),
@@ -384,6 +429,8 @@ def chebyshev(f: Callable[[float], float],
          initial point.
         d2f_x0 (float, optional): Second order derivative at
          initial point.
+        h (float, optional): Finite difference step size,
+         ignored when ``df`` is not None. Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -401,18 +448,21 @@ def chebyshev(f: Callable[[float], float],
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
-    return halley(f, df, d2f, x0, f_x0, df_x0, d2f_x0, 0,
+    return halley(f, df, d2f, x0, f_x0, df_x0, d2f_x0, 0, h,
                   etol, ertol, ptol, prtol, max_iter)
 
 ################################################################################
 # Householder
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((double, double, tuple[double], cython.unsignedlong, double, double, bint, bint))
-cdef householder_kernel(
-        DoubleScalarFPtr[:] fs,  # sadly, can't have memory view of C functions
-        double_vector_func_type nom_f,
-        double_vector_func_type denom_f,
+# TODO: find other methods for __pyx_vtab error
+#  https://stackoverflow.com/questions/37869945/cython-c-code-compilation-fails-with-typed-memoryviews
+#  https://stackoverflow.com/questions/31119510/cython-have-sequence-of-extension-types-as-attribute-of-another-extension-type
+cdef (double, double, vector[double], unsigned long, double, double, bint, bint) \
+        householder_kernel(
+        DoubleScalarFPtr[:] fs,
+        DoubleVectorFPtr nom_f,
+        DoubleVectorFPtr denom_f,
         double x0_,
         double[:] fs_x0,
         unsigned int d,
@@ -424,17 +474,26 @@ cdef householder_kernel(
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
+    cdef vector[double] dfs_x0 = vector[double](fs_x0.shape[0] - 1)
+    cdef unsigned int i
+    for i in range(1, d + 1):
+        dfs_x0[i - 1] = fs_x0[i]
     if _check_stop_condition_initial_guess_scalar(x0_, fs_x0[0], etol, ertol, ptol, prtol,
                                                   &precision, &error, &converged, &optimal):
-        return x0_, fs_x0, step, precision, error, converged, optimal
+        return x0_, fs_x0[0], dfs_x0, step, precision, error, converged, optimal
 
+    cdef bint[:] use_derivative_approximation = view.array(shape=(fs_x0.shape[0] - 1,),
+                                                           itemsize=sizeof(int),
+                                                           format='i')
+    for i in range(1, d + 1):
+        use_derivative_approximation[i - 1] = isinstance(fs[i], DerivativeApproximation)
     cdef double[:] x0 = view.array(shape=(1,),
                                    itemsize=sizeof(double),
                                    format='d')
     cdef double d_x
     x0[0] = x0_  # wrapped in a memory view to be able to pass into double_vector_func_type
-    cdef unsigned int i
     cdef double[:] nom_x0, denom_x0
+    cdef DoubleScalarFPtr f_ptr  # __pyx_vtab error workaround
     converged = True
     while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
@@ -448,13 +507,22 @@ cdef householder_kernel(
             break
         d_x = d * nom_x0[0] / denom_x0[0]
         x0[0] = x0[0] + d_x
-        for i in range(d + 1):
-            fs_x0[i] = fs[i](x0[0])
+
+        f_ptr = fs[0]
+        fs_x0[0] = f_ptr.eval(x0[0])
+        for i in range(1, d + 1):
+            f_ptr = fs[i]
+            if use_derivative_approximation[i - 1]:
+                fs_x0[i] = f_ptr.eval_with_f_val(x0[0], fs_x0[0])
+            else:
+                fs_x0[i] = f_ptr.eval(x0[0])
         precision = math.fabs(d_x)
         error = math.fabs(fs_x0[0])
 
     optimal = fisclose(0, error, ertol, etol)
-    return x0[0], fs_x0[0], tuple(fs_x0[1:]), step, precision, error, converged, optimal
+    for i in range(1, d + 1):
+        dfs_x0[i - 1] = fs_x0[i]
+    return x0[0], fs_x0[0], dfs_x0, step, precision, error, converged, optimal
 
 #########################
 # Sympy Expr Evaluators
@@ -738,10 +806,12 @@ class ReciprocalDerivativeFuncFactory:
 @dynamic_default_args()
 @cython.binding(True)
 def householder(f: Callable[[float], float],
-                dfs: Sequence[Callable[[float], float]],
+                dfs: Optional[Sequence[Optional[Callable[[float], float]]]],
                 x0: float,
                 f_x0: Optional[float] = None,
                 dfs_x0: Optional[Sequence[float]] = None,
+                d: Optional[int] = 2,
+                h: Optional[float] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
                 etol: float = named_default(ETOL=ETOL),
                 ertol: float = named_default(ERTOL=ERTOL),
                 ptol: float = named_default(PTOL=PTOL),
@@ -759,6 +829,10 @@ def householder(f: Callable[[float], float],
         f_x0 (float, optional): Value evaluated at initial guess.
         dfs_x0 (tuple of float, optional): Tuple of derivatives
          in increasing order at initial guess.
+        d (int, optional): Max order of derivatives, ignored
+         when ``dfs`` is not None. Defaults to {order}.
+        h (float, optional): Finite difference step size,
+         ignored when ``df`` is not None. Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -779,22 +853,30 @@ def householder(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if len(dfs) < 2:
-        raise ValueError(f'Requires at least second order derivative. Got {len(dfs)}.')
-
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    fs_wrappers = np.asarray([PyDoubleScalarFPtr(f)] + [PyDoubleScalarFPtr(df) for df in dfs])
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    if dfs is None:
+        dfs_wrappers = [FiniteDifference(f_wrapper, h=h, order=i + 1) for i in range(d)]
+    else:
+        if len(dfs) < 2:
+            raise ValueError(f'Requires at least second order derivative. Got {len(dfs)}.')
+        dfs_wrappers = [PyDoubleScalarFPtr.from_f(df) if df is not None else
+                        FiniteDifference(f_wrapper, h=h, order=i + 1)
+                        for i, df in enumerate(dfs)]
+        d = len(dfs_wrappers)
+
     if f_x0 is None:
-        f_x0 = fs_wrappers[0](x0)
+        f_x0 = f_wrapper(x0)
     if dfs_x0 is None:
-        dfs_x0 = [f_wrapper(x0) for f_wrapper in fs_wrappers[1:]]
+        dfs_x0 = [df_wrapper(x0) for df_wrapper in dfs_wrappers]
     fs_x0 = np.asarray([f_x0] + dfs_x0)
 
-    d = len(dfs)
-    res = householder_kernel[DoubleVectorFPtr](
-        fs_wrappers,
-        <DoubleVectorFPtr>ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
-        <DoubleVectorFPtr>ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
+    res = householder_kernel(
+        np.array([f_wrapper] + dfs_wrappers),
+        <DoubleVectorFPtr> ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
+        <DoubleVectorFPtr> ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
         x0, fs_x0, d, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType.from_results(res, tuple(_.n_f_calls for _ in fs_wrappers))
+    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
+                                                     *(_.n_f_calls for _ in dfs_wrappers)),
+                                               df_root=tuple)

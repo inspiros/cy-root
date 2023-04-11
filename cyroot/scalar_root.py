@@ -1,7 +1,8 @@
 from inspect import getmembers
+from functools import partial
 
 from . import scalar_bracketing, scalar_quasi_newton, scalar_newton
-from .utils.function_tagging import has_tag
+from .utils.function_tagging import is_tagged_with_any_startswith
 
 __all__ = [
     'SCALAR_ROOT_FINDING_METHODS',
@@ -11,7 +12,8 @@ __all__ = [
 # noinspection DuplicatedCode
 SCALAR_ROOT_FINDING_METHODS = {}
 for module in [scalar_bracketing, scalar_quasi_newton, scalar_newton]:
-    SCALAR_ROOT_FINDING_METHODS.update(getmembers(module, has_tag))
+    SCALAR_ROOT_FINDING_METHODS.update(
+        getmembers(module, partial(is_tagged_with_any_startswith, start='cyroot.scalar')))
 
 
 # noinspection DuplicatedCode

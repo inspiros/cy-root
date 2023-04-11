@@ -26,11 +26,11 @@ from ._check_args import (
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import QuasiNewtonMethodReturnType
 from .fptr cimport (
-    double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
-    complex_scalar_func_type, ComplexScalarFPtr, PyComplexScalarFPtr
+    DoubleScalarFPtr, PyDoubleScalarFPtr,
+    ComplexScalarFPtr, PyComplexScalarFPtr
 )
-from .ops.vector_ops cimport fabs, fabs_width, cabs_width, fargsort, fpermute
 from .ops.scalar_ops cimport fisclose, cabs, csqrt
+from .ops.vector_ops cimport fabs, fabs_width, cabs_width, fargsort, fpermute
 from .utils.function_tagging import tag
 
 __all__ = [
@@ -48,7 +48,7 @@ __all__ = [
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, double, double, bint, bint) \
         secant_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double x0,
         double x1,
         double f_x0,
@@ -132,15 +132,15 @@ def secant(f: Callable[[float], float],
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_unique_initial_guesses(x0, x1)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x0 is None:
         f_x0 = f_wrapper(x0)
     if f_x1 is None:
         f_x1 = f_wrapper(x1)
     _check_unique_initial_vals(f_x0, f_x1)
 
-    res = secant_kernel[DoubleScalarFPtr](
-        f_wrapper, x0, x1, f_x0, f_x1, etol, ertol, ptol, prtol, max_iter)
+    res = secant_kernel(
+        <DoubleScalarFPtr> f_wrapper, x0, x1, f_x0, f_x1, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -149,7 +149,7 @@ def secant(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, double, double, bint, bint) \
         sidi_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double[:] x0s,
         double[:] f_x0s,
         double etol=ETOL,
@@ -300,7 +300,7 @@ def sidi(f: Callable[[float], float],
 
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_xs is None:
         f_xs = [f_wrapper(x) for x in xs]
     elif not isinstance(f_xs, Sequence):
@@ -308,9 +308,9 @@ def sidi(f: Callable[[float], float],
     elif len(f_xs) != len(xs):
         raise ValueError(f'xs and f_xs must have same size. Got {len(xs)} and {len(f_xs)}.')
 
-    xs = np.array(xs, dtype=np.float64)
-    f_xs = np.array(f_xs, dtype=np.float64)
-    res = sidi_kernel[DoubleScalarFPtr](f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)
+    xs = np.asarray(xs, dtype=np.float64)
+    f_xs = np.asarray(f_xs, dtype=np.float64)
+    res = sidi_kernel(<DoubleScalarFPtr> f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -319,10 +319,10 @@ def sidi(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, double, double, bint, bint) \
         steffensen_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double x0,
         double f_x0,
-        bint adsp=True,
+        bint aitken=True,
         double etol=ETOL,
         double ertol=ERTOL,
         double ptol=PTOL,
@@ -349,7 +349,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
             converged = False
             break
         # Use Aitken's delta-squared method to find a better approximation
-        if adsp:
+        if aitken:
             x3 = x0 - (x1 - x0) ** 2 / denom
         else:
             x3 = x2 - (x2 - x1) ** 2 / denom
@@ -367,7 +367,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
 def steffensen(f: Callable[[float], float],
                x0: float,
                f_x0: Optional[float] = None,
-               adsp: bool = True,
+               aitken: bool = True,
                etol: float = named_default(ETOL=ETOL),
                ertol: float = named_default(ERTOL=ERTOL),
                ptol: float = named_default(PTOL=PTOL),
@@ -380,7 +380,7 @@ def steffensen(f: Callable[[float], float],
         f (function): Function for which the root is sought.
         x0 (float): First initial point.
         f_x0 (float, optional): Value evaluated at first initial point.
-        adsp (bool, optional): Use Aitken's delta-squared process or not.
+        aitken (bool, optional): Use Aitken's delta-squared process or not.
          Defaults to True.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
@@ -402,12 +402,12 @@ def steffensen(f: Callable[[float], float],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x0 is None:
         f_x0 = f_wrapper(x0)
 
-    res = steffensen_kernel[DoubleScalarFPtr](
-        f_wrapper, x0, f_x0, adsp, etol, ertol, ptol, prtol, max_iter)
+    res = steffensen_kernel(
+        <DoubleScalarFPtr> f_wrapper, x0, f_x0, aitken, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -416,7 +416,7 @@ def steffensen(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, double, double, bint, bint) \
         inverse_quadratic_interp_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double x0,
         double x1,
         double x2,
@@ -513,7 +513,7 @@ def inverse_quadratic_interp(
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_unique_initial_guesses(x0, x1, x2)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x0 is None:
         f_x0 = f_wrapper(x0)
     if f_x1 is None:
@@ -522,8 +522,8 @@ def inverse_quadratic_interp(
         f_x2 = f_wrapper(x2)
     _check_unique_initial_vals(f_x0, f_x1, f_x2)
 
-    res = inverse_quadratic_interp_kernel[DoubleScalarFPtr](
-        f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
+    res = inverse_quadratic_interp_kernel(
+        <DoubleScalarFPtr> f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -532,7 +532,7 @@ def inverse_quadratic_interp(
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, double, double, bint, bint) \
         hyperbolic_interp_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double x0,
         double x1,
         double x2,
@@ -634,7 +634,7 @@ def hyperbolic_interp(
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_unique_initial_guesses(x0, x1, x2)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x0 is None:
         f_x0 = f_wrapper(x0)
     if f_x1 is None:
@@ -643,8 +643,8 @@ def hyperbolic_interp(
         f_x2 = f_wrapper(x2)
     _check_unique_initial_vals(f_x0, f_x1, f_x2)
 
-    res = hyperbolic_interp_kernel[DoubleScalarFPtr](
-        f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
+    res = hyperbolic_interp_kernel(
+        <DoubleScalarFPtr> f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -653,7 +653,7 @@ def hyperbolic_interp(
 # noinspection DuplicatedCode
 cdef (double complex, double complex, unsigned long, double, double, bint, bint) \
         muller_kernel(
-        complex_scalar_func_type f,
+        ComplexScalarFPtr f,
         double complex x0,
         double complex x1,
         double complex x2,
@@ -764,7 +764,7 @@ def muller(f: Callable[[complex], complex],
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_unique_initial_guesses(x0, x1, x2)
 
-    f_wrapper = PyComplexScalarFPtr(f)
+    f_wrapper = PyComplexScalarFPtr.from_f(f)
     if f_x0 is None:
         f_x0 = f_wrapper(x0)
     if f_x1 is None:
@@ -773,6 +773,6 @@ def muller(f: Callable[[complex], complex],
         f_x2 = f_wrapper(x2)
     _check_unique_initial_vals(f_x0, f_x1, f_x2)
 
-    res = muller_kernel[ComplexScalarFPtr](
-        f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
+    res = muller_kernel(
+        <ComplexScalarFPtr> f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)

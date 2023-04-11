@@ -1,9 +1,12 @@
 # distutils: language=c++
 
+import numpy as np
+
 __all__ = [
     'DoubleScalarFPtr', 'CyDoubleScalarFPtr', 'PyDoubleScalarFPtr',
     'DoubleBiScalarFPtr', 'CyDoubleBiScalarFPtr', 'PyDoubleBiScalarFPtr',
     'ComplexScalarFPtr', 'CyComplexScalarFPtr', 'PyComplexScalarFPtr',
+    'ComplexBiScalarFPtr', 'CyComplexBiScalarFPtr', 'PyComplexBiScalarFPtr',
     'DoubleVectorFPtr', 'CyDoubleVectorFPtr', 'PyDoubleVectorFPtr',
     'ComplexVectorFPtr', 'CyComplexVectorFPtr', 'PyComplexVectorFPtr',
     'NdArrayFPtr', 'CyNdArrayFPtr', 'PyNdArrayFPtr',
@@ -43,7 +46,9 @@ cdef class PyDoubleScalarFPtr(DoubleScalarFPtr):
         self.f = f
 
     @staticmethod
-    cdef PyDoubleScalarFPtr from_f(object f):
+    cdef DoubleScalarFPtr from_f(object f):
+        if isinstance(f, DoubleScalarFPtr):
+            return f
         cdef PyDoubleScalarFPtr wrapper = PyDoubleScalarFPtr.__new__(PyDoubleScalarFPtr)
         wrapper.f = f
         return wrapper
@@ -81,7 +86,9 @@ cdef class PyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
         self.f = f
 
     @staticmethod
-    cdef PyDoubleBiScalarFPtr from_f(object f):
+    cdef DoubleBiScalarFPtr from_f(object f):
+        if isinstance(f, DoubleBiScalarFPtr):
+            return f
         cdef PyDoubleBiScalarFPtr wrapper = PyDoubleBiScalarFPtr.__new__(PyDoubleBiScalarFPtr)
         wrapper.f = f
         return wrapper
@@ -119,7 +126,9 @@ cdef class PyComplexScalarFPtr(ComplexScalarFPtr):
         self.f = f
 
     @staticmethod
-    cdef PyComplexScalarFPtr from_f(object f):
+    cdef ComplexScalarFPtr from_f(object f):
+        if isinstance(f, ComplexScalarFPtr):
+            return f
         cdef PyComplexScalarFPtr wrapper = PyComplexScalarFPtr.__new__(PyComplexScalarFPtr)
         wrapper.f = f
         return wrapper
@@ -127,6 +136,46 @@ cdef class PyComplexScalarFPtr(ComplexScalarFPtr):
     cdef inline double complex eval(self, double complex x) except *:
         self.n_f_calls += 1
         return self.f(x)
+
+# --------------------------------
+# Complex Bi-Scalar
+# --------------------------------
+cdef class ComplexBiScalarFPtr(TrackedFPtr):
+    def __call__(self, double complex a, double complex b):
+        return self.eval(a, b)
+
+    cdef (double complex, double complex) eval(self, double complex a, double complex b) except *:
+        raise NotImplementedError
+
+cdef class CyComplexBiScalarFPtr(ComplexBiScalarFPtr):
+    def __init__(self):
+        raise TypeError('This class cannot be instantiated directly.')
+
+    @staticmethod
+    cdef CyComplexBiScalarFPtr from_f(cbsf_ptr f):
+        cdef CyComplexBiScalarFPtr wrapper = CyComplexBiScalarFPtr.__new__(CyComplexBiScalarFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef inline (double complex, double complex) eval(self, double complex a, double complex b) except *:
+        self.n_f_calls += 1
+        return self.f(a, b)
+
+cdef class PyComplexBiScalarFPtr(ComplexBiScalarFPtr):
+    def __init__(self, f):
+        self.f = f
+
+    @staticmethod
+    cdef ComplexBiScalarFPtr from_f(object f):
+        if isinstance(f, ComplexBiScalarFPtr):
+            return f
+        cdef PyComplexBiScalarFPtr wrapper = PyComplexBiScalarFPtr.__new__(PyComplexBiScalarFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef inline (double complex, double complex) eval(self, double complex a, double complex b) except *:
+        self.n_f_calls += 1
+        return self.f(a, b)
 
 # --------------------------------
 # Double MemoryView
@@ -157,7 +206,9 @@ cdef class PyDoubleVectorFPtr(DoubleVectorFPtr):
         self.f = f
 
     @staticmethod
-    cdef PyDoubleVectorFPtr from_f(object f):
+    cdef DoubleVectorFPtr from_f(object f):
+        if isinstance(f, DoubleVectorFPtr):
+            return f
         cdef PyDoubleVectorFPtr wrapper = PyDoubleVectorFPtr.__new__(PyDoubleVectorFPtr)
         wrapper.f = f
         return wrapper
@@ -167,7 +218,7 @@ cdef class PyDoubleVectorFPtr(DoubleVectorFPtr):
         return self.f(x)
 
 # --------------------------------
-# Double Complex MemoryView
+# Complex MemoryView
 # --------------------------------
 cdef class ComplexVectorFPtr(TrackedFPtr):
     def __call__(self, double complex[:] x):
@@ -195,7 +246,9 @@ cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
         self.f = f
 
     @staticmethod
-    cdef PyComplexVectorFPtr from_f(object f):
+    cdef ComplexVectorFPtr from_f(object f):
+        if isinstance(f, ComplexVectorFPtr):
+            return f
         cdef PyComplexVectorFPtr wrapper = PyComplexVectorFPtr.__new__(PyComplexVectorFPtr)
         wrapper.f = f
         return wrapper
@@ -205,7 +258,7 @@ cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
         return self.f(x)
 
 # --------------------------------
-# Double Numpy Array
+# Numpy Array
 # --------------------------------
 cdef class NdArrayFPtr(TrackedFPtr):
     def __call__(self, np.ndarray x):
@@ -233,7 +286,9 @@ cdef class PyNdArrayFPtr(NdArrayFPtr):
         self.f = f
 
     @staticmethod
-    cdef PyNdArrayFPtr from_f(object f):
+    cdef NdArrayFPtr from_f(object f):
+        if isinstance(f, NdArrayFPtr):
+            return f
         cdef PyNdArrayFPtr wrapper = PyNdArrayFPtr.__new__(PyNdArrayFPtr)
         wrapper.f = f
         return wrapper

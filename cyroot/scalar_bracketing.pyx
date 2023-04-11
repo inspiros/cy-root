@@ -26,7 +26,7 @@ from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import (BracketingMethodsReturnType,
                             SplittingBracketingMethodReturnType)
 from .fptr cimport (
-    double_scalar_func_type, DoubleScalarFPtr, PyDoubleScalarFPtr,
+    DoubleScalarFPtr, PyDoubleScalarFPtr,
     DoubleBiScalarFPtr, PyDoubleBiScalarFPtr,
 )
 from .ops cimport scalar_ops
@@ -63,12 +63,10 @@ cdef inline (double, double, double, double, double, double)  _update_bracket(
 ################################################################################
 # Bisection
 ################################################################################
-ctypedef bint (*stop_func_type)(long, double, double, double, double)
-
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         bisect_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -77,8 +75,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         double ertol=ERTOL,
         double ptol=PTOL,
         double prtol=PRTOL,
-        unsigned long max_iter=MAX_ITER,
-        stop_func_type extra_stop_criteria=NULL):
+        unsigned long max_iter=MAX_ITER):
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
@@ -90,9 +87,6 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     while not (scalar_ops.fisclose(0, error, ertol, etol) or
                scalar_ops.fisclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
-            converged = False
-            break
-        if extra_stop_criteria is not NULL and extra_stop_criteria(step, a, b, f_a, f_b):
             converged = False
             break
         step += 1
@@ -110,7 +104,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         vrahatis_bisect_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -165,8 +159,7 @@ def bisect(f: Callable[[float], float],
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
            prtol: float = named_default(PRTOL=PRTOL),
-           max_iter: int = named_default(MAX_ITER=MAX_ITER)
-           ) -> BracketingMethodsReturnType:
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Bisection method for scalar root-finding.
 
@@ -195,21 +188,23 @@ def bisect(f: Callable[[float], float],
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
-    """
+    """  # TODO: check algo
     # check params
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if algo not in [2, 'modified', 'vrahatis'] and f_b is None:
         f_b = f_wrapper(b)
 
     if algo in [1, 'default']:
-        res = bisect_kernel[DoubleScalarFPtr](f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+        res = bisect_kernel(
+            <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     elif algo in [2, 'modified', 'vrahatis']:
-        res = vrahatis_bisect_kernel[DoubleScalarFPtr](f_wrapper, a, b, f_a, etol, ertol, ptol, prtol, max_iter)
+        res = vrahatis_bisect_kernel(
+            <DoubleScalarFPtr> f_wrapper, a, b, f_a, etol, ertol, ptol, prtol, max_iter)
     else:
         raise ValueError(f'algo must be either 1/\'default\' or 2/\'modified\'/\'vrahatis\'. '
                          f'Got unknown algo {algo}.')
@@ -372,8 +367,9 @@ def hybisect(f: Callable[[float], float],
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
-    interval_f_wrapper = PyDoubleBiScalarFPtr(interval_f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    interval_f_wrapper = PyDoubleBiScalarFPtr.from_f(interval_f)
+
     res = hybisect_kernel(<DoubleScalarFPtr> f_wrapper, <DoubleBiScalarFPtr> interval_f_wrapper,
                           a, b, etol, ertol, ptol, prtol, max_iter, max_split_iter)
     return SplittingBracketingMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
@@ -387,7 +383,7 @@ ctypedef double (*scale_func_type)(double, double)
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         regula_falsi_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -472,14 +468,14 @@ def regula_falsi(f: Callable[[float], float],
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = regula_falsi_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+    res = regula_falsi_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -532,14 +528,14 @@ def illinois(f: Callable[[float], float],
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = regula_falsi_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, illinois_scale)
+    res = regula_falsi_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, illinois_scale)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -592,14 +588,14 @@ def pegasus(f: Callable[[float], float],
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = regula_falsi_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, pegasus_scale)
+    res = regula_falsi_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, pegasus_scale)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -655,14 +651,14 @@ def anderson_bjorck(f: Callable[[float], float],
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = regula_falsi_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, anderson_bjorck_scale)
+    res = regula_falsi_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, anderson_bjorck_scale)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -671,7 +667,7 @@ def anderson_bjorck(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         dekker_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -765,14 +761,14 @@ def dekker(f: Callable[[float], float],
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = dekker_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+    res = dekker_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -781,7 +777,7 @@ def dekker(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         brent_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -865,11 +861,6 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     optimal = scalar_ops.fisclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
-BRENT_INTERP_METHODS: dict[str, int] = {
-    'quadratic': 0,
-    'hyperbolic': 1,
-}
-
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.bracketing')
 @dynamic_default_args()
@@ -895,9 +886,9 @@ def brent(f: Callable[[float], float],
         b (float): Upper bound of the interval to be searched.
         f_a (float, optional): Value evaluated at lower bound.
         f_b (float, optional): Value evaluated at upper bound.
-        interp_method: Interpolation method, 'quadratic' (or 0) for Inversed
-         Quadratic Interpolation and 'hyperbolic' (or 1) for Hyperbolic
-         Interpolation. Defaults to 1.
+        interp_method: Interpolation method, ``0``/``'quadratic'``
+         for Inversed Quadratic Interpolation and ``1``/``'hyperbolic'``
+         for Hyperbolic Interpolation. Defaults to {interp_method}.
         sigma: Numerical tolerance to decide which method to use.
          Defaults to {sigma}.
         etol (float, optional): Error tolerance, indicating the
@@ -919,26 +910,27 @@ def brent(f: Callable[[float], float],
     """
     # check params
     _check_bracket(a, b)
-    if ((isinstance(interp_method, int) and interp_method not in BRENT_INTERP_METHODS.values()) or
-            (isinstance(interp_method, str) and interp_method not in BRENT_INTERP_METHODS.keys())):
-        raise ValueError(f'interp_method can be {BRENT_INTERP_METHODS}. '
-                         f'No implementation found for {interp_method}.')
-    if isinstance(interp_method, str):
-        interp_method = BRENT_INTERP_METHODS[interp_method]
+    if interp_method in ['0', 'quadratic']:
+        interp_method = 0
+    elif interp_method in ['1', 'hyperbolic']:
+        interp_method = 1
+    elif interp_method not in [0, 1]:
+        raise ValueError('interp_method must be 0/\'quadratic\' or '
+                         f'1/\'hyperbolic\'. Got {interp_method}.')
     if sigma <= 0:
         raise ValueError(f'sigma must be positive. Got {sigma}.')
 
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wraper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f(a)
     if f_b is None:
         f_b = f(b)
 
-    res = brent_kernel[DoubleScalarFPtr](
-        f_wraper, a, b, f_a, f_b, interp_method, sigma, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wraper.n_f_calls)
+    res = brent_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, interp_method, sigma, etol, ertol, ptol, prtol, max_iter)
+    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
 # Chandrupatla
@@ -946,7 +938,7 @@ def brent(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         chandrupatla_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -1054,14 +1046,14 @@ def chandrupatla(f: Callable[[float], float],
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = chandrupatla_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, sigma, etol, ertol, ptol, prtol, max_iter)
+    res = chandrupatla_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, sigma, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -1070,7 +1062,7 @@ def chandrupatla(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         ridders_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -1163,14 +1155,14 @@ def ridders(f: Callable[[float], float],
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = ridders_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+    res = ridders_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -1272,7 +1264,7 @@ cdef double _inverse_poly_zero(double a, double b, double c, double d,
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         toms748_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -1428,14 +1420,14 @@ def toms748(f: Callable[[float], float],
 
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = toms748_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, k, mu, etol, ertol, ptol, prtol, max_iter)
+    res = toms748_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, k, mu, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -1444,7 +1436,7 @@ def toms748(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         wu_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -1562,14 +1554,14 @@ def wu(f: Callable[[float], float],
     _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
 
-    res = wu_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+    res = wu_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -1578,7 +1570,7 @@ def wu(f: Callable[[float], float],
 # noinspection DuplicatedCode
 cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
         itp_kernel(
-        double_scalar_func_type f,
+        DoubleScalarFPtr f,
         double a,
         double b,
         double f_a,
@@ -1714,13 +1706,13 @@ def itp(f: Callable[[float], float],
 
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
-    f_wrapper = PyDoubleScalarFPtr(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
     if f_b is None:
         f_b = f_wrapper(b)
     _check_unique_initial_vals(f_a, f_b)
 
-    res = itp_kernel[DoubleScalarFPtr](
-        f_wrapper, a, b, f_a, f_b, k1, k2, n0, etol, ertol, ptol, prtol, max_iter)
+    res = itp_kernel(
+        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, k1, k2, n0, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)

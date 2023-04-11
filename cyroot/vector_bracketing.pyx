@@ -20,9 +20,7 @@ from ._check_args import (
 from ._check_args cimport _check_stop_condition_bracket_vector
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import BracketingMethodsReturnType
-from .fptr cimport (
-    ndarray_func_type, NdArrayFPtr, PyNdArrayFPtr,
-)
+from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
 from .ops.scalar_ops cimport fisclose
 from .ops.vector_ops cimport fabs, fmax
 from .utils.function_tagging import tag
@@ -40,7 +38,7 @@ __all__ = [
 # noinspection DuplicatedCode
 @cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, np.ndarray, np.ndarray, double, double, bint, bint))
 cdef vrahatis_kernel(
-        ndarray_func_type F,
+        NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=2] x0s,
         np.ndarray[np.float64_t, ndim=2] F_x0s,
         np.ndarray[np.float64_t, ndim=2] S_x0s,
@@ -270,7 +268,7 @@ def vrahatis(F: Callable[[np.ndarray], np.ndarray],
 
     x0s = np.asarray(x0s, dtype=np.float64)
 
-    F_wrapper = PyNdArrayFPtr(F)
+    F_wrapper = PyNdArrayFPtr.from_f(F)
     if x0s.ndim == 1 or x0s.shape[0] == 1:
         x0s, S_x0s = compute_admissible_n_polygon(F_wrapper, x0s.reshape(-1), h)
     elif x0s.shape[0] != 2 ** x0s.shape[1]:
@@ -287,7 +285,7 @@ def vrahatis(F: Callable[[np.ndarray], np.ndarray],
 
     # sort by order of M
     x0s, F_x0s, S_x0s = sorted_by_vertices(x0s, F_x0s, S=S_x0s)
-    res = vrahatis_kernel[NdArrayFPtr](
+    res = vrahatis_kernel(
         F_wrapper, x0s, F_x0s, S_x0s, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, F_wrapper.n_f_calls)
 

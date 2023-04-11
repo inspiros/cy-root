@@ -4,6 +4,9 @@ __all__ = [
     'BracketingMethodsReturnType',
     'NewtonMethodReturnType',
     'QuasiNewtonMethodReturnType',
+    'SplittingBracketingMethodReturnType',
+    'SplittingNewtonMethodReturnType',
+    'SplittingQuasiNewtonMethodReturnType',
 ]
 
 
@@ -17,10 +20,14 @@ def _root_results_type(typename, field_names, *, defaults=None):
         f_calls_idx = field_names.index('f_calls')
 
         @classmethod
-        def from_results(cls, results, f_calls):
+        def from_results(cls, results, f_calls, **maps):
             fields = list(results)
             fields.insert(f_calls_idx, f_calls)
-            return cls(*fields)
+            for k, map in maps.items():
+                field_id = k if isinstance(k, int) else cls._fields.index(k)
+                fields[field_id] = map(fields[field_id])
+            res = cls(*fields)
+            return res
 
         setattr(root_results_type, 'from_results', from_results)
     return root_results_type

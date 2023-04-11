@@ -7,11 +7,15 @@ __all__ = [
     'set_default_stop_condition_args',
 ]
 
+# stop condition args
 ETOL = 1e-10
 ERTOL = 4 * np.finfo(np.float64).eps
 PTOL = 1e-12
 PRTOL = 4 * np.finfo(np.float64).eps
 MAX_ITER = 200
+
+# derivative approximation args
+FINITE_DIFF_STEP = 1e-3
 
 
 @dynamic_default_args()
