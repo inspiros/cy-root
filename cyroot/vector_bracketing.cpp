@@ -13,7 +13,8 @@
         "include_dirs": [
             "cyroot",
             "C:\\Python\\Python38\\lib\\site-packages\\numpy\\core\\include",
-            "cyroot\\ops"
+            "cyroot\\ops",
+            "cyroot\\utils"
         ],
         "language": "c++",
         "name": "cyroot.vector_bracketing",
@@ -1546,7 +1547,9 @@ typedef PyArrayObject *(*__pyx_t_6cyroot_4fptr_ndarray_f_ptr)(PyArrayObject *);
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose;
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
 
-/* "ops/scalar_ops.pxd":1
+/* "ops/scalar_ops.pxd":8
+ *     double
+ * 
  * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
  * 
@@ -1557,7 +1560,8 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose {
   double atol;
 };
 
-/* "ops/scalar_ops.pxd":2
+/* "ops/scalar_ops.pxd":9
+ * 
  * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * 
@@ -1575,7 +1579,9 @@ struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
 typedef struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fargsort;
 
-/* "ops/vector_ops.pxd":1
+/* "ops/vector_ops.pxd":3
+ * from .scalar_ops cimport real
+ * 
  * cdef bint fallclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef int[:] sign(double[:] xs) nogil
  * cdef double complex[:] csign(double complex[:] xs) nogil
@@ -1586,7 +1592,7 @@ struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fallclose {
   double atol;
 };
 
-/* "ops/vector_ops.pxd":10
+/* "ops/vector_ops.pxd":12
  * cdef double[:] sqrt(double[:] xs) nogil
  * cdef double complex[:] csqrt(double complex[:] xs) nogil
  * cdef double norm(double[:] xs, double order=*) nogil             # <<<<<<<<<<<<<<
@@ -1598,19 +1604,19 @@ struct __pyx_opt_args_6cyroot_3ops_10vector_ops_norm {
   double order;
 };
 
-/* "ops/vector_ops.pxd":11
+/* "ops/vector_ops.pxd":13
  * cdef double complex[:] csqrt(double complex[:] xs) nogil
  * cdef double norm(double[:] xs, double order=*) nogil
  * cdef double cnorm(double complex[:] xs, double order=*) nogil             # <<<<<<<<<<<<<<
  * cdef double[:] fpermute(double[:] xs, unsigned long[:] inds) nogil
- * cdef double fsum(double[:] xs) nogil
+ * cdef real sum(real[:] xs) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_cnorm {
   int __pyx_n;
   double order;
 };
 
-/* "ops/vector_ops.pxd":19
+/* "ops/vector_ops.pxd":23
  * cdef unsigned long fargmin(double[:] xs) nogil
  * cdef unsigned long fargmax(double[:] xs) nogil
  * cdef (unsigned long, unsigned long) fargminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
@@ -1622,7 +1628,7 @@ struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long {
   unsigned long f1;
 };
 
-/* "ops/vector_ops.pxd":21
+/* "ops/vector_ops.pxd":25
  * cdef (unsigned long, unsigned long) fargminmax(double[:] xs) nogil
  * cdef void fsort(double[::1] xs) nogil
  * cdef unsigned long[:] fargsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<

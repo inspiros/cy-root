@@ -124,16 +124,30 @@ cdef inline double[:] fpermute(double[:] xs, unsigned long[:] inds) nogil:
         res[i] = xs[inds[i]]
     return res
 
-cdef inline double fsum(double[:] xs) nogil:
+cdef inline real sum(real[:] xs) nogil:
     cdef unsigned long i
-    cdef double sum = 0.
+    cdef real res = 0
     for i in range(xs.shape[0]):
-        sum += xs[i]
-    return sum
+        res += xs[i]
+    return res
+
+cdef inline real prod(real[:] xs) nogil:
+    cdef real res = 1
+    cdef unsigned long i
+    for i in range(xs.shape[0]):
+        res *= xs[i]
+    return res
+
+cdef inline double complex cprod(double complex[:] xs) nogil:
+    cdef double complex res = 1
+    cdef unsigned long i
+    for i in range(xs.shape[0]):
+        res *= xs[i]
+    return res
 
 cdef inline double fmean(double[:] xs) nogil:
     if xs.shape[0]:
-        return fsum(xs) / xs.shape[0]
+        return sum(xs) / xs.shape[0]
     return math.NAN
 
 cdef inline double fmin(double[:] xs) nogil:

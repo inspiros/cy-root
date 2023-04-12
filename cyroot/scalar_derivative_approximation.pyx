@@ -4,12 +4,13 @@
 # cython: boundscheck = False
 # cython: profile = False
 
-from typing import Callable, Optional, Union
+from typing import Callable, Sequence, Optional, Union
 
 import cython
 
 from .fptr cimport DoubleScalarFPtr, PyDoubleScalarFPtr
 from .ops.scalar_ops cimport binomial_coef
+from .typing import VectorLike
 
 __all__ = [
     'DerivativeApproximation',
@@ -62,11 +63,12 @@ cdef double finite_difference_kernel(
         sgn = -sgn
     return diff / h ** order
 
-def _finite_diference_args_check(h: float = 1.,
-                                 order: int = 1,
-                                 kind: int = 1):
-    if h == 0:
+def _finite_diference_args_check(h: Union[float, VectorLike], order: int, kind: int):
+    if (isinstance(h, float) and h == 0) or \
+            (isinstance(h, Sequence) and any(h[i] == 0 for i in range(len(h)))):
         raise ValueError('h must be non-zero.')
+    if order < 1:
+        raise ValueError('order must be positive number.')
     if kind not in [-1, 0, 1]:
         raise ValueError('kind must be either -1 (backward), 0 (central), '
                          f'or 1 (forward). Got {kind}.')
@@ -124,11 +126,7 @@ def finite_difference(f: Callable[[float], float],
     # check args
     _finite_diference_args_check(h, order, kind)
 
-    if isinstance(f, DoubleScalarFPtr):
-        f_wrapper = f
-    else:
-        f_wrapper = PyDoubleScalarFPtr(f)
-
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x is None:
         f_x = f_wrapper(x)
     return finite_difference_kernel(<DoubleScalarFPtr> f_wrapper, x, f_x, h, order, kind)

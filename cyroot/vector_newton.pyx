@@ -20,6 +20,7 @@ from ._check_args import (
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import NewtonMethodReturnType
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
+from .vector_derivative_approximation import GeneralizedFiniteDifference, VectorDerivativeApproximation
 from .ops.scalar_ops cimport fisclose
 from .ops.vector_ops cimport fabs, fmax
 from .utils.function_tagging import tag
@@ -55,6 +56,7 @@ cdef generalized_newton_kernel(
                                                   &precision, &error, &converged, &optimal):
         return x0, F_x0, J_x0, step, precision, error, converged, optimal
 
+    cdef bint use_derivative_approximation = isinstance(J, VectorDerivativeApproximation)
     cdef np.ndarray[np.float64_t, ndim=1] d_x
     converged = True
     while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
@@ -66,7 +68,10 @@ cdef generalized_newton_kernel(
         d_x = np.linalg.solve(J_x0, -F_x0)
         x0 = x0 + d_x
         F_x0 = F(x0)
-        J_x0 = J(x0)
+        if use_derivative_approximation:
+            J_x0 = J.eval_with_f_val(x0, F_x0)
+        else:
+            J_x0 = J.eval(x0)
         precision = fmax(fabs(d_x))
         error = fmax(fabs(F_x0))
 
@@ -78,7 +83,7 @@ cdef generalized_newton_kernel(
 @dynamic_default_args()
 @cython.binding(True)
 def generalized_newton(F: Callable[[np.ndarray], np.ndarray],
-                       J: Callable[[np.ndarray], np.ndarray],
+                       J: Optional[Callable[[np.ndarray], np.ndarray]],
                        x0: np.ndarray,
                        F_x0: Optional[np.ndarray] = None,
                        J_x0: Optional[np.ndarray] = None,
@@ -92,7 +97,7 @@ def generalized_newton(F: Callable[[np.ndarray], np.ndarray],
 
     Args:
         F (function): Function for which the root is sought.
-        J (function): Function returning the Jacobian of F.
+        J (function): Function returning the Jacobian of ``F``.
         x0 (np.ndarray): First initial point.
         F_x0 (np.ndarray, optional): Value evaluated at initial
          point.
@@ -121,11 +126,9 @@ def generalized_newton(F: Callable[[np.ndarray], np.ndarray],
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if J is None:
-        pass
-    elif isinstance(J, NdArrayFPtr):
-        J_wrapper = J
+        J_wrapper = GeneralizedFiniteDifference(F_wrapper, h=1e-3, order=1)
     else:
-        J_wrapper = PyNdArrayFPtr(J)
+        J_wrapper = PyNdArrayFPtr.from_f(J)
 
     if F_x0 is None:
         F_x0 = F_wrapper(x0)

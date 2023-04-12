@@ -1,3 +1,10 @@
+ctypedef fused real:
+    int
+    unsigned int
+    long
+    unsigned long
+    double
+
 cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil
 cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
 

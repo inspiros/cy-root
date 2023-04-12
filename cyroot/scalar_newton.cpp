@@ -13,7 +13,8 @@
         "include_dirs": [
             "cyroot",
             "C:\\Python\\Python38\\lib\\site-packages\\numpy\\core\\include",
-            "cyroot\\ops"
+            "cyroot\\ops",
+            "cyroot\\utils"
         ],
         "language": "c++",
         "name": "cyroot.scalar_newton",
@@ -1570,7 +1571,9 @@ typedef PyArrayObject *(*__pyx_t_6cyroot_4fptr_ndarray_f_ptr)(PyArrayObject *);
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose;
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
 
-/* "ops/scalar_ops.pxd":1
+/* "ops/scalar_ops.pxd":8
+ *     double
+ * 
  * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
  * 
@@ -1581,7 +1584,8 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose {
   double atol;
 };
 
-/* "ops/scalar_ops.pxd":2
+/* "ops/scalar_ops.pxd":9
+ * 
  * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * 
