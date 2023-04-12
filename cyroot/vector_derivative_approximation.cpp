@@ -1632,6 +1632,8 @@ struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fargsort {
   int reverse;
 };
 struct __pyx_opt_args_6cyroot_31vector_derivative_approximation_generalized_finite_difference_kernel;
+struct __pyx_defaults;
+typedef struct __pyx_defaults __pyx_defaults;
 
 /* "cyroot/vector_derivative_approximation.pxd":18
  * # Finite Difference
@@ -1644,6 +1646,9 @@ struct __pyx_opt_args_6cyroot_31vector_derivative_approximation_generalized_fini
   int __pyx_n;
   int order;
   int kind;
+};
+struct __pyx_defaults {
+  PyObject *__pyx_arg_h;
 };
 
 /* "fptr.pxd":5
@@ -2346,7 +2351,7 @@ struct __pyx_vtabstruct_6cyroot_4fptr_PyNdArrayFPtr {
 static struct __pyx_vtabstruct_6cyroot_4fptr_PyNdArrayFPtr *__pyx_vtabptr_6cyroot_4fptr_PyNdArrayFPtr;
 
 
-/* "cyroot/vector_derivative_approximation.pyx":35
+/* "cyroot/vector_derivative_approximation.pyx":37
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef class VectorDerivativeApproximation(NdArrayFPtr):             # <<<<<<<<<<<<<<
@@ -2363,7 +2368,7 @@ struct __pyx_vtabstruct_6cyroot_31vector_derivative_approximation_VectorDerivati
 static struct __pyx_vtabstruct_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation *__pyx_vtabptr_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation;
 
 
-/* "cyroot/vector_derivative_approximation.pyx":219
+/* "cyroot/vector_derivative_approximation.pyx":221
  * 
  * # noinspection DuplicatedCode
  * cdef class GeneralizedFiniteDifference(VectorDerivativeApproximation):             # <<<<<<<<<<<<<<
@@ -3025,6 +3030,13 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStrNoError(PyObject* obj, P
 /* SetupReduce.proto */
 static int __Pyx_setup_reduce(PyObject* type_obj);
 
+/* PyObjectCallNoArg.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
+#else
+#define __Pyx_PyObject_CallNoArg(func) __Pyx_PyObject_Call(func, __pyx_empty_tuple, NULL)
+#endif
+
 /* FetchCommonType.proto */
 static PyTypeObject* __Pyx_FetchCommonType(PyTypeObject* type);
 
@@ -3631,15 +3643,15 @@ static PyTypeObject *__pyx_ptype_6cyroot_4fptr_NdArrayFPtr = 0;
 static PyTypeObject *__pyx_ptype_6cyroot_4fptr_CyNdArrayFPtr = 0;
 static PyTypeObject *__pyx_ptype_6cyroot_4fptr_PyNdArrayFPtr = 0;
 
+/* Module declarations from 'cython.view' */
+
+/* Module declarations from 'cython' */
+
 /* Module declarations from 'array' */
 
 /* Module declarations from 'cpython.array' */
 static PyTypeObject *__pyx_ptype_7cpython_5array_array = 0;
 static CYTHON_INLINE int __pyx_f_7cpython_5array_extend_buffer(arrayobject *, char *, Py_ssize_t); /*proto*/
-
-/* Module declarations from 'cython.view' */
-
-/* Module declarations from 'cython' */
 
 /* Module declarations from 'libcpp' */
 
@@ -3741,11 +3753,11 @@ static const char __pyx_k_f[] = "f";
 static const char __pyx_k_h[] = "h";
 static const char __pyx_k_i[] = "i";
 static const char __pyx_k_x[] = "x";
-static const char __pyx_k__3[] = ".";
+static const char __pyx_k__4[] = ".";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_np[] = "np";
 static const char __pyx_k_F_x[] = "F_x";
-static const char __pyx_k__26[] = "*";
+static const char __pyx_k__27[] = "*";
 static const char __pyx_k_all[] = "__all__";
 static const char __pyx_k_int[] = "int";
 static const char __pyx_k_new[] = "__new__";
@@ -3800,6 +3812,7 @@ static const char __pyx_k_reshape[] = "reshape";
 static const char __pyx_k_Callable[] = "Callable";
 static const char __pyx_k_Ellipsis[] = "Ellipsis";
 static const char __pyx_k_Optional[] = "Optional";
+static const char __pyx_k_defaults[] = "_defaults";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_itemsize[] = "itemsize";
 static const char __pyx_k_pyx_type[] = "__pyx_type";
@@ -3822,6 +3835,7 @@ static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_array_equal[] = "array_equal";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
 static const char __pyx_k_stringsource[] = "stringsource";
+static const char __pyx_k_named_default[] = "named_default";
 static const char __pyx_k_pyx_getbuffer[] = "__pyx_getbuffer";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_View_MemoryView[] = "View.MemoryView";
@@ -3831,11 +3845,13 @@ static const char __pyx_k_eval_with_f_val[] = "eval_with_f_val";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_while_h_shape_0[] = " while h.shape[0]=";
+static const char __pyx_k_FINITE_DIFF_STEP[] = "FINITE_DIFF_STEP";
 static const char __pyx_k_ascontiguousarray[] = "ascontiguousarray";
 static const char __pyx_k_pyx_unpickle_Enum[] = "__pyx_unpickle_Enum";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_strided_and_direct[] = "<strided and direct>";
 static const char __pyx_k_NotImplementedError[] = "NotImplementedError";
+static const char __pyx_k_dynamic_default_args[] = "dynamic_default_args";
 static const char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static const char __pyx_k_contiguous_and_direct[] = "<contiguous and direct>";
 static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>";
@@ -3883,6 +3899,7 @@ static PyObject *__pyx_kp_s_Cannot_index_with_type_s;
 static PyObject *__pyx_n_s_Ellipsis;
 static PyObject *__pyx_kp_s_Empty_shape_tuple_for_cython_arr;
 static PyObject *__pyx_n_s_F;
+static PyObject *__pyx_n_s_FINITE_DIFF_STEP;
 static PyObject *__pyx_n_s_F_wrapper;
 static PyObject *__pyx_n_s_F_x;
 static PyObject *__pyx_n_s_GeneralizedFiniteDifference;
@@ -3912,8 +3929,8 @@ static PyObject *__pyx_n_s_VectorDerivativeApproximation;
 static PyObject *__pyx_n_u_VectorDerivativeApproximation;
 static PyObject *__pyx_n_s_VectorLike;
 static PyObject *__pyx_n_s_View_MemoryView;
-static PyObject *__pyx_n_s__26;
-static PyObject *__pyx_kp_u__3;
+static PyObject *__pyx_n_s__27;
+static PyObject *__pyx_kp_u__4;
 static PyObject *__pyx_n_s_all;
 static PyObject *__pyx_n_s_allocate_buffer;
 static PyObject *__pyx_n_s_append;
@@ -3930,9 +3947,11 @@ static PyObject *__pyx_kp_s_contiguous_and_direct;
 static PyObject *__pyx_kp_s_contiguous_and_indirect;
 static PyObject *__pyx_kp_s_cyroot_vector_derivative_approxi;
 static PyObject *__pyx_n_s_cyroot_vector_derivative_approxi_2;
+static PyObject *__pyx_n_s_defaults;
 static PyObject *__pyx_n_s_dict;
 static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_dtype_is_object;
+static PyObject *__pyx_n_s_dynamic_default_args;
 static PyObject *__pyx_n_s_empty;
 static PyObject *__pyx_n_s_encode;
 static PyObject *__pyx_n_s_enumerate;
@@ -3965,6 +3984,7 @@ static PyObject *__pyx_n_s_memview;
 static PyObject *__pyx_n_s_mode;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_name_2;
+static PyObject *__pyx_n_s_named_default;
 static PyObject *__pyx_n_s_ndim;
 static PyObject *__pyx_n_s_new;
 static PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
@@ -4033,6 +4053,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
 static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_1h_4__del__(struct __pyx_obj_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_6__reduce_cython__(struct __pyx_obj_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_8__setstate_cython__(struct __pyx_obj_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_6__defaults__(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_finite_difference(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_F, PyObject *__pyx_v_x, PyObject *__pyx_v_F_x, PyObject *__pyx_v_h, PyObject *__pyx_v_order, PyObject *__pyx_v_kind); /* proto */
 static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_2__pyx_unpickle_VectorDerivativeApproximation(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_4__pyx_unpickle_GeneralizedFiniteDifference(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
@@ -4086,7 +4107,6 @@ static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k); 
 static PyObject *__pyx_tp_new_Enum(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new__memoryviewslice(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_float_1_;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_39425840;
@@ -4099,9 +4119,9 @@ static PyObject *__pyx_int_184977713;
 static PyObject *__pyx_int_207065528;
 static PyObject *__pyx_int_234301111;
 static PyObject *__pyx_int_neg_1;
+static PyObject *__pyx_k__3;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_slice__2;
-static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__5;
 static PyObject *__pyx_tuple__6;
 static PyObject *__pyx_tuple__7;
@@ -4123,8 +4143,8 @@ static PyObject *__pyx_tuple__22;
 static PyObject *__pyx_tuple__23;
 static PyObject *__pyx_tuple__24;
 static PyObject *__pyx_tuple__25;
-static PyObject *__pyx_tuple__27;
-static PyObject *__pyx_tuple__29;
+static PyObject *__pyx_tuple__26;
+static PyObject *__pyx_tuple__28;
 static PyObject *__pyx_tuple__30;
 static PyObject *__pyx_tuple__32;
 static PyObject *__pyx_tuple__34;
@@ -4133,13 +4153,13 @@ static PyObject *__pyx_tuple__36;
 static PyObject *__pyx_tuple__37;
 static PyObject *__pyx_tuple__38;
 static PyObject *__pyx_tuple__39;
-static PyObject *__pyx_codeobj__28;
+static PyObject *__pyx_codeobj__29;
 static PyObject *__pyx_codeobj__31;
 static PyObject *__pyx_codeobj__33;
 static PyObject *__pyx_codeobj__40;
 /* Late includes */
 
-/* "cyroot/vector_derivative_approximation.pyx":36
+/* "cyroot/vector_derivative_approximation.pyx":38
  * # noinspection DuplicatedCode
  * cdef class VectorDerivativeApproximation(NdArrayFPtr):
  *     def __init__(self, F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]]):             # <<<<<<<<<<<<<<
@@ -4176,7 +4196,7 @@ static int __pyx_pw_6cyroot_31vector_derivative_approximation_29VectorDerivative
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 36, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 38, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
@@ -4187,7 +4207,7 @@ static int __pyx_pw_6cyroot_31vector_derivative_approximation_29VectorDerivative
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 36, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 38, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.vector_derivative_approximation.VectorDerivativeApproximation.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4211,7 +4231,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDerivative
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "cyroot/vector_derivative_approximation.pyx":37
+  /* "cyroot/vector_derivative_approximation.pyx":39
  * cdef class VectorDerivativeApproximation(NdArrayFPtr):
  *     def __init__(self, F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]]):
  *         if isinstance(F, NdArrayFPtr):             # <<<<<<<<<<<<<<
@@ -4222,14 +4242,14 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDerivative
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":38
+    /* "cyroot/vector_derivative_approximation.pyx":40
  *     def __init__(self, F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]]):
  *         if isinstance(F, NdArrayFPtr):
  *             self.F = F             # <<<<<<<<<<<<<<
  *         else:
  *             self.F = PyNdArrayFPtr(F)
  */
-    if (!(likely(((__pyx_v_F) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_F, __pyx_ptype_6cyroot_4fptr_NdArrayFPtr))))) __PYX_ERR(0, 38, __pyx_L1_error)
+    if (!(likely(((__pyx_v_F) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_F, __pyx_ptype_6cyroot_4fptr_NdArrayFPtr))))) __PYX_ERR(0, 40, __pyx_L1_error)
     __pyx_t_3 = __pyx_v_F;
     __Pyx_INCREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
@@ -4238,7 +4258,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDerivative
     __pyx_v_self->F = ((struct __pyx_obj_6cyroot_4fptr_NdArrayFPtr *)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":37
+    /* "cyroot/vector_derivative_approximation.pyx":39
  * cdef class VectorDerivativeApproximation(NdArrayFPtr):
  *     def __init__(self, F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]]):
  *         if isinstance(F, NdArrayFPtr):             # <<<<<<<<<<<<<<
@@ -4248,7 +4268,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDerivative
     goto __pyx_L3;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":40
+  /* "cyroot/vector_derivative_approximation.pyx":42
  *             self.F = F
  *         else:
  *             self.F = PyNdArrayFPtr(F)             # <<<<<<<<<<<<<<
@@ -4256,7 +4276,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDerivative
  *     @staticmethod
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyNdArrayFPtr), __pyx_v_F); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_6cyroot_4fptr_PyNdArrayFPtr), __pyx_v_F); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
     __Pyx_GOTREF(__pyx_v_self->F);
@@ -4266,7 +4286,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDerivative
   }
   __pyx_L3:;
 
-  /* "cyroot/vector_derivative_approximation.pyx":36
+  /* "cyroot/vector_derivative_approximation.pyx":38
  * # noinspection DuplicatedCode
  * cdef class VectorDerivativeApproximation(NdArrayFPtr):
  *     def __init__(self, F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]]):             # <<<<<<<<<<<<<<
@@ -4286,7 +4306,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDerivative
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":43
+/* "cyroot/vector_derivative_approximation.pyx":45
  * 
  *     @staticmethod
  *     cdef object from_f(object F):             # <<<<<<<<<<<<<<
@@ -4306,7 +4326,7 @@ static PyObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDeriv
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("from_f", 0);
 
-  /* "cyroot/vector_derivative_approximation.pyx":44
+  /* "cyroot/vector_derivative_approximation.pyx":46
  *     @staticmethod
  *     cdef object from_f(object F):
  *         if F is not None:             # <<<<<<<<<<<<<<
@@ -4317,7 +4337,7 @@ static PyObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDeriv
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":45
+    /* "cyroot/vector_derivative_approximation.pyx":47
  *     cdef object from_f(object F):
  *         if F is not None:
  *             return F             # <<<<<<<<<<<<<<
@@ -4329,7 +4349,7 @@ static PyObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDeriv
     __pyx_r = __pyx_v_F;
     goto __pyx_L0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":44
+    /* "cyroot/vector_derivative_approximation.pyx":46
  *     @staticmethod
  *     cdef object from_f(object F):
  *         if F is not None:             # <<<<<<<<<<<<<<
@@ -4338,28 +4358,28 @@ static PyObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDeriv
  */
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":46
+  /* "cyroot/vector_derivative_approximation.pyx":48
  *         if F is not None:
  *             return F
  *         cdef GeneralizedFiniteDifference wrapper = GeneralizedFiniteDifference.__new__(GeneralizedFiniteDifference)             # <<<<<<<<<<<<<<
  *         wrapper.f = F
  *         return wrapper
  */
-  __pyx_t_3 = ((PyObject *)__pyx_tp_new_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference(((PyTypeObject *)__pyx_ptype_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference), __pyx_empty_tuple, NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_3 = ((PyObject *)__pyx_tp_new_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference(((PyTypeObject *)__pyx_ptype_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference), __pyx_empty_tuple, NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(((PyObject *)__pyx_t_3));
   __pyx_v_wrapper = ((struct __pyx_obj_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":47
+  /* "cyroot/vector_derivative_approximation.pyx":49
  *             return F
  *         cdef GeneralizedFiniteDifference wrapper = GeneralizedFiniteDifference.__new__(GeneralizedFiniteDifference)
  *         wrapper.f = F             # <<<<<<<<<<<<<<
  *         return wrapper
  * 
  */
-  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_wrapper), __pyx_n_s_f, __pyx_v_F) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_wrapper), __pyx_n_s_f, __pyx_v_F) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":48
+  /* "cyroot/vector_derivative_approximation.pyx":50
  *         cdef GeneralizedFiniteDifference wrapper = GeneralizedFiniteDifference.__new__(GeneralizedFiniteDifference)
  *         wrapper.f = F
  *         return wrapper             # <<<<<<<<<<<<<<
@@ -4371,7 +4391,7 @@ static PyObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDeriv
   __pyx_r = ((PyObject *)__pyx_v_wrapper);
   goto __pyx_L0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":43
+  /* "cyroot/vector_derivative_approximation.pyx":45
  * 
  *     @staticmethod
  *     cdef object from_f(object F):             # <<<<<<<<<<<<<<
@@ -4391,7 +4411,7 @@ static PyObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDeriv
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":50
+/* "cyroot/vector_derivative_approximation.pyx":52
  *         return wrapper
  * 
  *     cpdef np.ndarray eval(self, np.ndarray x):             # <<<<<<<<<<<<<<
@@ -4420,7 +4440,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivat
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_eval); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_eval); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_3eval)) {
         __Pyx_XDECREF(((PyObject *)__pyx_r));
@@ -4437,10 +4457,10 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivat
         }
         __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, ((PyObject *)__pyx_v_x)) : __Pyx_PyObject_CallOneArg(__pyx_t_3, ((PyObject *)__pyx_v_x));
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 50, __pyx_L1_error)
+        if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 52, __pyx_L1_error)
         __pyx_r = ((PyArrayObject *)__pyx_t_2);
         __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4459,7 +4479,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivat
     #endif
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":51
+  /* "cyroot/vector_derivative_approximation.pyx":53
  * 
  *     cpdef np.ndarray eval(self, np.ndarray x):
  *         raise NotImplementedError             # <<<<<<<<<<<<<<
@@ -4467,9 +4487,9 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivat
  *     cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x):
  */
   __Pyx_Raise(__pyx_builtin_NotImplementedError, 0, 0, 0);
-  __PYX_ERR(0, 51, __pyx_L1_error)
+  __PYX_ERR(0, 53, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":50
+  /* "cyroot/vector_derivative_approximation.pyx":52
  *         return wrapper
  * 
  *     cpdef np.ndarray eval(self, np.ndarray x):             # <<<<<<<<<<<<<<
@@ -4500,7 +4520,7 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_29VectorDeri
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("eval (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 50, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 52, __pyx_L1_error)
   __pyx_r = __pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_2eval(((struct __pyx_obj_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation *)__pyx_v_self), ((PyArrayObject *)__pyx_v_x));
 
   /* function exit code */
@@ -4521,7 +4541,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDeri
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("eval", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_eval(__pyx_v_self, __pyx_v_x, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_eval(__pyx_v_self, __pyx_v_x, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4542,7 +4562,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivat
   return __pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_eval(__pyx_v_self, __pyx_v_x, 0);
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":53
+/* "cyroot/vector_derivative_approximation.pyx":55
  *         raise NotImplementedError
  * 
  *     cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x):             # <<<<<<<<<<<<<<
@@ -4573,7 +4593,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29Vector
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_eval_with_f_val); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_eval_with_f_val); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_5eval_with_f_val)) {
         __Pyx_XDECREF(((PyObject *)__pyx_r));
@@ -4593,7 +4613,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29Vector
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[3] = {__pyx_t_4, ((PyObject *)__pyx_v_x), ((PyObject *)__pyx_v_F_x)};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 53, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
@@ -4601,13 +4621,13 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29Vector
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[3] = {__pyx_t_4, ((PyObject *)__pyx_v_x), ((PyObject *)__pyx_v_F_x)};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 53, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
         #endif
         {
-          __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 53, __pyx_L1_error)
+          __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 55, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           if (__pyx_t_4) {
             __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -4618,12 +4638,12 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29Vector
           __Pyx_INCREF(((PyObject *)__pyx_v_F_x));
           __Pyx_GIVEREF(((PyObject *)__pyx_v_F_x));
           PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, ((PyObject *)__pyx_v_F_x));
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 53, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         }
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 53, __pyx_L1_error)
+        if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 55, __pyx_L1_error)
         __pyx_r = ((PyArrayObject *)__pyx_t_2);
         __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4642,7 +4662,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29Vector
     #endif
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":54
+  /* "cyroot/vector_derivative_approximation.pyx":56
  * 
  *     cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x):
  *         raise NotImplementedError             # <<<<<<<<<<<<<<
@@ -4650,9 +4670,9 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_29Vector
  * ################################################################################
  */
   __Pyx_Raise(__pyx_builtin_NotImplementedError, 0, 0, 0);
-  __PYX_ERR(0, 54, __pyx_L1_error)
+  __PYX_ERR(0, 56, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":53
+  /* "cyroot/vector_derivative_approximation.pyx":55
  *         raise NotImplementedError
  * 
  *     cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x):             # <<<<<<<<<<<<<<
@@ -4709,11 +4729,11 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_29VectorDeri
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_F_x)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("eval_with_f_val", 1, 2, 2, 1); __PYX_ERR(0, 53, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("eval_with_f_val", 1, 2, 2, 1); __PYX_ERR(0, 55, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "eval_with_f_val") < 0)) __PYX_ERR(0, 53, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "eval_with_f_val") < 0)) __PYX_ERR(0, 55, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -4726,14 +4746,14 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_29VectorDeri
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("eval_with_f_val", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 53, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("eval_with_f_val", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 55, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.vector_derivative_approximation.VectorDerivativeApproximation.eval_with_f_val", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 53, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_F_x), __pyx_ptype_5numpy_ndarray, 1, "F_x", 0))) __PYX_ERR(0, 53, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 55, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_F_x), __pyx_ptype_5numpy_ndarray, 1, "F_x", 0))) __PYX_ERR(0, 55, __pyx_L1_error)
   __pyx_r = __pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_4eval_with_f_val(((struct __pyx_obj_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation *)__pyx_v_self), __pyx_v_x, __pyx_v_F_x);
 
   /* function exit code */
@@ -4754,7 +4774,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDeri
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("eval_with_f_val", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_eval_with_f_val(__pyx_v_self, __pyx_v_x, __pyx_v_F_x, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_eval_with_f_val(__pyx_v_self, __pyx_v_x, __pyx_v_F_x, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5069,7 +5089,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_29VectorDeri
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":60
+/* "cyroot/vector_derivative_approximation.pyx":62
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef unsigned int[:, :] _vector_derivative_indices(unsigned int[:] ns, bint[:] unique_mask):             # <<<<<<<<<<<<<<
@@ -5104,19 +5124,19 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_vector_derivative_indices", 0);
 
-  /* "cyroot/vector_derivative_approximation.pyx":61
+  /* "cyroot/vector_derivative_approximation.pyx":63
  * # noinspection DuplicatedCode
  * cdef unsigned int[:, :] _vector_derivative_indices(unsigned int[:] ns, bint[:] unique_mask):
  *     cdef unsigned int[:, :] inds = product(ns)             # <<<<<<<<<<<<<<
  *     unique_mask[:] = True
  *     cdef unsigned int i, j, k
  */
-  __pyx_t_1 = __pyx_f_6cyroot_5utils_9itertools_product(__pyx_v_ns, 0); if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_6cyroot_5utils_9itertools_product(__pyx_v_ns, 0); if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 63, __pyx_L1_error)
   __pyx_v_inds = __pyx_t_1;
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":62
+  /* "cyroot/vector_derivative_approximation.pyx":64
  * cdef unsigned int[:, :] _vector_derivative_indices(unsigned int[:] ns, bint[:] unique_mask):
  *     cdef unsigned int[:, :] inds = product(ns)
  *     unique_mask[:] = True             # <<<<<<<<<<<<<<
@@ -5138,7 +5158,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
       }
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":64
+  /* "cyroot/vector_derivative_approximation.pyx":66
  *     unique_mask[:] = True
  *     cdef unsigned int i, j, k
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -5153,7 +5173,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
       #endif
       /*try:*/ {
 
-        /* "cyroot/vector_derivative_approximation.pyx":65
+        /* "cyroot/vector_derivative_approximation.pyx":67
  *     cdef unsigned int i, j, k
  *     with nogil:
  *         for i in range(inds.shape[0]):             # <<<<<<<<<<<<<<
@@ -5165,7 +5185,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
         for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
           __pyx_v_i = __pyx_t_4;
 
-          /* "cyroot/vector_derivative_approximation.pyx":66
+          /* "cyroot/vector_derivative_approximation.pyx":68
  *     with nogil:
  *         for i in range(inds.shape[0]):
  *             for j in range(inds.shape[1] - 1):             # <<<<<<<<<<<<<<
@@ -5177,7 +5197,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
           for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
             __pyx_v_j = __pyx_t_7;
 
-            /* "cyroot/vector_derivative_approximation.pyx":67
+            /* "cyroot/vector_derivative_approximation.pyx":69
  *         for i in range(inds.shape[0]):
  *             for j in range(inds.shape[1] - 1):
  *                 for k in range(j + 1, inds.shape[1]):             # <<<<<<<<<<<<<<
@@ -5189,7 +5209,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
             for (__pyx_t_10 = (__pyx_v_j + 1); __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
               __pyx_v_k = __pyx_t_10;
 
-              /* "cyroot/vector_derivative_approximation.pyx":68
+              /* "cyroot/vector_derivative_approximation.pyx":70
  *             for j in range(inds.shape[1] - 1):
  *                 for k in range(j + 1, inds.shape[1]):
  *                     if inds[i, j] > inds[i, k]:             # <<<<<<<<<<<<<<
@@ -5203,7 +5223,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
               __pyx_t_15 = (((*((unsigned int *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_inds.data + __pyx_t_11 * __pyx_v_inds.strides[0]) ) + __pyx_t_12 * __pyx_v_inds.strides[1]) ))) > (*((unsigned int *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_inds.data + __pyx_t_13 * __pyx_v_inds.strides[0]) ) + __pyx_t_14 * __pyx_v_inds.strides[1]) )))) != 0);
               if (__pyx_t_15) {
 
-                /* "cyroot/vector_derivative_approximation.pyx":69
+                /* "cyroot/vector_derivative_approximation.pyx":71
  *                 for k in range(j + 1, inds.shape[1]):
  *                     if inds[i, j] > inds[i, k]:
  *                         unique_mask[i] = False             # <<<<<<<<<<<<<<
@@ -5213,7 +5233,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
                 __pyx_t_14 = __pyx_v_i;
                 *((int *) ( /* dim=0 */ (__pyx_v_unique_mask.data + __pyx_t_14 * __pyx_v_unique_mask.strides[0]) )) = 0;
 
-                /* "cyroot/vector_derivative_approximation.pyx":70
+                /* "cyroot/vector_derivative_approximation.pyx":72
  *                     if inds[i, j] > inds[i, k]:
  *                         unique_mask[i] = False
  *                         break             # <<<<<<<<<<<<<<
@@ -5222,7 +5242,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
  */
                 goto __pyx_L11_break;
 
-                /* "cyroot/vector_derivative_approximation.pyx":68
+                /* "cyroot/vector_derivative_approximation.pyx":70
  *             for j in range(inds.shape[1] - 1):
  *                 for k in range(j + 1, inds.shape[1]):
  *                     if inds[i, j] > inds[i, k]:             # <<<<<<<<<<<<<<
@@ -5233,7 +5253,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
             }
             __pyx_L11_break:;
 
-            /* "cyroot/vector_derivative_approximation.pyx":71
+            /* "cyroot/vector_derivative_approximation.pyx":73
  *                         unique_mask[i] = False
  *                         break
  *                 if not unique_mask[i]:             # <<<<<<<<<<<<<<
@@ -5244,7 +5264,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
             __pyx_t_15 = ((!((*((int *) ( /* dim=0 */ (__pyx_v_unique_mask.data + __pyx_t_14 * __pyx_v_unique_mask.strides[0]) ))) != 0)) != 0);
             if (__pyx_t_15) {
 
-              /* "cyroot/vector_derivative_approximation.pyx":72
+              /* "cyroot/vector_derivative_approximation.pyx":74
  *                         break
  *                 if not unique_mask[i]:
  *                     break             # <<<<<<<<<<<<<<
@@ -5253,7 +5273,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
  */
               goto __pyx_L9_break;
 
-              /* "cyroot/vector_derivative_approximation.pyx":71
+              /* "cyroot/vector_derivative_approximation.pyx":73
  *                         unique_mask[i] = False
  *                         break
  *                 if not unique_mask[i]:             # <<<<<<<<<<<<<<
@@ -5266,7 +5286,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
         }
       }
 
-      /* "cyroot/vector_derivative_approximation.pyx":64
+      /* "cyroot/vector_derivative_approximation.pyx":66
  *     unique_mask[:] = True
  *     cdef unsigned int i, j, k
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -5285,7 +5305,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
       }
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":73
+  /* "cyroot/vector_derivative_approximation.pyx":75
  *                 if not unique_mask[i]:
  *                     break
  *     return inds             # <<<<<<<<<<<<<<
@@ -5296,7 +5316,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
   __pyx_r = __pyx_v_inds;
   goto __pyx_L0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":60
+  /* "cyroot/vector_derivative_approximation.pyx":62
  * ################################################################################
  * # noinspection DuplicatedCode
  * cdef unsigned int[:, :] _vector_derivative_indices(unsigned int[:] ns, bint[:] unique_mask):             # <<<<<<<<<<<<<<
@@ -5321,7 +5341,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__vec
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":75
+/* "cyroot/vector_derivative_approximation.pyx":77
  *     return inds
  * 
  * cdef np.ndarray[np.float64_t, ndim=2] _vector_perturbations(unsigned int dim, int order):             # <<<<<<<<<<<<<<
@@ -5356,55 +5376,55 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation__vector_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_vector_perturbations", 0);
 
-  /* "cyroot/vector_derivative_approximation.pyx":76
+  /* "cyroot/vector_derivative_approximation.pyx":78
  * 
  * cdef np.ndarray[np.float64_t, ndim=2] _vector_perturbations(unsigned int dim, int order):
  *     cdef unsigned int[:] ns = view.array(shape=(dim,),             # <<<<<<<<<<<<<<
  *                                          itemsize=sizeof(int),
  *                                          format='I')
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_dim); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_dim); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":77
+  /* "cyroot/vector_derivative_approximation.pyx":79
  * cdef np.ndarray[np.float64_t, ndim=2] _vector_perturbations(unsigned int dim, int order):
  *     cdef unsigned int[:] ns = view.array(shape=(dim,),
  *                                          itemsize=sizeof(int),             # <<<<<<<<<<<<<<
  *                                          format='I')
  *     ns[:] = order + 1
  */
-  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 78, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":76
+  /* "cyroot/vector_derivative_approximation.pyx":78
  * 
  * cdef np.ndarray[np.float64_t, ndim=2] _vector_perturbations(unsigned int dim, int order):
  *     cdef unsigned int[:] ns = view.array(shape=(dim,),             # <<<<<<<<<<<<<<
  *                                          itemsize=sizeof(int),
  *                                          format='I')
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_ns = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":79
+  /* "cyroot/vector_derivative_approximation.pyx":81
  *                                          itemsize=sizeof(int),
  *                                          format='I')
  *     ns[:] = order + 1             # <<<<<<<<<<<<<<
@@ -5426,31 +5446,31 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation__vector_
       }
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":80
+  /* "cyroot/vector_derivative_approximation.pyx":82
  *                                          format='I')
  *     ns[:] = order + 1
  *     cdef unsigned int[:, :] inds = product(ns)             # <<<<<<<<<<<<<<
  *     cdef array.array perturb_inds = array.array('I')
  *     for i in range(inds.shape[0]):
  */
-  __pyx_t_5 = __pyx_f_6cyroot_5utils_9itertools_product(__pyx_v_ns, 0); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_5 = __pyx_f_6cyroot_5utils_9itertools_product(__pyx_v_ns, 0); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 82, __pyx_L1_error)
   __pyx_v_inds = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":81
+  /* "cyroot/vector_derivative_approximation.pyx":83
  *     ns[:] = order + 1
  *     cdef unsigned int[:, :] inds = product(ns)
  *     cdef array.array perturb_inds = array.array('I')             # <<<<<<<<<<<<<<
  *     for i in range(inds.shape[0]):
  *         steps = inds[i]
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7cpython_5array_array), __pyx_tuple_, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7cpython_5array_array), __pyx_tuple_, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_perturb_inds = ((arrayobject *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":82
+  /* "cyroot/vector_derivative_approximation.pyx":84
  *     cdef unsigned int[:, :] inds = product(ns)
  *     cdef array.array perturb_inds = array.array('I')
  *     for i in range(inds.shape[0]):             # <<<<<<<<<<<<<<
@@ -5462,7 +5482,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation__vector_
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "cyroot/vector_derivative_approximation.pyx":83
+    /* "cyroot/vector_derivative_approximation.pyx":85
  *     cdef array.array perturb_inds = array.array('I')
  *     for i in range(inds.shape[0]):
  *         steps = inds[i]             # <<<<<<<<<<<<<<
@@ -5485,7 +5505,7 @@ __pyx_t_4.shape[0] = __pyx_v_inds.shape[1];
 __pyx_t_4.strides[0] = __pyx_v_inds.strides[1];
     __pyx_t_4.suboffsets[0] = -1;
 
-__pyx_t_3 = __pyx_memoryview_fromslice(__pyx_t_4, 1, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+__pyx_t_3 = __pyx_memoryview_fromslice(__pyx_t_4, 1, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
     __pyx_t_4.memview = NULL;
@@ -5493,37 +5513,37 @@ __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_t_4, 1, (PyObject *(*)(char *)) __p
     __Pyx_XDECREF_SET(__pyx_v_steps, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":84
+    /* "cyroot/vector_derivative_approximation.pyx":86
  *     for i in range(inds.shape[0]):
  *         steps = inds[i]
  *         if sum(steps) <= order:             # <<<<<<<<<<<<<<
  *             perturb_inds.append(i)
  *     return np.ascontiguousarray(np.asarray(inds, dtype=np.float64)[perturb_inds])
  */
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_sum, __pyx_v_steps); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_sum, __pyx_v_steps); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_order); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_order); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = PyObject_RichCompare(__pyx_t_3, __pyx_t_1, Py_LE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __pyx_t_2 = PyObject_RichCompare(__pyx_t_3, __pyx_t_1, Py_LE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 86, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (__pyx_t_9) {
 
-      /* "cyroot/vector_derivative_approximation.pyx":85
+      /* "cyroot/vector_derivative_approximation.pyx":87
  *         steps = inds[i]
  *         if sum(steps) <= order:
  *             perturb_inds.append(i)             # <<<<<<<<<<<<<<
  *     return np.ascontiguousarray(np.asarray(inds, dtype=np.float64)[perturb_inds])
  * 
  */
-      __pyx_t_2 = PyInt_FromSsize_t(__pyx_v_i); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_2 = PyInt_FromSsize_t(__pyx_v_i); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 87, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_10 = __Pyx_PyObject_Append(((PyObject *)__pyx_v_perturb_inds), __pyx_t_2); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_Append(((PyObject *)__pyx_v_perturb_inds), __pyx_t_2); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 87, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "cyroot/vector_derivative_approximation.pyx":84
+      /* "cyroot/vector_derivative_approximation.pyx":86
  *     for i in range(inds.shape[0]):
  *         steps = inds[i]
  *         if sum(steps) <= order:             # <<<<<<<<<<<<<<
@@ -5533,7 +5553,7 @@ __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_t_4, 1, (PyObject *(*)(char *)) __p
     }
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":86
+  /* "cyroot/vector_derivative_approximation.pyx":88
  *         if sum(steps) <= order:
  *             perturb_inds.append(i)
  *     return np.ascontiguousarray(np.asarray(inds, dtype=np.float64)[perturb_inds])             # <<<<<<<<<<<<<<
@@ -5541,38 +5561,38 @@ __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_t_4, 1, (PyObject *(*)(char *)) __p
  * cdef int[:] _finite_difference_coefs(int order, int kind):
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ascontiguousarray); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ascontiguousarray); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_asarray); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_asarray); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_inds, 2, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_inds, 2, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_12 = PyTuple_New(1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_12 = PyTuple_New(1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_13, __pyx_n_s_np); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_13, __pyx_n_s_np); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
-  __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_13, __pyx_n_s_float64); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_13, __pyx_n_s_float64); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_14);
   __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_14) < 0) __PYX_ERR(0, 86, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_14) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-  __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_12, __pyx_t_1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_12, __pyx_t_1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_14);
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_t_14, ((PyObject *)__pyx_v_perturb_inds)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_t_14, ((PyObject *)__pyx_v_perturb_inds)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
   __pyx_t_14 = NULL;
@@ -5588,15 +5608,15 @@ __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_t_4, 1, (PyObject *(*)(char *)) __p
   __pyx_t_2 = (__pyx_t_14) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_14, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 86, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 88, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":75
+  /* "cyroot/vector_derivative_approximation.pyx":77
  *     return inds
  * 
  * cdef np.ndarray[np.float64_t, ndim=2] _vector_perturbations(unsigned int dim, int order):             # <<<<<<<<<<<<<<
@@ -5627,7 +5647,7 @@ __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_t_4, 1, (PyObject *(*)(char *)) __p
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":88
+/* "cyroot/vector_derivative_approximation.pyx":90
  *     return np.ascontiguousarray(np.asarray(inds, dtype=np.float64)[perturb_inds])
  * 
  * cdef int[:] _finite_difference_coefs(int order, int kind):             # <<<<<<<<<<<<<<
@@ -5654,55 +5674,55 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__fin
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_finite_difference_coefs", 0);
 
-  /* "cyroot/vector_derivative_approximation.pyx":89
+  /* "cyroot/vector_derivative_approximation.pyx":91
  * 
  * cdef int[:] _finite_difference_coefs(int order, int kind):
  *     cdef int[:] out = view.array(shape=(order + 1,),             # <<<<<<<<<<<<<<
  *                                  itemsize=sizeof(int),
  *                                  format='i')
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_order + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_order + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":90
+  /* "cyroot/vector_derivative_approximation.pyx":92
  * cdef int[:] _finite_difference_coefs(int order, int kind):
  *     cdef int[:] out = view.array(shape=(order + 1,),
  *                                  itemsize=sizeof(int),             # <<<<<<<<<<<<<<
  *                                  format='i')
  *     cdef long i
  */
-  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_i) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_i) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":89
+  /* "cyroot/vector_derivative_approximation.pyx":91
  * 
  * cdef int[:] _finite_difference_coefs(int order, int kind):
  *     cdef int[:] out = view.array(shape=(order + 1,),             # <<<<<<<<<<<<<<
  *                                  itemsize=sizeof(int),
  *                                  format='i')
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_out = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":93
+  /* "cyroot/vector_derivative_approximation.pyx":95
  *                                  format='i')
  *     cdef long i
  *     if kind == 1:             # <<<<<<<<<<<<<<
@@ -5712,7 +5732,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__fin
   __pyx_t_5 = ((__pyx_v_kind == 1) != 0);
   if (__pyx_t_5) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":94
+    /* "cyroot/vector_derivative_approximation.pyx":96
  *     cdef long i
  *     if kind == 1:
  *         for i in range(order + 1):             # <<<<<<<<<<<<<<
@@ -5724,7 +5744,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__fin
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_i = __pyx_t_8;
 
-      /* "cyroot/vector_derivative_approximation.pyx":95
+      /* "cyroot/vector_derivative_approximation.pyx":97
  *     if kind == 1:
  *         for i in range(order + 1):
  *             out[i] = (-1) ** (order - i) * binomial_coef(order, i)             # <<<<<<<<<<<<<<
@@ -5736,7 +5756,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__fin
       *((int *) ( /* dim=0 */ (__pyx_v_out.data + __pyx_t_9 * __pyx_v_out.strides[0]) )) = (__Pyx_pow_long(-1L, (__pyx_v_order - __pyx_v_i)) * binomial_coef(__pyx_v_order, __pyx_v_i));
     }
 
-    /* "cyroot/vector_derivative_approximation.pyx":93
+    /* "cyroot/vector_derivative_approximation.pyx":95
  *                                  format='i')
  *     cdef long i
  *     if kind == 1:             # <<<<<<<<<<<<<<
@@ -5746,7 +5766,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__fin
     goto __pyx_L3;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":97
+  /* "cyroot/vector_derivative_approximation.pyx":99
  *             out[i] = (-1) ** (order - i) * binomial_coef(order, i)
  *     else:
  *         for i in range(order + 1):             # <<<<<<<<<<<<<<
@@ -5759,7 +5779,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__fin
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_i = __pyx_t_8;
 
-      /* "cyroot/vector_derivative_approximation.pyx":98
+      /* "cyroot/vector_derivative_approximation.pyx":100
  *     else:
  *         for i in range(order + 1):
  *             out[i] = (-1) ** i * binomial_coef(order, i)             # <<<<<<<<<<<<<<
@@ -5773,7 +5793,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__fin
   }
   __pyx_L3:;
 
-  /* "cyroot/vector_derivative_approximation.pyx":99
+  /* "cyroot/vector_derivative_approximation.pyx":101
  *         for i in range(order + 1):
  *             out[i] = (-1) ** i * binomial_coef(order, i)
  *     return out             # <<<<<<<<<<<<<<
@@ -5784,7 +5804,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__fin
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":88
+  /* "cyroot/vector_derivative_approximation.pyx":90
  *     return np.ascontiguousarray(np.asarray(inds, dtype=np.float64)[perturb_inds])
  * 
  * cdef int[:] _finite_difference_coefs(int order, int kind):             # <<<<<<<<<<<<<<
@@ -5812,7 +5832,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__fin
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":101
+/* "cyroot/vector_derivative_approximation.pyx":103
  *     return out
  * 
  * cdef unsigned int[:] _index_to_grad_comb(unsigned int[:] index, unsigned int dim):             # <<<<<<<<<<<<<<
@@ -5839,55 +5859,55 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__ind
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_index_to_grad_comb", 0);
 
-  /* "cyroot/vector_derivative_approximation.pyx":102
+  /* "cyroot/vector_derivative_approximation.pyx":104
  * 
  * cdef unsigned int[:] _index_to_grad_comb(unsigned int[:] index, unsigned int dim):
  *     cdef unsigned int[:] comb = view.array(shape=(dim,),             # <<<<<<<<<<<<<<
  *                                            itemsize=sizeof(int),
  *                                            format='I')
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 102, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_dim); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 102, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_dim); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 102, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 102, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":103
+  /* "cyroot/vector_derivative_approximation.pyx":105
  * cdef unsigned int[:] _index_to_grad_comb(unsigned int[:] index, unsigned int dim):
  *     cdef unsigned int[:] comb = view.array(shape=(dim,),
  *                                            itemsize=sizeof(int),             # <<<<<<<<<<<<<<
  *                                            format='I')
  *     comb[:] = 0
  */
-  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 105, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 102, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 102, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":102
+  /* "cyroot/vector_derivative_approximation.pyx":104
  * 
  * cdef unsigned int[:] _index_to_grad_comb(unsigned int[:] index, unsigned int dim):
  *     cdef unsigned int[:] comb = view.array(shape=(dim,),             # <<<<<<<<<<<<<<
  *                                            itemsize=sizeof(int),
  *                                            format='I')
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 102, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 102, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_comb = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":105
+  /* "cyroot/vector_derivative_approximation.pyx":107
  *                                            itemsize=sizeof(int),
  *                                            format='I')
  *     comb[:] = 0             # <<<<<<<<<<<<<<
@@ -5909,7 +5929,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__ind
       }
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":107
+  /* "cyroot/vector_derivative_approximation.pyx":109
  *     comb[:] = 0
  *     cdef unsigned int i
  *     for i in range(index.shape[0]):             # <<<<<<<<<<<<<<
@@ -5921,7 +5941,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__ind
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_i = __pyx_t_7;
 
-    /* "cyroot/vector_derivative_approximation.pyx":108
+    /* "cyroot/vector_derivative_approximation.pyx":110
  *     cdef unsigned int i
  *     for i in range(index.shape[0]):
  *         comb[index[i]] += 1             # <<<<<<<<<<<<<<
@@ -5933,7 +5953,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__ind
     *((unsigned int *) ( /* dim=0 */ (__pyx_v_comb.data + __pyx_t_9 * __pyx_v_comb.strides[0]) )) += 1;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":109
+  /* "cyroot/vector_derivative_approximation.pyx":111
  *     for i in range(index.shape[0]):
  *         comb[index[i]] += 1
  *     return comb             # <<<<<<<<<<<<<<
@@ -5944,7 +5964,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__ind
   __pyx_r = __pyx_v_comb;
   goto __pyx_L0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":101
+  /* "cyroot/vector_derivative_approximation.pyx":103
  *     return out
  * 
  * cdef unsigned int[:] _index_to_grad_comb(unsigned int[:] index, unsigned int dim):             # <<<<<<<<<<<<<<
@@ -5972,7 +5992,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__ind
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":112
+/* "cyroot/vector_derivative_approximation.pyx":114
  * 
  * # noinspection DuplicatedCode
  * cdef np.ndarray generalized_finite_difference_kernel(             # <<<<<<<<<<<<<<
@@ -5982,7 +6002,7 @@ static __Pyx_memviewslice __pyx_f_6cyroot_31vector_derivative_approximation__ind
 
 static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generalized_finite_difference_kernel(struct __pyx_obj_6cyroot_4fptr_NdArrayFPtr *__pyx_v_F, PyArrayObject *__pyx_v_x, PyArrayObject *__pyx_v_F_x, PyArrayObject *__pyx_v_h, struct __pyx_opt_args_6cyroot_31vector_derivative_approximation_generalized_finite_difference_kernel *__pyx_optional_args) {
   int __pyx_v_order = ((int)1);
-  int __pyx_v_kind = ((int)1);
+  int __pyx_v_kind = ((int)0);
   unsigned int __pyx_v_i;
   unsigned int __pyx_v_j;
   unsigned int __pyx_v_k;
@@ -6100,69 +6120,69 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generali
   __pyx_pybuffernd_h.rcbuffer = &__pyx_pybuffer_h;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 112, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 114, __pyx_L1_error)
   }
   __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_F_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_F_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 112, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_F_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_F_x, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 114, __pyx_L1_error)
   }
   __pyx_pybuffernd_F_x.diminfo[0].strides = __pyx_pybuffernd_F_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_F_x.diminfo[0].shape = __pyx_pybuffernd_F_x.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_h.rcbuffer->pybuffer, (PyObject*)__pyx_v_h, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 112, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_h.rcbuffer->pybuffer, (PyObject*)__pyx_v_h, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 114, __pyx_L1_error)
   }
   __pyx_pybuffernd_h.diminfo[0].strides = __pyx_pybuffernd_h.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_h.diminfo[0].shape = __pyx_pybuffernd_h.rcbuffer->pybuffer.shape[0];
 
-  /* "cyroot/vector_derivative_approximation.pyx":120
- *         int kind=1):
+  /* "cyroot/vector_derivative_approximation.pyx":122
+ *         int kind=0):
  *     cdef unsigned int i, j, k, ii, eq_ii
  *     cdef unsigned int[:] dims = view.array(shape=(order + 1,),             # <<<<<<<<<<<<<<
  *                                            itemsize=sizeof(int),
  *                                            format='I')
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_order + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_long((__pyx_v_order + 1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 120, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":121
+  /* "cyroot/vector_derivative_approximation.pyx":123
  *     cdef unsigned int i, j, k, ii, eq_ii
  *     cdef unsigned int[:] dims = view.array(shape=(order + 1,),
  *                                            itemsize=sizeof(int),             # <<<<<<<<<<<<<<
  *                                            format='I')
  *     dims[0] = F_x.shape[0]
  */
-  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 120, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_3) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 120, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":120
- *         int kind=1):
+  /* "cyroot/vector_derivative_approximation.pyx":122
+ *         int kind=0):
  *     cdef unsigned int i, j, k, ii, eq_ii
  *     cdef unsigned int[:] dims = view.array(shape=(order + 1,),             # <<<<<<<<<<<<<<
  *                                            itemsize=sizeof(int),
  *                                            format='I')
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_dims = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":123
+  /* "cyroot/vector_derivative_approximation.pyx":125
  *                                            itemsize=sizeof(int),
  *                                            format='I')
  *     dims[0] = F_x.shape[0]             # <<<<<<<<<<<<<<
@@ -6173,7 +6193,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generali
   if (__pyx_t_5 < 0) __pyx_t_5 += __pyx_v_dims.shape[0];
   *((unsigned int *) ( /* dim=0 */ (__pyx_v_dims.data + __pyx_t_5 * __pyx_v_dims.strides[0]) )) = (__pyx_v_F_x->dimensions[0]);
 
-  /* "cyroot/vector_derivative_approximation.pyx":124
+  /* "cyroot/vector_derivative_approximation.pyx":126
  *                                            format='I')
  *     dims[0] = F_x.shape[0]
  *     dims[1:] = x.shape[0]             # <<<<<<<<<<<<<<
@@ -6198,7 +6218,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generali
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 124, __pyx_L1_error)
+    __PYX_ERR(0, 126, __pyx_L1_error)
 }
 
 {
@@ -6219,43 +6239,43 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generali
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":125
+  /* "cyroot/vector_derivative_approximation.pyx":127
  *     dims[0] = F_x.shape[0]
  *     dims[1:] = x.shape[0]
  *     cdef np.ndarray[np.float64_t, ndim=2] D = np.zeros(dims, dtype=np.float64).reshape(F_x.shape[0], -1)             # <<<<<<<<<<<<<<
  * 
  *     # TODO: efficient implementations for Jacobian and Hessian
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_dims, 1, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_dims, 1, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_float64); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_float64); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_9) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_9) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, __pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, __pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_reshape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_reshape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_F_x->dimensions[0])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_F_x->dimensions[0])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __pyx_t_7 = NULL;
   __pyx_t_6 = 0;
@@ -6272,7 +6292,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generali
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_9, __pyx_int_neg_1};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -6281,14 +6301,14 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generali
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_9, __pyx_int_neg_1};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   } else
   #endif
   {
-    __pyx_t_2 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -6299,18 +6319,18 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generali
     __Pyx_GIVEREF(__pyx_int_neg_1);
     PyTuple_SET_ITEM(__pyx_t_2, 1+__pyx_t_6, __pyx_int_neg_1);
     __pyx_t_9 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 125, __pyx_L1_error)
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 127, __pyx_L1_error)
   __pyx_t_10 = ((PyArrayObject *)__pyx_t_3);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_D.rcbuffer->pybuffer, (PyObject*)__pyx_t_10, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_D = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_D.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 125, __pyx_L1_error)
+      __PYX_ERR(0, 127, __pyx_L1_error)
     } else {__pyx_pybuffernd_D.diminfo[0].strides = __pyx_pybuffernd_D.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_D.diminfo[0].shape = __pyx_pybuffernd_D.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_D.diminfo[1].strides = __pyx_pybuffernd_D.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_D.diminfo[1].shape = __pyx_pybuffernd_D.rcbuffer->pybuffer.shape[1];
     }
   }
@@ -6318,14 +6338,14 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generali
   __pyx_v_D = ((PyArrayObject *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":137
+  /* "cyroot/vector_derivative_approximation.pyx":139
  *     cdef unsigned int[:, :] indices
  *     cdef unsigned int[:] index
  *     cdef bint[:] unique_mask = view.array(shape=(prod[np.uint32_t](dims[1:]),),             # <<<<<<<<<<<<<<
  *                                           itemsize=sizeof(int),
  *                                           format='i')
  */
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4.data = __pyx_v_dims.data;
   __pyx_t_4.memview = __pyx_v_dims.memview;
@@ -6345,52 +6365,52 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_generali
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 137, __pyx_L1_error)
+    __PYX_ERR(0, 139, __pyx_L1_error)
 }
 
-__pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_fuse_1__pyx_f_6cyroot_3ops_10vector_ops_prod(__pyx_t_4)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
+__pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_fuse_1__pyx_f_6cyroot_3ops_10vector_ops_prod(__pyx_t_4)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_shape, __pyx_t_2) < 0) __PYX_ERR(0, 137, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_shape, __pyx_t_2) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":138
+  /* "cyroot/vector_derivative_approximation.pyx":140
  *     cdef unsigned int[:] index
  *     cdef bint[:] unique_mask = view.array(shape=(prod[np.uint32_t](dims[1:]),),
  *                                           itemsize=sizeof(int),             # <<<<<<<<<<<<<<
  *                                           format='i')
  *     indices = _vector_derivative_indices(dims[1:], unique_mask)
  */
-  __pyx_t_2 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 138, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 140, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_itemsize, __pyx_t_2) < 0) __PYX_ERR(0, 137, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_itemsize, __pyx_t_2) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_format, __pyx_n_u_i) < 0) __PYX_ERR(0, 137, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_format, __pyx_n_u_i) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":137
+  /* "cyroot/vector_derivative_approximation.pyx":139
  *     cdef unsigned int[:, :] indices
  *     cdef unsigned int[:] index
  *     cdef bint[:] unique_mask = view.array(shape=(prod[np.uint32_t](dims[1:]),),             # <<<<<<<<<<<<<<
  *                                           itemsize=sizeof(int),
  *                                           format='i')
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_unique_mask = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":140
+  /* "cyroot/vector_derivative_approximation.pyx":142
  *                                           itemsize=sizeof(int),
  *                                           format='i')
  *     indices = _vector_derivative_indices(dims[1:], unique_mask)             # <<<<<<<<<<<<<<
@@ -6415,10 +6435,10 @@ __pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_fuse_1__pyx_f_6cyroot_3ops_10vec
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 140, __pyx_L1_error)
+    __PYX_ERR(0, 142, __pyx_L1_error)
 }
 
-__pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivative_indices(__pyx_t_4, __pyx_v_unique_mask); if (unlikely(!__pyx_t_12.memview)) __PYX_ERR(0, 140, __pyx_L1_error)
+__pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivative_indices(__pyx_t_4, __pyx_v_unique_mask); if (unlikely(!__pyx_t_12.memview)) __PYX_ERR(0, 142, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
@@ -6426,51 +6446,51 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
   __pyx_t_12.memview = NULL;
   __pyx_t_12.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":143
+  /* "cyroot/vector_derivative_approximation.pyx":145
  * 
  *     cdef bint zero_step
  *     cdef np.ndarray[np.float64_t, ndim=2] perturbation_steps = _vector_perturbations(x.shape[0], order)             # <<<<<<<<<<<<<<
  *     cdef np.ndarray[np.float64_t, ndim=1] perturbation_step
  *     cdef np.ndarray[np.float64_t, ndim=2] F_perturbations = np.empty(
  */
-  __pyx_t_2 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation__vector_perturbations((__pyx_v_x->dimensions[0]), __pyx_v_order)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 143, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation__vector_perturbations((__pyx_v_x->dimensions[0]), __pyx_v_order)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_perturbation_steps.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_2), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_perturbation_steps = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_perturbation_steps.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 143, __pyx_L1_error)
+      __PYX_ERR(0, 145, __pyx_L1_error)
     } else {__pyx_pybuffernd_perturbation_steps.diminfo[0].strides = __pyx_pybuffernd_perturbation_steps.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_perturbation_steps.diminfo[0].shape = __pyx_pybuffernd_perturbation_steps.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_perturbation_steps.diminfo[1].strides = __pyx_pybuffernd_perturbation_steps.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_perturbation_steps.diminfo[1].shape = __pyx_pybuffernd_perturbation_steps.rcbuffer->pybuffer.shape[1];
     }
   }
   __pyx_v_perturbation_steps = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":145
+  /* "cyroot/vector_derivative_approximation.pyx":147
  *     cdef np.ndarray[np.float64_t, ndim=2] perturbation_steps = _vector_perturbations(x.shape[0], order)
  *     cdef np.ndarray[np.float64_t, ndim=1] perturbation_step
  *     cdef np.ndarray[np.float64_t, ndim=2] F_perturbations = np.empty(             # <<<<<<<<<<<<<<
  *         (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)
  *     for i in range(perturbation_steps.shape[0]):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_empty); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_empty); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":146
+  /* "cyroot/vector_derivative_approximation.pyx":148
  *     cdef np.ndarray[np.float64_t, ndim=1] perturbation_step
  *     cdef np.ndarray[np.float64_t, ndim=2] F_perturbations = np.empty(
  *         (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)             # <<<<<<<<<<<<<<
  *     for i in range(perturbation_steps.shape[0]):
  *         if kind == 1:
  */
-  __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_perturbation_steps->dimensions[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_perturbation_steps->dimensions[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_F_x->dimensions[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_F_x->dimensions[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_2);
@@ -6479,55 +6499,55 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
   __pyx_t_2 = 0;
   __pyx_t_1 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":145
+  /* "cyroot/vector_derivative_approximation.pyx":147
  *     cdef np.ndarray[np.float64_t, ndim=2] perturbation_steps = _vector_perturbations(x.shape[0], order)
  *     cdef np.ndarray[np.float64_t, ndim=1] perturbation_step
  *     cdef np.ndarray[np.float64_t, ndim=2] F_perturbations = np.empty(             # <<<<<<<<<<<<<<
  *         (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)
  *     for i in range(perturbation_steps.shape[0]):
  */
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_9);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_9);
   __pyx_t_9 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":146
+  /* "cyroot/vector_derivative_approximation.pyx":148
  *     cdef np.ndarray[np.float64_t, ndim=1] perturbation_step
  *     cdef np.ndarray[np.float64_t, ndim=2] F_perturbations = np.empty(
  *         (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)             # <<<<<<<<<<<<<<
  *     for i in range(perturbation_steps.shape[0]):
  *         if kind == 1:
  */
-  __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_dtype, __pyx_t_7) < 0) __PYX_ERR(0, 146, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_dtype, __pyx_t_7) < 0) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":145
+  /* "cyroot/vector_derivative_approximation.pyx":147
  *     cdef np.ndarray[np.float64_t, ndim=2] perturbation_steps = _vector_perturbations(x.shape[0], order)
  *     cdef np.ndarray[np.float64_t, ndim=1] perturbation_step
  *     cdef np.ndarray[np.float64_t, ndim=2] F_perturbations = np.empty(             # <<<<<<<<<<<<<<
  *         (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)
  *     for i in range(perturbation_steps.shape[0]):
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  if (!(likely(((__pyx_t_7) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_7, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 145, __pyx_L1_error)
+  if (!(likely(((__pyx_t_7) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_7, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 147, __pyx_L1_error)
   __pyx_t_13 = ((PyArrayObject *)__pyx_t_7);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_F_perturbations.rcbuffer->pybuffer, (PyObject*)__pyx_t_13, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_F_perturbations = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_F_perturbations.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 145, __pyx_L1_error)
+      __PYX_ERR(0, 147, __pyx_L1_error)
     } else {__pyx_pybuffernd_F_perturbations.diminfo[0].strides = __pyx_pybuffernd_F_perturbations.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_F_perturbations.diminfo[0].shape = __pyx_pybuffernd_F_perturbations.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_F_perturbations.diminfo[1].strides = __pyx_pybuffernd_F_perturbations.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_F_perturbations.diminfo[1].shape = __pyx_pybuffernd_F_perturbations.rcbuffer->pybuffer.shape[1];
     }
   }
@@ -6535,7 +6555,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
   __pyx_v_F_perturbations = ((PyArrayObject *)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":147
+  /* "cyroot/vector_derivative_approximation.pyx":149
  *     cdef np.ndarray[np.float64_t, ndim=2] F_perturbations = np.empty(
  *         (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)
  *     for i in range(perturbation_steps.shape[0]):             # <<<<<<<<<<<<<<
@@ -6547,7 +6567,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
   for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
     __pyx_v_i = __pyx_t_16;
 
-    /* "cyroot/vector_derivative_approximation.pyx":148
+    /* "cyroot/vector_derivative_approximation.pyx":150
  *         (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)
  *     for i in range(perturbation_steps.shape[0]):
  *         if kind == 1:             # <<<<<<<<<<<<<<
@@ -6557,16 +6577,16 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
     switch (__pyx_v_kind) {
       case 1:
 
-      /* "cyroot/vector_derivative_approximation.pyx":149
+      /* "cyroot/vector_derivative_approximation.pyx":151
  *     for i in range(perturbation_steps.shape[0]):
  *         if kind == 1:
  *             perturbation_step = perturbation_steps[i]             # <<<<<<<<<<<<<<
  *         elif kind == -1:
  *             perturbation_step = -perturbation_steps[i]
  */
-      __pyx_t_7 = __Pyx_GetItemInt(((PyObject *)__pyx_v_perturbation_steps), __pyx_v_i, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 149, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetItemInt(((PyObject *)__pyx_v_perturbation_steps), __pyx_v_i, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 151, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      if (!(likely(((__pyx_t_7) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_7, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 149, __pyx_L1_error)
+      if (!(likely(((__pyx_t_7) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_7, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 151, __pyx_L1_error)
       __pyx_t_17 = ((PyArrayObject *)__pyx_t_7);
       {
         __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -6583,13 +6603,13 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
           __pyx_t_18 = __pyx_t_19 = __pyx_t_20 = 0;
         }
         __pyx_pybuffernd_perturbation_step.diminfo[0].strides = __pyx_pybuffernd_perturbation_step.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_perturbation_step.diminfo[0].shape = __pyx_pybuffernd_perturbation_step.rcbuffer->pybuffer.shape[0];
-        if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 149, __pyx_L1_error)
+        if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 151, __pyx_L1_error)
       }
       __pyx_t_17 = 0;
       __Pyx_XDECREF_SET(__pyx_v_perturbation_step, ((PyArrayObject *)__pyx_t_7));
       __pyx_t_7 = 0;
 
-      /* "cyroot/vector_derivative_approximation.pyx":148
+      /* "cyroot/vector_derivative_approximation.pyx":150
  *         (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)
  *     for i in range(perturbation_steps.shape[0]):
  *         if kind == 1:             # <<<<<<<<<<<<<<
@@ -6599,19 +6619,19 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
       break;
       case -1L:
 
-      /* "cyroot/vector_derivative_approximation.pyx":151
+      /* "cyroot/vector_derivative_approximation.pyx":153
  *             perturbation_step = perturbation_steps[i]
  *         elif kind == -1:
  *             perturbation_step = -perturbation_steps[i]             # <<<<<<<<<<<<<<
  *         else:
  *             perturbation_step = <double> order / 2. - perturbation_steps[i]
  */
-      __pyx_t_7 = __Pyx_GetItemInt(((PyObject *)__pyx_v_perturbation_steps), __pyx_v_i, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 151, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetItemInt(((PyObject *)__pyx_v_perturbation_steps), __pyx_v_i, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 153, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_9 = PyNumber_Negative(__pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 151, __pyx_L1_error)
+      __pyx_t_9 = PyNumber_Negative(__pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 153, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      if (!(likely(((__pyx_t_9) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_9, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 151, __pyx_L1_error)
+      if (!(likely(((__pyx_t_9) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_9, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 153, __pyx_L1_error)
       __pyx_t_17 = ((PyArrayObject *)__pyx_t_9);
       {
         __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -6628,13 +6648,13 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
           __pyx_t_20 = __pyx_t_19 = __pyx_t_18 = 0;
         }
         __pyx_pybuffernd_perturbation_step.diminfo[0].strides = __pyx_pybuffernd_perturbation_step.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_perturbation_step.diminfo[0].shape = __pyx_pybuffernd_perturbation_step.rcbuffer->pybuffer.shape[0];
-        if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 151, __pyx_L1_error)
+        if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 153, __pyx_L1_error)
       }
       __pyx_t_17 = 0;
       __Pyx_XDECREF_SET(__pyx_v_perturbation_step, ((PyArrayObject *)__pyx_t_9));
       __pyx_t_9 = 0;
 
-      /* "cyroot/vector_derivative_approximation.pyx":150
+      /* "cyroot/vector_derivative_approximation.pyx":152
  *         if kind == 1:
  *             perturbation_step = perturbation_steps[i]
  *         elif kind == -1:             # <<<<<<<<<<<<<<
@@ -6644,22 +6664,22 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
       break;
       default:
 
-      /* "cyroot/vector_derivative_approximation.pyx":153
+      /* "cyroot/vector_derivative_approximation.pyx":155
  *             perturbation_step = -perturbation_steps[i]
  *         else:
  *             perturbation_step = <double> order / 2. - perturbation_steps[i]             # <<<<<<<<<<<<<<
  * 
  *         if kind != 0:
  */
-      __pyx_t_9 = PyFloat_FromDouble((((double)__pyx_v_order) / 2.)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 153, __pyx_L1_error)
+      __pyx_t_9 = PyFloat_FromDouble((((double)__pyx_v_order) / 2.)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 155, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_7 = __Pyx_GetItemInt(((PyObject *)__pyx_v_perturbation_steps), __pyx_v_i, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 153, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetItemInt(((PyObject *)__pyx_v_perturbation_steps), __pyx_v_i, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 155, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_1 = PyNumber_Subtract(__pyx_t_9, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
+      __pyx_t_1 = PyNumber_Subtract(__pyx_t_9, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 153, __pyx_L1_error)
+      if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 155, __pyx_L1_error)
       __pyx_t_17 = ((PyArrayObject *)__pyx_t_1);
       {
         __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -6676,7 +6696,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
           __pyx_t_18 = __pyx_t_19 = __pyx_t_20 = 0;
         }
         __pyx_pybuffernd_perturbation_step.diminfo[0].strides = __pyx_pybuffernd_perturbation_step.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_perturbation_step.diminfo[0].shape = __pyx_pybuffernd_perturbation_step.rcbuffer->pybuffer.shape[0];
-        if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 153, __pyx_L1_error)
+        if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 155, __pyx_L1_error)
       }
       __pyx_t_17 = 0;
       __Pyx_XDECREF_SET(__pyx_v_perturbation_step, ((PyArrayObject *)__pyx_t_1));
@@ -6684,7 +6704,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
       break;
     }
 
-    /* "cyroot/vector_derivative_approximation.pyx":155
+    /* "cyroot/vector_derivative_approximation.pyx":157
  *             perturbation_step = <double> order / 2. - perturbation_steps[i]
  * 
  *         if kind != 0:             # <<<<<<<<<<<<<<
@@ -6694,7 +6714,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
     __pyx_t_21 = ((__pyx_v_kind != 0) != 0);
     if (__pyx_t_21) {
 
-      /* "cyroot/vector_derivative_approximation.pyx":156
+      /* "cyroot/vector_derivative_approximation.pyx":158
  * 
  *         if kind != 0:
  *             if i == 0:             # <<<<<<<<<<<<<<
@@ -6704,16 +6724,16 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
       __pyx_t_21 = ((__pyx_v_i == 0) != 0);
       if (__pyx_t_21) {
 
-        /* "cyroot/vector_derivative_approximation.pyx":157
+        /* "cyroot/vector_derivative_approximation.pyx":159
  *         if kind != 0:
  *             if i == 0:
  *                 F_perturbations[0] = F_x             # <<<<<<<<<<<<<<
  *             else:
  *                 F_perturbations[i] = F(x + perturbation_step * h)
  */
-        if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_F_perturbations), 0, ((PyObject *)__pyx_v_F_x), long, 1, __Pyx_PyInt_From_long, 0, 0, 0) < 0)) __PYX_ERR(0, 157, __pyx_L1_error)
+        if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_F_perturbations), 0, ((PyObject *)__pyx_v_F_x), long, 1, __Pyx_PyInt_From_long, 0, 0, 0) < 0)) __PYX_ERR(0, 159, __pyx_L1_error)
 
-        /* "cyroot/vector_derivative_approximation.pyx":156
+        /* "cyroot/vector_derivative_approximation.pyx":158
  * 
  *         if kind != 0:
  *             if i == 0:             # <<<<<<<<<<<<<<
@@ -6723,7 +6743,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
         goto __pyx_L6;
       }
 
-      /* "cyroot/vector_derivative_approximation.pyx":159
+      /* "cyroot/vector_derivative_approximation.pyx":161
  *                 F_perturbations[0] = F_x
  *             else:
  *                 F_perturbations[i] = F(x + perturbation_step * h)             # <<<<<<<<<<<<<<
@@ -6731,9 +6751,9 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
  *             zero_step = True
  */
       /*else*/ {
-        __pyx_t_7 = PyNumber_Multiply(((PyObject *)__pyx_v_perturbation_step), ((PyObject *)__pyx_v_h)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 159, __pyx_L1_error)
+        __pyx_t_7 = PyNumber_Multiply(((PyObject *)__pyx_v_perturbation_step), ((PyObject *)__pyx_v_h)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_9 = PyNumber_Add(((PyObject *)__pyx_v_x), __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 159, __pyx_L1_error)
+        __pyx_t_9 = PyNumber_Add(((PyObject *)__pyx_v_x), __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 161, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_INCREF(((PyObject *)__pyx_v_F));
@@ -6750,15 +6770,15 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
         __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_3, __pyx_t_9) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_9);
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L1_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 161, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_F_perturbations), __pyx_v_i, __pyx_t_1, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0) < 0)) __PYX_ERR(0, 159, __pyx_L1_error)
+        if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_F_perturbations), __pyx_v_i, __pyx_t_1, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0) < 0)) __PYX_ERR(0, 161, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       }
       __pyx_L6:;
 
-      /* "cyroot/vector_derivative_approximation.pyx":155
+      /* "cyroot/vector_derivative_approximation.pyx":157
  *             perturbation_step = <double> order / 2. - perturbation_steps[i]
  * 
  *         if kind != 0:             # <<<<<<<<<<<<<<
@@ -6768,7 +6788,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
       goto __pyx_L5;
     }
 
-    /* "cyroot/vector_derivative_approximation.pyx":161
+    /* "cyroot/vector_derivative_approximation.pyx":163
  *                 F_perturbations[i] = F(x + perturbation_step * h)
  *         else:
  *             zero_step = True             # <<<<<<<<<<<<<<
@@ -6778,7 +6798,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
     /*else*/ {
       __pyx_v_zero_step = 1;
 
-      /* "cyroot/vector_derivative_approximation.pyx":162
+      /* "cyroot/vector_derivative_approximation.pyx":164
  *         else:
  *             zero_step = True
  *             for j in range(perturbation_step.shape[0]):             # <<<<<<<<<<<<<<
@@ -6790,7 +6810,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
       for (__pyx_t_24 = 0; __pyx_t_24 < __pyx_t_23; __pyx_t_24+=1) {
         __pyx_v_j = __pyx_t_24;
 
-        /* "cyroot/vector_derivative_approximation.pyx":163
+        /* "cyroot/vector_derivative_approximation.pyx":165
  *             zero_step = True
  *             for j in range(perturbation_step.shape[0]):
  *                 if perturbation_step[j] != 0:             # <<<<<<<<<<<<<<
@@ -6801,7 +6821,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
         __pyx_t_21 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_perturbation_step.rcbuffer->pybuffer.buf, __pyx_t_25, __pyx_pybuffernd_perturbation_step.diminfo[0].strides)) != 0.0) != 0);
         if (__pyx_t_21) {
 
-          /* "cyroot/vector_derivative_approximation.pyx":164
+          /* "cyroot/vector_derivative_approximation.pyx":166
  *             for j in range(perturbation_step.shape[0]):
  *                 if perturbation_step[j] != 0:
  *                     zero_step = False             # <<<<<<<<<<<<<<
@@ -6810,7 +6830,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
  */
           __pyx_v_zero_step = 0;
 
-          /* "cyroot/vector_derivative_approximation.pyx":165
+          /* "cyroot/vector_derivative_approximation.pyx":167
  *                 if perturbation_step[j] != 0:
  *                     zero_step = False
  *                     break             # <<<<<<<<<<<<<<
@@ -6819,7 +6839,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
  */
           goto __pyx_L8_break;
 
-          /* "cyroot/vector_derivative_approximation.pyx":163
+          /* "cyroot/vector_derivative_approximation.pyx":165
  *             zero_step = True
  *             for j in range(perturbation_step.shape[0]):
  *                 if perturbation_step[j] != 0:             # <<<<<<<<<<<<<<
@@ -6830,7 +6850,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
       }
       __pyx_L8_break:;
 
-      /* "cyroot/vector_derivative_approximation.pyx":166
+      /* "cyroot/vector_derivative_approximation.pyx":168
  *                     zero_step = False
  *                     break
  *             if zero_step:             # <<<<<<<<<<<<<<
@@ -6840,16 +6860,16 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
       __pyx_t_21 = (__pyx_v_zero_step != 0);
       if (__pyx_t_21) {
 
-        /* "cyroot/vector_derivative_approximation.pyx":167
+        /* "cyroot/vector_derivative_approximation.pyx":169
  *                     break
  *             if zero_step:
  *                 F_perturbations[i] = F_x             # <<<<<<<<<<<<<<
  *             else:
  *                 F_perturbations[i] = F(x + perturbation_step * h)
  */
-        if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_F_perturbations), __pyx_v_i, ((PyObject *)__pyx_v_F_x), unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0) < 0)) __PYX_ERR(0, 167, __pyx_L1_error)
+        if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_F_perturbations), __pyx_v_i, ((PyObject *)__pyx_v_F_x), unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0) < 0)) __PYX_ERR(0, 169, __pyx_L1_error)
 
-        /* "cyroot/vector_derivative_approximation.pyx":166
+        /* "cyroot/vector_derivative_approximation.pyx":168
  *                     zero_step = False
  *                     break
  *             if zero_step:             # <<<<<<<<<<<<<<
@@ -6859,7 +6879,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
         goto __pyx_L10;
       }
 
-      /* "cyroot/vector_derivative_approximation.pyx":169
+      /* "cyroot/vector_derivative_approximation.pyx":171
  *                 F_perturbations[i] = F_x
  *             else:
  *                 F_perturbations[i] = F(x + perturbation_step * h)             # <<<<<<<<<<<<<<
@@ -6867,9 +6887,9 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
  *     cdef double scale
  */
       /*else*/ {
-        __pyx_t_7 = PyNumber_Multiply(((PyObject *)__pyx_v_perturbation_step), ((PyObject *)__pyx_v_h)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 169, __pyx_L1_error)
+        __pyx_t_7 = PyNumber_Multiply(((PyObject *)__pyx_v_perturbation_step), ((PyObject *)__pyx_v_h)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 171, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_9 = PyNumber_Add(((PyObject *)__pyx_v_x), __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 169, __pyx_L1_error)
+        __pyx_t_9 = PyNumber_Add(((PyObject *)__pyx_v_x), __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 171, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_INCREF(((PyObject *)__pyx_v_F));
@@ -6886,10 +6906,10 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
         __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_3, __pyx_t_9) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_9);
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_F_perturbations), __pyx_v_i, __pyx_t_1, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0) < 0)) __PYX_ERR(0, 169, __pyx_L1_error)
+        if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_F_perturbations), __pyx_v_i, __pyx_t_1, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0) < 0)) __PYX_ERR(0, 171, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       }
       __pyx_L10:;
@@ -6897,7 +6917,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
     __pyx_L5:;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":174
+  /* "cyroot/vector_derivative_approximation.pyx":176
  *     cdef int coef
  *     cdef int[:] coefs
  *     cdef vector[vector[int]] all_coefs = vector[vector[int]](x.shape[0])             # <<<<<<<<<<<<<<
@@ -6908,11 +6928,11 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
     __pyx_t_26 = std::vector<std::vector<int> > ((__pyx_v_x->dimensions[0]));
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 174, __pyx_L1_error)
+    __PYX_ERR(0, 176, __pyx_L1_error)
   }
   __pyx_v_all_coefs = __pyx_t_26;
 
-  /* "cyroot/vector_derivative_approximation.pyx":175
+  /* "cyroot/vector_derivative_approximation.pyx":177
  *     cdef int[:] coefs
  *     cdef vector[vector[int]] all_coefs = vector[vector[int]](x.shape[0])
  *     for j in range(all_coefs.size()):             # <<<<<<<<<<<<<<
@@ -6924,7 +6944,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
   for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_28; __pyx_t_16+=1) {
     __pyx_v_j = __pyx_t_16;
 
-    /* "cyroot/vector_derivative_approximation.pyx":176
+    /* "cyroot/vector_derivative_approximation.pyx":178
  *     cdef vector[vector[int]] all_coefs = vector[vector[int]](x.shape[0])
  *     for j in range(all_coefs.size()):
  *         all_coefs[j].reserve(order + 1)             # <<<<<<<<<<<<<<
@@ -6934,55 +6954,55 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
     (__pyx_v_all_coefs[__pyx_v_j]).reserve((__pyx_v_order + 1));
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":177
+  /* "cyroot/vector_derivative_approximation.pyx":179
  *     for j in range(all_coefs.size()):
  *         all_coefs[j].reserve(order + 1)
  *     cdef unsigned int[:] grad_comb, len_coefs = view.array(shape=(x.shape[0],),             # <<<<<<<<<<<<<<
  *                                                            itemsize=sizeof(int),
  *                                                            format='I')
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 179, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_9 = PyTuple_New(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __pyx_t_9 = PyTuple_New(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 179, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_GIVEREF(__pyx_t_7);
   PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_7);
   __pyx_t_7 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_9) < 0) __PYX_ERR(0, 177, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_9) < 0) __PYX_ERR(0, 179, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":178
+  /* "cyroot/vector_derivative_approximation.pyx":180
  *         all_coefs[j].reserve(order + 1)
  *     cdef unsigned int[:] grad_comb, len_coefs = view.array(shape=(x.shape[0],),
  *                                                            itemsize=sizeof(int),             # <<<<<<<<<<<<<<
  *                                                            format='I')
  *     cdef unsigned int[:, :] perturbs
  */
-  __pyx_t_9 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 178, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 180, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_9) < 0) __PYX_ERR(0, 177, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_itemsize, __pyx_t_9) < 0) __PYX_ERR(0, 179, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 177, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 179, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":177
+  /* "cyroot/vector_derivative_approximation.pyx":179
  *     for j in range(all_coefs.size()):
  *         all_coefs[j].reserve(order + 1)
  *     cdef unsigned int[:] grad_comb, len_coefs = view.array(shape=(x.shape[0],),             # <<<<<<<<<<<<<<
  *                                                            itemsize=sizeof(int),
  *                                                            format='I')
  */
-  __pyx_t_9 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 179, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_9, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_9, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 179, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __pyx_v_len_coefs = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":182
+  /* "cyroot/vector_derivative_approximation.pyx":184
  *     cdef unsigned int[:, :] perturbs
  *     cdef unsigned int[:] perturb
  *     for ii in range(indices.shape[0]):             # <<<<<<<<<<<<<<
@@ -6994,7 +7014,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
   for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_30; __pyx_t_16+=1) {
     __pyx_v_ii = __pyx_t_16;
 
-    /* "cyroot/vector_derivative_approximation.pyx":183
+    /* "cyroot/vector_derivative_approximation.pyx":185
  *     cdef unsigned int[:] perturb
  *     for ii in range(indices.shape[0]):
  *         if unique_mask[ii]:             # <<<<<<<<<<<<<<
@@ -7005,7 +7025,7 @@ __pyx_t_12 = __pyx_f_6cyroot_31vector_derivative_approximation__vector_derivativ
     __pyx_t_21 = ((*((int *) ( /* dim=0 */ (__pyx_v_unique_mask.data + __pyx_t_25 * __pyx_v_unique_mask.strides[0]) ))) != 0);
     if (__pyx_t_21) {
 
-      /* "cyroot/vector_derivative_approximation.pyx":184
+      /* "cyroot/vector_derivative_approximation.pyx":186
  *     for ii in range(indices.shape[0]):
  *         if unique_mask[ii]:
  *             index = indices[ii]             # <<<<<<<<<<<<<<
@@ -7033,20 +7053,20 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
       __pyx_t_4.memview = NULL;
       __pyx_t_4.data = NULL;
 
-      /* "cyroot/vector_derivative_approximation.pyx":185
+      /* "cyroot/vector_derivative_approximation.pyx":187
  *         if unique_mask[ii]:
  *             index = indices[ii]
  *             grad_comb = _index_to_grad_comb(index, x.shape[0])             # <<<<<<<<<<<<<<
  *             scale = 1
  *             for j in range(x.shape[0]):
  */
-      __pyx_t_4 = __pyx_f_6cyroot_31vector_derivative_approximation__index_to_grad_comb(__pyx_v_index, (__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 185, __pyx_L1_error)
+      __pyx_t_4 = __pyx_f_6cyroot_31vector_derivative_approximation__index_to_grad_comb(__pyx_v_index, (__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 187, __pyx_L1_error)
       __PYX_XDEC_MEMVIEW(&__pyx_v_grad_comb, 1);
       __pyx_v_grad_comb = __pyx_t_4;
       __pyx_t_4.memview = NULL;
       __pyx_t_4.data = NULL;
 
-      /* "cyroot/vector_derivative_approximation.pyx":186
+      /* "cyroot/vector_derivative_approximation.pyx":188
  *             index = indices[ii]
  *             grad_comb = _index_to_grad_comb(index, x.shape[0])
  *             scale = 1             # <<<<<<<<<<<<<<
@@ -7055,7 +7075,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
  */
       __pyx_v_scale = 1.0;
 
-      /* "cyroot/vector_derivative_approximation.pyx":187
+      /* "cyroot/vector_derivative_approximation.pyx":189
  *             grad_comb = _index_to_grad_comb(index, x.shape[0])
  *             scale = 1
  *             for j in range(x.shape[0]):             # <<<<<<<<<<<<<<
@@ -7067,7 +7087,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
       for (__pyx_t_24 = 0; __pyx_t_24 < __pyx_t_15; __pyx_t_24+=1) {
         __pyx_v_j = __pyx_t_24;
 
-        /* "cyroot/vector_derivative_approximation.pyx":188
+        /* "cyroot/vector_derivative_approximation.pyx":190
  *             scale = 1
  *             for j in range(x.shape[0]):
  *                 scale *= h[j] ** grad_comb[j]             # <<<<<<<<<<<<<<
@@ -7078,7 +7098,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
         __pyx_t_31 = __pyx_v_j;
         __pyx_v_scale = (__pyx_v_scale * pow((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_h.rcbuffer->pybuffer.buf, __pyx_t_25, __pyx_pybuffernd_h.diminfo[0].strides)), ((__pyx_t_5numpy_float64_t)(*((unsigned int *) ( /* dim=0 */ (__pyx_v_grad_comb.data + __pyx_t_31 * __pyx_v_grad_comb.strides[0]) ))))));
 
-        /* "cyroot/vector_derivative_approximation.pyx":189
+        /* "cyroot/vector_derivative_approximation.pyx":191
  *             for j in range(x.shape[0]):
  *                 scale *= h[j] ** grad_comb[j]
  *                 all_coefs[j].clear()             # <<<<<<<<<<<<<<
@@ -7087,7 +7107,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
  */
         (__pyx_v_all_coefs[__pyx_v_j]).clear();
 
-        /* "cyroot/vector_derivative_approximation.pyx":190
+        /* "cyroot/vector_derivative_approximation.pyx":192
  *                 scale *= h[j] ** grad_comb[j]
  *                 all_coefs[j].clear()
  *                 coefs = _finite_difference_coefs(grad_comb[j], kind)             # <<<<<<<<<<<<<<
@@ -7095,13 +7115,13 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
  *                     all_coefs[j].push_back(coefs[k])
  */
         __pyx_t_31 = __pyx_v_j;
-        __pyx_t_32 = __pyx_f_6cyroot_31vector_derivative_approximation__finite_difference_coefs((*((unsigned int *) ( /* dim=0 */ (__pyx_v_grad_comb.data + __pyx_t_31 * __pyx_v_grad_comb.strides[0]) ))), __pyx_v_kind); if (unlikely(!__pyx_t_32.memview)) __PYX_ERR(0, 190, __pyx_L1_error)
+        __pyx_t_32 = __pyx_f_6cyroot_31vector_derivative_approximation__finite_difference_coefs((*((unsigned int *) ( /* dim=0 */ (__pyx_v_grad_comb.data + __pyx_t_31 * __pyx_v_grad_comb.strides[0]) ))), __pyx_v_kind); if (unlikely(!__pyx_t_32.memview)) __PYX_ERR(0, 192, __pyx_L1_error)
         __PYX_XDEC_MEMVIEW(&__pyx_v_coefs, 1);
         __pyx_v_coefs = __pyx_t_32;
         __pyx_t_32.memview = NULL;
         __pyx_t_32.data = NULL;
 
-        /* "cyroot/vector_derivative_approximation.pyx":191
+        /* "cyroot/vector_derivative_approximation.pyx":193
  *                 all_coefs[j].clear()
  *                 coefs = _finite_difference_coefs(grad_comb[j], kind)
  *                 for k in range(coefs.shape[0]):             # <<<<<<<<<<<<<<
@@ -7113,7 +7133,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
         for (__pyx_t_35 = 0; __pyx_t_35 < __pyx_t_34; __pyx_t_35+=1) {
           __pyx_v_k = __pyx_t_35;
 
-          /* "cyroot/vector_derivative_approximation.pyx":192
+          /* "cyroot/vector_derivative_approximation.pyx":194
  *                 coefs = _finite_difference_coefs(grad_comb[j], kind)
  *                 for k in range(coefs.shape[0]):
  *                     all_coefs[j].push_back(coefs[k])             # <<<<<<<<<<<<<<
@@ -7125,11 +7145,11 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
             (__pyx_v_all_coefs[__pyx_v_j]).push_back((*((int *) ( /* dim=0 */ (__pyx_v_coefs.data + __pyx_t_31 * __pyx_v_coefs.strides[0]) ))));
           } catch(...) {
             __Pyx_CppExn2PyErr();
-            __PYX_ERR(0, 192, __pyx_L1_error)
+            __PYX_ERR(0, 194, __pyx_L1_error)
           }
         }
 
-        /* "cyroot/vector_derivative_approximation.pyx":193
+        /* "cyroot/vector_derivative_approximation.pyx":195
  *                 for k in range(coefs.shape[0]):
  *                     all_coefs[j].push_back(coefs[k])
  *                 len_coefs[j] = all_coefs[j].size()             # <<<<<<<<<<<<<<
@@ -7140,20 +7160,20 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
         *((unsigned int *) ( /* dim=0 */ (__pyx_v_len_coefs.data + __pyx_t_31 * __pyx_v_len_coefs.strides[0]) )) = (__pyx_v_all_coefs[__pyx_v_j]).size();
       }
 
-      /* "cyroot/vector_derivative_approximation.pyx":194
+      /* "cyroot/vector_derivative_approximation.pyx":196
  *                     all_coefs[j].push_back(coefs[k])
  *                 len_coefs[j] = all_coefs[j].size()
  *             perturbs = product(len_coefs)             # <<<<<<<<<<<<<<
  *             for j in range(perturbs.shape[0]):
  *                 perturb = perturbs[j]
  */
-      __pyx_t_12 = __pyx_f_6cyroot_5utils_9itertools_product(__pyx_v_len_coefs, 0); if (unlikely(!__pyx_t_12.memview)) __PYX_ERR(0, 194, __pyx_L1_error)
+      __pyx_t_12 = __pyx_f_6cyroot_5utils_9itertools_product(__pyx_v_len_coefs, 0); if (unlikely(!__pyx_t_12.memview)) __PYX_ERR(0, 196, __pyx_L1_error)
       __PYX_XDEC_MEMVIEW(&__pyx_v_perturbs, 1);
       __pyx_v_perturbs = __pyx_t_12;
       __pyx_t_12.memview = NULL;
       __pyx_t_12.data = NULL;
 
-      /* "cyroot/vector_derivative_approximation.pyx":195
+      /* "cyroot/vector_derivative_approximation.pyx":197
  *                 len_coefs[j] = all_coefs[j].size()
  *             perturbs = product(len_coefs)
  *             for j in range(perturbs.shape[0]):             # <<<<<<<<<<<<<<
@@ -7165,7 +7185,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_index, 1);
       for (__pyx_t_24 = 0; __pyx_t_24 < __pyx_t_34; __pyx_t_24+=1) {
         __pyx_v_j = __pyx_t_24;
 
-        /* "cyroot/vector_derivative_approximation.pyx":196
+        /* "cyroot/vector_derivative_approximation.pyx":198
  *             perturbs = product(len_coefs)
  *             for j in range(perturbs.shape[0]):
  *                 perturb = perturbs[j]             # <<<<<<<<<<<<<<
@@ -7193,7 +7213,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
         __pyx_t_4.memview = NULL;
         __pyx_t_4.data = NULL;
 
-        /* "cyroot/vector_derivative_approximation.pyx":197
+        /* "cyroot/vector_derivative_approximation.pyx":199
  *             for j in range(perturbs.shape[0]):
  *                 perturb = perturbs[j]
  *                 coef = 1             # <<<<<<<<<<<<<<
@@ -7202,7 +7222,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
  */
         __pyx_v_coef = 1;
 
-        /* "cyroot/vector_derivative_approximation.pyx":198
+        /* "cyroot/vector_derivative_approximation.pyx":200
  *                 perturb = perturbs[j]
  *                 coef = 1
  *                 for k in range(all_coefs.size()):             # <<<<<<<<<<<<<<
@@ -7214,7 +7234,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
         for (__pyx_t_35 = 0; __pyx_t_35 < __pyx_t_28; __pyx_t_35+=1) {
           __pyx_v_k = __pyx_t_35;
 
-          /* "cyroot/vector_derivative_approximation.pyx":199
+          /* "cyroot/vector_derivative_approximation.pyx":201
  *                 coef = 1
  *                 for k in range(all_coefs.size()):
  *                     coef *= all_coefs[k][perturb[k]]             # <<<<<<<<<<<<<<
@@ -7225,7 +7245,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
           __pyx_v_coef = (__pyx_v_coef * ((__pyx_v_all_coefs[__pyx_v_k])[(*((unsigned int *) ( /* dim=0 */ (__pyx_v_perturb.data + __pyx_t_31 * __pyx_v_perturb.strides[0]) )))]));
         }
 
-        /* "cyroot/vector_derivative_approximation.pyx":200
+        /* "cyroot/vector_derivative_approximation.pyx":202
  *                 for k in range(all_coefs.size()):
  *                     coef *= all_coefs[k][perturb[k]]
  *                 for k in range(perturbation_steps.shape[0]):             # <<<<<<<<<<<<<<
@@ -7237,21 +7257,21 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
         for (__pyx_t_35 = 0; __pyx_t_35 < __pyx_t_15; __pyx_t_35+=1) {
           __pyx_v_k = __pyx_t_35;
 
-          /* "cyroot/vector_derivative_approximation.pyx":201
+          /* "cyroot/vector_derivative_approximation.pyx":203
  *                     coef *= all_coefs[k][perturb[k]]
  *                 for k in range(perturbation_steps.shape[0]):
  *                     if np.array_equal(perturbation_steps[k], perturb):             # <<<<<<<<<<<<<<
  *                         break
  *                 D[:, ii] += coef * F_perturbations[k] / scale
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_array_equal); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 201, __pyx_L1_error)
+          __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_array_equal); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 203, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_1 = __Pyx_GetItemInt(((PyObject *)__pyx_v_perturbation_steps), __pyx_v_k, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_GetItemInt(((PyObject *)__pyx_v_perturbation_steps), __pyx_v_k, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_v_perturb, 1, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 201, __pyx_L1_error)
+          __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_v_perturb, 1, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 203, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __pyx_t_2 = NULL;
           __pyx_t_6 = 0;
@@ -7268,7 +7288,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_7)) {
             PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_t_3};
-            __pyx_t_9 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 201, __pyx_L1_error)
+            __pyx_t_9 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 203, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
             __Pyx_GOTREF(__pyx_t_9);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7278,7 +7298,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
             PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_t_3};
-            __pyx_t_9 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 201, __pyx_L1_error)
+            __pyx_t_9 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 203, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
             __Pyx_GOTREF(__pyx_t_9);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7286,7 +7306,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
           } else
           #endif
           {
-            __pyx_t_8 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 201, __pyx_L1_error)
+            __pyx_t_8 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 203, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_8);
             if (__pyx_t_2) {
               __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -7297,16 +7317,16 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
             PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_6, __pyx_t_3);
             __pyx_t_1 = 0;
             __pyx_t_3 = 0;
-            __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_8, NULL); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 201, __pyx_L1_error)
+            __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_8, NULL); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 203, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_9);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
           }
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-          __pyx_t_21 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_21 < 0)) __PYX_ERR(0, 201, __pyx_L1_error)
+          __pyx_t_21 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_21 < 0)) __PYX_ERR(0, 203, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
           if (__pyx_t_21) {
 
-            /* "cyroot/vector_derivative_approximation.pyx":202
+            /* "cyroot/vector_derivative_approximation.pyx":204
  *                 for k in range(perturbation_steps.shape[0]):
  *                     if np.array_equal(perturbation_steps[k], perturb):
  *                         break             # <<<<<<<<<<<<<<
@@ -7315,7 +7335,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
  */
             goto __pyx_L25_break;
 
-            /* "cyroot/vector_derivative_approximation.pyx":201
+            /* "cyroot/vector_derivative_approximation.pyx":203
  *                     coef *= all_coefs[k][perturb[k]]
  *                 for k in range(perturbation_steps.shape[0]):
  *                     if np.array_equal(perturbation_steps[k], perturb):             # <<<<<<<<<<<<<<
@@ -7326,16 +7346,16 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
         }
         __pyx_L25_break:;
 
-        /* "cyroot/vector_derivative_approximation.pyx":203
+        /* "cyroot/vector_derivative_approximation.pyx":205
  *                     if np.array_equal(perturbation_steps[k], perturb):
  *                         break
  *                 D[:, ii] += coef * F_perturbations[k] / scale             # <<<<<<<<<<<<<<
  * 
  *     cdef unsigned int[:] eq_index = view.array(shape=(indices.shape[1],),
  */
-        __pyx_t_9 = __Pyx_PyInt_From_unsigned_int(__pyx_v_ii); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyInt_From_unsigned_int(__pyx_v_ii); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_INCREF(__pyx_slice__2);
         __Pyx_GIVEREF(__pyx_slice__2);
@@ -7343,32 +7363,32 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
         __Pyx_GIVEREF(__pyx_t_9);
         PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_9);
         __pyx_t_9 = 0;
-        __pyx_t_9 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_D), __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_D), __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_coef); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_coef); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_F_perturbations), __pyx_v_k, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_GetItemInt(((PyObject *)__pyx_v_F_perturbations), __pyx_v_k, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_1 = PyNumber_Multiply(__pyx_t_8, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_1 = PyNumber_Multiply(__pyx_t_8, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_3 = PyFloat_FromDouble(__pyx_v_scale); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_3 = PyFloat_FromDouble(__pyx_v_scale); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_8 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_t_9, __pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_t_9, __pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_D), __pyx_t_7, __pyx_t_3) < 0)) __PYX_ERR(0, 203, __pyx_L1_error)
+        if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_D), __pyx_t_7, __pyx_t_3) < 0)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       }
 
-      /* "cyroot/vector_derivative_approximation.pyx":183
+      /* "cyroot/vector_derivative_approximation.pyx":185
  *     cdef unsigned int[:] perturb
  *     for ii in range(indices.shape[0]):
  *         if unique_mask[ii]:             # <<<<<<<<<<<<<<
@@ -7378,55 +7398,55 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
     }
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":205
+  /* "cyroot/vector_derivative_approximation.pyx":207
  *                 D[:, ii] += coef * F_perturbations[k] / scale
  * 
  *     cdef unsigned int[:] eq_index = view.array(shape=(indices.shape[1],),             # <<<<<<<<<<<<<<
  *                                                itemsize=sizeof(int),
  *                                                format='I')
  */
-  __pyx_t_7 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_3 = PyInt_FromSsize_t((__pyx_v_indices.shape[1])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t((__pyx_v_indices.shape[1])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_8 = PyTuple_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_8 = PyTuple_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_3);
   __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_shape, __pyx_t_8) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_shape, __pyx_t_8) < 0) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":206
+  /* "cyroot/vector_derivative_approximation.pyx":208
  * 
  *     cdef unsigned int[:] eq_index = view.array(shape=(indices.shape[1],),
  *                                                itemsize=sizeof(int),             # <<<<<<<<<<<<<<
  *                                                format='I')
  *     for ii in range(indices.shape[0]):
  */
-  __pyx_t_8 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 208, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_itemsize, __pyx_t_8) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_itemsize, __pyx_t_8) < 0) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_format, __pyx_n_u_I) < 0) __PYX_ERR(0, 207, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":205
+  /* "cyroot/vector_derivative_approximation.pyx":207
  *                 D[:, ii] += coef * F_perturbations[k] / scale
  * 
  *     cdef unsigned int[:] eq_index = view.array(shape=(indices.shape[1],),             # <<<<<<<<<<<<<<
  *                                                itemsize=sizeof(int),
  *                                                format='I')
  */
-  __pyx_t_8 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_Call(((PyObject *)__pyx_array_type), __pyx_empty_tuple, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_unsigned_int(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_v_eq_index = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "cyroot/vector_derivative_approximation.pyx":208
+  /* "cyroot/vector_derivative_approximation.pyx":210
  *                                                itemsize=sizeof(int),
  *                                                format='I')
  *     for ii in range(indices.shape[0]):             # <<<<<<<<<<<<<<
@@ -7438,7 +7458,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
   for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_30; __pyx_t_16+=1) {
     __pyx_v_ii = __pyx_t_16;
 
-    /* "cyroot/vector_derivative_approximation.pyx":209
+    /* "cyroot/vector_derivative_approximation.pyx":211
  *                                                format='I')
  *     for ii in range(indices.shape[0]):
  *         if not unique_mask[ii]:             # <<<<<<<<<<<<<<
@@ -7449,7 +7469,7 @@ __PYX_XDEC_MEMVIEW(&__pyx_v_perturb, 1);
     __pyx_t_21 = ((!((*((int *) ( /* dim=0 */ (__pyx_v_unique_mask.data + __pyx_t_31 * __pyx_v_unique_mask.strides[0]) ))) != 0)) != 0);
     if (__pyx_t_21) {
 
-      /* "cyroot/vector_derivative_approximation.pyx":210
+      /* "cyroot/vector_derivative_approximation.pyx":212
  *     for ii in range(indices.shape[0]):
  *         if not unique_mask[ii]:
  *             eq_index[:] = indices[ii]             # <<<<<<<<<<<<<<
@@ -7472,12 +7492,12 @@ __pyx_t_4.shape[0] = __pyx_v_indices.shape[1];
 __pyx_t_4.strides[0] = __pyx_v_indices.strides[1];
     __pyx_t_4.suboffsets[0] = -1;
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0) < 0)) __PYX_ERR(0, 210, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0) < 0)) __PYX_ERR(0, 212, __pyx_L1_error)
       __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
       __pyx_t_4.memview = NULL;
       __pyx_t_4.data = NULL;
 
-      /* "cyroot/vector_derivative_approximation.pyx":211
+      /* "cyroot/vector_derivative_approximation.pyx":213
  *         if not unique_mask[ii]:
  *             eq_index[:] = indices[ii]
  *             sort(&eq_index[0], (&eq_index[0]) + eq_index.shape[0])             # <<<<<<<<<<<<<<
@@ -7490,7 +7510,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
       if (__pyx_t_36 < 0) __pyx_t_36 += __pyx_v_eq_index.shape[0];
       std::sort<unsigned int *>((&(*((unsigned int *) ( /* dim=0 */ (__pyx_v_eq_index.data + __pyx_t_5 * __pyx_v_eq_index.strides[0]) )))), ((&(*((unsigned int *) ( /* dim=0 */ (__pyx_v_eq_index.data + __pyx_t_36 * __pyx_v_eq_index.strides[0]) )))) + (__pyx_v_eq_index.shape[0])));
 
-      /* "cyroot/vector_derivative_approximation.pyx":212
+      /* "cyroot/vector_derivative_approximation.pyx":214
  *             eq_index[:] = indices[ii]
  *             sort(&eq_index[0], (&eq_index[0]) + eq_index.shape[0])
  *             eq_ii = 0             # <<<<<<<<<<<<<<
@@ -7499,7 +7519,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
  */
       __pyx_v_eq_ii = 0;
 
-      /* "cyroot/vector_derivative_approximation.pyx":213
+      /* "cyroot/vector_derivative_approximation.pyx":215
  *             sort(&eq_index[0], (&eq_index[0]) + eq_index.shape[0])
  *             eq_ii = 0
  *             for i in range(order - 1, -1, -1):             # <<<<<<<<<<<<<<
@@ -7509,7 +7529,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
       for (__pyx_t_24 = (__pyx_v_order - 1) + 1; __pyx_t_24 > -1 + 1; ) { __pyx_t_24-=1;
         __pyx_v_i = __pyx_t_24;
 
-        /* "cyroot/vector_derivative_approximation.pyx":214
+        /* "cyroot/vector_derivative_approximation.pyx":216
  *             eq_ii = 0
  *             for i in range(order - 1, -1, -1):
  *                 eq_ii += eq_index[i] * x.shape[0] ** (order - 1 - i)             # <<<<<<<<<<<<<<
@@ -7520,16 +7540,16 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
         __pyx_v_eq_ii = (__pyx_v_eq_ii + ((*((unsigned int *) ( /* dim=0 */ (__pyx_v_eq_index.data + __pyx_t_31 * __pyx_v_eq_index.strides[0]) ))) * __Pyx_pow_long(((long)(__pyx_v_x->dimensions[0])), ((__pyx_v_order - 1) - __pyx_v_i))));
       }
 
-      /* "cyroot/vector_derivative_approximation.pyx":215
+      /* "cyroot/vector_derivative_approximation.pyx":217
  *             for i in range(order - 1, -1, -1):
  *                 eq_ii += eq_index[i] * x.shape[0] ** (order - 1 - i)
  *             D[:, ii] = D[:, eq_ii]             # <<<<<<<<<<<<<<
  *     return D.reshape(dims)
  * 
  */
-      __pyx_t_8 = __Pyx_PyInt_From_unsigned_int(__pyx_v_eq_ii); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 215, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyInt_From_unsigned_int(__pyx_v_eq_ii); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 217, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 215, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 217, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_INCREF(__pyx_slice__2);
       __Pyx_GIVEREF(__pyx_slice__2);
@@ -7537,12 +7557,12 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
       __Pyx_GIVEREF(__pyx_t_8);
       PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_8);
       __pyx_t_8 = 0;
-      __pyx_t_8 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_D), __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 215, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_D), __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 217, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = __Pyx_PyInt_From_unsigned_int(__pyx_v_ii); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 215, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyInt_From_unsigned_int(__pyx_v_ii); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 217, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 215, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 217, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_slice__2);
       __Pyx_GIVEREF(__pyx_slice__2);
@@ -7550,11 +7570,11 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
       __Pyx_GIVEREF(__pyx_t_7);
       PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_7);
       __pyx_t_7 = 0;
-      if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_D), __pyx_t_3, __pyx_t_8) < 0)) __PYX_ERR(0, 215, __pyx_L1_error)
+      if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_D), __pyx_t_3, __pyx_t_8) < 0)) __PYX_ERR(0, 217, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-      /* "cyroot/vector_derivative_approximation.pyx":209
+      /* "cyroot/vector_derivative_approximation.pyx":211
  *                                                format='I')
  *     for ii in range(indices.shape[0]):
  *         if not unique_mask[ii]:             # <<<<<<<<<<<<<<
@@ -7564,7 +7584,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
     }
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":216
+  /* "cyroot/vector_derivative_approximation.pyx":218
  *                 eq_ii += eq_index[i] * x.shape[0] ** (order - 1 - i)
  *             D[:, ii] = D[:, eq_ii]
  *     return D.reshape(dims)             # <<<<<<<<<<<<<<
@@ -7572,9 +7592,9 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
  * # noinspection DuplicatedCode
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_D), __pyx_n_s_reshape); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_D), __pyx_n_s_reshape); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_7 = __pyx_memoryview_fromslice(__pyx_v_dims, 1, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_7 = __pyx_memoryview_fromslice(__pyx_v_dims, 1, (PyObject *(*)(char *)) __pyx_memview_get_unsigned_int, (int (*)(char *, PyObject *)) __pyx_memview_set_unsigned_int, 0);; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_t_9 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7589,15 +7609,15 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
   __pyx_t_8 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_9, __pyx_t_7) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_7);
   __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 216, __pyx_L1_error)
+  if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_8) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_8, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 216, __pyx_L1_error)
+  if (!(likely(((__pyx_t_8) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_8, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 218, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_8);
   __pyx_t_8 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":112
+  /* "cyroot/vector_derivative_approximation.pyx":114
  * 
  * # noinspection DuplicatedCode
  * cdef np.ndarray generalized_finite_difference_kernel(             # <<<<<<<<<<<<<<
@@ -7660,12 +7680,12 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_eq_index, 1, 1, 0
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":220
+/* "cyroot/vector_derivative_approximation.pyx":222
  * # noinspection DuplicatedCode
  * cdef class GeneralizedFiniteDifference(VectorDerivativeApproximation):
  *     def __init__(self,             # <<<<<<<<<<<<<<
  *                  F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]],
- *                  h: Union[float, VectorLike] = 1.,
+ *                  h: Union[float, VectorLike] = FINITE_DIFF_STEP,
  */
 
 /* Python wrapper */
@@ -7684,9 +7704,9 @@ static int __pyx_pw_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   {
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_F,&__pyx_n_s_h,&__pyx_n_s_order,&__pyx_n_s_kind,0};
     PyObject* values[4] = {0,0,0,0};
-    values[1] = ((PyObject *)__pyx_float_1_);
+    values[1] = __pyx_k__3;
     values[2] = ((PyObject *)__pyx_int_1);
-    values[3] = ((PyObject *)__pyx_int_1);
+    values[3] = ((PyObject *)__pyx_int_0);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
@@ -7727,7 +7747,7 @@ static int __pyx_pw_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 220, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 222, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -7749,7 +7769,7 @@ static int __pyx_pw_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 220, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 222, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.vector_derivative_approximation.GeneralizedFiniteDifference.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -7778,14 +7798,14 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "cyroot/vector_derivative_approximation.pyx":225
+  /* "cyroot/vector_derivative_approximation.pyx":227
  *                  order: int = 1,
- *                  kind: int = 1):
+ *                  kind: int = 0):
  *         super().__init__(F)             # <<<<<<<<<<<<<<
  *         # check args
  *         _finite_diference_args_check(h, order, kind)
  */
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 225, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 227, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_ptype_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference));
   __Pyx_GIVEREF(((PyObject *)__pyx_ptype_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference));
@@ -7793,10 +7813,10 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
   PyTuple_SET_ITEM(__pyx_t_2, 1, ((PyObject *)__pyx_v_self));
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_super, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 225, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_super, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 227, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_init); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 225, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_init); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 227, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -7811,19 +7831,19 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_v_F) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_F);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 225, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":227
+  /* "cyroot/vector_derivative_approximation.pyx":229
  *         super().__init__(F)
  *         # check args
  *         _finite_diference_args_check(h, order, kind)             # <<<<<<<<<<<<<<
  *         if isinstance(h, float):
  *             self.h = np.full(1, h)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_finite_diference_args_check); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 227, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_finite_diference_args_check); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 229, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -7840,7 +7860,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_h, __pyx_v_order, __pyx_v_kind};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
@@ -7848,13 +7868,13 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_h, __pyx_v_order, __pyx_v_kind};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 227, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 229, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_3) {
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -7868,14 +7888,14 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
     __Pyx_INCREF(__pyx_v_kind);
     __Pyx_GIVEREF(__pyx_v_kind);
     PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_4, __pyx_v_kind);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":228
+  /* "cyroot/vector_derivative_approximation.pyx":230
  *         # check args
  *         _finite_diference_args_check(h, order, kind)
  *         if isinstance(h, float):             # <<<<<<<<<<<<<<
@@ -7886,16 +7906,16 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   __pyx_t_7 = (__pyx_t_6 != 0);
   if (__pyx_t_7) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":229
+    /* "cyroot/vector_derivative_approximation.pyx":231
  *         _finite_diference_args_check(h, order, kind)
  *         if isinstance(h, float):
  *             self.h = np.full(1, h)             # <<<<<<<<<<<<<<
  *         else:
  *             self.h = np.asarray(h, dtype=np.float64)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 229, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_full); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 229, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_full); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 231, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_2 = NULL;
@@ -7913,7 +7933,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_int_1, __pyx_v_h};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -7921,13 +7941,13 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_int_1, __pyx_v_h};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 229, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 231, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       if (__pyx_t_2) {
         __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -7938,19 +7958,19 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
       __Pyx_INCREF(__pyx_v_h);
       __Pyx_GIVEREF(__pyx_v_h);
       PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_4, __pyx_v_h);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 229, __pyx_L1_error)
+    if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 231, __pyx_L1_error)
     __Pyx_GIVEREF(__pyx_t_1);
     __Pyx_GOTREF(__pyx_v_self->h);
     __Pyx_DECREF(((PyObject *)__pyx_v_self->h));
     __pyx_v_self->h = ((PyArrayObject *)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":228
+    /* "cyroot/vector_derivative_approximation.pyx":230
  *         # check args
  *         _finite_diference_args_check(h, order, kind)
  *         if isinstance(h, float):             # <<<<<<<<<<<<<<
@@ -7960,7 +7980,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
     goto __pyx_L3;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":231
+  /* "cyroot/vector_derivative_approximation.pyx":233
  *             self.h = np.full(1, h)
  *         else:
  *             self.h = np.asarray(h, dtype=np.float64)             # <<<<<<<<<<<<<<
@@ -7968,31 +7988,31 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
  *         self.kind = kind
  */
   /*else*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_asarray); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_asarray); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_INCREF(__pyx_v_h);
     __Pyx_GIVEREF(__pyx_v_h);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_h);
-    __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_8) < 0) __PYX_ERR(0, 231, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_8) < 0) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (!(likely(((__pyx_t_8) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_8, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 231, __pyx_L1_error)
+    if (!(likely(((__pyx_t_8) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_8, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GIVEREF(__pyx_t_8);
     __Pyx_GOTREF(__pyx_v_self->h);
     __Pyx_DECREF(((PyObject *)__pyx_v_self->h));
@@ -8001,32 +8021,32 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   }
   __pyx_L3:;
 
-  /* "cyroot/vector_derivative_approximation.pyx":232
+  /* "cyroot/vector_derivative_approximation.pyx":234
  *         else:
  *             self.h = np.asarray(h, dtype=np.float64)
  *         self.order = order             # <<<<<<<<<<<<<<
  *         self.kind = kind
  * 
  */
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_order); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 232, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_order); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 234, __pyx_L1_error)
   __pyx_v_self->order = __pyx_t_4;
 
-  /* "cyroot/vector_derivative_approximation.pyx":233
+  /* "cyroot/vector_derivative_approximation.pyx":235
  *             self.h = np.asarray(h, dtype=np.float64)
  *         self.order = order
  *         self.kind = kind             # <<<<<<<<<<<<<<
  * 
  *     cpdef np.ndarray eval(self, np.ndarray x):
  */
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_kind); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 233, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_kind); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 235, __pyx_L1_error)
   __pyx_v_self->kind = __pyx_t_4;
 
-  /* "cyroot/vector_derivative_approximation.pyx":220
+  /* "cyroot/vector_derivative_approximation.pyx":222
  * # noinspection DuplicatedCode
  * cdef class GeneralizedFiniteDifference(VectorDerivativeApproximation):
  *     def __init__(self,             # <<<<<<<<<<<<<<
  *                  F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]],
- *                  h: Union[float, VectorLike] = 1.,
+ *                  h: Union[float, VectorLike] = FINITE_DIFF_STEP,
  */
 
   /* function exit code */
@@ -8045,7 +8065,7 @@ static int __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFinit
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":235
+/* "cyroot/vector_derivative_approximation.pyx":237
  *         self.kind = kind
  * 
  *     cpdef np.ndarray eval(self, np.ndarray x):             # <<<<<<<<<<<<<<
@@ -8099,7 +8119,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_eval); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 235, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_eval); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_3eval)) {
         __Pyx_XDECREF(((PyObject *)__pyx_r));
@@ -8116,10 +8136,10 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
         }
         __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, ((PyObject *)__pyx_v_x)) : __Pyx_PyObject_CallOneArg(__pyx_t_3, ((PyObject *)__pyx_v_x));
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L1_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 237, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 235, __pyx_L1_error)
+        if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 237, __pyx_L1_error)
         __pyx_r = ((PyArrayObject *)__pyx_t_2);
         __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -8138,7 +8158,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     #endif
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":236
+  /* "cyroot/vector_derivative_approximation.pyx":238
  * 
  *     cpdef np.ndarray eval(self, np.ndarray x):
  *         self.n_f_calls += 1             # <<<<<<<<<<<<<<
@@ -8147,27 +8167,27 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
  */
   __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.n_f_calls = (__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.n_f_calls + 1);
 
-  /* "cyroot/vector_derivative_approximation.pyx":237
+  /* "cyroot/vector_derivative_approximation.pyx":239
  *     cpdef np.ndarray eval(self, np.ndarray x):
  *         self.n_f_calls += 1
  *         cdef np.ndarray[np.float64_t, ndim=1] F_x = self.F.eval(x)             # <<<<<<<<<<<<<<
  *         cdef np.ndarray[np.float64_t, ndim=1] h
  *         if self.h.shape[0] == x.shape[0]:
  */
-  __pyx_t_1 = ((PyObject *)((struct __pyx_vtabstruct_6cyroot_4fptr_NdArrayFPtr *)__pyx_v_self->__pyx_base.F->__pyx_vtab)->eval(__pyx_v_self->__pyx_base.F, __pyx_v_x)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)((struct __pyx_vtabstruct_6cyroot_4fptr_NdArrayFPtr *)__pyx_v_self->__pyx_base.F->__pyx_vtab)->eval(__pyx_v_self->__pyx_base.F, __pyx_v_x)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 239, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_F_x.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_1), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_F_x = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_F_x.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 237, __pyx_L1_error)
+      __PYX_ERR(0, 239, __pyx_L1_error)
     } else {__pyx_pybuffernd_F_x.diminfo[0].strides = __pyx_pybuffernd_F_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_F_x.diminfo[0].shape = __pyx_pybuffernd_F_x.rcbuffer->pybuffer.shape[0];
     }
   }
   __pyx_v_F_x = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":239
+  /* "cyroot/vector_derivative_approximation.pyx":241
  *         cdef np.ndarray[np.float64_t, ndim=1] F_x = self.F.eval(x)
  *         cdef np.ndarray[np.float64_t, ndim=1] h
  *         if self.h.shape[0] == x.shape[0]:             # <<<<<<<<<<<<<<
@@ -8177,7 +8197,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
   __pyx_t_5 = (((__pyx_v_self->h->dimensions[0]) == (__pyx_v_x->dimensions[0])) != 0);
   if (__pyx_t_5) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":240
+    /* "cyroot/vector_derivative_approximation.pyx":242
  *         cdef np.ndarray[np.float64_t, ndim=1] h
  *         if self.h.shape[0] == x.shape[0]:
  *             h = self.h             # <<<<<<<<<<<<<<
@@ -8201,12 +8221,12 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
         __pyx_t_7 = __pyx_t_8 = __pyx_t_9 = 0;
       }
       __pyx_pybuffernd_h.diminfo[0].strides = __pyx_pybuffernd_h.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_h.diminfo[0].shape = __pyx_pybuffernd_h.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 240, __pyx_L1_error)
+      if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 242, __pyx_L1_error)
     }
     __pyx_v_h = ((PyArrayObject *)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":239
+    /* "cyroot/vector_derivative_approximation.pyx":241
  *         cdef np.ndarray[np.float64_t, ndim=1] F_x = self.F.eval(x)
  *         cdef np.ndarray[np.float64_t, ndim=1] h
  *         if self.h.shape[0] == x.shape[0]:             # <<<<<<<<<<<<<<
@@ -8216,7 +8236,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     goto __pyx_L3;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":241
+  /* "cyroot/vector_derivative_approximation.pyx":243
  *         if self.h.shape[0] == x.shape[0]:
  *             h = self.h
  *         elif self.h.shape[0] == 1:             # <<<<<<<<<<<<<<
@@ -8226,21 +8246,21 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
   __pyx_t_5 = (((__pyx_v_self->h->dimensions[0]) == 1) != 0);
   if (likely(__pyx_t_5)) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":242
+    /* "cyroot/vector_derivative_approximation.pyx":244
  *             h = self.h
  *         elif self.h.shape[0] == 1:
  *             h = np.full(x.shape[0], self.h[0])             # <<<<<<<<<<<<<<
  *         else:
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_full); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 242, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_full); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 244, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_GetItemInt(((PyObject *)__pyx_v_self->h), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 242, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetItemInt(((PyObject *)__pyx_v_self->h), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 244, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_10 = NULL;
     __pyx_t_6 = 0;
@@ -8257,7 +8277,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_2, __pyx_t_4};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 244, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -8267,7 +8287,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_2, __pyx_t_4};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 244, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -8275,7 +8295,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     } else
     #endif
     {
-      __pyx_t_11 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 242, __pyx_L1_error)
+      __pyx_t_11 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 244, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       if (__pyx_t_10) {
         __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -8286,12 +8306,12 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
       PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_6, __pyx_t_4);
       __pyx_t_2 = 0;
       __pyx_t_4 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 244, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 242, __pyx_L1_error)
+    if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 244, __pyx_L1_error)
     __pyx_t_12 = ((PyArrayObject *)__pyx_t_1);
     {
       __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -8308,13 +8328,13 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
         __pyx_t_9 = __pyx_t_8 = __pyx_t_7 = 0;
       }
       __pyx_pybuffernd_h.diminfo[0].strides = __pyx_pybuffernd_h.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_h.diminfo[0].shape = __pyx_pybuffernd_h.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 242, __pyx_L1_error)
+      if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 244, __pyx_L1_error)
     }
     __pyx_t_12 = 0;
     __pyx_v_h = ((PyArrayObject *)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":241
+    /* "cyroot/vector_derivative_approximation.pyx":243
  *         if self.h.shape[0] == x.shape[0]:
  *             h = self.h
  *         elif self.h.shape[0] == 1:             # <<<<<<<<<<<<<<
@@ -8324,7 +8344,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     goto __pyx_L3;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":244
+  /* "cyroot/vector_derivative_approximation.pyx":246
  *             h = np.full(x.shape[0], self.h[0])
  *         else:
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')             # <<<<<<<<<<<<<<
@@ -8332,7 +8352,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
  *             <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)
  */
   /*else*/ {
-    __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 244, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_13 = 0;
     __pyx_t_14 = 127;
@@ -8340,9 +8360,9 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     __pyx_t_13 += 11;
     __Pyx_GIVEREF(__pyx_kp_u_x_shape_0);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_x_shape_0);
-    __pyx_t_3 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 244, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_11 = __Pyx_PyObject_FormatSimple(__pyx_t_3, __pyx_empty_unicode); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 244, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_FormatSimple(__pyx_t_3, __pyx_empty_unicode); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_11) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_11) : __pyx_t_14;
@@ -8354,9 +8374,9 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     __pyx_t_13 += 18;
     __Pyx_GIVEREF(__pyx_kp_u_while_h_shape_0);
     PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_while_h_shape_0);
-    __pyx_t_11 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_self->h->dimensions[0])); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 244, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_self->h->dimensions[0])); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_11, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 244, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_11, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) : __pyx_t_14;
@@ -8364,23 +8384,23 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_3);
     __pyx_t_3 = 0;
-    __Pyx_INCREF(__pyx_kp_u__3);
+    __Pyx_INCREF(__pyx_kp_u__4);
     __pyx_t_13 += 1;
-    __Pyx_GIVEREF(__pyx_kp_u__3);
-    PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u__3);
-    __pyx_t_3 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 244, __pyx_L1_error)
+    __Pyx_GIVEREF(__pyx_kp_u__4);
+    PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u__4);
+    __pyx_t_3 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 244, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 244, __pyx_L1_error)
+    __PYX_ERR(0, 246, __pyx_L1_error)
   }
   __pyx_L3:;
 
-  /* "cyroot/vector_derivative_approximation.pyx":245
+  /* "cyroot/vector_derivative_approximation.pyx":247
  *         else:
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
  *         return generalized_finite_difference_kernel(             # <<<<<<<<<<<<<<
@@ -8389,7 +8409,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
 
-  /* "cyroot/vector_derivative_approximation.pyx":246
+  /* "cyroot/vector_derivative_approximation.pyx":248
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
  *         return generalized_finite_difference_kernel(
  *             <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)             # <<<<<<<<<<<<<<
@@ -8399,7 +8419,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
   __pyx_t_1 = ((PyObject *)__pyx_v_self->__pyx_base.F);
   __Pyx_INCREF(__pyx_t_1);
 
-  /* "cyroot/vector_derivative_approximation.pyx":245
+  /* "cyroot/vector_derivative_approximation.pyx":247
  *         else:
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
  *         return generalized_finite_difference_kernel(             # <<<<<<<<<<<<<<
@@ -8409,14 +8429,14 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
   __pyx_t_15.__pyx_n = 2;
   __pyx_t_15.order = __pyx_v_self->order;
   __pyx_t_15.kind = __pyx_v_self->kind;
-  __pyx_t_3 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_generalized_finite_difference_kernel(((struct __pyx_obj_6cyroot_4fptr_NdArrayFPtr *)__pyx_t_1), ((PyArrayObject *)__pyx_v_x), ((PyArrayObject *)__pyx_v_F_x), ((PyArrayObject *)__pyx_v_h), &__pyx_t_15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 245, __pyx_L1_error)
+  __pyx_t_3 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_generalized_finite_difference_kernel(((struct __pyx_obj_6cyroot_4fptr_NdArrayFPtr *)__pyx_t_1), ((PyArrayObject *)__pyx_v_x), ((PyArrayObject *)__pyx_v_F_x), ((PyArrayObject *)__pyx_v_h), &__pyx_t_15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 247, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = ((PyArrayObject *)__pyx_t_3);
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":235
+  /* "cyroot/vector_derivative_approximation.pyx":237
  *         self.kind = kind
  * 
  *     cpdef np.ndarray eval(self, np.ndarray x):             # <<<<<<<<<<<<<<
@@ -8462,7 +8482,7 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_27Generalize
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("eval (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 235, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 237, __pyx_L1_error)
   __pyx_r = __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_2eval(((struct __pyx_obj_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference *)__pyx_v_self), ((PyArrayObject *)__pyx_v_x));
 
   /* function exit code */
@@ -8483,7 +8503,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_27Generalize
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("eval", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_eval(__pyx_v_self, __pyx_v_x, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 235, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_eval(__pyx_v_self, __pyx_v_x, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8504,7 +8524,7 @@ PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFi
   return __pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_eval(__pyx_v_self, __pyx_v_x, 0);
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":248
+/* "cyroot/vector_derivative_approximation.pyx":250
  *             <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)
  * 
  *     cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x):             # <<<<<<<<<<<<<<
@@ -8551,7 +8571,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_eval_with_f_val); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 248, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_eval_with_f_val); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 250, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_5eval_with_f_val)) {
         __Pyx_XDECREF(((PyObject *)__pyx_r));
@@ -8571,7 +8591,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[3] = {__pyx_t_4, ((PyObject *)__pyx_v_x), ((PyObject *)__pyx_v_F_x)};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 248, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 250, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
@@ -8579,13 +8599,13 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[3] = {__pyx_t_4, ((PyObject *)__pyx_v_x), ((PyObject *)__pyx_v_F_x)};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 248, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 250, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
         #endif
         {
-          __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 248, __pyx_L1_error)
+          __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 250, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           if (__pyx_t_4) {
             __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -8596,12 +8616,12 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
           __Pyx_INCREF(((PyObject *)__pyx_v_F_x));
           __Pyx_GIVEREF(((PyObject *)__pyx_v_F_x));
           PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, ((PyObject *)__pyx_v_F_x));
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 248, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 250, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         }
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 248, __pyx_L1_error)
+        if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 250, __pyx_L1_error)
         __pyx_r = ((PyArrayObject *)__pyx_t_2);
         __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -8620,7 +8640,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     #endif
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":249
+  /* "cyroot/vector_derivative_approximation.pyx":251
  * 
  *     cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x):
  *         self.n_f_calls += 1             # <<<<<<<<<<<<<<
@@ -8629,7 +8649,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
  */
   __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.n_f_calls = (__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.n_f_calls + 1);
 
-  /* "cyroot/vector_derivative_approximation.pyx":251
+  /* "cyroot/vector_derivative_approximation.pyx":253
  *         self.n_f_calls += 1
  *         cdef np.ndarray[np.float64_t, ndim=1] h
  *         if self.h.shape[0] == x.shape[0]:             # <<<<<<<<<<<<<<
@@ -8639,7 +8659,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
   __pyx_t_7 = (((__pyx_v_self->h->dimensions[0]) == (__pyx_v_x->dimensions[0])) != 0);
   if (__pyx_t_7) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":252
+    /* "cyroot/vector_derivative_approximation.pyx":254
  *         cdef np.ndarray[np.float64_t, ndim=1] h
  *         if self.h.shape[0] == x.shape[0]:
  *             h = self.h             # <<<<<<<<<<<<<<
@@ -8663,12 +8683,12 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
         __pyx_t_8 = __pyx_t_9 = __pyx_t_10 = 0;
       }
       __pyx_pybuffernd_h.diminfo[0].strides = __pyx_pybuffernd_h.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_h.diminfo[0].shape = __pyx_pybuffernd_h.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 252, __pyx_L1_error)
+      if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 254, __pyx_L1_error)
     }
     __pyx_v_h = ((PyArrayObject *)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":251
+    /* "cyroot/vector_derivative_approximation.pyx":253
  *         self.n_f_calls += 1
  *         cdef np.ndarray[np.float64_t, ndim=1] h
  *         if self.h.shape[0] == x.shape[0]:             # <<<<<<<<<<<<<<
@@ -8678,7 +8698,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     goto __pyx_L3;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":253
+  /* "cyroot/vector_derivative_approximation.pyx":255
  *         if self.h.shape[0] == x.shape[0]:
  *             h = self.h
  *         elif self.h.shape[0] == 1:             # <<<<<<<<<<<<<<
@@ -8688,21 +8708,21 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
   __pyx_t_7 = (((__pyx_v_self->h->dimensions[0]) == 1) != 0);
   if (likely(__pyx_t_7)) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":254
+    /* "cyroot/vector_derivative_approximation.pyx":256
  *             h = self.h
  *         elif self.h.shape[0] == 1:
  *             h = np.full(x.shape[0], self.h[0])             # <<<<<<<<<<<<<<
  *         else:
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_full); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_full); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_self->h), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt(((PyObject *)__pyx_v_self->h), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 256, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_4 = NULL;
     __pyx_t_5 = 0;
@@ -8719,7 +8739,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_2, __pyx_t_6};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -8729,7 +8749,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_2, __pyx_t_6};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -8737,7 +8757,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     } else
     #endif
     {
-      __pyx_t_11 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 254, __pyx_L1_error)
+      __pyx_t_11 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       if (__pyx_t_4) {
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -8748,12 +8768,12 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
       PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_5, __pyx_t_6);
       __pyx_t_2 = 0;
       __pyx_t_6 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 254, __pyx_L1_error)
+    if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 256, __pyx_L1_error)
     __pyx_t_12 = ((PyArrayObject *)__pyx_t_1);
     {
       __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -8770,13 +8790,13 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
         __pyx_t_10 = __pyx_t_9 = __pyx_t_8 = 0;
       }
       __pyx_pybuffernd_h.diminfo[0].strides = __pyx_pybuffernd_h.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_h.diminfo[0].shape = __pyx_pybuffernd_h.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 254, __pyx_L1_error)
+      if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 256, __pyx_L1_error)
     }
     __pyx_t_12 = 0;
     __pyx_v_h = ((PyArrayObject *)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":253
+    /* "cyroot/vector_derivative_approximation.pyx":255
  *         if self.h.shape[0] == x.shape[0]:
  *             h = self.h
  *         elif self.h.shape[0] == 1:             # <<<<<<<<<<<<<<
@@ -8786,7 +8806,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     goto __pyx_L3;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":256
+  /* "cyroot/vector_derivative_approximation.pyx":258
  *             h = np.full(x.shape[0], self.h[0])
  *         else:
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')             # <<<<<<<<<<<<<<
@@ -8794,7 +8814,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
  *             <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)
  */
   /*else*/ {
-    __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_13 = 0;
     __pyx_t_14 = 127;
@@ -8802,9 +8822,9 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     __pyx_t_13 += 11;
     __Pyx_GIVEREF(__pyx_kp_u_x_shape_0);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_x_shape_0);
-    __pyx_t_3 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_x->dimensions[0])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_11 = __Pyx_PyObject_FormatSimple(__pyx_t_3, __pyx_empty_unicode); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_FormatSimple(__pyx_t_3, __pyx_empty_unicode); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_11) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_11) : __pyx_t_14;
@@ -8816,9 +8836,9 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     __pyx_t_13 += 18;
     __Pyx_GIVEREF(__pyx_kp_u_while_h_shape_0);
     PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_while_h_shape_0);
-    __pyx_t_11 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_self->h->dimensions[0])); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_self->h->dimensions[0])); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_11, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_11, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) : __pyx_t_14;
@@ -8826,23 +8846,23 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_3);
     __pyx_t_3 = 0;
-    __Pyx_INCREF(__pyx_kp_u__3);
+    __Pyx_INCREF(__pyx_kp_u__4);
     __pyx_t_13 += 1;
-    __Pyx_GIVEREF(__pyx_kp_u__3);
-    PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u__3);
-    __pyx_t_3 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __Pyx_GIVEREF(__pyx_kp_u__4);
+    PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u__4);
+    __pyx_t_3 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 256, __pyx_L1_error)
+    __PYX_ERR(0, 258, __pyx_L1_error)
   }
   __pyx_L3:;
 
-  /* "cyroot/vector_derivative_approximation.pyx":257
+  /* "cyroot/vector_derivative_approximation.pyx":259
  *         else:
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
  *         return generalized_finite_difference_kernel(             # <<<<<<<<<<<<<<
@@ -8851,7 +8871,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
 
-  /* "cyroot/vector_derivative_approximation.pyx":258
+  /* "cyroot/vector_derivative_approximation.pyx":260
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
  *         return generalized_finite_difference_kernel(
  *             <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)             # <<<<<<<<<<<<<<
@@ -8861,7 +8881,7 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
   __pyx_t_1 = ((PyObject *)__pyx_v_self->__pyx_base.F);
   __Pyx_INCREF(__pyx_t_1);
 
-  /* "cyroot/vector_derivative_approximation.pyx":257
+  /* "cyroot/vector_derivative_approximation.pyx":259
  *         else:
  *             raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
  *         return generalized_finite_difference_kernel(             # <<<<<<<<<<<<<<
@@ -8871,14 +8891,14 @@ static PyArrayObject *__pyx_f_6cyroot_31vector_derivative_approximation_27Genera
   __pyx_t_15.__pyx_n = 2;
   __pyx_t_15.order = __pyx_v_self->order;
   __pyx_t_15.kind = __pyx_v_self->kind;
-  __pyx_t_3 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_generalized_finite_difference_kernel(((struct __pyx_obj_6cyroot_4fptr_NdArrayFPtr *)__pyx_t_1), ((PyArrayObject *)__pyx_v_x), ((PyArrayObject *)__pyx_v_F_x), ((PyArrayObject *)__pyx_v_h), &__pyx_t_15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_t_3 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_generalized_finite_difference_kernel(((struct __pyx_obj_6cyroot_4fptr_NdArrayFPtr *)__pyx_t_1), ((PyArrayObject *)__pyx_v_x), ((PyArrayObject *)__pyx_v_F_x), ((PyArrayObject *)__pyx_v_h), &__pyx_t_15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = ((PyArrayObject *)__pyx_t_3);
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":248
+  /* "cyroot/vector_derivative_approximation.pyx":250
  *             <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)
  * 
  *     cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x):             # <<<<<<<<<<<<<<
@@ -8946,11 +8966,11 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_27Generalize
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_F_x)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("eval_with_f_val", 1, 2, 2, 1); __PYX_ERR(0, 248, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("eval_with_f_val", 1, 2, 2, 1); __PYX_ERR(0, 250, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "eval_with_f_val") < 0)) __PYX_ERR(0, 248, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "eval_with_f_val") < 0)) __PYX_ERR(0, 250, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -8963,14 +8983,14 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_27Generalize
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("eval_with_f_val", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 248, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("eval_with_f_val", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 250, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.vector_derivative_approximation.GeneralizedFiniteDifference.eval_with_f_val", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 248, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_F_x), __pyx_ptype_5numpy_ndarray, 1, "F_x", 0))) __PYX_ERR(0, 248, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 250, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_F_x), __pyx_ptype_5numpy_ndarray, 1, "F_x", 0))) __PYX_ERR(0, 250, __pyx_L1_error)
   __pyx_r = __pyx_pf_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_4eval_with_f_val(((struct __pyx_obj_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference *)__pyx_v_self), __pyx_v_x, __pyx_v_F_x);
 
   /* function exit code */
@@ -8991,7 +9011,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_27Generalize
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("eval_with_f_val", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_eval_with_f_val(__pyx_v_self, __pyx_v_x, __pyx_v_F_x, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 248, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_eval_with_f_val(__pyx_v_self, __pyx_v_x, __pyx_v_F_x, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 250, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -9596,17 +9616,81 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_27Generalize
   return __pyx_r;
 }
 
-/* "cyroot/vector_derivative_approximation.pyx":262
- * # noinspection DuplicatedCode
+/* "cyroot/vector_derivative_approximation.pyx":265
+ * @dynamic_default_args()
  * @cython.binding(True)
  * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],             # <<<<<<<<<<<<<<
  *                                   x: ArrayLike,
  *                                   F_x: Optional[ArrayLike] = None,
  */
 
+static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_6__defaults__(CYTHON_UNUSED PyObject *__pyx_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__defaults__", 0);
+  __Pyx_XDECREF(__pyx_r);
+
+  /* "cyroot/vector_derivative_approximation.pyx":267
+ * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
+ *                                   x: ArrayLike,
+ *                                   F_x: Optional[ArrayLike] = None,             # <<<<<<<<<<<<<<
+ *                                   h: Union[float, VectorLike] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
+ *                                   order: int = 1,
+ */
+  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(((PyObject *)Py_None));
+  __Pyx_GIVEREF(((PyObject *)Py_None));
+  PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)Py_None));
+  __Pyx_INCREF(__Pyx_CyFunction_Defaults(__pyx_defaults, __pyx_self)->__pyx_arg_h);
+  __Pyx_GIVEREF(__Pyx_CyFunction_Defaults(__pyx_defaults, __pyx_self)->__pyx_arg_h);
+  PyTuple_SET_ITEM(__pyx_t_1, 1, __Pyx_CyFunction_Defaults(__pyx_defaults, __pyx_self)->__pyx_arg_h);
+  __Pyx_INCREF(((PyObject *)__pyx_int_1));
+  __Pyx_GIVEREF(((PyObject *)__pyx_int_1));
+  PyTuple_SET_ITEM(__pyx_t_1, 2, ((PyObject *)__pyx_int_1));
+  __Pyx_INCREF(((PyObject *)__pyx_int_0));
+  __Pyx_GIVEREF(((PyObject *)__pyx_int_0));
+  PyTuple_SET_ITEM(__pyx_t_1, 3, ((PyObject *)__pyx_int_0));
+
+  /* "cyroot/vector_derivative_approximation.pyx":265
+ * @dynamic_default_args()
+ * @cython.binding(True)
+ * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],             # <<<<<<<<<<<<<<
+ *                                   x: ArrayLike,
+ *                                   F_x: Optional[ArrayLike] = None,
+ */
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  __Pyx_INCREF(Py_None);
+  __Pyx_GIVEREF(Py_None);
+  PyTuple_SET_ITEM(__pyx_t_2, 1, Py_None);
+  __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("cyroot.vector_derivative_approximation.__defaults__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* Python wrapper */
 static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_1generalized_finite_difference(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6cyroot_31vector_derivative_approximation_generalized_finite_difference[] = "\n    Generalized finite difference method.\n\n    Args:\n        F (function): Function for which the derivative is sought.\n        x (np.ndarray): Point at which the derivative is sought.\n        F_x (np.ndarray, optional): Value evaluated at point ``x``.\n        h (float):  Finite difference step. Defaults to 1.\n        order (int): Order of derivative to be estimated.\n         Defaults to 1.\n        kind (int): Type of finite difference, including ``1``\n         for forward, ``-1`` for backward, and ``0`` for central.\n         Defaults to 1.\n\n    Returns:\n        diff: Estimated derivative.\n    ";
+static char __pyx_doc_6cyroot_31vector_derivative_approximation_generalized_finite_difference[] = "\n    Generalized finite difference method.\n\n    Args:\n        F (function): Function for which the derivative is sought.\n        x (np.ndarray): Point at which the derivative is sought.\n        F_x (np.ndarray, optional): Value evaluated at point ``x``.\n        h (float, np.ndarray): Finite difference step. Defaults to {h}.\n        order (int): Order of derivative to be estimated.\n         Defaults to 1.\n        kind (int): Type of finite difference, including ``1``\n         for forward, ``-1`` for backward, and ``0`` for central.\n         Defaults to 0.\n\n    Returns:\n        diff: Estimated derivative.\n    ";
 static PyMethodDef __pyx_mdef_6cyroot_31vector_derivative_approximation_1generalized_finite_difference = {"generalized_finite_difference", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_31vector_derivative_approximation_1generalized_finite_difference, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6cyroot_31vector_derivative_approximation_generalized_finite_difference};
 static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_1generalized_finite_difference(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_F = 0;
@@ -9624,18 +9708,11 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_1generalized
   {
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_F,&__pyx_n_s_x,&__pyx_n_s_F_x,&__pyx_n_s_h,&__pyx_n_s_order,&__pyx_n_s_kind,0};
     PyObject* values[6] = {0,0,0,0,0,0};
-
-    /* "cyroot/vector_derivative_approximation.pyx":264
- * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
- *                                   x: ArrayLike,
- *                                   F_x: Optional[ArrayLike] = None,             # <<<<<<<<<<<<<<
- *                                   h: Union[float, VectorLike] = 1.,
- *                                   order: int = 1,
- */
+    __pyx_defaults *__pyx_dynamic_args = __Pyx_CyFunction_Defaults(__pyx_defaults, __pyx_self);
     values[2] = ((PyObject *)((PyObject *)Py_None));
-    values[3] = ((PyObject *)((PyObject*)__pyx_float_1_));
+    values[3] = __pyx_dynamic_args->__pyx_arg_h;
     values[4] = ((PyObject *)((PyObject *)__pyx_int_1));
-    values[5] = ((PyObject *)((PyObject *)__pyx_int_1));
+    values[5] = ((PyObject *)((PyObject *)__pyx_int_0));
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
@@ -9664,7 +9741,7 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_1generalized
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("generalized_finite_difference", 0, 2, 6, 1); __PYX_ERR(0, 262, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("generalized_finite_difference", 0, 2, 6, 1); __PYX_ERR(0, 265, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -9692,7 +9769,7 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_1generalized
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "generalized_finite_difference") < 0)) __PYX_ERR(0, 262, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "generalized_finite_difference") < 0)) __PYX_ERR(0, 265, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -9719,21 +9796,13 @@ static PyObject *__pyx_pw_6cyroot_31vector_derivative_approximation_1generalized
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("generalized_finite_difference", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 262, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("generalized_finite_difference", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 265, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cyroot.vector_derivative_approximation.generalized_finite_difference", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_6cyroot_31vector_derivative_approximation_generalized_finite_difference(__pyx_self, __pyx_v_F, __pyx_v_x, __pyx_v_F_x, __pyx_v_h, __pyx_v_order, __pyx_v_kind);
-
-  /* "cyroot/vector_derivative_approximation.pyx":262
- * # noinspection DuplicatedCode
- * @cython.binding(True)
- * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],             # <<<<<<<<<<<<<<
- *                                   x: ArrayLike,
- *                                   F_x: Optional[ArrayLike] = None,
- */
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
@@ -9762,14 +9831,14 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
   __Pyx_INCREF(__pyx_v_F_x);
   __Pyx_INCREF(__pyx_v_h);
 
-  /* "cyroot/vector_derivative_approximation.pyx":286
+  /* "cyroot/vector_derivative_approximation.pyx":289
  *     """
  *     # check args
  *     _finite_diference_args_check(h, order, kind)             # <<<<<<<<<<<<<<
  * 
  *     x = np.asarray(x, dtype=np.float64)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_finite_diference_args_check); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 286, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_finite_diference_args_check); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -9786,7 +9855,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_h, __pyx_v_order, __pyx_v_kind};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
@@ -9794,13 +9863,13 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_h, __pyx_v_order, __pyx_v_kind};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 289, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_3) {
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -9814,40 +9883,40 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
     __Pyx_INCREF(__pyx_v_kind);
     __Pyx_GIVEREF(__pyx_v_kind);
     PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_4, __pyx_v_kind);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":288
+  /* "cyroot/vector_derivative_approximation.pyx":291
  *     _finite_diference_args_check(h, order, kind)
  * 
  *     x = np.asarray(x, dtype=np.float64)             # <<<<<<<<<<<<<<
  *     if isinstance(h, float):
  *         h = np.full(x.shape[0], h)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_asarray); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_asarray); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_x);
   __Pyx_GIVEREF(__pyx_v_x);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_x);
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_float64); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_float64); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 288, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -9855,7 +9924,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
   __Pyx_DECREF_SET(__pyx_v_x, __pyx_t_6);
   __pyx_t_6 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":289
+  /* "cyroot/vector_derivative_approximation.pyx":292
  * 
  *     x = np.asarray(x, dtype=np.float64)
  *     if isinstance(h, float):             # <<<<<<<<<<<<<<
@@ -9866,21 +9935,21 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
   __pyx_t_8 = (__pyx_t_7 != 0);
   if (__pyx_t_8) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":290
+    /* "cyroot/vector_derivative_approximation.pyx":293
  *     x = np.asarray(x, dtype=np.float64)
  *     if isinstance(h, float):
  *         h = np.full(x.shape[0], h)             # <<<<<<<<<<<<<<
  *     else:
  *         h = np.asarray(h, dtype=np.float64)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 290, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 293, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_full); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 290, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_full); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 293, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_shape); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 290, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_shape); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 293, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_5, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 290, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_5, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 293, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_5 = NULL;
@@ -9898,7 +9967,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_1)) {
       PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_t_2, __pyx_v_h};
-      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 290, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 293, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -9907,14 +9976,14 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
       PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_t_2, __pyx_v_h};
-      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 290, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 293, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 290, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 293, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       if (__pyx_t_5) {
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -9925,7 +9994,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
       __Pyx_GIVEREF(__pyx_v_h);
       PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_4, __pyx_v_h);
       __pyx_t_2 = 0;
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 290, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 293, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
@@ -9933,7 +10002,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
     __Pyx_DECREF_SET(__pyx_v_h, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":289
+    /* "cyroot/vector_derivative_approximation.pyx":292
  * 
  *     x = np.asarray(x, dtype=np.float64)
  *     if isinstance(h, float):             # <<<<<<<<<<<<<<
@@ -9943,7 +10012,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
     goto __pyx_L3;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":292
+  /* "cyroot/vector_derivative_approximation.pyx":295
  *         h = np.full(x.shape[0], h)
  *     else:
  *         h = np.asarray(h, dtype=np.float64)             # <<<<<<<<<<<<<<
@@ -9951,26 +10020,26 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
  *     F_wrapper = PyNdArrayFPtr.from_f(F)
  */
   /*else*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 295, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_asarray); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_asarray); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 295, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 295, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_INCREF(__pyx_v_h);
     __Pyx_GIVEREF(__pyx_v_h);
     PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_h);
-    __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 295, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 295, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 295, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 292, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 295, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 295, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -9980,19 +10049,19 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
   }
   __pyx_L3:;
 
-  /* "cyroot/vector_derivative_approximation.pyx":294
+  /* "cyroot/vector_derivative_approximation.pyx":297
  *         h = np.asarray(h, dtype=np.float64)
  * 
  *     F_wrapper = PyNdArrayFPtr.from_f(F)             # <<<<<<<<<<<<<<
  *     if F_x is None:
  *         F_x = F_wrapper(x)
  */
-  __pyx_t_5 = ((PyObject *)__pyx_vtabptr_6cyroot_4fptr_PyNdArrayFPtr->from_f(__pyx_v_F)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 294, __pyx_L1_error)
+  __pyx_t_5 = ((PyObject *)__pyx_vtabptr_6cyroot_4fptr_PyNdArrayFPtr->from_f(__pyx_v_F)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 297, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_v_F_wrapper = ((struct __pyx_obj_6cyroot_4fptr_NdArrayFPtr *)__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":295
+  /* "cyroot/vector_derivative_approximation.pyx":298
  * 
  *     F_wrapper = PyNdArrayFPtr.from_f(F)
  *     if F_x is None:             # <<<<<<<<<<<<<<
@@ -10003,7 +10072,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
   __pyx_t_7 = (__pyx_t_8 != 0);
   if (__pyx_t_7) {
 
-    /* "cyroot/vector_derivative_approximation.pyx":296
+    /* "cyroot/vector_derivative_approximation.pyx":299
  *     F_wrapper = PyNdArrayFPtr.from_f(F)
  *     if F_x is None:
  *         F_x = F_wrapper(x)             # <<<<<<<<<<<<<<
@@ -10023,13 +10092,13 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
     }
     __pyx_t_5 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_6, __pyx_v_x) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_x);
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 296, __pyx_L1_error)
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 299, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF_SET(__pyx_v_F_x, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "cyroot/vector_derivative_approximation.pyx":295
+    /* "cyroot/vector_derivative_approximation.pyx":298
  * 
  *     F_wrapper = PyNdArrayFPtr.from_f(F)
  *     if F_x is None:             # <<<<<<<<<<<<<<
@@ -10039,33 +10108,33 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
     goto __pyx_L4;
   }
 
-  /* "cyroot/vector_derivative_approximation.pyx":298
+  /* "cyroot/vector_derivative_approximation.pyx":301
  *         F_x = F_wrapper(x)
  *     else:
  *         F_x = np.asarray(F_x, dtype=np.float64)             # <<<<<<<<<<<<<<
  *     return generalized_finite_difference_kernel(<NdArrayFPtr> F_wrapper, x, F_x, h, order, kind)
  */
   /*else*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 298, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 301, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 298, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 301, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 298, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 301, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(__pyx_v_F_x);
     __Pyx_GIVEREF(__pyx_v_F_x);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_v_F_x);
-    __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 298, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 301, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 298, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 301, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float64); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 298, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float64); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 301, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 298, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 301, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 298, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 301, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -10075,28 +10144,28 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_generalized_
   }
   __pyx_L4:;
 
-  /* "cyroot/vector_derivative_approximation.pyx":299
+  /* "cyroot/vector_derivative_approximation.pyx":302
  *     else:
  *         F_x = np.asarray(F_x, dtype=np.float64)
  *     return generalized_finite_difference_kernel(<NdArrayFPtr> F_wrapper, x, F_x, h, order, kind)             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  if (!(likely(((__pyx_v_x) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_x, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 299, __pyx_L1_error)
-  if (!(likely(((__pyx_v_F_x) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_F_x, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 299, __pyx_L1_error)
-  if (!(likely(((__pyx_v_h) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_h, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 299, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_order); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 299, __pyx_L1_error)
-  __pyx_t_9 = __Pyx_PyInt_As_int(__pyx_v_kind); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 299, __pyx_L1_error)
+  if (!(likely(((__pyx_v_x) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_x, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 302, __pyx_L1_error)
+  if (!(likely(((__pyx_v_F_x) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_F_x, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 302, __pyx_L1_error)
+  if (!(likely(((__pyx_v_h) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_h, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 302, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_order); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 302, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyInt_As_int(__pyx_v_kind); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 302, __pyx_L1_error)
   __pyx_t_10.__pyx_n = 2;
   __pyx_t_10.order = __pyx_t_4;
   __pyx_t_10.kind = __pyx_t_9;
-  __pyx_t_2 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_generalized_finite_difference_kernel(__pyx_v_F_wrapper, ((PyArrayObject *)__pyx_v_x), ((PyArrayObject *)__pyx_v_F_x), ((PyArrayObject *)__pyx_v_h), &__pyx_t_10)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 299, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_6cyroot_31vector_derivative_approximation_generalized_finite_difference_kernel(__pyx_v_F_wrapper, ((PyArrayObject *)__pyx_v_x), ((PyArrayObject *)__pyx_v_F_x), ((PyArrayObject *)__pyx_v_h), &__pyx_t_10)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 302, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":262
- * # noinspection DuplicatedCode
+  /* "cyroot/vector_derivative_approximation.pyx":265
+ * @dynamic_default_args()
  * @cython.binding(True)
  * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],             # <<<<<<<<<<<<<<
  *                                   x: ArrayLike,
@@ -10229,7 +10298,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_2__pyx_unpic
  */
   __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_v___pyx_checksum); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_tuple__4, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_tuple__5, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
@@ -10633,7 +10702,7 @@ static PyObject *__pyx_pf_6cyroot_31vector_derivative_approximation_4__pyx_unpic
  */
   __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_v___pyx_checksum); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_tuple__5, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_tuple__6, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
@@ -11487,7 +11556,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
  * 
  * cdef inline int import_umath() except -1:
  */
-      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(3, 944, __pyx_L5_except_error)
+      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(3, 944, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_Raise(__pyx_t_8, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -11619,7 +11688,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
  * 
  * cdef inline int import_ufunc() except -1:
  */
-      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(3, 950, __pyx_L5_except_error)
+      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(3, 950, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_Raise(__pyx_t_8, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -11751,7 +11820,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
  * 
  * cdef extern from *:
  */
-      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(3, 956, __pyx_L5_except_error)
+      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(3, 956, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_Raise(__pyx_t_8, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -12827,7 +12896,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *         if itemsize <= 0:
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 134, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 134, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -12859,7 +12928,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *         if not isinstance(format, bytes):
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 137, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 137, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -12986,7 +13055,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  * 
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 149, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 149, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -13260,7 +13329,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *             if self.dtype_is_object:
  */
-      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 177, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 177, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_Raise(__pyx_t_10, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -13504,7 +13573,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(stru
  *         info.buf = self.data
  *         info.len = self.len
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 193, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 193, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -14238,7 +14307,7 @@ static PyObject *__pyx_pf___pyx_array___reduce_cython__(CYTHON_UNUSED struct __p
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 2, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -14294,7 +14363,7 @@ static PyObject *__pyx_pf___pyx_array_2__setstate_cython__(CYTHON_UNUSED struct 
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -16023,7 +16092,7 @@ static int __pyx_memoryview___pyx_pf_15View_dot_MemoryView_10memoryview_6__setit
  * 
  *         have_slices, index = _unellipsify(index, self.view.ndim)
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 420, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 420, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -17071,7 +17140,7 @@ static PyObject *__pyx_memoryview_convert_item_to_object(struct __pyx_memoryview
  *         else:
  *             if len(self.view.format) == 1:
  */
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 497, __pyx_L5_except_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 497, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_Raise(__pyx_t_6, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -17433,7 +17502,7 @@ static int __pyx_memoryview___pyx_pf_15View_dot_MemoryView_10memoryview_8__getbu
  * 
  *         if flags & PyBUF_ND:
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 522, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 522, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -17982,7 +18051,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView_10memoryview_7strides___get__(st
  * 
  *         return tuple([stride for stride in self.view.strides[:self.view.ndim]])
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 572, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 572, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -18099,7 +18168,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView_10memoryview_10suboffsets___get_
     __Pyx_XDECREF(__pyx_r);
     __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->view.ndim); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 579, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__19, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 579, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__20, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 579, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_r = __pyx_t_3;
@@ -19137,7 +19206,7 @@ static PyObject *__pyx_pf___pyx_memoryview___reduce_cython__(CYTHON_UNUSED struc
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 2, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -19193,7 +19262,7 @@ static PyObject *__pyx_pf___pyx_memoryview_2__setstate_cython__(CYTHON_UNUSED st
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -19854,7 +19923,7 @@ static PyObject *assert_direct_dimensions(Py_ssize_t *__pyx_v_suboffsets, int __
  * 
  * 
  */
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 705, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 705, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_Raise(__pyx_t_5, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -22038,7 +22107,7 @@ static PyObject *__pyx_pf___pyx_memoryviewslice___reduce_cython__(CYTHON_UNUSED 
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 2, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -22094,7 +22163,7 @@ static PyObject *__pyx_pf___pyx_memoryviewslice_2__setstate_cython__(CYTHON_UNUS
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__25, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -25371,7 +25440,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView___pyx_unpickle_Enum(CYTHON_UNUSE
  */
   __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_v___pyx_checksum); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_tuple__25, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_tuple__26, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
@@ -26961,6 +27030,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_Ellipsis, __pyx_k_Ellipsis, sizeof(__pyx_k_Ellipsis), 0, 0, 1, 1},
   {&__pyx_kp_s_Empty_shape_tuple_for_cython_arr, __pyx_k_Empty_shape_tuple_for_cython_arr, sizeof(__pyx_k_Empty_shape_tuple_for_cython_arr), 0, 0, 1, 0},
   {&__pyx_n_s_F, __pyx_k_F, sizeof(__pyx_k_F), 0, 0, 1, 1},
+  {&__pyx_n_s_FINITE_DIFF_STEP, __pyx_k_FINITE_DIFF_STEP, sizeof(__pyx_k_FINITE_DIFF_STEP), 0, 0, 1, 1},
   {&__pyx_n_s_F_wrapper, __pyx_k_F_wrapper, sizeof(__pyx_k_F_wrapper), 0, 0, 1, 1},
   {&__pyx_n_s_F_x, __pyx_k_F_x, sizeof(__pyx_k_F_x), 0, 0, 1, 1},
   {&__pyx_n_s_GeneralizedFiniteDifference, __pyx_k_GeneralizedFiniteDifference, sizeof(__pyx_k_GeneralizedFiniteDifference), 0, 0, 1, 1},
@@ -26990,8 +27060,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_VectorDerivativeApproximation, __pyx_k_VectorDerivativeApproximation, sizeof(__pyx_k_VectorDerivativeApproximation), 0, 1, 0, 1},
   {&__pyx_n_s_VectorLike, __pyx_k_VectorLike, sizeof(__pyx_k_VectorLike), 0, 0, 1, 1},
   {&__pyx_n_s_View_MemoryView, __pyx_k_View_MemoryView, sizeof(__pyx_k_View_MemoryView), 0, 0, 1, 1},
-  {&__pyx_n_s__26, __pyx_k__26, sizeof(__pyx_k__26), 0, 0, 1, 1},
-  {&__pyx_kp_u__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 1, 0, 0},
+  {&__pyx_n_s__27, __pyx_k__27, sizeof(__pyx_k__27), 0, 0, 1, 1},
+  {&__pyx_kp_u__4, __pyx_k__4, sizeof(__pyx_k__4), 0, 1, 0, 0},
   {&__pyx_n_s_all, __pyx_k_all, sizeof(__pyx_k_all), 0, 0, 1, 1},
   {&__pyx_n_s_allocate_buffer, __pyx_k_allocate_buffer, sizeof(__pyx_k_allocate_buffer), 0, 0, 1, 1},
   {&__pyx_n_s_append, __pyx_k_append, sizeof(__pyx_k_append), 0, 0, 1, 1},
@@ -27008,9 +27078,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_contiguous_and_indirect, __pyx_k_contiguous_and_indirect, sizeof(__pyx_k_contiguous_and_indirect), 0, 0, 1, 0},
   {&__pyx_kp_s_cyroot_vector_derivative_approxi, __pyx_k_cyroot_vector_derivative_approxi, sizeof(__pyx_k_cyroot_vector_derivative_approxi), 0, 0, 1, 0},
   {&__pyx_n_s_cyroot_vector_derivative_approxi_2, __pyx_k_cyroot_vector_derivative_approxi_2, sizeof(__pyx_k_cyroot_vector_derivative_approxi_2), 0, 0, 1, 1},
+  {&__pyx_n_s_defaults, __pyx_k_defaults, sizeof(__pyx_k_defaults), 0, 0, 1, 1},
   {&__pyx_n_s_dict, __pyx_k_dict, sizeof(__pyx_k_dict), 0, 0, 1, 1},
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_dtype_is_object, __pyx_k_dtype_is_object, sizeof(__pyx_k_dtype_is_object), 0, 0, 1, 1},
+  {&__pyx_n_s_dynamic_default_args, __pyx_k_dynamic_default_args, sizeof(__pyx_k_dynamic_default_args), 0, 0, 1, 1},
   {&__pyx_n_s_empty, __pyx_k_empty, sizeof(__pyx_k_empty), 0, 0, 1, 1},
   {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
   {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
@@ -27043,6 +27115,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_name_2, __pyx_k_name_2, sizeof(__pyx_k_name_2), 0, 0, 1, 1},
+  {&__pyx_n_s_named_default, __pyx_k_named_default, sizeof(__pyx_k_named_default), 0, 0, 1, 1},
   {&__pyx_n_s_ndim, __pyx_k_ndim, sizeof(__pyx_k_ndim), 0, 0, 1, 1},
   {&__pyx_n_s_new, __pyx_k_new, sizeof(__pyx_k_new), 0, 0, 1, 1},
   {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
@@ -27097,11 +27170,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 51, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 65, __pyx_L1_error)
-  __pyx_builtin_sum = __Pyx_GetBuiltinName(__pyx_n_s_sum); if (!__pyx_builtin_sum) __PYX_ERR(0, 84, __pyx_L1_error)
-  __pyx_builtin_super = __Pyx_GetBuiltinName(__pyx_n_s_super); if (!__pyx_builtin_super) __PYX_ERR(0, 225, __pyx_L1_error)
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 244, __pyx_L1_error)
+  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_builtin_sum = __Pyx_GetBuiltinName(__pyx_n_s_sum); if (!__pyx_builtin_sum) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_builtin_super = __Pyx_GetBuiltinName(__pyx_n_s_super); if (!__pyx_builtin_super) __PYX_ERR(0, 227, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 246, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(3, 944, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(4, 109, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 152, __pyx_L1_error)
@@ -27118,25 +27191,25 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "cyroot/vector_derivative_approximation.pyx":81
+  /* "cyroot/vector_derivative_approximation.pyx":83
  *     ns[:] = order + 1
  *     cdef unsigned int[:, :] inds = product(ns)
  *     cdef array.array perturb_inds = array.array('I')             # <<<<<<<<<<<<<<
  *     for i in range(inds.shape[0]):
  *         steps = inds[i]
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_u_I); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_u_I); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "cyroot/vector_derivative_approximation.pyx":203
+  /* "cyroot/vector_derivative_approximation.pyx":205
  *                     if np.array_equal(perturbation_steps[k], perturb):
  *                         break
  *                 D[:, ii] += coef * F_perturbations[k] / scale             # <<<<<<<<<<<<<<
  * 
  *     cdef unsigned int[:] eq_index = view.array(shape=(indices.shape[1],),
  */
-  __pyx_slice__2 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__2)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_slice__2 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__2)) __PYX_ERR(0, 205, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice__2);
   __Pyx_GIVEREF(__pyx_slice__2);
 
@@ -27147,12 +27220,12 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         from pickle import PickleError as __pyx_PickleError
  *         raise __pyx_PickleError("Incompatible checksums (0x%x vs (0xc5791b8, 0x42d8203, 0xdf726b7) = (F, n_f_calls))" % __pyx_checksum)
  */
-  __pyx_tuple__4 = PyTuple_Pack(3, __pyx_int_207065528, __pyx_int_70091267, __pyx_int_234301111); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(1, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__4);
-  __Pyx_GIVEREF(__pyx_tuple__4);
-  __pyx_tuple__5 = PyTuple_Pack(3, __pyx_int_99694685, __pyx_int_139418775, __pyx_int_39425840); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(3, __pyx_int_207065528, __pyx_int_70091267, __pyx_int_234301111); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
+  __pyx_tuple__6 = PyTuple_Pack(3, __pyx_int_99694685, __pyx_int_139418775, __pyx_int_39425840); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
 
   /* "C:/Python/Python38/lib/site-packages/numpy/__init__.pxd":944
  *         __pyx_import_array()
@@ -27161,9 +27234,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_umath() except -1:
  */
-  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(3, 944, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(3, 944, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__7);
+  __Pyx_GIVEREF(__pyx_tuple__7);
 
   /* "C:/Python/Python38/lib/site-packages/numpy/__init__.pxd":950
  *         _import_umath()
@@ -27172,9 +27245,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * cdef inline int import_ufunc() except -1:
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(3, 950, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_u_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(3, 950, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
 
   /* "View.MemoryView":134
  * 
@@ -27183,9 +27256,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         if itemsize <= 0:
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(1, 134, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(1, 134, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__9);
+  __Pyx_GIVEREF(__pyx_tuple__9);
 
   /* "View.MemoryView":137
  * 
@@ -27194,9 +27267,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         if not isinstance(format, bytes):
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(1, 137, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
+  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(1, 137, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
 
   /* "View.MemoryView":149
  * 
@@ -27205,9 +27278,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(1, 149, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(1, 149, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__11);
+  __Pyx_GIVEREF(__pyx_tuple__11);
 
   /* "View.MemoryView":177
  *             self.data = <char *>malloc(self.len)
@@ -27216,9 +27289,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *             if self.dtype_is_object:
  */
-  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(1, 177, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(1, 177, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
 
   /* "View.MemoryView":193
  *             bufmode = PyBUF_F_CONTIGUOUS | PyBUF_ANY_CONTIGUOUS
@@ -27227,9 +27300,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         info.buf = self.data
  *         info.len = self.len
  */
-  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(1, 193, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(1, 193, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
 
   /* "(tree fragment)":2
  * def __reduce_cython__(self):
@@ -27237,18 +27310,18 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(1, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(1, 2, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__14);
+  __Pyx_GIVEREF(__pyx_tuple__14);
 
   /* "(tree fragment)":4
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(1, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
+  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__15);
+  __Pyx_GIVEREF(__pyx_tuple__15);
 
   /* "View.MemoryView":420
  *     def __setitem__(memoryview self, object index, object value):
@@ -27257,9 +27330,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         have_slices, index = _unellipsify(index, self.view.ndim)
  */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_s_Cannot_assign_to_read_only_memor); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(1, 420, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
+  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_s_Cannot_assign_to_read_only_memor); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(1, 420, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
 
   /* "View.MemoryView":497
  *             result = struct.unpack(self.view.format, bytesitem)
@@ -27268,9 +27341,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         else:
  *             if len(self.view.format) == 1:
  */
-  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(1, 497, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(1, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__17);
+  __Pyx_GIVEREF(__pyx_tuple__17);
 
   /* "View.MemoryView":522
  *     def __getbuffer__(self, Py_buffer *info, int flags):
@@ -27279,9 +27352,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         if flags & PyBUF_ND:
  */
-  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_s_Cannot_create_writable_memory_vi); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(1, 522, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
+  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_s_Cannot_create_writable_memory_vi); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(1, 522, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__18);
+  __Pyx_GIVEREF(__pyx_tuple__18);
 
   /* "View.MemoryView":572
  *         if self.view.strides == NULL:
@@ -27290,9 +27363,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         return tuple([stride for stride in self.view.strides[:self.view.ndim]])
  */
-  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(1, 572, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
+  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(1, 572, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__19);
+  __Pyx_GIVEREF(__pyx_tuple__19);
 
   /* "View.MemoryView":579
  *     def suboffsets(self):
@@ -27301,12 +27374,12 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         return tuple([suboffset for suboffset in self.view.suboffsets[:self.view.ndim]])
  */
-  __pyx_tuple__19 = PyTuple_New(1); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(1, 579, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__19);
+  __pyx_tuple__20 = PyTuple_New(1); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(1, 579, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__20);
   __Pyx_INCREF(__pyx_int_neg_1);
   __Pyx_GIVEREF(__pyx_int_neg_1);
-  PyTuple_SET_ITEM(__pyx_tuple__19, 0, __pyx_int_neg_1);
-  __Pyx_GIVEREF(__pyx_tuple__19);
+  PyTuple_SET_ITEM(__pyx_tuple__20, 0, __pyx_int_neg_1);
+  __Pyx_GIVEREF(__pyx_tuple__20);
 
   /* "(tree fragment)":2
  * def __reduce_cython__(self):
@@ -27314,18 +27387,18 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(1, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__20);
-  __Pyx_GIVEREF(__pyx_tuple__20);
+  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(1, 2, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__21);
+  __Pyx_GIVEREF(__pyx_tuple__21);
 
   /* "(tree fragment)":4
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(1, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__21);
-  __Pyx_GIVEREF(__pyx_tuple__21);
+  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__22);
+  __Pyx_GIVEREF(__pyx_tuple__22);
 
   /* "View.MemoryView":705
  *     for suboffset in suboffsets[:ndim]:
@@ -27334,9 +27407,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(1, 705, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__22);
-  __Pyx_GIVEREF(__pyx_tuple__22);
+  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(1, 705, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__23);
+  __Pyx_GIVEREF(__pyx_tuple__23);
 
   /* "(tree fragment)":2
  * def __reduce_cython__(self):
@@ -27344,36 +27417,33 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(1, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__23);
-  __Pyx_GIVEREF(__pyx_tuple__23);
+  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(1, 2, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__24);
+  __Pyx_GIVEREF(__pyx_tuple__24);
 
   /* "(tree fragment)":4
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(1, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__24);
-  __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_tuple__25 = PyTuple_Pack(3, __pyx_int_184977713, __pyx_int_136983863, __pyx_int_112105877); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __pyx_tuple__25 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_GIVEREF(__pyx_tuple__25);
+  __pyx_tuple__26 = PyTuple_Pack(3, __pyx_int_184977713, __pyx_int_136983863, __pyx_int_112105877); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__26);
+  __Pyx_GIVEREF(__pyx_tuple__26);
 
-  /* "cyroot/vector_derivative_approximation.pyx":262
- * # noinspection DuplicatedCode
+  /* "cyroot/vector_derivative_approximation.pyx":265
+ * @dynamic_default_args()
  * @cython.binding(True)
  * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],             # <<<<<<<<<<<<<<
  *                                   x: ArrayLike,
  *                                   F_x: Optional[ArrayLike] = None,
  */
-  __pyx_tuple__27 = PyTuple_Pack(7, __pyx_n_s_F, __pyx_n_s_x, __pyx_n_s_F_x, __pyx_n_s_h, __pyx_n_s_order, __pyx_n_s_kind, __pyx_n_s_F_wrapper); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__27);
-  __Pyx_GIVEREF(__pyx_tuple__27);
-  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(6, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_vector_derivative_approxi, __pyx_n_s_generalized_finite_difference, 262, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __pyx_tuple__29 = PyTuple_Pack(4, ((PyObject *)Py_None), ((PyObject*)__pyx_float_1_), ((PyObject *)__pyx_int_1), ((PyObject *)__pyx_int_1)); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__29);
-  __Pyx_GIVEREF(__pyx_tuple__29);
+  __pyx_tuple__28 = PyTuple_Pack(7, __pyx_n_s_F, __pyx_n_s_x, __pyx_n_s_F_x, __pyx_n_s_h, __pyx_n_s_order, __pyx_n_s_kind, __pyx_n_s_F_wrapper); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__28);
+  __Pyx_GIVEREF(__pyx_tuple__28);
+  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(6, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_vector_derivative_approxi, __pyx_n_s_generalized_finite_difference, 265, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 265, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_VectorDerivativeApproximation(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
@@ -27462,7 +27532,6 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 
 static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_float_1_ = PyFloat_FromDouble(1.); if (unlikely(!__pyx_float_1_)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_39425840 = PyInt_FromLong(39425840L); if (unlikely(!__pyx_int_39425840)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -27544,16 +27613,16 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation.eval = (PyArrayObject *(*)(struct __pyx_obj_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation *, PyArrayObject *, int __pyx_skip_dispatch))__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_eval;
   __pyx_vtable_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation.eval_with_f_val = (PyArrayObject *(*)(struct __pyx_obj_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation *, PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch))__pyx_f_6cyroot_31vector_derivative_approximation_29VectorDerivativeApproximation_eval_with_f_val;
   __pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation.tp_base = __pyx_ptype_6cyroot_4fptr_NdArrayFPtr;
-  if (PyType_Ready(&__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation.tp_dictoffset && __pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation.tp_dict, __pyx_vtabptr_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_VectorDerivativeApproximation, (PyObject *)&__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation.tp_dict, __pyx_vtabptr_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_VectorDerivativeApproximation, (PyObject *)&__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
   __pyx_ptype_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation = &__pyx_type_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation;
   __pyx_vtabptr_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference = &__pyx_vtable_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference;
   __pyx_vtable_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.__pyx_base = *__pyx_vtabptr_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation;
@@ -27561,16 +27630,16 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.__pyx_base.eval = (PyArrayObject *(*)(struct __pyx_obj_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation *, PyArrayObject *, int __pyx_skip_dispatch))__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_eval;
   __pyx_vtable_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.__pyx_base.eval_with_f_val = (PyArrayObject *(*)(struct __pyx_obj_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation *, PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch))__pyx_f_6cyroot_31vector_derivative_approximation_27GeneralizedFiniteDifference_eval_with_f_val;
   __pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.tp_base = __pyx_ptype_6cyroot_31vector_derivative_approximation_VectorDerivativeApproximation;
-  if (PyType_Ready(&__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.tp_dictoffset && __pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.tp_dict, __pyx_vtabptr_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_GeneralizedFiniteDifference, (PyObject *)&__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference.tp_dict, __pyx_vtabptr_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_GeneralizedFiniteDifference, (PyObject *)&__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
   __pyx_ptype_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference = &__pyx_type_6cyroot_31vector_derivative_approximation_GeneralizedFiniteDifference;
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;
@@ -27907,7 +27976,8 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_vector_derivative_approximation(Py
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
-  static PyThread_type_lock __pyx_t_6[8];
+  PyObject *__pyx_t_6 = NULL;
+  static PyThread_type_lock __pyx_t_7[8];
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -28016,11 +28086,23 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/vector_derivative_approximation.pyx":7
  * # cython: profile = False
  * 
+ * import array             # <<<<<<<<<<<<<<
+ * from typing import Callable, Optional, Union
+ * 
+ */
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_array, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_array, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "cyroot/vector_derivative_approximation.pyx":8
+ * 
+ * import array
  * from typing import Callable, Optional, Union             # <<<<<<<<<<<<<<
  * 
- * from cpython cimport array
+ * cimport numpy as np
  */
-  __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_Callable);
   __Pyx_GIVEREF(__pyx_n_s_Callable);
@@ -28031,94 +28113,131 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_n_s_Union);
   __Pyx_GIVEREF(__pyx_n_s_Union);
   PyList_SET_ITEM(__pyx_t_1, 2, __pyx_n_s_Union);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_typing, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_typing, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Callable); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Callable); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Callable, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Callable, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Optional); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Optional); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Optional, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Optional, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Union); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Union); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Union, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Union, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "cyroot/vector_derivative_approximation.pyx":10
- * 
- * from cpython cimport array
- * import array             # <<<<<<<<<<<<<<
- * import numpy as np
- * cimport numpy as np
- */
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_array, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_array, __pyx_t_2) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "cyroot/vector_derivative_approximation.pyx":11
- * from cpython cimport array
- * import array
- * import numpy as np             # <<<<<<<<<<<<<<
+ * 
  * cimport numpy as np
+ * import numpy as np             # <<<<<<<<<<<<<<
  * import cython
+ * from cpython cimport array
  */
   __pyx_t_2 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_2) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":21
+  /* "cyroot/vector_derivative_approximation.pyx":15
+ * from cpython cimport array
+ * from cython cimport view
+ * from dynamic_default_args import dynamic_default_args, named_default             # <<<<<<<<<<<<<<
+ * from libcpp.algorithm cimport sort
+ * from libcpp.vector cimport vector
+ */
+  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_n_s_dynamic_default_args);
+  __Pyx_GIVEREF(__pyx_n_s_dynamic_default_args);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_dynamic_default_args);
+  __Pyx_INCREF(__pyx_n_s_named_default);
+  __Pyx_GIVEREF(__pyx_n_s_named_default);
+  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_n_s_named_default);
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_dynamic_default_args, __pyx_t_2, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_dynamic_default_args); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_dynamic_default_args, __pyx_t_2) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_named_default); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_named_default, __pyx_t_2) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "cyroot/vector_derivative_approximation.pyx":19
+ * from libcpp.vector cimport vector
+ * 
+ * from ._defaults import FINITE_DIFF_STEP             # <<<<<<<<<<<<<<
+ * from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
+ * from .ops.scalar_ops cimport binomial_coef
+ */
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_n_s_FINITE_DIFF_STEP);
+  __Pyx_GIVEREF(__pyx_n_s_FINITE_DIFF_STEP);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_FINITE_DIFF_STEP);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_defaults, __pyx_t_1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_FINITE_DIFF_STEP); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_FINITE_DIFF_STEP, __pyx_t_1) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "cyroot/vector_derivative_approximation.pyx":23
  * from .ops.scalar_ops cimport binomial_coef
  * from .ops.vector_ops cimport prod
  * from .scalar_derivative_approximation import _finite_diference_args_check             # <<<<<<<<<<<<<<
  * from .typing import *
  * from .utils.itertools cimport product
  */
-  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_n_s_finite_diference_args_check);
   __Pyx_GIVEREF(__pyx_n_s_finite_diference_args_check);
   PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_finite_diference_args_check);
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_scalar_derivative_approximation, __pyx_t_2, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_scalar_derivative_approximation, __pyx_t_2, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_finite_diference_args_check); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_finite_diference_args_check); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_finite_diference_args_check, __pyx_t_2) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_finite_diference_args_check, __pyx_t_2) < 0) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":22
+  /* "cyroot/vector_derivative_approximation.pyx":24
  * from .ops.vector_ops cimport prod
  * from .scalar_derivative_approximation import _finite_diference_args_check
  * from .typing import *             # <<<<<<<<<<<<<<
  * from .utils.itertools cimport product
  * 
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_n_s__26);
-  __Pyx_GIVEREF(__pyx_n_s__26);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s__26);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_typing, __pyx_t_1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_INCREF(__pyx_n_s__27);
+  __Pyx_GIVEREF(__pyx_n_s__27);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s__27);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_typing, __pyx_t_1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__pyx_import_star(__pyx_t_2) < 0) __PYX_ERR(0, 22, __pyx_L1_error);
+  if (__pyx_import_star(__pyx_t_2) < 0) __PYX_ERR(0, 24, __pyx_L1_error);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":25
+  /* "cyroot/vector_derivative_approximation.pyx":27
  * from .utils.itertools cimport product
  * 
  * __all__ = [             # <<<<<<<<<<<<<<
  *     'VectorDerivativeApproximation',
  *     'generalized_finite_difference',
  */
-  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_n_u_VectorDerivativeApproximation);
   __Pyx_GIVEREF(__pyx_n_u_VectorDerivativeApproximation);
@@ -28129,126 +28248,188 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_n_u_GeneralizedFiniteDifference);
   __Pyx_GIVEREF(__pyx_n_u_GeneralizedFiniteDifference);
   PyList_SET_ITEM(__pyx_t_2, 2, __pyx_n_u_GeneralizedFiniteDifference);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_all, __pyx_t_2) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_all, __pyx_t_2) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":262
+  /* "cyroot/vector_derivative_approximation.pyx":224
+ *     def __init__(self,
+ *                  F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]],
+ *                  h: Union[float, VectorLike] = FINITE_DIFF_STEP,             # <<<<<<<<<<<<<<
+ *                  order: int = 1,
+ *                  kind: int = 0):
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_FINITE_DIFF_STEP); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_k__3 = __pyx_t_2;
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "cyroot/vector_derivative_approximation.pyx":263
+ * 
  * # noinspection DuplicatedCode
+ * @dynamic_default_args()             # <<<<<<<<<<<<<<
+ * @cython.binding(True)
+ * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_dynamic_default_args); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 263, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "cyroot/vector_derivative_approximation.pyx":265
+ * @dynamic_default_args()
  * @cython.binding(True)
  * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],             # <<<<<<<<<<<<<<
  *                                   x: ArrayLike,
  *                                   F_x: Optional[ArrayLike] = None,
  */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Callable); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_ArrayLike); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_Callable); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_ArrayLike); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
-  __pyx_t_3 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_ArrayLike); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_4);
   __pyx_t_4 = 0;
-  __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_F, __pyx_t_3) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_ArrayLike); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_4);
+  __pyx_t_5 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_GetItem(__pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_F, __pyx_t_4) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":263
+  /* "cyroot/vector_derivative_approximation.pyx":266
  * @cython.binding(True)
  * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
  *                                   x: ArrayLike,             # <<<<<<<<<<<<<<
  *                                   F_x: Optional[ArrayLike] = None,
- *                                   h: Union[float, VectorLike] = 1.,
+ *                                   h: Union[float, VectorLike] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_ArrayLike); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 263, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_x, __pyx_t_3) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_ArrayLike); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 266, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_x, __pyx_t_4) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":264
+  /* "cyroot/vector_derivative_approximation.pyx":267
  * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
  *                                   x: ArrayLike,
  *                                   F_x: Optional[ArrayLike] = None,             # <<<<<<<<<<<<<<
- *                                   h: Union[float, VectorLike] = 1.,
+ *                                   h: Union[float, VectorLike] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
  *                                   order: int = 1,
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_Optional); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 264, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_Optional); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 267, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_ArrayLike); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 267, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_t_4, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 267, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_ArrayLike); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 264, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 264, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_F_x, __pyx_t_3) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_F_x, __pyx_t_1) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cyroot/vector_derivative_approximation.pyx":265
+  /* "cyroot/vector_derivative_approximation.pyx":268
  *                                   x: ArrayLike,
  *                                   F_x: Optional[ArrayLike] = None,
- *                                   h: Union[float, VectorLike] = 1.,             # <<<<<<<<<<<<<<
+ *                                   h: Union[float, VectorLike] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),             # <<<<<<<<<<<<<<
  *                                   order: int = 1,
- *                                   kind: int = 1):
+ *                                   kind: int = 0):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Union); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_VectorLike); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 265, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_Union); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_VectorLike); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 268, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 268, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(((PyObject *)(&PyFloat_Type)));
   __Pyx_GIVEREF(((PyObject *)(&PyFloat_Type)));
-  PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)(&PyFloat_Type)));
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_GetItem(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 265, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  PyTuple_SET_ITEM(__pyx_t_4, 0, ((PyObject *)(&PyFloat_Type)));
+  __Pyx_GIVEREF(__pyx_t_6);
+  PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_6);
+  __pyx_t_6 = 0;
+  __pyx_t_6 = __Pyx_PyObject_GetItem(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 268, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_h, __pyx_t_5) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_order, __pyx_n_u_int) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_kind, __pyx_n_u_int) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_h, __pyx_t_6) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_order, __pyx_n_u_int) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_kind, __pyx_n_u_int) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
 
-  /* "cyroot/vector_derivative_approximation.pyx":262
- * # noinspection DuplicatedCode
+  /* "cyroot/vector_derivative_approximation.pyx":265
+ * @dynamic_default_args()
  * @cython.binding(True)
  * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],             # <<<<<<<<<<<<<<
  *                                   x: ArrayLike,
  *                                   F_x: Optional[ArrayLike] = None,
  */
-  __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_6cyroot_31vector_derivative_approximation_1generalized_finite_difference, 0, __pyx_n_s_generalized_finite_difference, NULL, __pyx_n_s_cyroot_vector_derivative_approxi_2, __pyx_d, ((PyObject *)__pyx_codeobj__28)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_CyFunction_New(&__pyx_mdef_6cyroot_31vector_derivative_approximation_1generalized_finite_difference, 0, __pyx_n_s_generalized_finite_difference, NULL, __pyx_n_s_cyroot_vector_derivative_approxi_2, __pyx_d, ((PyObject *)__pyx_codeobj__29)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_6, sizeof(__pyx_defaults), 1)) __PYX_ERR(0, 265, __pyx_L1_error)
+
+  /* "cyroot/vector_derivative_approximation.pyx":268
+ *                                   x: ArrayLike,
+ *                                   F_x: Optional[ArrayLike] = None,
+ *                                   h: Union[float, VectorLike] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),             # <<<<<<<<<<<<<<
+ *                                   order: int = 1,
+ *                                   kind: int = 0):
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_named_default); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 268, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 268, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_FINITE_DIFF_STEP); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_5, __pyx_tuple__29);
-  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_5, __pyx_t_2);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_generalized_finite_difference, __pyx_t_5) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_FINITE_DIFF_STEP, __pyx_t_5) < 0) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 268, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_CyFunction_Defaults(__pyx_defaults, __pyx_t_6)->__pyx_arg_h = __pyx_t_5;
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+  __Pyx_CyFunction_SetDefaultsGetter(__pyx_t_6, __pyx_pf_6cyroot_31vector_derivative_approximation_6__defaults__);
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_6, __pyx_t_2);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "cyroot/vector_derivative_approximation.pyx":263
+ * 
+ * # noinspection DuplicatedCode
+ * @dynamic_default_args()             # <<<<<<<<<<<<<<
+ * @cython.binding(True)
+ * def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
+ */
+  __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 263, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_generalized_finite_difference, __pyx_t_2) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_VectorDerivativeApproximation(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_5 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_31vector_derivative_approximation_3__pyx_unpickle_VectorDerivativeApproximation, NULL, __pyx_n_s_cyroot_vector_derivative_approxi_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_VectorDerivativeA, __pyx_t_5) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_31vector_derivative_approximation_3__pyx_unpickle_VectorDerivativeApproximation, NULL, __pyx_n_s_cyroot_vector_derivative_approxi_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_VectorDerivativeA, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "(tree fragment)":11
  *         __pyx_unpickle_VectorDerivativeApproximation__set_state(<VectorDerivativeApproximation> __pyx_result, __pyx_state)
@@ -28257,20 +28438,20 @@ if (!__Pyx_RefNanny) {
  *     __pyx_result.F = __pyx_state[0]; __pyx_result.n_f_calls = __pyx_state[1]
  *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
  */
-  __pyx_t_5 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_31vector_derivative_approximation_5__pyx_unpickle_GeneralizedFiniteDifference, NULL, __pyx_n_s_cyroot_vector_derivative_approxi_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_GeneralizedFinite, __pyx_t_5) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_31vector_derivative_approximation_5__pyx_unpickle_GeneralizedFiniteDifference, NULL, __pyx_n_s_cyroot_vector_derivative_approxi_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_GeneralizedFinite, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "cyroot/vector_derivative_approximation.pyx":1
  * # distutils: language=c++             # <<<<<<<<<<<<<<
  * # cython: cdivision = True
  * # cython: initializedcheck = False
  */
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_5) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "View.MemoryView":210
  *         info.obj = self
@@ -28279,10 +28460,10 @@ if (!__Pyx_RefNanny) {
  * 
  *     def __dealloc__(array self):
  */
-  __pyx_t_5 = __pyx_capsule_create(((void *)(&__pyx_array_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 210, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem((PyObject *)__pyx_array_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_5) < 0) __PYX_ERR(1, 210, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_array_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 210, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem((PyObject *)__pyx_array_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) __PYX_ERR(1, 210, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_array_type);
 
   /* "View.MemoryView":287
@@ -28292,12 +28473,12 @@ if (!__Pyx_RefNanny) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__34, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 287, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__34, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 287, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(generic);
-  __Pyx_DECREF_SET(generic, __pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  __pyx_t_5 = 0;
+  __Pyx_DECREF_SET(generic, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":288
  * 
@@ -28306,12 +28487,12 @@ if (!__Pyx_RefNanny) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__35, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 288, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__35, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 288, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(strided);
-  __Pyx_DECREF_SET(strided, __pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  __pyx_t_5 = 0;
+  __Pyx_DECREF_SET(strided, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":289
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -28320,12 +28501,12 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__36, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 289, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__36, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 289, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(indirect);
-  __Pyx_DECREF_SET(indirect, __pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  __pyx_t_5 = 0;
+  __Pyx_DECREF_SET(indirect, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":292
  * 
@@ -28334,12 +28515,12 @@ if (!__Pyx_RefNanny) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__37, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 292, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__37, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 292, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(contiguous);
-  __Pyx_DECREF_SET(contiguous, __pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  __pyx_t_5 = 0;
+  __Pyx_DECREF_SET(contiguous, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":293
  * 
@@ -28348,12 +28529,12 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__38, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 293, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__38, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 293, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(indirect_contiguous);
-  __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_5);
-  __pyx_t_5 = 0;
+  __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":317
  * 
@@ -28371,15 +28552,15 @@ if (!__Pyx_RefNanny) {
  *     PyThread_allocate_lock(),
  *     PyThread_allocate_lock(),
  */
-  __pyx_t_6[0] = PyThread_allocate_lock();
-  __pyx_t_6[1] = PyThread_allocate_lock();
-  __pyx_t_6[2] = PyThread_allocate_lock();
-  __pyx_t_6[3] = PyThread_allocate_lock();
-  __pyx_t_6[4] = PyThread_allocate_lock();
-  __pyx_t_6[5] = PyThread_allocate_lock();
-  __pyx_t_6[6] = PyThread_allocate_lock();
-  __pyx_t_6[7] = PyThread_allocate_lock();
-  memcpy(&(__pyx_memoryview_thread_locks[0]), __pyx_t_6, sizeof(__pyx_memoryview_thread_locks[0]) * (8));
+  __pyx_t_7[0] = PyThread_allocate_lock();
+  __pyx_t_7[1] = PyThread_allocate_lock();
+  __pyx_t_7[2] = PyThread_allocate_lock();
+  __pyx_t_7[3] = PyThread_allocate_lock();
+  __pyx_t_7[4] = PyThread_allocate_lock();
+  __pyx_t_7[5] = PyThread_allocate_lock();
+  __pyx_t_7[6] = PyThread_allocate_lock();
+  __pyx_t_7[7] = PyThread_allocate_lock();
+  memcpy(&(__pyx_memoryview_thread_locks[0]), __pyx_t_7, sizeof(__pyx_memoryview_thread_locks[0]) * (8));
 
   /* "View.MemoryView":551
  *         info.obj = self
@@ -28388,10 +28569,10 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_5 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 551, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem((PyObject *)__pyx_memoryview_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_5) < 0) __PYX_ERR(1, 551, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 551, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem((PyObject *)__pyx_memoryview_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) __PYX_ERR(1, 551, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_memoryview_type);
 
   /* "View.MemoryView":997
@@ -28401,10 +28582,10 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_5 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 997, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem((PyObject *)__pyx_memoryviewslice_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_5) < 0) __PYX_ERR(1, 997, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 997, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem((PyObject *)__pyx_memoryviewslice_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) __PYX_ERR(1, 997, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_memoryviewslice_type);
 
   /* "(tree fragment)":1
@@ -28412,10 +28593,10 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_5 = PyCFunction_NewEx(&__pyx_mdef_15View_dot_MemoryView_1__pyx_unpickle_Enum, NULL, __pyx_n_s_View_MemoryView); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_5) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_15View_dot_MemoryView_1__pyx_unpickle_Enum, NULL, __pyx_n_s_View_MemoryView); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "(tree fragment)":11
  *         __pyx_unpickle_Enum__set_state(<Enum> __pyx_result, __pyx_state)
@@ -28434,6 +28615,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
   if (__pyx_m) {
     if (__pyx_d) {
       __Pyx_AddTraceback("init cyroot.vector_derivative_approximation", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -31288,6 +31470,28 @@ __PYX_GOOD:
     Py_XDECREF(setstate_cython);
     return ret;
 }
+
+/* PyObjectCallNoArg */
+  #if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
+#if CYTHON_FAST_PYCALL
+    if (PyFunction_Check(func)) {
+        return __Pyx_PyFunction_FastCall(func, NULL, 0);
+    }
+#endif
+#if defined(__Pyx_CyFunction_USED) && defined(NDEBUG)
+    if (likely(PyCFunction_Check(func) || __Pyx_CyFunction_Check(func)))
+#else
+    if (likely(PyCFunction_Check(func)))
+#endif
+    {
+        if (likely(PyCFunction_GET_FLAGS(func) & METH_NOARGS)) {
+            return __Pyx_PyObject_CallMethO(func, NULL);
+        }
+    }
+    return __Pyx_PyObject_Call(func, __pyx_empty_tuple, NULL);
+}
+#endif
 
 /* FetchCommonType */
   static PyTypeObject* __Pyx_FetchCommonType(PyTypeObject* type) {

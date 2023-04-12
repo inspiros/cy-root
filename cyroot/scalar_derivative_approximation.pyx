@@ -7,7 +7,9 @@
 from typing import Callable, Sequence, Optional, Union
 
 import cython
+from dynamic_default_args import dynamic_default_args, named_default
 
+from ._defaults import FINITE_DIFF_STEP
 from .fptr cimport DoubleScalarFPtr, PyDoubleScalarFPtr
 from .ops.scalar_ops cimport binomial_coef
 from .typing import VectorLike
@@ -45,7 +47,7 @@ cdef double finite_difference_kernel(
         double f_x,
         double h=1.,
         int order=1,
-        int kind=1):
+        int kind=0):
     cdef unsigned int i
     cdef double f_i, diff = 0.
     cdef int bin_coef, sgn = (-1) ** order if kind == 1 else 1
@@ -77,9 +79,9 @@ def _finite_diference_args_check(h: Union[float, VectorLike], order: int, kind: 
 cdef class FiniteDifference(DerivativeApproximation):
     def __init__(self,
                  f: Union[DoubleScalarFPtr, Callable[[float], float]],
-                 h: float = 1.,
+                 h: float = FINITE_DIFF_STEP,
                  order: int = 1,
-                 kind: int = 1):
+                 kind: int = 0):
         super().__init__(f)
         # check args
         _finite_diference_args_check(h, order, kind)
@@ -99,13 +101,14 @@ cdef class FiniteDifference(DerivativeApproximation):
             <DoubleScalarFPtr> self.f, x, f_x, self.h, self.order, self.kind)
 
 # noinspection DuplicatedCode
+@dynamic_default_args()
 @cython.binding(True)
 def finite_difference(f: Callable[[float], float],
                       x: float,
                       f_x: Optional[float] = None,
-                      h: float = 1.,
+                      h: float = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
                       order: int = 1,
-                      kind: int = 1):
+                      kind: int = 0):
     """
     Finite difference method.
 
@@ -113,12 +116,12 @@ def finite_difference(f: Callable[[float], float],
         f (function): Function for which the derivative is sought.
         x (float): Point at which the derivative is sought.
         f_x (float, optional): Value evaluated at point ``x``.
-        h (float):  Finite difference step. Defaults to 1.
+        h (float): Finite difference step. Defaults to {h}.
         order (int): Order of derivative to be estimated.
          Defaults to 1.
         kind (int): Type of finite difference, including ``1``
          for forward, ``-1`` for backward, and ``0`` for central.
-         Defaults to 1.
+         Defaults to 0.
 
     Returns:
         diff: Estimated derivative.

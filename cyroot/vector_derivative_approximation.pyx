@@ -4,17 +4,19 @@
 # cython: boundscheck = False
 # cython: profile = False
 
+import array
 from typing import Callable, Optional, Union
 
-from cpython cimport array
-import array
-import numpy as np
 cimport numpy as np
+import numpy as np
 import cython
+from cpython cimport array
 from cython cimport view
+from dynamic_default_args import dynamic_default_args, named_default
 from libcpp.algorithm cimport sort
 from libcpp.vector cimport vector
 
+from ._defaults import FINITE_DIFF_STEP
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
 from .ops.scalar_ops cimport binomial_coef
 from .ops.vector_ops cimport prod
@@ -115,7 +117,7 @@ cdef np.ndarray generalized_finite_difference_kernel(
         np.ndarray[np.float64_t, ndim=1] F_x,
         np.ndarray[np.float64_t, ndim=1] h,
         int order=1,
-        int kind=1):
+        int kind=0):
     cdef unsigned int i, j, k, ii, eq_ii
     cdef unsigned int[:] dims = view.array(shape=(order + 1,),
                                            itemsize=sizeof(int),
@@ -219,9 +221,9 @@ cdef np.ndarray generalized_finite_difference_kernel(
 cdef class GeneralizedFiniteDifference(VectorDerivativeApproximation):
     def __init__(self,
                  F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]],
-                 h: Union[float, VectorLike] = 1.,
+                 h: Union[float, VectorLike] = FINITE_DIFF_STEP,
                  order: int = 1,
-                 kind: int = 1):
+                 kind: int = 0):
         super().__init__(F)
         # check args
         _finite_diference_args_check(h, order, kind)
@@ -258,13 +260,14 @@ cdef class GeneralizedFiniteDifference(VectorDerivativeApproximation):
             <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)
 
 # noinspection DuplicatedCode
+@dynamic_default_args()
 @cython.binding(True)
 def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
                                   x: ArrayLike,
                                   F_x: Optional[ArrayLike] = None,
-                                  h: Union[float, VectorLike] = 1.,
+                                  h: Union[float, VectorLike] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
                                   order: int = 1,
-                                  kind: int = 1):
+                                  kind: int = 0):
     """
     Generalized finite difference method.
 
@@ -272,12 +275,12 @@ def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
         F (function): Function for which the derivative is sought.
         x (np.ndarray): Point at which the derivative is sought.
         F_x (np.ndarray, optional): Value evaluated at point ``x``.
-        h (float):  Finite difference step. Defaults to 1.
+        h (float, np.ndarray): Finite difference step. Defaults to {h}.
         order (int): Order of derivative to be estimated.
          Defaults to 1.
         kind (int): Type of finite difference, including ``1``
          for forward, ``-1`` for backward, and ``0`` for central.
-         Defaults to 1.
+         Defaults to 0.
 
     Returns:
         diff: Estimated derivative.

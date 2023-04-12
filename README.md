@@ -57,13 +57,14 @@ pip uninstall cy-root
 ## Supported algorithms
 
 **Note:**
-For more information about the listed algorithms, please use Google until I update the references.
+For more information about the listed algorithms, please check the function's docstring or use Google until I update the
+references.
 
 ### Scalar root:
 
 - **Bracketing methods:** (methods that require lower and upper bounds)
     - [x] Bisect
-    - [x] Hybisect: _(bisection with interval analysis)_
+    - [x] Hybisect _(bisection with interval analysis)_
     - [x] Regula Falsi
     - [x] Illinois
     - [x] Pegasus
@@ -92,7 +93,7 @@ For more information about the listed algorithms, please use Google until I upda
 ### Vector root:
 
 - **Bracketing methods:** (methods that require n-dimensional bracket)
-    - [x] Vrahatis: _(generalized bisection using n-polygon)_
+    - [x] Vrahatis _(generalized bisection using n-polygon)_
 - **Newton-like methods:** (methods that require Jacobian and/or Hessian)
     - [x] Generalized Newton
     - [x] Generalized Chebyshev
@@ -106,6 +107,11 @@ For more information about the listed algorithms, please use Google until I upda
     - [x] Traub-Steffensen
     - [x] Broyden _(Good and Bad)_
     - [x] Klement
+
+#### Derivative Approximation:
+
+Methods that can be combined with any Newton-like root-finding methods to discard the need of analytical derivatives.
+- [x] Finite Difference _(for both scalar and vector functions, up to arbitrary order)_
 
 ## Usage
 
@@ -306,6 +312,77 @@ RootResults(root=array([4.80212874e-11, 0.00000000e+00]), f_root=array([ 2.30604
        [ 4.87891437e-21,  1.39698452e-10]]), precision=2.9904297647806717e-10, error=9.604257471622717e-11, converged=True, optimal=True)
 ```
 
+#### Example 7:
+
+This example shows the use of `finite_difference` to approximate derivatives when analytical solutions are not
+available:
+
+```python
+import math
+
+from cyroot import finite_difference
+
+f = lambda x: (math.sin(x) + 1) ** x
+x = 3 * math.pi / 2
+d3f_x = finite_difference(f, x,
+                          h=1e-2,  # step
+                          order=3,  # order
+                          kind=0)  # type: 1 for forward, -1 for backward, 0 for central
+# 1.249375772412258e-10
+```
+
+Similarly, `generalized_finite_difference` can compute vector derivative of arbitrary order
+(`order=1` for **Jacobian**, `order=2` for **Hessian**), other paramaters are similar:
+```python
+import numpy as np
+
+from cyroot import generalized_finite_difference
+
+F = lambda x: np.array([x[0] ** 3 - 3 * x[0] * x[1] + 5 * x[1] - 7,
+                        x[0] ** 2 + x[0] * x[1] ** 2 - 4 * x[1] ** 2 + 3.5])
+x = np.array([2., 3.])
+
+J_x = generalized_finite_difference(F, x, h=1e-4, order=1)
+# array([[  2.99985,  -1.00015],
+#        [ 13.0003 , -11.9997 ]])
+H_x = generalized_finite_difference(F, x, h=1e-3, order=2)
+# array([[[12.   , -3.   ],
+#         [-3.   ,  0.   ]],
+#        [[ 2.   ,  6.001],
+#         [ 6.001, -3.998]]])
+K_x = generalized_finite_difference(F, x, h=1e-2, order=3)
+# array([[[[ 6.00000000e+00,  2.32830644e-10],
+#          [ 2.32830644e-10,  2.32830644e-10]],
+#         [[ 2.32830644e-10,  2.32830644e-10],
+#          [ 2.32830644e-10,  1.11758709e-08]]],
+#        [[[ 0.00000000e+00, -3.72529030e-09],
+#          [-3.72529030e-09,  1.99999999e+00]],
+#         [[-3.72529030e-09,  1.99999999e+00],
+#          [ 1.99999999e+00, -1.67638063e-08]]]])
+```
+
+Conveniently, you can use the `FiniteDifference` and `GeneralizedFiniteDifference` classes to wrap our function and
+pass them to any Newton-like methods.
+This is the default behavior when derivative functions are set to `None`.
+```python
+from cyroot import GeneralizedFiniteDifference, generalized_halley
+
+J = GeneralizedFiniteDifference(F, h=1e-4, order=1)
+H = GeneralizedFiniteDifference(F, h=1e-3, order=2)
+
+result = generalized_halley(F, J=J, H=H, x0=x)
+print(result)
+```
+Output:
+```
+RootResults(root=array([2.16665878, 2.11415683]), f_root=array([-5.47455414e-11,  1.05089271e-11]), df_root=(array([[ 7.74141032, -1.49997634],
+       [ 8.80307666, -7.75212506]]), array([[[ 1.30059527e+01, -3.00000000e+00],
+        [-3.00000000e+00, -4.54747351e-13]],
+
+       [[ 2.00000000e+00,  4.22931366e+00],
+        [ 4.22931366e+00, -3.66668244e+00]]])), iters=4, f_calls=(5, 211, 211), precision=1.0327220168881081e-07, error=5.474554143347632e-11, converged=True, optimal=True)
+```
+
 #### Output format:
 
 The returned `result` is a namedtuple whose elements depend on the type of the method:
@@ -326,8 +403,11 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
 - Exclusive to Newton-like methods:
     - `df_root`: derivative or tuple of derivatives (of increasing orders) evaluated at root.
 
-**Note**: `converged` can be `True` even if the solution is not optimal, which means the routine stopped because the
+**Note**:
+- `converged` can be `True` even if the solution is not optimal, which means the routine stopped because the
 precision tolerance is satisfied.
+- For `scipy.optimize.root` users, the stopping condition arguments `etol`, `ertol`, `ptol`, `prtol` are equivalent to
+`f_tol`, `f_rtol`, `x_tol`, `x_rtol`, respectively (but not identical).
 
 #### Configurations:
 
@@ -344,8 +424,6 @@ cyroot.set_default_stop_condition_args(
 
 help(cyroot.illinois)  # run to check the updated docstring
 ```
-For `scipy.optimize.root` users, `etol` and `ertol` are equivalent to `f_tol` and `f_rtol`, `ptol` and `prtol` are
-equivalent to `x_tol` and `x_rtol`.
 
 For more examples, please check the [`examples`](examples) folder.
 

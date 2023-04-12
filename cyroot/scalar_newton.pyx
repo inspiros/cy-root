@@ -99,7 +99,8 @@ def newton(f: Callable[[float], float],
 
     Args:
         f (function): Function for which the root is sought.
-        df (function): Function return derivative of ``f``.
+        df (function, optional): Function returning derivative
+         of ``f``.
         x0 (float): Initial point.
         f_x0 (float, optional): Value evaluated at
          initial point.
@@ -278,9 +279,10 @@ def halley(f: Callable[[float], float],
 
     Args:
         f (function): Function for which the root is sought.
-        df (function): Function return derivative of f.
-        d2f (function): Function return second order derivative
-         of f.
+        df (function, optional): Function returning derivative
+         of ``f``.
+        d2f (function, optional): Function returning second order derivative
+         of ``f``.
         x0 (float): Initial point.
         f_x0 (float, optional): Value evaluated at initial point.
         df_x0 (float, optional): First order derivative at
@@ -290,7 +292,8 @@ def halley(f: Callable[[float], float],
         alpha (float, optional): If set, the modified halley
          formula which has parameter alpha will be used.
         h (float, optional): Finite difference step size,
-         ignored when ``df`` is not None. Defaults to {h}.
+         ignored when ``df`` and ``d2f`` are not None.
+          Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -366,9 +369,10 @@ def super_halley(f: Callable[[float], float],
 
     Args:
         f (function): Function for which the root is sought.
-        df (function): Function return derivative of f.
-        d2f (function): Function return second order derivative
-         of f.
+        df (function, optional): Function returning derivative
+         of ``f``.
+        d2f (function, optional): Function returning second order derivative
+         of ``f``.
         x0 (float): Initial point.
         f_x0 (float, optional): Value evaluated at initial point.
         df_x0 (float, optional): First order derivative at
@@ -376,7 +380,8 @@ def super_halley(f: Callable[[float], float],
         d2f_x0 (float, optional): Second order derivative at
          initial point.
         h (float, optional): Finite difference step size,
-         ignored when ``df`` is not None. Defaults to {h}.
+         ignored when ``df`` and ``d2f`` are not None.
+          Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -420,9 +425,10 @@ def chebyshev(f: Callable[[float], float],
 
     Args:
         f (function): Function for which the root is sought.
-        df (function): Function return derivative of f.
-        d2f (function): Function return second order derivative
-         of f.
+        df (function, optional): Function returning derivative
+         of ``f``.
+        d2f (function, optional): Function returning second order derivative
+         of ``f``.
         x0 (float): Initial point.
         f_x0 (float, optional): Value evaluated at initial point.
         df_x0 (float, optional): First order derivative at
@@ -430,7 +436,8 @@ def chebyshev(f: Callable[[float], float],
         d2f_x0 (float, optional): Second order derivative at
          initial point.
         h (float, optional): Finite difference step size,
-         ignored when ``df`` is not None. Defaults to {h}.
+         ignored when ``df`` and ``d2f`` are not None.
+          Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -823,8 +830,8 @@ def householder(f: Callable[[float], float],
 
     Args:
         f (function): Function for which the root is sought.
-        dfs (tuple of function): Tuple of derivative functions
-         of f in increasing order.
+        dfs (tuple of function, optional): Tuple of derivative
+         functions of ``f`` in increasing order.
         x0 (float): Initial guess.
         f_x0 (float, optional): Value evaluated at initial guess.
         dfs_x0 (tuple of float, optional): Tuple of derivatives
@@ -832,7 +839,8 @@ def householder(f: Callable[[float], float],
         d (int, optional): Max order of derivatives, ignored
          when ``dfs`` is not None. Defaults to {order}.
         h (float, optional): Finite difference step size,
-         ignored when ``df`` is not None. Defaults to {h}.
+         ignored when none of the ``dfs`` is not None.
+         Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.

@@ -22,12 +22,13 @@ from ._check_args import (
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import QuasiNewtonMethodReturnType
 from .fptr cimport (
-    ndarray_func_type, NdArrayFPtr, PyNdArrayFPtr,
+    NdArrayFPtr, PyNdArrayFPtr,
 )
 from .ops.scalar_ops cimport fisclose, sqrt
 from .ops.vector_ops cimport fabs, fmax, norm
 from .typing import ArrayLike
 from .utils.function_tagging import tag
+from .vector_derivative_approximation import generalized_finite_difference
 
 __all__ = [
     'wolfe_bittner',
@@ -488,15 +489,15 @@ def barnes(F: Callable[[ArrayLike], ArrayLike],
 
     x0 = np.asarray(x0, dtype=np.float64)
 
-    if J_x0 is None:  # TODO: estimate initial guess with finite difference
-        raise ValueError('J_x0 must be explicitly set.')
-    J_x0 = np.asarray(J_x0, dtype=np.float64)
-
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
+    if J_x0 is None:
+        J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0)
+    else:
+        J_x0 = np.asarray(J_x0, dtype=np.float64)
 
     res = barnes_kernel(
         <NdArrayFPtr> F_wrapper, x0, F_x0, J_x0, formula, etol, ertol, ptol, prtol, max_iter)
@@ -746,15 +747,16 @@ def broyden(F: Callable[[ArrayLike], ArrayLike],
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     x0 = np.asarray(x0, dtype=np.float64)
-    if J_x0 is None:
-        raise ValueError('J_x0 must be explicitly set.')
-    J_x0 = np.asarray(J_x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
+    if J_x0 is None:
+        J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0)
+    else:
+        J_x0 = np.asarray(J_x0, dtype=np.float64)
 
     if algo in [1, 'good']:
         res = broyden1_kernel(
@@ -865,15 +867,16 @@ def klement(F: Callable[[ArrayLike], ArrayLike],
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     x0 = np.asarray(x0, dtype=np.float64)
-    if J_x0 is None:
-        raise ValueError('J_x0 must be explicitly set.')
-    J_x0 = np.asarray(J_x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
         F_x0 = F_wrapper(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
+    if J_x0 is None:
+        J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0)
+    else:
+        J_x0 = np.asarray(J_x0, dtype=np.float64)
 
     res = klement_kernel(
         F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
