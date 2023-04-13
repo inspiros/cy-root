@@ -7,8 +7,6 @@ from .fptr cimport NdArrayFPtr
 ################################################################################
 cdef class VectorDerivativeApproximation(NdArrayFPtr):
     cdef NdArrayFPtr F
-    @staticmethod
-    cdef object from_f(object F)
     cpdef np.ndarray eval(self, np.ndarray x)
     cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x)
 

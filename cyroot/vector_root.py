@@ -29,7 +29,10 @@ def find_root_vector(method: str, *args, **kwargs):
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
-    if method not in VECTOR_ROOT_FINDING_METHODS.keys():
-        raise ValueError(f'No implementation for {str(method)} found. '
+    if method in VECTOR_ROOT_FINDING_METHODS.keys():
+        return VECTOR_ROOT_FINDING_METHODS[method](*args, **kwargs)
+    elif 'generalized_' + method in VECTOR_ROOT_FINDING_METHODS.keys():
+        return VECTOR_ROOT_FINDING_METHODS['generalized_' + method](*args, **kwargs)
+    else:
+        raise ValueError(f'No implementation for {method} found. '
                          f'Supported methods are: {", ".join(VECTOR_ROOT_FINDING_METHODS.keys())}')
-    return VECTOR_ROOT_FINDING_METHODS[method](*args, **kwargs)

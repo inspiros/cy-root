@@ -30,7 +30,8 @@ def find_root_scalar(method: str, *args, **kwargs):
     Returns:
         solution: The solution represented as a ``RootResults`` object.
     """
-    if method not in SCALAR_ROOT_FINDING_METHODS.keys():
+    if method in SCALAR_ROOT_FINDING_METHODS.keys():
+        return SCALAR_ROOT_FINDING_METHODS[method](*args, **kwargs)
+    else:
         raise ValueError(f'No implementation for {str(method)} found. '
                          f'Supported methods are: {", ".join(SCALAR_ROOT_FINDING_METHODS.keys())}')
-    return SCALAR_ROOT_FINDING_METHODS[method](*args, **kwargs)

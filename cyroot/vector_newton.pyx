@@ -16,8 +16,8 @@ from ._check_args cimport _check_stop_condition_initial_guess_vector
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER, FINITE_DIFF_STEP
 from ._return_types import NewtonMethodReturnType
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
-from .ops.scalar_ops cimport fisclose
-from .ops.vector_ops cimport fabs, fmax
+from .ops.scalar_ops cimport isclose
+from .ops.vector_ops cimport fabs, max
 from .typing import *
 from .utils.function_tagging import tag
 from .vector_derivative_approximation import GeneralizedFiniteDifference, VectorDerivativeApproximation
@@ -56,7 +56,7 @@ cdef generalized_newton_kernel(
     cdef bint use_derivative_approximation = isinstance(J, VectorDerivativeApproximation)
     cdef np.ndarray[np.float64_t, ndim=1] d_x
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -69,22 +69,23 @@ cdef generalized_newton_kernel(
             J_x0 = J.eval_with_f_val(x0, F_x0)
         else:
             J_x0 = J.eval(x0)
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_x0))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_x0))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, F_x0, J_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
-def generalized_newton(F: Callable[[np.ndarray], np.ndarray],
-                       J: Optional[Callable[[np.ndarray], np.ndarray]],
-                       x0: np.ndarray,
-                       F_x0: Optional[np.ndarray] = None,
-                       J_x0: Optional[np.ndarray] = None,
-                       h: Optional[Union[float, VectorLike]] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
+def generalized_newton(F: Callable[[VectorLike], VectorLike],
+                       J: Optional[Callable[[VectorLike], Array2DLike]],
+                       x0: VectorLike,
+                       F_x0: Optional[VectorLike] = None,
+                       J_x0: Optional[Array2DLike] = None,
+                       h: Optional[Union[float, VectorLike]] = named_default(
+                           FINITE_DIFF_STEP=FINITE_DIFF_STEP),
                        etol: float = named_default(ETOL=ETOL),
                        ertol: float = named_default(ERTOL=ERTOL),
                        ptol: float = named_default(PTOL=PTOL),
@@ -174,7 +175,7 @@ cdef generalized_halley_kernel(
                                                  isinstance(H, VectorDerivativeApproximation)]
     cdef np.ndarray[np.float64_t, ndim=1] d_x, a, b
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -193,10 +194,10 @@ cdef generalized_halley_kernel(
             H_x0 = H.eval_with_f_val(x0, F_x0)
         else:
             H_x0 = H.eval(x0)
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_x0))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_x0))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, F_x0, (J_x0, H_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -227,7 +228,7 @@ cdef generalized_modified_halley_kernel(
     cdef np.ndarray[np.float64_t, ndim=1] d_x, a
     cdef np.ndarray[np.float64_t, ndim=2] L_F, I_sub_L_F_inv, I = np.eye(x0.shape[0], dtype=np.float64)
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -247,25 +248,26 @@ cdef generalized_modified_halley_kernel(
             H_x0 = H.eval_with_f_val(x0, F_x0)
         else:
             H_x0 = H.eval(x0)
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_x0))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_x0))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, F_x0, (J_x0, H_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
-def generalized_halley(F: Callable[[np.ndarray], np.ndarray],
-                       J: Optional[Callable[[np.ndarray], np.ndarray]],
-                       H: Optional[Callable[[np.ndarray], np.ndarray]],
-                       x0: np.ndarray,
-                       F_x0: Optional[np.ndarray] = None,
-                       J_x0: Optional[np.ndarray] = None,
-                       H_x0: Optional[np.ndarray] = None,
+def generalized_halley(F: Callable[[VectorLike], VectorLike],
+                       J: Optional[Callable[[VectorLike], Array2DLike]],
+                       H: Optional[Callable[[VectorLike], Array3DLike]],
+                       x0: VectorLike,
+                       F_x0: Optional[VectorLike] = None,
+                       J_x0: Optional[Array2DLike] = None,
+                       H_x0: Optional[Array3DLike] = None,
                        alpha: Optional[float] = None,
-                       h: Optional[Union[float, VectorLike]] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
+                       h: Optional[Union[float, VectorLike]] = named_default(
+                           FINITE_DIFF_STEP=FINITE_DIFF_STEP),
                        etol: float = named_default(ETOL=ETOL),
                        ertol: float = named_default(ERTOL=ERTOL),
                        ptol: float = named_default(PTOL=PTOL),
@@ -354,14 +356,15 @@ def generalized_halley(F: Callable[[np.ndarray], np.ndarray],
 @tag('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
-def generalized_super_halley(F: Callable[[np.ndarray], np.ndarray],
-                             J: Optional[Callable[[np.ndarray], np.ndarray]],
-                             H: Optional[Callable[[np.ndarray], np.ndarray]],
-                             x0: np.ndarray,
-                             F_x0: Optional[np.ndarray] = None,
-                             J_x0: Optional[np.ndarray] = None,
-                             H_x0: Optional[np.ndarray] = None,
-                             h: Optional[Union[float, VectorLike]] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
+def generalized_super_halley(F: Callable[[VectorLike], VectorLike],
+                             J: Optional[Callable[[VectorLike], Array2DLike]],
+                             H: Optional[Callable[[VectorLike], Array3DLike]],
+                             x0: VectorLike,
+                             F_x0: Optional[VectorLike] = None,
+                             J_x0: Optional[Array2DLike] = None,
+                             H_x0: Optional[Array3DLike] = None,
+                             h: Optional[Union[float, VectorLike]] = named_default(
+                                 FINITE_DIFF_STEP=FINITE_DIFF_STEP),
                              etol: float = named_default(ETOL=ETOL),
                              ertol: float = named_default(ERTOL=ERTOL),
                              ptol: float = named_default(PTOL=PTOL),
@@ -410,14 +413,15 @@ def generalized_super_halley(F: Callable[[np.ndarray], np.ndarray],
 @tag('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
-def generalized_chebyshev(F: Callable[[np.ndarray], np.ndarray],
-                          J: Optional[Callable[[np.ndarray], np.ndarray]],
-                          H: Optional[Callable[[np.ndarray], np.ndarray]],
-                          x0: np.ndarray,
-                          F_x0: Optional[np.ndarray] = None,
-                          J_x0: Optional[np.ndarray] = None,
-                          H_x0: Optional[np.ndarray] = None,
-                          h: Optional[Union[float, VectorLike]] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
+def generalized_chebyshev(F: Callable[[VectorLike], VectorLike],
+                          J: Optional[Callable[[VectorLike], Array2DLike]],
+                          H: Optional[Callable[[VectorLike], Array3DLike]],
+                          x0: VectorLike,
+                          F_x0: Optional[VectorLike] = None,
+                          J_x0: Optional[Array2DLike] = None,
+                          H_x0: Optional[Array3DLike] = None,
+                          h: Optional[Union[float, VectorLike]] = named_default(
+                              FINITE_DIFF_STEP=FINITE_DIFF_STEP),
                           etol: float = named_default(ETOL=ETOL),
                           ertol: float = named_default(ERTOL=ERTOL),
                           ptol: float = named_default(PTOL=PTOL),
@@ -495,7 +499,7 @@ cdef generalized_tangent_hyperbolas_kernel(
     if formula == 1:
         I = np.eye(F_x0.shape[0], dtype=np.float64)
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -517,23 +521,23 @@ cdef generalized_tangent_hyperbolas_kernel(
             H_x0 = H.eval_with_f_val(x0, F_x0)
         else:
             H_x0 = H.eval(x0)
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_x0))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_x0))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, F_x0, (J_x0, H_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
-def generalized_tangent_hyperbolas(F: Callable[[np.ndarray], np.ndarray],
-                                   J: Optional[Callable[[np.ndarray], np.ndarray]],
-                                   H: Optional[Callable[[np.ndarray], np.ndarray]],
-                                   x0: np.ndarray,
-                                   F_x0: Optional[np.ndarray] = None,
-                                   J_x0: Optional[np.ndarray] = None,
-                                   H_x0: Optional[np.ndarray] = None,
+def generalized_tangent_hyperbolas(F: Callable[[VectorLike], VectorLike],
+                                   J: Optional[Callable[[VectorLike], Array2DLike]],
+                                   H: Optional[Callable[[VectorLike], Array3DLike]],
+                                   x0: VectorLike,
+                                   F_x0: Optional[VectorLike] = None,
+                                   J_x0: Optional[Array2DLike] = None,
+                                   H_x0: Optional[Array3DLike] = None,
                                    formula: int = 2,
                                    h: Optional[Union[float, VectorLike]] = named_default(
                                        FINITE_DIFF_STEP=FINITE_DIFF_STEP),

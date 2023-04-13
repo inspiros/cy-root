@@ -57,8 +57,8 @@ pip uninstall cy-root
 ## Supported algorithms
 
 **Note:**
-For more information about the listed algorithms, please check the function's docstring or use Google until I update the
-references.
+For more information about the listed algorithms, please check the functions' docstrings or use Google until I update
+the references.
 
 ### Scalar root:
 
@@ -99,7 +99,7 @@ references.
     - [x] Generalized Chebyshev
     - [x] Generalized Halley
     - [x] Generalized Super-Halley
-    - [x] Generalized Tangent Hyperbolas _(similar to Halley method)_
+    - [x] Generalized Tangent Hyperbolas _(similar to Generalized Halley)_
 - **Quasi-Newton methods:** (methods that approximate Jacobian, use interpolation, or successive iteration)
     - [x] Wolfe-Bittner
     - [x] Robinson
@@ -325,14 +325,15 @@ from cyroot import finite_difference
 f = lambda x: (math.sin(x) + 1) ** x
 x = 3 * math.pi / 2
 d3f_x = finite_difference(f, x,
-                          h=1e-2,  # step
-                          order=3,  # order
-                          kind=0)  # type: 1 for forward, -1 for backward, 0 for central
-# 1.249375772412258e-10
+                          h=1e-4,  # step
+                          order=1,  # order
+                          kind='forward')  # type: forward, backward, or central
+# 7.611804179666343e-36
 ```
 
 Similarly, `generalized_finite_difference` can compute vector derivative of arbitrary order
-(`order=1` for **Jacobian**, `order=2` for **Hessian**), other paramaters are similar:
+(`order=1` for **Jacobian**, `order=2` for **Hessian**), and `h` can be a number or a `np.ndarray` containing different
+step sizes for each dimension:
 ```python
 import numpy as np
 
@@ -342,15 +343,17 @@ F = lambda x: np.array([x[0] ** 3 - 3 * x[0] * x[1] + 5 * x[1] - 7,
                         x[0] ** 2 + x[0] * x[1] ** 2 - 4 * x[1] ** 2 + 3.5])
 x = np.array([2., 3.])
 
-J_x = generalized_finite_difference(F, x, h=1e-4, order=1)
+# Derivatives of F will have shape (m, *([n] * order))
+# where n is number of inputs, m is number of outputs
+J_x = generalized_finite_difference(F, x, h=1e-4, order=1)  # Jacobian
 # array([[  2.99985,  -1.00015],
 #        [ 13.0003 , -11.9997 ]])
-H_x = generalized_finite_difference(F, x, h=1e-3, order=2)
+H_x = generalized_finite_difference(F, x, h=1e-3, order=2)  # Hessian
 # array([[[12.   , -3.   ],
 #         [-3.   ,  0.   ]],
 #        [[ 2.   ,  6.001],
 #         [ 6.001, -3.998]]])
-K_x = generalized_finite_difference(F, x, h=1e-2, order=3)
+K_x = generalized_finite_difference(F, x, h=1e-2, order=3)  # Kardashian, maybe
 # array([[[[ 6.00000000e+00,  2.32830644e-10],
 #          [ 2.32830644e-10,  2.32830644e-10]],
 #         [[ 2.32830644e-10,  2.32830644e-10],
@@ -363,7 +366,8 @@ K_x = generalized_finite_difference(F, x, h=1e-2, order=3)
 
 Conveniently, you can use the `FiniteDifference` and `GeneralizedFiniteDifference` classes to wrap our function and
 pass them to any Newton-like methods.
-This is the default behavior when derivative functions are set to `None`.
+This is actually the default behavior when derivative functions of all Newton-like methods or the initial Jacobian
+guess of some vector quasi-Newton methods are not provided are set to `None`.
 ```python
 from cyroot import GeneralizedFiniteDifference, generalized_halley
 
@@ -373,6 +377,7 @@ H = GeneralizedFiniteDifference(F, h=1e-3, order=2)
 result = generalized_halley(F, J=J, H=H, x0=x)
 print(result)
 ```
+
 Output:
 ```
 RootResults(root=array([2.16665878, 2.11415683]), f_root=array([-5.47455414e-11,  1.05089271e-11]), df_root=(array([[ 7.74141032, -1.49997634],
@@ -403,7 +408,7 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
 - Exclusive to Newton-like methods:
     - `df_root`: derivative or tuple of derivatives (of increasing orders) evaluated at root.
 
-**Note**:
+**Notes**:
 - `converged` can be `True` even if the solution is not optimal, which means the routine stopped because the
 precision tolerance is satisfied.
 - For `scipy.optimize.root` users, the stopping condition arguments `etol`, `ertol`, `ptol`, `prtol` are equivalent to
@@ -428,6 +433,7 @@ help(cyroot.illinois)  # run to check the updated docstring
 For more examples, please check the [`examples`](examples) folder.
 
 ## Contributing
+
 If you want to contribute, please contact me. \
 If you want an algorithm to be implemented, also drop me the paper (I will read if I have time).
 

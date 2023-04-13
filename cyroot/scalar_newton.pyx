@@ -4,7 +4,7 @@
 # cython: boundscheck = False
 # cython: profile = False
 
-from typing import Callable, Sequence, Optional
+from typing import Callable, Sequence, Optional, Union
 
 import cython
 import numpy as np
@@ -25,7 +25,8 @@ from .fptr cimport (
     DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
 from .scalar_derivative_approximation import DerivativeApproximation, FiniteDifference
-from .ops.scalar_ops cimport fisclose
+from .ops.scalar_ops cimport isclose
+from .typing import VectorLike
 from .utils.function_tagging import tag
 
 __all__ = [
@@ -62,7 +63,7 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) \
     cdef bint use_derivative_approximation = isinstance(df, DerivativeApproximation)
     cdef double d_x
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or df_x0 == 0:
             converged = False
         step += 1
@@ -76,7 +77,7 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) \
         precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -173,7 +174,7 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
                                                  isinstance(d2f, DerivativeApproximation)]
     cdef double d_x, denom
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -196,7 +197,7 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
         precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -226,7 +227,7 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
                                                  isinstance(d2f, DerivativeApproximation)]
     cdef double d_x, L_f, denom
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -253,7 +254,7 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
         precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -502,7 +503,7 @@ cdef (double, double, vector[double], unsigned long, double, double, bint, bint)
     cdef double[:] nom_x0, denom_x0
     cdef DoubleScalarFPtr f_ptr  # __pyx_vtab error workaround
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -526,7 +527,7 @@ cdef (double, double, vector[double], unsigned long, double, double, bint, bint)
         precision = math.fabs(d_x)
         error = math.fabs(fs_x0[0])
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     for i in range(1, d + 1):
         dfs_x0[i - 1] = fs_x0[i]
     return x0[0], fs_x0[0], dfs_x0, step, precision, error, converged, optimal
@@ -813,11 +814,11 @@ class ReciprocalDerivativeFuncFactory:
 @dynamic_default_args()
 @cython.binding(True)
 def householder(f: Callable[[float], float],
-                dfs: Optional[Sequence[Optional[Callable[[float], float]]]],
+                dfs: Optional[Union[np.ndarray, Sequence[Optional[Callable[[float], float]]]]],
                 x0: float,
                 f_x0: Optional[float] = None,
-                dfs_x0: Optional[Sequence[float]] = None,
-                d: Optional[int] = 2,
+                dfs_x0: Optional[VectorLike] = None,
+                d: Optional[int] = None,
                 h: Optional[float] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
                 etol: float = named_default(ETOL=ETOL),
                 ertol: float = named_default(ERTOL=ERTOL),
@@ -837,7 +838,7 @@ def householder(f: Callable[[float], float],
         dfs_x0 (tuple of float, optional): Tuple of derivatives
          in increasing order at initial guess.
         d (int, optional): Max order of derivatives, ignored
-         when ``dfs`` is not None. Defaults to {order}.
+         when ``dfs`` is not None. Defaults to None.
         h (float, optional): Finite difference step size,
          ignored when none of the ``dfs`` is not None.
          Defaults to {h}.
@@ -865,6 +866,8 @@ def householder(f: Callable[[float], float],
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if dfs is None:
+        if d is None:
+            raise ValueError('d must be set if dfs is None.')
         dfs_wrappers = [FiniteDifference(f_wrapper, h=h, order=i + 1) for i in range(d)]
     else:
         if len(dfs) < 2:
@@ -878,10 +881,12 @@ def householder(f: Callable[[float], float],
         f_x0 = f_wrapper(x0)
     if dfs_x0 is None:
         dfs_x0 = [df_wrapper(x0) for df_wrapper in dfs_wrappers]
-    fs_x0 = np.asarray([f_x0] + dfs_x0)
+    fs_x0 = np.empty(d + 1, dtype=np.float64)
+    fs_x0[0] = f_x0
+    fs_x0[1:] = np.asarray(dfs_x0, dtype=np.float64)
 
     res = householder_kernel(
-        np.array([f_wrapper] + dfs_wrappers),
+        np.asarray([f_wrapper] + dfs_wrappers),
         <DoubleVectorFPtr> ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
         <DoubleVectorFPtr> ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
         x0, fs_x0, d, etol, ertol, ptol, prtol, max_iter)

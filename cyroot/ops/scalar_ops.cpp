@@ -1057,25 +1057,25 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 
 
 /*--- Type declarations ---*/
-struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose;
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose;
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
 
-/* "cyroot/ops/scalar_ops.pxd":8
- *     double
+/* "cyroot/ops/scalar_ops.pxd":18
+ *     double complex
  * 
- * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
  * 
  */
-struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose {
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   int __pyx_n;
   double rtol;
   double atol;
 };
 
-/* "cyroot/ops/scalar_ops.pxd":9
+/* "cyroot/ops/scalar_ops.pxd":19
  * 
- * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil
+ * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * 
  * cdef extern from '<math.h>' nogil:
@@ -1347,7 +1347,7 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 /* Module declarations from 'libc.math' */
 
 /* Module declarations from 'cyroot.ops.scalar_ops' */
-static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose *__pyx_optional_args); /*proto*/
+static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_isclose(double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose *__pyx_optional_args); /*proto*/
 #define __Pyx_MODULE_NAME "cyroot.ops.scalar_ops"
 extern int __pyx_module_is_main_cyroot__ops__scalar_ops;
 int __pyx_module_is_main_cyroot__ops__scalar_ops = 0;
@@ -1366,12 +1366,12 @@ static PyObject *__pyx_n_s_test;
 /* "cyroot/ops/scalar_ops.pyx":9
  * from libc cimport math
  * 
- * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
+ * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)
  */
 
-static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(double __pyx_v_a, double __pyx_v_b, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose *__pyx_optional_args) {
+static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_isclose(double __pyx_v_a, double __pyx_v_b, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose *__pyx_optional_args) {
   double __pyx_v_rtol = ((double)1e-5);
   double __pyx_v_atol = ((double)1e-8);
   int __pyx_r;
@@ -1388,7 +1388,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(double __pyx
 
   /* "cyroot/ops/scalar_ops.pyx":10
  * 
- * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
+ * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):             # <<<<<<<<<<<<<<
  *         return math.isinf(a) and math.isinf(b)
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
@@ -1405,7 +1405,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(double __pyx
   if (__pyx_t_1) {
 
     /* "cyroot/ops/scalar_ops.pyx":11
- * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
+ * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)             # <<<<<<<<<<<<<<
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
@@ -1425,7 +1425,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(double __pyx
 
     /* "cyroot/ops/scalar_ops.pyx":10
  * 
- * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
+ * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:
  *     if math.isinf(b) or math.isinf(a):             # <<<<<<<<<<<<<<
  *         return math.isinf(a) and math.isinf(b)
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
@@ -1445,7 +1445,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(double __pyx
   /* "cyroot/ops/scalar_ops.pyx":9
  * from libc cimport math
  * 
- * cdef inline bint fisclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
+ * cdef inline bint isclose(double a, double b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
  *     if math.isinf(b) or math.isinf(a):
  *         return math.isinf(a) and math.isinf(b)
  */
@@ -1459,7 +1459,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(double __pyx
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
  * 
  * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
- *     return fisclose(a.real, b.real, rtol, atol) and fisclose(a.imag, b.imag, rtol, atol)
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
  */
 
 static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_cisclose(__pyx_t_double_complex __pyx_v_a, __pyx_t_double_complex __pyx_v_b, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose *__pyx_optional_args) {
@@ -1468,7 +1468,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_cisclose(__pyx_t_doub
   int __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_3;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_3;
   int __pyx_t_4;
   if (__pyx_optional_args) {
     if (__pyx_optional_args->__pyx_n > 0) {
@@ -1482,12 +1482,12 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_cisclose(__pyx_t_doub
   /* "cyroot/ops/scalar_ops.pyx":15
  * 
  * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:
- *     return fisclose(a.real, b.real, rtol, atol) and fisclose(a.imag, b.imag, rtol, atol)             # <<<<<<<<<<<<<<
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)             # <<<<<<<<<<<<<<
  */
   __pyx_t_3.__pyx_n = 2;
   __pyx_t_3.rtol = __pyx_v_rtol;
   __pyx_t_3.atol = __pyx_v_atol;
-  __pyx_t_2 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(__Pyx_CREAL(__pyx_v_a), __Pyx_CREAL(__pyx_v_b), &__pyx_t_3); 
+  __pyx_t_2 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(__Pyx_CREAL(__pyx_v_a), __Pyx_CREAL(__pyx_v_b), &__pyx_t_3); 
   __pyx_t_4 = (__pyx_t_2 != 0);
   if (__pyx_t_4) {
   } else {
@@ -1497,7 +1497,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_cisclose(__pyx_t_doub
   __pyx_t_3.__pyx_n = 2;
   __pyx_t_3.rtol = __pyx_v_rtol;
   __pyx_t_3.atol = __pyx_v_atol;
-  __pyx_t_4 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(__Pyx_CIMAG(__pyx_v_a), __Pyx_CIMAG(__pyx_v_b), &__pyx_t_3); 
+  __pyx_t_4 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(__Pyx_CIMAG(__pyx_v_a), __Pyx_CIMAG(__pyx_v_b), &__pyx_t_3); 
   __pyx_t_2 = (__pyx_t_4 != 0);
   __pyx_t_1 = __pyx_t_2;
   __pyx_L3_bool_binop_done:;
@@ -1508,7 +1508,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_cisclose(__pyx_t_doub
  *     return math.fabs(a - b) <= atol + rtol * math.fabs(b)
  * 
  * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
- *     return fisclose(a.real, b.real, rtol, atol) and fisclose(a.imag, b.imag, rtol, atol)
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
  */
 
   /* function exit code */
@@ -1617,7 +1617,7 @@ static int __Pyx_modinit_function_export_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_export_code", 0);
   /*--- Function export code ---*/
-  if (__Pyx_ExportFunction("fisclose", (void (*)(void))__pyx_f_6cyroot_3ops_10scalar_ops_fisclose, "int (double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("isclose", (void (*)(void))__pyx_f_6cyroot_3ops_10scalar_ops_isclose, "int (double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("cisclose", (void (*)(void))__pyx_f_6cyroot_3ops_10scalar_ops_cisclose, "int (__pyx_t_double_complex, __pyx_t_double_complex, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;

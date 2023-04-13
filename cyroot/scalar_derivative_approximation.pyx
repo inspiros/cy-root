@@ -7,12 +7,11 @@
 from typing import Callable, Sequence, Optional, Union
 
 import cython
-from dynamic_default_args import dynamic_default_args, named_default
 
-from ._defaults import FINITE_DIFF_STEP
 from .fptr cimport DoubleScalarFPtr, PyDoubleScalarFPtr
 from .ops.scalar_ops cimport binomial_coef
 from .typing import VectorLike
+from .utils.function_tagging import tag
 
 __all__ = [
     'DerivativeApproximation',
@@ -65,26 +64,36 @@ cdef double finite_difference_kernel(
         sgn = -sgn
     return diff / h ** order
 
-def _finite_diference_args_check(h: Union[float, VectorLike], order: int, kind: int):
+def _check_finite_difference_args(h: Union[float, VectorLike], order: int, kind: int):
     if (isinstance(h, float) and h == 0) or \
             (isinstance(h, Sequence) and any(h[i] == 0 for i in range(len(h)))):
         raise ValueError('h must be non-zero.')
     if order < 1:
         raise ValueError('order must be positive number.')
-    if kind not in [-1, 0, 1]:
-        raise ValueError('kind must be either -1 (backward), 0 (central), '
-                         f'or 1 (forward). Got {kind}.')
+    if kind == 'forward':
+        kind = 1
+    elif kind == 'backward':
+        kind = -1
+    elif kind == 'central':
+        kind = 0
+    elif kind not in [-1, 0, 1]:
+        raise ValueError('kind must be either 1/\'forward\', -1/\'backward\', '
+                         f'or 0\'central\'. Got {kind}.')
+    return h, order, kind
 
 # noinspection DuplicatedCode
 cdef class FiniteDifference(DerivativeApproximation):
+    """
+    A class to wrap a function for derivative approximation.
+    """
     def __init__(self,
                  f: Union[DoubleScalarFPtr, Callable[[float], float]],
-                 h: float = FINITE_DIFF_STEP,
+                 h: float = 1.,
                  order: int = 1,
-                 kind: int = 0):
+                 kind: Union[int, str] = 0):
         super().__init__(f)
         # check args
-        _finite_diference_args_check(h, order, kind)
+        h, order, kind = _check_finite_difference_args(h, order, kind)
         self.h = h
         self.order = order
         self.kind = kind
@@ -101,14 +110,14 @@ cdef class FiniteDifference(DerivativeApproximation):
             <DoubleScalarFPtr> self.f, x, f_x, self.h, self.order, self.kind)
 
 # noinspection DuplicatedCode
-@dynamic_default_args()
+@tag('cyroot.da.scalar')
 @cython.binding(True)
 def finite_difference(f: Callable[[float], float],
                       x: float,
                       f_x: Optional[float] = None,
-                      h: float = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
+                      h: float = 1.,
                       order: int = 1,
-                      kind: int = 0):
+                      kind: Union[int, str] = 0):
     """
     Finite difference method.
 
@@ -116,10 +125,10 @@ def finite_difference(f: Callable[[float], float],
         f (function): Function for which the derivative is sought.
         x (float): Point at which the derivative is sought.
         f_x (float, optional): Value evaluated at point ``x``.
-        h (float): Finite difference step. Defaults to {h}.
+        h (float): Finite difference step. Defaults to 1.
         order (int): Order of derivative to be estimated.
          Defaults to 1.
-        kind (int): Type of finite difference, including ``1``
+        kind (int, str): Type of finite difference, including ``1``
          for forward, ``-1`` for backward, and ``0`` for central.
          Defaults to 0.
 
@@ -127,9 +136,9 @@ def finite_difference(f: Callable[[float], float],
         diff: Estimated derivative.
     """
     # check args
-    _finite_diference_args_check(h, order, kind)
+    h, order, kind = _check_finite_difference_args(h, order, kind)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x is None:
         f_x = f_wrapper(x)
-    return finite_difference_kernel(<DoubleScalarFPtr> f_wrapper, x, f_x, h, order, kind)
+    return finite_difference_kernel(f_wrapper, x, f_x, h, order, kind)

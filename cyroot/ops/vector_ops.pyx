@@ -11,12 +11,39 @@ from libc cimport math
 
 from . cimport scalar_ops
 
-cdef inline bint fallclose(double[:] a, double[:] b, double rtol=1e-5, double atol=1e-8) nogil:
+cdef inline bint equal(real[:] a, real[:] b) nogil:
+    if a.shape[0] != b.shape[0]:
+        return False
     cdef unsigned long i
     for i in range(a.shape[0]):
-        if ((math.isinf(a[i]) and not math.isinf(b[i])) or
-                (math.isinf(b[i]) and not math.isinf(a[i])) or
-                math.fabs(a[i] - b[i]) > atol + rtol * math.fabs(b[i])):
+        if a[i] != b[i]:
+            return False
+    return True
+
+cdef inline bint cequal(double complex[:] a, double complex[:] b) nogil:
+    if a.shape[0] != b.shape[0]:
+        return False
+    cdef unsigned long i
+    for i in range(a.shape[0]):
+        if a[i].real != b[i].real or a[i].imag != b[i].imag:
+            return False
+    return True
+
+cdef inline bint allclose(double[:] a, double[:] b, double rtol=1e-5, double atol=1e-8) nogil:
+    if a.shape[0] != b.shape[0]:
+        return False
+    cdef unsigned long i
+    for i in range(a.shape[0]):
+        if not scalar_ops.isclose(a[i], b[i], rtol, atol):
+            return False
+    return True
+
+cdef inline bint callclose(double complex[:] a, double complex[:] b, double rtol=1e-5, double atol=1e-8) nogil:
+    if a.shape[0] != b.shape[0]:
+        return False
+    cdef unsigned long i
+    for i in range(a.shape[0]):
+        if not scalar_ops.cisclose(a[i], b[i], rtol, atol):
             return False
     return True
 
@@ -58,13 +85,13 @@ cdef inline double[:] cabs(double complex[:] xs) nogil:
 
 cdef inline double fabs_width(double[:] xs) nogil:
     cdef unsigned long argmin_i, argmax_i
-    argmin_i, argmax_i = fargminmax(xs)
+    argmin_i, argmax_i = argminmax(xs)
     return xs[argmax_i] - xs[argmin_i]
 
 cdef inline double cabs_width(double complex[:] xs) nogil:
     cdef unsigned long argmin_i, argmax_i
     cdef double[:] xs_abs = cabs(xs)
-    argmin_i, argmax_i = fargminmax(xs_abs)
+    argmin_i, argmax_i = argminmax(xs_abs)
     return xs_abs[argmax_i] - xs_abs[argmin_i]
 
 cdef inline double[:] sqrt(double[:] xs) nogil:
@@ -87,9 +114,9 @@ cdef inline double complex[:] csqrt(double complex[:] xs) nogil:
 
 cdef inline double norm(double[:] xs, double order=2) nogil:
     if order == math.INFINITY:
-        return fmax(fabs(xs))
+        return max(fabs(xs))
     if order == -math.INFINITY:
-        return fmin(fabs(xs))
+        return min(fabs(xs))
     cdef unsigned long i
     cdef double res = 0
     if order == 0:
@@ -102,9 +129,9 @@ cdef inline double norm(double[:] xs, double order=2) nogil:
 
 cdef inline double cnorm(double complex[:] xs, double order=2) nogil:
     if order == math.INFINITY:
-        return fmax(cabs(xs))
+        return max(cabs(xs))
     if order == -math.INFINITY:
-        return fmin(cabs(xs))
+        return min(cabs(xs))
     cdef unsigned long i
     cdef double res = 0
     if order == 0:
@@ -115,7 +142,7 @@ cdef inline double cnorm(double complex[:] xs, double order=2) nogil:
         res += scalar_ops.cabs(xs[i]) ** order
     return res ** (1 / order)
 
-cdef inline double[:] fpermute(double[:] xs, unsigned long[:] inds) nogil:
+cdef inline double[:] permute(double[:] xs, unsigned long[:] inds) nogil:
     cdef unsigned long i
     cdef double[:] res
     with gil:
@@ -124,15 +151,15 @@ cdef inline double[:] fpermute(double[:] xs, unsigned long[:] inds) nogil:
         res[i] = xs[inds[i]]
     return res
 
-cdef inline real sum(real[:] xs) nogil:
+cdef inline numeric sum(numeric[:] xs) nogil:
     cdef unsigned long i
-    cdef real res = 0
+    cdef numeric res = 0
     for i in range(xs.shape[0]):
         res += xs[i]
     return res
 
-cdef inline real prod(real[:] xs) nogil:
-    cdef real res = 1
+cdef inline numeric prod(numeric[:] xs) nogil:
+    cdef numeric res = 1
     cdef unsigned long i
     for i in range(xs.shape[0]):
         res *= xs[i]
@@ -145,12 +172,10 @@ cdef inline double complex cprod(double complex[:] xs) nogil:
         res *= xs[i]
     return res
 
-cdef inline double fmean(double[:] xs) nogil:
-    if xs.shape[0]:
-        return sum(xs) / xs.shape[0]
-    return math.NAN
+cdef inline double mean(double[:] xs) nogil:
+    return sum[double](xs) / xs.shape[0]
 
-cdef inline double fmin(double[:] xs) nogil:
+cdef inline double min(double[:] xs) nogil:
     if xs.shape[0] == 0:
         raise ValueError('Empty sequence.')
     cdef unsigned long i
@@ -160,7 +185,7 @@ cdef inline double fmin(double[:] xs) nogil:
             minimum = xs[i]
     return minimum
 
-cdef inline double fmax(double[:] xs) nogil:
+cdef inline double max(double[:] xs) nogil:
     if xs.shape[0] == 0:
         raise ValueError('Empty sequence.')
     cdef unsigned long i
@@ -170,7 +195,7 @@ cdef inline double fmax(double[:] xs) nogil:
             maximum = xs[i]
     return maximum
 
-cdef inline unsigned long fargmin(double[:] xs) nogil:
+cdef inline unsigned long argmin(double[:] xs) nogil:
     if xs.shape[0] == 0:
         raise ValueError('Empty sequence.')
     cdef unsigned long i, argmin_i = 0
@@ -181,7 +206,7 @@ cdef inline unsigned long fargmin(double[:] xs) nogil:
             argmin_i = i
     return argmin_i
 
-cdef inline unsigned long fargmax(double[:] xs) nogil:
+cdef inline unsigned long argmax(double[:] xs) nogil:
     if xs.shape[0] == 0:
         raise ValueError('Empty sequence.')
     cdef unsigned long i, argmax_i = 0
@@ -192,7 +217,7 @@ cdef inline unsigned long fargmax(double[:] xs) nogil:
             argmax_i = i
     return argmax_i
 
-cdef inline (unsigned long, unsigned long) fargminmax(double[:] xs) nogil:
+cdef inline (unsigned long, unsigned long) argminmax(double[:] xs) nogil:
     if xs.shape[0] == 0:
         raise ValueError('Empty sequence.')
     cdef unsigned long i, argmin_i = 0, argmax_i = 0
@@ -206,7 +231,7 @@ cdef inline (unsigned long, unsigned long) fargminmax(double[:] xs) nogil:
             argmax_i = i
     return argmin_i, argmax_i
 
-cdef inline void fsort(double[::1] xs) nogil:
+cdef inline void sort(double[::1] xs) nogil:
     cpp_sort(&xs[0], (&xs[0]) + xs.shape[0])
 
 cdef struct _IndexedDouble:
@@ -219,7 +244,7 @@ cdef bint _ascending_cmp(_IndexedDouble &lhs, _IndexedDouble &rhs) nogil:
 cdef bint _descending_cmp(_IndexedDouble &lhs, _IndexedDouble &rhs) nogil:
     return lhs.val > rhs.val
 
-cdef inline unsigned long[:] fargsort(double[:] xs, bint reverse=False) nogil:
+cdef inline unsigned long[:] argsort(double[:] xs, bint reverse=False) nogil:
     cdef unsigned long i
     cdef vector[_IndexedDouble] indexed_xs = vector[_IndexedDouble](xs.shape[0])
     for i in range(xs.shape[0]):

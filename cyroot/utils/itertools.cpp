@@ -1424,25 +1424,25 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
  * cdef inline object PyArray_MultiIterNew1(a):
  */
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
-struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose;
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose;
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
 
-/* "scalar_ops.pxd":8
- *     double
+/* "scalar_ops.pxd":18
+ *     double complex
  * 
- * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
  * 
  */
-struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose {
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   int __pyx_n;
   double rtol;
   double atol;
 };
 
-/* "scalar_ops.pxd":9
+/* "scalar_ops.pxd":19
  * 
- * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil
+ * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * 
  * cdef extern from '<math.h>' nogil:
@@ -1452,68 +1452,82 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose {
   double rtol;
   double atol;
 };
-struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fallclose;
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_allclose;
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_callclose;
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_norm;
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_cnorm;
 struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
 typedef struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
-struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fargsort;
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_argsort;
 
 /* "vector_ops.pxd":3
- * from .scalar_ops cimport real
+ * from .scalar_ops cimport numeric
  * 
- * cdef bint fallclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef bint allclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef bint callclose(double complex[:] a, double complex[:] b, double rtol=*, double atol=*) nogil
  * cdef int[:] sign(double[:] xs) nogil
- * cdef double complex[:] csign(double complex[:] xs) nogil
  */
-struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fallclose {
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_allclose {
   int __pyx_n;
   double rtol;
   double atol;
 };
 
-/* "vector_ops.pxd":12
+/* "vector_ops.pxd":4
+ * 
+ * cdef bint allclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil
+ * cdef bint callclose(double complex[:] a, double complex[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef int[:] sign(double[:] xs) nogil
+ * cdef double complex[:] csign(double complex[:] xs) nogil
+ */
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_callclose {
+  int __pyx_n;
+  double rtol;
+  double atol;
+};
+
+/* "vector_ops.pxd":13
  * cdef double[:] sqrt(double[:] xs) nogil
  * cdef double complex[:] csqrt(double complex[:] xs) nogil
  * cdef double norm(double[:] xs, double order=*) nogil             # <<<<<<<<<<<<<<
  * cdef double cnorm(double complex[:] xs, double order=*) nogil
- * cdef double[:] fpermute(double[:] xs, unsigned long[:] inds) nogil
+ * cdef double[:] permute(double[:] xs, unsigned long[:] inds) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_norm {
   int __pyx_n;
   double order;
 };
 
-/* "vector_ops.pxd":13
+/* "vector_ops.pxd":14
  * cdef double complex[:] csqrt(double complex[:] xs) nogil
  * cdef double norm(double[:] xs, double order=*) nogil
  * cdef double cnorm(double complex[:] xs, double order=*) nogil             # <<<<<<<<<<<<<<
- * cdef double[:] fpermute(double[:] xs, unsigned long[:] inds) nogil
- * cdef real sum(real[:] xs) nogil
+ * cdef double[:] permute(double[:] xs, unsigned long[:] inds) nogil
+ * cdef numeric sum(numeric[:] xs) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_cnorm {
   int __pyx_n;
   double order;
 };
 
-/* "vector_ops.pxd":23
- * cdef unsigned long fargmin(double[:] xs) nogil
- * cdef unsigned long fargmax(double[:] xs) nogil
- * cdef (unsigned long, unsigned long) fargminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
- * cdef void fsort(double[::1] xs) nogil
- * cdef unsigned long[:] fargsort(double[:] xs, bint reverse=*) nogil
+/* "vector_ops.pxd":24
+ * cdef unsigned long argmin(double[:] xs) nogil
+ * cdef unsigned long argmax(double[:] xs) nogil
+ * cdef (unsigned long, unsigned long) argminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
+ * cdef void sort(double[::1] xs) nogil
+ * cdef unsigned long[:] argsort(double[:] xs, bint reverse=*) nogil
  */
 struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long {
   unsigned long f0;
   unsigned long f1;
 };
 
-/* "vector_ops.pxd":25
- * cdef (unsigned long, unsigned long) fargminmax(double[:] xs) nogil
- * cdef void fsort(double[::1] xs) nogil
- * cdef unsigned long[:] fargsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<
+/* "vector_ops.pxd":26
+ * cdef (unsigned long, unsigned long) argminmax(double[:] xs) nogil
+ * cdef void sort(double[::1] xs) nogil
+ * cdef unsigned long[:] argsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<
  */
-struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fargsort {
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_argsort {
   int __pyx_n;
   int reverse;
 };
@@ -2481,7 +2495,9 @@ static int (*__pyx_fuse_0__pyx_f_6cyroot_3ops_10vector_ops_prod)(__Pyx_memviewsl
 static unsigned int (*__pyx_fuse_1__pyx_f_6cyroot_3ops_10vector_ops_prod)(__Pyx_memviewslice); /*proto*/
 static long (*__pyx_fuse_2__pyx_f_6cyroot_3ops_10vector_ops_prod)(__Pyx_memviewslice); /*proto*/
 static unsigned long (*__pyx_fuse_3__pyx_f_6cyroot_3ops_10vector_ops_prod)(__Pyx_memviewslice); /*proto*/
-static double (*__pyx_fuse_4__pyx_f_6cyroot_3ops_10vector_ops_prod)(__Pyx_memviewslice); /*proto*/
+static float (*__pyx_fuse_4__pyx_f_6cyroot_3ops_10vector_ops_prod)(__Pyx_memviewslice); /*proto*/
+static double (*__pyx_fuse_5__pyx_f_6cyroot_3ops_10vector_ops_prod)(__Pyx_memviewslice); /*proto*/
+static __pyx_t_double_complex (*__pyx_fuse_6__pyx_f_6cyroot_3ops_10vector_ops_prod)(__Pyx_memviewslice); /*proto*/
 
 /* Module declarations from 'cyroot.utils.itertools' */
 static PyTypeObject *__pyx_array_type = 0;
@@ -18723,7 +18739,9 @@ static int __Pyx_modinit_function_import_code(void) {
   if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_1prod", (void (**)(void))&__pyx_fuse_1__pyx_f_6cyroot_3ops_10vector_ops_prod, "unsigned int (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_2prod", (void (**)(void))&__pyx_fuse_2__pyx_f_6cyroot_3ops_10vector_ops_prod, "long (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_3prod", (void (**)(void))&__pyx_fuse_3__pyx_f_6cyroot_3ops_10vector_ops_prod, "unsigned long (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_4prod", (void (**)(void))&__pyx_fuse_4__pyx_f_6cyroot_3ops_10vector_ops_prod, "double (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_4prod", (void (**)(void))&__pyx_fuse_4__pyx_f_6cyroot_3ops_10vector_ops_prod, "float (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_5prod", (void (**)(void))&__pyx_fuse_5__pyx_f_6cyroot_3ops_10vector_ops_prod, "double (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "__pyx_fuse_6prod", (void (**)(void))&__pyx_fuse_6__pyx_f_6cyroot_3ops_10vector_ops_prod, "__pyx_t_double_complex (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;

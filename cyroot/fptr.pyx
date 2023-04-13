@@ -37,7 +37,7 @@ cdef class CyDoubleScalarFPtr(DoubleScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline double eval(self, double x) except *:
+    cpdef double eval(self, double x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -53,7 +53,7 @@ cdef class PyDoubleScalarFPtr(DoubleScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline double eval(self, double x) except *:
+    cpdef double eval(self, double x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -77,7 +77,7 @@ cdef class CyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline (double, double) eval(self, double a, double b) except *:
+    cpdef (double, double) eval(self, double a, double b) except *:
         self.n_f_calls += 1
         return self.f(a, b)
 
@@ -93,7 +93,7 @@ cdef class PyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline (double, double) eval(self, double a, double b) except *:
+    cpdef (double, double) eval(self, double a, double b) except *:
         self.n_f_calls += 1
         return self.f(a, b)
 
@@ -117,7 +117,7 @@ cdef class CyComplexScalarFPtr(ComplexScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline double complex eval(self, double complex x) except *:
+    cpdef double complex eval(self, double complex x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -133,7 +133,7 @@ cdef class PyComplexScalarFPtr(ComplexScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline double complex eval(self, double complex x) except *:
+    cpdef double complex eval(self, double complex x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -157,7 +157,7 @@ cdef class CyComplexBiScalarFPtr(ComplexBiScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline (double complex, double complex) eval(self, double complex a, double complex b) except *:
+    cpdef (double complex, double complex) eval(self, double complex a, double complex b) except *:
         self.n_f_calls += 1
         return self.f(a, b)
 
@@ -173,7 +173,7 @@ cdef class PyComplexBiScalarFPtr(ComplexBiScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline (double complex, double complex) eval(self, double complex a, double complex b) except *:
+    cpdef (double complex, double complex) eval(self, double complex a, double complex b) except *:
         self.n_f_calls += 1
         return self.f(a, b)
 
@@ -197,7 +197,7 @@ cdef class CyDoubleVectorFPtr(DoubleVectorFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef double[:] eval(self, double[:] x) except *:
+    cpdef double[:] eval(self, double[:] x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -213,7 +213,7 @@ cdef class PyDoubleVectorFPtr(DoubleVectorFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline double[:] eval(self, double[:] x) except *:
+    cpdef double[:] eval(self, double[:] x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -237,7 +237,7 @@ cdef class CyComplexVectorFPtr(ComplexVectorFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef double complex[:] eval(self, double complex[:] x) except *:
+    cpdef double complex[:] eval(self, double complex[:] x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -253,7 +253,7 @@ cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline double complex[:] eval(self, double complex[:] x) except *:
+    cpdef double complex[:] eval(self, double complex[:] x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -277,7 +277,7 @@ cdef class CyNdArrayFPtr(NdArrayFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef np.ndarray eval(self, np.ndarray x):
+    cpdef np.ndarray eval(self, np.ndarray x):
         self.n_f_calls += 1
         return self.f(x)
 
@@ -293,6 +293,6 @@ cdef class PyNdArrayFPtr(NdArrayFPtr):
         wrapper.f = f
         return wrapper
 
-    cdef inline np.ndarray eval(self, np.ndarray x):
+    cpdef np.ndarray eval(self, np.ndarray x):
         self.n_f_calls += 1
         return np.asarray(self.f(x), dtype=np.float64)

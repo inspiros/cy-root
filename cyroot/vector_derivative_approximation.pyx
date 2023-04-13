@@ -12,16 +12,15 @@ import numpy as np
 import cython
 from cpython cimport array
 from cython cimport view
-from dynamic_default_args import dynamic_default_args, named_default
 from libcpp.algorithm cimport sort
 from libcpp.vector cimport vector
 
-from ._defaults import FINITE_DIFF_STEP
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
 from .ops.scalar_ops cimport binomial_coef
-from .ops.vector_ops cimport prod
-from .scalar_derivative_approximation import _finite_diference_args_check
+from .ops.vector_ops cimport equal, prod
+from .scalar_derivative_approximation import _check_finite_difference_args
 from .typing import *
+from .utils.function_tagging import tag
 from .utils.itertools cimport product
 
 __all__ = [
@@ -35,19 +34,14 @@ __all__ = [
 ################################################################################
 # noinspection DuplicatedCode
 cdef class VectorDerivativeApproximation(NdArrayFPtr):
-    def __init__(self, F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]]):
+    """
+    A class to wrap a vector function for derivative approximation.
+    """
+    def __init__(self, F: Union[NdArrayFPtr, Callable[[VectorLike], VectorLike]]):
         if isinstance(F, NdArrayFPtr):
             self.F = F
         else:
             self.F = PyNdArrayFPtr(F)
-
-    @staticmethod
-    cdef object from_f(object F):
-        if F is not None:
-            return F
-        cdef GeneralizedFiniteDifference wrapper = GeneralizedFiniteDifference.__new__(GeneralizedFiniteDifference)
-        wrapper.f = F
-        return wrapper
 
     cpdef np.ndarray eval(self, np.ndarray x):
         raise NotImplementedError
@@ -74,7 +68,7 @@ cdef unsigned int[:, :] _vector_derivative_indices(unsigned int[:] ns, bint[:] u
                     break
     return inds
 
-cdef np.ndarray[np.float64_t, ndim=2] _vector_perturbations(unsigned int dim, int order):
+cdef np.ndarray[np.uint32_t, ndim=2] _vector_perturbation_steps(unsigned int dim, int order):
     cdef unsigned int[:] ns = view.array(shape=(dim,),
                                          itemsize=sizeof(int),
                                          format='I')
@@ -85,7 +79,7 @@ cdef np.ndarray[np.float64_t, ndim=2] _vector_perturbations(unsigned int dim, in
         steps = inds[i]
         if sum(steps) <= order:
             perturb_inds.append(i)
-    return np.ascontiguousarray(np.asarray(inds, dtype=np.float64)[perturb_inds])
+    return np.ascontiguousarray(np.asarray(inds, dtype=np.uint32)[perturb_inds])
 
 cdef int[:] _finite_difference_coefs(int order, int kind):
     cdef int[:] out = view.array(shape=(order + 1,),
@@ -126,14 +120,6 @@ cdef np.ndarray generalized_finite_difference_kernel(
     dims[1:] = x.shape[0]
     cdef np.ndarray[np.float64_t, ndim=2] D = np.zeros(dims, dtype=np.float64).reshape(F_x.shape[0], -1)
 
-    # TODO: efficient implementations for Jacobian and Hessian
-    # cdef np.ndarray[np.float64_t, ndim=1] x_perturb = x.copy()
-    # for j in range(x.shape[0]):
-    #     x_perturb[j] += h[j]
-    #     D[:, j] = (F.eval(x_perturb) - F_x) / h[j]
-    #     x_perturb[j] = x[j]
-    # return D.reshape(dims)
-
     cdef unsigned int[:, :] indices
     cdef unsigned int[:] index
     cdef bint[:] unique_mask = view.array(shape=(prod[np.uint32_t](dims[1:]),),
@@ -142,7 +128,7 @@ cdef np.ndarray generalized_finite_difference_kernel(
     indices = _vector_derivative_indices(dims[1:], unique_mask)
 
     cdef bint zero_step
-    cdef np.ndarray[np.float64_t, ndim=2] perturbation_steps = _vector_perturbations(x.shape[0], order)
+    cdef np.ndarray[np.uint32_t, ndim=2] perturbation_steps = _vector_perturbation_steps(x.shape[0], order)
     cdef np.ndarray[np.float64_t, ndim=1] perturbation_step
     cdef np.ndarray[np.float64_t, ndim=2] F_perturbations = np.empty(
         (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)
@@ -176,9 +162,9 @@ cdef np.ndarray generalized_finite_difference_kernel(
     cdef vector[vector[int]] all_coefs = vector[vector[int]](x.shape[0])
     for j in range(all_coefs.size()):
         all_coefs[j].reserve(order + 1)
-    cdef unsigned int[:] grad_comb, len_coefs = view.array(shape=(x.shape[0],),
-                                                           itemsize=sizeof(int),
-                                                           format='I')
+    cdef unsigned int[:] grad_comb, coefs_lens = view.array(shape=(x.shape[0],),
+                                                            itemsize=sizeof(int),
+                                                            format='I')
     cdef unsigned int[:, :] perturbs
     cdef unsigned int[:] perturb
     for ii in range(indices.shape[0]):
@@ -192,22 +178,22 @@ cdef np.ndarray generalized_finite_difference_kernel(
                 coefs = _finite_difference_coefs(grad_comb[j], kind)
                 for k in range(coefs.shape[0]):
                     all_coefs[j].push_back(coefs[k])
-                len_coefs[j] = all_coefs[j].size()
-            perturbs = product(len_coefs)
+                coefs_lens[j] = all_coefs[j].size()
+            perturbs = product(coefs_lens)
             for j in range(perturbs.shape[0]):
                 perturb = perturbs[j]
                 coef = 1
                 for k in range(all_coefs.size()):
                     coef *= all_coefs[k][perturb[k]]
                 for k in range(perturbation_steps.shape[0]):
-                    if np.array_equal(perturbation_steps[k], perturb):
+                    if equal[np.uint32_t](perturbation_steps[k], perturb):
                         break
                 D[:, ii] += coef * F_perturbations[k] / scale
 
     cdef unsigned int[:] eq_index = view.array(shape=(indices.shape[1],),
                                                itemsize=sizeof(int),
                                                format='I')
-    for ii in range(indices.shape[0]):
+    for ii in range(indices.shape[0]):  # repeated indices
         if not unique_mask[ii]:
             eq_index[:] = indices[ii]
             sort(&eq_index[0], (&eq_index[0]) + eq_index.shape[0])
@@ -220,13 +206,13 @@ cdef np.ndarray generalized_finite_difference_kernel(
 # noinspection DuplicatedCode
 cdef class GeneralizedFiniteDifference(VectorDerivativeApproximation):
     def __init__(self,
-                 F: Union[NdArrayFPtr, Callable[[ArrayLike], ArrayLike]],
-                 h: Union[float, VectorLike] = FINITE_DIFF_STEP,
+                 F: Union[NdArrayFPtr, Callable[[VectorLike], VectorLike]],
+                 h: Union[float, VectorLike] = 1.,
                  order: int = 1,
-                 kind: int = 0):
+                 kind: Union[int, str] = 0):
         super().__init__(F)
         # check args
-        _finite_diference_args_check(h, order, kind)
+        h, order, kind = _check_finite_difference_args(h, order, kind)
         if isinstance(h, float):
             self.h = np.full(1, h)
         else:
@@ -260,14 +246,14 @@ cdef class GeneralizedFiniteDifference(VectorDerivativeApproximation):
             <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)
 
 # noinspection DuplicatedCode
-@dynamic_default_args()
+@tag('cyroot.da.vector')
 @cython.binding(True)
-def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
-                                  x: ArrayLike,
+def generalized_finite_difference(F: Callable[[VectorLike], VectorLike],
+                                  x: VectorLike,
                                   F_x: Optional[ArrayLike] = None,
-                                  h: Union[float, VectorLike] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
+                                  h: Union[float, VectorLike] = 1.,
                                   order: int = 1,
-                                  kind: int = 0):
+                                  kind: Union[int, str] = 0):
     """
     Generalized finite difference method.
 
@@ -275,10 +261,10 @@ def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
         F (function): Function for which the derivative is sought.
         x (np.ndarray): Point at which the derivative is sought.
         F_x (np.ndarray, optional): Value evaluated at point ``x``.
-        h (float, np.ndarray): Finite difference step. Defaults to {h}.
+        h (float, np.ndarray): Finite difference step. Defaults to 1.
         order (int): Order of derivative to be estimated.
          Defaults to 1.
-        kind (int): Type of finite difference, including ``1``
+        kind (int, str): Type of finite difference, including ``1``
          for forward, ``-1`` for backward, and ``0`` for central.
          Defaults to 0.
 
@@ -286,7 +272,7 @@ def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
         diff: Estimated derivative.
     """
     # check args
-    _finite_diference_args_check(h, order, kind)
+    h, order, kind = _check_finite_difference_args(h, order, kind)
 
     x = np.asarray(x, dtype=np.float64)
     if isinstance(h, float):
@@ -299,4 +285,4 @@ def generalized_finite_difference(F: Callable[[ArrayLike], ArrayLike],
         F_x = F_wrapper(x)
     else:
         F_x = np.asarray(F_x, dtype=np.float64)
-    return generalized_finite_difference_kernel(<NdArrayFPtr> F_wrapper, x, F_x, h, order, kind)
+    return generalized_finite_difference_kernel(F_wrapper, x, F_x, h, order, kind)

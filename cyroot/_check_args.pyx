@@ -116,9 +116,9 @@ cdef inline bint _check_stop_condition_bracket_scalar(
     cdef double error_a = math.fabs(f_a), error_b = math.fabs(f_b)
     error[0] = math.fmin(error_a, error_b)
     r[0], f_r[0] = (a, f_a) if error_a < error_b else (b, f_b)
-    optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
-    converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
-    return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+    optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+    converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
 
 # noinspection DuplicatedCode
 cdef inline bint _check_stop_condition_bracket_vector(
@@ -139,12 +139,12 @@ cdef inline bint _check_stop_condition_bracket_vector(
         raise ValueError('Empty sequence.')
     precision[0] = np.max(bs.max(0) - bs.min(0))
     cdef double[:] errors = np.abs(F_bs).max(1)
-    cdef unsigned long best_i = vector_ops.fargmin(errors)
+    cdef unsigned long best_i = vector_ops.argmin(errors)
     error[0] = errors[best_i]
     r[:], F_r[:] = bs[best_i], F_bs[best_i]
-    optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
-    converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
-    return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+    optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+    converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
 
 ################################################################################
 # Quasi-Newton methods with multiple guesses
@@ -167,7 +167,7 @@ cdef inline bint _check_stop_condition_initial_guess_scalar(
     """Check if stop condition is already met."""
     precision[0] = math.INFINITY
     error[0] = math.fabs(f_x0)
-    optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+    optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
     converged[0] = optimal[0]
     return optimal[0]
 
@@ -185,8 +185,8 @@ cdef inline bint _check_stop_condition_initial_guess_vector(
         bint* optimal):
     """Check if stop condition is already met."""
     precision[0] = math.INFINITY
-    error[0] = vector_ops.fmax(vector_ops.fabs(F_x0))
-    optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+    error[0] = vector_ops.max(vector_ops.fabs(F_x0))
+    optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
     converged[0] = optimal[0]
     return optimal[0]
 
@@ -211,17 +211,17 @@ cdef inline bint _check_stop_condition_initial_guesses_scalar(
         r[0], f_r[0] = xs[0], f_xs[0]
         precision[0] = math.INFINITY
         error[0] = math.fabs(f_xs[0])
-        optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+        optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
     cdef double[:] errors = vector_ops.fabs(f_xs)
-    cdef unsigned long best_i = vector_ops.fargmin(errors)
+    cdef unsigned long best_i = vector_ops.argmin(errors)
     r[0], f_r[0] = xs[best_i], f_xs[best_i]
     error[0] = errors[best_i]
-    precision[0] = vector_ops.fmax(xs) - vector_ops.fmin(xs)
-    optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
-    converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
-    return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+    precision[0] = vector_ops.max(xs) - vector_ops.min(xs)
+    optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+    converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
 
 # noinspection DuplicatedCode
 cdef inline bint _check_stop_condition_initial_guesses_vector(
@@ -244,7 +244,7 @@ cdef inline bint _check_stop_condition_initial_guesses_vector(
         r[0], F_r[0] = xs[0], F_xs[0]
         precision[0] = math.INFINITY
         error[0] = np.max(np.abs(F_xs[0]))
-        optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+        optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
     cdef np.ndarray[np.float64_t, ndim=1] errors = np.abs(F_xs).max(1)
@@ -252,9 +252,9 @@ cdef inline bint _check_stop_condition_initial_guesses_vector(
     r[:], F_r[:] = xs[best_i], F_xs[best_i]
     error[0] = errors[best_i]
     precision[0] = np.max(xs.max(0) - xs.min(0))
-    optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
-    converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
-    return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+    optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+    converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
 
 # --------------------------------
 # Double Complex
@@ -274,7 +274,7 @@ cdef inline bint _check_stop_condition_initial_guess_complex_scalar(
     """Check if stop condition is already met."""
     precision[0] = math.INFINITY
     error[0] = scalar_ops.cabs(f_x0)
-    optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+    optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
     converged[0] = optimal[0]
     return optimal[0]
 
@@ -292,8 +292,8 @@ cdef inline bint _check_stop_condition_initial_guess_complex_vector(
         bint* optimal):
     """Check if stop condition is already met."""
     precision[0] = math.INFINITY
-    error[0] = vector_ops.fmax(vector_ops.cabs(F_x0))
-    optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+    error[0] = vector_ops.max(vector_ops.cabs(F_x0))
+    optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
     converged[0] = optimal[0]
     return optimal[0]
 
@@ -318,15 +318,15 @@ cdef inline bint _check_stop_condition_initial_guesses_complex_scalar(
         r[0], f_r[0] = xs[0], f_xs[0]
         precision[0] = math.INFINITY
         error[0] = scalar_ops.cabs(f_xs[0])
-        optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+        optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
     cdef double[:] errors = vector_ops.cabs(f_xs)
-    cdef unsigned long best_i = vector_ops.fargmin(errors)
+    cdef unsigned long best_i = vector_ops.argmin(errors)
     r[0], f_r[0] = xs[best_i], f_xs[best_i]
     error[0] = errors[best_i]
     cdef double[:] xs_abs = vector_ops.cabs(xs)
-    precision[0] = vector_ops.fmax(xs_abs) - vector_ops.fmin(xs_abs)
-    optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
-    converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
-    return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+    precision[0] = vector_ops.max(xs_abs) - vector_ops.min(xs_abs)
+    optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+    converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+    return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)

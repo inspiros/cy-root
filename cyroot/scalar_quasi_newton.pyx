@@ -4,7 +4,7 @@
 # cython: boundscheck = False
 # cython: profile = False
 
-from typing import Callable, Sequence, Optional
+from typing import Callable, Sequence, Optional, Union
 
 import cython
 import numpy as np
@@ -29,8 +29,9 @@ from .fptr cimport (
     DoubleScalarFPtr, PyDoubleScalarFPtr,
     ComplexScalarFPtr, PyComplexScalarFPtr
 )
-from .ops.scalar_ops cimport fisclose, cabs, csqrt
-from .ops.vector_ops cimport fabs, fabs_width, cabs_width, fargsort, fpermute
+from .ops.scalar_ops cimport isclose, cabs, csqrt
+from .ops.vector_ops cimport fabs, fabs_width, cabs_width, argsort, permute
+from .typing import VectorLike
 from .utils.function_tagging import tag
 
 __all__ = [
@@ -68,7 +69,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
 
     cdef double x2, df_01
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -85,7 +86,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
         error = math.fabs(f_x1)
 
     r, f_r = x1, f_x1
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -165,15 +166,15 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
         return r, f_r, step, precision, error, converged, optimal
 
     # sort by error of f
-    cdef unsigned long[:] inds = fargsort(fabs(f_x0s), reverse=<bint> True)
-    cdef double[:] xs = fpermute(x0s, inds)
-    cdef double[:] f_xs = fpermute(f_x0s, inds)
+    cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
+    cdef double[:] xs = permute(x0s, inds)
+    cdef double[:] f_xs = permute(f_x0s, inds)
 
     cdef double xn, f_xn, dp_xn
     cdef double[:] dfs = view.array(shape=(1 + 1,), itemsize=sizeof(double), format='d')
     cdef NewtonPolynomial poly = NewtonPolynomial(x0s.shape[0])
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -196,7 +197,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
         error = math.fabs(f_xn)
 
     r, f_r = xn, f_xn
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 cdef class NewtonPolynomial:
@@ -261,8 +262,8 @@ cdef class NewtonPolynomial:
 @dynamic_default_args()
 @cython.binding(True)
 def sidi(f: Callable[[float], float],
-         xs: Sequence[float],
-         f_xs: Sequence[float] = None,
+         xs: VectorLike,
+         f_xs: Optional[VectorLike] = None,
          etol: float = named_default(ETOL=ETOL),
          ertol: float = named_default(ERTOL=ERTOL),
          ptol: float = named_default(PTOL=PTOL),
@@ -293,23 +294,20 @@ def sidi(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    if not isinstance(xs, Sequence):
-        raise ValueError(f'xs must be a sequence. Got {type(xs)}.')
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+
     if len(xs) < 2:
         raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
-
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    xs = np.asarray(xs, dtype=np.float64)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_xs is None:
-        f_xs = [f_wrapper(x) for x in xs]
-    elif not isinstance(f_xs, Sequence):
-        raise ValueError(f'f_xs must be a sequence. Got {type(f_xs)}.')
+        f_xs = np.array([f_wrapper(x) for x in xs], dtype=np.float64)
     elif len(f_xs) != len(xs):
         raise ValueError(f'xs and f_xs must have same size. Got {len(xs)} and {len(f_xs)}.')
+    else:
+        f_xs = np.asarray(f_xs, dtype=np.float64)
 
-    xs = np.asarray(xs, dtype=np.float64)
-    f_xs = np.asarray(f_xs, dtype=np.float64)
     res = sidi_kernel(<DoubleScalarFPtr> f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
@@ -337,7 +335,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
 
     cdef double x1, x2, x3, denom
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -357,7 +355,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
         x0, f_x0 = x3, f(x3)
         error = math.fabs(f_x0)
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -439,7 +437,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
 
     cdef double x3, df_01, df_02, df_12
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -461,7 +459,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
         error = math.fabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -555,7 +553,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
 
     cdef double x3, d_01, d_12, df_01, df_02, df_12
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -582,7 +580,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
         error = math.fabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -678,7 +676,7 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
     cdef double complex div_diff_01, div_diff_12, div_diff_02, a, b, s_delta, d1, d2, d, x3
     cdef double complex d_01, d_02, d_12
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -710,7 +708,7 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
         error = cabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode

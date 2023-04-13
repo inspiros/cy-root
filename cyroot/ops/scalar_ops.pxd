@@ -3,9 +3,19 @@ ctypedef fused real:
     unsigned int
     long
     unsigned long
+    float
     double
 
-cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil
+ctypedef fused numeric:
+    int
+    unsigned int
+    long
+    unsigned long
+    float
+    double
+    double complex
+
+cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
 cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
 
 cdef extern from '<math.h>' nogil:

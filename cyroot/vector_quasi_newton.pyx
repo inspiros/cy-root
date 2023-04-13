@@ -19,14 +19,14 @@ from ._check_args import (
     _check_stop_condition_args,
     _check_unique_initial_guesses,
 )
-from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
+from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER, FINITE_DIFF_STEP
 from ._return_types import QuasiNewtonMethodReturnType
 from .fptr cimport (
     NdArrayFPtr, PyNdArrayFPtr,
 )
-from .ops.scalar_ops cimport fisclose, sqrt
-from .ops.vector_ops cimport fabs, fmax, norm
-from .typing import ArrayLike
+from .ops.scalar_ops cimport isclose, sqrt
+from .ops.vector_ops cimport fabs, max, norm
+from .typing import *
 from .utils.function_tagging import tag
 from .vector_derivative_approximation import generalized_finite_difference
 
@@ -78,7 +78,7 @@ cdef wolfe_bittner_kernel(
     cdef np.ndarray[np.float64_t, ndim=1] b = np.zeros(d + 1, dtype=np.float64)
     b[0] = 1
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -95,18 +95,18 @@ cdef wolfe_bittner_kernel(
         A[1:, -1] = F_x1
 
         precision = (F_xs.min(0) - F_xs.max(0)).max()
-        error = fmax(fabs(F_x1))
+        error = max(fabs(F_x1))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return xs[-1], F_xs[-1], step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def wolfe_bittner(F: Callable[[ArrayLike], ArrayLike],
-                  x0s: ArrayLike,
-                  F_x0s: Optional[ArrayLike] = None,
+def wolfe_bittner(F: Callable[[VectorLike], VectorLike],
+                  x0s: Array2DLike,
+                  F_x0s: Optional[Array2DLike] = None,
                   etol: float = named_default(ETOL=ETOL),
                   ertol: float = named_default(ERTOL=ERTOL),
                   ptol: float = named_default(PTOL=PTOL),
@@ -190,7 +190,7 @@ cdef robinson_kernel(
     cdef np.ndarray[np.float64_t, ndim=2] H
     cdef np.ndarray[np.float64_t, ndim=1] d_x = x1 - x0
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -210,10 +210,10 @@ cdef robinson_kernel(
 
         x0, x1 = x1, r
         F_x0, F_x1 = F_x1, F_r
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_r))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_r))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return r, F_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -255,11 +255,11 @@ cdef np.ndarray[np.float64_t, ndim=2] _random_H(unsigned int d):
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def robinson(F: Callable[[ArrayLike], ArrayLike],
-             x0: ArrayLike,
-             x1: ArrayLike,
-             F_x0: Optional[ArrayLike] = None,
-             F_x1: Optional[ArrayLike] = None,
+def robinson(F: Callable[[VectorLike], VectorLike],
+             x0: VectorLike,
+             x1: VectorLike,
+             F_x0: Optional[VectorLike] = None,
+             F_x1: Optional[VectorLike] = None,
              orth: Union[str, int] = 'efficient',
              etol: float = named_default(ETOL=ETOL),
              ertol: float = named_default(ERTOL=ERTOL),
@@ -305,6 +305,16 @@ def robinson(F: Callable[[ArrayLike], ArrayLike],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
+    if orth == 'identity':
+        orth = 1
+    elif orth == 'efficient':
+        orth = 2
+    elif orth == 'random':
+        orth = 3
+    elif orth not in [1, 2, 3]:
+        raise ValueError('orth must be either 1/\'identity\', 2/\'efficient\', or '
+                         f'3/\'random\'. Got {orth}.')
+
     x0 = np.asarray(x0, dtype=np.float64)
     x1 = np.asarray(x1, dtype=np.float64)
     _check_unique_initial_guesses(x0, x1)
@@ -318,16 +328,6 @@ def robinson(F: Callable[[ArrayLike], ArrayLike],
         F_x1 = F_wrapper(x1)
     else:
         F_x1 = np.asarray(F_x1, dtype=np.float64)
-
-    if orth in ['1', 'identity']:
-        orth = 1
-    elif orth in ['2', 'efficient']:
-        orth = 2
-    elif orth in ['3', 'random']:
-        orth = 3
-    elif orth not in [1, 2, 3]:
-        raise ValueError('orth must be eith 1/identity, 2/efficient, or '
-                         f'3/random. Got {orth}.')
 
     res = robinson_kernel(
         <NdArrayFPtr> F_wrapper, x0, x1, F_x0, F_x1, orth, etol, ertol, ptol, prtol, max_iter)
@@ -360,7 +360,7 @@ cdef barnes_kernel(
     cdef np.ndarray[np.float64_t, ndim=2] D
     cdef np.ndarray[np.float64_t, ndim=2] d_xs = np.zeros((x0.shape[0] - 1, x0.shape[0]), dtype=np.float64)
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -388,10 +388,10 @@ cdef barnes_kernel(
 
         x0 = x1
         F_x0 = F_x1
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_x1))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_x1))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x1, F_x1, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -439,11 +439,13 @@ cdef np.ndarray[np.float64_t, ndim=1] _orthogonal_vector(
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def barnes(F: Callable[[ArrayLike], ArrayLike],
-           x0: ArrayLike,
-           F_x0: Optional[ArrayLike] = None,
-           J_x0: Optional[ArrayLike] = None,
+def barnes(F: Callable[[VectorLike], VectorLike],
+           x0: VectorLike,
+           F_x0: Optional[VectorLike] = None,
+           J_x0: Optional[Array2DLike] = None,
            formula: int = 2,
+           h: Optional[Union[float, VectorLike]] = named_default(
+               FINITE_DIFF_STEP=FINITE_DIFF_STEP),
            etol: float = named_default(ETOL=ETOL),
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
@@ -451,6 +453,7 @@ def barnes(F: Callable[[ArrayLike], ArrayLike],
            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
     """
     Barnes's Secant method for vector root-finding.
+
     Setting ``formula=1`` will use Eq.(9) while setting ``formula=2``
     will use Eq.(44) (recommended) in the paper to update the Jacobian.
 
@@ -466,7 +469,9 @@ def barnes(F: Callable[[ArrayLike], ArrayLike],
          point.
         formula (int, optional): Formula to update the Jacobian,
          which can be either the base ``1`` or its extended form
-         ``2``. Defaults to {formula}
+         ``2``. Defaults to {formula}.
+        h (float, np.ndarray, optional): Finite difference step size,
+         ignored when ``J_x0`` is not None. Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -495,7 +500,7 @@ def barnes(F: Callable[[ArrayLike], ArrayLike],
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
     if J_x0 is None:
-        J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0)
+        J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0, h=h, order=1)
     else:
         J_x0 = np.asarray(J_x0, dtype=np.float64)
 
@@ -529,7 +534,7 @@ cdef traub_steffensen_kernel(
     cdef np.ndarray[np.float64_t, ndim=2] H
     cdef np.ndarray[np.float64_t, ndim=1] d_x
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -542,19 +547,19 @@ cdef traub_steffensen_kernel(
         x0 = x0 + d_x
         F_x0 = F(x0)
 
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_x0))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_x0))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, F_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def traub_steffensen(F: Callable[[ArrayLike], ArrayLike],
-                     x0: ArrayLike,
-                     F_x0: Optional[ArrayLike] = None,
+def traub_steffensen(F: Callable[[VectorLike], VectorLike],
+                     x0: VectorLike,
+                     F_x0: Optional[VectorLike] = None,
                      etol: float = named_default(ETOL=ETOL),
                      ertol: float = named_default(ERTOL=ERTOL),
                      ptol: float = named_default(PTOL=PTOL),
@@ -625,7 +630,7 @@ cdef broyden1_kernel(
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, d_F
     cdef double denom
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -643,10 +648,10 @@ cdef broyden1_kernel(
         J_x0 += np.outer(d_F - np.dot(J_x0, d_x), d_x) / denom
 
         x0, F_x0 = x1, F_x1
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_x0))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_x0))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, F_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -672,7 +677,7 @@ cdef broyden2_kernel(
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, d_F, u
     cdef double denom
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -685,7 +690,7 @@ cdef broyden2_kernel(
 
         u = J_x0_inv.dot(d_F)  # J^-1.[f_x1 - f_x0]
 
-        denom = np.dot(d_x, u)  # [x1 - x0].J^-1.[f_x1 - f_x0]
+        denom = d_x.dot(u)  # [x1 - x0].J^-1.[f_x1 - f_x0]
         if denom == 0:
             converged = False
             break
@@ -693,21 +698,23 @@ cdef broyden2_kernel(
         J_x0_inv += ((d_x - u).dot(d_x) * J_x0_inv) / denom
 
         x0, F_x0 = x1, F_x1
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_x0))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_x0))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, F_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def broyden(F: Callable[[ArrayLike], ArrayLike],
-            x0: ArrayLike,
-            F_x0: Optional[ArrayLike] = None,
-            J_x0: Optional[ArrayLike] = None,
+def broyden(F: Callable[[VectorLike], VectorLike],
+            x0: VectorLike,
+            F_x0: Optional[VectorLike] = None,
+            J_x0: Optional[Array2DLike] = None,
             algo: Union[int, str] = 2,
+            h: Optional[Union[float, VectorLike]] = named_default(
+                FINITE_DIFF_STEP=FINITE_DIFF_STEP),
             etol: float = named_default(ETOL=ETOL),
             ertol: float = named_default(ERTOL=ERTOL),
             ptol: float = named_default(PTOL=PTOL),
@@ -726,6 +733,8 @@ def broyden(F: Callable[[ArrayLike], ArrayLike],
         J_x0 (np.ndarray, optional): Jacobian at initial point.
         algo (int, str): Broyden's ``1``/``'good'`` or ``2``/``'bad'``
          version. Defaults to {algo}.
+        h (float, np.ndarray, optional): Finite difference step size,
+         ignored when ``J_x0`` is not None. Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -746,6 +755,14 @@ def broyden(F: Callable[[ArrayLike], ArrayLike],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
+    if algo == 'good':
+        algo = 1
+    elif algo == 'bad':
+        algo = 2
+    else:
+        raise ValueError('algo must be either 1/\'good\' or 2/\'bad\'. '
+                         f'Got {algo}.')
+
     x0 = np.asarray(x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
@@ -754,19 +771,16 @@ def broyden(F: Callable[[ArrayLike], ArrayLike],
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
     if J_x0 is None:
-        J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0)
+        J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0, h=h, order=1)
     else:
         J_x0 = np.asarray(J_x0, dtype=np.float64)
 
-    if algo in [1, 'good']:
+    if algo == 1:
         res = broyden1_kernel(
             <NdArrayFPtr> F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
-    elif algo in [2, 'bad']:
+    else:
         res = broyden2_kernel(
             <NdArrayFPtr> F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
-    else:
-        raise ValueError(f'algo must be either 1/\'good\' or 2/\'bad\'. '
-                         f'Got unknown algo {algo}.')
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 ################################################################################
@@ -794,7 +808,7 @@ cdef klement_kernel(
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, d_F, denom, k
     cdef np.ndarray[np.float64_t, ndim=2] U
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -814,20 +828,22 @@ cdef klement_kernel(
         J_x0 += k.reshape(-1, 1) * U * J_x0  # (1 + k_i * J_{i,j} * d_x_{j}) * J_{i, j}
 
         x0, F_x0 = x1, F_x1
-        precision = fmax(fabs(d_x))
-        error = fmax(fabs(F_x0))
+        precision = max(fabs(d_x))
+        error = max(fabs(F_x0))
 
-    optimal = fisclose(0, error, ertol, etol)
+    optimal = isclose(0, error, ertol, etol)
     return x0, F_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
 @tag('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
-def klement(F: Callable[[ArrayLike], ArrayLike],
-            x0: ArrayLike,
-            F_x0: Optional[ArrayLike] = None,
-            J_x0: Optional[ArrayLike] = None,
+def klement(F: Callable[[VectorLike], VectorLike],
+            x0: VectorLike,
+            F_x0: Optional[VectorLike] = None,
+            J_x0: Optional[Array2DLike] = None,
+            h: Optional[Union[float, VectorLike]] = named_default(
+                FINITE_DIFF_STEP=FINITE_DIFF_STEP),
             etol: float = named_default(ETOL=ETOL),
             ertol: float = named_default(ERTOL=ERTOL),
             ptol: float = named_default(PTOL=PTOL),
@@ -846,6 +862,8 @@ def klement(F: Callable[[ArrayLike], ArrayLike],
         F_x0 (np.ndarray, optional): Value evaluated at initial
          point.
         J_x0 (np.ndarray, optional): Jacobian at initial point.
+        h (float, np.ndarray, optional): Finite difference step size,
+         ignored when ``J_x0`` is not None. Defaults to {h}.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -874,7 +892,7 @@ def klement(F: Callable[[ArrayLike], ArrayLike],
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
     if J_x0 is None:
-        J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0)
+        J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0, h=h, order=1)
     else:
         J_x0 = np.asarray(J_x0, dtype=np.float64)
 

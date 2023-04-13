@@ -84,8 +84,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     converged = True
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -93,12 +93,12 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         r = (a + b) / 2
         f_r = f(r)
         error = math.fabs(f_r)
-        if scalar_ops.fisclose(0, error, ertol, etol):
+        if scalar_ops.isclose(0, error, ertol, etol):
             break
         a, b, _, f_a, f_b, _ = _update_bracket(a, b, r, f_a, f_b, f_r)
         precision = math.fabs(b - a)
 
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -127,8 +127,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         else:
             max_iter = <unsigned long> math.ceil(math.log2(h / etol))
     converged = True
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -139,10 +139,10 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         f_r = f(r)
         error = math.fabs(f_r)
         precision = math.fabs(w)
-        if scalar_ops.fisclose(0, error, ertol, etol):
+        if scalar_ops.isclose(0, error, ertol, etol):
             break
 
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (r - w / 2, r + w / 2), (math.NAN, math.NAN), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -154,7 +154,7 @@ def bisect(f: Callable[[float], float],
            b: float,
            f_a: Optional[float] = None,
            f_b: Optional[float] = None,
-           algo: Union[str, int] = 1,
+           algo: Union[int, str] = 1,
            etol: float = named_default(ETOL=ETOL),
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
@@ -188,26 +188,31 @@ def bisect(f: Callable[[float], float],
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
-    """  # TODO: check algo
+    """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
+
+    if algo == 'default':
+        algo = 1
+    elif algo in ['modified', 'vrahatis']:
+        algo = 2
+    elif algo not in [1, 2]:
+        raise ValueError(f'algo must be either 1/\'default\' or '
+                         f'2/\'modified\'/\'vrahatis\'. Got {algo}.')
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
         f_a = f_wrapper(a)
-    if algo not in [2, 'modified', 'vrahatis'] and f_b is None:
+    if algo != 2 and f_b is None:
         f_b = f_wrapper(b)
 
-    if algo in [1, 'default']:
+    if algo == 1:
         res = bisect_kernel(
             <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
-    elif algo in [2, 'modified', 'vrahatis']:
+    else:
         res = vrahatis_bisect_kernel(
             <DoubleScalarFPtr> f_wrapper, a, b, f_a, etol, ertol, ptol, prtol, max_iter)
-    else:
-        raise ValueError(f'algo must be either 1/\'default\' or 2/\'modified\'/\'vrahatis\'. '
-                         f'Got unknown algo {algo}.')
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 #------------------------
@@ -253,8 +258,8 @@ cdef bint _hybisect_subroutine(
                 max_iter = <unsigned long> math.fmin(math.ceil(math.log2(h / etol)), max_iter)
             else:
                 max_iter = <unsigned long> math.ceil(math.log2(h / etol))
-        while not (scalar_ops.fisclose(0, error, ertol, etol) or
-                   scalar_ops.fisclose(0, precision, prtol, ptol)):
+        while not (scalar_ops.isclose(0, error, ertol, etol) or
+                   scalar_ops.isclose(0, precision, prtol, ptol)):
             if step >= max_iter > 0:
                 converged = False
                 break
@@ -266,7 +271,7 @@ cdef bint _hybisect_subroutine(
 
             error = math.fabs(f_r)
             precision = math.fabs(w)
-            if scalar_ops.fisclose(0, error, ertol, etol):
+            if scalar_ops.isclose(0, error, ertol, etol):
                 break
         rs.push_back(r)
         f_rs.push_back(f_r)
@@ -275,7 +280,7 @@ cdef bint _hybisect_subroutine(
         precisions.push_back(precision)
         errors.push_back(error)
         converged_flags.push_back(converged)
-        optimal_flags.push_back(scalar_ops.fisclose(0, error, ertol, etol))
+        optimal_flags.push_back(scalar_ops.isclose(0, error, ertol, etol))
         return True
     # continue bisecting
     split_step[0] += 1
@@ -364,8 +369,8 @@ def hybisect(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     interval_f_wrapper = PyDoubleBiScalarFPtr.from_f(interval_f)
@@ -402,8 +407,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     converged = True
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or f_a == f_b:
             converged = False
             break
@@ -413,7 +418,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         precision = math.fabs(b - a)
         error = math.fabs(f_r)
 
-        if scalar_ops.fisclose(0, error, ertol, etol):
+        if scalar_ops.isclose(0, error, ertol, etol):
             break
         elif math.copysign(1, f_b) * math.copysign(1, f_r) < 0:
             a, f_a = b, f_b
@@ -421,7 +426,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
             f_a *= scale_func(f_b, f_r)
         b, f_b = r, f_r
 
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -465,8 +470,8 @@ def regula_falsi(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -525,8 +530,8 @@ def illinois(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -585,8 +590,8 @@ def pegasus(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -648,8 +653,8 @@ def anderson_bjorck(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -686,8 +691,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
     cdef double b_prev = a, f_b_prev = f_a, b_next, f_b_next, c, s
     converged = True
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -714,7 +719,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         error = math.fabs(f_b)
 
     r, f_r = b, f_b
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -758,8 +763,8 @@ def dekker(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -801,8 +806,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef int last_method = 0  # 0 for bisect, 1 for interp
     cdef bint use_interp
     converged = True
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -811,7 +816,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
         s = math.NAN
         use_interp = False
-        if interp_method == 0 and f_a != f_b != f_b_prev != f_a:
+        if interp_method == 1 and f_a != f_b != f_b_prev != f_a:
             # inverse quadratic interpolation
             df_ab = f_a - f_b
             df_abp = f_a - f_b_prev
@@ -820,7 +825,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
                  + b * f_a * f_b_prev / (-df_ab * df_bbp)
                  + b_prev * f_a * f_b / (df_abp * df_bbp))
             use_interp = True
-        elif interp_method == 1 and a != b != b_prev:
+        elif interp_method == 2 and a != b != b_prev:
             # hyperbolic interpolation
             d_ab = a - b
             d_bbp = b - b_prev
@@ -858,7 +863,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         error = math.fabs(f_b)
 
     r, f_r = b, f_b
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -870,7 +875,7 @@ def brent(f: Callable[[float], float],
           b: float,
           f_a: Optional[float] = None,
           f_b: Optional[float] = None,
-          interp_method: Union[str, int] = 'hyperbolic',
+          interp_method: Union[int, str] = 'hyperbolic',
           sigma: float = 1e-5,
           etol: float = named_default(ETOL=ETOL),
           ertol: float = named_default(ERTOL=ERTOL),
@@ -886,8 +891,8 @@ def brent(f: Callable[[float], float],
         b (float): Upper bound of the interval to be searched.
         f_a (float, optional): Value evaluated at lower bound.
         f_b (float, optional): Value evaluated at upper bound.
-        interp_method: Interpolation method, ``0``/``'quadratic'``
-         for Inversed Quadratic Interpolation and ``1``/``'hyperbolic'``
+        interp_method: Interpolation method, ``1``/``'quadratic'``
+         for Inversed Quadratic Interpolation and ``2``/``'hyperbolic'``
          for Hyperbolic Interpolation. Defaults to {interp_method}.
         sigma: Numerical tolerance to decide which method to use.
          Defaults to {sigma}.
@@ -909,18 +914,18 @@ def brent(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_bracket(a, b)
-    if interp_method in ['0', 'quadratic']:
-        interp_method = 0
-    elif interp_method in ['1', 'hyperbolic']:
+
+    if interp_method == 'quadratic':
         interp_method = 1
-    elif interp_method not in [0, 1]:
-        raise ValueError('interp_method must be 0/\'quadratic\' or '
-                         f'1/\'hyperbolic\'. Got {interp_method}.')
+    elif interp_method == 'hyperbolic':
+        interp_method = 2
+    elif interp_method not in [1, 2]:
+        raise ValueError('interp_method must be 1/\'quadratic\' or '
+                         f'2/\'hyperbolic\'. Got {interp_method}.')
     if sigma <= 0:
         raise ValueError(f'sigma must be positive. Got {sigma}.')
-
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -958,8 +963,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
     cdef double c, f_c, d, f_d, d_ab, d_fa_fb, d_ad, d_fa_fd, d_bd, d_fb_fd, tl, t = 0.5
     converged = True
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -976,7 +981,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         r, f_r = (a, f_a) if math.fabs(f_a) < math.fabs(f_b) else (b, f_b)
         error = math.fabs(f_r)
         tl = (2 * ptol * math.fabs(r) + 0.5 * sigma) / precision
-        if scalar_ops.fisclose(0, error, ertol, etol) or tl > 0.5:
+        if scalar_ops.isclose(0, error, ertol, etol) or tl > 0.5:
             break
         if a != b != d != a and f_a != f_b != f_d != f_a:
             # inverse quadratic interpolation
@@ -997,7 +1002,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
             t = 1 - tl
 
     # this method set r and f_r inside loop
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -1043,8 +1048,11 @@ def chandrupatla(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
+
+    if sigma < 0:
+        raise ValueError(f'sigma must be non-negative. Got {sigma}.')
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -1081,8 +1089,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
     cdef double c, f_c, d, f_d, denom
     converged = True
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -1108,7 +1116,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     if b < a:
         a, f_a = b, f_b
     r, f_r = d, f_d
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -1152,8 +1160,8 @@ def ridders(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -1293,15 +1301,15 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     f_c = f(c)
     step += 1
     error = math.fabs(f_c)
-    if scalar_ops.fisclose(0, error, ertol, etol):
+    if scalar_ops.isclose(0, error, ertol, etol):
         r, f_r = c, f_c
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, True, True
     a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
     precision = math.fabs(b - a)
     e = f_e = math.NAN
     converged = True
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -1323,7 +1331,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
                 c = _newton_quadratic(a, b, d, f_a, f_b, f_d, n)
             f_c = f(c)
             error = math.fabs(f_c)
-            if scalar_ops.fisclose(0, error, ertol, etol):
+            if scalar_ops.isclose(0, error, ertol, etol):
                 break
 
             # re-bracket
@@ -1342,7 +1350,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
             c = (a + b) / 2
         f_c = f(c)
         error = math.fabs(f_c)
-        if scalar_ops.fisclose(0, error, ertol, etol):
+        if scalar_ops.isclose(0, error, ertol, etol):
             break
 
         # re-bracket
@@ -1356,14 +1364,14 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
             z = (a + b) / 2
             f_z = f(z)
             error = math.fabs(f_z)
-            if scalar_ops.fisclose(0, error, ertol, etol):
+            if scalar_ops.isclose(0, error, ertol, etol):
                 c, f_c = z, f_z
                 break
             a, b, d, f_a, f_b, f_d = _update_bracket(a, b, z, f_a, f_b, f_z)
             precision = math.fabs(b - a)
 
     r, f_r = c, f_c
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -1411,14 +1419,13 @@ def toms748(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_bracket(a, b)
 
     if not isinstance(k, int) or k <= 0:
         raise ValueError(f'k must be positive integer. Got {k}.')
     if not 0 < mu < 1:
         raise ValueError(f'mu must be in range (0, 1). Got {mu}.')
-
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -1460,13 +1467,13 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     f_c = f(c)
     step += 1
     error = math.fabs(f_c)
-    if scalar_ops.fisclose(0, error, ertol, etol):
+    if scalar_ops.isclose(0, error, ertol, etol):
         r, f_r = c, f_c
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, True, True
     a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
     converged = True
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -1502,7 +1509,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
 
     r, f_r = c, f_c
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -1551,8 +1558,8 @@ def wu(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    _check_bracket(a, b)
     etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    _check_bracket(a, b)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
@@ -1597,8 +1604,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef double x_m, f_m, rho, rho_i, delta, x_f, sigma, x_t, x_itp, f_itp
     converged = True
     rho_i = ptol * 2 ** <double> n_max
-    while not (scalar_ops.fisclose(0, error, ertol, etol) or
-               scalar_ops.fisclose(0, precision, prtol, ptol)):
+    while not (scalar_ops.isclose(0, error, ertol, etol) or
+               scalar_ops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or f_a == f_b:
             converged = False
             break
@@ -1619,7 +1626,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         # update interval
         f_itp = f(x_itp)
         error = math.fabs(f_itp)
-        if scalar_ops.fisclose(0, error, ertol, etol):
+        if scalar_ops.isclose(0, error, ertol, etol):
             a = b = x_itp
             f_a = f_b = f_itp
             break
@@ -1633,7 +1640,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     error = math.fabs(f_m)
 
     r, f_r = x_m, f_m
-    optimal = scalar_ops.fisclose(0, error, ertol, etol)
+    optimal = scalar_ops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # upper bound for k2
@@ -1649,8 +1656,8 @@ def itp(f: Callable[[float], float],
         f_a: Optional[float] = None,
         f_b: Optional[float] = None,
         k1: Optional[float] = None,
-        k2: Optional[float] = 2,
-        n0: Optional[int] = 1,
+        k2: float = 2,
+        n0: int = 1,
         etol: float = named_default(ETOL=ETOL),
         ertol: float = named_default(ERTOL=ERTOL),
         ptol: float = named_default(PTOL=PTOL),
@@ -1693,7 +1700,9 @@ def itp(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
+    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
     _check_bracket(a, b)
+
     if k1 is None:
         k1 = 0.2 / (b - a)
     elif k1 <= 0:
@@ -1703,8 +1712,6 @@ def itp(f: Callable[[float], float],
                          f'phi={PHI} is the golden ratio. Got {k2}.')
     if n0 < 0:
         raise ValueError(f'n0 must be non-negative integer. Got {n0}.')
-
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:

@@ -17,13 +17,13 @@ cdef class CyDoubleScalarFPtr(DoubleScalarFPtr):
     cdef dsf_ptr f
     @staticmethod
     cdef CyDoubleScalarFPtr from_f(dsf_ptr f)
-    cdef double eval(self, double x) except *
+    cpdef double eval(self, double x) except *
 
 cdef class PyDoubleScalarFPtr(DoubleScalarFPtr):
     cdef object f
     @staticmethod
     cdef DoubleScalarFPtr from_f(object f)
-    cdef double eval(self, double x) except *
+    cpdef double eval(self, double x) except *
 
 ctypedef fused double_scalar_func_type:
     dsf_ptr
@@ -41,13 +41,13 @@ cdef class CyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
     cdef dbsf_ptr f
     @staticmethod
     cdef CyDoubleBiScalarFPtr from_f(dbsf_ptr f)
-    cdef (double, double) eval(self, double a, double b) except *
+    cpdef (double, double) eval(self, double a, double b) except *
 
 cdef class PyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
     cdef object f
     @staticmethod
     cdef DoubleBiScalarFPtr from_f(object f)
-    cdef (double, double) eval(self, double a, double b) except *
+    cpdef (double, double) eval(self, double a, double b) except *
 
 ctypedef fused double_bi_scalar_func_type:
     dbsf_ptr
@@ -65,13 +65,13 @@ cdef class CyComplexScalarFPtr(ComplexScalarFPtr):
     cdef csf_ptr f
     @staticmethod
     cdef CyComplexScalarFPtr from_f(csf_ptr f)
-    cdef double complex eval(self, double complex x) except *
+    cpdef double complex eval(self, double complex x) except *
 
 cdef class PyComplexScalarFPtr(ComplexScalarFPtr):
     cdef object f
     @staticmethod
     cdef ComplexScalarFPtr from_f(object f)
-    cdef double complex eval(self, double complex x) except *
+    cpdef double complex eval(self, double complex x) except *
 
 ctypedef fused complex_scalar_func_type:
     csf_ptr
@@ -89,13 +89,13 @@ cdef class CyComplexBiScalarFPtr(ComplexBiScalarFPtr):
     cdef cbsf_ptr f
     @staticmethod
     cdef CyComplexBiScalarFPtr from_f(cbsf_ptr f)
-    cdef (double complex, double complex) eval(self, double complex a, double complex b) except *
+    cpdef (double complex, double complex) eval(self, double complex a, double complex b) except *
 
 cdef class PyComplexBiScalarFPtr(ComplexBiScalarFPtr):
     cdef object f
     @staticmethod
     cdef ComplexBiScalarFPtr from_f(object f)
-    cdef (double complex, double complex) eval(self, double complex a, double complex b) except *
+    cpdef (double complex, double complex) eval(self, double complex a, double complex b) except *
 
 ctypedef fused complex_bi_scalar_func_type:
     cbsf_ptr
@@ -113,13 +113,13 @@ cdef class CyDoubleVectorFPtr(DoubleVectorFPtr):
     cdef dvf_ptr f
     @staticmethod
     cdef CyDoubleVectorFPtr from_f(dvf_ptr f)
-    cdef double[:] eval(self, double[:] x) except *
+    cpdef double[:] eval(self, double[:] x) except *
 
 cdef class PyDoubleVectorFPtr(DoubleVectorFPtr):
     cdef object f
     @staticmethod
     cdef DoubleVectorFPtr from_f(object f)
-    cdef double[:] eval(self, double[:] x) except *
+    cpdef double[:] eval(self, double[:] x) except *
 
 ctypedef fused double_vector_func_type:
     dvf_ptr
@@ -137,13 +137,13 @@ cdef class CyComplexVectorFPtr(ComplexVectorFPtr):
     cdef cvf_ptr f
     @staticmethod
     cdef CyComplexVectorFPtr from_f(cvf_ptr f)
-    cdef double complex[:] eval(self, double complex[:] x) except *
+    cpdef double complex[:] eval(self, double complex[:] x) except *
 
 cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
     cdef object f
     @staticmethod
     cdef ComplexVectorFPtr from_f(object f)
-    cdef double complex[:] eval(self, double complex[:] x) except *
+    cpdef double complex[:] eval(self, double complex[:] x) except *
 
 ctypedef fused complex_vector_func_type:
     cvf_ptr
@@ -161,13 +161,13 @@ cdef class CyNdArrayFPtr(NdArrayFPtr):
     cdef ndarray_f_ptr f
     @staticmethod
     cdef CyNdArrayFPtr from_f(ndarray_f_ptr f)
-    cdef np.ndarray eval(self, np.ndarray x)
+    cpdef np.ndarray eval(self, np.ndarray x)
 
 cdef class PyNdArrayFPtr(NdArrayFPtr):
     cdef object f
     @staticmethod
     cdef NdArrayFPtr from_f(object f)
-    cdef np.ndarray eval(self, np.ndarray x)
+    cpdef np.ndarray eval(self, np.ndarray x)
 
 ctypedef fused ndarray_func_type:
     ndarray_f_ptr

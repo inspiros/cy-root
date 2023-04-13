@@ -21,8 +21,9 @@ from ._check_args cimport _check_stop_condition_bracket_vector
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import BracketingMethodsReturnType
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
-from .ops.scalar_ops cimport fisclose
-from .ops.vector_ops cimport fabs, fmax
+from .ops.scalar_ops cimport isclose
+from .ops.vector_ops cimport fabs, max
+from .typing import *
 from .utils.function_tagging import tag
 
 __all__ = [
@@ -62,7 +63,7 @@ cdef vrahatis_kernel(
     cdef unsigned long i, p0, p1
     cdef long r_id = -1
     converged = True
-    while not (fisclose(0, error, ertol, etol) or fisclose(0, precision, prtol, ptol)):
+    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -82,9 +83,9 @@ cdef vrahatis_kernel(
                     x0s[p1] = r
                     F_x0s[p1] = F_r
                     r_id = p1
-                error = fmax(fabs(F_r))
-                precision = fmax(x0s.max(0) - x0s.min(0))
-                if not fisclose(0, error, ertol, etol):
+                error = max(fabs(F_r))
+                precision = max(x0s.max(0) - x0s.min(0))
+                if not isclose(0, error, ertol, etol):
                     r_id = -1
                 else:
                     break
@@ -93,12 +94,12 @@ cdef vrahatis_kernel(
 
     if r_id >= 0:
         # return the vertex with small enough error
-        optimal = fisclose(0, error, ertol, etol)
+        optimal = isclose(0, error, ertol, etol)
         return x0s[r_id], F_x0s[r_id], step, x0s, F_x0s, precision, error, converged, optimal
     elif step == 0:
         # if the precision tol is satisfied without running into the loop,
         # just return the vertex with the smallest error
-        optimal = fisclose(0, error, ertol, etol)
+        optimal = isclose(0, error, ertol, etol)
         return r, F_r, step, x0s, F_x0s, precision, error, converged, optimal
     # otherwise, find the diagonal with the longest length
     cdef unsigned long best_i
@@ -112,8 +113,8 @@ cdef vrahatis_kernel(
     r = (x0s[vertices[best_i, 0]] + x0s[vertices[best_i, 1]]) / 2
     F_r = F(r)
 
-    error = fmax(fabs(F_r))
-    optimal = fisclose(0, error, ertol, etol)
+    error = max(fabs(F_r))
+    optimal = isclose(0, error, ertol, etol)
     return r, F_r, step, x0s, F_x0s, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -147,10 +148,23 @@ cpdef np.ndarray[np.float64_t, ndim=2] get_M(unsigned int n,
 
 # noinspection DuplicatedCode
 def compute_admissible_n_polygon(
-        F: Callable[[np.ndarray], np.ndarray],
-        x: np.ndarray,
-        h: Optional[Union[np.ndarray, float]] = None,
+        F: Callable[[VectorLike], VectorLike],
+        x: VectorLike,
+        h: Optional[Union[VectorLike, float]] = None,
         eps: float=1e-3) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Find an admissible n-polygon from an initial point.
+
+    Args:
+        F (function): Function for which the root is sought.
+        x (np.ndarray): Initial point.
+        h (np.ndarray, optional): Search direction.
+        eps: (float): ``etol`` for internal bisection.
+
+    Returns:
+        V (np.ndarray): Vertices of the n-polygon.
+        S (np.ndarray): Signs of ``V``.
+    """
     x = x.reshape(-1)
     cdef unsigned int d = x.shape[0]
     if h is None:
@@ -211,10 +225,10 @@ def sorted_by_vertices(*mats, S):
 @tag('cyroot.vector.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
-def vrahatis(F: Callable[[np.ndarray], np.ndarray],
-             x0s: np.ndarray,
-             F_x0s: Optional[np.ndarray] = None,
-             h: Optional[np.ndarray] = None,
+def vrahatis(F: Callable[[VectorLike], VectorLike],
+             x0s: Union[Array2DLike, VectorLike],
+             F_x0s: Optional[Array2DLike] = None,
+             h: Optional[Union[VectorLike, float]] = None,
              etol: float = named_default(ETOL=ETOL),
              ertol: float = named_default(ERTOL=ERTOL),
              ptol: float = named_default(PTOL=PTOL),

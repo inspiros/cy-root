@@ -13,7 +13,8 @@
         "include_dirs": [
             "cyroot",
             "C:\\Python\\Python38\\lib\\site-packages\\numpy\\core\\include",
-            "cyroot\\ops"
+            "cyroot\\ops",
+            "cyroot\\utils"
         ],
         "language": "c++",
         "name": "cyroot._check_args",
@@ -792,7 +793,39 @@ static CYTHON_INLINE float __PYX_NAN() {
     
 #include <math.h>
 #include <complex>
-#include "sign.hpp"
+
+    #include <complex>
+
+    template <typename T>
+    int sign(T val) {
+        return (T(0) < val) - (val < T(0));
+    }
+
+    template <typename T>
+    std::complex<T> csign(std::complex<T> val) {
+        return val / std::norm(val);
+    }
+
+    unsigned long factorial(unsigned int n) {
+        unsigned long f = 1;
+        for (unsigned int i = 1; i < n + 1; i++)
+            f *= i;
+        return f;
+    }
+
+    unsigned long binomial_coef(unsigned long n, unsigned long k) {
+        unsigned long bin_coef = 1;
+        unsigned int i;
+        if (k <= n / 2) {
+            for (i = 0; i < k; i++)
+                bin_coef *= n - i;
+            return bin_coef / factorial(k);
+        }
+        for (i = 0; i < n - k; i++)
+            bin_coef *= n - i;
+        return bin_coef / factorial(n - k);
+    }
+    
 #include "pythread.h"
 #include <stdlib.h>
 #include "pystate.h"
@@ -1395,91 +1428,110 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
  * cdef inline object PyArray_MultiIterNew1(a):
  */
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
-struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose;
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose;
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
 
-/* "scalar_ops.pxd":1
- * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+/* "scalar_ops.pxd":18
+ *     double complex
+ * 
+ * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
  * 
  */
-struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose {
+struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   int __pyx_n;
   double rtol;
   double atol;
 };
 
-/* "scalar_ops.pxd":2
- * cdef bint fisclose(double a, double b, double rtol=*, double atol=*) nogil
+/* "scalar_ops.pxd":19
+ * 
+ * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * 
- * cdef extern from '<math.h>':
+ * cdef extern from '<math.h>' nogil:
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose {
   int __pyx_n;
   double rtol;
   double atol;
 };
-struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fallclose;
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_allclose;
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_callclose;
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_norm;
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_cnorm;
 struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
 typedef struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long __pyx_ctuple_unsigned__space_long__and_unsigned__space_long;
-struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fargsort;
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_argsort;
 
-/* "vector_ops.pxd":1
- * cdef bint fallclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+/* "vector_ops.pxd":3
+ * from .scalar_ops cimport numeric
+ * 
+ * cdef bint allclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef bint callclose(double complex[:] a, double complex[:] b, double rtol=*, double atol=*) nogil
  * cdef int[:] sign(double[:] xs) nogil
- * cdef double complex[:] csign(double complex[:] xs) nogil
  */
-struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fallclose {
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_allclose {
   int __pyx_n;
   double rtol;
   double atol;
 };
 
-/* "vector_ops.pxd":10
+/* "vector_ops.pxd":4
+ * 
+ * cdef bint allclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil
+ * cdef bint callclose(double complex[:] a, double complex[:] b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
+ * cdef int[:] sign(double[:] xs) nogil
+ * cdef double complex[:] csign(double complex[:] xs) nogil
+ */
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_callclose {
+  int __pyx_n;
+  double rtol;
+  double atol;
+};
+
+/* "vector_ops.pxd":13
  * cdef double[:] sqrt(double[:] xs) nogil
  * cdef double complex[:] csqrt(double complex[:] xs) nogil
  * cdef double norm(double[:] xs, double order=*) nogil             # <<<<<<<<<<<<<<
  * cdef double cnorm(double complex[:] xs, double order=*) nogil
- * cdef double[:] fpermute(double[:] xs, unsigned long[:] inds) nogil
+ * cdef double[:] permute(double[:] xs, unsigned long[:] inds) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_norm {
   int __pyx_n;
   double order;
 };
 
-/* "vector_ops.pxd":11
+/* "vector_ops.pxd":14
  * cdef double complex[:] csqrt(double complex[:] xs) nogil
  * cdef double norm(double[:] xs, double order=*) nogil
  * cdef double cnorm(double complex[:] xs, double order=*) nogil             # <<<<<<<<<<<<<<
- * cdef double[:] fpermute(double[:] xs, unsigned long[:] inds) nogil
- * cdef double fsum(double[:] xs) nogil
+ * cdef double[:] permute(double[:] xs, unsigned long[:] inds) nogil
+ * cdef numeric sum(numeric[:] xs) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10vector_ops_cnorm {
   int __pyx_n;
   double order;
 };
 
-/* "vector_ops.pxd":19
- * cdef unsigned long fargmin(double[:] xs) nogil
- * cdef unsigned long fargmax(double[:] xs) nogil
- * cdef (unsigned long, unsigned long) fargminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
- * cdef void fsort(double[::1] xs) nogil
- * cdef unsigned long[:] fargsort(double[:] xs, bint reverse=*) nogil
+/* "vector_ops.pxd":24
+ * cdef unsigned long argmin(double[:] xs) nogil
+ * cdef unsigned long argmax(double[:] xs) nogil
+ * cdef (unsigned long, unsigned long) argminmax(double[:] xs) nogil             # <<<<<<<<<<<<<<
+ * cdef void sort(double[::1] xs) nogil
+ * cdef unsigned long[:] argsort(double[:] xs, bint reverse=*) nogil
  */
 struct __pyx_ctuple_unsigned__space_long__and_unsigned__space_long {
   unsigned long f0;
   unsigned long f1;
 };
 
-/* "vector_ops.pxd":21
- * cdef (unsigned long, unsigned long) fargminmax(double[:] xs) nogil
- * cdef void fsort(double[::1] xs) nogil
- * cdef unsigned long[:] fargsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<
+/* "vector_ops.pxd":26
+ * cdef (unsigned long, unsigned long) argminmax(double[:] xs) nogil
+ * cdef void sort(double[::1] xs) nogil
+ * cdef unsigned long[:] argsort(double[:] xs, bint reverse=*) nogil             # <<<<<<<<<<<<<<
  */
-struct __pyx_opt_args_6cyroot_3ops_10vector_ops_fargsort {
+struct __pyx_opt_args_6cyroot_3ops_10vector_ops_argsort {
   int __pyx_n;
   int reverse;
 };
@@ -1508,8 +1560,8 @@ typedef double (*__pyx_t_6cyroot_11_check_args_precision_func_type_complex_scala
  *     cdef double error_a = math.fabs(f_a), error_b = math.fabs(f_b)
  *     error[0] = math.fmin(error_a, error_b)
  *     r[0], f_r[0] = (a, f_a) if error_a < error_b else (b, f_b)             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  */
 struct __pyx_ctuple_double__and_double {
   double f0;
@@ -2625,14 +2677,14 @@ static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 /* Module declarations from 'cyroot.ops' */
 
 /* Module declarations from 'cyroot.ops.scalar_ops' */
-static int (*__pyx_f_6cyroot_3ops_10scalar_ops_fisclose)(double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose *__pyx_optional_args); /*proto*/
+static int (*__pyx_f_6cyroot_3ops_10scalar_ops_isclose)(double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose *__pyx_optional_args); /*proto*/
 
 /* Module declarations from 'cyroot.ops.vector_ops' */
 static __Pyx_memviewslice (*__pyx_f_6cyroot_3ops_10vector_ops_fabs)(__Pyx_memviewslice); /*proto*/
 static __Pyx_memviewslice (*__pyx_f_6cyroot_3ops_10vector_ops_cabs)(__Pyx_memviewslice); /*proto*/
-static double (*__pyx_f_6cyroot_3ops_10vector_ops_fmin)(__Pyx_memviewslice); /*proto*/
-static double (*__pyx_f_6cyroot_3ops_10vector_ops_fmax)(__Pyx_memviewslice); /*proto*/
-static unsigned long (*__pyx_f_6cyroot_3ops_10vector_ops_fargmin)(__Pyx_memviewslice); /*proto*/
+static double (*__pyx_f_6cyroot_3ops_10vector_ops_min)(__Pyx_memviewslice); /*proto*/
+static double (*__pyx_f_6cyroot_3ops_10vector_ops_max)(__Pyx_memviewslice); /*proto*/
+static unsigned long (*__pyx_f_6cyroot_3ops_10vector_ops_argmin)(__Pyx_memviewslice); /*proto*/
 
 /* Module declarations from 'cyroot._check_args' */
 static PyTypeObject *__pyx_ptype_6cyroot_11_check_args___pyx_scope_struct___check_unique_initial_guesses = 0;
@@ -5424,7 +5476,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
   double __pyx_t_3;
   double __pyx_t_4;
   int __pyx_t_5;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_6;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_6;
   int __pyx_t_7;
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("_check_stop_condition_bracket_scalar", 0);
@@ -5453,7 +5505,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
  *     cdef double error_a = math.fabs(f_a), error_b = math.fabs(f_b)
  *     error[0] = math.fmin(error_a, error_b)             # <<<<<<<<<<<<<<
  *     r[0], f_r[0] = (a, f_a) if error_a < error_b else (b, f_b)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
   (__pyx_v_error[0]) = fmin(__pyx_v_error_a, __pyx_v_error_b);
 
@@ -5461,8 +5513,8 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
  *     cdef double error_a = math.fabs(f_a), error_b = math.fabs(f_b)
  *     error[0] = math.fmin(error_a, error_b)
  *     r[0], f_r[0] = (a, f_a) if error_a < error_b else (b, f_b)             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  */
   if (((__pyx_v_error_a < __pyx_v_error_b) != 0)) {
     __pyx_t_2.f0 = __pyx_v_a;
@@ -5481,27 +5533,27 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
   /* "cyroot/_check_args.pyx":119
  *     error[0] = math.fmin(error_a, error_b)
  *     r[0], f_r[0] = (a, f_a) if error_a < error_b else (b, f_b)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  */
   __pyx_t_6.__pyx_n = 2;
   __pyx_t_6.rtol = __pyx_v_ertol;
   __pyx_t_6.atol = __pyx_v_etol;
-  __pyx_t_5 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
+  __pyx_t_5 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
   (__pyx_v_optimal[0]) = __pyx_t_5;
 
   /* "cyroot/_check_args.pyx":120
  *     r[0], f_r[0] = (a, f_a) if error_a < error_b else (b, f_b)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  * 
  */
   __pyx_t_6.__pyx_n = 2;
   __pyx_t_6.rtol = __pyx_v_prtol;
   __pyx_t_6.atol = __pyx_v_ptol;
-  __pyx_t_7 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
+  __pyx_t_7 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
   __pyx_t_8 = (__pyx_t_7 != 0);
   if (!__pyx_t_8) {
   } else {
@@ -5514,9 +5566,9 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
   (__pyx_v_converged[0]) = __pyx_t_5;
 
   /* "cyroot/_check_args.pyx":121
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
  * 
  * # noinspection DuplicatedCode
  */
@@ -5529,7 +5581,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
   __pyx_t_6.__pyx_n = 2;
   __pyx_t_6.rtol = __pyx_v_prtol;
   __pyx_t_6.atol = __pyx_v_ptol;
-  __pyx_t_8 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
+  __pyx_t_8 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
   __pyx_t_7 = (__pyx_t_8 != 0);
   __pyx_t_5 = __pyx_t_7;
   __pyx_L5_bool_binop_done:;
@@ -5581,7 +5633,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
   double __pyx_t_8;
   __Pyx_memviewslice __pyx_t_9 = { 0, 0, { 0 }, { 0 }, { 0 } };
   size_t __pyx_t_10;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_11;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_11;
   int __pyx_t_12;
   int __pyx_t_13;
   int __pyx_lineno = 0;
@@ -5662,7 +5714,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
  *         raise ValueError('Empty sequence.')
  *     precision[0] = np.max(bs.max(0) - bs.min(0))             # <<<<<<<<<<<<<<
  *     cdef double[:] errors = np.abs(F_bs).max(1)
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 140, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -5731,7 +5783,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
  *         raise ValueError('Empty sequence.')
  *     precision[0] = np.max(bs.max(0) - bs.min(0))
  *     cdef double[:] errors = np.abs(F_bs).max(1)             # <<<<<<<<<<<<<<
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     error[0] = errors[best_i]
  */
   __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 141, __pyx_L1_error)
@@ -5781,28 +5833,28 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
   /* "cyroot/_check_args.pyx":142
  *     precision[0] = np.max(bs.max(0) - bs.min(0))
  *     cdef double[:] errors = np.abs(F_bs).max(1)
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)             # <<<<<<<<<<<<<<
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)             # <<<<<<<<<<<<<<
  *     error[0] = errors[best_i]
  *     r[:], F_r[:] = bs[best_i], F_bs[best_i]
  */
-  __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_fargmin(__pyx_v_errors);
+  __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_argmin(__pyx_v_errors);
 
   /* "cyroot/_check_args.pyx":143
  *     cdef double[:] errors = np.abs(F_bs).max(1)
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     error[0] = errors[best_i]             # <<<<<<<<<<<<<<
  *     r[:], F_r[:] = bs[best_i], F_bs[best_i]
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
   __pyx_t_10 = __pyx_v_best_i;
   (__pyx_v_error[0]) = (*((double *) ( /* dim=0 */ (__pyx_v_errors.data + __pyx_t_10 * __pyx_v_errors.strides[0]) )));
 
   /* "cyroot/_check_args.pyx":144
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     error[0] = errors[best_i]
  *     r[:], F_r[:] = bs[best_i], F_bs[best_i]             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  */
   __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_bs), __pyx_v_best_i, unsigned long, 0, __Pyx_PyInt_From_unsigned_long, 0, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -5816,27 +5868,27 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
   /* "cyroot/_check_args.pyx":145
  *     error[0] = errors[best_i]
  *     r[:], F_r[:] = bs[best_i], F_bs[best_i]
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  */
   __pyx_t_11.__pyx_n = 2;
   __pyx_t_11.rtol = __pyx_v_ertol;
   __pyx_t_11.atol = __pyx_v_etol;
-  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_11); 
+  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_11); 
   (__pyx_v_optimal[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":146
  *     r[:], F_r[:] = bs[best_i], F_bs[best_i]
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  * 
  */
   __pyx_t_11.__pyx_n = 2;
   __pyx_t_11.rtol = __pyx_v_prtol;
   __pyx_t_11.atol = __pyx_v_ptol;
-  __pyx_t_12 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_11); 
+  __pyx_t_12 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_11); 
   __pyx_t_13 = (__pyx_t_12 != 0);
   if (!__pyx_t_13) {
   } else {
@@ -5849,9 +5901,9 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
   (__pyx_v_converged[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":147
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
  * 
  * ################################################################################
  */
@@ -5864,7 +5916,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_bra
   __pyx_t_11.__pyx_n = 2;
   __pyx_t_11.rtol = __pyx_v_prtol;
   __pyx_t_11.atol = __pyx_v_ptol;
-  __pyx_t_13 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_11); 
+  __pyx_t_13 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_11); 
   __pyx_t_12 = (__pyx_t_13 != 0);
   __pyx_t_1 = __pyx_t_12;
   __pyx_L6_bool_binop_done:;
@@ -5923,7 +5975,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_2;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_2;
   __Pyx_RefNannySetupContext("_check_stop_condition_initial_guess_scalar", 0);
 
   /* "cyroot/_check_args.pyx":168
@@ -5931,7 +5983,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *     """Check if stop condition is already met."""
  *     precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
  *     error[0] = math.fabs(f_x0)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
   (__pyx_v_precision[0]) = INFINITY;
 
@@ -5939,7 +5991,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *     """Check if stop condition is already met."""
  *     precision[0] = math.INFINITY
  *     error[0] = math.fabs(f_x0)             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]
  */
   (__pyx_v_error[0]) = fabs(__pyx_v_f_x0);
@@ -5947,19 +5999,19 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   /* "cyroot/_check_args.pyx":170
  *     precision[0] = math.INFINITY
  *     error[0] = math.fabs(f_x0)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *     converged[0] = optimal[0]
  *     return optimal[0]
  */
   __pyx_t_2.__pyx_n = 2;
   __pyx_t_2.rtol = __pyx_v_ertol;
   __pyx_t_2.atol = __pyx_v_etol;
-  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_2); 
+  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_2); 
   (__pyx_v_optimal[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":171
  *     error[0] = math.fabs(f_x0)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *     return optimal[0]
  * 
@@ -5967,7 +6019,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
   /* "cyroot/_check_args.pyx":172
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]
  *     return optimal[0]             # <<<<<<<<<<<<<<
  * 
@@ -6003,7 +6055,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   __Pyx_RefNannyDeclarations
   __Pyx_memviewslice __pyx_t_1 = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_t_2;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_3;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_3;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -6013,40 +6065,40 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         bint* optimal):
  *     """Check if stop condition is already met."""
  *     precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
- *     error[0] = vector_ops.fmax(vector_ops.fabs(F_x0))
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     error[0] = vector_ops.max(vector_ops.fabs(F_x0))
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
   (__pyx_v_precision[0]) = INFINITY;
 
   /* "cyroot/_check_args.pyx":188
  *     """Check if stop condition is already met."""
  *     precision[0] = math.INFINITY
- *     error[0] = vector_ops.fmax(vector_ops.fabs(F_x0))             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     error[0] = vector_ops.max(vector_ops.fabs(F_x0))             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]
  */
   __pyx_t_1 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_v_F_x0); if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 188, __pyx_L1_error)
-  (__pyx_v_error[0]) = __pyx_f_6cyroot_3ops_10vector_ops_fmax(__pyx_t_1);
+  (__pyx_v_error[0]) = __pyx_f_6cyroot_3ops_10vector_ops_max(__pyx_t_1);
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
   /* "cyroot/_check_args.pyx":189
  *     precision[0] = math.INFINITY
- *     error[0] = vector_ops.fmax(vector_ops.fabs(F_x0))
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *     error[0] = vector_ops.max(vector_ops.fabs(F_x0))
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *     converged[0] = optimal[0]
  *     return optimal[0]
  */
   __pyx_t_3.__pyx_n = 2;
   __pyx_t_3.rtol = __pyx_v_ertol;
   __pyx_t_3.atol = __pyx_v_etol;
-  __pyx_t_2 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_3); 
+  __pyx_t_2 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_3); 
   (__pyx_v_optimal[0]) = __pyx_t_2;
 
   /* "cyroot/_check_args.pyx":190
- *     error[0] = vector_ops.fmax(vector_ops.fabs(F_x0))
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     error[0] = vector_ops.max(vector_ops.fabs(F_x0))
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *     return optimal[0]
  * 
@@ -6054,7 +6106,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
   /* "cyroot/_check_args.pyx":191
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]
  *     return optimal[0]             # <<<<<<<<<<<<<<
  * 
@@ -6099,7 +6151,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   Py_ssize_t __pyx_t_3;
   double __pyx_t_4;
   double __pyx_t_5;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_6;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_6;
   __Pyx_memviewslice __pyx_t_7 = { 0, 0, { 0 }, { 0 }, { 0 } };
   size_t __pyx_t_8;
   int __pyx_t_9;
@@ -6172,7 +6224,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         r[0], f_r[0] = xs[0], f_xs[0]
  *         precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
  *         error[0] = math.fabs(f_xs[0])
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
     (__pyx_v_precision[0]) = INFINITY;
 
@@ -6180,7 +6232,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         r[0], f_r[0] = xs[0], f_xs[0]
  *         precision[0] = math.INFINITY
  *         error[0] = math.fabs(f_xs[0])             # <<<<<<<<<<<<<<
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  */
     __pyx_t_3 = 0;
@@ -6190,19 +6242,19 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
     /* "cyroot/_check_args.pyx":214
  *         precision[0] = math.INFINITY
  *         error[0] = math.fabs(f_xs[0])
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *         converged[0] = optimal[0]
  *         return optimal[0]
  */
     __pyx_t_6.__pyx_n = 2;
     __pyx_t_6.rtol = __pyx_v_ertol;
     __pyx_t_6.atol = __pyx_v_etol;
-    __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
+    __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
     (__pyx_v_optimal[0]) = __pyx_t_1;
 
     /* "cyroot/_check_args.pyx":215
  *         error[0] = math.fabs(f_xs[0])
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *         return optimal[0]
  *     cdef double[:] errors = vector_ops.fabs(f_xs)
@@ -6210,11 +6262,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
     (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
     /* "cyroot/_check_args.pyx":216
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  *         return optimal[0]             # <<<<<<<<<<<<<<
  *     cdef double[:] errors = vector_ops.fabs(f_xs)
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  */
     __pyx_r = (__pyx_v_optimal[0]);
     goto __pyx_L0;
@@ -6232,7 +6284,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         converged[0] = optimal[0]
  *         return optimal[0]
  *     cdef double[:] errors = vector_ops.fabs(f_xs)             # <<<<<<<<<<<<<<
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
  */
   __pyx_t_7 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_v_f_xs); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 217, __pyx_L1_error)
@@ -6243,18 +6295,18 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   /* "cyroot/_check_args.pyx":218
  *         return optimal[0]
  *     cdef double[:] errors = vector_ops.fabs(f_xs)
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)             # <<<<<<<<<<<<<<
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)             # <<<<<<<<<<<<<<
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
  *     error[0] = errors[best_i]
  */
-  __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_fargmin(__pyx_v_errors);
+  __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_argmin(__pyx_v_errors);
 
   /* "cyroot/_check_args.pyx":219
  *     cdef double[:] errors = vector_ops.fabs(f_xs)
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]             # <<<<<<<<<<<<<<
  *     error[0] = errors[best_i]
- *     precision[0] = vector_ops.fmax(xs) - vector_ops.fmin(xs)
+ *     precision[0] = vector_ops.max(xs) - vector_ops.min(xs)
  */
   __pyx_t_8 = __pyx_v_best_i;
   __pyx_t_5 = (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_8 * __pyx_v_xs.strides[0]) )));
@@ -6264,11 +6316,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   (__pyx_v_f_r[0]) = __pyx_t_4;
 
   /* "cyroot/_check_args.pyx":220
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
  *     error[0] = errors[best_i]             # <<<<<<<<<<<<<<
- *     precision[0] = vector_ops.fmax(xs) - vector_ops.fmin(xs)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     precision[0] = vector_ops.max(xs) - vector_ops.min(xs)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
   __pyx_t_8 = __pyx_v_best_i;
   (__pyx_v_error[0]) = (*((double *) ( /* dim=0 */ (__pyx_v_errors.data + __pyx_t_8 * __pyx_v_errors.strides[0]) )));
@@ -6276,36 +6328,36 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   /* "cyroot/_check_args.pyx":221
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
  *     error[0] = errors[best_i]
- *     precision[0] = vector_ops.fmax(xs) - vector_ops.fmin(xs)             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     precision[0] = vector_ops.max(xs) - vector_ops.min(xs)             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  */
-  (__pyx_v_precision[0]) = (__pyx_f_6cyroot_3ops_10vector_ops_fmax(__pyx_v_xs) - __pyx_f_6cyroot_3ops_10vector_ops_fmin(__pyx_v_xs));
+  (__pyx_v_precision[0]) = (__pyx_f_6cyroot_3ops_10vector_ops_max(__pyx_v_xs) - __pyx_f_6cyroot_3ops_10vector_ops_min(__pyx_v_xs));
 
   /* "cyroot/_check_args.pyx":222
  *     error[0] = errors[best_i]
- *     precision[0] = vector_ops.fmax(xs) - vector_ops.fmin(xs)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     precision[0] = vector_ops.max(xs) - vector_ops.min(xs)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  */
   __pyx_t_6.__pyx_n = 2;
   __pyx_t_6.rtol = __pyx_v_ertol;
   __pyx_t_6.atol = __pyx_v_etol;
-  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
+  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
   (__pyx_v_optimal[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":223
- *     precision[0] = vector_ops.fmax(xs) - vector_ops.fmin(xs)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     precision[0] = vector_ops.max(xs) - vector_ops.min(xs)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  * 
  */
   __pyx_t_6.__pyx_n = 2;
   __pyx_t_6.rtol = __pyx_v_prtol;
   __pyx_t_6.atol = __pyx_v_ptol;
-  __pyx_t_9 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
+  __pyx_t_9 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
   __pyx_t_10 = (__pyx_t_9 != 0);
   if (!__pyx_t_10) {
   } else {
@@ -6318,9 +6370,9 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   (__pyx_v_converged[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":224
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
  * 
  * # noinspection DuplicatedCode
  */
@@ -6333,7 +6385,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   __pyx_t_6.__pyx_n = 2;
   __pyx_t_6.rtol = __pyx_v_prtol;
   __pyx_t_6.atol = __pyx_v_ptol;
-  __pyx_t_10 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
+  __pyx_t_10 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
   __pyx_t_9 = (__pyx_t_10 != 0);
   __pyx_t_1 = __pyx_t_9;
   __pyx_L7_bool_binop_done:;
@@ -6394,7 +6446,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   PyObject *__pyx_t_9 = NULL;
   PyObject *__pyx_t_10 = NULL;
   double __pyx_t_11;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_12;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_12;
   PyArrayObject *__pyx_t_13 = NULL;
   unsigned long __pyx_t_14;
   size_t __pyx_t_15;
@@ -6514,7 +6566,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         r[0], F_r[0] = xs[0], F_xs[0]
  *         precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
  *         error[0] = np.max(np.abs(F_xs[0]))
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
     (__pyx_v_precision[0]) = INFINITY;
 
@@ -6522,7 +6574,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         r[0], F_r[0] = xs[0], F_xs[0]
  *         precision[0] = math.INFINITY
  *         error[0] = np.max(np.abs(F_xs[0]))             # <<<<<<<<<<<<<<
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  */
     __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 246, __pyx_L1_error)
@@ -6576,19 +6628,19 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
     /* "cyroot/_check_args.pyx":247
  *         precision[0] = math.INFINITY
  *         error[0] = np.max(np.abs(F_xs[0]))
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *         converged[0] = optimal[0]
  *         return optimal[0]
  */
     __pyx_t_12.__pyx_n = 2;
     __pyx_t_12.rtol = __pyx_v_ertol;
     __pyx_t_12.atol = __pyx_v_etol;
-    __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_12); 
+    __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_12); 
     (__pyx_v_optimal[0]) = __pyx_t_1;
 
     /* "cyroot/_check_args.pyx":248
  *         error[0] = np.max(np.abs(F_xs[0]))
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *         return optimal[0]
  *     cdef np.ndarray[np.float64_t, ndim=1] errors = np.abs(F_xs).max(1)
@@ -6596,7 +6648,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
     (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
     /* "cyroot/_check_args.pyx":249
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  *         return optimal[0]             # <<<<<<<<<<<<<<
  *     cdef np.ndarray[np.float64_t, ndim=1] errors = np.abs(F_xs).max(1)
@@ -6725,7 +6777,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
  *     error[0] = errors[best_i]             # <<<<<<<<<<<<<<
  *     precision[0] = np.max(xs.max(0) - xs.min(0))
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
   __pyx_t_15 = __pyx_v_best_i;
   (__pyx_v_error[0]) = (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_errors.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_errors.diminfo[0].strides));
@@ -6734,8 +6786,8 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
  *     error[0] = errors[best_i]
  *     precision[0] = np.max(xs.max(0) - xs.min(0))             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -6803,27 +6855,27 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   /* "cyroot/_check_args.pyx":255
  *     error[0] = errors[best_i]
  *     precision[0] = np.max(xs.max(0) - xs.min(0))
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  */
   __pyx_t_12.__pyx_n = 2;
   __pyx_t_12.rtol = __pyx_v_ertol;
   __pyx_t_12.atol = __pyx_v_etol;
-  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_12); 
+  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_12); 
   (__pyx_v_optimal[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":256
  *     precision[0] = np.max(xs.max(0) - xs.min(0))
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  * 
  */
   __pyx_t_12.__pyx_n = 2;
   __pyx_t_12.rtol = __pyx_v_prtol;
   __pyx_t_12.atol = __pyx_v_ptol;
-  __pyx_t_16 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_12); 
+  __pyx_t_16 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_12); 
   __pyx_t_17 = (__pyx_t_16 != 0);
   if (!__pyx_t_17) {
   } else {
@@ -6836,9 +6888,9 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   (__pyx_v_converged[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":257
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
  * 
  * # --------------------------------
  */
@@ -6851,7 +6903,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   __pyx_t_12.__pyx_n = 2;
   __pyx_t_12.rtol = __pyx_v_prtol;
   __pyx_t_12.atol = __pyx_v_ptol;
-  __pyx_t_17 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_12); 
+  __pyx_t_17 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_12); 
   __pyx_t_16 = (__pyx_t_17 != 0);
   __pyx_t_1 = __pyx_t_16;
   __pyx_L7_bool_binop_done:;
@@ -6911,7 +6963,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_2;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_2;
   __Pyx_RefNannySetupContext("_check_stop_condition_initial_guess_complex_scalar", 0);
 
   /* "cyroot/_check_args.pyx":275
@@ -6919,7 +6971,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *     """Check if stop condition is already met."""
  *     precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
  *     error[0] = scalar_ops.cabs(f_x0)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
   (__pyx_v_precision[0]) = INFINITY;
 
@@ -6927,7 +6979,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *     """Check if stop condition is already met."""
  *     precision[0] = math.INFINITY
  *     error[0] = scalar_ops.cabs(f_x0)             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]
  */
   (__pyx_v_error[0]) = abs(__pyx_v_f_x0);
@@ -6935,19 +6987,19 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   /* "cyroot/_check_args.pyx":277
  *     precision[0] = math.INFINITY
  *     error[0] = scalar_ops.cabs(f_x0)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *     converged[0] = optimal[0]
  *     return optimal[0]
  */
   __pyx_t_2.__pyx_n = 2;
   __pyx_t_2.rtol = __pyx_v_ertol;
   __pyx_t_2.atol = __pyx_v_etol;
-  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_2); 
+  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_2); 
   (__pyx_v_optimal[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":278
  *     error[0] = scalar_ops.cabs(f_x0)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *     return optimal[0]
  * 
@@ -6955,7 +7007,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
   /* "cyroot/_check_args.pyx":279
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]
  *     return optimal[0]             # <<<<<<<<<<<<<<
  * 
@@ -6991,7 +7043,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   __Pyx_RefNannyDeclarations
   __Pyx_memviewslice __pyx_t_1 = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_t_2;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_3;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_3;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -7001,40 +7053,40 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         bint* optimal):
  *     """Check if stop condition is already met."""
  *     precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
- *     error[0] = vector_ops.fmax(vector_ops.cabs(F_x0))
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     error[0] = vector_ops.max(vector_ops.cabs(F_x0))
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
   (__pyx_v_precision[0]) = INFINITY;
 
   /* "cyroot/_check_args.pyx":295
  *     """Check if stop condition is already met."""
  *     precision[0] = math.INFINITY
- *     error[0] = vector_ops.fmax(vector_ops.cabs(F_x0))             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     error[0] = vector_ops.max(vector_ops.cabs(F_x0))             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]
  */
   __pyx_t_1 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_v_F_x0); if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 295, __pyx_L1_error)
-  (__pyx_v_error[0]) = __pyx_f_6cyroot_3ops_10vector_ops_fmax(__pyx_t_1);
+  (__pyx_v_error[0]) = __pyx_f_6cyroot_3ops_10vector_ops_max(__pyx_t_1);
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
   /* "cyroot/_check_args.pyx":296
  *     precision[0] = math.INFINITY
- *     error[0] = vector_ops.fmax(vector_ops.cabs(F_x0))
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *     error[0] = vector_ops.max(vector_ops.cabs(F_x0))
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *     converged[0] = optimal[0]
  *     return optimal[0]
  */
   __pyx_t_3.__pyx_n = 2;
   __pyx_t_3.rtol = __pyx_v_ertol;
   __pyx_t_3.atol = __pyx_v_etol;
-  __pyx_t_2 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_3); 
+  __pyx_t_2 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_3); 
   (__pyx_v_optimal[0]) = __pyx_t_2;
 
   /* "cyroot/_check_args.pyx":297
- *     error[0] = vector_ops.fmax(vector_ops.cabs(F_x0))
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     error[0] = vector_ops.max(vector_ops.cabs(F_x0))
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *     return optimal[0]
  * 
@@ -7042,7 +7094,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
   /* "cyroot/_check_args.pyx":298
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *     converged[0] = optimal[0]
  *     return optimal[0]             # <<<<<<<<<<<<<<
  * 
@@ -7088,7 +7140,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   Py_ssize_t __pyx_t_3;
   __pyx_t_double_complex __pyx_t_4;
   __pyx_t_double_complex __pyx_t_5;
-  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose __pyx_t_6;
+  struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose __pyx_t_6;
   __Pyx_memviewslice __pyx_t_7 = { 0, 0, { 0 }, { 0 }, { 0 } };
   size_t __pyx_t_8;
   int __pyx_t_9;
@@ -7161,7 +7213,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         r[0], f_r[0] = xs[0], f_xs[0]
  *         precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
  *         error[0] = scalar_ops.cabs(f_xs[0])
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
     (__pyx_v_precision[0]) = INFINITY;
 
@@ -7169,7 +7221,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         r[0], f_r[0] = xs[0], f_xs[0]
  *         precision[0] = math.INFINITY
  *         error[0] = scalar_ops.cabs(f_xs[0])             # <<<<<<<<<<<<<<
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  */
     __pyx_t_3 = 0;
@@ -7179,19 +7231,19 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
     /* "cyroot/_check_args.pyx":321
  *         precision[0] = math.INFINITY
  *         error[0] = scalar_ops.cabs(f_xs[0])
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *         converged[0] = optimal[0]
  *         return optimal[0]
  */
     __pyx_t_6.__pyx_n = 2;
     __pyx_t_6.rtol = __pyx_v_ertol;
     __pyx_t_6.atol = __pyx_v_etol;
-    __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
+    __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
     (__pyx_v_optimal[0]) = __pyx_t_1;
 
     /* "cyroot/_check_args.pyx":322
  *         error[0] = scalar_ops.cabs(f_xs[0])
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *         return optimal[0]
  *     cdef double[:] errors = vector_ops.cabs(f_xs)
@@ -7199,11 +7251,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
     (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
     /* "cyroot/_check_args.pyx":323
- *         optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  *         return optimal[0]             # <<<<<<<<<<<<<<
  *     cdef double[:] errors = vector_ops.cabs(f_xs)
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  */
     __pyx_r = (__pyx_v_optimal[0]);
     goto __pyx_L0;
@@ -7221,7 +7273,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *         converged[0] = optimal[0]
  *         return optimal[0]
  *     cdef double[:] errors = vector_ops.cabs(f_xs)             # <<<<<<<<<<<<<<
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
  */
   __pyx_t_7 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_v_f_xs); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 324, __pyx_L1_error)
@@ -7232,15 +7284,15 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   /* "cyroot/_check_args.pyx":325
  *         return optimal[0]
  *     cdef double[:] errors = vector_ops.cabs(f_xs)
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)             # <<<<<<<<<<<<<<
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)             # <<<<<<<<<<<<<<
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
  *     error[0] = errors[best_i]
  */
-  __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_fargmin(__pyx_v_errors);
+  __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_argmin(__pyx_v_errors);
 
   /* "cyroot/_check_args.pyx":326
  *     cdef double[:] errors = vector_ops.cabs(f_xs)
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]             # <<<<<<<<<<<<<<
  *     error[0] = errors[best_i]
  *     cdef double[:] xs_abs = vector_ops.cabs(xs)
@@ -7253,11 +7305,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   (__pyx_v_f_r[0]) = __pyx_t_4;
 
   /* "cyroot/_check_args.pyx":327
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
  *     error[0] = errors[best_i]             # <<<<<<<<<<<<<<
  *     cdef double[:] xs_abs = vector_ops.cabs(xs)
- *     precision[0] = vector_ops.fmax(xs_abs) - vector_ops.fmin(xs_abs)
+ *     precision[0] = vector_ops.max(xs_abs) - vector_ops.min(xs_abs)
  */
   __pyx_t_8 = __pyx_v_best_i;
   (__pyx_v_error[0]) = (*((double *) ( /* dim=0 */ (__pyx_v_errors.data + __pyx_t_8 * __pyx_v_errors.strides[0]) )));
@@ -7266,8 +7318,8 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
  *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
  *     error[0] = errors[best_i]
  *     cdef double[:] xs_abs = vector_ops.cabs(xs)             # <<<<<<<<<<<<<<
- *     precision[0] = vector_ops.fmax(xs_abs) - vector_ops.fmin(xs_abs)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
+ *     precision[0] = vector_ops.max(xs_abs) - vector_ops.min(xs_abs)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
  */
   __pyx_t_7 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_v_xs); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 328, __pyx_L1_error)
   __pyx_v_xs_abs = __pyx_t_7;
@@ -7277,35 +7329,35 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   /* "cyroot/_check_args.pyx":329
  *     error[0] = errors[best_i]
  *     cdef double[:] xs_abs = vector_ops.cabs(xs)
- *     precision[0] = vector_ops.fmax(xs_abs) - vector_ops.fmin(xs_abs)             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     precision[0] = vector_ops.max(xs_abs) - vector_ops.min(xs_abs)             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  */
-  (__pyx_v_precision[0]) = (__pyx_f_6cyroot_3ops_10vector_ops_fmax(__pyx_v_xs_abs) - __pyx_f_6cyroot_3ops_10vector_ops_fmin(__pyx_v_xs_abs));
+  (__pyx_v_precision[0]) = (__pyx_f_6cyroot_3ops_10vector_ops_max(__pyx_v_xs_abs) - __pyx_f_6cyroot_3ops_10vector_ops_min(__pyx_v_xs_abs));
 
   /* "cyroot/_check_args.pyx":330
  *     cdef double[:] xs_abs = vector_ops.cabs(xs)
- *     precision[0] = vector_ops.fmax(xs_abs) - vector_ops.fmin(xs_abs)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     precision[0] = vector_ops.max(xs_abs) - vector_ops.min(xs_abs)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  */
   __pyx_t_6.__pyx_n = 2;
   __pyx_t_6.rtol = __pyx_v_ertol;
   __pyx_t_6.atol = __pyx_v_etol;
-  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
+  __pyx_t_1 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_error[0]), &__pyx_t_6); 
   (__pyx_v_optimal[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":331
- *     precision[0] = vector_ops.fmax(xs_abs) - vector_ops.fmin(xs_abs)
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)
+ *     precision[0] = vector_ops.max(xs_abs) - vector_ops.min(xs_abs)
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
  */
   __pyx_t_6.__pyx_n = 2;
   __pyx_t_6.rtol = __pyx_v_prtol;
   __pyx_t_6.atol = __pyx_v_ptol;
-  __pyx_t_9 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
+  __pyx_t_9 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
   __pyx_t_10 = (__pyx_t_9 != 0);
   if (!__pyx_t_10) {
   } else {
@@ -7318,9 +7370,9 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   (__pyx_v_converged[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":332
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
- *     return optimal[0] or scalar_ops.fisclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)             # <<<<<<<<<<<<<<
  */
   __pyx_t_10 = ((__pyx_v_optimal[0]) != 0);
   if (!__pyx_t_10) {
@@ -7331,7 +7383,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_condition_ini
   __pyx_t_6.__pyx_n = 2;
   __pyx_t_6.rtol = __pyx_v_prtol;
   __pyx_t_6.atol = __pyx_v_ptol;
-  __pyx_t_10 = __pyx_f_6cyroot_3ops_10scalar_ops_fisclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
+  __pyx_t_10 = __pyx_f_6cyroot_3ops_10scalar_ops_isclose(0.0, (__pyx_v_precision[0]), &__pyx_t_6); 
   __pyx_t_9 = (__pyx_t_10 != 0);
   __pyx_t_1 = __pyx_t_9;
   __pyx_L7_bool_binop_done:;
@@ -22851,11 +22903,11 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__4);
 
   /* "cyroot/_check_args.pyx":144
- *     cdef unsigned long best_i = vector_ops.fargmin(errors)
+ *     cdef unsigned long best_i = vector_ops.argmin(errors)
  *     error[0] = errors[best_i]
  *     r[:], F_r[:] = bs[best_i], F_bs[best_i]             # <<<<<<<<<<<<<<
- *     optimal[0] = scalar_ops.fisclose(0, error[0], ertol, etol)
- *     converged[0] = scalar_ops.fisclose(0, precision[0], prtol, ptol) or optimal[0]
+ *     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
+ *     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  */
   __pyx_slice__5 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__5)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice__5);
@@ -23450,15 +23502,15 @@ static int __Pyx_modinit_function_import_code(void) {
   /*--- Function import code ---*/
   __pyx_t_1 = PyImport_ImportModule("cyroot.ops.scalar_ops"); if (!__pyx_t_1) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_ImportFunction(__pyx_t_1, "fisclose", (void (**)(void))&__pyx_f_6cyroot_3ops_10scalar_ops_fisclose, "int (double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_fisclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "isclose", (void (**)(void))&__pyx_f_6cyroot_3ops_10scalar_ops_isclose, "int (double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = PyImport_ImportModule("cyroot.ops.vector_ops"); if (!__pyx_t_1) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (__Pyx_ImportFunction(__pyx_t_1, "fabs", (void (**)(void))&__pyx_f_6cyroot_3ops_10vector_ops_fabs, "__Pyx_memviewslice (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction(__pyx_t_1, "cabs", (void (**)(void))&__pyx_f_6cyroot_3ops_10vector_ops_cabs, "__Pyx_memviewslice (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction(__pyx_t_1, "fmin", (void (**)(void))&__pyx_f_6cyroot_3ops_10vector_ops_fmin, "double (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction(__pyx_t_1, "fmax", (void (**)(void))&__pyx_f_6cyroot_3ops_10vector_ops_fmax, "double (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction(__pyx_t_1, "fargmin", (void (**)(void))&__pyx_f_6cyroot_3ops_10vector_ops_fargmin, "unsigned long (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "min", (void (**)(void))&__pyx_f_6cyroot_3ops_10vector_ops_min, "double (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "max", (void (**)(void))&__pyx_f_6cyroot_3ops_10vector_ops_max, "double (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "argmin", (void (**)(void))&__pyx_f_6cyroot_3ops_10vector_ops_argmin, "unsigned long (__Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
