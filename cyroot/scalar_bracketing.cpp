@@ -1561,8 +1561,8 @@ typedef PyArrayObject *(*__pyx_t_6cyroot_4fptr_ndarray_f_ptr)(PyArrayObject *);
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose;
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
 
-/* "scalar_ops.pxd":9
- *     double
+/* "scalar_ops.pxd":18
+ *     double complex
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
@@ -1574,7 +1574,7 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   double atol;
 };
 
-/* "scalar_ops.pxd":10
+/* "scalar_ops.pxd":19
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<

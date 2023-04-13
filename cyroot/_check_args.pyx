@@ -122,14 +122,14 @@ cdef inline bint _check_stop_condition_bracket_scalar(
 
 # noinspection DuplicatedCode
 cdef inline bint _check_stop_condition_bracket_vector(
-        np.ndarray[np.float64_t, ndim=2] bs,
-        np.ndarray[np.float64_t, ndim=2] F_bs,
+        double[:, :] bs,
+        double[:, :] F_bs,
         double etol,
         double ertol,
         double ptol,
         double prtol,
-        np.ndarray[np.float64_t, ndim=1] r,
-        np.ndarray[np.float64_t, ndim=1] F_r,
+        double[:] r,
+        double[:] F_r,
         double* precision,
         double* error,
         bint* converged,
@@ -137,7 +137,7 @@ cdef inline bint _check_stop_condition_bracket_vector(
     """Check if stop condition is already met."""
     if bs.shape[0] == 0:
         raise ValueError('Empty sequence.')
-    precision[0] = np.max(bs.max(0) - bs.min(0))
+    precision[0] = vector_ops.max(np.max(bs, 0) - np.min(bs, 0))
     cdef double[:] errors = np.abs(F_bs).max(1)
     cdef unsigned long best_i = vector_ops.argmin(errors)
     error[0] = errors[best_i]
@@ -225,14 +225,14 @@ cdef inline bint _check_stop_condition_initial_guesses_scalar(
 
 # noinspection DuplicatedCode
 cdef inline bint _check_stop_condition_initial_guesses_vector(
-        np.ndarray[np.float64_t, ndim=2] xs,
-        np.ndarray[np.float64_t, ndim=2] F_xs,
+        double[:, :] xs,
+        double[:, :] F_xs,
         double etol,
         double ertol,
         double ptol,
         double prtol,
-        np.ndarray[np.float64_t, ndim=1] r,
-        np.ndarray[np.float64_t, ndim=1] F_r,
+        double[:] r,
+        double[:] F_r,
         double* precision,
         double* error,
         bint* converged,
@@ -241,17 +241,17 @@ cdef inline bint _check_stop_condition_initial_guesses_vector(
     if xs.shape[0] == 0:
         raise ValueError('Empty sequence.')
     if xs.shape[0] == 1:
-        r[0], F_r[0] = xs[0], F_xs[0]
+        r[:], F_r[:] = xs[0], F_xs[0]
         precision[0] = math.INFINITY
         error[0] = np.max(np.abs(F_xs[0]))
         optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
-    cdef np.ndarray[np.float64_t, ndim=1] errors = np.abs(F_xs).max(1)
-    cdef unsigned long best_i = np.argmin(errors)
+    cdef double[:] errors = np.abs(F_xs).max(1)
+    cdef unsigned long best_i = vector_ops.argmin(errors)
     r[:], F_r[:] = xs[best_i], F_xs[best_i]
     error[0] = errors[best_i]
-    precision[0] = np.max(xs.max(0) - xs.min(0))
+    precision[0] = vector_ops.max(np.max(xs, 0) - np.min(xs, 0))
     optimal[0] = scalar_ops.isclose(0, error[0], ertol, etol)
     converged[0] = scalar_ops.isclose(0, precision[0], prtol, ptol) or optimal[0]
     return optimal[0] or scalar_ops.isclose(0, precision[0], prtol, ptol)
