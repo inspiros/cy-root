@@ -366,8 +366,9 @@ K_x = generalized_finite_difference(F, x, h=1e-2, order=3)  # Kardashian, maybe
 
 Conveniently, you can use the `FiniteDifference` and `GeneralizedFiniteDifference` classes to wrap our function and
 pass them to any Newton-like methods.
+
 This is actually the default behavior when derivative functions of all Newton-like methods or the initial Jacobian
-guess of some vector quasi-Newton methods are not provided are set to `None`.
+guess of some vector quasi-Newton methods are not provided.
 ```python
 from cyroot import GeneralizedFiniteDifference, generalized_halley
 
