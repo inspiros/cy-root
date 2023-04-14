@@ -5,7 +5,7 @@ from .utils.function_tagging import is_tagged_with_any_startswith
 
 __all__ = [
     'VECTOR_ROOT_FINDING_METHODS',
-    'find_root_vector',
+    'find_vector_root',
 ]
 
 # noinspection DuplicatedCode
@@ -16,7 +16,7 @@ for module in [vector_bracketing, vector_quasi_newton, vector_newton]:
 
 
 # noinspection DuplicatedCode
-def find_root_vector(method: str, *args, **kwargs):
+def find_vector_root(method: str, *args, **kwargs):
     """
     Find the root of a vector function.
 

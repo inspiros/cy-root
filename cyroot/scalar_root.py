@@ -6,7 +6,7 @@ from .utils.function_tagging import is_tagged_with_any_startswith
 
 __all__ = [
     'SCALAR_ROOT_FINDING_METHODS',
-    'find_root_scalar',
+    'find_scalar_root',
 ]
 
 # noinspection DuplicatedCode
@@ -17,7 +17,7 @@ for module in [scalar_bracketing, scalar_quasi_newton, scalar_newton]:
 
 
 # noinspection DuplicatedCode
-def find_root_scalar(method: str, *args, **kwargs):
+def find_scalar_root(method: str, *args, **kwargs):
     """
     Find the root of a scalar function.
 

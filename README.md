@@ -119,14 +119,14 @@ Methods that can be combined with any Newton-like root-finding methods to discar
 
 #### Example 1:
 
-Use `find_root_scalar` or `find_root_vector` and pass method name as the first argument.
-This example shows the use of `find_root_scalar` function with `itp` method.
+Use `find_scalar_root` or `find_vector_root` and pass method name as the first argument.
+This example shows the use of `find_scalar_root` function with `itp` method.
 
 ```python
-from cyroot import find_root_scalar
+from cyroot import find_scalar_root
 
 f = lambda x: x ** 2 - 612
-result = find_root_scalar(method='itp', f=f, a=-10, b=50)
+result = find_scalar_root(method='itp', f=f, a=-10, b=50)
 print(result)
 ```
 

@@ -32,31 +32,31 @@ def tag(*tags: str, wrap: bool = False):
     return decorator
 
 
-def is_tagged(f: Any):
+def is_tagged(f: Any) -> bool:
     return hasattr(f, '__tags__')
 
 
-def is_tagged_with_all(f: Any, *tags: str):
+def is_tagged_with_all(f: Any, *tags: str) -> bool:
     return hasattr(f, '__tags__') and all(tag in f.__tags__ for tag in tags)
 
 
-def is_tagged_with_any(f: Any, *tags: str):
+def is_tagged_with_any(f: Any, *tags: str) -> bool:
     return hasattr(f, '__tags__') and any(tag in f.__tags__ for tag in tags)
 
 
-def is_tagged_with_any_startswith(f: Any, start: str):
+def is_tagged_with_any_startswith(f: Any, start: str) -> bool:
     return hasattr(f, '__tags__') and any(tag.startswith(start) for tag in f.__tags__)
 
 
-def is_tagged_with_any_startswith_any(f: Any, *starts: str):
+def is_tagged_with_any_startswith_any(f: Any, *starts: str) -> bool:
     return hasattr(f, '__tags__') and any(any(tag.startswith(_ for _ in starts))
                                           for tag in f.__tags__)
 
 
-def is_tagged_with_any_endswith(f: Any, end: str):
+def is_tagged_with_any_endswith(f: Any, end: str) -> bool:
     return hasattr(f, '__tags__') and any(tag.endswith(end) for tag in f.__tags__)
 
 
-def is_tagged_with_any_endswith_any(f: Any, *ends: str):
+def is_tagged_with_any_endswith_any(f: Any, *ends: str) -> bool:
     return hasattr(f, '__tags__') and any(any(tag.endswith(_ for _ in ends))
                                           for tag in f.__tags__)
