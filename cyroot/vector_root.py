@@ -23,8 +23,8 @@ def find_vector_root(method: str, *args, **kwargs):
     Args:
         method (str): Name of the method. A full list of supported
          methods is stored in ``VECTOR_ROOT_FINDING_METHODS``.
-        *args: Extra argument to be passed.
-        **kwargs: Extra keywords arguments to be passed.
+        *args: Extra arguments to be passed.
+        **kwargs: Extra keyword arguments to be passed.
 
     Returns:
         solution: The solution represented as a ``RootResults`` object.
