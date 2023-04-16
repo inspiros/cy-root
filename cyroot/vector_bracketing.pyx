@@ -358,7 +358,6 @@ def vrahatis(F: Callable[[VectorLike], VectorLike],
         if F_x0s.ndim != 2 or F_x0s.shape[0] != x0s.shape[0]:
             raise ValueError('x0s and F_x0s must have same length.')
     if x0s.shape[0] != 2 ** F_x0s.shape[1]:
-        print(F_x0s.shape)
         raise ValueError('Initial bounds do not form an admissible n-polygon. '
                          f'Expected {2 ** F_x0s.shape[1]} points, got {x0s.shape[0]}.')
 
