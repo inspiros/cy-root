@@ -5,6 +5,7 @@ requires = [
     "Cython",
     "dynamic-default-args",
     "numpy",
+    "scipy",
     "sympy",
 ]
 

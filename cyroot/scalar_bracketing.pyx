@@ -13,14 +13,10 @@ from libc cimport math
 from libcpp.vector cimport vector
 from libcpp.pair cimport pair
 
-from ._check_args import (
-    _check_stop_condition_args,
-    _check_bracket,
-    _check_unique_initial_vals,
-)
+from ._check_args import _check_stop_cond_args
 from ._check_args cimport (
-    _check_stop_condition_bracket_scalar,
-    _check_stop_condition_initial_guess_scalar,
+    _check_stop_cond_scalar_bracket,
+    _check_stop_cond_scalar_initial_guess,
 )
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import (BracketingMethodsReturnType,
@@ -29,7 +25,7 @@ from .fptr cimport (
     DoubleScalarFPtr, PyDoubleScalarFPtr,
     DoubleBiScalarFPtr, PyDoubleBiScalarFPtr,
 )
-from .ops cimport scalar_ops
+from .ops cimport scalar_ops as sops
 from .utils.function_tagging import tag
 
 __all__ = [
@@ -79,26 +75,26 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
-                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
+                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     converged = True
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
         r = (a + b) / 2
-        f_r = f(r)
+        f_r = f.eval(r)
         error = math.fabs(f_r)
-        if scalar_ops.isclose(0, error, ertol, etol):
+        if sops.isclose(0, error, ertol, etol):
             break
         a, b, _, f_a, f_b, _ = _update_bracket(a, b, r, f_a, f_b, f_r)
         precision = math.fabs(b - a)
 
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -116,8 +112,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_scalar(a, f_a, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guess(a, f_a, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return a, f_a, step, (a, b), (f_a, math.NAN), precision, error, converged, optimal
 
     cdef double h = b - a, w, r = a, f_r = f_a, scale = 1.
@@ -127,22 +123,22 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         else:
             max_iter = <unsigned long> math.ceil(math.log2(h / etol))
     converged = True
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
         scale *= 2
         w = h / scale
-        r += scalar_ops.sign(f_a) * scalar_ops.sign(f_r) * w
-        f_r = f(r)
+        r += sops.sign(f_a) * sops.sign(f_r) * w
+        f_r = f.eval(r)
         error = math.fabs(f_r)
         precision = math.fabs(w)
-        if scalar_ops.isclose(0, error, ertol, etol):
+        if sops.isclose(0, error, ertol, etol):
             break
 
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (r - w / 2, r + w / 2), (math.NAN, math.NAN), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -190,8 +186,8 @@ def bisect(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     if algo == 'default':
         algo = 1
@@ -203,16 +199,16 @@ def bisect(f: Callable[[float], float],
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if algo != 2 and f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     if algo == 1:
         res = bisect_kernel(
-            <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+            f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     else:
         res = vrahatis_bisect_kernel(
-            <DoubleScalarFPtr> f_wrapper, a, b, f_a, etol, ertol, ptol, prtol, max_iter)
+            f_wrapper, a, b, f_a, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 #------------------------
@@ -242,12 +238,12 @@ cdef bint _hybisect_subroutine(
     if split_step[0] >= max_iter > 0:
         return False
     cdef double f_l, f_h
-    f_l, f_h = interval_f(a, b)
+    f_l, f_h = interval_f.eval(a, b)
     if not f_l <= 0 <= f_h:
         return False
     cdef double h = b - a
     cdef precision = h, error = math.INFINITY
-    cdef double f_a = f(a), f_b = f(b), m, f_m, w, scale = 1.
+    cdef double f_a = f.eval(a), f_b = f.eval(b), m, f_m, w, scale = 1.
     cdef unsigned long step = 0
     cdef bint converged = True
     if math.copysign(1, f_a) * math.copysign(1, f_b) <= 0:
@@ -258,8 +254,8 @@ cdef bint _hybisect_subroutine(
                 max_iter = <unsigned long> math.fmin(math.ceil(math.log2(h / etol)), max_iter)
             else:
                 max_iter = <unsigned long> math.ceil(math.log2(h / etol))
-        while not (scalar_ops.isclose(0, error, ertol, etol) or
-                   scalar_ops.isclose(0, precision, prtol, ptol)):
+        while not (sops.isclose(0, error, ertol, etol) or
+                   sops.isclose(0, precision, prtol, ptol)):
             if step >= max_iter > 0:
                 converged = False
                 break
@@ -267,11 +263,11 @@ cdef bint _hybisect_subroutine(
             scale *= 2
             w = h / scale
             r += math.copysign(1, f_a) * math.copysign(1, f_r) * w
-            f_r = f(r)
+            f_r = f.eval(r)
 
             error = math.fabs(f_r)
             precision = math.fabs(w)
-            if scalar_ops.isclose(0, error, ertol, etol):
+            if sops.isclose(0, error, ertol, etol):
                 break
         rs.push_back(r)
         f_rs.push_back(f_r)
@@ -280,7 +276,7 @@ cdef bint _hybisect_subroutine(
         precisions.push_back(precision)
         errors.push_back(error)
         converged_flags.push_back(converged)
-        optimal_flags.push_back(scalar_ops.isclose(0, error, ertol, etol))
+        optimal_flags.push_back(sops.isclose(0, error, ertol, etol))
         return True
     # continue bisecting
     split_step[0] += 1
@@ -369,14 +365,14 @@ def hybisect(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     interval_f_wrapper = PyDoubleBiScalarFPtr.from_f(interval_f)
 
-    res = hybisect_kernel(<DoubleScalarFPtr> f_wrapper, <DoubleBiScalarFPtr> interval_f_wrapper,
-                          a, b, etol, ertol, ptol, prtol, max_iter, max_split_iter)
+    res = hybisect_kernel(f_wrapper, interval_f_wrapper, a, b,
+                          etol, ertol, ptol, prtol, max_iter, max_split_iter)
     return SplittingBracketingMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
                                                                   interval_f_wrapper.n_f_calls))
 
@@ -402,23 +398,23 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
-                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
+                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     converged = True
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or f_a == f_b:
             converged = False
             break
         step += 1
         r = (a * f_b - b * f_a) / (f_b - f_a)
-        f_r = f(r)
+        f_r = f.eval(r)
         precision = math.fabs(b - a)
         error = math.fabs(f_r)
 
-        if scalar_ops.isclose(0, error, ertol, etol):
+        if sops.isclose(0, error, ertol, etol):
             break
         elif math.copysign(1, f_b) * math.copysign(1, f_r) < 0:
             a, f_a = b, f_b
@@ -426,7 +422,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
             f_a *= scale_func(f_b, f_r)
         b, f_b = r, f_r
 
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -470,17 +466,17 @@ def regula_falsi(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     res = regula_falsi_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -530,17 +526,17 @@ def illinois(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     res = regula_falsi_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, illinois_scale)
+        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, illinois_scale)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -590,17 +586,17 @@ def pegasus(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     res = regula_falsi_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, pegasus_scale)
+        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, pegasus_scale)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -653,17 +649,17 @@ def anderson_bjorck(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     res = regula_falsi_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, anderson_bjorck_scale)
+        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, anderson_bjorck_scale)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -685,14 +681,14 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
-                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
+                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double b_prev = a, f_b_prev = f_a, b_next, f_b_next, c, s
     converged = True
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -706,7 +702,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
             b_next = c
         else:
             b_next = s
-        f_b_next = f(b_next)
+        f_b_next = f.eval(b_next)
 
         if math.copysign(1, f_b) * math.copysign(1, f_b_next) < 0:
             a, f_a = b, f_b
@@ -719,7 +715,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         error = math.fabs(f_b)
 
     r, f_r = b, f_b
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -763,17 +759,17 @@ def dekker(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     res = dekker_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -797,8 +793,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
-                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
+                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double b_prev = a, f_b_prev = f_a, b_prev_prev = a, b_next, f_b_next, c, s
@@ -806,8 +802,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef int last_method = 0  # 0 for bisect, 1 for interp
     cdef bint use_interp
     converged = True
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -849,7 +845,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         else:
             last_method = 1
             b_next = s
-        f_b_next = f(b_next)
+        f_b_next = f.eval(b_next)
 
         if math.copysign(1, f_b) * math.copysign(1, f_b_next) < 0:
             a, f_a = b, f_b
@@ -863,7 +859,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         error = math.fabs(f_b)
 
     r, f_r = b, f_b
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -914,8 +910,8 @@ def brent(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     if interp_method == 'quadratic':
         interp_method = 1
@@ -929,12 +925,12 @@ def brent(f: Callable[[float], float],
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f(b)
+        f_b = f_wrapper.eval(b)
 
     res = brent_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, interp_method, sigma, etol, ertol, ptol, prtol, max_iter)
+        f_wrapper, a, b, f_a, f_b, interp_method, sigma, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -957,20 +953,20 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
-                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
+                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double c, f_c, d, f_d, d_ab, d_fa_fb, d_ad, d_fa_fd, d_bd, d_fb_fd, tl, t = 0.5
     converged = True
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
         c = a + (b - a) * t
-        f_c = f(c)
+        f_c = f.eval(c)
         if math.copysign(1, f_a) * math.copysign(1, f_c) > 0:
             d, a = a, c
             f_d, f_a = f_a, f_c
@@ -981,7 +977,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         r, f_r = (a, f_a) if math.fabs(f_a) < math.fabs(f_b) else (b, f_b)
         error = math.fabs(f_r)
         tl = (2 * ptol * math.fabs(r) + 0.5 * sigma) / precision
-        if scalar_ops.isclose(0, error, ertol, etol) or tl > 0.5:
+        if sops.isclose(0, error, ertol, etol) or tl > 0.5:
             break
         if a != b != d != a and f_a != f_b != f_d != f_a:
             # inverse quadratic interpolation
@@ -1002,7 +998,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
             t = 1 - tl
 
     # this method set r and f_r inside loop
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -1048,20 +1044,20 @@ def chandrupatla(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     if sigma < 0:
         raise ValueError(f'sigma must be non-negative. Got {sigma}.')
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     res = chandrupatla_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, sigma, etol, ertol, ptol, prtol, max_iter)
+        f_wrapper, a, b, f_a, f_b, sigma, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -1083,27 +1079,27 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
-                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
+                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double c, f_c, d, f_d, denom
     converged = True
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
         c = (a + b) / 2
-        f_c = f(c)
+        f_c = f.eval(c)
 
         denom = math.sqrt(f_c ** 2 - f_a * f_b)
         if denom == 0:
             converged = False
             break
         d = c + (c - a) * math.copysign(1, f_a) * f_c / denom
-        f_d = f(d)
+        f_d = f.eval(d)
 
         if math.copysign(1, f_c) * math.copysign(1, f_d) < 0:  # well-behaved
             a, f_a = c, f_c
@@ -1116,7 +1112,7 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     if b < a:
         a, f_a = b, f_b
     r, f_r = d, f_d
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -1160,17 +1156,17 @@ def ridders(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     res = ridders_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -1287,8 +1283,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
-                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
+                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef unsigned long n
@@ -1298,18 +1294,18 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     c = (a - b * f_a / f_b) / (1 - f_a / f_b)
     if not a < c < b:
         c = (a + b) / 2
-    f_c = f(c)
+    f_c = f.eval(c)
     step += 1
     error = math.fabs(f_c)
-    if scalar_ops.isclose(0, error, ertol, etol):
+    if sops.isclose(0, error, ertol, etol):
         r, f_r = c, f_c
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, True, True
     a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
     precision = math.fabs(b - a)
     e = f_e = math.NAN
     converged = True
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -1329,9 +1325,9 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
             #  Otherwise, repeats of an approximate Newton-Raphson step.
             if use_newton_quadratic:
                 c = _newton_quadratic(a, b, d, f_a, f_b, f_d, n)
-            f_c = f(c)
+            f_c = f.eval(c)
             error = math.fabs(f_c)
-            if scalar_ops.isclose(0, error, ertol, etol):
+            if sops.isclose(0, error, ertol, etol):
                 break
 
             # re-bracket
@@ -1348,9 +1344,9 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         c = u - 2 * f_u / A
         if math.fabs(c - u) > 0.5 * (b - a):
             c = (a + b) / 2
-        f_c = f(c)
+        f_c = f.eval(c)
         error = math.fabs(f_c)
-        if scalar_ops.isclose(0, error, ertol, etol):
+        if sops.isclose(0, error, ertol, etol):
             break
 
         # re-bracket
@@ -1362,16 +1358,16 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         if precision > mu * ab_width:
             e, f_e = d, f_d
             z = (a + b) / 2
-            f_z = f(z)
+            f_z = f.eval(z)
             error = math.fabs(f_z)
-            if scalar_ops.isclose(0, error, ertol, etol):
+            if sops.isclose(0, error, ertol, etol):
                 c, f_c = z, f_z
                 break
             a, b, d, f_a, f_b, f_d = _update_bracket(a, b, z, f_a, f_b, f_z)
             precision = math.fabs(b - a)
 
     r, f_r = c, f_c
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -1419,8 +1415,8 @@ def toms748(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     if not isinstance(k, int) or k <= 0:
         raise ValueError(f'k must be positive integer. Got {k}.')
@@ -1429,12 +1425,12 @@ def toms748(f: Callable[[float], float],
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     res = toms748_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, k, mu, etol, ertol, ptol, prtol, max_iter)
+        f_wrapper, a, b, f_a, f_b, k, mu, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -1456,24 +1452,24 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
-                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
+                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef double c, f_c, a_bar, f_a_bar, b_bar, f_b_bar, c_bar
     cdef double div_diff_ab, div_diff_bc, div_diff_ac, alpha, beta, delta, s_delta, d1, d2, d
     # bisect initialize
     c = (a + b) / 2
-    f_c = f(c)
+    f_c = f.eval(c)
     step += 1
     error = math.fabs(f_c)
-    if scalar_ops.isclose(0, error, ertol, etol):
+    if sops.isclose(0, error, ertol, etol):
         r, f_r = c, f_c
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, True, True
     a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
     converged = True
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -1500,16 +1496,16 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
         a, b, f_a, f_b = a_bar, b_bar, f_a_bar, f_b_bar
         if a < c_bar < b:
-            c, f_c = c_bar, f(c_bar)
+            c, f_c = c_bar, f.eval(c_bar)
         else:
             c = (a + b) / 2
-            f_c = f(c)
+            f_c = f.eval(c)
         precision = math.fabs(b - a)
         error = math.fabs(f_c)
         a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
 
     r, f_r = c, f_c
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -1558,17 +1554,17 @@ def wu(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
+        f_b = f_wrapper.eval(b)
 
     res = wu_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
+        f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -1595,17 +1591,18 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_bracket_scalar(a, b, f_a, f_b, etol, ertol, ptol, prtol,
-                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
+                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
     cdef unsigned long n_1div2 = <unsigned long> math.ceil(math.log2((b - a) / ptol))
     cdef unsigned long n_max = n_1div2 + n0
-    cdef double x_m, f_m, rho, rho_i, delta, x_f, sigma, x_t, x_itp, f_itp
+    cdef double x_m, rho, rho_i, delta, x_f, sigma, x_t, x_itp, f_itp
+    cdef bint return_x_itp = False
     converged = True
-    rho_i = ptol * 2 ** <double> n_max
-    while not (scalar_ops.isclose(0, error, ertol, etol) or
-               scalar_ops.isclose(0, precision, prtol, ptol)):
+    rho_i = ptol * 2 ** <double> (n_max + 1)
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or f_a == f_b:
             converged = False
             break
@@ -1624,23 +1621,27 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         # projection
         x_itp = x_t if math.fabs(x_t - x_m) <= rho else x_m - sigma * rho
         # update interval
-        f_itp = f(x_itp)
+        f_itp = f.eval(x_itp)
         error = math.fabs(f_itp)
-        if scalar_ops.isclose(0, error, ertol, etol):
-            a = b = x_itp
-            f_a = f_b = f_itp
+        if sops.isclose(0, error, ertol, etol):
+            return_x_itp = True  # we want to keep the bracket for returning
+            # a = b = x_itp
+            # f_a = f_b = f_itp
             break
         elif f_itp > 0:
             b, f_b = x_itp, f_itp
         elif f_itp < 0:
             a, f_a = x_itp, f_itp
         precision = math.fabs(b - a)
-    x_m = (a + b) / 2
-    f_m = f(x_m)
-    error = math.fabs(f_m)
 
-    r, f_r = x_m, f_m
-    optimal = scalar_ops.isclose(0, error, ertol, etol)
+    if return_x_itp:
+        optimal = sops.isclose(0, error, ertol, etol)
+        return x_itp, f_itp, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+
+    r = (a + b) / 2
+    f_r = f.eval(r)
+    error = math.fabs(f_r)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
 
 # upper bound for k2
@@ -1700,11 +1701,11 @@ def itp(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_bracket(a, b)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    a, b = (a, b) if a < b else (b, a)
 
     if k1 is None:
-        k1 = 0.2 / (b - a)
+        k1 = 0.2 / (b - a) if a != b else math.INFINITY
     elif k1 <= 0:
         raise ValueError(f'k1 must be in range (1, inf). Got {k1}.')
     if not 1 <= k2 < 1 + PHI:
@@ -1715,11 +1716,10 @@ def itp(f: Callable[[float], float],
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_a is None:
-        f_a = f_wrapper(a)
+        f_a = f_wrapper.eval(a)
     if f_b is None:
-        f_b = f_wrapper(b)
-    _check_unique_initial_vals(f_a, f_b)
+        f_b = f_wrapper.eval(b)
 
     res = itp_kernel(
-        <DoubleScalarFPtr> f_wrapper, a, b, f_a, f_b, k1, k2, n0, etol, ertol, ptol, prtol, max_iter)
+        f_wrapper, a, b, f_a, f_b, k1, k2, n0, etol, ertol, ptol, prtol, max_iter)
     return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)

@@ -9,7 +9,7 @@ from typing import Callable, Sequence, Optional, Union
 import cython
 
 from .fptr cimport DoubleScalarFPtr, PyDoubleScalarFPtr
-from .ops.scalar_ops cimport binomial_coef
+from .ops cimport scalar_ops as sops
 from .typing import VectorLike
 from .utils.function_tagging import tag
 
@@ -51,7 +51,7 @@ cdef double finite_difference_kernel(
     cdef double f_i, diff = 0.
     cdef int bin_coef, sgn = (-1) ** order if kind == 1 else 1
     for i in range(order + 1):
-        bin_coef = binomial_coef(order, i)
+        bin_coef = sops.binomial_coef(order, i)
         if kind == 1:  # forward
             f_i = f.eval(x + i * h) if i > 0 else f_x
             diff += sgn * bin_coef * f_i
@@ -140,5 +140,5 @@ def finite_difference(f: Callable[[float], float],
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x is None:
-        f_x = f_wrapper(x)
+        f_x = f_wrapper.eval(x)
     return finite_difference_kernel(f_wrapper, x, f_x, h, order, kind)

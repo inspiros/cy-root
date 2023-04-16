@@ -16,8 +16,7 @@ from libcpp.algorithm cimport sort
 from libcpp.vector cimport vector
 
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
-from .ops.scalar_ops cimport binomial_coef
-from .ops.vector_ops cimport equal, prod
+from .ops cimport scalar_ops as sops, vector_ops as vops
 from .scalar_derivative_approximation import _check_finite_difference_args
 from .typing import *
 from .utils.function_tagging import tag
@@ -88,10 +87,10 @@ cdef int[:] _finite_difference_coefs(int order, int kind):
     cdef long i
     if kind == 1:
         for i in range(order + 1):
-            out[i] = (-1) ** (order - i) * binomial_coef(order, i)
+            out[i] = (-1) ** (order - i) * sops.binomial_coef(order, i)
     else:
         for i in range(order + 1):
-            out[i] = (-1) ** i * binomial_coef(order, i)
+            out[i] = (-1) ** i * sops.binomial_coef(order, i)
     return out
 
 cdef unsigned int[:] _index_to_grad_comb(unsigned int[:] index, unsigned int dim):
@@ -122,7 +121,7 @@ cdef np.ndarray generalized_finite_difference_kernel(
 
     cdef unsigned int[:, :] indices
     cdef unsigned int[:] index
-    cdef bint[:] unique_mask = view.array(shape=(prod[np.uint32_t](dims[1:]),),
+    cdef bint[:] unique_mask = view.array(shape=(vops.prod[np.uint32_t](dims[1:]),),
                                           itemsize=sizeof(int),
                                           format='i')
     indices = _vector_derivative_indices(dims[1:], unique_mask)
@@ -144,7 +143,7 @@ cdef np.ndarray generalized_finite_difference_kernel(
             if i == 0:
                 F_perturbations[0] = F_x
             else:
-                F_perturbations[i] = F(x + perturbation_step * h)
+                F_perturbations[i] = F.eval(x + perturbation_step * h)
         else:
             zero_step = True
             for j in range(perturbation_step.shape[0]):
@@ -154,7 +153,7 @@ cdef np.ndarray generalized_finite_difference_kernel(
             if zero_step:
                 F_perturbations[i] = F_x
             else:
-                F_perturbations[i] = F(x + perturbation_step * h)
+                F_perturbations[i] = F.eval(x + perturbation_step * h)
 
     cdef double scale
     cdef int coef
@@ -186,7 +185,7 @@ cdef np.ndarray generalized_finite_difference_kernel(
                 for k in range(all_coefs.size()):
                     coef *= all_coefs[k][perturb[k]]
                 for k in range(perturbation_steps.shape[0]):
-                    if equal[np.uint32_t](perturbation_steps[k], perturb):
+                    if vops.equal[np.uint32_t](perturbation_steps[k], perturb):
                         break
                 D[:, ii] += coef * F_perturbations[k] / scale
 
@@ -282,7 +281,7 @@ def generalized_finite_difference(F: Callable[[VectorLike], VectorLike],
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x is None:
-        F_x = F_wrapper(x)
+        F_x = F_wrapper.eval(x)
     else:
         F_x = np.asarray(F_x, dtype=np.float64)
     return generalized_finite_difference_kernel(F_wrapper, x, F_x, h, order, kind)

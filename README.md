@@ -11,22 +11,20 @@ cy-root ![Build wheels](https://github.com/inspiros/cy-root/actions/workflows/bu
 A simple root-finding package written in Cython.
 Many of the implemented methods can't be found in common Python libraries.
 
-**Context:**
+## News:
 
-I had to find root of this beast of a function, which has no known bound.
-
-$$ f(x) = \frac{1}{\sum\limits_{j=1}^{\infty} \left(\prod\limits_{k=j}^{\infty} \frac{1}{k \cdot x + 1} \right) } - p $$
-
-Fortunately, Sidi's method came to the rescue.
+- Vector root-finding methods can now _(try to)_ solve systems of equations with number of inputs different from number
+  of outputs.
 
 ## Requirements
 
 - Python 3.6+
 - dynamic-default-args
 - numpy
+- scipy
 - sympy
 
-**For compilation:**
+#### For compilation:
 
 - Cython (if you want to build from `.pyx` files)
 - A C/C++ compiler
@@ -46,12 +44,6 @@ Make sure you have all the dependencies installed, then clone this repo and run:
 git clone git://github.com/inspiros/cy-root.git
 cd cy-root
 pip install .
-```
-
-For uninstalling:
-
-```bash
-pip uninstall cy-root
 ```
 
 ## Supported algorithms
@@ -81,6 +73,7 @@ the references.
     - [x] Chebyshev
     - [x] Halley
     - [x] Super-Halley
+    - [x] Tangent Hyperbolas _(similar to Halley)_
     - [x] Householder
 - **Quasi-Newton methods:** (methods that approximate derivative, use interpolation, or successive iteration)
     - [x] Secant
@@ -111,6 +104,7 @@ the references.
 #### Derivative Approximation:
 
 Methods that can be combined with any Newton-like root-finding methods to discard the need of analytical derivatives.
+
 - [x] Finite Difference _(for both scalar and vector functions, up to arbitrary order)_
 
 ## Usage
@@ -131,8 +125,9 @@ print(result)
 ```
 
 Output:
+
 ```
-RootResults(root=24.73863375370596, f_root=-1.1368683772161603e-13, iters=8, f_calls=11, a=24.73863375370596, b=24.73863375370596, f_a=-1.1368683772161603e-13, f_b=-1.1368683772161603e-13, precision=6.353294779160024e-08, error=1.1368683772161603e-13, converged=True, optimal=True)
+RootResults(root=24.73863375370596, f_root=-1.1368683772161603e-13, iters=8, f_calls=10, bracket=(24.73863369031373, 24.738633753846678), f_bracket=(-3.1364744472739403e-06, 6.962181942071766e-09), precision=6.353294779160024e-08, error=1.1368683772161603e-13, converged=True, optimal=True)
 ```
 
 The names and pointers to all implemented methods are stored in two dictionaries `SCALAR_ROOT_FINDING_METHODS` and
@@ -163,6 +158,7 @@ print(result)
 ```
 
 Output:
+
 ```
 RootResults(root=(0.34356074972251255+1.4553466902253551j), f_root=(-8.881784197001252e-16-1.7763568394002505e-15j), iters=43, f_calls=43, precision=3.177770418807502e-08, error=1.9860273225978185e-15, converged=True, optimal=True)
 ```
@@ -192,6 +188,7 @@ print(result)
 ```
 
 Output:
+
 ```
 RootResults(root=[-24.738633753707973, 24.738633753707973], f_root=[9.936229616869241e-11, 9.936229616869241e-11], split_iters=1, iters=[43, 43], f_calls=(92, 3), bracket=[(-24.738633753710815, -24.73863375370513), (24.73863375370513, 24.738633753710815)], f_bracket=[(nan, nan), (nan, nan)], precision=[5.6843418860808015e-12, 5.6843418860808015e-12], error=[9.936229616869241e-11, 9.936229616869241e-11], converged=[True, True], optimal=[True, True])
 ```
@@ -214,6 +211,7 @@ print(result)
 ```
 
 Output:
+
 ```
 RootResults(root=4.613470267581537, f_root=-3.623767952376511e-13, df_root=(19.7176210537612, 17.68082160548922), iters=11, f_calls=(12, 12, 12), precision=4.9625634836147965e-05, error=3.623767952376511e-13, converged=True, optimal=True)
 ```
@@ -250,15 +248,15 @@ F = lambda x: np.array([x[0] ** 2 + 2 * x[0] * np.sin(x[1]) - x[1],
                         4 * x[0] * x[1] ** 2 - x[1] ** 3 - 1])
 # Jacobian
 J = lambda x: np.array([
-    [2*x[0] + 2 * np.sin(x[1]),         2*x[0]*np.cos(x[1]) - 1],
-    [            4 * x[1] ** 2, 8 * x[0] * x[1] - 3 * x[1] ** 2]
+    [2 * x[0] + 2 * np.sin(x[1]), 2 * x[0] * np.cos(x[1]) - 1],
+    [4 * x[1] ** 2, 8 * x[0] * x[1] - 3 * x[1] ** 2]
 ])
 # Hessian
 H = lambda x: np.array([
-    [[               2,         2 * np.cos(x[1])],
+    [[2, 2 * np.cos(x[1])],
      [2 * np.cos(x[1]), -2 * x[0] * np.sin(x[1])]],
-    [[               0,                  8 * x[1]],
-     [        8 * x[1],      8 * x[0] - 6 * x[1]]]
+    [[0, 8 * x[1]],
+     [8 * x[1], 8 * x[0] - 6 * x[1]]]
 ])
 
 result = generalized_super_halley(F, J, H, x0=np.array([2., 2.]))
@@ -266,6 +264,7 @@ print(result)
 ```
 
 Output: _(a bit messy)_
+
 ```
 RootResults(root=array([0.48298601, 1.08951589]), f_root=array([-4.35123049e-11, -6.55444587e-11]), df_root=(array([[ 2.73877785, -0.55283751],
        [ 4.74817951,  0.6486328 ]]), array([[[ 2.        ,  0.92582907],
@@ -282,6 +281,7 @@ For vector bracketing root methods or vector root methods with multiple initial 
 
 This example shows the use of `vrahatis` method (a generalized bisection) with the example function in the original
 paper:
+
 ```python
 import numpy as np
 
@@ -293,15 +293,16 @@ F = lambda x: np.array([x[0] ** 2 - 4 * x[1],
 # If the initial points do not form an admissible n-polygon,
 # an exception will be raised.
 x0s = np.array([[-2., -0.25],
-                [0.5,  0.25],
-                [2  , -0.25],
-                [0.6,  0.25]])
+                [0.5, 0.25],
+                [2, -0.25],
+                [0.6, 0.25]])
 
 result = vrahatis(F, x0s=x0s)
 print(result)
 ```
 
 Output:
+
 ```
 RootResults(root=array([4.80212874e-11, 0.00000000e+00]), f_root=array([ 2.30604404e-21, -9.60425747e-11]), iters=34, f_calls=140, bracket=array([[ 2.29193750e-10,  2.91038305e-11],
        [-6.54727619e-12,  2.91038305e-11],
@@ -334,6 +335,7 @@ d3f_x = finite_difference(f, x,
 Similarly, `generalized_finite_difference` can compute vector derivative of arbitrary order
 (`order=1` for **Jacobian**, `order=2` for **Hessian**), and `h` can be a number or a `np.ndarray` containing different
 step sizes for each dimension:
+
 ```python
 import numpy as np
 
@@ -369,6 +371,7 @@ pass them to any Newton-like methods.
 
 This is actually the default behavior when derivative functions of all Newton-like methods or the initial Jacobian
 guess of some vector quasi-Newton methods are not provided.
+
 ```python
 from cyroot import GeneralizedFiniteDifference, generalized_halley
 
@@ -380,6 +383,7 @@ print(result)
 ```
 
 Output:
+
 ```
 RootResults(root=array([2.16665878, 2.11415683]), f_root=array([-5.47455414e-11,  1.05089271e-11]), df_root=(array([[ 7.74141032, -1.49997634],
        [ 8.80307666, -7.75212506]]), array([[[ 1.30059527e+01, -3.00000000e+00],
@@ -410,10 +414,11 @@ The returned `result` is a namedtuple whose elements depend on the type of the m
     - `df_root`: derivative or tuple of derivatives (of increasing orders) evaluated at root.
 
 **Notes**:
+
 - `converged` can be `True` even if the solution is not optimal, which means the routine stopped because the
-precision tolerance is satisfied.
+  precision tolerance is satisfied.
 - For `scipy.optimize.root` users, the stopping condition arguments `etol`, `ertol`, `ptol`, `prtol` are equivalent to
-`f_tol`, `f_rtol`, `x_tol`, `x_rtol`, respectively (but not identical).
+  `f_tol`, `f_rtol`, `x_tol`, `x_rtol`, respectively (but not identical).
 
 #### Configurations:
 

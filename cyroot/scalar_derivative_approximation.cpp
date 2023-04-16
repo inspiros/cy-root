@@ -1530,7 +1530,7 @@ typedef PyArrayObject *(*__pyx_t_6cyroot_4fptr_ndarray_f_ptr)(PyArrayObject *);
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose;
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
 
-/* "ops/scalar_ops.pxd":18
+/* "scalar_ops.pxd":18
  *     double complex
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
@@ -1543,7 +1543,7 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   double atol;
 };
 
-/* "ops/scalar_ops.pxd":19
+/* "scalar_ops.pxd":19
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
@@ -3391,6 +3391,8 @@ static PyTypeObject *__pyx_ptype_6cyroot_4fptr_PyNdArrayFPtr = 0;
 
 /* Module declarations from 'cython' */
 
+/* Module declarations from 'cyroot.ops' */
+
 /* Module declarations from 'cyroot.ops.scalar_ops' */
 
 /* Module declarations from 'cyroot.scalar_derivative_approximation' */
@@ -4757,7 +4759,7 @@ static double __pyx_f_6cyroot_31scalar_derivative_approximation_finite_differenc
  *     cdef double f_i, diff = 0.
  *     cdef int bin_coef, sgn = (-1) ** order if kind == 1 else 1             # <<<<<<<<<<<<<<
  *     for i in range(order + 1):
- *         bin_coef = binomial_coef(order, i)
+ *         bin_coef = sops.binomial_coef(order, i)
  */
   if (((__pyx_v_kind == 1) != 0)) {
     __pyx_t_1 = __Pyx_pow_long(-1L, ((long)__pyx_v_order));
@@ -4770,7 +4772,7 @@ static double __pyx_f_6cyroot_31scalar_derivative_approximation_finite_differenc
  *     cdef double f_i, diff = 0.
  *     cdef int bin_coef, sgn = (-1) ** order if kind == 1 else 1
  *     for i in range(order + 1):             # <<<<<<<<<<<<<<
- *         bin_coef = binomial_coef(order, i)
+ *         bin_coef = sops.binomial_coef(order, i)
  *         if kind == 1:  # forward
  */
   __pyx_t_1 = (__pyx_v_order + 1);
@@ -4781,7 +4783,7 @@ static double __pyx_f_6cyroot_31scalar_derivative_approximation_finite_differenc
     /* "cyroot/scalar_derivative_approximation.pyx":54
  *     cdef int bin_coef, sgn = (-1) ** order if kind == 1 else 1
  *     for i in range(order + 1):
- *         bin_coef = binomial_coef(order, i)             # <<<<<<<<<<<<<<
+ *         bin_coef = sops.binomial_coef(order, i)             # <<<<<<<<<<<<<<
  *         if kind == 1:  # forward
  *             f_i = f.eval(x + i * h) if i > 0 else f_x
  */
@@ -4789,7 +4791,7 @@ static double __pyx_f_6cyroot_31scalar_derivative_approximation_finite_differenc
 
     /* "cyroot/scalar_derivative_approximation.pyx":55
  *     for i in range(order + 1):
- *         bin_coef = binomial_coef(order, i)
+ *         bin_coef = sops.binomial_coef(order, i)
  *         if kind == 1:  # forward             # <<<<<<<<<<<<<<
  *             f_i = f.eval(x + i * h) if i > 0 else f_x
  *             diff += sgn * bin_coef * f_i
@@ -4798,7 +4800,7 @@ static double __pyx_f_6cyroot_31scalar_derivative_approximation_finite_differenc
       case 1:
 
       /* "cyroot/scalar_derivative_approximation.pyx":56
- *         bin_coef = binomial_coef(order, i)
+ *         bin_coef = sops.binomial_coef(order, i)
  *         if kind == 1:  # forward
  *             f_i = f.eval(x + i * h) if i > 0 else f_x             # <<<<<<<<<<<<<<
  *             diff += sgn * bin_coef * f_i
@@ -4823,7 +4825,7 @@ static double __pyx_f_6cyroot_31scalar_derivative_approximation_finite_differenc
 
       /* "cyroot/scalar_derivative_approximation.pyx":55
  *     for i in range(order + 1):
- *         bin_coef = binomial_coef(order, i)
+ *         bin_coef = sops.binomial_coef(order, i)
  *         if kind == 1:  # forward             # <<<<<<<<<<<<<<
  *             f_i = f.eval(x + i * h) if i > 0 else f_x
  *             diff += sgn * bin_coef * f_i
@@ -7176,7 +7178,7 @@ static PyObject *__pyx_pf_6cyroot_31scalar_derivative_approximation_2finite_diff
  * 
  *     f_wrapper = PyDoubleScalarFPtr.from_f(f)             # <<<<<<<<<<<<<<
  *     if f_x is None:
- *         f_x = f_wrapper(x)
+ *         f_x = f_wrapper.eval(x)
  */
   __pyx_t_1 = ((PyObject *)__pyx_vtabptr_6cyroot_4fptr_PyDoubleScalarFPtr->from_f(__pyx_v_f)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 141, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -7187,7 +7189,7 @@ static PyObject *__pyx_pf_6cyroot_31scalar_derivative_approximation_2finite_diff
  * 
  *     f_wrapper = PyDoubleScalarFPtr.from_f(f)
  *     if f_x is None:             # <<<<<<<<<<<<<<
- *         f_x = f_wrapper(x)
+ *         f_x = f_wrapper.eval(x)
  *     return finite_difference_kernel(f_wrapper, x, f_x, h, order, kind)
  */
   __pyx_t_9 = (__pyx_v_f_x == Py_None);
@@ -7197,28 +7199,12 @@ static PyObject *__pyx_pf_6cyroot_31scalar_derivative_approximation_2finite_diff
     /* "cyroot/scalar_derivative_approximation.pyx":143
  *     f_wrapper = PyDoubleScalarFPtr.from_f(f)
  *     if f_x is None:
- *         f_x = f_wrapper(x)             # <<<<<<<<<<<<<<
+ *         f_x = f_wrapper.eval(x)             # <<<<<<<<<<<<<<
  *     return finite_difference_kernel(f_wrapper, x, f_x, h, order, kind)
  */
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 143, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_INCREF(((PyObject *)__pyx_v_f_wrapper));
-    __pyx_t_6 = ((PyObject *)__pyx_v_f_wrapper); __pyx_t_2 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_6);
-      if (likely(__pyx_t_2)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-        __Pyx_INCREF(__pyx_t_2);
-        __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_6, function);
-      }
-    }
-    __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_2, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_3);
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
+    __pyx_t_8 = ((struct __pyx_vtabstruct_6cyroot_4fptr_DoubleScalarFPtr *)__pyx_v_f_wrapper->__pyx_vtab)->eval(__pyx_v_f_wrapper, __pyx_v_x); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 143, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF_SET(__pyx_v_f_x, __pyx_t_1);
     __pyx_t_1 = 0;
 
@@ -7226,14 +7212,14 @@ static PyObject *__pyx_pf_6cyroot_31scalar_derivative_approximation_2finite_diff
  * 
  *     f_wrapper = PyDoubleScalarFPtr.from_f(f)
  *     if f_x is None:             # <<<<<<<<<<<<<<
- *         f_x = f_wrapper(x)
+ *         f_x = f_wrapper.eval(x)
  *     return finite_difference_kernel(f_wrapper, x, f_x, h, order, kind)
  */
   }
 
   /* "cyroot/scalar_derivative_approximation.pyx":144
  *     if f_x is None:
- *         f_x = f_wrapper(x)
+ *         f_x = f_wrapper.eval(x)
  *     return finite_difference_kernel(f_wrapper, x, f_x, h, order, kind)             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
@@ -24542,7 +24528,7 @@ if (!__Pyx_RefNanny) {
 
   /* "cyroot/scalar_derivative_approximation.pyx":13
  * from .fptr cimport DoubleScalarFPtr, PyDoubleScalarFPtr
- * from .ops.scalar_ops cimport binomial_coef
+ * from .ops cimport scalar_ops as sops
  * from .typing import VectorLike             # <<<<<<<<<<<<<<
  * from .utils.function_tagging import tag
  * 
@@ -24562,7 +24548,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "cyroot/scalar_derivative_approximation.pyx":14
- * from .ops.scalar_ops cimport binomial_coef
+ * from .ops cimport scalar_ops as sops
  * from .typing import VectorLike
  * from .utils.function_tagging import tag             # <<<<<<<<<<<<<<
  * 

@@ -4,12 +4,14 @@ cdef bint equal(real[:] a, real[:] b) nogil
 cdef bint cequal(double complex[:] a, double complex[:] b) nogil
 cdef bint allclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil
 cdef bint callclose(double complex[:] a, double complex[:] b, double rtol=*, double atol=*) nogil
+cdef bint anyclose(double[:] a, double[:] b, double rtol=*, double atol=*) nogil
+cdef bint canyclose(double complex[:] a, double complex[:] b, double rtol=*, double atol=*) nogil
 cdef int[:] sign(double[:] xs) nogil
 cdef double complex[:] csign(double complex[:] xs) nogil
 cdef double[:] fabs(double[:] xs) nogil
 cdef double[:] cabs(double complex[:] xs) nogil
-cdef double fabs_width(double[:] xs) nogil
-cdef double cabs_width(double complex[:] xs) nogil
+cdef double width(double[:] xs) nogil
+cdef double cwidth(double complex[:] xs) nogil
 cdef double[:] sqrt(double[:] xs) nogil
 cdef double complex[:] csqrt(double complex[:] xs) nogil
 cdef double norm(double[:] xs, double order=*) nogil

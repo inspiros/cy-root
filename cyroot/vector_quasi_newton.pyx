@@ -12,21 +12,22 @@ import numpy as np
 cimport numpy as np
 
 from ._check_args cimport (
-    _check_stop_condition_initial_guess_vector,
-    _check_stop_condition_initial_guesses_vector,
+    _check_stop_cond_vector_initial_guess,
+    _check_stop_cond_vector_initial_guesses,
 )
 from ._check_args import (
-    _check_stop_condition_args,
-    _check_unique_initial_guesses,
+    _check_stop_cond_args,
+    _check_initial_guesses_uniqueness,
+    _check_initial_vals_uniqueness,
 )
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER, FINITE_DIFF_STEP
 from ._return_types import QuasiNewtonMethodReturnType
 from .fptr cimport (
     NdArrayFPtr, PyNdArrayFPtr,
 )
-from .ops.scalar_ops cimport isclose, sqrt
-from .ops.vector_ops cimport fabs, max, norm
+from .ops cimport scalar_ops as sops, vector_ops as vops, matrix_ops as mops
 from .typing import *
+from .utils import warn_value
 from .utils.function_tagging import tag
 from .vector_derivative_approximation import generalized_finite_difference
 
@@ -61,8 +62,8 @@ cdef wolfe_bittner_kernel(
     cdef np.ndarray[np.float64_t, ndim=1] r = np.empty(x0s.shape[1], dtype=np.float64)
     cdef np.ndarray[np.float64_t, ndim=1] F_r = np.empty(F_x0s.shape[1], dtype=np.float64)
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guesses_vector(x0s, F_x0s, etol, ertol, ptol, prtol,
-                                                    r, F_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_vector_initial_guesses(x0s, F_x0s, etol, ertol, ptol, prtol,
+                                               r, F_r, &precision, &error, &converged, &optimal):
         return r, F_r, step, precision, error, converged, optimal
 
     # sort by error of F
@@ -70,22 +71,23 @@ cdef wolfe_bittner_kernel(
     cdef np.ndarray[np.float64_t, ndim=2] xs = x0s[inds]
     cdef np.ndarray[np.float64_t, ndim=2] F_xs = F_x0s[inds]
 
-    cdef unsigned long d = xs.shape[1], i
+    cdef unsigned long i
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, ps
-    cdef np.ndarray[np.float64_t, ndim=2] A = np.empty((d + 1, d + 1), dtype=np.float64)
+    cdef np.ndarray[np.float64_t, ndim=2] A = np.empty((F_xs.shape[1] + 1, xs.shape[0]), dtype=np.float64)
     A[0, :] = 1
     A[1:] = F_xs.transpose()
-    cdef np.ndarray[np.float64_t, ndim=1] b = np.zeros(d + 1, dtype=np.float64)
+    cdef np.ndarray[np.float64_t, ndim=1] b = np.zeros(F_xs.shape[1] + 1, dtype=np.float64)
     b[0] = 1
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
-        ps = np.linalg.lstsq(A, b, rcond=None)[0]
+        ps = mops.inv(A, b, method=4)  # lstsq
         x1 = ps.dot(xs)
-        F_x1 = F(x1)
+        F_x1 = F.eval(x1)
 
         xs[:-1] = xs[1:]
         F_xs[:-1] = F_xs[1:]
@@ -95,9 +97,9 @@ cdef wolfe_bittner_kernel(
         A[1:, -1] = F_x1
 
         precision = (F_xs.min(0) - F_xs.max(0)).max()
-        error = max(fabs(F_x1))
+        error = vops.max(vops.fabs(F_x1))
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return xs[-1], F_xs[-1], step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -139,22 +141,33 @@ def wolfe_bittner(F: Callable[[VectorLike], VectorLike],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     x0s = np.asarray(x0s, dtype=np.float64)
-    d = x0s.shape[1]
-    if x0s.shape[0] != d + 1:
-        raise ValueError('Number of initial points must be d + 1. '
-                         f'Got n_points={x0s.shape[0]}, d={d}.')
+    if x0s.ndim != 2:
+        raise ValueError(f'x0s must be a 2D array. Got x0s.shape={x0s.shape}.')
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0s is None:
-        F_x0s = np.stack([F_wrapper(x0s[i]) for i in range(d + 1)])
+        F_x0s = np.stack([F_wrapper.eval(x0s[i]) for i in range(x0s.shape[0])])
     else:
         F_x0s = np.asarray(F_x0s, dtype=np.float64)
+        if F_x0s.ndim != 2 or F_x0s.shape[0] != x0s.shape[0]:
+            raise ValueError('x0s and F_x0s must have same length.')
+
+    warn_msgs = []
+    if x0s.shape[1] < F_x0s.shape[1]:
+        warn_msgs.append('Input dimension is smaller than output dimension. '
+                         f'Got d_in={x0s.shape[0]}, d_out={F_x0s.shape[0]}.')
+    if x0s.shape[0] < F_x0s.shape[1] + 1:
+        warn_msgs.append('Number of initial points should be at least d_out + 1, '
+                         'where d_out is dimension of output. '
+                         f'Got len(x0s)={x0s.shape[0]}, d_out={F_x0s.shape[1]}.')
+    if len(warn_msgs):
+        warn_value('\n'.join(warn_msgs))
 
     res = wolfe_bittner_kernel(
-        <NdArrayFPtr> F_wrapper, x0s, F_x0s, etol, ertol, ptol, prtol, max_iter)
+        F_wrapper, x0s, F_x0s, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 #------------------------
@@ -179,41 +192,42 @@ cdef robinson_kernel(
     cdef np.ndarray[np.float64_t, ndim=1] r = np.empty(x0.shape[0], dtype=np.float64)
     cdef np.ndarray[np.float64_t, ndim=1] F_r = np.empty(F_x0.shape[0], dtype=np.float64)
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guesses_vector(np.stack([x0, x1]), np.stack([F_x0, F_x1]),
-                                                    etol, ertol, ptol, prtol,
-                                                    r, F_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_vector_initial_guesses(np.stack([x0, x1]), np.stack([F_x0, F_x1]),
+                                               etol, ertol, ptol, prtol,
+                                               r, F_r, &precision, &error, &converged, &optimal):
         return r, F_r, step, precision, error, converged, optimal
 
     cdef unsigned long i
     cdef np.ndarray[np.float64_t, ndim=2] I = np.eye(x0.shape[0], dtype=np.float64)
-    cdef np.ndarray[np.float64_t, ndim=2] J = np.empty((x0.shape[0], x0.shape[0]), dtype=np.float64)
+    cdef np.ndarray[np.float64_t, ndim=2] J = np.empty((F_x0.shape[0], x0.shape[0]), dtype=np.float64)
     cdef np.ndarray[np.float64_t, ndim=2] H
     cdef np.ndarray[np.float64_t, ndim=1] d_x = x1 - x0
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
         if orth == 1:  # simple
-            H = norm(d_x) * I
+            H = vops.norm(d_x) * I
         elif orth == 2:  # efficient
-            H = norm(d_x) * _efficient_H(d_x)
+            H = vops.norm(d_x) * _efficient_H(d_x)
         else:  # random
-            H = norm(d_x) * _random_H(x0.shape[0])
+            H = vops.norm(d_x) * _random_H(x0.shape[0])
         for i in range(x0.shape[0]):
-            J[:, i] = F(x1 + H[i]) - F_x1
-        J = J.dot(np.linalg.solve(H, I))
-        d_x = np.linalg.solve(J, -F_x1)  # -J^-1.F_x_n
+            J[:, i] = F.eval(x1 + H[i]) - F_x1
+        J = J.dot(mops.inv(H))
+        d_x = mops.inv(J, -F_x1)  # -J^-1.F_x_n
         r = x1 + d_x
-        F_r = F(r)
+        F_r = F.eval(r)
 
         x0, x1 = x1, r
         F_x0, F_x1 = F_x1, F_r
-        precision = max(fabs(d_x))
-        error = max(fabs(F_r))
+        precision = vops.max(vops.fabs(d_x))
+        error = vops.max(vops.fabs(F_r))
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, F_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -237,7 +251,7 @@ cdef np.ndarray[np.float64_t, ndim=2] _efficient_H(np.ndarray[np.float64_t, ndim
                 else:
                     H[i, j] = 0
                 scale += H[i, j] * H[i, j]
-            scale = sqrt(scale)
+            scale = sops.sqrt(scale)
             if scale != 0:
                 for i in range(d_x.shape[0]):  # row normalize
                     H[i, j] /= scale
@@ -303,7 +317,7 @@ def robinson(F: Callable[[VectorLike], VectorLike],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     if orth == 'identity':
         orth = 1
@@ -317,20 +331,25 @@ def robinson(F: Callable[[VectorLike], VectorLike],
 
     x0 = np.asarray(x0, dtype=np.float64)
     x1 = np.asarray(x1, dtype=np.float64)
-    _check_unique_initial_guesses(x0, x1)
+    _check_initial_guesses_uniqueness((x0, x1))
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
-        F_x0 = F_wrapper(x0)
+        F_x0 = F_wrapper.eval(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
     if F_x1 is None:
-        F_x1 = F_wrapper(x1)
+        F_x1 = F_wrapper.eval(x1)
     else:
         F_x1 = np.asarray(F_x1, dtype=np.float64)
+    _check_initial_vals_uniqueness((F_x0, F_x1))
+
+    if x0.shape[0] < F_x0.shape[0]:
+        warn_value('Input dimension is smaller than output dimension. '
+                   f'Got n={x0.shape[0]}, m={F_x0.shape[0]}.')
 
     res = robinson_kernel(
-        <NdArrayFPtr> F_wrapper, x0, x1, F_x0, F_x1, orth, etol, ertol, ptol, prtol, max_iter)
+        F_wrapper, x0, x1, F_x0, F_x1, orth, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 #------------------------
@@ -352,21 +371,22 @@ cdef barnes_kernel(
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_vector(x0, F_x0, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0, F_x0, step, precision, error, converged, optimal
 
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, z
     cdef np.ndarray[np.float64_t, ndim=2] D
     cdef np.ndarray[np.float64_t, ndim=2] d_xs = np.zeros((x0.shape[0] - 1, x0.shape[0]), dtype=np.float64)
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
 
-        d_x = np.linalg.solve(J_x0, -F_x0)
+        d_x = mops.inv(J_x0, -F_x0)
         if step > 1:
             z = _orthogonal_vector(d_xs[:step - 1])
             if step > x0.shape[0] - 1:
@@ -378,7 +398,7 @@ cdef barnes_kernel(
             z = d_x
 
         x1 = x0 + d_x
-        F_x1 = F(x1)
+        F_x1 = F.eval(x1)
 
         if formula == 2:
             D = np.outer(F_x1 - F_x0 - J_x0.dot(d_x), z) / z.dot(d_x) # (F_x1 - F_x0 - J.d_x).z^T / z^T.d_x
@@ -388,10 +408,10 @@ cdef barnes_kernel(
 
         x0 = x1
         F_x0 = F_x1
-        precision = max(fabs(d_x))
-        error = max(fabs(F_x1))
+        precision = vops.max(vops.fabs(d_x))
+        error = vops.max(vops.fabs(F_x1))
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return x1, F_x1, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -418,7 +438,7 @@ cdef np.ndarray[np.float64_t, ndim=1] _orthogonal_vector(
         for i in range(v.shape[0]):
             b = v[i] - np.sum(v[i].dot(basis[:k].T).reshape(-1, 1) * basis[:k], 0)
             if not np.allclose(b, 0, atol=eps, rtol=0):
-                basis[k] = b / norm(b)
+                basis[k] = b / vops.norm(b)
                 k += 1
     else:
         raise ValueError(f'Unsupported orthogonalize method {method}.')
@@ -430,7 +450,7 @@ cdef np.ndarray[np.float64_t, ndim=1] _orthogonal_vector(
         v_rand = np.random.randn(d)
         b = v_rand - np.sum(v_rand.dot(basis[:k].T).reshape(-1, 1) * basis[:k], 0)
         if not np.allclose(b, 0, atol=eps, rtol=0):
-            basis[k] = b / norm(b)
+            basis[k] = b / vops.norm(b)
             k += 1
             break
     return basis[k_final]
@@ -490,13 +510,13 @@ def barnes(F: Callable[[VectorLike], VectorLike],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     x0 = np.asarray(x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
-        F_x0 = F_wrapper(x0)
+        F_x0 = F_wrapper.eval(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
     if J_x0 is None:
@@ -504,8 +524,12 @@ def barnes(F: Callable[[VectorLike], VectorLike],
     else:
         J_x0 = np.asarray(J_x0, dtype=np.float64)
 
+    if x0.shape[0] < F_x0.shape[0]:
+        warn_value('Input dimension is smaller than output dimension. '
+                   f'Got n={x0.shape[0]}, m={F_x0.shape[0]}.')
+
     res = barnes_kernel(
-        <NdArrayFPtr> F_wrapper, x0, F_x0, J_x0, formula, etol, ertol, ptol, prtol, max_iter)
+        F_wrapper, x0, F_x0, J_x0, formula, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 ################################################################################
@@ -525,32 +549,35 @@ cdef traub_steffensen_kernel(
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_vector(x0, F_x0, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0, F_x0, step, precision, error, converged, optimal
 
     cdef unsigned long i
-    cdef np.ndarray[np.float64_t, ndim=2] J = np.empty((x0.shape[0], x0.shape[0]), dtype=np.float64)
-    cdef np.ndarray[np.float64_t, ndim=2] H
+    cdef np.ndarray[np.float64_t, ndim=2] J = np.empty((F_x0.shape[0], x0.shape[0]), dtype=np.float64)
+    cdef np.ndarray[np.float64_t, ndim=2] H = np.zeros((x0.shape[0], x0.shape[0]), dtype=np.float64)
     cdef np.ndarray[np.float64_t, ndim=1] d_x
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
-        H = np.diag(F_x0)
+        for i in range(min(x0.shape[0], F_x0.shape[0])):  # H = diag(F_x0)
+            H[i, i] = F_x0[i]
+
         for i in range(x0.shape[0]):
-            J[:, i] = F(x0 + H[i]) - F_x0
-        J = np.matmul(J, np.linalg.inv(H))
-        d_x = np.linalg.solve(J, -F_x0)  # -J^-1.F_x_n
+            J[:, i] = F.eval(x0 + H[i]) - F_x0
+        J = np.matmul(J, mops.inv(H))
+        d_x = mops.inv(J, -F_x0)  # -J^-1.F_x_n
         x0 = x0 + d_x
-        F_x0 = F(x0)
+        F_x0 = F.eval(x0)
 
-        precision = max(fabs(d_x))
-        error = max(fabs(F_x0))
+        precision = vops.max(vops.fabs(d_x))
+        error = vops.max(vops.fabs(F_x0))
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return x0, F_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -591,18 +618,22 @@ def traub_steffensen(F: Callable[[VectorLike], VectorLike],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     x0 = np.asarray(x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
-        F_x0 = F_wrapper(x0)
+        F_x0 = F_wrapper.eval(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
 
+    if x0.shape[0] < F_x0.shape[0]:
+        warn_value('Input dimension is smaller than output dimension. '
+                   f'Got n={x0.shape[0]}, m={F_x0.shape[0]}.')
+
     res = traub_steffensen_kernel(
-        <NdArrayFPtr> F_wrapper, x0, F_x0, etol, ertol, ptol, prtol, max_iter)
+        F_wrapper, x0, F_x0, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 ################################################################################
@@ -623,35 +654,36 @@ cdef broyden1_kernel(
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_vector(x0, F_x0, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0, F_x0, step, precision, error, converged, optimal
 
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, d_F
     cdef double denom
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
-        d_x = np.linalg.solve(J_x0, -F_x0)
+        d_x = mops.inv(J_x0, -F_x0)
 
         x1 = x0 + d_x
-        F_x1 = F(x1)
+        F_x1 = F.eval(x1)
         d_F = F_x1 - F_x0
 
-        denom = np.dot(d_x, d_x)  # ||x1 - x0||^2
+        denom = d_x.dot(d_x)  # ||x1 - x0||^2
         if denom == 0:
             converged = False
             break
-        J_x0 += np.outer(d_F - np.dot(J_x0, d_x), d_x) / denom
+        J_x0 += np.outer(d_F - J_x0.dot(d_x), d_x) / denom
 
         x0, F_x0 = x1, F_x1
-        precision = max(fabs(d_x))
-        error = max(fabs(F_x0))
+        precision = vops.max(vops.fabs(d_x))
+        error = vops.max(vops.fabs(F_x0))
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return x0, F_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -661,6 +693,7 @@ cdef broyden2_kernel(
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
         np.ndarray[np.float64_t, ndim=2] J_x0,
+        bint inversed=False,
         double etol=ETOL,
         double ertol=ERTOL,
         double ptol=PTOL,
@@ -669,15 +702,16 @@ cdef broyden2_kernel(
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_vector(x0, F_x0, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0, F_x0, step, precision, error, converged, optimal
 
-    cdef np.ndarray[np.float64_t, ndim=2] J_x0_inv = np.linalg.inv(J_x0)
+    cdef np.ndarray[np.float64_t, ndim=2] J_x0_inv = J_x0 if inversed else mops.inv(J_x0, None, method=3)
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, d_F, u
     cdef double denom
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -685,7 +719,7 @@ cdef broyden2_kernel(
         d_x = -J_x0_inv.dot(F_x0)  # Newton step
 
         x1 = x0 + d_x
-        F_x1 = F(x1)
+        F_x1 = F.eval(x1)
         d_F = F_x1 - F_x0
 
         u = J_x0_inv.dot(d_F)  # J^-1.[f_x1 - f_x0]
@@ -698,10 +732,10 @@ cdef broyden2_kernel(
         J_x0_inv += ((d_x - u).dot(d_x) * J_x0_inv) / denom
 
         x0, F_x0 = x1, F_x1
-        precision = max(fabs(d_x))
-        error = max(fabs(F_x0))
+        precision = vops.max(vops.fabs(d_x))
+        error = vops.max(vops.fabs(F_x0))
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return x0, F_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -753,7 +787,7 @@ def broyden(F: Callable[[VectorLike], VectorLike],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     if algo == 'good':
         algo = 1
@@ -767,7 +801,7 @@ def broyden(F: Callable[[VectorLike], VectorLike],
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
-        F_x0 = F_wrapper(x0)
+        F_x0 = F_wrapper.eval(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
     if J_x0 is None:
@@ -775,12 +809,16 @@ def broyden(F: Callable[[VectorLike], VectorLike],
     else:
         J_x0 = np.asarray(J_x0, dtype=np.float64)
 
+    if x0.shape[0] < F_x0.shape[0]:
+        warn_value('Input dimension is smaller than output dimension. '
+                   f'Got n={x0.shape[0]}, m={F_x0.shape[0]}.')
+
     if algo == 1:
         res = broyden1_kernel(
-            <NdArrayFPtr> F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
+            F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
     else:
         res = broyden2_kernel(
-            <NdArrayFPtr> F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
+            F_wrapper, x0, F_x0, J_x0, False, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
 
 ################################################################################
@@ -801,22 +839,23 @@ cdef klement_kernel(
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_vector(x0, F_x0, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0, F_x0, step, precision, error, converged, optimal
 
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, d_F, denom, k
     cdef np.ndarray[np.float64_t, ndim=2] U
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
-        d_x = np.linalg.solve(J_x0, -F_x0)
+        d_x = mops.inv(J_x0, -F_x0)
 
         x1 = x0 + d_x
-        F_x1 = F(x1)
+        F_x1 = F.eval(x1)
         d_F = F_x1 - F_x0
 
         U = J_x0 * d_x
@@ -828,10 +867,10 @@ cdef klement_kernel(
         J_x0 += k.reshape(-1, 1) * U * J_x0  # (1 + k_i * J_{i,j} * d_x_{j}) * J_{i, j}
 
         x0, F_x0 = x1, F_x1
-        precision = max(fabs(d_x))
-        error = max(fabs(F_x0))
+        precision = vops.max(vops.fabs(d_x))
+        error = vops.max(vops.fabs(F_x0))
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return x0, F_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -882,19 +921,23 @@ def klement(F: Callable[[VectorLike], VectorLike],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     x0 = np.asarray(x0, dtype=np.float64)
 
     F_wrapper = PyNdArrayFPtr.from_f(F)
     if F_x0 is None:
-        F_x0 = F_wrapper(x0)
+        F_x0 = F_wrapper.eval(x0)
     else:
         F_x0 = np.asarray(F_x0, dtype=np.float64)
     if J_x0 is None:
         J_x0 = generalized_finite_difference(F_wrapper, x0, F_x0, h=h, order=1)
     else:
         J_x0 = np.asarray(J_x0, dtype=np.float64)
+
+    if x0.shape[0] < F_x0.shape[0]:
+        warn_value('Input dimension is smaller than output dimension. '
+                   f'Got n={x0.shape[0]}, m={F_x0.shape[0]}.')
 
     res = klement_kernel(
         F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)

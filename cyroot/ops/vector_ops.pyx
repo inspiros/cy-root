@@ -9,7 +9,7 @@ from libcpp.algorithm cimport sort as cpp_sort
 from libcpp.vector cimport vector
 from libc cimport math
 
-from . cimport scalar_ops
+from . cimport scalar_ops as sops
 
 cdef inline bint equal(real[:] a, real[:] b) nogil:
     if a.shape[0] != b.shape[0]:
@@ -34,7 +34,7 @@ cdef inline bint allclose(double[:] a, double[:] b, double rtol=1e-5, double ato
         return False
     cdef unsigned long i
     for i in range(a.shape[0]):
-        if not scalar_ops.isclose(a[i], b[i], rtol, atol):
+        if not sops.isclose(a[i], b[i], rtol, atol):
             return False
     return True
 
@@ -43,9 +43,27 @@ cdef inline bint callclose(double complex[:] a, double complex[:] b, double rtol
         return False
     cdef unsigned long i
     for i in range(a.shape[0]):
-        if not scalar_ops.cisclose(a[i], b[i], rtol, atol):
+        if not sops.cisclose(a[i], b[i], rtol, atol):
             return False
     return True
+
+cdef inline bint anyclose(double[:] a, double[:] b, double rtol=1e-5, double atol=1e-8) nogil:
+    if a.shape[0] != b.shape[0]:
+        return False
+    cdef unsigned long i
+    for i in range(a.shape[0]):
+        if sops.isclose(a[i], b[i], rtol, atol):
+            return True
+    return False
+
+cdef inline bint canyclose(double complex[:] a, double complex[:] b, double rtol=1e-5, double atol=1e-8) nogil:
+    if a.shape[0] != b.shape[0]:
+        return False
+    cdef unsigned long i
+    for i in range(a.shape[0]):
+        if sops.cisclose(a[i], b[i], rtol, atol):
+            return True
+    return False
 
 cdef inline int[:] sign(double[:] xs) nogil:
     cdef unsigned long i
@@ -53,7 +71,7 @@ cdef inline int[:] sign(double[:] xs) nogil:
     with gil:
         res = view.array(shape=(xs.shape[0],), itemsize=sizeof(int), format='i')
     for i in range(xs.shape[0]):
-        res[i] = scalar_ops.sign(xs[i])
+        res[i] = sops.sign(xs[i])
     return res
 
 cdef inline double complex[:] csign(double complex[:] xs) nogil:
@@ -62,7 +80,7 @@ cdef inline double complex[:] csign(double complex[:] xs) nogil:
     with gil:
         res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double complex), format='c')
     for i in range(xs.shape[0]):
-        res[i] = scalar_ops.csign(xs[i])
+        res[i] = sops.csign(xs[i])
     return res
 
 cdef inline double[:] fabs(double[:] xs) nogil:
@@ -80,15 +98,15 @@ cdef inline double[:] cabs(double complex[:] xs) nogil:
     with gil:
         res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double), format='d')
     for i in range(xs.shape[0]):
-        res[i] = scalar_ops.cabs(xs[i])
+        res[i] = sops.cabs(xs[i])
     return res
 
-cdef inline double fabs_width(double[:] xs) nogil:
+cdef inline double width(double[:] xs) nogil:
     cdef unsigned long argmin_i, argmax_i
     argmin_i, argmax_i = argminmax(xs)
     return xs[argmax_i] - xs[argmin_i]
 
-cdef inline double cabs_width(double complex[:] xs) nogil:
+cdef inline double cwidth(double complex[:] xs) nogil:
     cdef unsigned long argmin_i, argmax_i
     cdef double[:] xs_abs = cabs(xs)
     argmin_i, argmax_i = argminmax(xs_abs)
@@ -100,7 +118,7 @@ cdef inline double[:] sqrt(double[:] xs) nogil:
     with gil:
         res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double), format='d')
     for i in range(xs.shape[0]):
-        res[i] = scalar_ops.sqrt(xs[i])
+        res[i] = sops.sqrt(xs[i])
     return res
 
 cdef inline double complex[:] csqrt(double complex[:] xs) nogil:
@@ -109,7 +127,7 @@ cdef inline double complex[:] csqrt(double complex[:] xs) nogil:
     with gil:
         res = view.array(shape=(xs.shape[0],), itemsize=sizeof(double complex), format='C')
     for i in range(xs.shape[0]):
-        res[i] = scalar_ops.csqrt(xs[i])
+        res[i] = sops.csqrt(xs[i])
     return res
 
 cdef inline double norm(double[:] xs, double order=2) nogil:
@@ -124,7 +142,7 @@ cdef inline double norm(double[:] xs, double order=2) nogil:
             res += xs[i] != 0
         return res
     for i in range(xs.shape[0]):
-        res += scalar_ops.fabs(xs[i]) ** order
+        res += sops.fabs(xs[i]) ** order
     return res ** (1 / order)
 
 cdef inline double cnorm(double complex[:] xs, double order=2) nogil:
@@ -139,7 +157,7 @@ cdef inline double cnorm(double complex[:] xs, double order=2) nogil:
             res += xs[i] != 0
         return res
     for i in range(xs.shape[0]):
-        res += scalar_ops.cabs(xs[i]) ** order
+        res += sops.cabs(xs[i]) ** order
     return res ** (1 / order)
 
 cdef inline double[:] permute(double[:] xs, unsigned long[:] inds) nogil:

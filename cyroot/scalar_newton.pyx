@@ -16,8 +16,8 @@ from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
 from libcpp.vector cimport vector
 
-from ._check_args cimport _check_stop_condition_initial_guess_scalar
-from ._check_args import _check_stop_condition_args
+from ._check_args cimport _check_stop_cond_scalar_initial_guess
+from ._check_args import _check_stop_cond_args
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER, FINITE_DIFF_STEP
 from ._return_types import NewtonMethodReturnType
 from .fptr cimport (
@@ -25,7 +25,7 @@ from .fptr cimport (
     DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
 from .scalar_derivative_approximation import DerivativeApproximation, FiniteDifference
-from .ops.scalar_ops cimport isclose
+from .ops cimport scalar_ops as sops
 from .typing import VectorLike
 from .utils.function_tagging import tag
 
@@ -34,6 +34,7 @@ __all__ = [
     'halley',
     'super_halley',
     'chebyshev',
+    'tangent_hyperbolas',
     'householder',
 ]
 
@@ -56,20 +57,21 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) \
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_scalar(x0, f_x0, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
     cdef bint use_derivative_approximation = isinstance(df, DerivativeApproximation)
     cdef double d_x
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0 or df_x0 == 0:
             converged = False
         step += 1
         d_x = -f_x0 / df_x0
         x0 = x0 + d_x
-        f_x0 = f(x0)
+        f_x0 = f.eval(x0)
         if use_derivative_approximation:
             df_x0 = df.eval_with_f_val(x0, f_x0)
         else:
@@ -77,7 +79,7 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) \
         precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return x0, f_x0, df_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -127,7 +129,7 @@ def newton(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if df is None:
@@ -136,12 +138,12 @@ def newton(f: Callable[[float], float],
         df_wrapper = PyDoubleScalarFPtr.from_f(df)
 
     if f_x0 is None:
-        f_x0 = f_wrapper(x0)
+        f_x0 = f_wrapper.eval(x0)
     if df_x0 is None:
-        df_x0 = df_wrapper(x0)
+        df_x0 = df_wrapper.eval(x0)
 
-    res = newton_kernel(<DoubleScalarFPtr> f_wrapper, <DoubleScalarFPtr> df_wrapper,
-                        x0, f_x0, df_x0, etol, ertol, ptol, prtol, max_iter)
+    res = newton_kernel(f_wrapper, df_wrapper, x0, f_x0, df_x0,
+                        etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
                                                      df_wrapper.n_f_calls))
 
@@ -166,15 +168,16 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_scalar(x0, f_x0, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
     cdef bint[2] use_derivative_approximation = [isinstance(df, DerivativeApproximation),
                                                  isinstance(d2f, DerivativeApproximation)]
     cdef double d_x, denom
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -185,7 +188,7 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
             break
         d_x = -2 * f_x0 * df_x0 / denom
         x0 = x0 + d_x
-        f_x0 = f(x0)
+        f_x0 = f.eval(x0)
         if use_derivative_approximation[0]:
             df_x0 = df.eval_with_f_val(x0, f_x0)
         else:
@@ -193,11 +196,11 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
         if use_derivative_approximation[1]:
             d2f_x0 = d2f.eval_with_f_val(x0, f_x0)
         else:
-            d2f_x0 = d2f(x0)
+            d2f_x0 = d2f.eval(x0)
         precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -219,15 +222,16 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_scalar(x0, f_x0, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
     cdef bint[2] use_derivative_approximation = [isinstance(df, DerivativeApproximation),
                                                  isinstance(d2f, DerivativeApproximation)]
     cdef double d_x, L_f, denom
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -242,7 +246,7 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
             break
         d_x = -(1 + L_f / denom) * f_x0 / df_x0
         x0 = x0 + d_x
-        f_x0 = f(x0)
+        f_x0 = f.eval(x0)
         if use_derivative_approximation[0]:
             df_x0 = df.eval_with_f_val(x0, f_x0)
         else:
@@ -250,11 +254,11 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
         if use_derivative_approximation[1]:
             d2f_x0 = d2f.eval_with_f_val(x0, f_x0)
         else:
-            d2f_x0 = d2f(x0)
+            d2f_x0 = d2f.eval(x0)
         precision = math.fabs(d_x)
         error = math.fabs(f_x0)
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -313,7 +317,7 @@ def halley(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if df is None:
@@ -326,24 +330,27 @@ def halley(f: Callable[[float], float],
         d2f_wrapper = PyDoubleScalarFPtr.from_f(d2f)
 
     if f_x0 is None:
-        f_x0 = f_wrapper(x0)
+        f_x0 = f_wrapper.eval(x0)
     if df_x0 is None:
-        df_x0 = df_wrapper(x0)
+        df_x0 = df_wrapper.eval(x0)
     if d2f_x0 is None:
-        d2f_x0 = d2f_wrapper(x0)
+        d2f_x0 = d2f_wrapper.eval(x0)
 
     if alpha is None:
         res = halley_kernel(
-            <DoubleScalarFPtr> f_wrapper, <DoubleScalarFPtr> df_wrapper, <DoubleScalarFPtr> d2f_wrapper,
+            f_wrapper, df_wrapper, d2f_wrapper,
             x0, f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol, max_iter)
     else:
         res = modified_halley_kernel(
-            <DoubleScalarFPtr> f_wrapper, <DoubleScalarFPtr> df_wrapper, <DoubleScalarFPtr> d2f_wrapper,
+            f_wrapper, df_wrapper, d2f_wrapper,
             x0, f_x0, df_x0, d2f_x0, alpha, etol, ertol, ptol, prtol, max_iter)
     return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
                                                      df_wrapper.n_f_calls,
                                                      d2f_wrapper.n_f_calls))
 
+#------------------------
+# Super-Halley
+#------------------------
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.newton')
 @dynamic_default_args()
@@ -403,6 +410,9 @@ def super_halley(f: Callable[[float], float],
     return halley(f, df, d2f, x0, f_x0, df_x0, d2f_x0, 1, h,
                   etol, ertol, ptol, prtol, max_iter)
 
+#------------------------
+# Chebyshev
+#------------------------
 # noinspection DuplicatedCode
 @tag('cyroot.scalar.newton')
 @dynamic_default_args()
@@ -459,6 +469,162 @@ def chebyshev(f: Callable[[float], float],
     return halley(f, df, d2f, x0, f_x0, df_x0, d2f_x0, 0, h,
                   etol, ertol, ptol, prtol, max_iter)
 
+#------------------------
+# Tangent Hyperbolas
+#------------------------
+# noinspection DuplicatedCode
+cdef (double, double, (double, double), unsigned long, double, double, bint, bint) \
+        tangent_hyperbolas_kernel(
+        DoubleScalarFPtr f,
+        DoubleScalarFPtr df,
+        DoubleScalarFPtr d2f,
+        double x0,
+        double f_x0,
+        double df_x0,
+        double d2f_x0,
+        int formula=2,
+        double etol=ETOL,
+        double ertol=ERTOL,
+        double ptol=PTOL,
+        double prtol=PRTOL,
+        unsigned long max_iter=MAX_ITER):
+    cdef unsigned long step = 0
+    cdef double precision, error
+    cdef bint converged, optimal
+    if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
+        return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+
+    cdef bint[2] use_derivative_approximation = [isinstance(df, DerivativeApproximation),
+                                                 isinstance(d2f, DerivativeApproximation)]
+    cdef double d_x, a, denom
+    converged = True
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
+        if step >= max_iter > 0:
+            converged = False
+            break
+        step += 1
+
+        if df_x0 == 0:
+            converged = False
+            break
+        a = -f_x0 / df_x0
+        if formula == 2:  # more likely
+            denom = df_x0 + .5 * d2f_x0 * a  # J + .5 * H.a
+            if denom == 0:
+                converged = False
+                break
+            d_x = -f_x0 / denom
+        else:
+            denom = 1 + .5 * d2f_x0 * a / df_x0  # I + .5 * J^-1.H.a
+            if denom == 0:
+                converged = False
+                break
+            d_x = a / denom
+        x0 = x0 + d_x
+        f_x0 = f.eval(x0)
+        if use_derivative_approximation[0]:
+            df_x0 = df.eval_with_f_val(x0, f_x0)
+        else:
+            df_x0 = df.eval(x0)
+        if use_derivative_approximation[1]:
+            d2f_x0 = d2f.eval_with_f_val(x0, f_x0)
+        else:
+            d2f_x0 = d2f.eval(x0)
+        precision = math.fabs(d_x)
+        error = math.fabs(f_x0)
+
+    optimal = sops.isclose(0, error, ertol, etol)
+    return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+
+# noinspection DuplicatedCode
+@tag('cyroot.scalar.newton')
+@dynamic_default_args()
+@cython.binding(True)
+def tangent_hyperbolas(f: Callable[[float], float],
+                       df: Optional[Callable[[float], float]],
+                       d2f: Optional[Callable[[float], float]],
+                       x0: float,
+                       f_x0: Optional[float] = None,
+                       df_x0: Optional[float] = None,
+                       d2f_x0: Optional[float] = None,
+                       formula: Optional[int] = 2,
+                       h: Optional[float] = named_default(FINITE_DIFF_STEP=FINITE_DIFF_STEP),
+                       etol: float = named_default(ETOL=ETOL),
+                       ertol: float = named_default(ERTOL=ERTOL),
+                       ptol: float = named_default(PTOL=PTOL),
+                       prtol: float = named_default(PRTOL=PRTOL),
+                       max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+    """
+    Tangent Hyperbolas method for scalar root-finding.
+
+    This method is the same as Halley's method.
+    There are 2 formulas ``formula=1`` and ``formula=2``, the later
+    (default) requires 1 less division.
+
+    Args:
+        f (function): Function for which the root is sought.
+        df (function, optional): Function returning derivative
+         of ``f``.
+        d2f (function, optional): Function returning second order derivative
+         of ``f``.
+        x0 (float): Initial point.
+        f_x0 (float, optional): Value evaluated at initial point.
+        df_x0 (float, optional): First order derivative at
+         initial point.
+        d2f_x0 (float, optional): Second order derivative at
+         initial point.
+        formula (int): Formula 1 or 2. Defaults to 2.
+        h (float, optional): Finite difference step size,
+         ignored when ``df`` and ``d2f`` are not None.
+          Defaults to {h}.
+        etol (float, optional): Error tolerance, indicating the
+         desired precision of the root. Defaults to {etol}.
+        ertol (float, optional): Relative error tolerance.
+         Defaults to {ertol}.
+        ptol (float, optional): Precision tolerance, indicating
+         the minimum change of root approximations or width of
+         brackets (in bracketing methods) after each iteration.
+         Defaults to {ptol}.
+        prtol (float, optional): Relative precision tolerance.
+         Defaults to {prtol}.
+        max_iter (int, optional): Maximum number of iterations.
+         If set to 0, the procedure will run indefinitely until
+         stopping condition is met. Defaults to {max_iter}.
+
+    Returns:
+        solution: The solution represented as a ``RootResults`` object.
+    """
+    # check params
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    if formula not in [1, 2]:
+        raise ValueError(f'Unknown formula {formula}.')
+
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    if df is None:
+        df_wrapper = FiniteDifference(f_wrapper, h=h, order=1)
+    else:
+        df_wrapper = PyDoubleScalarFPtr.from_f(df)
+    if d2f is None:
+        d2f_wrapper = FiniteDifference(f_wrapper, h=h, order=2)
+    else:
+        d2f_wrapper = PyDoubleScalarFPtr.from_f(d2f)
+
+    if f_x0 is None:
+        f_x0 = f_wrapper.eval(x0)
+    if df_x0 is None:
+        df_x0 = df_wrapper.eval(x0)
+    if d2f_x0 is None:
+        d2f_x0 = d2f_wrapper.eval(x0)
+
+    res = tangent_hyperbolas_kernel(
+        f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, formula,
+        etol, ertol, ptol, prtol, max_iter)
+    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
+                                                     df_wrapper.n_f_calls,
+                                                     d2f_wrapper.n_f_calls))
+
 ################################################################################
 # Householder
 ################################################################################
@@ -486,8 +652,8 @@ cdef (double, double, vector[double], unsigned long, double, double, bint, bint)
     cdef unsigned int i
     for i in range(1, d + 1):
         dfs_x0[i - 1] = fs_x0[i]
-    if _check_stop_condition_initial_guess_scalar(x0_, fs_x0[0], etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guess(x0_, fs_x0[0], etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0_, fs_x0[0], dfs_x0, step, precision, error, converged, optimal
 
     cdef bint[:] use_derivative_approximation = view.array(shape=(fs_x0.shape[0] - 1,),
@@ -503,13 +669,14 @@ cdef (double, double, vector[double], unsigned long, double, double, bint, bint)
     cdef double[:] nom_x0, denom_x0
     cdef DoubleScalarFPtr f_ptr  # __pyx_vtab error workaround
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
-        nom_x0 = nom_f(fs_x0[:-1])
-        denom_x0 = denom_f(fs_x0)
+        nom_x0 = nom_f.eval(fs_x0[:-1])
+        denom_x0 = denom_f.eval(fs_x0)
         if denom_x0[0] == 0:
             converged = False
             break
@@ -527,7 +694,7 @@ cdef (double, double, vector[double], unsigned long, double, double, bint, bint)
         precision = math.fabs(d_x)
         error = math.fabs(fs_x0[0])
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     for i in range(1, d + 1):
         dfs_x0[i - 1] = fs_x0[i]
     return x0[0], fs_x0[0], dfs_x0, step, precision, error, converged, optimal
@@ -862,7 +1029,7 @@ def householder(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if dfs is None:
@@ -878,9 +1045,9 @@ def householder(f: Callable[[float], float],
         d = len(dfs_wrappers)
 
     if f_x0 is None:
-        f_x0 = f_wrapper(x0)
+        f_x0 = f_wrapper.eval(x0)
     if dfs_x0 is None:
-        dfs_x0 = [df_wrapper(x0) for df_wrapper in dfs_wrappers]
+        dfs_x0 = [df_wrapper.eval(x0) for df_wrapper in dfs_wrappers]
     fs_x0 = np.empty(d + 1, dtype=np.float64)
     fs_x0[0] = f_x0
     fs_x0[1:] = np.asarray(dfs_x0, dtype=np.float64)

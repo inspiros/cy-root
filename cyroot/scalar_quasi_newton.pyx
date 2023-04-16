@@ -4,7 +4,7 @@
 # cython: boundscheck = False
 # cython: profile = False
 
-from typing import Callable, Sequence, Optional, Union
+from typing import Callable, Optional
 
 import cython
 import numpy as np
@@ -14,14 +14,14 @@ from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
 
 from ._check_args cimport (
-    _check_stop_condition_initial_guess_scalar,
-    _check_stop_condition_initial_guesses_scalar,
-    _check_stop_condition_initial_guesses_complex_scalar,
+    _check_stop_cond_scalar_initial_guess,
+    _check_stop_cond_scalar_initial_guesses,
+    _check_stop_cond_complex_scalar_initial_guesses,
 )
 from ._check_args import (
-    _check_stop_condition_args,
-    _check_unique_initial_guesses,
-    _check_unique_initial_vals,
+    _check_stop_cond_args,
+    _check_initial_guesses_uniqueness,
+    _check_initial_vals_uniqueness,
 )
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from ._return_types import QuasiNewtonMethodReturnType
@@ -29,8 +29,7 @@ from .fptr cimport (
     DoubleScalarFPtr, PyDoubleScalarFPtr,
     ComplexScalarFPtr, PyComplexScalarFPtr
 )
-from .ops.scalar_ops cimport isclose, cabs, csqrt
-from .ops.vector_ops cimport fabs, fabs_width, cabs_width, argsort, permute
+from .ops cimport scalar_ops as sops, vector_ops as vops
 from .typing import VectorLike
 from .utils.function_tagging import tag
 
@@ -63,13 +62,14 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
     cdef double[2] xs = [x0, x1], f_xs = [f_x0, f_x1]
-    if _check_stop_condition_initial_guesses_scalar(xs, f_xs, etol, ertol, ptol, prtol,
-                                                    &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
+                                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double x2, df_01
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -80,13 +80,13 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
             break
         x2 = x0 - f_x0 * (x0 - x1) / df_01
         x0, f_x0 = x1, f_x1
-        x1, f_x1 = x2, f(x2)
+        x1, f_x1 = x2, f.eval(x2)
 
         precision = math.fabs(x1 - x0)
         error = math.fabs(f_x1)
 
     r, f_r = x1, f_x1
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -130,18 +130,18 @@ def secant(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_unique_initial_guesses(x0, x1)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    _check_initial_guesses_uniqueness((x0, x1))
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x0 is None:
-        f_x0 = f_wrapper(x0)
+        f_x0 = f_wrapper.eval(x0)
     if f_x1 is None:
-        f_x1 = f_wrapper(x1)
-    _check_unique_initial_vals(f_x0, f_x1)
+        f_x1 = f_wrapper.eval(x1)
+    _check_initial_vals_uniqueness((f_x0, f_x1))
 
-    res = secant_kernel(
-        <DoubleScalarFPtr> f_wrapper, x0, x1, f_x0, f_x1, etol, ertol, ptol, prtol, max_iter)
+    res = secant_kernel(f_wrapper, x0, x1, f_x0, f_x1,
+                        etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -161,20 +161,21 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef unsigned long step = 0
     cdef double r, f_r, precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guesses_scalar(x0s, f_x0s, etol, ertol, ptol, prtol,
-                                                    &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guesses(x0s, f_x0s, etol, ertol, ptol, prtol,
+                                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     # sort by error of f
-    cdef unsigned long[:] inds = argsort(fabs(f_x0s), reverse=<bint> True)
-    cdef double[:] xs = permute(x0s, inds)
-    cdef double[:] f_xs = permute(f_x0s, inds)
+    cdef unsigned long[:] inds = vops.argsort(vops.fabs(f_x0s), reverse=<bint> True)
+    cdef double[:] xs = vops.permute(x0s, inds)
+    cdef double[:] f_xs = vops.permute(f_x0s, inds)
 
     cdef double xn, f_xn, dp_xn
     cdef double[:] dfs = view.array(shape=(1 + 1,), itemsize=sizeof(double), format='d')
     cdef NewtonPolynomial poly = NewtonPolynomial(x0s.shape[0])
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -186,18 +187,18 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
             converged = False
             break
         xn = xs[-1] - f_xs[-1] / dp_xn
-        f_xn = f(xn)
+        f_xn = f.eval(xn)
         # remove x0 and add xn
         xs[:-1] = xs[1:]
         xs[-1] = xn
         f_xs[:-1] = f_xs[1:]
         f_xs[-1] = f_xn
 
-        precision = fabs_width(xs)
+        precision = vops.width(xs)
         error = math.fabs(f_xn)
 
     r, f_r = xn, f_xn
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 cdef class NewtonPolynomial:
@@ -294,21 +295,25 @@ def sidi(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
-    if len(xs) < 2:
-        raise ValueError(f'Requires at least 2 initial guesses. Got {len(xs)}.')
     xs = np.asarray(xs, dtype=np.float64)
+    if xs.shape[0] < 2:
+        raise ValueError('Requires at least 2 initial guesses. '
+                         f'Got {xs.shape[0]}.')
+    _check_initial_guesses_uniqueness(xs)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_xs is None:
-        f_xs = np.array([f_wrapper(x) for x in xs], dtype=np.float64)
-    elif len(f_xs) != len(xs):
-        raise ValueError(f'xs and f_xs must have same size. Got {len(xs)} and {len(f_xs)}.')
+        f_xs = np.array([f_wrapper.eval(x) for x in xs], dtype=np.float64)
     else:
         f_xs = np.asarray(f_xs, dtype=np.float64)
+        if xs.shape[0] != f_xs.shape[0]:
+            raise ValueError('xs and f_xs must have same size. '
+                             f'Got {xs.shape[0]} and {f_xs.shape[0]}.')
+    _check_initial_guesses_uniqueness(f_xs)
 
-    res = sidi_kernel(<DoubleScalarFPtr> f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)
+    res = sidi_kernel(f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -329,19 +334,20 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef unsigned long step = 0
     cdef double precision, error
     cdef bint converged, optimal
-    if _check_stop_condition_initial_guess_scalar(x0, f_x0, etol, ertol, ptol, prtol,
-                                                  &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
+                                             &precision, &error, &converged, &optimal):
         return x0, f_x0, step, precision, error, converged, optimal
 
     cdef double x1, x2, x3, denom
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
         step += 1
         x1 = x0 + f_x0
-        x2 = x1 + f(x1)
+        x2 = x1 + f.eval(x1)
         denom = x2 - 2 * x1 + x0
         if denom == 0:
             converged = False
@@ -352,10 +358,10 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
         else:
             x3 = x2 - (x2 - x1) ** 2 / denom
         precision = math.fabs(x3 - x0)
-        x0, f_x0 = x3, f(x3)
+        x0, f_x0 = x3, f.eval(x3)
         error = math.fabs(f_x0)
 
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return x0, f_x0, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -398,14 +404,14 @@ def steffensen(f: Callable[[float], float],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x0 is None:
-        f_x0 = f_wrapper(x0)
+        f_x0 = f_wrapper.eval(x0)
 
-    res = steffensen_kernel(
-        <DoubleScalarFPtr> f_wrapper, x0, f_x0, aitken, etol, ertol, ptol, prtol, max_iter)
+    res = steffensen_kernel(f_wrapper, x0, f_x0, aitken,
+                            etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -431,13 +437,14 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef bint converged, optimal
     cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
     cdef double[:] xs = x_arr, f_xs = f_arr
-    if _check_stop_condition_initial_guesses_scalar(xs, f_xs, etol, ertol, ptol, prtol,
-                                                    &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
+                                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double x3, df_01, df_02, df_12
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -453,13 +460,13 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
               + xs[2] * f_xs[0] * f_xs[1] / (df_02 * df_12))
         xs[0], f_xs[0] = xs[1], f_xs[1]
         xs[1], f_xs[1] = xs[2], f_xs[2]
-        xs[2], f_xs[2] = x3, f(x3)
+        xs[2], f_xs[2] = x3, f.eval(x3)
 
-        precision = fabs_width(xs)
+        precision = vops.width(xs)
         error = math.fabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -508,20 +515,20 @@ def inverse_quadratic_interp(
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_unique_initial_guesses(x0, x1, x2)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    _check_initial_guesses_uniqueness((x0, x1, x2))
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x0 is None:
-        f_x0 = f_wrapper(x0)
+        f_x0 = f_wrapper.eval(x0)
     if f_x1 is None:
-        f_x1 = f_wrapper(x1)
+        f_x1 = f_wrapper.eval(x1)
     if f_x2 is None:
-        f_x2 = f_wrapper(x2)
-    _check_unique_initial_vals(f_x0, f_x1, f_x2)
+        f_x2 = f_wrapper.eval(x2)
+    _check_initial_vals_uniqueness((f_x0, f_x1, f_x2))
 
-    res = inverse_quadratic_interp_kernel(
-        <DoubleScalarFPtr> f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
+    res = inverse_quadratic_interp_kernel(f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2,
+                                          etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -547,13 +554,14 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef bint converged, optimal
     cdef double[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
     cdef double[:] xs = x_arr, f_xs = f_arr
-    if _check_stop_condition_initial_guesses_scalar(xs, f_xs, etol, ertol, ptol, prtol,
-                                                    &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_scalar_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
+                                               &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double x3, d_01, d_12, df_01, df_02, df_12
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -574,13 +582,13 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
         x3 = xs[1] - f_xs[1] * df_02 / denom
         xs[0], f_xs[0] = xs[1], f_xs[1]
         xs[1], f_xs[1] = xs[2], f_xs[2]
-        xs[2], f_xs[2] = x3, f(x3)
+        xs[2], f_xs[2] = x3, f.eval(x3)
 
-        precision = fabs_width(xs)
+        precision = vops.width(xs)
         error = math.fabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -629,20 +637,20 @@ def hyperbolic_interp(
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_unique_initial_guesses(x0, x1, x2)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    _check_initial_guesses_uniqueness((x0, x1, x2))
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
     if f_x0 is None:
-        f_x0 = f_wrapper(x0)
+        f_x0 = f_wrapper.eval(x0)
     if f_x1 is None:
-        f_x1 = f_wrapper(x1)
+        f_x1 = f_wrapper.eval(x1)
     if f_x2 is None:
-        f_x2 = f_wrapper(x2)
-    _check_unique_initial_vals(f_x0, f_x1, f_x2)
+        f_x2 = f_wrapper.eval(x2)
+    _check_initial_vals_uniqueness((f_x0, f_x1, f_x2))
 
-    res = hyperbolic_interp_kernel(
-        <DoubleScalarFPtr> f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
+    res = hyperbolic_interp_kernel(f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2,
+                                   etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################
@@ -669,14 +677,15 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
     cdef bint converged, optimal
     cdef double complex[3] x_arr = [x0, x1, x2], f_arr = [f_x0, f_x1, f_x2]
     cdef double complex[:] xs = x_arr, f_xs = f_arr
-    if _check_stop_condition_initial_guesses_complex_scalar(xs, f_xs, etol, ertol, ptol, prtol,
-                                                            &r, &f_r, &precision, &error, &converged, &optimal):
+    if _check_stop_cond_complex_scalar_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
+                                                       &r, &f_r, &precision, &error, &converged, &optimal):
         return r, f_r, step, precision, error, converged, optimal
 
     cdef double complex div_diff_01, div_diff_12, div_diff_02, a, b, s_delta, d1, d2, d, x3
     cdef double complex d_01, d_02, d_12
     converged = True
-    while not (isclose(0, error, ertol, etol) or isclose(0, precision, prtol, ptol)):
+    while not (sops.isclose(0, error, ertol, etol) or
+               sops.isclose(0, precision, prtol, ptol)):
         if step >= max_iter > 0:
             converged = False
             break
@@ -694,21 +703,21 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
         div_diff_12 = (f_xs[1] - f_xs[2]) / d_12
         b = div_diff_01 + div_diff_02 - div_diff_12
         a = (div_diff_01 - div_diff_12) / d_02
-        s_delta = csqrt(b ** 2 - 4 * a * f_xs[2])  # \sqrt{b^2 - 4ac}
+        s_delta = sops.csqrt(b ** 2 - 4 * a * f_xs[2])  # \sqrt{b^2 - 4ac}
         d1, d2 = b + s_delta, b - s_delta
         # take the higher-magnitude denominator
-        d = d1 if cabs(d1) > cabs(d2) else d2
+        d = d1 if sops.cabs(d1) > sops.cabs(d2) else d2
 
         x3 = xs[2] - 2 * f_xs[2] / d
         xs[0], f_xs[0] = xs[1], f_xs[1]
         xs[1], f_xs[1] = xs[2], f_xs[2]
-        xs[2], f_xs[2] = x3, f(x3)
+        xs[2], f_xs[2] = x3, f.eval(x3)
 
-        precision = cabs_width(xs)
-        error = cabs(f_xs[2])
+        precision = vops.cwidth(xs)
+        error = sops.cabs(f_xs[2])
 
     r, f_r = xs[2], f_xs[2]
-    optimal = isclose(0, error, ertol, etol)
+    optimal = sops.isclose(0, error, ertol, etol)
     return r, f_r, step, precision, error, converged, optimal
 
 # noinspection DuplicatedCode
@@ -759,18 +768,18 @@ def muller(f: Callable[[complex], complex],
         solution: The solution represented as a ``RootResults`` object.
     """
     # check params
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol, ertol, ptol, prtol, max_iter)
-    _check_unique_initial_guesses(x0, x1, x2)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
+    _check_initial_guesses_uniqueness((x0, x1, x2))
 
     f_wrapper = PyComplexScalarFPtr.from_f(f)
     if f_x0 is None:
-        f_x0 = f_wrapper(x0)
+        f_x0 = f_wrapper.eval(x0)
     if f_x1 is None:
-        f_x1 = f_wrapper(x1)
+        f_x1 = f_wrapper.eval(x1)
     if f_x2 is None:
-        f_x2 = f_wrapper(x2)
-    _check_unique_initial_vals(f_x0, f_x1, f_x2)
+        f_x2 = f_wrapper.eval(x2)
+    _check_initial_vals_uniqueness((f_x0, f_x1, f_x2))
 
-    res = muller_kernel(
-        <ComplexScalarFPtr> f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2, etol, ertol, ptol, prtol, max_iter)
+    res = muller_kernel(f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2,
+                        etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)

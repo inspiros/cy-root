@@ -3,7 +3,7 @@ cimport numpy as np
 # --------------------------------
 # Bracketing methods
 # --------------------------------
-cdef bint _check_stop_condition_bracket_scalar(
+cdef bint _check_stop_cond_scalar_bracket(
         double a,
         double b,
         double f_a,
@@ -19,7 +19,7 @@ cdef bint _check_stop_condition_bracket_scalar(
         bint* converged,
         bint* optimal)
 
-cdef bint _check_stop_condition_bracket_vector(
+cdef bint _check_stop_cond_vector_bracket(
         double[:, :] bs,
         double[:, :] F_bs,
         double etol,
@@ -41,7 +41,7 @@ cdef bint _check_stop_condition_bracket_vector(
 # --------------------------------
 ctypedef double (*precision_func_type_scalar)(double[:])
 
-cdef bint _check_stop_condition_initial_guess_scalar(
+cdef bint _check_stop_cond_scalar_initial_guess(
         double x0,
         double f_x0,
         double etol,
@@ -53,7 +53,7 @@ cdef bint _check_stop_condition_initial_guess_scalar(
         bint* converged,
         bint* optimal)
 
-cdef bint _check_stop_condition_initial_guess_vector(
+cdef bint _check_stop_cond_vector_initial_guess(
         double[:] x0,
         double[:] F_x0,
         double etol,
@@ -65,7 +65,7 @@ cdef bint _check_stop_condition_initial_guess_vector(
         bint* converged,
         bint* optimal)
 
-cdef bint _check_stop_condition_initial_guesses_scalar(
+cdef bint _check_stop_cond_scalar_initial_guesses(
         double[:] xs,
         double[:] f_xs,
         double etol,
@@ -79,7 +79,7 @@ cdef bint _check_stop_condition_initial_guesses_scalar(
         bint* converged,
         bint* optimal)
 
-cdef bint _check_stop_condition_initial_guesses_vector(
+cdef bint _check_stop_cond_vector_initial_guesses(
         double[:, :] xs,
         double[:, :] F_xs,
         double etol,
@@ -98,7 +98,7 @@ cdef bint _check_stop_condition_initial_guesses_vector(
 # --------------------------------
 ctypedef double (*precision_func_type_complex_scalar)(double complex[:])
 
-cdef bint _check_stop_condition_initial_guess_complex_scalar(
+cdef bint _check_stop_cond_complex_scalar_initial_guess(
         double complex x0,
         double complex f_x0,
         double etol,
@@ -110,7 +110,7 @@ cdef bint _check_stop_condition_initial_guess_complex_scalar(
         bint* converged,
         bint* optimal)
 
-cdef bint _check_stop_condition_initial_guess_complex_vector(
+cdef bint _check_stop_cond_complex_vector_initial_guess(
         double complex[:] x0,
         double complex[:] F_x0,
         double etol,
@@ -122,7 +122,7 @@ cdef bint _check_stop_condition_initial_guess_complex_vector(
         bint* converged,
         bint* optimal)
 
-cdef bint _check_stop_condition_initial_guesses_complex_scalar(
+cdef bint _check_stop_cond_complex_scalar_initial_guesses(
         double complex[:] xs,
         double complex[:] f_xs,
         double etol,
@@ -131,6 +131,20 @@ cdef bint _check_stop_condition_initial_guesses_complex_scalar(
         double prtol,
         double complex* r,
         double complex* f_r,
+        double* precision,
+        double* error,
+        bint* converged,
+        bint* optimal)
+
+cdef bint _check_stop_cond_complex_vector_initial_guesses(
+        double complex[:, :] xs,
+        double complex[:, :] F_xs,
+        double etol,
+        double ertol,
+        double ptol,
+        double prtol,
+        double complex[:] r,
+        double complex[:] F_r,
         double* precision,
         double* error,
         bint* converged,

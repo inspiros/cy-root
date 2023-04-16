@@ -1,7 +1,7 @@
 from dynamic_default_args import dynamic_default_args, named_default
 import numpy as np
 
-from ._check_args import _check_stop_condition_args
+from ._check_args import _check_stop_cond_args
 
 __all__ = [
     'set_default_stop_condition_args',
@@ -44,11 +44,11 @@ def set_default_stop_condition_args(etol=named_default(ETOL=ETOL),
          If set to 0, the procedure will run indefinitely until
          stopping condition is met. Defaults to {max_iter}.
     """
-    etol, ertol, ptol, prtol, max_iter = _check_stop_condition_args(etol,
-                                                                    ertol,
-                                                                    ptol,
-                                                                    prtol,
-                                                                    max_iter)
+    etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol,
+                                                               ertol,
+                                                               ptol,
+                                                               prtol,
+                                                               max_iter)
     named_default('ETOL').value = etol
     named_default('ERTOL').value = ertol
     named_default('PTOL').value = ptol
