@@ -1,11 +1,5 @@
 name: Build
 
-variables:
-  CIBW_SKIP: "*-musllinux_* *-win32 *-manylinux_i686"
-  CIBW_BEFORE_ALL_LINUX: >
-    yum install -y lapack-devel   &&
-    yum install -y blas-devel;
-
 on:
   push:
     tags:
