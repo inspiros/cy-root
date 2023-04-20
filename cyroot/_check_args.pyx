@@ -52,29 +52,29 @@ def _check_stop_cond_args(etol: float,
     return etol, ertol, ptol, prtol, max_iter
 
 # noinspection DuplicatedCode
-def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
-    if not len(xs):
+def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
+    if not len(x0s):
         raise ValueError('Empty.')
-    elif isinstance(xs[0], np.ndarray):
-        if np.unique(xs if isinstance(xs, np.ndarray) else
-                     np.stack(xs), axis=0).shape[0] < len(xs):
+    elif isinstance(x0s[0], np.ndarray):
+        if np.unique(x0s if isinstance(x0s, np.ndarray) else
+                     np.stack(x0s), axis=0).shape[0] < len(x0s):
             raise ValueError(f'Initial guesses must be unique. Got:\n' +
-                             '\n'.join(repr(_) for _ in xs))
-    elif len(set(xs)) < len(xs):
-        raise ValueError(f'Initial guesses must be unique. Got {xs}.')
+                             '\n'.join(repr(_) for _ in x0s))
+    elif len(set(x0s)) < len(x0s):
+        raise ValueError(f'Initial guesses must be unique. Got {x0s}.')
 
 # noinspection DuplicatedCode
-def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
-    if not len(f_xs):
+def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
+    if not len(f_x0s):
         raise ValueError('Empty.')
-    elif isinstance(f_xs[0], np.ndarray):
-        if np.unique(f_xs if isinstance(f_xs, np.ndarray) else
-                     np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+    elif isinstance(f_x0s[0], np.ndarray):
+        if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else
+                     np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
             raise ValueError('Initial guesses\' values must be unique. '
-                             'Got:\n' + '\n'.join(repr(_) for _ in f_xs))
-    elif len(set(f_xs)) < len(f_xs):
+                             'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))
+    elif len(set(f_x0s)) < len(f_x0s):
         raise ValueError('Initial guesses\' values must be unique. '
-                         f'Got {f_xs}.')
+                         f'Got {f_x0s}.')
 
 ################################################################################
 # Bracketing methods
@@ -176,8 +176,8 @@ cdef inline bint _check_stop_cond_vector_initial_guess(
 
 # noinspection DuplicatedCode
 cdef inline bint _check_stop_cond_scalar_initial_guesses(
-        double[:] xs,
-        double[:] f_xs,
+        double[:] x0s,
+        double[:] f_x0s,
         double etol,
         double ertol,
         double ptol,
@@ -189,28 +189,28 @@ cdef inline bint _check_stop_cond_scalar_initial_guesses(
         bint* converged,
         bint* optimal):
     """Check if stop condition is already met."""
-    if xs.shape[0] == 0:
+    if x0s.shape[0] == 0:
         raise ValueError('Empty sequence.')
-    if xs.shape[0] == 1:
-        r[0], f_r[0] = xs[0], f_xs[0]
+    if x0s.shape[0] == 1:
+        r[0], f_r[0] = x0s[0], f_x0s[0]
         precision[0] = math.INFINITY
-        error[0] = math.fabs(f_xs[0])
+        error[0] = math.fabs(f_x0s[0])
         optimal[0] = sops.isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
-    cdef double[:] errors = vops.fabs(f_xs)
+    cdef double[:] errors = vops.fabs(f_x0s)
     cdef unsigned long best_i = vops.argmin(errors)
-    r[0], f_r[0] = xs[best_i], f_xs[best_i]
+    r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
     error[0] = errors[best_i]
-    precision[0] = vops.max(xs) - vops.min(xs)
+    precision[0] = vops.max(x0s) - vops.min(x0s)
     optimal[0] = sops.isclose(0, error[0], ertol, etol)
     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
     return optimal[0] or sops.isclose(0, precision[0], prtol, ptol)
 
 # noinspection DuplicatedCode
 cdef inline bint _check_stop_cond_vector_initial_guesses(
-        double[:, :] xs,
-        double[:, :] F_xs,
+        double[:, :] x0s,
+        double[:, :] F_x0s,
         double etol,
         double ertol,
         double ptol,
@@ -222,20 +222,20 @@ cdef inline bint _check_stop_cond_vector_initial_guesses(
         bint* converged,
         bint* optimal):
     """Check if stop condition is already met."""
-    if xs.shape[0] == 0:
+    if x0s.shape[0] == 0:
         raise ValueError('Empty sequence.')
-    if xs.shape[0] == 1:
-        r[:], F_r[:] = xs[0], F_xs[0]
+    if x0s.shape[0] == 1:
+        r[:], F_r[:] = x0s[0], F_x0s[0]
         precision[0] = math.INFINITY
-        error[0] = vops.max(vops.fabs(F_xs[0]))
+        error[0] = vops.max(vops.fabs(F_x0s[0]))
         optimal[0] = sops.isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
-    cdef double[:] errors = np.abs(F_xs).max(1)
+    cdef double[:] errors = np.abs(F_x0s).max(1)
     cdef unsigned long best_i = vops.argmin(errors)
-    r[:], F_r[:] = xs[best_i], F_xs[best_i]
+    r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
     error[0] = errors[best_i]
-    precision[0] = vops.max(np.max(xs, 0) - np.min(xs, 0))
+    precision[0] = vops.max(np.max(x0s, 0) - np.min(x0s, 0))
     optimal[0] = sops.isclose(0, error[0], ertol, etol)
     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
     return optimal[0] or sops.isclose(0, precision[0], prtol, ptol)
@@ -283,8 +283,8 @@ cdef inline bint _check_stop_cond_complex_vector_initial_guess(
 
 # noinspection DuplicatedCode
 cdef inline bint _check_stop_cond_complex_scalar_initial_guesses(
-        double complex[:] xs,
-        double complex[:] f_xs,
+        double complex[:] x0s,
+        double complex[:] f_x0s,
         double etol,
         double ertol,
         double ptol,
@@ -296,20 +296,20 @@ cdef inline bint _check_stop_cond_complex_scalar_initial_guesses(
         bint* converged,
         bint* optimal):
     """Check if stop condition is already met."""
-    if xs.shape[0] == 0:
+    if x0s.shape[0] == 0:
         raise ValueError('Empty sequence.')
-    if xs.shape[0] == 1:
-        r[0], f_r[0] = xs[0], f_xs[0]
+    if x0s.shape[0] == 1:
+        r[0], f_r[0] = x0s[0], f_x0s[0]
         precision[0] = math.INFINITY
-        error[0] = sops.cabs(f_xs[0])
+        error[0] = sops.cabs(f_x0s[0])
         optimal[0] = sops.isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
-    cdef double[:] errors = vops.cabs(f_xs)
+    cdef double[:] errors = vops.cabs(f_x0s)
     cdef unsigned long best_i = vops.argmin(errors)
-    r[0], f_r[0] = xs[best_i], f_xs[best_i]
+    r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
     error[0] = errors[best_i]
-    cdef double[:] xs_abs = vops.cabs(xs)
+    cdef double[:] xs_abs = vops.cabs(x0s)
     precision[0] = vops.max(xs_abs) - vops.min(xs_abs)
     optimal[0] = sops.isclose(0, error[0], ertol, etol)
     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
@@ -317,8 +317,8 @@ cdef inline bint _check_stop_cond_complex_scalar_initial_guesses(
 
 # noinspection DuplicatedCode
 cdef inline bint _check_stop_cond_complex_vector_initial_guesses(
-        double complex[:, :] xs,
-        double complex[:, :] F_xs,
+        double complex[:, :] x0s,
+        double complex[:, :] F_x0s,
         double etol,
         double ertol,
         double ptol,
@@ -330,20 +330,20 @@ cdef inline bint _check_stop_cond_complex_vector_initial_guesses(
         bint* converged,
         bint* optimal):
     """Check if stop condition is already met."""
-    if xs.shape[0] == 0:
+    if x0s.shape[0] == 0:
         raise ValueError('Empty sequence.')
-    if xs.shape[0] == 1:
-        r[:], F_r[:] = xs[0], F_xs[0]
+    if x0s.shape[0] == 1:
+        r[:], F_r[:] = x0s[0], F_x0s[0]
         precision[0] = math.INFINITY
-        error[0] = vops.max(vops.cabs(F_xs[0]))
+        error[0] = vops.max(vops.cabs(F_x0s[0]))
         optimal[0] = sops.isclose(0, error[0], ertol, etol)
         converged[0] = optimal[0]
         return optimal[0]
-    cdef double[:] errors = np.abs(F_xs).max(1)
+    cdef double[:] errors = np.abs(F_x0s).max(1)
     cdef unsigned long best_i = vops.argmin(errors)
-    r[:], F_r[:] = xs[best_i], F_xs[best_i]
+    r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
     error[0] = errors[best_i]
-    cdef double[:, :] xs_abs = np.abs(xs)
+    cdef double[:, :] xs_abs = np.abs(x0s)
     precision[0] = vops.max(np.max(xs_abs, 0) - np.min(xs_abs, 0))
     optimal[0] = sops.isclose(0, error[0], ertol, etol)
     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]

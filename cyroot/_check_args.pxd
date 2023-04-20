@@ -66,8 +66,8 @@ cdef bint _check_stop_cond_vector_initial_guess(
         bint* optimal)
 
 cdef bint _check_stop_cond_scalar_initial_guesses(
-        double[:] xs,
-        double[:] f_xs,
+        double[:] x0s,
+        double[:] f_x0s,
         double etol,
         double ertol,
         double ptol,
@@ -80,8 +80,8 @@ cdef bint _check_stop_cond_scalar_initial_guesses(
         bint* optimal)
 
 cdef bint _check_stop_cond_vector_initial_guesses(
-        double[:, :] xs,
-        double[:, :] F_xs,
+        double[:, :] x0s,
+        double[:, :] F_x0s,
         double etol,
         double ertol,
         double ptol,
@@ -123,8 +123,8 @@ cdef bint _check_stop_cond_complex_vector_initial_guess(
         bint* optimal)
 
 cdef bint _check_stop_cond_complex_scalar_initial_guesses(
-        double complex[:] xs,
-        double complex[:] f_xs,
+        double complex[:] x0s,
+        double complex[:] f_x0s,
         double etol,
         double ertol,
         double ptol,
@@ -137,8 +137,8 @@ cdef bint _check_stop_cond_complex_scalar_initial_guesses(
         bint* optimal)
 
 cdef bint _check_stop_cond_complex_vector_initial_guesses(
-        double complex[:, :] xs,
-        double complex[:, :] F_xs,
+        double complex[:, :] x0s,
+        double complex[:, :] F_x0s,
         double etol,
         double ertol,
         double ptol,

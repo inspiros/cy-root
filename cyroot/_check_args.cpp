@@ -1436,7 +1436,7 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
- * 
+ * cdef real min(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   int __pyx_n;
@@ -1448,8 +1448,8 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
- * 
- * cdef extern from '<math.h>' nogil:
+ * cdef real min(real a, real b) nogil
+ * cdef real max(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose {
   int __pyx_n;
@@ -1599,22 +1599,22 @@ struct __pyx_ctuple_double__and_double {
 /* "cyroot/_check_args.pyx":55
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(xs):
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(x0s):
  *         raise ValueError('Empty.')
  */
 struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness {
   PyObject_HEAD
-  PyObject *__pyx_v_xs;
+  PyObject *__pyx_v_x0s;
 };
 
 
 /* "cyroot/_check_args.pyx":62
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
- *                              '\n'.join(repr(_) for _ in xs))             # <<<<<<<<<<<<<<
- *     elif len(set(xs)) < len(xs):
- *         raise ValueError(f'Initial guesses must be unique. Got {xs}.')
+ *                              '\n'.join(repr(_) for _ in x0s))             # <<<<<<<<<<<<<<
+ *     elif len(set(x0s)) < len(x0s):
+ *         raise ValueError(f'Initial guesses must be unique. Got {x0s}.')
  */
 struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_1_genexpr {
   PyObject_HEAD
@@ -1626,21 +1626,21 @@ struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_1_genexpr {
 /* "cyroot/_check_args.pyx":67
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(f_xs):
+ * def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(f_x0s):
  *         raise ValueError('Empty.')
  */
 struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness {
   PyObject_HEAD
-  PyObject *__pyx_v_f_xs;
+  PyObject *__pyx_v_f_x0s;
 };
 
 
 /* "cyroot/_check_args.pyx":74
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  *             raise ValueError('Initial guesses\' values must be unique. '
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))             # <<<<<<<<<<<<<<
- *     elif len(set(f_xs)) < len(f_xs):
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))             # <<<<<<<<<<<<<<
+ *     elif len(set(f_x0s)) < len(f_x0s):
  *         raise ValueError('Initial guesses\' values must be unique. '
  */
 struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_3_genexpr {
@@ -2789,7 +2789,6 @@ static const char __pyx_k_c[] = "c";
 static const char __pyx_k__4[] = "\n";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_np[] = "np";
-static const char __pyx_k_xs[] = "xs";
 static const char __pyx_k_abs[] = "abs";
 static const char __pyx_k_all[] = "__all__";
 static const char __pyx_k_max[] = "max";
@@ -2797,12 +2796,12 @@ static const char __pyx_k_min[] = "min";
 static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_obj[] = "obj";
 static const char __pyx_k_tol[] = "tol";
+static const char __pyx_k_x0s[] = "x0s";
 static const char __pyx_k_args[] = "args";
 static const char __pyx_k_axis[] = "axis";
 static const char __pyx_k_base[] = "base";
 static const char __pyx_k_dict[] = "__dict__";
 static const char __pyx_k_etol[] = "etol";
-static const char __pyx_k_f_xs[] = "f_xs";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_math[] = "math";
 static const char __pyx_k_mode[] = "mode";
@@ -2822,6 +2821,7 @@ static const char __pyx_k_class[] = "__class__";
 static const char __pyx_k_close[] = "close";
 static const char __pyx_k_error[] = "error";
 static const char __pyx_k_ertol[] = "ertol";
+static const char __pyx_k_f_x0s[] = "f_x0s";
 static const char __pyx_k_flags[] = "flags";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_prtol[] = "prtol";
@@ -2985,7 +2985,7 @@ static PyObject *__pyx_n_s_ertol;
 static PyObject *__pyx_n_u_ertol;
 static PyObject *__pyx_n_s_etol;
 static PyObject *__pyx_n_u_etol;
-static PyObject *__pyx_n_s_f_xs;
+static PyObject *__pyx_n_s_f_x0s;
 static PyObject *__pyx_n_s_flags;
 static PyObject *__pyx_n_s_format;
 static PyObject *__pyx_n_s_fortran;
@@ -3058,13 +3058,13 @@ static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_n_s_unique;
 static PyObject *__pyx_n_s_unpack;
 static PyObject *__pyx_n_s_update;
-static PyObject *__pyx_n_s_xs;
+static PyObject *__pyx_n_s_x0s;
 static PyObject *__pyx_pf_6cyroot_11_check_args__check_stop_cond_arg(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_tol, PyObject *__pyx_v_arg_name); /* proto */
 static PyObject *__pyx_pf_6cyroot_11_check_args_2_check_stop_cond_args(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_etol, double __pyx_v_ertol, double __pyx_v_ptol, double __pyx_v_prtol, PyObject *__pyx_v_max_iter); /* proto */
 static PyObject *__pyx_pf_6cyroot_11_check_args_33_check_initial_guesses_uniqueness_genexpr(PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniqueness(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_xs); /* proto */
+static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniqueness(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_x0s); /* proto */
 static PyObject *__pyx_pf_6cyroot_11_check_args_30_check_initial_vals_uniqueness_genexpr(PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f_xs); /* proto */
+static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f_x0s); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(struct __pyx_array_obj *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_array___pyx_pf_15View_dot_MemoryView_5array_4__dealloc__(struct __pyx_array_obj *__pyx_v_self); /* proto */
@@ -4018,19 +4018,19 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_2_check_stop_cond_args(CYTHON_UN
 /* "cyroot/_check_args.pyx":55
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(xs):
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(x0s):
  *         raise ValueError('Empty.')
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6cyroot_11_check_args_5_check_initial_guesses_uniqueness(PyObject *__pyx_self, PyObject *__pyx_v_xs); /*proto*/
+static PyObject *__pyx_pw_6cyroot_11_check_args_5_check_initial_guesses_uniqueness(PyObject *__pyx_self, PyObject *__pyx_v_x0s); /*proto*/
 static PyMethodDef __pyx_mdef_6cyroot_11_check_args_5_check_initial_guesses_uniqueness = {"_check_initial_guesses_uniqueness", (PyCFunction)__pyx_pw_6cyroot_11_check_args_5_check_initial_guesses_uniqueness, METH_O, 0};
-static PyObject *__pyx_pw_6cyroot_11_check_args_5_check_initial_guesses_uniqueness(PyObject *__pyx_self, PyObject *__pyx_v_xs) {
+static PyObject *__pyx_pw_6cyroot_11_check_args_5_check_initial_guesses_uniqueness(PyObject *__pyx_self, PyObject *__pyx_v_x0s) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_check_initial_guesses_uniqueness (wrapper)", 0);
-  __pyx_r = __pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniqueness(__pyx_self, ((PyObject *)__pyx_v_xs));
+  __pyx_r = __pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniqueness(__pyx_self, ((PyObject *)__pyx_v_x0s));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
@@ -4039,11 +4039,11 @@ static PyObject *__pyx_pw_6cyroot_11_check_args_5_check_initial_guesses_uniquene
 static PyObject *__pyx_gb_6cyroot_11_check_args_33_check_initial_guesses_uniqueness_2generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
 /* "cyroot/_check_args.pyx":62
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
- *                              '\n'.join(repr(_) for _ in xs))             # <<<<<<<<<<<<<<
- *     elif len(set(xs)) < len(xs):
- *         raise ValueError(f'Initial guesses must be unique. Got {xs}.')
+ *                              '\n'.join(repr(_) for _ in x0s))             # <<<<<<<<<<<<<<
+ *     elif len(set(x0s)) < len(x0s):
+ *         raise ValueError(f'Initial guesses must be unique. Got {x0s}.')
  */
 
 static PyObject *__pyx_pf_6cyroot_11_check_args_33_check_initial_guesses_uniqueness_genexpr(PyObject *__pyx_self) {
@@ -4105,12 +4105,12 @@ static PyObject *__pyx_gb_6cyroot_11_check_args_33_check_initial_guesses_uniquen
   if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 62, __pyx_L1_error)
   __pyx_r = PyList_New(0); if (unlikely(!__pyx_r)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_r);
-  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_xs)) { __Pyx_RaiseClosureNameError("xs"); __PYX_ERR(0, 62, __pyx_L1_error) }
-  if (likely(PyList_CheckExact(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_xs)) || PyTuple_CheckExact(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_xs)) {
-    __pyx_t_1 = __pyx_cur_scope->__pyx_outer_scope->__pyx_v_xs; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_x0s)) { __Pyx_RaiseClosureNameError("x0s"); __PYX_ERR(0, 62, __pyx_L1_error) }
+  if (likely(PyList_CheckExact(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_x0s)) || PyTuple_CheckExact(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_x0s)) {
+    __pyx_t_1 = __pyx_cur_scope->__pyx_outer_scope->__pyx_v_x0s; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_xs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_x0s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   }
@@ -4178,12 +4178,12 @@ static PyObject *__pyx_gb_6cyroot_11_check_args_33_check_initial_guesses_uniquen
 /* "cyroot/_check_args.pyx":55
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(xs):
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(x0s):
  *         raise ValueError('Empty.')
  */
 
-static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniqueness(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_xs) {
+static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniqueness(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_x0s) {
   struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness *__pyx_cur_scope;
   PyObject *__pyx_gb_6cyroot_11_check_args_33_check_initial_guesses_uniqueness_2generator = 0;
   PyObject *__pyx_r = NULL;
@@ -4210,18 +4210,18 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
-  __pyx_cur_scope->__pyx_v_xs = __pyx_v_xs;
-  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_xs);
-  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_xs);
+  __pyx_cur_scope->__pyx_v_x0s = __pyx_v_x0s;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_x0s);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_x0s);
 
   /* "cyroot/_check_args.pyx":56
  * # noinspection DuplicatedCode
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
- *     if not len(xs):             # <<<<<<<<<<<<<<
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
+ *     if not len(x0s):             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty.')
- *     elif isinstance(xs[0], np.ndarray):
+ *     elif isinstance(x0s[0], np.ndarray):
  */
-  __pyx_t_1 = __pyx_cur_scope->__pyx_v_xs;
+  __pyx_t_1 = __pyx_cur_scope->__pyx_v_x0s;
   __Pyx_INCREF(__pyx_t_1);
   __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4229,11 +4229,11 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
   if (unlikely(__pyx_t_3)) {
 
     /* "cyroot/_check_args.pyx":57
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
- *     if not len(xs):
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
+ *     if not len(x0s):
  *         raise ValueError('Empty.')             # <<<<<<<<<<<<<<
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else
  */
     __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
@@ -4243,21 +4243,21 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
 
     /* "cyroot/_check_args.pyx":56
  * # noinspection DuplicatedCode
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
- *     if not len(xs):             # <<<<<<<<<<<<<<
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
+ *     if not len(x0s):             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty.')
- *     elif isinstance(xs[0], np.ndarray):
+ *     elif isinstance(x0s[0], np.ndarray):
  */
   }
 
   /* "cyroot/_check_args.pyx":58
- *     if not len(xs):
+ *     if not len(x0s):
  *         raise ValueError('Empty.')
- *     elif isinstance(xs[0], np.ndarray):             # <<<<<<<<<<<<<<
- *         if np.unique(xs if isinstance(xs, np.ndarray) else
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *     elif isinstance(x0s[0], np.ndarray):             # <<<<<<<<<<<<<<
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_xs, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_x0s, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = __Pyx_TypeCheck(__pyx_t_1, __pyx_ptype_5numpy_ndarray); 
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4266,9 +4266,9 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
 
     /* "cyroot/_check_args.pyx":59
  *         raise ValueError('Empty.')
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
  */
     __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
@@ -4276,21 +4276,21 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
     __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_unique); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 59, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_6 = __pyx_cur_scope->__pyx_v_xs;
+    __pyx_t_6 = __pyx_cur_scope->__pyx_v_x0s;
     __Pyx_INCREF(__pyx_t_6);
     __pyx_t_4 = __Pyx_TypeCheck(__pyx_t_6, __pyx_ptype_5numpy_ndarray); 
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     if ((__pyx_t_4 != 0)) {
-      __Pyx_INCREF(__pyx_cur_scope->__pyx_v_xs);
-      __pyx_t_1 = __pyx_cur_scope->__pyx_v_xs;
+      __Pyx_INCREF(__pyx_cur_scope->__pyx_v_x0s);
+      __pyx_t_1 = __pyx_cur_scope->__pyx_v_x0s;
     } else {
 
       /* "cyroot/_check_args.pyx":60
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else
- *                      np.stack(xs), axis=0).shape[0] < len(xs):             # <<<<<<<<<<<<<<
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):             # <<<<<<<<<<<<<<
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
- *                              '\n'.join(repr(_) for _ in xs))
+ *                              '\n'.join(repr(_) for _ in x0s))
  */
       __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 60, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
@@ -4307,7 +4307,7 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
           __Pyx_DECREF_SET(__pyx_t_8, function);
         }
       }
-      __pyx_t_6 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_7, __pyx_cur_scope->__pyx_v_xs) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_cur_scope->__pyx_v_xs);
+      __pyx_t_6 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_7, __pyx_cur_scope->__pyx_v_x0s) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_cur_scope->__pyx_v_x0s);
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 60, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
@@ -4318,9 +4318,9 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
 
     /* "cyroot/_check_args.pyx":59
  *         raise ValueError('Empty.')
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
  */
     __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 59, __pyx_L1_error)
@@ -4330,11 +4330,11 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
     __pyx_t_1 = 0;
 
     /* "cyroot/_check_args.pyx":60
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else
- *                      np.stack(xs), axis=0).shape[0] < len(xs):             # <<<<<<<<<<<<<<
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):             # <<<<<<<<<<<<<<
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
- *                              '\n'.join(repr(_) for _ in xs))
+ *                              '\n'.join(repr(_) for _ in x0s))
  */
     __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
@@ -4342,9 +4342,9 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
 
     /* "cyroot/_check_args.pyx":59
  *         raise ValueError('Empty.')
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
  */
     __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 59, __pyx_L1_error)
@@ -4354,11 +4354,11 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
     /* "cyroot/_check_args.pyx":60
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else
- *                      np.stack(xs), axis=0).shape[0] < len(xs):             # <<<<<<<<<<<<<<
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):             # <<<<<<<<<<<<<<
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
- *                              '\n'.join(repr(_) for _ in xs))
+ *                              '\n'.join(repr(_) for _ in x0s))
  */
     __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
@@ -4366,7 +4366,7 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
     __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 60, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __pyx_cur_scope->__pyx_v_xs;
+    __pyx_t_1 = __pyx_cur_scope->__pyx_v_x0s;
     __Pyx_INCREF(__pyx_t_1);
     __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 60, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4380,19 +4380,19 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
 
     /* "cyroot/_check_args.pyx":59
  *         raise ValueError('Empty.')
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
  */
     if (unlikely(__pyx_t_4)) {
 
       /* "cyroot/_check_args.pyx":62
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
- *                              '\n'.join(repr(_) for _ in xs))             # <<<<<<<<<<<<<<
- *     elif len(set(xs)) < len(xs):
- *         raise ValueError(f'Initial guesses must be unique. Got {xs}.')
+ *                              '\n'.join(repr(_) for _ in x0s))             # <<<<<<<<<<<<<<
+ *     elif len(set(x0s)) < len(x0s):
+ *         raise ValueError(f'Initial guesses must be unique. Got {x0s}.')
  */
       __pyx_t_6 = __pyx_pf_6cyroot_11_check_args_33_check_initial_guesses_uniqueness_genexpr(((PyObject*)__pyx_cur_scope)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 62, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
@@ -4404,11 +4404,11 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
       /* "cyroot/_check_args.pyx":61
- *         if np.unique(xs if isinstance(xs, np.ndarray) else
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +             # <<<<<<<<<<<<<<
- *                              '\n'.join(repr(_) for _ in xs))
- *     elif len(set(xs)) < len(xs):
+ *                              '\n'.join(repr(_) for _ in x0s))
+ *     elif len(set(x0s)) < len(x0s):
  */
       __pyx_t_1 = __Pyx_PyUnicode_Concat(__pyx_kp_u_Initial_guesses_must_be_unique_G, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
@@ -4422,35 +4422,35 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
 
       /* "cyroot/_check_args.pyx":59
  *         raise ValueError('Empty.')
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
  */
     }
 
     /* "cyroot/_check_args.pyx":58
- *     if not len(xs):
+ *     if not len(x0s):
  *         raise ValueError('Empty.')
- *     elif isinstance(xs[0], np.ndarray):             # <<<<<<<<<<<<<<
- *         if np.unique(xs if isinstance(xs, np.ndarray) else
- *                      np.stack(xs), axis=0).shape[0] < len(xs):
+ *     elif isinstance(x0s[0], np.ndarray):             # <<<<<<<<<<<<<<
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else
+ *                      np.stack(x0s), axis=0).shape[0] < len(x0s):
  */
     goto __pyx_L3;
   }
 
   /* "cyroot/_check_args.pyx":63
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
- *                              '\n'.join(repr(_) for _ in xs))
- *     elif len(set(xs)) < len(xs):             # <<<<<<<<<<<<<<
- *         raise ValueError(f'Initial guesses must be unique. Got {xs}.')
+ *                              '\n'.join(repr(_) for _ in x0s))
+ *     elif len(set(x0s)) < len(x0s):             # <<<<<<<<<<<<<<
+ *         raise ValueError(f'Initial guesses must be unique. Got {x0s}.')
  * 
  */
-  __pyx_t_6 = PySet_New(__pyx_cur_scope->__pyx_v_xs); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_6 = PySet_New(__pyx_cur_scope->__pyx_v_x0s); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_2 = PySet_GET_SIZE(__pyx_t_6); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __pyx_cur_scope->__pyx_v_xs;
+  __pyx_t_6 = __pyx_cur_scope->__pyx_v_x0s;
   __Pyx_INCREF(__pyx_t_6);
   __pyx_t_9 = PyObject_Length(__pyx_t_6); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -4458,9 +4458,9 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
   if (unlikely(__pyx_t_4)) {
 
     /* "cyroot/_check_args.pyx":64
- *                              '\n'.join(repr(_) for _ in xs))
- *     elif len(set(xs)) < len(xs):
- *         raise ValueError(f'Initial guesses must be unique. Got {xs}.')             # <<<<<<<<<<<<<<
+ *                              '\n'.join(repr(_) for _ in x0s))
+ *     elif len(set(x0s)) < len(x0s):
+ *         raise ValueError(f'Initial guesses must be unique. Got {x0s}.')             # <<<<<<<<<<<<<<
  * 
  * # noinspection DuplicatedCode
  */
@@ -4472,7 +4472,7 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
     __pyx_t_9 += 36;
     __Pyx_GIVEREF(__pyx_kp_u_Initial_guesses_must_be_unique_G_2);
     PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_Initial_guesses_must_be_unique_G_2);
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_cur_scope->__pyx_v_xs, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_cur_scope->__pyx_v_x0s, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_10 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_10) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_10;
     __pyx_t_9 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
@@ -4495,9 +4495,9 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
 
     /* "cyroot/_check_args.pyx":63
  *             raise ValueError(f'Initial guesses must be unique. Got:\n' +
- *                              '\n'.join(repr(_) for _ in xs))
- *     elif len(set(xs)) < len(xs):             # <<<<<<<<<<<<<<
- *         raise ValueError(f'Initial guesses must be unique. Got {xs}.')
+ *                              '\n'.join(repr(_) for _ in x0s))
+ *     elif len(set(x0s)) < len(x0s):             # <<<<<<<<<<<<<<
+ *         raise ValueError(f'Initial guesses must be unique. Got {x0s}.')
  * 
  */
   }
@@ -4506,8 +4506,8 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
   /* "cyroot/_check_args.pyx":55
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(xs):
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(x0s):
  *         raise ValueError('Empty.')
  */
 
@@ -4533,19 +4533,19 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_4_check_initial_guesses_uniquene
 /* "cyroot/_check_args.pyx":67
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(f_xs):
+ * def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(f_x0s):
  *         raise ValueError('Empty.')
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6cyroot_11_check_args_7_check_initial_vals_uniqueness(PyObject *__pyx_self, PyObject *__pyx_v_f_xs); /*proto*/
+static PyObject *__pyx_pw_6cyroot_11_check_args_7_check_initial_vals_uniqueness(PyObject *__pyx_self, PyObject *__pyx_v_f_x0s); /*proto*/
 static PyMethodDef __pyx_mdef_6cyroot_11_check_args_7_check_initial_vals_uniqueness = {"_check_initial_vals_uniqueness", (PyCFunction)__pyx_pw_6cyroot_11_check_args_7_check_initial_vals_uniqueness, METH_O, 0};
-static PyObject *__pyx_pw_6cyroot_11_check_args_7_check_initial_vals_uniqueness(PyObject *__pyx_self, PyObject *__pyx_v_f_xs) {
+static PyObject *__pyx_pw_6cyroot_11_check_args_7_check_initial_vals_uniqueness(PyObject *__pyx_self, PyObject *__pyx_v_f_x0s) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_check_initial_vals_uniqueness (wrapper)", 0);
-  __pyx_r = __pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(__pyx_self, ((PyObject *)__pyx_v_f_xs));
+  __pyx_r = __pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(__pyx_self, ((PyObject *)__pyx_v_f_x0s));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
@@ -4554,10 +4554,10 @@ static PyObject *__pyx_pw_6cyroot_11_check_args_7_check_initial_vals_uniqueness(
 static PyObject *__pyx_gb_6cyroot_11_check_args_30_check_initial_vals_uniqueness_2generator1(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
 /* "cyroot/_check_args.pyx":74
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  *             raise ValueError('Initial guesses\' values must be unique. '
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))             # <<<<<<<<<<<<<<
- *     elif len(set(f_xs)) < len(f_xs):
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))             # <<<<<<<<<<<<<<
+ *     elif len(set(f_x0s)) < len(f_x0s):
  *         raise ValueError('Initial guesses\' values must be unique. '
  */
 
@@ -4620,12 +4620,12 @@ static PyObject *__pyx_gb_6cyroot_11_check_args_30_check_initial_vals_uniqueness
   if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 74, __pyx_L1_error)
   __pyx_r = PyList_New(0); if (unlikely(!__pyx_r)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_r);
-  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_xs)) { __Pyx_RaiseClosureNameError("f_xs"); __PYX_ERR(0, 74, __pyx_L1_error) }
-  if (likely(PyList_CheckExact(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_xs)) || PyTuple_CheckExact(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_xs)) {
-    __pyx_t_1 = __pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_xs; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_x0s)) { __Pyx_RaiseClosureNameError("f_x0s"); __PYX_ERR(0, 74, __pyx_L1_error) }
+  if (likely(PyList_CheckExact(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_x0s)) || PyTuple_CheckExact(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_x0s)) {
+    __pyx_t_1 = __pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_x0s; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_xs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_f_x0s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L1_error)
   }
@@ -4693,12 +4693,12 @@ static PyObject *__pyx_gb_6cyroot_11_check_args_30_check_initial_vals_uniqueness
 /* "cyroot/_check_args.pyx":67
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(f_xs):
+ * def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(f_x0s):
  *         raise ValueError('Empty.')
  */
 
-static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f_xs) {
+static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f_x0s) {
   struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness *__pyx_cur_scope;
   PyObject *__pyx_gb_6cyroot_11_check_args_30_check_initial_vals_uniqueness_2generator1 = 0;
   PyObject *__pyx_r = NULL;
@@ -4725,18 +4725,18 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
-  __pyx_cur_scope->__pyx_v_f_xs = __pyx_v_f_xs;
-  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_f_xs);
-  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_f_xs);
+  __pyx_cur_scope->__pyx_v_f_x0s = __pyx_v_f_x0s;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_f_x0s);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_f_x0s);
 
   /* "cyroot/_check_args.pyx":68
  * # noinspection DuplicatedCode
- * def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
- *     if not len(f_xs):             # <<<<<<<<<<<<<<
+ * def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
+ *     if not len(f_x0s):             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty.')
- *     elif isinstance(f_xs[0], np.ndarray):
+ *     elif isinstance(f_x0s[0], np.ndarray):
  */
-  __pyx_t_1 = __pyx_cur_scope->__pyx_v_f_xs;
+  __pyx_t_1 = __pyx_cur_scope->__pyx_v_f_x0s;
   __Pyx_INCREF(__pyx_t_1);
   __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4744,11 +4744,11 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
   if (unlikely(__pyx_t_3)) {
 
     /* "cyroot/_check_args.pyx":69
- * def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
- *     if not len(f_xs):
+ * def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
+ *     if not len(f_x0s):
  *         raise ValueError('Empty.')             # <<<<<<<<<<<<<<
- *     elif isinstance(f_xs[0], np.ndarray):
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else
+ *     elif isinstance(f_x0s[0], np.ndarray):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else
  */
     __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
@@ -4758,21 +4758,21 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
 
     /* "cyroot/_check_args.pyx":68
  * # noinspection DuplicatedCode
- * def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
- *     if not len(f_xs):             # <<<<<<<<<<<<<<
+ * def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
+ *     if not len(f_x0s):             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty.')
- *     elif isinstance(f_xs[0], np.ndarray):
+ *     elif isinstance(f_x0s[0], np.ndarray):
  */
   }
 
   /* "cyroot/_check_args.pyx":70
- *     if not len(f_xs):
+ *     if not len(f_x0s):
  *         raise ValueError('Empty.')
- *     elif isinstance(f_xs[0], np.ndarray):             # <<<<<<<<<<<<<<
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *     elif isinstance(f_x0s[0], np.ndarray):             # <<<<<<<<<<<<<<
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_f_xs, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_f_x0s, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = __Pyx_TypeCheck(__pyx_t_1, __pyx_ptype_5numpy_ndarray); 
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4781,9 +4781,9 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
 
     /* "cyroot/_check_args.pyx":71
  *         raise ValueError('Empty.')
- *     elif isinstance(f_xs[0], np.ndarray):
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *     elif isinstance(f_x0s[0], np.ndarray):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  *             raise ValueError('Initial guesses\' values must be unique. '
  */
     __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
@@ -4791,21 +4791,21 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
     __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_unique); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_6 = __pyx_cur_scope->__pyx_v_f_xs;
+    __pyx_t_6 = __pyx_cur_scope->__pyx_v_f_x0s;
     __Pyx_INCREF(__pyx_t_6);
     __pyx_t_4 = __Pyx_TypeCheck(__pyx_t_6, __pyx_ptype_5numpy_ndarray); 
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     if ((__pyx_t_4 != 0)) {
-      __Pyx_INCREF(__pyx_cur_scope->__pyx_v_f_xs);
-      __pyx_t_1 = __pyx_cur_scope->__pyx_v_f_xs;
+      __Pyx_INCREF(__pyx_cur_scope->__pyx_v_f_x0s);
+      __pyx_t_1 = __pyx_cur_scope->__pyx_v_f_x0s;
     } else {
 
       /* "cyroot/_check_args.pyx":72
- *     elif isinstance(f_xs[0], np.ndarray):
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):             # <<<<<<<<<<<<<<
+ *     elif isinstance(f_x0s[0], np.ndarray):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):             # <<<<<<<<<<<<<<
  *             raise ValueError('Initial guesses\' values must be unique. '
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))
  */
       __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 72, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
@@ -4822,7 +4822,7 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
           __Pyx_DECREF_SET(__pyx_t_8, function);
         }
       }
-      __pyx_t_6 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_7, __pyx_cur_scope->__pyx_v_f_xs) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_cur_scope->__pyx_v_f_xs);
+      __pyx_t_6 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_7, __pyx_cur_scope->__pyx_v_f_x0s) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_cur_scope->__pyx_v_f_x0s);
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 72, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
@@ -4833,9 +4833,9 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
 
     /* "cyroot/_check_args.pyx":71
  *         raise ValueError('Empty.')
- *     elif isinstance(f_xs[0], np.ndarray):
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *     elif isinstance(f_x0s[0], np.ndarray):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  *             raise ValueError('Initial guesses\' values must be unique. '
  */
     __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 71, __pyx_L1_error)
@@ -4845,11 +4845,11 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
     __pyx_t_1 = 0;
 
     /* "cyroot/_check_args.pyx":72
- *     elif isinstance(f_xs[0], np.ndarray):
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):             # <<<<<<<<<<<<<<
+ *     elif isinstance(f_x0s[0], np.ndarray):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):             # <<<<<<<<<<<<<<
  *             raise ValueError('Initial guesses\' values must be unique. '
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))
  */
     __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
@@ -4857,9 +4857,9 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
 
     /* "cyroot/_check_args.pyx":71
  *         raise ValueError('Empty.')
- *     elif isinstance(f_xs[0], np.ndarray):
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *     elif isinstance(f_x0s[0], np.ndarray):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  *             raise ValueError('Initial guesses\' values must be unique. '
  */
     __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 71, __pyx_L1_error)
@@ -4869,11 +4869,11 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
     /* "cyroot/_check_args.pyx":72
- *     elif isinstance(f_xs[0], np.ndarray):
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):             # <<<<<<<<<<<<<<
+ *     elif isinstance(f_x0s[0], np.ndarray):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):             # <<<<<<<<<<<<<<
  *             raise ValueError('Initial guesses\' values must be unique. '
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))
  */
     __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
@@ -4881,7 +4881,7 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
     __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __pyx_cur_scope->__pyx_v_f_xs;
+    __pyx_t_1 = __pyx_cur_scope->__pyx_v_f_x0s;
     __Pyx_INCREF(__pyx_t_1);
     __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4895,18 +4895,18 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
 
     /* "cyroot/_check_args.pyx":71
  *         raise ValueError('Empty.')
- *     elif isinstance(f_xs[0], np.ndarray):
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *     elif isinstance(f_x0s[0], np.ndarray):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  *             raise ValueError('Initial guesses\' values must be unique. '
  */
     if (unlikely(__pyx_t_4)) {
 
       /* "cyroot/_check_args.pyx":74
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  *             raise ValueError('Initial guesses\' values must be unique. '
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))             # <<<<<<<<<<<<<<
- *     elif len(set(f_xs)) < len(f_xs):
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))             # <<<<<<<<<<<<<<
+ *     elif len(set(f_x0s)) < len(f_x0s):
  *         raise ValueError('Initial guesses\' values must be unique. '
  */
       __pyx_t_6 = __pyx_pf_6cyroot_11_check_args_30_check_initial_vals_uniqueness_genexpr(((PyObject*)__pyx_cur_scope)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 74, __pyx_L1_error)
@@ -4922,11 +4922,11 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
       /* "cyroot/_check_args.pyx":73
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  *             raise ValueError('Initial guesses\' values must be unique. '             # <<<<<<<<<<<<<<
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))
- *     elif len(set(f_xs)) < len(f_xs):
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))
+ *     elif len(set(f_x0s)) < len(f_x0s):
  */
       __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 73, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
@@ -4937,35 +4937,35 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
 
       /* "cyroot/_check_args.pyx":71
  *         raise ValueError('Empty.')
- *     elif isinstance(f_xs[0], np.ndarray):
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else             # <<<<<<<<<<<<<<
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *     elif isinstance(f_x0s[0], np.ndarray):
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else             # <<<<<<<<<<<<<<
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  *             raise ValueError('Initial guesses\' values must be unique. '
  */
     }
 
     /* "cyroot/_check_args.pyx":70
- *     if not len(f_xs):
+ *     if not len(f_x0s):
  *         raise ValueError('Empty.')
- *     elif isinstance(f_xs[0], np.ndarray):             # <<<<<<<<<<<<<<
- *         if np.unique(f_xs if isinstance(f_xs, np.ndarray) else
- *                      np.stack(f_xs), axis=0).shape[0] < len(f_xs):
+ *     elif isinstance(f_x0s[0], np.ndarray):             # <<<<<<<<<<<<<<
+ *         if np.unique(f_x0s if isinstance(f_x0s, np.ndarray) else
+ *                      np.stack(f_x0s), axis=0).shape[0] < len(f_x0s):
  */
     goto __pyx_L3;
   }
 
   /* "cyroot/_check_args.pyx":75
  *             raise ValueError('Initial guesses\' values must be unique. '
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))
- *     elif len(set(f_xs)) < len(f_xs):             # <<<<<<<<<<<<<<
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))
+ *     elif len(set(f_x0s)) < len(f_x0s):             # <<<<<<<<<<<<<<
  *         raise ValueError('Initial guesses\' values must be unique. '
- *                          f'Got {f_xs}.')
+ *                          f'Got {f_x0s}.')
  */
-  __pyx_t_6 = PySet_New(__pyx_cur_scope->__pyx_v_f_xs); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_6 = PySet_New(__pyx_cur_scope->__pyx_v_f_x0s); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_2 = PySet_GET_SIZE(__pyx_t_6); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __pyx_cur_scope->__pyx_v_f_xs;
+  __pyx_t_6 = __pyx_cur_scope->__pyx_v_f_x0s;
   __Pyx_INCREF(__pyx_t_6);
   __pyx_t_9 = PyObject_Length(__pyx_t_6); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -4973,10 +4973,10 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
   if (unlikely(__pyx_t_4)) {
 
     /* "cyroot/_check_args.pyx":76
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))
- *     elif len(set(f_xs)) < len(f_xs):
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))
+ *     elif len(set(f_x0s)) < len(f_x0s):
  *         raise ValueError('Initial guesses\' values must be unique. '             # <<<<<<<<<<<<<<
- *                          f'Got {f_xs}.')
+ *                          f'Got {f_x0s}.')
  * 
  */
     __pyx_t_6 = PyTuple_New(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 76, __pyx_L1_error)
@@ -4989,13 +4989,13 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
     PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_Initial_guesses_values_must_be_u_2);
 
     /* "cyroot/_check_args.pyx":77
- *     elif len(set(f_xs)) < len(f_xs):
+ *     elif len(set(f_x0s)) < len(f_x0s):
  *         raise ValueError('Initial guesses\' values must be unique. '
- *                          f'Got {f_xs}.')             # <<<<<<<<<<<<<<
+ *                          f'Got {f_x0s}.')             # <<<<<<<<<<<<<<
  * 
  * ################################################################################
  */
-    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_cur_scope->__pyx_v_f_xs, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_cur_scope->__pyx_v_f_x0s, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_10 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_10) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_10;
     __pyx_t_9 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
@@ -5008,10 +5008,10 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
     PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_kp_u_);
 
     /* "cyroot/_check_args.pyx":76
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))
- *     elif len(set(f_xs)) < len(f_xs):
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))
+ *     elif len(set(f_x0s)) < len(f_x0s):
  *         raise ValueError('Initial guesses\' values must be unique. '             # <<<<<<<<<<<<<<
- *                          f'Got {f_xs}.')
+ *                          f'Got {f_x0s}.')
  * 
  */
     __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_6, 3, __pyx_t_9, __pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
@@ -5026,10 +5026,10 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
 
     /* "cyroot/_check_args.pyx":75
  *             raise ValueError('Initial guesses\' values must be unique. '
- *                              'Got:\n' + '\n'.join(repr(_) for _ in f_xs))
- *     elif len(set(f_xs)) < len(f_xs):             # <<<<<<<<<<<<<<
+ *                              'Got:\n' + '\n'.join(repr(_) for _ in f_x0s))
+ *     elif len(set(f_x0s)) < len(f_x0s):             # <<<<<<<<<<<<<<
  *         raise ValueError('Initial guesses\' values must be unique. '
- *                          f'Got {f_xs}.')
+ *                          f'Got {f_x0s}.')
  */
   }
   __pyx_L3:;
@@ -5037,8 +5037,8 @@ static PyObject *__pyx_pf_6cyroot_11_check_args_6_check_initial_vals_uniqueness(
   /* "cyroot/_check_args.pyx":67
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(f_xs):
+ * def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(f_x0s):
  *         raise ValueError('Empty.')
  */
 
@@ -5774,11 +5774,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_vector_i
  * 
  * # noinspection DuplicatedCode
  * cdef inline bint _check_stop_cond_scalar_initial_guesses(             # <<<<<<<<<<<<<<
- *         double[:] xs,
- *         double[:] f_xs,
+ *         double[:] x0s,
+ *         double[:] f_x0s,
  */
 
-static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_initial_guesses(__Pyx_memviewslice __pyx_v_xs, __Pyx_memviewslice __pyx_v_f_xs, double __pyx_v_etol, double __pyx_v_ertol, double __pyx_v_ptol, double __pyx_v_prtol, double *__pyx_v_r, double *__pyx_v_f_r, double *__pyx_v_precision, double *__pyx_v_error, int *__pyx_v_converged, int *__pyx_v_optimal) {
+static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_initial_guesses(__Pyx_memviewslice __pyx_v_x0s, __Pyx_memviewslice __pyx_v_f_x0s, double __pyx_v_etol, double __pyx_v_ertol, double __pyx_v_ptol, double __pyx_v_prtol, double *__pyx_v_r, double *__pyx_v_f_r, double *__pyx_v_precision, double *__pyx_v_error, int *__pyx_v_converged, int *__pyx_v_optimal) {
   __Pyx_memviewslice __pyx_v_errors = { 0, 0, { 0 }, { 0 }, { 0 } };
   unsigned long __pyx_v_best_i;
   int __pyx_r;
@@ -5801,19 +5801,19 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_i
   /* "cyroot/_check_args.pyx":192
  *         bint* optimal):
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 0:             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
+ *     if x0s.shape[0] == 1:
  */
-  __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 0) != 0);
+  __pyx_t_1 = (((__pyx_v_x0s.shape[0]) == 0) != 0);
   if (unlikely(__pyx_t_1)) {
 
     /* "cyroot/_check_args.pyx":193
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')             # <<<<<<<<<<<<<<
- *     if xs.shape[0] == 1:
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *     if x0s.shape[0] == 1:
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  */
     __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 193, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
@@ -5824,61 +5824,61 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_i
     /* "cyroot/_check_args.pyx":192
  *         bint* optimal):
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 0:             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
+ *     if x0s.shape[0] == 1:
  */
   }
 
   /* "cyroot/_check_args.pyx":194
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:             # <<<<<<<<<<<<<<
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *     if x0s.shape[0] == 1:             # <<<<<<<<<<<<<<
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  *         precision[0] = math.INFINITY
  */
-  __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 1) != 0);
+  __pyx_t_1 = (((__pyx_v_x0s.shape[0]) == 1) != 0);
   if (__pyx_t_1) {
 
     /* "cyroot/_check_args.pyx":195
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
- *         r[0], f_r[0] = xs[0], f_xs[0]             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 1:
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]             # <<<<<<<<<<<<<<
  *         precision[0] = math.INFINITY
- *         error[0] = math.fabs(f_xs[0])
+ *         error[0] = math.fabs(f_x0s[0])
  */
     __pyx_t_3 = 0;
-    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_xs.shape[0];
-    __pyx_t_4 = (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_3 * __pyx_v_xs.strides[0]) )));
+    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_x0s.shape[0];
+    __pyx_t_4 = (*((double *) ( /* dim=0 */ (__pyx_v_x0s.data + __pyx_t_3 * __pyx_v_x0s.strides[0]) )));
     __pyx_t_3 = 0;
-    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_f_xs.shape[0];
-    __pyx_t_5 = (*((double *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_3 * __pyx_v_f_xs.strides[0]) )));
+    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_f_x0s.shape[0];
+    __pyx_t_5 = (*((double *) ( /* dim=0 */ (__pyx_v_f_x0s.data + __pyx_t_3 * __pyx_v_f_x0s.strides[0]) )));
     (__pyx_v_r[0]) = __pyx_t_4;
     (__pyx_v_f_r[0]) = __pyx_t_5;
 
     /* "cyroot/_check_args.pyx":196
- *     if xs.shape[0] == 1:
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *     if x0s.shape[0] == 1:
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  *         precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
- *         error[0] = math.fabs(f_xs[0])
+ *         error[0] = math.fabs(f_x0s[0])
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  */
     (__pyx_v_precision[0]) = INFINITY;
 
     /* "cyroot/_check_args.pyx":197
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  *         precision[0] = math.INFINITY
- *         error[0] = math.fabs(f_xs[0])             # <<<<<<<<<<<<<<
+ *         error[0] = math.fabs(f_x0s[0])             # <<<<<<<<<<<<<<
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  */
     __pyx_t_3 = 0;
-    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_f_xs.shape[0];
-    (__pyx_v_error[0]) = fabs((*((double *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_3 * __pyx_v_f_xs.strides[0]) ))));
+    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_f_x0s.shape[0];
+    (__pyx_v_error[0]) = fabs((*((double *) ( /* dim=0 */ (__pyx_v_f_x0s.data + __pyx_t_3 * __pyx_v_f_x0s.strides[0]) ))));
 
     /* "cyroot/_check_args.pyx":198
  *         precision[0] = math.INFINITY
- *         error[0] = math.fabs(f_xs[0])
+ *         error[0] = math.fabs(f_x0s[0])
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *         converged[0] = optimal[0]
  *         return optimal[0]
@@ -5890,11 +5890,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_i
     (__pyx_v_optimal[0]) = __pyx_t_1;
 
     /* "cyroot/_check_args.pyx":199
- *         error[0] = math.fabs(f_xs[0])
+ *         error[0] = math.fabs(f_x0s[0])
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *         return optimal[0]
- *     cdef double[:] errors = vops.fabs(f_xs)
+ *     cdef double[:] errors = vops.fabs(f_x0s)
  */
     (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
@@ -5902,17 +5902,17 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_i
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  *         return optimal[0]             # <<<<<<<<<<<<<<
- *     cdef double[:] errors = vops.fabs(f_xs)
+ *     cdef double[:] errors = vops.fabs(f_x0s)
  *     cdef unsigned long best_i = vops.argmin(errors)
  */
     __pyx_r = (__pyx_v_optimal[0]);
     goto __pyx_L0;
 
     /* "cyroot/_check_args.pyx":194
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:             # <<<<<<<<<<<<<<
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *     if x0s.shape[0] == 1:             # <<<<<<<<<<<<<<
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  *         precision[0] = math.INFINITY
  */
   }
@@ -5920,60 +5920,60 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_i
   /* "cyroot/_check_args.pyx":201
  *         converged[0] = optimal[0]
  *         return optimal[0]
- *     cdef double[:] errors = vops.fabs(f_xs)             # <<<<<<<<<<<<<<
+ *     cdef double[:] errors = vops.fabs(f_x0s)             # <<<<<<<<<<<<<<
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
  */
-  __pyx_t_7 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_v_f_xs); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 201, __pyx_L1_error)
+  __pyx_t_7 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_v_f_x0s); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 201, __pyx_L1_error)
   __pyx_v_errors = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
   /* "cyroot/_check_args.pyx":202
  *         return optimal[0]
- *     cdef double[:] errors = vops.fabs(f_xs)
+ *     cdef double[:] errors = vops.fabs(f_x0s)
  *     cdef unsigned long best_i = vops.argmin(errors)             # <<<<<<<<<<<<<<
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
  *     error[0] = errors[best_i]
  */
   __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_argmin(__pyx_v_errors);
 
   /* "cyroot/_check_args.pyx":203
- *     cdef double[:] errors = vops.fabs(f_xs)
+ *     cdef double[:] errors = vops.fabs(f_x0s)
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]             # <<<<<<<<<<<<<<
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]             # <<<<<<<<<<<<<<
  *     error[0] = errors[best_i]
- *     precision[0] = vops.max(xs) - vops.min(xs)
+ *     precision[0] = vops.max(x0s) - vops.min(x0s)
  */
   __pyx_t_8 = __pyx_v_best_i;
-  __pyx_t_5 = (*((double *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_8 * __pyx_v_xs.strides[0]) )));
+  __pyx_t_5 = (*((double *) ( /* dim=0 */ (__pyx_v_x0s.data + __pyx_t_8 * __pyx_v_x0s.strides[0]) )));
   __pyx_t_8 = __pyx_v_best_i;
-  __pyx_t_4 = (*((double *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_8 * __pyx_v_f_xs.strides[0]) )));
+  __pyx_t_4 = (*((double *) ( /* dim=0 */ (__pyx_v_f_x0s.data + __pyx_t_8 * __pyx_v_f_x0s.strides[0]) )));
   (__pyx_v_r[0]) = __pyx_t_5;
   (__pyx_v_f_r[0]) = __pyx_t_4;
 
   /* "cyroot/_check_args.pyx":204
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
  *     error[0] = errors[best_i]             # <<<<<<<<<<<<<<
- *     precision[0] = vops.max(xs) - vops.min(xs)
+ *     precision[0] = vops.max(x0s) - vops.min(x0s)
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  */
   __pyx_t_8 = __pyx_v_best_i;
   (__pyx_v_error[0]) = (*((double *) ( /* dim=0 */ (__pyx_v_errors.data + __pyx_t_8 * __pyx_v_errors.strides[0]) )));
 
   /* "cyroot/_check_args.pyx":205
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
  *     error[0] = errors[best_i]
- *     precision[0] = vops.max(xs) - vops.min(xs)             # <<<<<<<<<<<<<<
+ *     precision[0] = vops.max(x0s) - vops.min(x0s)             # <<<<<<<<<<<<<<
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  */
-  (__pyx_v_precision[0]) = (__pyx_f_6cyroot_3ops_10vector_ops_max(__pyx_v_xs) - __pyx_f_6cyroot_3ops_10vector_ops_min(__pyx_v_xs));
+  (__pyx_v_precision[0]) = (__pyx_f_6cyroot_3ops_10vector_ops_max(__pyx_v_x0s) - __pyx_f_6cyroot_3ops_10vector_ops_min(__pyx_v_x0s));
 
   /* "cyroot/_check_args.pyx":206
  *     error[0] = errors[best_i]
- *     precision[0] = vops.max(xs) - vops.min(xs)
+ *     precision[0] = vops.max(x0s) - vops.min(x0s)
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  *     return optimal[0] or sops.isclose(0, precision[0], prtol, ptol)
@@ -5985,7 +5985,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_i
   (__pyx_v_optimal[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":207
- *     precision[0] = vops.max(xs) - vops.min(xs)
+ *     precision[0] = vops.max(x0s) - vops.min(x0s)
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
  *     return optimal[0] or sops.isclose(0, precision[0], prtol, ptol)
@@ -6033,8 +6033,8 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_i
  * 
  * # noinspection DuplicatedCode
  * cdef inline bint _check_stop_cond_scalar_initial_guesses(             # <<<<<<<<<<<<<<
- *         double[:] xs,
- *         double[:] f_xs,
+ *         double[:] x0s,
+ *         double[:] f_x0s,
  */
 
   /* function exit code */
@@ -6053,11 +6053,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_scalar_i
  * 
  * # noinspection DuplicatedCode
  * cdef inline bint _check_stop_cond_vector_initial_guesses(             # <<<<<<<<<<<<<<
- *         double[:, :] xs,
- *         double[:, :] F_xs,
+ *         double[:, :] x0s,
+ *         double[:, :] F_x0s,
  */
 
-static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_vector_initial_guesses(__Pyx_memviewslice __pyx_v_xs, __Pyx_memviewslice __pyx_v_F_xs, double __pyx_v_etol, double __pyx_v_ertol, double __pyx_v_ptol, double __pyx_v_prtol, __Pyx_memviewslice __pyx_v_r, __Pyx_memviewslice __pyx_v_F_r, double *__pyx_v_precision, double *__pyx_v_error, int *__pyx_v_converged, int *__pyx_v_optimal) {
+static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_vector_initial_guesses(__Pyx_memviewslice __pyx_v_x0s, __Pyx_memviewslice __pyx_v_F_x0s, double __pyx_v_etol, double __pyx_v_ertol, double __pyx_v_ptol, double __pyx_v_prtol, __Pyx_memviewslice __pyx_v_r, __Pyx_memviewslice __pyx_v_F_r, double *__pyx_v_precision, double *__pyx_v_error, int *__pyx_v_converged, int *__pyx_v_optimal) {
   __Pyx_memviewslice __pyx_v_errors = { 0, 0, { 0 }, { 0 }, { 0 } };
   unsigned long __pyx_v_best_i;
   int __pyx_r;
@@ -6084,19 +6084,19 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_vector_i
   /* "cyroot/_check_args.pyx":225
  *         bint* optimal):
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 0:             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
+ *     if x0s.shape[0] == 1:
  */
-  __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 0) != 0);
+  __pyx_t_1 = (((__pyx_v_x0s.shape[0]) == 0) != 0);
   if (unlikely(__pyx_t_1)) {
 
     /* "cyroot/_check_args.pyx":226
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')             # <<<<<<<<<<<<<<
- *     if xs.shape[0] == 1:
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *     if x0s.shape[0] == 1:
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  */
     __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 226, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
@@ -6107,59 +6107,59 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_vector_i
     /* "cyroot/_check_args.pyx":225
  *         bint* optimal):
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 0:             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
+ *     if x0s.shape[0] == 1:
  */
   }
 
   /* "cyroot/_check_args.pyx":227
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:             # <<<<<<<<<<<<<<
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *     if x0s.shape[0] == 1:             # <<<<<<<<<<<<<<
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  *         precision[0] = math.INFINITY
  */
-  __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 1) != 0);
+  __pyx_t_1 = (((__pyx_v_x0s.shape[0]) == 1) != 0);
   if (__pyx_t_1) {
 
     /* "cyroot/_check_args.pyx":228
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
- *         r[:], F_r[:] = xs[0], F_xs[0]             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 1:
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]             # <<<<<<<<<<<<<<
  *         precision[0] = math.INFINITY
- *         error[0] = vops.max(vops.fabs(F_xs[0]))
+ *         error[0] = vops.max(vops.fabs(F_x0s[0]))
  */
-    __pyx_t_3.data = __pyx_v_xs.data;
-    __pyx_t_3.memview = __pyx_v_xs.memview;
+    __pyx_t_3.data = __pyx_v_x0s.data;
+    __pyx_t_3.memview = __pyx_v_x0s.memview;
     __PYX_INC_MEMVIEW(&__pyx_t_3, 0);
     {
     Py_ssize_t __pyx_tmp_idx = 0;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_3.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_3.shape[0] = __pyx_v_xs.shape[1];
-__pyx_t_3.strides[0] = __pyx_v_xs.strides[1];
+__pyx_t_3.shape[0] = __pyx_v_x0s.shape[1];
+__pyx_t_3.strides[0] = __pyx_v_x0s.strides[1];
     __pyx_t_3.suboffsets[0] = -1;
 
-__pyx_t_4.data = __pyx_v_F_xs.data;
-    __pyx_t_4.memview = __pyx_v_F_xs.memview;
+__pyx_t_4.data = __pyx_v_F_x0s.data;
+    __pyx_t_4.memview = __pyx_v_F_x0s.memview;
     __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
     {
     Py_ssize_t __pyx_tmp_idx = 0;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_4.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_4.shape[0] = __pyx_v_F_xs.shape[1];
-__pyx_t_4.strides[0] = __pyx_v_F_xs.strides[1];
+__pyx_t_4.shape[0] = __pyx_v_F_x0s.shape[1];
+__pyx_t_4.strides[0] = __pyx_v_F_x0s.strides[1];
     __pyx_t_4.suboffsets[0] = -1;
 
 if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0)) __PYX_ERR(0, 228, __pyx_L1_error)
@@ -6172,35 +6172,35 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0))
     __pyx_t_4.data = NULL;
 
     /* "cyroot/_check_args.pyx":229
- *     if xs.shape[0] == 1:
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *     if x0s.shape[0] == 1:
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  *         precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
- *         error[0] = vops.max(vops.fabs(F_xs[0]))
+ *         error[0] = vops.max(vops.fabs(F_x0s[0]))
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  */
     (__pyx_v_precision[0]) = INFINITY;
 
     /* "cyroot/_check_args.pyx":230
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  *         precision[0] = math.INFINITY
- *         error[0] = vops.max(vops.fabs(F_xs[0]))             # <<<<<<<<<<<<<<
+ *         error[0] = vops.max(vops.fabs(F_x0s[0]))             # <<<<<<<<<<<<<<
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  */
-    __pyx_t_4.data = __pyx_v_F_xs.data;
-    __pyx_t_4.memview = __pyx_v_F_xs.memview;
+    __pyx_t_4.data = __pyx_v_F_x0s.data;
+    __pyx_t_4.memview = __pyx_v_F_x0s.memview;
     __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
     {
     Py_ssize_t __pyx_tmp_idx = 0;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_4.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_4.shape[0] = __pyx_v_F_xs.shape[1];
-__pyx_t_4.strides[0] = __pyx_v_F_xs.strides[1];
+__pyx_t_4.shape[0] = __pyx_v_F_x0s.shape[1];
+__pyx_t_4.strides[0] = __pyx_v_F_x0s.strides[1];
     __pyx_t_4.suboffsets[0] = -1;
 
 __pyx_t_3 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_t_4); if (unlikely(!__pyx_t_3.memview)) __PYX_ERR(0, 230, __pyx_L1_error)
@@ -6214,7 +6214,7 @@ __pyx_t_3 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_t_4); if (unlikely(!__p
 
     /* "cyroot/_check_args.pyx":231
  *         precision[0] = math.INFINITY
- *         error[0] = vops.max(vops.fabs(F_xs[0]))
+ *         error[0] = vops.max(vops.fabs(F_x0s[0]))
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *         converged[0] = optimal[0]
  *         return optimal[0]
@@ -6226,11 +6226,11 @@ __pyx_t_3 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_t_4); if (unlikely(!__p
     (__pyx_v_optimal[0]) = __pyx_t_1;
 
     /* "cyroot/_check_args.pyx":232
- *         error[0] = vops.max(vops.fabs(F_xs[0]))
+ *         error[0] = vops.max(vops.fabs(F_x0s[0]))
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *         return optimal[0]
- *     cdef double[:] errors = np.abs(F_xs).max(1)
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)
  */
     (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
@@ -6238,17 +6238,17 @@ __pyx_t_3 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_t_4); if (unlikely(!__p
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  *         return optimal[0]             # <<<<<<<<<<<<<<
- *     cdef double[:] errors = np.abs(F_xs).max(1)
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)
  *     cdef unsigned long best_i = vops.argmin(errors)
  */
     __pyx_r = (__pyx_v_optimal[0]);
     goto __pyx_L0;
 
     /* "cyroot/_check_args.pyx":227
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:             # <<<<<<<<<<<<<<
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *     if x0s.shape[0] == 1:             # <<<<<<<<<<<<<<
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  *         precision[0] = math.INFINITY
  */
   }
@@ -6256,16 +6256,16 @@ __pyx_t_3 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_t_4); if (unlikely(!__p
   /* "cyroot/_check_args.pyx":234
  *         converged[0] = optimal[0]
  *         return optimal[0]
- *     cdef double[:] errors = np.abs(F_xs).max(1)             # <<<<<<<<<<<<<<
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)             # <<<<<<<<<<<<<<
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
  */
   __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_abs); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __pyx_memoryview_fromslice(__pyx_v_F_xs, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 234, __pyx_L1_error)
+  __pyx_t_7 = __pyx_memoryview_fromslice(__pyx_v_F_x0s, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_t_9 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
@@ -6309,50 +6309,50 @@ __pyx_t_3 = __pyx_f_6cyroot_3ops_10vector_ops_fabs(__pyx_t_4); if (unlikely(!__p
 
   /* "cyroot/_check_args.pyx":235
  *         return optimal[0]
- *     cdef double[:] errors = np.abs(F_xs).max(1)
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)
  *     cdef unsigned long best_i = vops.argmin(errors)             # <<<<<<<<<<<<<<
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
  *     error[0] = errors[best_i]
  */
   __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_argmin(__pyx_v_errors);
 
   /* "cyroot/_check_args.pyx":236
- *     cdef double[:] errors = np.abs(F_xs).max(1)
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]             # <<<<<<<<<<<<<<
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]             # <<<<<<<<<<<<<<
  *     error[0] = errors[best_i]
- *     precision[0] = vops.max(np.max(xs, 0) - np.min(xs, 0))
+ *     precision[0] = vops.max(np.max(x0s, 0) - np.min(x0s, 0))
  */
-  __pyx_t_3.data = __pyx_v_xs.data;
-  __pyx_t_3.memview = __pyx_v_xs.memview;
+  __pyx_t_3.data = __pyx_v_x0s.data;
+  __pyx_t_3.memview = __pyx_v_x0s.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_3, 0);
   {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_best_i;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_3.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_3.shape[0] = __pyx_v_xs.shape[1];
-__pyx_t_3.strides[0] = __pyx_v_xs.strides[1];
+__pyx_t_3.shape[0] = __pyx_v_x0s.shape[1];
+__pyx_t_3.strides[0] = __pyx_v_x0s.strides[1];
     __pyx_t_3.suboffsets[0] = -1;
 
-__pyx_t_4.data = __pyx_v_F_xs.data;
-  __pyx_t_4.memview = __pyx_v_F_xs.memview;
+__pyx_t_4.data = __pyx_v_F_x0s.data;
+  __pyx_t_4.memview = __pyx_v_F_x0s.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
   {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_best_i;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_4.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_4.shape[0] = __pyx_v_F_xs.shape[1];
-__pyx_t_4.strides[0] = __pyx_v_F_xs.strides[1];
+__pyx_t_4.shape[0] = __pyx_v_F_x0s.shape[1];
+__pyx_t_4.strides[0] = __pyx_v_F_x0s.strides[1];
     __pyx_t_4.suboffsets[0] = -1;
 
 if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0)) __PYX_ERR(0, 236, __pyx_L1_error)
@@ -6366,18 +6366,18 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0))
 
   /* "cyroot/_check_args.pyx":237
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
  *     error[0] = errors[best_i]             # <<<<<<<<<<<<<<
- *     precision[0] = vops.max(np.max(xs, 0) - np.min(xs, 0))
+ *     precision[0] = vops.max(np.max(x0s, 0) - np.min(x0s, 0))
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  */
   __pyx_t_10 = __pyx_v_best_i;
   (__pyx_v_error[0]) = (*((double *) ( /* dim=0 */ (__pyx_v_errors.data + __pyx_t_10 * __pyx_v_errors.strides[0]) )));
 
   /* "cyroot/_check_args.pyx":238
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
  *     error[0] = errors[best_i]
- *     precision[0] = vops.max(np.max(xs, 0) - np.min(xs, 0))             # <<<<<<<<<<<<<<
+ *     precision[0] = vops.max(np.max(x0s, 0) - np.min(x0s, 0))             # <<<<<<<<<<<<<<
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  */
@@ -6386,7 +6386,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0))
   __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_max); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_xs, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 238, __pyx_L1_error)
+  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_x0s, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_7 = NULL;
   __pyx_t_11 = 0;
@@ -6440,7 +6440,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0))
   __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_min); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __pyx_memoryview_fromslice(__pyx_v_xs, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 238, __pyx_L1_error)
+  __pyx_t_9 = __pyx_memoryview_fromslice(__pyx_v_x0s, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __pyx_t_7 = NULL;
   __pyx_t_11 = 0;
@@ -6502,7 +6502,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0))
 
   /* "cyroot/_check_args.pyx":239
  *     error[0] = errors[best_i]
- *     precision[0] = vops.max(np.max(xs, 0) - np.min(xs, 0))
+ *     precision[0] = vops.max(np.max(x0s, 0) - np.min(x0s, 0))
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
  *     return optimal[0] or sops.isclose(0, precision[0], prtol, ptol)
@@ -6514,7 +6514,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0))
   (__pyx_v_optimal[0]) = __pyx_t_1;
 
   /* "cyroot/_check_args.pyx":240
- *     precision[0] = vops.max(np.max(xs, 0) - np.min(xs, 0))
+ *     precision[0] = vops.max(np.max(x0s, 0) - np.min(x0s, 0))
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]             # <<<<<<<<<<<<<<
  *     return optimal[0] or sops.isclose(0, precision[0], prtol, ptol)
@@ -6562,8 +6562,8 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0))
  * 
  * # noinspection DuplicatedCode
  * cdef inline bint _check_stop_cond_vector_initial_guesses(             # <<<<<<<<<<<<<<
- *         double[:, :] xs,
- *         double[:, :] F_xs,
+ *         double[:, :] x0s,
+ *         double[:, :] F_x0s,
  */
 
   /* function exit code */
@@ -6758,11 +6758,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
  * 
  * # noinspection DuplicatedCode
  * cdef inline bint _check_stop_cond_complex_scalar_initial_guesses(             # <<<<<<<<<<<<<<
- *         double complex[:] xs,
- *         double complex[:] f_xs,
+ *         double complex[:] x0s,
+ *         double complex[:] f_x0s,
  */
 
-static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_scalar_initial_guesses(__Pyx_memviewslice __pyx_v_xs, __Pyx_memviewslice __pyx_v_f_xs, double __pyx_v_etol, double __pyx_v_ertol, double __pyx_v_ptol, double __pyx_v_prtol, __pyx_t_double_complex *__pyx_v_r, __pyx_t_double_complex *__pyx_v_f_r, double *__pyx_v_precision, double *__pyx_v_error, int *__pyx_v_converged, int *__pyx_v_optimal) {
+static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_scalar_initial_guesses(__Pyx_memviewslice __pyx_v_x0s, __Pyx_memviewslice __pyx_v_f_x0s, double __pyx_v_etol, double __pyx_v_ertol, double __pyx_v_ptol, double __pyx_v_prtol, __pyx_t_double_complex *__pyx_v_r, __pyx_t_double_complex *__pyx_v_f_r, double *__pyx_v_precision, double *__pyx_v_error, int *__pyx_v_converged, int *__pyx_v_optimal) {
   __Pyx_memviewslice __pyx_v_errors = { 0, 0, { 0 }, { 0 }, { 0 } };
   unsigned long __pyx_v_best_i;
   __Pyx_memviewslice __pyx_v_xs_abs = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -6786,19 +6786,19 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
   /* "cyroot/_check_args.pyx":299
  *         bint* optimal):
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 0:             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
+ *     if x0s.shape[0] == 1:
  */
-  __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 0) != 0);
+  __pyx_t_1 = (((__pyx_v_x0s.shape[0]) == 0) != 0);
   if (unlikely(__pyx_t_1)) {
 
     /* "cyroot/_check_args.pyx":300
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')             # <<<<<<<<<<<<<<
- *     if xs.shape[0] == 1:
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *     if x0s.shape[0] == 1:
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  */
     __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 300, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
@@ -6809,61 +6809,61 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
     /* "cyroot/_check_args.pyx":299
  *         bint* optimal):
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 0:             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
+ *     if x0s.shape[0] == 1:
  */
   }
 
   /* "cyroot/_check_args.pyx":301
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:             # <<<<<<<<<<<<<<
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *     if x0s.shape[0] == 1:             # <<<<<<<<<<<<<<
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  *         precision[0] = math.INFINITY
  */
-  __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 1) != 0);
+  __pyx_t_1 = (((__pyx_v_x0s.shape[0]) == 1) != 0);
   if (__pyx_t_1) {
 
     /* "cyroot/_check_args.pyx":302
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
- *         r[0], f_r[0] = xs[0], f_xs[0]             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 1:
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]             # <<<<<<<<<<<<<<
  *         precision[0] = math.INFINITY
- *         error[0] = sops.cabs(f_xs[0])
+ *         error[0] = sops.cabs(f_x0s[0])
  */
     __pyx_t_3 = 0;
-    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_xs.shape[0];
-    __pyx_t_4 = (*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_3 * __pyx_v_xs.strides[0]) )));
+    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_x0s.shape[0];
+    __pyx_t_4 = (*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_x0s.data + __pyx_t_3 * __pyx_v_x0s.strides[0]) )));
     __pyx_t_3 = 0;
-    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_f_xs.shape[0];
-    __pyx_t_5 = (*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_3 * __pyx_v_f_xs.strides[0]) )));
+    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_f_x0s.shape[0];
+    __pyx_t_5 = (*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_f_x0s.data + __pyx_t_3 * __pyx_v_f_x0s.strides[0]) )));
     (__pyx_v_r[0]) = __pyx_t_4;
     (__pyx_v_f_r[0]) = __pyx_t_5;
 
     /* "cyroot/_check_args.pyx":303
- *     if xs.shape[0] == 1:
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *     if x0s.shape[0] == 1:
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  *         precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
- *         error[0] = sops.cabs(f_xs[0])
+ *         error[0] = sops.cabs(f_x0s[0])
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  */
     (__pyx_v_precision[0]) = INFINITY;
 
     /* "cyroot/_check_args.pyx":304
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  *         precision[0] = math.INFINITY
- *         error[0] = sops.cabs(f_xs[0])             # <<<<<<<<<<<<<<
+ *         error[0] = sops.cabs(f_x0s[0])             # <<<<<<<<<<<<<<
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  */
     __pyx_t_3 = 0;
-    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_f_xs.shape[0];
-    (__pyx_v_error[0]) = abs((*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_3 * __pyx_v_f_xs.strides[0]) ))));
+    if (__pyx_t_3 < 0) __pyx_t_3 += __pyx_v_f_x0s.shape[0];
+    (__pyx_v_error[0]) = abs((*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_f_x0s.data + __pyx_t_3 * __pyx_v_f_x0s.strides[0]) ))));
 
     /* "cyroot/_check_args.pyx":305
  *         precision[0] = math.INFINITY
- *         error[0] = sops.cabs(f_xs[0])
+ *         error[0] = sops.cabs(f_x0s[0])
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *         converged[0] = optimal[0]
  *         return optimal[0]
@@ -6875,11 +6875,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
     (__pyx_v_optimal[0]) = __pyx_t_1;
 
     /* "cyroot/_check_args.pyx":306
- *         error[0] = sops.cabs(f_xs[0])
+ *         error[0] = sops.cabs(f_x0s[0])
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *         return optimal[0]
- *     cdef double[:] errors = vops.cabs(f_xs)
+ *     cdef double[:] errors = vops.cabs(f_x0s)
  */
     (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
@@ -6887,17 +6887,17 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  *         return optimal[0]             # <<<<<<<<<<<<<<
- *     cdef double[:] errors = vops.cabs(f_xs)
+ *     cdef double[:] errors = vops.cabs(f_x0s)
  *     cdef unsigned long best_i = vops.argmin(errors)
  */
     __pyx_r = (__pyx_v_optimal[0]);
     goto __pyx_L0;
 
     /* "cyroot/_check_args.pyx":301
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:             # <<<<<<<<<<<<<<
- *         r[0], f_r[0] = xs[0], f_xs[0]
+ *     if x0s.shape[0] == 1:             # <<<<<<<<<<<<<<
+ *         r[0], f_r[0] = x0s[0], f_x0s[0]
  *         precision[0] = math.INFINITY
  */
   }
@@ -6905,63 +6905,63 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
   /* "cyroot/_check_args.pyx":308
  *         converged[0] = optimal[0]
  *         return optimal[0]
- *     cdef double[:] errors = vops.cabs(f_xs)             # <<<<<<<<<<<<<<
+ *     cdef double[:] errors = vops.cabs(f_x0s)             # <<<<<<<<<<<<<<
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
  */
-  __pyx_t_7 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_v_f_xs); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 308, __pyx_L1_error)
+  __pyx_t_7 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_v_f_x0s); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 308, __pyx_L1_error)
   __pyx_v_errors = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
   /* "cyroot/_check_args.pyx":309
  *         return optimal[0]
- *     cdef double[:] errors = vops.cabs(f_xs)
+ *     cdef double[:] errors = vops.cabs(f_x0s)
  *     cdef unsigned long best_i = vops.argmin(errors)             # <<<<<<<<<<<<<<
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
  *     error[0] = errors[best_i]
  */
   __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_argmin(__pyx_v_errors);
 
   /* "cyroot/_check_args.pyx":310
- *     cdef double[:] errors = vops.cabs(f_xs)
+ *     cdef double[:] errors = vops.cabs(f_x0s)
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]             # <<<<<<<<<<<<<<
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]             # <<<<<<<<<<<<<<
  *     error[0] = errors[best_i]
- *     cdef double[:] xs_abs = vops.cabs(xs)
+ *     cdef double[:] xs_abs = vops.cabs(x0s)
  */
   __pyx_t_8 = __pyx_v_best_i;
-  __pyx_t_5 = (*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_xs.data + __pyx_t_8 * __pyx_v_xs.strides[0]) )));
+  __pyx_t_5 = (*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_x0s.data + __pyx_t_8 * __pyx_v_x0s.strides[0]) )));
   __pyx_t_8 = __pyx_v_best_i;
-  __pyx_t_4 = (*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_f_xs.data + __pyx_t_8 * __pyx_v_f_xs.strides[0]) )));
+  __pyx_t_4 = (*((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_f_x0s.data + __pyx_t_8 * __pyx_v_f_x0s.strides[0]) )));
   (__pyx_v_r[0]) = __pyx_t_5;
   (__pyx_v_f_r[0]) = __pyx_t_4;
 
   /* "cyroot/_check_args.pyx":311
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
  *     error[0] = errors[best_i]             # <<<<<<<<<<<<<<
- *     cdef double[:] xs_abs = vops.cabs(xs)
+ *     cdef double[:] xs_abs = vops.cabs(x0s)
  *     precision[0] = vops.max(xs_abs) - vops.min(xs_abs)
  */
   __pyx_t_8 = __pyx_v_best_i;
   (__pyx_v_error[0]) = (*((double *) ( /* dim=0 */ (__pyx_v_errors.data + __pyx_t_8 * __pyx_v_errors.strides[0]) )));
 
   /* "cyroot/_check_args.pyx":312
- *     r[0], f_r[0] = xs[best_i], f_xs[best_i]
+ *     r[0], f_r[0] = x0s[best_i], f_x0s[best_i]
  *     error[0] = errors[best_i]
- *     cdef double[:] xs_abs = vops.cabs(xs)             # <<<<<<<<<<<<<<
+ *     cdef double[:] xs_abs = vops.cabs(x0s)             # <<<<<<<<<<<<<<
  *     precision[0] = vops.max(xs_abs) - vops.min(xs_abs)
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  */
-  __pyx_t_7 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_v_xs); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 312, __pyx_L1_error)
+  __pyx_t_7 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_v_x0s); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 312, __pyx_L1_error)
   __pyx_v_xs_abs = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
   /* "cyroot/_check_args.pyx":313
  *     error[0] = errors[best_i]
- *     cdef double[:] xs_abs = vops.cabs(xs)
+ *     cdef double[:] xs_abs = vops.cabs(x0s)
  *     precision[0] = vops.max(xs_abs) - vops.min(xs_abs)             # <<<<<<<<<<<<<<
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
@@ -6969,7 +6969,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
   (__pyx_v_precision[0]) = (__pyx_f_6cyroot_3ops_10vector_ops_max(__pyx_v_xs_abs) - __pyx_f_6cyroot_3ops_10vector_ops_min(__pyx_v_xs_abs));
 
   /* "cyroot/_check_args.pyx":314
- *     cdef double[:] xs_abs = vops.cabs(xs)
+ *     cdef double[:] xs_abs = vops.cabs(x0s)
  *     precision[0] = vops.max(xs_abs) - vops.min(xs_abs)
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
@@ -7030,8 +7030,8 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
  * 
  * # noinspection DuplicatedCode
  * cdef inline bint _check_stop_cond_complex_scalar_initial_guesses(             # <<<<<<<<<<<<<<
- *         double complex[:] xs,
- *         double complex[:] f_xs,
+ *         double complex[:] x0s,
+ *         double complex[:] f_x0s,
  */
 
   /* function exit code */
@@ -7051,11 +7051,11 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
  * 
  * # noinspection DuplicatedCode
  * cdef inline bint _check_stop_cond_complex_vector_initial_guesses(             # <<<<<<<<<<<<<<
- *         double complex[:, :] xs,
- *         double complex[:, :] F_xs,
+ *         double complex[:, :] x0s,
+ *         double complex[:, :] F_x0s,
  */
 
-static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_vector_initial_guesses(__Pyx_memviewslice __pyx_v_xs, __Pyx_memviewslice __pyx_v_F_xs, double __pyx_v_etol, double __pyx_v_ertol, double __pyx_v_ptol, double __pyx_v_prtol, __Pyx_memviewslice __pyx_v_r, __Pyx_memviewslice __pyx_v_F_r, double *__pyx_v_precision, double *__pyx_v_error, int *__pyx_v_converged, int *__pyx_v_optimal) {
+static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_vector_initial_guesses(__Pyx_memviewslice __pyx_v_x0s, __Pyx_memviewslice __pyx_v_F_x0s, double __pyx_v_etol, double __pyx_v_ertol, double __pyx_v_ptol, double __pyx_v_prtol, __Pyx_memviewslice __pyx_v_r, __Pyx_memviewslice __pyx_v_F_r, double *__pyx_v_precision, double *__pyx_v_error, int *__pyx_v_converged, int *__pyx_v_optimal) {
   __Pyx_memviewslice __pyx_v_errors = { 0, 0, { 0 }, { 0 }, { 0 } };
   unsigned long __pyx_v_best_i;
   __Pyx_memviewslice __pyx_v_xs_abs = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -7085,19 +7085,19 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
   /* "cyroot/_check_args.pyx":333
  *         bint* optimal):
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 0:             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
+ *     if x0s.shape[0] == 1:
  */
-  __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 0) != 0);
+  __pyx_t_1 = (((__pyx_v_x0s.shape[0]) == 0) != 0);
   if (unlikely(__pyx_t_1)) {
 
     /* "cyroot/_check_args.pyx":334
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')             # <<<<<<<<<<<<<<
- *     if xs.shape[0] == 1:
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *     if x0s.shape[0] == 1:
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  */
     __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 334, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
@@ -7108,59 +7108,59 @@ static CYTHON_INLINE int __pyx_f_6cyroot_11_check_args__check_stop_cond_complex_
     /* "cyroot/_check_args.pyx":333
  *         bint* optimal):
  *     """Check if stop condition is already met."""
- *     if xs.shape[0] == 0:             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 0:             # <<<<<<<<<<<<<<
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
+ *     if x0s.shape[0] == 1:
  */
   }
 
   /* "cyroot/_check_args.pyx":335
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:             # <<<<<<<<<<<<<<
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *     if x0s.shape[0] == 1:             # <<<<<<<<<<<<<<
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  *         precision[0] = math.INFINITY
  */
-  __pyx_t_1 = (((__pyx_v_xs.shape[0]) == 1) != 0);
+  __pyx_t_1 = (((__pyx_v_x0s.shape[0]) == 1) != 0);
   if (__pyx_t_1) {
 
     /* "cyroot/_check_args.pyx":336
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:
- *         r[:], F_r[:] = xs[0], F_xs[0]             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] == 1:
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]             # <<<<<<<<<<<<<<
  *         precision[0] = math.INFINITY
- *         error[0] = vops.max(vops.cabs(F_xs[0]))
+ *         error[0] = vops.max(vops.cabs(F_x0s[0]))
  */
-    __pyx_t_3.data = __pyx_v_xs.data;
-    __pyx_t_3.memview = __pyx_v_xs.memview;
+    __pyx_t_3.data = __pyx_v_x0s.data;
+    __pyx_t_3.memview = __pyx_v_x0s.memview;
     __PYX_INC_MEMVIEW(&__pyx_t_3, 0);
     {
     Py_ssize_t __pyx_tmp_idx = 0;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_3.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_3.shape[0] = __pyx_v_xs.shape[1];
-__pyx_t_3.strides[0] = __pyx_v_xs.strides[1];
+__pyx_t_3.shape[0] = __pyx_v_x0s.shape[1];
+__pyx_t_3.strides[0] = __pyx_v_x0s.strides[1];
     __pyx_t_3.suboffsets[0] = -1;
 
-__pyx_t_4.data = __pyx_v_F_xs.data;
-    __pyx_t_4.memview = __pyx_v_F_xs.memview;
+__pyx_t_4.data = __pyx_v_F_x0s.data;
+    __pyx_t_4.memview = __pyx_v_F_x0s.memview;
     __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
     {
     Py_ssize_t __pyx_tmp_idx = 0;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_4.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_4.shape[0] = __pyx_v_F_xs.shape[1];
-__pyx_t_4.strides[0] = __pyx_v_F_xs.strides[1];
+__pyx_t_4.shape[0] = __pyx_v_F_x0s.shape[1];
+__pyx_t_4.strides[0] = __pyx_v_F_x0s.strides[1];
     __pyx_t_4.suboffsets[0] = -1;
 
 if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0)) __PYX_ERR(0, 336, __pyx_L1_error)
@@ -7173,35 +7173,35 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_r, 1, 1, 0) < 0))
     __pyx_t_4.data = NULL;
 
     /* "cyroot/_check_args.pyx":337
- *     if xs.shape[0] == 1:
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *     if x0s.shape[0] == 1:
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  *         precision[0] = math.INFINITY             # <<<<<<<<<<<<<<
- *         error[0] = vops.max(vops.cabs(F_xs[0]))
+ *         error[0] = vops.max(vops.cabs(F_x0s[0]))
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  */
     (__pyx_v_precision[0]) = INFINITY;
 
     /* "cyroot/_check_args.pyx":338
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  *         precision[0] = math.INFINITY
- *         error[0] = vops.max(vops.cabs(F_xs[0]))             # <<<<<<<<<<<<<<
+ *         error[0] = vops.max(vops.cabs(F_x0s[0]))             # <<<<<<<<<<<<<<
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  */
-    __pyx_t_4.data = __pyx_v_F_xs.data;
-    __pyx_t_4.memview = __pyx_v_F_xs.memview;
+    __pyx_t_4.data = __pyx_v_F_x0s.data;
+    __pyx_t_4.memview = __pyx_v_F_x0s.memview;
     __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
     {
     Py_ssize_t __pyx_tmp_idx = 0;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_4.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_4.shape[0] = __pyx_v_F_xs.shape[1];
-__pyx_t_4.strides[0] = __pyx_v_F_xs.strides[1];
+__pyx_t_4.shape[0] = __pyx_v_F_x0s.shape[1];
+__pyx_t_4.strides[0] = __pyx_v_F_x0s.strides[1];
     __pyx_t_4.suboffsets[0] = -1;
 
 __pyx_t_5 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_t_4); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 338, __pyx_L1_error)
@@ -7215,7 +7215,7 @@ __pyx_t_5 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_t_4); if (unlikely(!__p
 
     /* "cyroot/_check_args.pyx":339
  *         precision[0] = math.INFINITY
- *         error[0] = vops.max(vops.cabs(F_xs[0]))
+ *         error[0] = vops.max(vops.cabs(F_x0s[0]))
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *         converged[0] = optimal[0]
  *         return optimal[0]
@@ -7227,11 +7227,11 @@ __pyx_t_5 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_t_4); if (unlikely(!__p
     (__pyx_v_optimal[0]) = __pyx_t_1;
 
     /* "cyroot/_check_args.pyx":340
- *         error[0] = vops.max(vops.cabs(F_xs[0]))
+ *         error[0] = vops.max(vops.cabs(F_x0s[0]))
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]             # <<<<<<<<<<<<<<
  *         return optimal[0]
- *     cdef double[:] errors = np.abs(F_xs).max(1)
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)
  */
     (__pyx_v_converged[0]) = (__pyx_v_optimal[0]);
 
@@ -7239,17 +7239,17 @@ __pyx_t_5 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_t_4); if (unlikely(!__p
  *         optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *         converged[0] = optimal[0]
  *         return optimal[0]             # <<<<<<<<<<<<<<
- *     cdef double[:] errors = np.abs(F_xs).max(1)
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)
  *     cdef unsigned long best_i = vops.argmin(errors)
  */
     __pyx_r = (__pyx_v_optimal[0]);
     goto __pyx_L0;
 
     /* "cyroot/_check_args.pyx":335
- *     if xs.shape[0] == 0:
+ *     if x0s.shape[0] == 0:
  *         raise ValueError('Empty sequence.')
- *     if xs.shape[0] == 1:             # <<<<<<<<<<<<<<
- *         r[:], F_r[:] = xs[0], F_xs[0]
+ *     if x0s.shape[0] == 1:             # <<<<<<<<<<<<<<
+ *         r[:], F_r[:] = x0s[0], F_x0s[0]
  *         precision[0] = math.INFINITY
  */
   }
@@ -7257,16 +7257,16 @@ __pyx_t_5 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_t_4); if (unlikely(!__p
   /* "cyroot/_check_args.pyx":342
  *         converged[0] = optimal[0]
  *         return optimal[0]
- *     cdef double[:] errors = np.abs(F_xs).max(1)             # <<<<<<<<<<<<<<
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)             # <<<<<<<<<<<<<<
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_abs); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_F_xs, 2, (PyObject *(*)(char *)) __pyx_memview_get___pyx_t_double_complex, (int (*)(char *, PyObject *)) __pyx_memview_set___pyx_t_double_complex, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_F_x0s, 2, (PyObject *(*)(char *)) __pyx_memview_get___pyx_t_double_complex, (int (*)(char *, PyObject *)) __pyx_memview_set___pyx_t_double_complex, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_10 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_9))) {
@@ -7310,50 +7310,50 @@ __pyx_t_5 = __pyx_f_6cyroot_3ops_10vector_ops_cabs(__pyx_t_4); if (unlikely(!__p
 
   /* "cyroot/_check_args.pyx":343
  *         return optimal[0]
- *     cdef double[:] errors = np.abs(F_xs).max(1)
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)
  *     cdef unsigned long best_i = vops.argmin(errors)             # <<<<<<<<<<<<<<
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
  *     error[0] = errors[best_i]
  */
   __pyx_v_best_i = __pyx_f_6cyroot_3ops_10vector_ops_argmin(__pyx_v_errors);
 
   /* "cyroot/_check_args.pyx":344
- *     cdef double[:] errors = np.abs(F_xs).max(1)
+ *     cdef double[:] errors = np.abs(F_x0s).max(1)
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]             # <<<<<<<<<<<<<<
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]             # <<<<<<<<<<<<<<
  *     error[0] = errors[best_i]
- *     cdef double[:, :] xs_abs = np.abs(xs)
+ *     cdef double[:, :] xs_abs = np.abs(x0s)
  */
-  __pyx_t_4.data = __pyx_v_xs.data;
-  __pyx_t_4.memview = __pyx_v_xs.memview;
+  __pyx_t_4.data = __pyx_v_x0s.data;
+  __pyx_t_4.memview = __pyx_v_x0s.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
   {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_best_i;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_4.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_4.shape[0] = __pyx_v_xs.shape[1];
-__pyx_t_4.strides[0] = __pyx_v_xs.strides[1];
+__pyx_t_4.shape[0] = __pyx_v_x0s.shape[1];
+__pyx_t_4.strides[0] = __pyx_v_x0s.strides[1];
     __pyx_t_4.suboffsets[0] = -1;
 
-__pyx_t_3.data = __pyx_v_F_xs.data;
-  __pyx_t_3.memview = __pyx_v_F_xs.memview;
+__pyx_t_3.data = __pyx_v_F_x0s.data;
+  __pyx_t_3.memview = __pyx_v_F_x0s.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_3, 0);
   {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_best_i;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_xs.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_xs.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_F_x0s.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_F_x0s.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         __pyx_t_3.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_3.shape[0] = __pyx_v_F_xs.shape[1];
-__pyx_t_3.strides[0] = __pyx_v_F_xs.strides[1];
+__pyx_t_3.shape[0] = __pyx_v_F_x0s.shape[1];
+__pyx_t_3.strides[0] = __pyx_v_F_x0s.strides[1];
     __pyx_t_3.suboffsets[0] = -1;
 
 if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_r, 1, 1, 0) < 0)) __PYX_ERR(0, 344, __pyx_L1_error)
@@ -7367,18 +7367,18 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_r, 1, 1, 0) < 0))
 
   /* "cyroot/_check_args.pyx":345
  *     cdef unsigned long best_i = vops.argmin(errors)
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
  *     error[0] = errors[best_i]             # <<<<<<<<<<<<<<
- *     cdef double[:, :] xs_abs = np.abs(xs)
+ *     cdef double[:, :] xs_abs = np.abs(x0s)
  *     precision[0] = vops.max(np.max(xs_abs, 0) - np.min(xs_abs, 0))
  */
   __pyx_t_11 = __pyx_v_best_i;
   (__pyx_v_error[0]) = (*((double *) ( /* dim=0 */ (__pyx_v_errors.data + __pyx_t_11 * __pyx_v_errors.strides[0]) )));
 
   /* "cyroot/_check_args.pyx":346
- *     r[:], F_r[:] = xs[best_i], F_xs[best_i]
+ *     r[:], F_r[:] = x0s[best_i], F_x0s[best_i]
  *     error[0] = errors[best_i]
- *     cdef double[:, :] xs_abs = np.abs(xs)             # <<<<<<<<<<<<<<
+ *     cdef double[:, :] xs_abs = np.abs(x0s)             # <<<<<<<<<<<<<<
  *     precision[0] = vops.max(np.max(xs_abs, 0) - np.min(xs_abs, 0))
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  */
@@ -7387,7 +7387,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_r, 1, 1, 0) < 0))
   __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_abs); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __pyx_memoryview_fromslice(__pyx_v_xs, 2, (PyObject *(*)(char *)) __pyx_memview_get___pyx_t_double_complex, (int (*)(char *, PyObject *)) __pyx_memview_set___pyx_t_double_complex, 0);; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 346, __pyx_L1_error)
+  __pyx_t_9 = __pyx_memoryview_fromslice(__pyx_v_x0s, 2, (PyObject *(*)(char *)) __pyx_memview_get___pyx_t_double_complex, (int (*)(char *, PyObject *)) __pyx_memview_set___pyx_t_double_complex, 0);; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __pyx_t_8 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
@@ -7413,7 +7413,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_r, 1, 1, 0) < 0))
 
   /* "cyroot/_check_args.pyx":347
  *     error[0] = errors[best_i]
- *     cdef double[:, :] xs_abs = np.abs(xs)
+ *     cdef double[:, :] xs_abs = np.abs(x0s)
  *     precision[0] = vops.max(np.max(xs_abs, 0) - np.min(xs_abs, 0))             # <<<<<<<<<<<<<<
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
@@ -7538,7 +7538,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_r, 1, 1, 0) < 0))
   __pyx_t_5.data = NULL;
 
   /* "cyroot/_check_args.pyx":348
- *     cdef double[:, :] xs_abs = np.abs(xs)
+ *     cdef double[:, :] xs_abs = np.abs(x0s)
  *     precision[0] = vops.max(np.max(xs_abs, 0) - np.min(xs_abs, 0))
  *     optimal[0] = sops.isclose(0, error[0], ertol, etol)             # <<<<<<<<<<<<<<
  *     converged[0] = sops.isclose(0, precision[0], prtol, ptol) or optimal[0]
@@ -7596,8 +7596,8 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_4, __pyx_v_r, 1, 1, 0) < 0))
  * 
  * # noinspection DuplicatedCode
  * cdef inline bint _check_stop_cond_complex_vector_initial_guesses(             # <<<<<<<<<<<<<<
- *         double complex[:, :] xs,
- *         double complex[:, :] F_xs,
+ *         double complex[:, :] x0s,
+ *         double complex[:, :] F_x0s,
  */
 
   /* function exit code */
@@ -21699,7 +21699,7 @@ static PyObject *__pyx_tp_new_6cyroot_11_check_args___pyx_scope_struct___check_i
 static void __pyx_tp_dealloc_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness(PyObject *o) {
   struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness *p = (struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness *)o;
   PyObject_GC_UnTrack(o);
-  Py_CLEAR(p->__pyx_v_xs);
+  Py_CLEAR(p->__pyx_v_x0s);
   if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness)))) {
     __pyx_freelist_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness[__pyx_freecount_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness++] = ((struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness *)o);
   } else {
@@ -21710,8 +21710,8 @@ static void __pyx_tp_dealloc_6cyroot_11_check_args___pyx_scope_struct___check_in
 static int __pyx_tp_traverse_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness(PyObject *o, visitproc v, void *a) {
   int e;
   struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness *p = (struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness *)o;
-  if (p->__pyx_v_xs) {
-    e = (*v)(p->__pyx_v_xs, a); if (e) return e;
+  if (p->__pyx_v_x0s) {
+    e = (*v)(p->__pyx_v_x0s, a); if (e) return e;
   }
   return 0;
 }
@@ -21719,8 +21719,8 @@ static int __pyx_tp_traverse_6cyroot_11_check_args___pyx_scope_struct___check_in
 static int __pyx_tp_clear_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness(PyObject *o) {
   PyObject* tmp;
   struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness *p = (struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct___check_initial_guesses_uniqueness *)o;
-  tmp = ((PyObject*)p->__pyx_v_xs);
-  p->__pyx_v_xs = Py_None; Py_INCREF(Py_None);
+  tmp = ((PyObject*)p->__pyx_v_x0s);
+  p->__pyx_v_x0s = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   return 0;
 }
@@ -21930,7 +21930,7 @@ static PyObject *__pyx_tp_new_6cyroot_11_check_args___pyx_scope_struct_2__check_
 static void __pyx_tp_dealloc_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness(PyObject *o) {
   struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness *p = (struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness *)o;
   PyObject_GC_UnTrack(o);
-  Py_CLEAR(p->__pyx_v_f_xs);
+  Py_CLEAR(p->__pyx_v_f_x0s);
   if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness)))) {
     __pyx_freelist_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness[__pyx_freecount_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness++] = ((struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness *)o);
   } else {
@@ -21941,8 +21941,8 @@ static void __pyx_tp_dealloc_6cyroot_11_check_args___pyx_scope_struct_2__check_i
 static int __pyx_tp_traverse_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness(PyObject *o, visitproc v, void *a) {
   int e;
   struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness *p = (struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness *)o;
-  if (p->__pyx_v_f_xs) {
-    e = (*v)(p->__pyx_v_f_xs, a); if (e) return e;
+  if (p->__pyx_v_f_x0s) {
+    e = (*v)(p->__pyx_v_f_x0s, a); if (e) return e;
   }
   return 0;
 }
@@ -21950,8 +21950,8 @@ static int __pyx_tp_traverse_6cyroot_11_check_args___pyx_scope_struct_2__check_i
 static int __pyx_tp_clear_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness(PyObject *o) {
   PyObject* tmp;
   struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness *p = (struct __pyx_obj_6cyroot_11_check_args___pyx_scope_struct_2__check_initial_vals_uniqueness *)o;
-  tmp = ((PyObject*)p->__pyx_v_f_xs);
-  p->__pyx_v_f_xs = Py_None; Py_INCREF(Py_None);
+  tmp = ((PyObject*)p->__pyx_v_f_x0s);
+  p->__pyx_v_f_x0s = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   return 0;
 }
@@ -22983,7 +22983,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_ertol, __pyx_k_ertol, sizeof(__pyx_k_ertol), 0, 1, 0, 1},
   {&__pyx_n_s_etol, __pyx_k_etol, sizeof(__pyx_k_etol), 0, 0, 1, 1},
   {&__pyx_n_u_etol, __pyx_k_etol, sizeof(__pyx_k_etol), 0, 1, 0, 1},
-  {&__pyx_n_s_f_xs, __pyx_k_f_xs, sizeof(__pyx_k_f_xs), 0, 0, 1, 1},
+  {&__pyx_n_s_f_x0s, __pyx_k_f_x0s, sizeof(__pyx_k_f_x0s), 0, 0, 1, 1},
   {&__pyx_n_s_flags, __pyx_k_flags, sizeof(__pyx_k_flags), 0, 0, 1, 1},
   {&__pyx_n_s_format, __pyx_k_format, sizeof(__pyx_k_format), 0, 0, 1, 1},
   {&__pyx_n_s_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 0, 1, 1},
@@ -23056,7 +23056,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_unique, __pyx_k_unique, sizeof(__pyx_k_unique), 0, 0, 1, 1},
   {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
   {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
-  {&__pyx_n_s_xs, __pyx_k_xs, sizeof(__pyx_k_xs), 0, 0, 1, 1},
+  {&__pyx_n_s_x0s, __pyx_k_x0s, sizeof(__pyx_k_x0s), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
@@ -23090,11 +23090,11 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__2);
 
   /* "cyroot/_check_args.pyx":57
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
- *     if not len(xs):
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):
+ *     if not len(x0s):
  *         raise ValueError('Empty.')             # <<<<<<<<<<<<<<
- *     elif isinstance(xs[0], np.ndarray):
- *         if np.unique(xs if isinstance(xs, np.ndarray) else
+ *     elif isinstance(x0s[0], np.ndarray):
+ *         if np.unique(x0s if isinstance(x0s, np.ndarray) else
  */
   __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_Empty); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
@@ -23355,11 +23355,11 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "cyroot/_check_args.pyx":55
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(xs):
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(x0s):
  *         raise ValueError('Empty.')
  */
-  __pyx_tuple__31 = PyTuple_Pack(3, __pyx_n_s_xs, __pyx_n_s_genexpr, __pyx_n_s_genexpr); if (unlikely(!__pyx_tuple__31)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_tuple__31 = PyTuple_Pack(3, __pyx_n_s_x0s, __pyx_n_s_genexpr, __pyx_n_s_genexpr); if (unlikely(!__pyx_tuple__31)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__31);
   __Pyx_GIVEREF(__pyx_tuple__31);
   __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot__check_args_pyx, __pyx_n_s_check_initial_guesses_uniquenes_2, 55, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) __PYX_ERR(0, 55, __pyx_L1_error)
@@ -23367,11 +23367,11 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "cyroot/_check_args.pyx":67
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(f_xs):
+ * def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(f_x0s):
  *         raise ValueError('Empty.')
  */
-  __pyx_tuple__33 = PyTuple_Pack(3, __pyx_n_s_f_xs, __pyx_n_s_genexpr, __pyx_n_s_genexpr); if (unlikely(!__pyx_tuple__33)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_tuple__33 = PyTuple_Pack(3, __pyx_n_s_f_x0s, __pyx_n_s_genexpr, __pyx_n_s_genexpr); if (unlikely(!__pyx_tuple__33)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__33);
   __Pyx_GIVEREF(__pyx_tuple__33);
   __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot__check_args_pyx, __pyx_n_s_check_initial_vals_uniqueness, 67, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) __PYX_ERR(0, 67, __pyx_L1_error)
@@ -24023,8 +24023,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/_check_args.pyx":55
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_guesses_uniqueness(xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(xs):
+ * def _check_initial_guesses_uniqueness(x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(x0s):
  *         raise ValueError('Empty.')
  */
   __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_11_check_args_5_check_initial_guesses_uniqueness, NULL, __pyx_n_s_cyroot__check_args); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
@@ -24035,8 +24035,8 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/_check_args.pyx":67
  * 
  * # noinspection DuplicatedCode
- * def _check_initial_vals_uniqueness(f_xs: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
- *     if not len(f_xs):
+ * def _check_initial_vals_uniqueness(f_x0s: Union[Sequence[Union[float, complex, np.ndarray]], np.ndarray]):             # <<<<<<<<<<<<<<
+ *     if not len(f_x0s):
  *         raise ValueError('Empty.')
  */
   __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6cyroot_11_check_args_7_check_initial_vals_uniqueness, NULL, __pyx_n_s_cyroot__check_args); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)

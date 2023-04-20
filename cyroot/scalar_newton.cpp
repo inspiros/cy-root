@@ -1576,7 +1576,7 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
- * 
+ * cdef real min(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   int __pyx_n;
@@ -1588,8 +1588,8 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
- * 
- * cdef extern from '<math.h>' nogil:
+ * cdef real min(real a, real b) nogil
+ * cdef real max(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose {
   int __pyx_n;

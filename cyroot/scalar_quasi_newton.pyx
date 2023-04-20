@@ -263,8 +263,8 @@ cdef class NewtonPolynomial:
 @dynamic_default_args()
 @cython.binding(True)
 def sidi(f: Callable[[float], float],
-         xs: VectorLike,
-         f_xs: Optional[VectorLike] = None,
+         x0s: VectorLike,
+         f_x0s: Optional[VectorLike] = None,
          etol: float = named_default(ETOL=ETOL),
          ertol: float = named_default(ERTOL=ERTOL),
          ptol: float = named_default(PTOL=PTOL),
@@ -275,8 +275,8 @@ def sidi(f: Callable[[float], float],
 
     Args:
         f (function): Function for which the root is sought.
-        xs (tuple of float): Tuple of initial points.
-        f_xs (tuple of float, optional): Tuple of values evaluated at initial points.
+        x0s (tuple of float): Tuple of initial points.
+        f_x0s (tuple of float, optional): Tuple of values evaluated at initial points.
         etol (float, optional): Error tolerance, indicating the
          desired precision of the root. Defaults to {etol}.
         ertol (float, optional): Relative error tolerance.
@@ -297,23 +297,23 @@ def sidi(f: Callable[[float], float],
     # check params
     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
 
-    xs = np.asarray(xs, dtype=np.float64)
-    if xs.shape[0] < 2:
+    x0s = np.asarray(x0s, dtype=np.float64)
+    if x0s.shape[0] < 2:
         raise ValueError('Requires at least 2 initial guesses. '
-                         f'Got {xs.shape[0]}.')
-    _check_initial_guesses_uniqueness(xs)
+                         f'Got {x0s.shape[0]}.')
+    _check_initial_guesses_uniqueness(x0s)
 
     f_wrapper = PyDoubleScalarFPtr.from_f(f)
-    if f_xs is None:
-        f_xs = np.array([f_wrapper.eval(x) for x in xs], dtype=np.float64)
+    if f_x0s is None:
+        f_x0s = np.array([f_wrapper.eval(x) for x in x0s], dtype=np.float64)
     else:
-        f_xs = np.asarray(f_xs, dtype=np.float64)
-        if xs.shape[0] != f_xs.shape[0]:
+        f_x0s = np.asarray(f_x0s, dtype=np.float64)
+        if x0s.shape[0] != f_x0s.shape[0]:
             raise ValueError('xs and f_xs must have same size. '
-                             f'Got {xs.shape[0]} and {f_xs.shape[0]}.')
-    _check_initial_guesses_uniqueness(f_xs)
+                             f'Got {x0s.shape[0]} and {f_x0s.shape[0]}.')
+    _check_initial_guesses_uniqueness(f_x0s)
 
-    res = sidi_kernel(f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)
+    res = sidi_kernel(f_wrapper, x0s, f_x0s, etol, ertol, ptol, prtol, max_iter)
     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
 
 ################################################################################

@@ -1549,7 +1549,7 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
- * 
+ * cdef real min(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   int __pyx_n;
@@ -1561,8 +1561,8 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
- * 
- * cdef extern from '<math.h>' nogil:
+ * cdef real min(real a, real b) nogil
+ * cdef real max(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose {
   int __pyx_n;
@@ -3743,7 +3743,6 @@ static const char __pyx_k_T[] = "T{";
   static const char __pyx_k_x0[] = "x0";
   static const char __pyx_k_x1[] = "x1";
   static const char __pyx_k_x2[] = "x2";
-  static const char __pyx_k_xs[] = "xs";
   static const char __pyx_k__14[] = ".";
   static const char __pyx_k__56[] = "^";
   static const char __pyx_k__57[] = "";
@@ -3757,6 +3756,7 @@ static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_obj[] = "obj";
 static const char __pyx_k_res[] = "res";
 static const char __pyx_k_tag[] = "tag";
+static const char __pyx_k_x0s[] = "x0s";
 static const char __pyx_k_ETOL[] = "ETOL";
 static const char __pyx_k_PTOL[] = "PTOL";
 static const char __pyx_k_base[] = "base";
@@ -3765,7 +3765,6 @@ static const char __pyx_k_etol[] = "etol";
 static const char __pyx_k_f_x0[] = "f_x0";
 static const char __pyx_k_f_x1[] = "f_x1";
 static const char __pyx_k_f_x2[] = "f_x2";
-static const char __pyx_k_f_xs[] = "f_xs";
 static const char __pyx_k_join[] = "join";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_mode[] = "mode";
@@ -3786,6 +3785,7 @@ static const char __pyx_k_class[] = "__class__";
 static const char __pyx_k_dtype[] = "dtype";
 static const char __pyx_k_error[] = "error";
 static const char __pyx_k_ertol[] = "ertol";
+static const char __pyx_k_f_x0s[] = "f_x0s";
 static const char __pyx_k_flags[] = "flags";
 static const char __pyx_k_float[] = "float";
 static const char __pyx_k_numpy[] = "numpy";
@@ -3968,9 +3968,9 @@ static PyObject *__pyx_n_s_etol;
 static PyObject *__pyx_n_s_f;
 static PyObject *__pyx_n_s_f_wrapper;
 static PyObject *__pyx_n_s_f_x0;
+static PyObject *__pyx_n_s_f_x0s;
 static PyObject *__pyx_n_s_f_x1;
 static PyObject *__pyx_n_s_f_x2;
-static PyObject *__pyx_n_s_f_xs;
 static PyObject *__pyx_n_s_flags;
 static PyObject *__pyx_n_u_float;
 static PyObject *__pyx_n_s_float64;
@@ -4056,9 +4056,9 @@ static PyObject *__pyx_n_s_update;
 static PyObject *__pyx_n_s_utils_function_tagging;
 static PyObject *__pyx_n_s_x;
 static PyObject *__pyx_n_s_x0;
+static PyObject *__pyx_n_s_x0s;
 static PyObject *__pyx_n_s_x1;
 static PyObject *__pyx_n_s_x2;
-static PyObject *__pyx_n_s_xs;
 static PyObject *__pyx_kp_u_xs_and_f_xs_must_have_same_size;
 static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_12__defaults__(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_secant(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f, double __pyx_v_x0, double __pyx_v_x1, PyObject *__pyx_v_f_x0, PyObject *__pyx_v_f_x1, PyObject *__pyx_v_etol, PyObject *__pyx_v_ertol, PyObject *__pyx_v_ptol, PyObject *__pyx_v_prtol, PyObject *__pyx_v_max_iter); /* proto */
@@ -4067,7 +4067,7 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_16NewtonPolynomial_2__ca
 static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_16NewtonPolynomial_4__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_6cyroot_19scalar_quasi_newton_NewtonPolynomial *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_16NewtonPolynomial_6__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_6cyroot_19scalar_quasi_newton_NewtonPolynomial *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_14__defaults__(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f, PyObject *__pyx_v_xs, PyObject *__pyx_v_f_xs, PyObject *__pyx_v_etol, PyObject *__pyx_v_ertol, PyObject *__pyx_v_ptol, PyObject *__pyx_v_prtol, PyObject *__pyx_v_max_iter); /* proto */
+static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f, PyObject *__pyx_v_x0s, PyObject *__pyx_v_f_x0s, PyObject *__pyx_v_etol, PyObject *__pyx_v_ertol, PyObject *__pyx_v_ptol, PyObject *__pyx_v_prtol, PyObject *__pyx_v_max_iter); /* proto */
 static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_16__defaults__(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_4steffensen(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f, double __pyx_v_x0, PyObject *__pyx_v_f_x0, PyObject *__pyx_v_aitken, PyObject *__pyx_v_etol, PyObject *__pyx_v_ertol, PyObject *__pyx_v_ptol, PyObject *__pyx_v_prtol, PyObject *__pyx_v_max_iter); /* proto */
 static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_18__defaults__(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
@@ -6954,8 +6954,8 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_16NewtonPolynomial_6__se
  * @dynamic_default_args()
  * @cython.binding(True)
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
- *          xs: VectorLike,
- *          f_xs: Optional[VectorLike] = None,
+ *          x0s: VectorLike,
+ *          f_x0s: Optional[VectorLike] = None,
  */
 
 static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_14__defaults__(CYTHON_UNUSED PyObject *__pyx_self) {
@@ -6971,8 +6971,8 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_14__defaults__(CYTHON_UN
 
   /* "cyroot/scalar_quasi_newton.pyx":267
  * def sidi(f: Callable[[float], float],
- *          xs: VectorLike,
- *          f_xs: Optional[VectorLike] = None,             # <<<<<<<<<<<<<<
+ *          x0s: VectorLike,
+ *          f_x0s: Optional[VectorLike] = None,             # <<<<<<<<<<<<<<
  *          etol: float = named_default(ETOL=ETOL),
  *          ertol: float = named_default(ERTOL=ERTOL),
  */
@@ -7001,8 +7001,8 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_14__defaults__(CYTHON_UN
  * @dynamic_default_args()
  * @cython.binding(True)
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
- *          xs: VectorLike,
- *          f_xs: Optional[VectorLike] = None,
+ *          x0s: VectorLike,
+ *          f_x0s: Optional[VectorLike] = None,
  */
   __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -7030,12 +7030,12 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_14__defaults__(CYTHON_UN
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6cyroot_19scalar_quasi_newton_3sidi(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6cyroot_19scalar_quasi_newton_2sidi[] = "\n    Sidi's Generalized Secant method for scalar root-finding.\n\n    Args:\n        f (function): Function for which the root is sought.\n        xs (tuple of float): Tuple of initial points.\n        f_xs (tuple of float, optional): Tuple of values evaluated at initial points.\n        etol (float, optional): Error tolerance, indicating the\n         desired precision of the root. Defaults to {etol}.\n        ertol (float, optional): Relative error tolerance.\n         Defaults to {ertol}.\n        ptol (float, optional): Precision tolerance, indicating\n         the minimum change of root approximations or width of\n         brackets (in bracketing methods) after each iteration.\n         Defaults to {ptol}.\n        prtol (float, optional): Relative precision tolerance.\n         Defaults to {prtol}.\n        max_iter (int, optional): Maximum number of iterations.\n         If set to 0, the procedure will run indefinitely until\n         stopping condition is met. Defaults to {max_iter}.\n\n    Returns:\n        solution: The solution represented as a ``RootResults`` object.\n    ";
+static char __pyx_doc_6cyroot_19scalar_quasi_newton_2sidi[] = "\n    Sidi's Generalized Secant method for scalar root-finding.\n\n    Args:\n        f (function): Function for which the root is sought.\n        x0s (tuple of float): Tuple of initial points.\n        f_x0s (tuple of float, optional): Tuple of values evaluated at initial points.\n        etol (float, optional): Error tolerance, indicating the\n         desired precision of the root. Defaults to {etol}.\n        ertol (float, optional): Relative error tolerance.\n         Defaults to {ertol}.\n        ptol (float, optional): Precision tolerance, indicating\n         the minimum change of root approximations or width of\n         brackets (in bracketing methods) after each iteration.\n         Defaults to {ptol}.\n        prtol (float, optional): Relative precision tolerance.\n         Defaults to {prtol}.\n        max_iter (int, optional): Maximum number of iterations.\n         If set to 0, the procedure will run indefinitely until\n         stopping condition is met. Defaults to {max_iter}.\n\n    Returns:\n        solution: The solution represented as a ``RootResults`` object.\n    ";
 static PyMethodDef __pyx_mdef_6cyroot_19scalar_quasi_newton_3sidi = {"sidi", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6cyroot_19scalar_quasi_newton_3sidi, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6cyroot_19scalar_quasi_newton_2sidi};
 static PyObject *__pyx_pw_6cyroot_19scalar_quasi_newton_3sidi(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_f = 0;
-  PyObject *__pyx_v_xs = 0;
-  PyObject *__pyx_v_f_xs = 0;
+  PyObject *__pyx_v_x0s = 0;
+  PyObject *__pyx_v_f_x0s = 0;
   PyObject *__pyx_v_etol = 0;
   PyObject *__pyx_v_ertol = 0;
   PyObject *__pyx_v_ptol = 0;
@@ -7048,7 +7048,7 @@ static PyObject *__pyx_pw_6cyroot_19scalar_quasi_newton_3sidi(PyObject *__pyx_se
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("sidi (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_f,&__pyx_n_s_xs,&__pyx_n_s_f_xs,&__pyx_n_s_etol,&__pyx_n_s_ertol,&__pyx_n_s_ptol,&__pyx_n_s_prtol,&__pyx_n_s_max_iter,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_f,&__pyx_n_s_x0s,&__pyx_n_s_f_x0s,&__pyx_n_s_etol,&__pyx_n_s_ertol,&__pyx_n_s_ptol,&__pyx_n_s_prtol,&__pyx_n_s_max_iter,0};
     PyObject* values[8] = {0,0,0,0,0,0,0,0};
     __pyx_defaults1 *__pyx_dynamic_args = __Pyx_CyFunction_Defaults(__pyx_defaults1, __pyx_self);
     values[2] = ((PyObject *)((PyObject *)Py_None));
@@ -7087,14 +7087,14 @@ static PyObject *__pyx_pw_6cyroot_19scalar_quasi_newton_3sidi(PyObject *__pyx_se
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
-        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_xs)) != 0)) kw_args--;
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x0s)) != 0)) kw_args--;
         else {
           __Pyx_RaiseArgtupleInvalid("sidi", 0, 2, 8, 1); __PYX_ERR(0, 265, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_f_xs);
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_f_x0s);
           if (value) { values[2] = value; kw_args--; }
         }
         CYTHON_FALLTHROUGH;
@@ -7152,8 +7152,8 @@ static PyObject *__pyx_pw_6cyroot_19scalar_quasi_newton_3sidi(PyObject *__pyx_se
       }
     }
     __pyx_v_f = values[0];
-    __pyx_v_xs = values[1];
-    __pyx_v_f_xs = values[2];
+    __pyx_v_x0s = values[1];
+    __pyx_v_f_x0s = values[2];
     __pyx_v_etol = values[3];
     __pyx_v_ertol = values[4];
     __pyx_v_ptol = values[5];
@@ -7168,14 +7168,14 @@ static PyObject *__pyx_pw_6cyroot_19scalar_quasi_newton_3sidi(PyObject *__pyx_se
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(__pyx_self, __pyx_v_f, __pyx_v_xs, __pyx_v_f_xs, __pyx_v_etol, __pyx_v_ertol, __pyx_v_ptol, __pyx_v_prtol, __pyx_v_max_iter);
+  __pyx_r = __pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(__pyx_self, __pyx_v_f, __pyx_v_x0s, __pyx_v_f_x0s, __pyx_v_etol, __pyx_v_ertol, __pyx_v_ptol, __pyx_v_prtol, __pyx_v_max_iter);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f, PyObject *__pyx_v_xs, PyObject *__pyx_v_f_xs, PyObject *__pyx_v_etol, PyObject *__pyx_v_ertol, PyObject *__pyx_v_ptol, PyObject *__pyx_v_prtol, PyObject *__pyx_v_max_iter) {
+static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_f, PyObject *__pyx_v_x0s, PyObject *__pyx_v_f_x0s, PyObject *__pyx_v_etol, PyObject *__pyx_v_ertol, PyObject *__pyx_v_ptol, PyObject *__pyx_v_prtol, PyObject *__pyx_v_max_iter) {
   struct __pyx_obj_6cyroot_4fptr_DoubleScalarFPtr *__pyx_v_f_wrapper = NULL;
   PyObject *__pyx_v_res = NULL;
   PyObject *__pyx_7genexpr__pyx_v_x = NULL;
@@ -7208,8 +7208,8 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("sidi", 0);
-  __Pyx_INCREF(__pyx_v_xs);
-  __Pyx_INCREF(__pyx_v_f_xs);
+  __Pyx_INCREF(__pyx_v_x0s);
+  __Pyx_INCREF(__pyx_v_f_x0s);
   __Pyx_INCREF(__pyx_v_etol);
   __Pyx_INCREF(__pyx_v_ertol);
   __Pyx_INCREF(__pyx_v_ptol);
@@ -7221,7 +7221,7 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
  *     # check params
  *     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)             # <<<<<<<<<<<<<<
  * 
- *     xs = np.asarray(xs, dtype=np.float64)
+ *     x0s = np.asarray(x0s, dtype=np.float64)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_check_stop_cond_args); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 298, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -7355,8 +7355,8 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
   /* "cyroot/scalar_quasi_newton.pyx":300
  *     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
  * 
- *     xs = np.asarray(xs, dtype=np.float64)             # <<<<<<<<<<<<<<
- *     if xs.shape[0] < 2:
+ *     x0s = np.asarray(x0s, dtype=np.float64)             # <<<<<<<<<<<<<<
+ *     if x0s.shape[0] < 2:
  *         raise ValueError('Requires at least 2 initial guesses. '
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 300, __pyx_L1_error)
@@ -7366,9 +7366,9 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 300, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_v_xs);
-  __Pyx_GIVEREF(__pyx_v_xs);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_xs);
+  __Pyx_INCREF(__pyx_v_x0s);
+  __Pyx_GIVEREF(__pyx_v_x0s);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_x0s);
   __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 300, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 300, __pyx_L1_error)
@@ -7383,17 +7383,17 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __Pyx_DECREF_SET(__pyx_v_xs, __pyx_t_5);
+  __Pyx_DECREF_SET(__pyx_v_x0s, __pyx_t_5);
   __pyx_t_5 = 0;
 
   /* "cyroot/scalar_quasi_newton.pyx":301
  * 
- *     xs = np.asarray(xs, dtype=np.float64)
- *     if xs.shape[0] < 2:             # <<<<<<<<<<<<<<
+ *     x0s = np.asarray(x0s, dtype=np.float64)
+ *     if x0s.shape[0] < 2:             # <<<<<<<<<<<<<<
  *         raise ValueError('Requires at least 2 initial guesses. '
- *                          f'Got {xs.shape[0]}.')
+ *                          f'Got {x0s.shape[0]}.')
  */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_xs, __pyx_n_s_shape); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 301, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_x0s, __pyx_n_s_shape); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 301, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_5, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 301, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
@@ -7405,11 +7405,11 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
   if (unlikely(__pyx_t_10)) {
 
     /* "cyroot/scalar_quasi_newton.pyx":302
- *     xs = np.asarray(xs, dtype=np.float64)
- *     if xs.shape[0] < 2:
+ *     x0s = np.asarray(x0s, dtype=np.float64)
+ *     if x0s.shape[0] < 2:
  *         raise ValueError('Requires at least 2 initial guesses. '             # <<<<<<<<<<<<<<
- *                          f'Got {xs.shape[0]}.')
- *     _check_initial_guesses_uniqueness(xs)
+ *                          f'Got {x0s.shape[0]}.')
+ *     _check_initial_guesses_uniqueness(x0s)
  */
     __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 302, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
@@ -7421,13 +7421,13 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_kp_u_Requires_at_least_2_initial_gues);
 
     /* "cyroot/scalar_quasi_newton.pyx":303
- *     if xs.shape[0] < 2:
+ *     if x0s.shape[0] < 2:
  *         raise ValueError('Requires at least 2 initial guesses. '
- *                          f'Got {xs.shape[0]}.')             # <<<<<<<<<<<<<<
- *     _check_initial_guesses_uniqueness(xs)
+ *                          f'Got {x0s.shape[0]}.')             # <<<<<<<<<<<<<<
+ *     _check_initial_guesses_uniqueness(x0s)
  * 
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_xs, __pyx_n_s_shape); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 303, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_x0s, __pyx_n_s_shape); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 303, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_6, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 303, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
@@ -7446,11 +7446,11 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
     PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_kp_u__14);
 
     /* "cyroot/scalar_quasi_newton.pyx":302
- *     xs = np.asarray(xs, dtype=np.float64)
- *     if xs.shape[0] < 2:
+ *     x0s = np.asarray(x0s, dtype=np.float64)
+ *     if x0s.shape[0] < 2:
  *         raise ValueError('Requires at least 2 initial guesses. '             # <<<<<<<<<<<<<<
- *                          f'Got {xs.shape[0]}.')
- *     _check_initial_guesses_uniqueness(xs)
+ *                          f'Got {x0s.shape[0]}.')
+ *     _check_initial_guesses_uniqueness(x0s)
  */
     __pyx_t_6 = __Pyx_PyUnicode_Join(__pyx_t_5, 3, __pyx_t_11, __pyx_t_12); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 302, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
@@ -7464,17 +7464,17 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
 
     /* "cyroot/scalar_quasi_newton.pyx":301
  * 
- *     xs = np.asarray(xs, dtype=np.float64)
- *     if xs.shape[0] < 2:             # <<<<<<<<<<<<<<
+ *     x0s = np.asarray(x0s, dtype=np.float64)
+ *     if x0s.shape[0] < 2:             # <<<<<<<<<<<<<<
  *         raise ValueError('Requires at least 2 initial guesses. '
- *                          f'Got {xs.shape[0]}.')
+ *                          f'Got {x0s.shape[0]}.')
  */
   }
 
   /* "cyroot/scalar_quasi_newton.pyx":304
  *         raise ValueError('Requires at least 2 initial guesses. '
- *                          f'Got {xs.shape[0]}.')
- *     _check_initial_guesses_uniqueness(xs)             # <<<<<<<<<<<<<<
+ *                          f'Got {x0s.shape[0]}.')
+ *     _check_initial_guesses_uniqueness(x0s)             # <<<<<<<<<<<<<<
  * 
  *     f_wrapper = PyDoubleScalarFPtr.from_f(f)
  */
@@ -7490,7 +7490,7 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
       __Pyx_DECREF_SET(__pyx_t_6, function);
     }
   }
-  __pyx_t_5 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_1, __pyx_v_xs) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_xs);
+  __pyx_t_5 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_1, __pyx_v_x0s) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_x0s);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 304, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -7498,11 +7498,11 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "cyroot/scalar_quasi_newton.pyx":306
- *     _check_initial_guesses_uniqueness(xs)
+ *     _check_initial_guesses_uniqueness(x0s)
  * 
  *     f_wrapper = PyDoubleScalarFPtr.from_f(f)             # <<<<<<<<<<<<<<
- *     if f_xs is None:
- *         f_xs = np.array([f_wrapper.eval(x) for x in xs], dtype=np.float64)
+ *     if f_x0s is None:
+ *         f_x0s = np.array([f_wrapper.eval(x) for x in x0s], dtype=np.float64)
  */
   __pyx_t_5 = ((PyObject *)__pyx_vtabptr_6cyroot_4fptr_PyDoubleScalarFPtr->from_f(__pyx_v_f)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 306, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -7512,20 +7512,20 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
   /* "cyroot/scalar_quasi_newton.pyx":307
  * 
  *     f_wrapper = PyDoubleScalarFPtr.from_f(f)
- *     if f_xs is None:             # <<<<<<<<<<<<<<
- *         f_xs = np.array([f_wrapper.eval(x) for x in xs], dtype=np.float64)
+ *     if f_x0s is None:             # <<<<<<<<<<<<<<
+ *         f_x0s = np.array([f_wrapper.eval(x) for x in x0s], dtype=np.float64)
  *     else:
  */
-  __pyx_t_10 = (__pyx_v_f_xs == Py_None);
+  __pyx_t_10 = (__pyx_v_f_x0s == Py_None);
   __pyx_t_13 = (__pyx_t_10 != 0);
   if (__pyx_t_13) {
 
     /* "cyroot/scalar_quasi_newton.pyx":308
  *     f_wrapper = PyDoubleScalarFPtr.from_f(f)
- *     if f_xs is None:
- *         f_xs = np.array([f_wrapper.eval(x) for x in xs], dtype=np.float64)             # <<<<<<<<<<<<<<
+ *     if f_x0s is None:
+ *         f_x0s = np.array([f_wrapper.eval(x) for x in x0s], dtype=np.float64)             # <<<<<<<<<<<<<<
  *     else:
- *         f_xs = np.asarray(f_xs, dtype=np.float64)
+ *         f_x0s = np.asarray(f_x0s, dtype=np.float64)
  */
     __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 308, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
@@ -7535,11 +7535,11 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
     { /* enter inner scope */
       __pyx_t_5 = PyList_New(0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 308, __pyx_L9_error)
       __Pyx_GOTREF(__pyx_t_5);
-      if (likely(PyList_CheckExact(__pyx_v_xs)) || PyTuple_CheckExact(__pyx_v_xs)) {
-        __pyx_t_1 = __pyx_v_xs; __Pyx_INCREF(__pyx_t_1); __pyx_t_11 = 0;
+      if (likely(PyList_CheckExact(__pyx_v_x0s)) || PyTuple_CheckExact(__pyx_v_x0s)) {
+        __pyx_t_1 = __pyx_v_x0s; __Pyx_INCREF(__pyx_t_1); __pyx_t_11 = 0;
         __pyx_t_14 = NULL;
       } else {
-        __pyx_t_11 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_xs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 308, __pyx_L9_error)
+        __pyx_t_11 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_x0s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 308, __pyx_L9_error)
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_t_14 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 308, __pyx_L9_error)
       }
@@ -7610,24 +7610,24 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_xs, __pyx_t_3);
+    __Pyx_DECREF_SET(__pyx_v_f_x0s, __pyx_t_3);
     __pyx_t_3 = 0;
 
     /* "cyroot/scalar_quasi_newton.pyx":307
  * 
  *     f_wrapper = PyDoubleScalarFPtr.from_f(f)
- *     if f_xs is None:             # <<<<<<<<<<<<<<
- *         f_xs = np.array([f_wrapper.eval(x) for x in xs], dtype=np.float64)
+ *     if f_x0s is None:             # <<<<<<<<<<<<<<
+ *         f_x0s = np.array([f_wrapper.eval(x) for x in x0s], dtype=np.float64)
  *     else:
  */
     goto __pyx_L6;
   }
 
   /* "cyroot/scalar_quasi_newton.pyx":310
- *         f_xs = np.array([f_wrapper.eval(x) for x in xs], dtype=np.float64)
+ *         f_x0s = np.array([f_wrapper.eval(x) for x in x0s], dtype=np.float64)
  *     else:
- *         f_xs = np.asarray(f_xs, dtype=np.float64)             # <<<<<<<<<<<<<<
- *         if xs.shape[0] != f_xs.shape[0]:
+ *         f_x0s = np.asarray(f_x0s, dtype=np.float64)             # <<<<<<<<<<<<<<
+ *         if x0s.shape[0] != f_x0s.shape[0]:
  *             raise ValueError('xs and f_xs must have same size. '
  */
   /*else*/ {
@@ -7638,9 +7638,9 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 310, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_INCREF(__pyx_v_f_xs);
-    __Pyx_GIVEREF(__pyx_v_f_xs);
-    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_f_xs);
+    __Pyx_INCREF(__pyx_v_f_x0s);
+    __Pyx_GIVEREF(__pyx_v_f_x0s);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_f_x0s);
     __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 310, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 310, __pyx_L1_error)
@@ -7655,22 +7655,22 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF_SET(__pyx_v_f_xs, __pyx_t_7);
+    __Pyx_DECREF_SET(__pyx_v_f_x0s, __pyx_t_7);
     __pyx_t_7 = 0;
 
     /* "cyroot/scalar_quasi_newton.pyx":311
  *     else:
- *         f_xs = np.asarray(f_xs, dtype=np.float64)
- *         if xs.shape[0] != f_xs.shape[0]:             # <<<<<<<<<<<<<<
+ *         f_x0s = np.asarray(f_x0s, dtype=np.float64)
+ *         if x0s.shape[0] != f_x0s.shape[0]:             # <<<<<<<<<<<<<<
  *             raise ValueError('xs and f_xs must have same size. '
- *                              f'Got {xs.shape[0]} and {f_xs.shape[0]}.')
+ *                              f'Got {x0s.shape[0]} and {f_x0s.shape[0]}.')
  */
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_xs, __pyx_n_s_shape); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 311, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_x0s, __pyx_n_s_shape); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 311, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 311, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_f_xs, __pyx_n_s_shape); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 311, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_f_x0s, __pyx_n_s_shape); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 311, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 311, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
@@ -7683,11 +7683,11 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
     if (unlikely(__pyx_t_13)) {
 
       /* "cyroot/scalar_quasi_newton.pyx":312
- *         f_xs = np.asarray(f_xs, dtype=np.float64)
- *         if xs.shape[0] != f_xs.shape[0]:
+ *         f_x0s = np.asarray(f_x0s, dtype=np.float64)
+ *         if x0s.shape[0] != f_x0s.shape[0]:
  *             raise ValueError('xs and f_xs must have same size. '             # <<<<<<<<<<<<<<
- *                              f'Got {xs.shape[0]} and {f_xs.shape[0]}.')
- *     _check_initial_guesses_uniqueness(f_xs)
+ *                              f'Got {x0s.shape[0]} and {f_x0s.shape[0]}.')
+ *     _check_initial_guesses_uniqueness(f_x0s)
  */
       __pyx_t_7 = PyTuple_New(5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 312, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
@@ -7699,13 +7699,13 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
       PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_kp_u_xs_and_f_xs_must_have_same_size);
 
       /* "cyroot/scalar_quasi_newton.pyx":313
- *         if xs.shape[0] != f_xs.shape[0]:
+ *         if x0s.shape[0] != f_x0s.shape[0]:
  *             raise ValueError('xs and f_xs must have same size. '
- *                              f'Got {xs.shape[0]} and {f_xs.shape[0]}.')             # <<<<<<<<<<<<<<
- *     _check_initial_guesses_uniqueness(f_xs)
+ *                              f'Got {x0s.shape[0]} and {f_x0s.shape[0]}.')             # <<<<<<<<<<<<<<
+ *     _check_initial_guesses_uniqueness(f_x0s)
  * 
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_xs, __pyx_n_s_shape); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 313, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_x0s, __pyx_n_s_shape); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 313, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
@@ -7722,7 +7722,7 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
       __pyx_t_11 += 5;
       __Pyx_GIVEREF(__pyx_kp_u_and);
       PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_kp_u_and);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_f_xs, __pyx_n_s_shape); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 313, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_f_x0s, __pyx_n_s_shape); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 313, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
@@ -7741,11 +7741,11 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
       PyTuple_SET_ITEM(__pyx_t_7, 4, __pyx_kp_u__14);
 
       /* "cyroot/scalar_quasi_newton.pyx":312
- *         f_xs = np.asarray(f_xs, dtype=np.float64)
- *         if xs.shape[0] != f_xs.shape[0]:
+ *         f_x0s = np.asarray(f_x0s, dtype=np.float64)
+ *         if x0s.shape[0] != f_x0s.shape[0]:
  *             raise ValueError('xs and f_xs must have same size. '             # <<<<<<<<<<<<<<
- *                              f'Got {xs.shape[0]} and {f_xs.shape[0]}.')
- *     _check_initial_guesses_uniqueness(f_xs)
+ *                              f'Got {x0s.shape[0]} and {f_x0s.shape[0]}.')
+ *     _check_initial_guesses_uniqueness(f_x0s)
  */
       __pyx_t_3 = __Pyx_PyUnicode_Join(__pyx_t_7, 5, __pyx_t_11, __pyx_t_12); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 312, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
@@ -7759,10 +7759,10 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
 
       /* "cyroot/scalar_quasi_newton.pyx":311
  *     else:
- *         f_xs = np.asarray(f_xs, dtype=np.float64)
- *         if xs.shape[0] != f_xs.shape[0]:             # <<<<<<<<<<<<<<
+ *         f_x0s = np.asarray(f_x0s, dtype=np.float64)
+ *         if x0s.shape[0] != f_x0s.shape[0]:             # <<<<<<<<<<<<<<
  *             raise ValueError('xs and f_xs must have same size. '
- *                              f'Got {xs.shape[0]} and {f_xs.shape[0]}.')
+ *                              f'Got {x0s.shape[0]} and {f_x0s.shape[0]}.')
  */
     }
   }
@@ -7770,10 +7770,10 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
 
   /* "cyroot/scalar_quasi_newton.pyx":314
  *             raise ValueError('xs and f_xs must have same size. '
- *                              f'Got {xs.shape[0]} and {f_xs.shape[0]}.')
- *     _check_initial_guesses_uniqueness(f_xs)             # <<<<<<<<<<<<<<
+ *                              f'Got {x0s.shape[0]} and {f_x0s.shape[0]}.')
+ *     _check_initial_guesses_uniqueness(f_x0s)             # <<<<<<<<<<<<<<
  * 
- *     res = sidi_kernel(f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)
+ *     res = sidi_kernel(f_wrapper, x0s, f_x0s, etol, ertol, ptol, prtol, max_iter)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_check_initial_guesses_uniquenes); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 314, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -7787,7 +7787,7 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
       __Pyx_DECREF_SET(__pyx_t_3, function);
     }
   }
-  __pyx_t_7 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_1, __pyx_v_f_xs) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_f_xs);
+  __pyx_t_7 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_1, __pyx_v_f_x0s) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_f_x0s);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 314, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
@@ -7795,14 +7795,14 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
   /* "cyroot/scalar_quasi_newton.pyx":316
- *     _check_initial_guesses_uniqueness(f_xs)
+ *     _check_initial_guesses_uniqueness(f_x0s)
  * 
- *     res = sidi_kernel(f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)             # <<<<<<<<<<<<<<
+ *     res = sidi_kernel(f_wrapper, x0s, f_x0s, etol, ertol, ptol, prtol, max_iter)             # <<<<<<<<<<<<<<
  *     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
  * 
  */
-  __pyx_t_17 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_xs, PyBUF_WRITABLE); if (unlikely(!__pyx_t_17.memview)) __PYX_ERR(0, 316, __pyx_L1_error)
-  __pyx_t_18 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_f_xs, PyBUF_WRITABLE); if (unlikely(!__pyx_t_18.memview)) __PYX_ERR(0, 316, __pyx_L1_error)
+  __pyx_t_17 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_x0s, PyBUF_WRITABLE); if (unlikely(!__pyx_t_17.memview)) __PYX_ERR(0, 316, __pyx_L1_error)
+  __pyx_t_18 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_f_x0s, PyBUF_WRITABLE); if (unlikely(!__pyx_t_18.memview)) __PYX_ERR(0, 316, __pyx_L1_error)
   __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_v_etol); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 316, __pyx_L1_error)
   __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_ertol); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 316, __pyx_L1_error)
   __pyx_t_19 = __pyx_PyFloat_AsDouble(__pyx_v_ptol); if (unlikely((__pyx_t_19 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 316, __pyx_L1_error)
@@ -7828,7 +7828,7 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
 
   /* "cyroot/scalar_quasi_newton.pyx":317
  * 
- *     res = sidi_kernel(f_wrapper, xs, f_xs, etol, ertol, ptol, prtol, max_iter)
+ *     res = sidi_kernel(f_wrapper, x0s, f_x0s, etol, ertol, ptol, prtol, max_iter)
  *     return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)             # <<<<<<<<<<<<<<
  * 
  * ################################################################################
@@ -7896,8 +7896,8 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
  * @dynamic_default_args()
  * @cython.binding(True)
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
- *          xs: VectorLike,
- *          f_xs: Optional[VectorLike] = None,
+ *          x0s: VectorLike,
+ *          f_x0s: Optional[VectorLike] = None,
  */
 
   /* function exit code */
@@ -7917,8 +7917,8 @@ static PyObject *__pyx_pf_6cyroot_19scalar_quasi_newton_2sidi(CYTHON_UNUSED PyOb
   __Pyx_XDECREF((PyObject *)__pyx_v_f_wrapper);
   __Pyx_XDECREF(__pyx_v_res);
   __Pyx_XDECREF(__pyx_7genexpr__pyx_v_x);
-  __Pyx_XDECREF(__pyx_v_xs);
-  __Pyx_XDECREF(__pyx_v_f_xs);
+  __Pyx_XDECREF(__pyx_v_x0s);
+  __Pyx_XDECREF(__pyx_v_f_x0s);
   __Pyx_XDECREF(__pyx_v_etol);
   __Pyx_XDECREF(__pyx_v_ertol);
   __Pyx_XDECREF(__pyx_v_ptol);
@@ -28465,9 +28465,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_f, __pyx_k_f, sizeof(__pyx_k_f), 0, 0, 1, 1},
   {&__pyx_n_s_f_wrapper, __pyx_k_f_wrapper, sizeof(__pyx_k_f_wrapper), 0, 0, 1, 1},
   {&__pyx_n_s_f_x0, __pyx_k_f_x0, sizeof(__pyx_k_f_x0), 0, 0, 1, 1},
+  {&__pyx_n_s_f_x0s, __pyx_k_f_x0s, sizeof(__pyx_k_f_x0s), 0, 0, 1, 1},
   {&__pyx_n_s_f_x1, __pyx_k_f_x1, sizeof(__pyx_k_f_x1), 0, 0, 1, 1},
   {&__pyx_n_s_f_x2, __pyx_k_f_x2, sizeof(__pyx_k_f_x2), 0, 0, 1, 1},
-  {&__pyx_n_s_f_xs, __pyx_k_f_xs, sizeof(__pyx_k_f_xs), 0, 0, 1, 1},
   {&__pyx_n_s_flags, __pyx_k_flags, sizeof(__pyx_k_flags), 0, 0, 1, 1},
   {&__pyx_n_u_float, __pyx_k_float, sizeof(__pyx_k_float), 0, 1, 0, 1},
   {&__pyx_n_s_float64, __pyx_k_float64, sizeof(__pyx_k_float64), 0, 0, 1, 1},
@@ -28553,9 +28553,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_utils_function_tagging, __pyx_k_utils_function_tagging, sizeof(__pyx_k_utils_function_tagging), 0, 0, 1, 1},
   {&__pyx_n_s_x, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
   {&__pyx_n_s_x0, __pyx_k_x0, sizeof(__pyx_k_x0), 0, 0, 1, 1},
+  {&__pyx_n_s_x0s, __pyx_k_x0s, sizeof(__pyx_k_x0s), 0, 0, 1, 1},
   {&__pyx_n_s_x1, __pyx_k_x1, sizeof(__pyx_k_x1), 0, 0, 1, 1},
   {&__pyx_n_s_x2, __pyx_k_x2, sizeof(__pyx_k_x2), 0, 0, 1, 1},
-  {&__pyx_n_s_xs, __pyx_k_xs, sizeof(__pyx_k_xs), 0, 0, 1, 1},
   {&__pyx_kp_u_xs_and_f_xs_must_have_same_size, __pyx_k_xs_and_f_xs_must_have_same_size, sizeof(__pyx_k_xs_and_f_xs_must_have_same_size), 0, 1, 0, 0},
   {0, 0, 0, 0, 0, 0, 0}
 };
@@ -28852,10 +28852,10 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * @dynamic_default_args()
  * @cython.binding(True)
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
- *          xs: VectorLike,
- *          f_xs: Optional[VectorLike] = None,
+ *          x0s: VectorLike,
+ *          f_x0s: Optional[VectorLike] = None,
  */
-  __pyx_tuple__64 = PyTuple_Pack(11, __pyx_n_s_f, __pyx_n_s_xs, __pyx_n_s_f_xs, __pyx_n_s_etol, __pyx_n_s_ertol, __pyx_n_s_ptol, __pyx_n_s_prtol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_res, __pyx_n_s_x); if (unlikely(!__pyx_tuple__64)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __pyx_tuple__64 = PyTuple_Pack(11, __pyx_n_s_f, __pyx_n_s_x0s, __pyx_n_s_f_x0s, __pyx_n_s_etol, __pyx_n_s_ertol, __pyx_n_s_ptol, __pyx_n_s_prtol, __pyx_n_s_max_iter, __pyx_n_s_f_wrapper, __pyx_n_s_res, __pyx_n_s_x); if (unlikely(!__pyx_tuple__64)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__64);
   __Pyx_GIVEREF(__pyx_tuple__64);
   __pyx_codeobj__65 = (PyObject*)__Pyx_PyCode_New(8, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__64, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cyroot_scalar_quasi_newton_pyx, __pyx_n_s_sidi, 265, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__65)) __PYX_ERR(0, 265, __pyx_L1_error)
@@ -30201,8 +30201,8 @@ if (!__Pyx_RefNanny) {
  * @dynamic_default_args()
  * @cython.binding(True)
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
- *          xs: VectorLike,
- *          f_xs: Optional[VectorLike] = None,
+ *          x0s: VectorLike,
+ *          f_x0s: Optional[VectorLike] = None,
  */
   __pyx_t_7 = __Pyx_PyDict_NewPresized(9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
@@ -30231,19 +30231,19 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/scalar_quasi_newton.pyx":266
  * @cython.binding(True)
  * def sidi(f: Callable[[float], float],
- *          xs: VectorLike,             # <<<<<<<<<<<<<<
- *          f_xs: Optional[VectorLike] = None,
+ *          x0s: VectorLike,             # <<<<<<<<<<<<<<
+ *          f_x0s: Optional[VectorLike] = None,
  *          etol: float = named_default(ETOL=ETOL),
  */
   __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_VectorLike); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_xs, __pyx_t_9) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_x0s, __pyx_t_9) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
   /* "cyroot/scalar_quasi_newton.pyx":267
  * def sidi(f: Callable[[float], float],
- *          xs: VectorLike,
- *          f_xs: Optional[VectorLike] = None,             # <<<<<<<<<<<<<<
+ *          x0s: VectorLike,
+ *          f_x0s: Optional[VectorLike] = None,             # <<<<<<<<<<<<<<
  *          etol: float = named_default(ETOL=ETOL),
  *          ertol: float = named_default(ERTOL=ERTOL),
  */
@@ -30255,7 +30255,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_f_xs, __pyx_t_5) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_f_x0s, __pyx_t_5) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_etol, __pyx_n_u_float) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_ertol, __pyx_n_u_float) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
@@ -30279,16 +30279,16 @@ if (!__Pyx_RefNanny) {
  * @dynamic_default_args()
  * @cython.binding(True)
  * def sidi(f: Callable[[float], float],             # <<<<<<<<<<<<<<
- *          xs: VectorLike,
- *          f_xs: Optional[VectorLike] = None,
+ *          x0s: VectorLike,
+ *          f_x0s: Optional[VectorLike] = None,
  */
   __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_6cyroot_19scalar_quasi_newton_3sidi, 0, __pyx_n_s_sidi, NULL, __pyx_n_s_cyroot_scalar_quasi_newton_2, __pyx_d, ((PyObject *)__pyx_codeobj__65)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   if (!__Pyx_CyFunction_InitDefaults(__pyx_t_5, sizeof(__pyx_defaults1), 5)) __PYX_ERR(0, 265, __pyx_L1_error)
 
   /* "cyroot/scalar_quasi_newton.pyx":268
- *          xs: VectorLike,
- *          f_xs: Optional[VectorLike] = None,
+ *          x0s: VectorLike,
+ *          f_x0s: Optional[VectorLike] = None,
  *          etol: float = named_default(ETOL=ETOL),             # <<<<<<<<<<<<<<
  *          ertol: float = named_default(ERTOL=ERTOL),
  *          ptol: float = named_default(PTOL=PTOL),
@@ -30310,7 +30310,7 @@ if (!__Pyx_RefNanny) {
   __pyx_t_8 = 0;
 
   /* "cyroot/scalar_quasi_newton.pyx":269
- *          f_xs: Optional[VectorLike] = None,
+ *          f_x0s: Optional[VectorLike] = None,
  *          etol: float = named_default(ETOL=ETOL),
  *          ertol: float = named_default(ERTOL=ERTOL),             # <<<<<<<<<<<<<<
  *          ptol: float = named_default(PTOL=PTOL),
