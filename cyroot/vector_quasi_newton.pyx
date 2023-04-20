@@ -793,7 +793,7 @@ def broyden(F: Callable[[VectorLike], VectorLike],
         algo = 1
     elif algo == 'bad':
         algo = 2
-    else:
+    elif algo not in [1, 2]:
         raise ValueError('algo must be either 1/\'good\' or 2/\'bad\'. '
                          f'Got {algo}.')
 
