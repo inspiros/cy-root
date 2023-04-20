@@ -1185,7 +1185,7 @@ cdef double[:, :] _divided_differences(
     cdef unsigned int i, j, M = <unsigned int> len(xs)
     if not forward:
         xs = xs[::-1]
-    N = M if N == 0 else min(N, M)
+    N = M if N == 0 else sops.min(N, M)
     cdef double[:, :] DD = view.array(shape=(M, N), itemsize=sizeof(double), format='d')
     DD[:, 0] = fs
     for j in range(1, N):
@@ -1205,7 +1205,7 @@ cdef double[:] _diag_divided_differences(
       f[a], f[a, b] and f[a, b, c].
     """
     cdef unsigned int j, M = <unsigned int> len(xs)
-    N = M if N == 0 else min(N, M)
+    N = M if N == 0 else sops.min(N, M)
     cdef double[:, :] DD = _divided_differences(xs, fs, N)
     cdef double[:] dd = view.array(shape=(N,), itemsize=sizeof(double), format='d')
     if forward:

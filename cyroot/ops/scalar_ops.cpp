@@ -1065,7 +1065,7 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
- * 
+ * cdef real min(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   int __pyx_n;
@@ -1077,8 +1077,8 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
- * 
- * cdef extern from '<math.h>' nogil:
+ * cdef real min(real a, real b) nogil
+ * cdef real max(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose {
   int __pyx_n;
@@ -1348,6 +1348,18 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'cyroot.ops.scalar_ops' */
 static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_isclose(double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose *__pyx_optional_args); /*proto*/
+static CYTHON_INLINE int __pyx_fuse_0__pyx_f_6cyroot_3ops_10scalar_ops_min(int, int); /*proto*/
+static CYTHON_INLINE unsigned int __pyx_fuse_1__pyx_f_6cyroot_3ops_10scalar_ops_min(unsigned int, unsigned int); /*proto*/
+static CYTHON_INLINE long __pyx_fuse_2__pyx_f_6cyroot_3ops_10scalar_ops_min(long, long); /*proto*/
+static CYTHON_INLINE unsigned long __pyx_fuse_3__pyx_f_6cyroot_3ops_10scalar_ops_min(unsigned long, unsigned long); /*proto*/
+static CYTHON_INLINE float __pyx_fuse_4__pyx_f_6cyroot_3ops_10scalar_ops_min(float, float); /*proto*/
+static CYTHON_INLINE double __pyx_fuse_5__pyx_f_6cyroot_3ops_10scalar_ops_min(double, double); /*proto*/
+static CYTHON_INLINE int __pyx_fuse_0__pyx_f_6cyroot_3ops_10scalar_ops_max(int, int); /*proto*/
+static CYTHON_INLINE unsigned int __pyx_fuse_1__pyx_f_6cyroot_3ops_10scalar_ops_max(unsigned int, unsigned int); /*proto*/
+static CYTHON_INLINE long __pyx_fuse_2__pyx_f_6cyroot_3ops_10scalar_ops_max(long, long); /*proto*/
+static CYTHON_INLINE unsigned long __pyx_fuse_3__pyx_f_6cyroot_3ops_10scalar_ops_max(unsigned long, unsigned long); /*proto*/
+static CYTHON_INLINE float __pyx_fuse_4__pyx_f_6cyroot_3ops_10scalar_ops_max(float, float); /*proto*/
+static CYTHON_INLINE double __pyx_fuse_5__pyx_f_6cyroot_3ops_10scalar_ops_max(double, double); /*proto*/
 #define __Pyx_MODULE_NAME "cyroot.ops.scalar_ops"
 extern int __pyx_module_is_main_cyroot__ops__scalar_ops;
 int __pyx_module_is_main_cyroot__ops__scalar_ops = 0;
@@ -1460,6 +1472,7 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_isclose(double __pyx_
  * 
  * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
  *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
+ * 
  */
 
 static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_cisclose(__pyx_t_double_complex __pyx_v_a, __pyx_t_double_complex __pyx_v_b, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose *__pyx_optional_args) {
@@ -1483,6 +1496,8 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_cisclose(__pyx_t_doub
  * 
  * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:
  *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline real min(real a, real b) nogil:
  */
   __pyx_t_3.__pyx_n = 2;
   __pyx_t_3.rtol = __pyx_v_rtol;
@@ -1509,6 +1524,388 @@ static CYTHON_INLINE int __pyx_f_6cyroot_3ops_10scalar_ops_cisclose(__pyx_t_doub
  * 
  * cdef inline bint cisclose(double complex a, double complex b, double rtol=1e-5, double atol=1e-8) nogil:             # <<<<<<<<<<<<<<
  *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "cyroot/ops/scalar_ops.pyx":17
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
+ * 
+ * cdef inline real min(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a > b else a
+ * 
+ */
+
+static CYTHON_INLINE int __pyx_fuse_0__pyx_f_6cyroot_3ops_10scalar_ops_min(int __pyx_v_a, int __pyx_v_b) {
+  int __pyx_r;
+  int __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":18
+ * 
+ * cdef inline real min(real a, real b) nogil:
+ *     return b if a > b else a             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ */
+  if (((__pyx_v_a > __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":17
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
+ * 
+ * cdef inline real min(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a > b else a
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE unsigned int __pyx_fuse_1__pyx_f_6cyroot_3ops_10scalar_ops_min(unsigned int __pyx_v_a, unsigned int __pyx_v_b) {
+  unsigned int __pyx_r;
+  unsigned int __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":18
+ * 
+ * cdef inline real min(real a, real b) nogil:
+ *     return b if a > b else a             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ */
+  if (((__pyx_v_a > __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":17
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
+ * 
+ * cdef inline real min(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a > b else a
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE long __pyx_fuse_2__pyx_f_6cyroot_3ops_10scalar_ops_min(long __pyx_v_a, long __pyx_v_b) {
+  long __pyx_r;
+  long __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":18
+ * 
+ * cdef inline real min(real a, real b) nogil:
+ *     return b if a > b else a             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ */
+  if (((__pyx_v_a > __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":17
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
+ * 
+ * cdef inline real min(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a > b else a
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE unsigned long __pyx_fuse_3__pyx_f_6cyroot_3ops_10scalar_ops_min(unsigned long __pyx_v_a, unsigned long __pyx_v_b) {
+  unsigned long __pyx_r;
+  unsigned long __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":18
+ * 
+ * cdef inline real min(real a, real b) nogil:
+ *     return b if a > b else a             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ */
+  if (((__pyx_v_a > __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":17
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
+ * 
+ * cdef inline real min(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a > b else a
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE float __pyx_fuse_4__pyx_f_6cyroot_3ops_10scalar_ops_min(float __pyx_v_a, float __pyx_v_b) {
+  float __pyx_r;
+  float __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":18
+ * 
+ * cdef inline real min(real a, real b) nogil:
+ *     return b if a > b else a             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ */
+  if (((__pyx_v_a > __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":17
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
+ * 
+ * cdef inline real min(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a > b else a
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE double __pyx_fuse_5__pyx_f_6cyroot_3ops_10scalar_ops_min(double __pyx_v_a, double __pyx_v_b) {
+  double __pyx_r;
+  double __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":18
+ * 
+ * cdef inline real min(real a, real b) nogil:
+ *     return b if a > b else a             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ */
+  if (((__pyx_v_a > __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":17
+ *     return isclose(a.real, b.real, rtol, atol) and isclose(a.imag, b.imag, rtol, atol)
+ * 
+ * cdef inline real min(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a > b else a
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "cyroot/ops/scalar_ops.pyx":20
+ *     return b if a > b else a
+ * 
+ * cdef inline real max(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a < b else a
+ */
+
+static CYTHON_INLINE int __pyx_fuse_0__pyx_f_6cyroot_3ops_10scalar_ops_max(int __pyx_v_a, int __pyx_v_b) {
+  int __pyx_r;
+  int __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":21
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ *     return b if a < b else a             # <<<<<<<<<<<<<<
+ */
+  if (((__pyx_v_a < __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":20
+ *     return b if a > b else a
+ * 
+ * cdef inline real max(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a < b else a
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE unsigned int __pyx_fuse_1__pyx_f_6cyroot_3ops_10scalar_ops_max(unsigned int __pyx_v_a, unsigned int __pyx_v_b) {
+  unsigned int __pyx_r;
+  unsigned int __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":21
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ *     return b if a < b else a             # <<<<<<<<<<<<<<
+ */
+  if (((__pyx_v_a < __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":20
+ *     return b if a > b else a
+ * 
+ * cdef inline real max(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a < b else a
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE long __pyx_fuse_2__pyx_f_6cyroot_3ops_10scalar_ops_max(long __pyx_v_a, long __pyx_v_b) {
+  long __pyx_r;
+  long __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":21
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ *     return b if a < b else a             # <<<<<<<<<<<<<<
+ */
+  if (((__pyx_v_a < __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":20
+ *     return b if a > b else a
+ * 
+ * cdef inline real max(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a < b else a
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE unsigned long __pyx_fuse_3__pyx_f_6cyroot_3ops_10scalar_ops_max(unsigned long __pyx_v_a, unsigned long __pyx_v_b) {
+  unsigned long __pyx_r;
+  unsigned long __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":21
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ *     return b if a < b else a             # <<<<<<<<<<<<<<
+ */
+  if (((__pyx_v_a < __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":20
+ *     return b if a > b else a
+ * 
+ * cdef inline real max(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a < b else a
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE float __pyx_fuse_4__pyx_f_6cyroot_3ops_10scalar_ops_max(float __pyx_v_a, float __pyx_v_b) {
+  float __pyx_r;
+  float __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":21
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ *     return b if a < b else a             # <<<<<<<<<<<<<<
+ */
+  if (((__pyx_v_a < __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":20
+ *     return b if a > b else a
+ * 
+ * cdef inline real max(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a < b else a
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+static CYTHON_INLINE double __pyx_fuse_5__pyx_f_6cyroot_3ops_10scalar_ops_max(double __pyx_v_a, double __pyx_v_b) {
+  double __pyx_r;
+  double __pyx_t_1;
+
+  /* "cyroot/ops/scalar_ops.pyx":21
+ * 
+ * cdef inline real max(real a, real b) nogil:
+ *     return b if a < b else a             # <<<<<<<<<<<<<<
+ */
+  if (((__pyx_v_a < __pyx_v_b) != 0)) {
+    __pyx_t_1 = __pyx_v_b;
+  } else {
+    __pyx_t_1 = __pyx_v_a;
+  }
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "cyroot/ops/scalar_ops.pyx":20
+ *     return b if a > b else a
+ * 
+ * cdef inline real max(real a, real b) nogil:             # <<<<<<<<<<<<<<
+ *     return b if a < b else a
  */
 
   /* function exit code */
@@ -1619,6 +2016,18 @@ static int __Pyx_modinit_function_export_code(void) {
   /*--- Function export code ---*/
   if (__Pyx_ExportFunction("isclose", (void (*)(void))__pyx_f_6cyroot_3ops_10scalar_ops_isclose, "int (double, double, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("cisclose", (void (*)(void))__pyx_f_6cyroot_3ops_10scalar_ops_cisclose, "int (__pyx_t_double_complex, __pyx_t_double_complex, struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_0min", (void (*)(void))__pyx_fuse_0__pyx_f_6cyroot_3ops_10scalar_ops_min, "int (int, int)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_1min", (void (*)(void))__pyx_fuse_1__pyx_f_6cyroot_3ops_10scalar_ops_min, "unsigned int (unsigned int, unsigned int)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_2min", (void (*)(void))__pyx_fuse_2__pyx_f_6cyroot_3ops_10scalar_ops_min, "long (long, long)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_3min", (void (*)(void))__pyx_fuse_3__pyx_f_6cyroot_3ops_10scalar_ops_min, "unsigned long (unsigned long, unsigned long)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_4min", (void (*)(void))__pyx_fuse_4__pyx_f_6cyroot_3ops_10scalar_ops_min, "float (float, float)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_5min", (void (*)(void))__pyx_fuse_5__pyx_f_6cyroot_3ops_10scalar_ops_min, "double (double, double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_0max", (void (*)(void))__pyx_fuse_0__pyx_f_6cyroot_3ops_10scalar_ops_max, "int (int, int)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_1max", (void (*)(void))__pyx_fuse_1__pyx_f_6cyroot_3ops_10scalar_ops_max, "unsigned int (unsigned int, unsigned int)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_2max", (void (*)(void))__pyx_fuse_2__pyx_f_6cyroot_3ops_10scalar_ops_max, "long (long, long)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_3max", (void (*)(void))__pyx_fuse_3__pyx_f_6cyroot_3ops_10scalar_ops_max, "unsigned long (unsigned long, unsigned long)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_4max", (void (*)(void))__pyx_fuse_4__pyx_f_6cyroot_3ops_10scalar_ops_max, "float (float, float)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("__pyx_fuse_5max", (void (*)(void))__pyx_fuse_5__pyx_f_6cyroot_3ops_10scalar_ops_max, "double (double, double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;

@@ -17,6 +17,8 @@ ctypedef fused numeric:
 
 cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
 cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
+cdef real min(real a, real b) nogil
+cdef real max(real a, real b) nogil
 
 cdef extern from '<math.h>' nogil:
     double fabs(double)
