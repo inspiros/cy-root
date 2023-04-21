@@ -375,6 +375,7 @@ cdef barnes_kernel(
                                              &precision, &error, &converged, &optimal):
         return x0, F_x0, step, precision, error, converged, optimal
 
+    cdef double denom
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, z
     cdef np.ndarray[np.float64_t, ndim=2] D
     cdef np.ndarray[np.float64_t, ndim=2] d_xs = np.zeros((x0.shape[0] - 1, x0.shape[0]), dtype=np.float64)
@@ -400,10 +401,14 @@ cdef barnes_kernel(
         x1 = x0 + d_x
         F_x1 = F.eval(x1)
 
+        denom = z.dot(d_x)
+        if denom == 0:
+            converged = False
+            break
         if formula == 2:
-            D = np.outer(F_x1 - F_x0 - J_x0.dot(d_x), z) / z.dot(d_x) # (F_x1 - F_x0 - J.d_x).z^T / z^T.d_x
+            D = np.outer(F_x1 - F_x0 - J_x0.dot(d_x), z) / denom # (F_x1 - F_x0 - J.d_x).z^T / z^T.d_x
         else:
-            D = np.outer(F_x1, z) / z.dot(d_x)  # F.z^T / z^T.d_x
+            D = np.outer(F_x1, z) / denom  # F.z^T / z^T.d_x
         J_x0 = J_x0 + D
 
         x0 = x1
