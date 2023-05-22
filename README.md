@@ -4,7 +4,7 @@
 <p align="center">
   <img src="https://www.austintexas.gov/sites/default/files/images/dsd/Community_Trees/tree-root-distruibution-1.jpg" width="300"/>
   <br/>
-  <i><font size="1">(Not this root)</font></i>
+  <i>(Not this root)</i>
   <br/>
 </p>
 
