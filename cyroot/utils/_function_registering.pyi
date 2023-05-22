@@ -5,7 +5,7 @@ def _empty_decorator(f):
     return f
 
 
-tag = _empty_decorator
+register = _empty_decorator
 
 
 def is_tagged(f: Any) -> bool:

@@ -2,7 +2,7 @@ from functools import wraps
 from typing import Callable, Any
 
 __all__ = [
-    'tag',
+    'register',
     'is_tagged',
     'is_tagged_with_all',
     'is_tagged_with_any_startswith',
@@ -12,7 +12,7 @@ __all__ = [
 ]
 
 
-def tag(*tags: str, wrap: bool = False):
+def register(*tags: str, wrap: bool = False):
     """This decorator is used to add tag to functions."""
 
     def decorator(f: Callable):

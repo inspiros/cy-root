@@ -19,12 +19,12 @@ from ._check_args import (
 )
 from ._check_args cimport _check_stop_cond_vector_bracket
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
-from ._return_types import BracketingMethodsReturnType
+from ._types import VectorLike, Array2DLike
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
 from .ops cimport scalar_ops as sops, vector_ops as vops
-from .typing import *
-from .utils import warn_value
-from .utils.function_tagging import tag
+from .return_types cimport BracketingMethodsReturnType
+from .utils._function_registering import register
+from .utils._warnings import warn_value
 
 __all__ = [
     'vrahatis',
@@ -37,8 +37,7 @@ __all__ = [
 # Vrahatis
 #------------------------
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, np.ndarray, np.ndarray, double, double, bint, bint))
-cdef vrahatis_kernel(
+cdef BracketingMethodsReturnType vrahatis_kernel(
         NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=2] x0s,
         np.ndarray[np.float64_t, ndim=2] F_x0s,
@@ -48,7 +47,7 @@ cdef vrahatis_kernel(
         double ptol=PTOL,
         double prtol=PRTOL,
         unsigned long max_iter=MAX_ITER):
-    cdef unsigned int d_in = x0s.shape[1], d_out = F_x0s.shape[1]
+    cdef unsigned int d_in = <unsigned int> x0s.shape[1], d_out = <unsigned int> F_x0s.shape[1]
     cdef unsigned long step = 0
     cdef double precision, error
     cdef np.ndarray[np.float64_t, ndim=1] r = np.empty(d_in, dtype=np.float64)
@@ -56,7 +55,8 @@ cdef vrahatis_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_bracket(x0s, F_x0s, etol, ertol, ptol, prtol,
                                        r, F_r, &precision, &error, &converged, &optimal):
-        return r, F_r, step, x0s, F_x0s, precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, F_r, step, F.n_f_calls, x0s, F_x0s, precision, error, converged, optimal)
 
     cdef unsigned long[:, :] vertices = _get_1_simplexes(S_x0s)
     cdef np.ndarray[np.float64_t, ndim=1] S_r = np.empty(d_out, dtype=np.float64)
@@ -96,12 +96,14 @@ cdef vrahatis_kernel(
     if r_id >= 0:
         # return the vertex with small enough error
         optimal = sops.isclose(0, error, ertol, etol)
-        return x0s[r_id], F_x0s[r_id], step, x0s, F_x0s, precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            x0s[r_id], F_x0s[r_id], step, F.n_f_calls, x0s, F_x0s, precision, error, converged, optimal)
     elif step == 0:
         # if the precision tol is satisfied without running into the loop,
         # just return the vertex with the smallest error
         optimal = sops.isclose(0, error, ertol, etol)
-        return r, F_r, step, x0s, F_x0s, precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, F_r, step, F.n_f_calls, x0s, F_x0s, precision, error, converged, optimal)
     # otherwise, find the diagonal with the longest length
     cdef unsigned long best_i
     cdef double longest_len_squared = -math.INFINITY, diag_len_squared
@@ -116,7 +118,8 @@ cdef vrahatis_kernel(
 
     error = vops.max(vops.fabs(F_r))
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, F_r, step, x0s, F_x0s, precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, F_r, step, F.n_f_calls, x0s, F_x0s, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
 cpdef unsigned long[:, :] _get_1_simplexes(double[:, :] S):
@@ -139,7 +142,7 @@ cpdef np.ndarray[np.float64_t, ndim=2] get_M(unsigned int n,
                                              bint sign=False):
     cdef np.ndarray[np.float64_t, ndim=2] M = np.empty((2 ** n, n), dtype=np.float64)
     cdef unsigned int i, j, rate = 1
-    for j in range(M.shape[1] - 1, -1, -1):
+    for j in range(<unsigned int> M.shape[1] - 1, -1, -1):
         for i in range(M.shape[0]):
             M[i, j] = (i // rate) % 2
         rate *= 2
@@ -284,7 +287,7 @@ def sorted_by_vertices(*mats, S):
     return *(m[sorted_inds] for m in mats), S[sorted_inds]
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.bracketing')
+@register('cyroot.vector.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def vrahatis(F: Callable[[VectorLike], VectorLike],
@@ -313,7 +316,7 @@ def vrahatis(F: Callable[[VectorLike], VectorLike],
     Otherwise, the convergence is not guaranteed.
 
     References:
-        https://link.springer.com/article/10.1007/BF01389620
+        https://doi.org/10.1007/BF01389620
 
     Args:
         F (function): Function for which the root is sought.
@@ -374,7 +377,7 @@ def vrahatis(F: Callable[[VectorLike], VectorLike],
     x0s, F_x0s, S_x0s = sorted_by_vertices(x0s, F_x0s, S=S_x0s)
     res = vrahatis_kernel(
         F_wrapper, x0s, F_x0s, S_x0s, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, F_wrapper.n_f_calls)
+    return res
 
 #------------------------
 # Eiger-Sikorski-Stenger

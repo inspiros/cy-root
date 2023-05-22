@@ -1,7 +1,7 @@
 from inspect import getmembers
 from functools import partial
 from . import vector_bracketing, vector_quasi_newton, vector_newton
-from .utils.function_tagging import is_tagged_with_any_startswith
+from .utils._function_registering import is_tagged_with_any_startswith
 
 __all__ = [
     'VECTOR_ROOT_FINDING_METHODS',

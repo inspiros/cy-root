@@ -1,4 +1,4 @@
-cy-root ![Build wheels](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg) ![PyPI](https://img.shields.io/pypi/v/cy-root) ![PyPI - Downloads](https://img.shields.io/pypi/dm/cy-root) ![GitHub](https://img.shields.io/github/license/inspiros/cy-root)
+cy-root [![Build wheels](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg)](https://github.com/inspiros/cy-root/actions) [![PyPI](https://img.shields.io/pypi/v/cy-root)](https://pypi.org/project/cy-root) [![PyPI - Downloads](https://img.shields.io/pypi/dm/cy-root)](https://pypi.org/project/cy-root) [![GitHub](https://img.shields.io/github/license/inspiros/cy-root)](https://github.com/inspiros/cy-root/blob/master/LICENSE.txt)
 ========
 
 <p align="center">
@@ -13,8 +13,10 @@ Many of the implemented methods can't be found in common Python libraries.
 
 ## News:
 
-- Vector root-finding methods can now _(try to)_ solve systems of equations with number of inputs different from number
-  of outputs.
+- **v1.0.3:** All methods now return a _partially_ typed `namedtuple`-like Cython Extension object instead of
+  `namedtuple`.
+- **v1.0.2:** Vector root-finding methods can now _(try to)_ solve systems of equations with number of inputs different
+  from number of outputs.
 
 ## Requirements
 
@@ -49,63 +51,64 @@ pip install .
 ## Supported algorithms
 
 **Note:**
-For more information about the listed algorithms, please check the functions' docstrings or use Google until I update
-the references.
+For more information about the listed algorithms, please use Google until I update the references.
 
 ### Scalar root:
 
 - **Bracketing methods:** (methods that require lower and upper bounds)
-    - [x] Bisect
-    - [x] Hybisect _(bisection with interval analysis)_
-    - [x] Regula Falsi
-    - [x] Illinois
-    - [x] Pegasus
-    - [x] Anderson–Björck
-    - [x] Dekker
-    - [x] Brent _(with Inverse Quadratic Interpolation and Hyperbolic Interpolation)_
-    - [x] Chandrupatla
-    - [x] Ridders
-    - [x] TOMS748
-    - [x] Wu
-    - [x] ITP
+    - ✅ Bisect
+    - ✅ [Hybisect](https://dl.acm.org/doi/10.1145/3437120.3437324) _(bisection with interval analysis)_
+    - ✅ Regula Falsi
+    - ✅ Illinois
+    - ✅ Pegasus
+    - ✅ Anderson–Björck
+    - ✅ Dekker
+    - ✅ Brent _(with Inverse Quadratic Interpolation and Hyperbolic Interpolation)_
+    - ✅ [Chandrupatla](https://dl.acm.org/doi/10.1016/S0965-9978%2896%2900051-8)
+    - ✅ [Ridders](https://doi.org/10.1109/TCS.1979.1084580)
+    - ✅ [TOMS748](https://dl.acm.org/doi/10.1145/210089.210111)
+    - ✅ [Wu](https://doi.org/10.1016/j.amc.2004.04.120)
+    - ✅ [ITP](https://dl.acm.org/doi/10.1145/3423597)
 - **Newton-like methods:** (methods that require derivative and/or higher order derivatives)
-    - [x] Newton
-    - [x] Chebyshev
-    - [x] Halley
-    - [x] Super-Halley
-    - [x] Tangent Hyperbolas _(similar to Halley)_
-    - [x] Householder
+    - ✅ Newton
+    - ✅ Chebyshev
+    - ✅ Halley
+    - ✅ Super-Halley
+    - ✅ Tangent Hyperbolas _(similar to Halley)_
+    - ✅ Householder
 - **Quasi-Newton methods:** (methods that approximate derivative, use interpolation, or successive iteration)
-    - [x] Secant
-    - [x] Sidi
-    - [x] Steffensen
-    - [x] Inverse Quadratic Interpolation
-    - [x] Hyperbolic Interpolation
-    - [x] Muller _(for complex root)_
+    - ✅ Secant
+    - ✅ Sidi
+    - ✅ Steffensen
+    - ✅ Inverse Quadratic Interpolation
+    - ✅ Hyperbolic Interpolation
+    - ✅ [Muller](https://www.ams.org/journals/mcom/1956-10-056/S0025-5718-1956-0083822-0/) _(for complex root)_
 
 ### Vector root:
 
 - **Bracketing methods:** (methods that require n-dimensional bracket)
-    - [x] Vrahatis _(generalized bisection using n-polygon)_
+    - ✅ [Vrahatis](https://doi.org/10.1007/BF01389620) _(generalized bisection using n-polygon)_
+
+[//]: # (    - ⬜ [Eiger-Sikorski-Stenger]&#40;https://dl.acm.org/doi/10.1145/2701.2705&#41; _&#40;planned&#41;_)
 - **Newton-like methods:** (methods that require Jacobian and/or Hessian)
-    - [x] Generalized Newton
-    - [x] Generalized Chebyshev
-    - [x] Generalized Halley
-    - [x] Generalized Super-Halley
-    - [x] Generalized Tangent Hyperbolas _(similar to Generalized Halley)_
+    - ✅ Generalized Newton
+    - ✅ Generalized Chebyshev
+    - ✅ Generalized Halley
+    - ✅ Generalized Super-Halley
+    - ✅ Generalized Tangent Hyperbolas _(similar to Generalized Halley)_
 - **Quasi-Newton methods:** (methods that approximate Jacobian, use interpolation, or successive iteration)
-    - [x] Wolfe-Bittner
-    - [x] Robinson
-    - [x] Barnes
-    - [x] Traub-Steffensen
-    - [x] Broyden _(Good and Bad)_
-    - [x] Klement
+    - ✅ [Wolfe-Bittner](https://doi.org/10.1145/368518.368542)
+    - ✅ [Robinson](https://epubs.siam.org/doi/abs/10.1137/0703057)
+    - ✅ [Barnes](https://academic.oup.com/comjnl/article/8/1/66/489886)
+    - ✅ Traub-Steffensen
+    - ✅ [Broyden](https://doi.org/10.2307/2003941) _(Good and Bad)_
+    - ✅ [Klement](https://jatm.com.br/jatm/article/view/373)
 
 #### Derivative Approximation:
 
 Methods that can be combined with any Newton-like root-finding methods to discard the need of analytical derivatives.
 
-- [x] Finite Difference _(for both scalar and vector functions, up to arbitrary order)_
+- ✅ Finite Difference _(for both scalar and vector functions, up to arbitrary order)_
 
 ## Usage
 
@@ -395,7 +398,7 @@ RootResults(root=array([2.16665878, 2.11415683]), f_root=array([-5.47455414e-11,
 
 #### Output format:
 
-The returned `result` is a namedtuple whose elements depend on the type of the method:
+The returned `result` is a namedtuple-like object whose elements depend on the type of the method:
 
 - Common:
     - `root`: the solved root.

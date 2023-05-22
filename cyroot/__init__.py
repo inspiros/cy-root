@@ -9,7 +9,7 @@ from .scalar_derivative_approximation import *
 from .scalar_newton import *
 from .scalar_quasi_newton import *
 from .scalar_root import *
-from .utils import set_value_warning_filter
+from .utils._warnings import set_value_warning_filter
 from .vector_bracketing import *
 from .vector_derivative_approximation import *
 from .vector_newton import *

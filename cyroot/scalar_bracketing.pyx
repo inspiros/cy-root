@@ -10,8 +10,8 @@ import cython
 from cython cimport view
 from dynamic_default_args import dynamic_default_args, named_default
 from libc cimport math
-from libcpp.vector cimport vector
 from libcpp.pair cimport pair
+from libcpp.vector cimport vector
 
 from ._check_args import _check_stop_cond_args
 from ._check_args cimport (
@@ -19,14 +19,13 @@ from ._check_args cimport (
     _check_stop_cond_scalar_initial_guess,
 )
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
-from ._return_types import (BracketingMethodsReturnType,
-                            SplittingBracketingMethodReturnType)
 from .fptr cimport (
     DoubleScalarFPtr, PyDoubleScalarFPtr,
     DoubleBiScalarFPtr, PyDoubleBiScalarFPtr,
 )
 from .ops cimport scalar_ops as sops
-from .utils.function_tagging import tag
+from .return_types cimport BracketingMethodsReturnType, SplittingBracketingMethodsReturnType
+from .utils._function_registering import register
 
 __all__ = [
     'bisect',
@@ -60,8 +59,7 @@ cdef inline (double, double, double, double, double, double)  _update_bracket(
 # Bisection
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        bisect_kernel(
+cdef BracketingMethodsReturnType bisect_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -77,7 +75,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     converged = True
     while not (sops.isclose(0, error, ertol, etol) or
@@ -95,11 +94,11 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         precision = math.fabs(b - a)
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        vrahatis_bisect_kernel(
+cdef BracketingMethodsReturnType vrahatis_bisect_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -114,7 +113,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_initial_guess(a, f_a, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return a, f_a, step, (a, b), (f_a, math.NAN), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            a, f_a, step, f.n_f_calls, (a, b), (f_a, math.NAN), precision, error, converged, optimal)
 
     cdef double h = b - a, w, r = a, f_r = f_a, scale = 1.
     if ptol == prtol == 0:
@@ -139,10 +139,11 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
             break
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (r - w / 2, r + w / 2), (math.NAN, math.NAN), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (r - w / 2, r + w / 2), (math.NAN, math.NAN), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def bisect(f: Callable[[float], float],
@@ -197,7 +198,7 @@ def bisect(f: Callable[[float], float],
         raise ValueError(f'algo must be either 1/\'default\' or '
                          f'2/\'modified\'/\'vrahatis\'. Got {algo}.')
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if algo != 2 and f_b is None:
@@ -209,7 +210,7 @@ def bisect(f: Callable[[float], float],
     else:
         res = vrahatis_bisect_kernel(
             f_wrapper, a, b, f_a, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 #------------------------
 # Hybisect
@@ -290,10 +291,7 @@ cdef bint _hybisect_subroutine(
     return has_l_root or has_r_root
 
 # noinspection DuplicatedCode
-cdef (vector[double], vector[double], unsigned long, vector[unsigned long],\
-        vector[pair[double, double]], vector[pair[double, double]],\
-        vector[double], vector[double], vector[bint], vector[bint]) \
-        hybisect_kernel(
+cdef SplittingBracketingMethodsReturnType hybisect_kernel(
         DoubleScalarFPtr f,
         DoubleBiScalarFPtr interval_f,
         double a,
@@ -317,10 +315,12 @@ cdef (vector[double], vector[double], unsigned long, vector[unsigned long],\
     cdef unsigned long i
     for i in range(brackets.size()):
         f_brackets.push_back(pair[double, double](math.NAN, math.NAN))
-    return rs, f_rs, split_step, steps, brackets, f_brackets, precisions, errors, converged_flags, optimal_flags
+    return SplittingBracketingMethodsReturnType(
+        rs, f_rs, split_step, steps, (f.n_f_calls, interval_f.n_f_calls), brackets, f_brackets,
+        precisions, errors, converged_flags, optimal_flags)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def hybisect(f: Callable[[float], float],
@@ -332,7 +332,7 @@ def hybisect(f: Callable[[float], float],
              ptol: float = named_default(PTOL=PTOL),
              prtol: float = named_default(PRTOL=PRTOL),
              max_iter: int = named_default(MAX_ITER=MAX_ITER),
-             max_split_iter: int = named_default(MAX_ITER=MAX_ITER)) -> SplittingBracketingMethodReturnType:
+             max_split_iter: int = named_default(MAX_ITER=MAX_ITER)) -> SplittingBracketingMethodsReturnType:
     """
     Hybrid Bisection method for scalar root-finding.
 
@@ -368,13 +368,12 @@ def hybisect(f: Callable[[float], float],
     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
     a, b = (a, b) if a < b else (b, a)
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
-    interval_f_wrapper = PyDoubleBiScalarFPtr.from_f(interval_f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
+    interval_f_wrapper = PyDoubleBiScalarFPtr.from_f(interval_f)  # type: ignore[has-type]
 
     res = hybisect_kernel(f_wrapper, interval_f_wrapper, a, b,
                           etol, ertol, ptol, prtol, max_iter, max_split_iter)
-    return SplittingBracketingMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
-                                                                  interval_f_wrapper.n_f_calls))
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # False position
@@ -382,8 +381,7 @@ def hybisect(f: Callable[[float], float],
 ctypedef double (*scale_func_type)(double, double)
 
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        regula_falsi_kernel(
+cdef BracketingMethodsReturnType regula_falsi_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -400,7 +398,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     converged = True
     while not (sops.isclose(0, error, ertol, etol) or
@@ -423,10 +422,11 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         b, f_b = r, f_r
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def regula_falsi(f: Callable[[float], float],
@@ -469,7 +469,7 @@ def regula_falsi(f: Callable[[float], float],
     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
     a, b = (a, b) if a < b else (b, a)
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -477,7 +477,7 @@ def regula_falsi(f: Callable[[float], float],
 
     res = regula_falsi_kernel(
         f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # Illinois
@@ -486,7 +486,7 @@ cdef inline double illinois_scale(double f_b, double f_c):
     return 0.5
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def illinois(f: Callable[[float], float],
@@ -529,7 +529,7 @@ def illinois(f: Callable[[float], float],
     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
     a, b = (a, b) if a < b else (b, a)
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -537,7 +537,7 @@ def illinois(f: Callable[[float], float],
 
     res = regula_falsi_kernel(
         f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, illinois_scale)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # Pegasus
@@ -546,7 +546,7 @@ cdef inline double pegasus_scale(double f_b, double f_c):
     return f_b / (f_b + f_c)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def pegasus(f: Callable[[float], float],
@@ -589,7 +589,7 @@ def pegasus(f: Callable[[float], float],
     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
     a, b = (a, b) if a < b else (b, a)
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -597,7 +597,7 @@ def pegasus(f: Callable[[float], float],
 
     res = regula_falsi_kernel(
         f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, pegasus_scale)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # Anderson–Björck
@@ -609,7 +609,7 @@ cdef inline double anderson_bjorck_scale(double f_b, double f_c):
     return m
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def anderson_bjorck(f: Callable[[float], float],
@@ -652,7 +652,7 @@ def anderson_bjorck(f: Callable[[float], float],
     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
     a, b = (a, b) if a < b else (b, a)
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -660,14 +660,13 @@ def anderson_bjorck(f: Callable[[float], float],
 
     res = regula_falsi_kernel(
         f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter, anderson_bjorck_scale)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # Dekker
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        dekker_kernel(
+cdef BracketingMethodsReturnType dekker_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -683,7 +682,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     cdef double b_prev = a, f_b_prev = f_a, b_next, f_b_next, c, s
     converged = True
@@ -716,10 +716,11 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
     r, f_r = b, f_b
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def dekker(f: Callable[[float], float],
@@ -762,7 +763,7 @@ def dekker(f: Callable[[float], float],
     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
     a, b = (a, b) if a < b else (b, a)
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -770,14 +771,13 @@ def dekker(f: Callable[[float], float],
 
     res = dekker_kernel(
         f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # Brent
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        brent_kernel(
+cdef BracketingMethodsReturnType brent_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -795,7 +795,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     cdef double b_prev = a, f_b_prev = f_a, b_prev_prev = a, b_next, f_b_next, c, s
     cdef double d_ab, d_abp, d_bbp, df_ab, df_abp, df_bbp, denom
@@ -860,10 +861,11 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
     r, f_r = b, f_b
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def brent(f: Callable[[float], float],
@@ -923,7 +925,7 @@ def brent(f: Callable[[float], float],
     if sigma <= 0:
         raise ValueError(f'sigma must be positive. Got {sigma}.')
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -931,14 +933,13 @@ def brent(f: Callable[[float], float],
 
     res = brent_kernel(
         f_wrapper, a, b, f_a, f_b, interp_method, sigma, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # Chandrupatla
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        chandrupatla_kernel(
+cdef BracketingMethodsReturnType chandrupatla_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -955,7 +956,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     cdef double c, f_c, d, f_d, d_ab, d_fa_fb, d_ad, d_fa_fd, d_bd, d_fb_fd, tl, t = 0.5
     converged = True
@@ -999,10 +1001,11 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
     # this method set r and f_r inside loop
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def chandrupatla(f: Callable[[float], float],
@@ -1018,6 +1021,9 @@ def chandrupatla(f: Callable[[float], float],
                  max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Chandrupatla's method for scalar root-finding.
+
+    References:
+        https://dl.acm.org/doi/10.1016/S0965-9978%2896%2900051-8
 
     Args:
         f (function): Function for which the root is sought.
@@ -1050,7 +1056,7 @@ def chandrupatla(f: Callable[[float], float],
     if sigma < 0:
         raise ValueError(f'sigma must be non-negative. Got {sigma}.')
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -1058,14 +1064,13 @@ def chandrupatla(f: Callable[[float], float],
 
     res = chandrupatla_kernel(
         f_wrapper, a, b, f_a, f_b, sigma, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # Ridders
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        ridders_kernel(
+cdef BracketingMethodsReturnType ridders_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -1081,7 +1086,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     cdef double c, f_c, d, f_d, denom
     converged = True
@@ -1113,10 +1119,11 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
         a, f_a = b, f_b
     r, f_r = d, f_d
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def ridders(f: Callable[[float], float],
@@ -1131,6 +1138,9 @@ def ridders(f: Callable[[float], float],
             max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     Ridders method for scalar root-finding.
+
+    References:
+        https://doi.org/10.1109/TCS.1979.1084580
 
     Args:
         f (function): Function for which the root is sought.
@@ -1159,7 +1169,7 @@ def ridders(f: Callable[[float], float],
     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
     a, b = (a, b) if a < b else (b, a)
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -1167,7 +1177,7 @@ def ridders(f: Callable[[float], float],
 
     res = ridders_kernel(
         f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # TOMS748
@@ -1182,7 +1192,7 @@ cdef double[:, :] _divided_differences(
 
     DD[i, j] = f[x_{i-j}, ..., x_i] for 0 <= j <= i
     If forward is False, return f[c], f[b, c], f[a, b, c]."""
-    cdef unsigned int i, j, M = <unsigned int> len(xs)
+    cdef unsigned int i, j, M = <unsigned int> xs.shape[0]
     if not forward:
         xs = xs[::-1]
     N = M if N == 0 else sops.min(N, M)
@@ -1204,7 +1214,7 @@ cdef double[:] _diag_divided_differences(
     Just return the main diagonal(or last row):
       f[a], f[a, b] and f[a, b, c].
     """
-    cdef unsigned int j, M = <unsigned int> len(xs)
+    cdef unsigned int j, M = <unsigned int> xs.shape[0]
     N = M if N == 0 else sops.min(N, M)
     cdef double[:, :] DD = _divided_differences(xs, fs, N)
     cdef double[:] dd = view.array(shape=(N,), itemsize=sizeof(double), format='d')
@@ -1266,8 +1276,7 @@ cdef double _inverse_poly_zero(double a, double b, double c, double d,
     return a + Q31 + Q32 + Q33
 
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        toms748_kernel(
+cdef BracketingMethodsReturnType toms748_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -1285,7 +1294,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     cdef unsigned long n
     cdef double c, f_c, d, f_d, e, f_e, u, f_u, z, f_z, A
@@ -1299,7 +1309,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     error = math.fabs(f_c)
     if sops.isclose(0, error, ertol, etol):
         r, f_r = c, f_c
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, True, True
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, True, True)
     a, b, d, f_a, f_b, f_d = _update_bracket(a, b, c, f_a, f_b, f_c)
     precision = math.fabs(b - a)
     e = f_e = math.NAN
@@ -1368,10 +1379,11 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
     r, f_r = c, f_c
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def toms748(f: Callable[[float], float],
@@ -1388,6 +1400,9 @@ def toms748(f: Callable[[float], float],
             max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> BracketingMethodsReturnType:
     """
     TOMS Algorithm 748.
+
+    References:
+        https://dl.acm.org/doi/10.1145/210089.210111
 
     Args:
         f (function): Function for which the root is sought.
@@ -1423,7 +1438,7 @@ def toms748(f: Callable[[float], float],
     if not 0 < mu < 1:
         raise ValueError(f'mu must be in range (0, 1). Got {mu}.')
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -1431,14 +1446,13 @@ def toms748(f: Callable[[float], float],
 
     res = toms748_kernel(
         f_wrapper, a, b, f_a, f_b, k, mu, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # Wu
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        wu_kernel(
+cdef BracketingMethodsReturnType wu_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -1454,7 +1468,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     cdef double c, f_c, a_bar, f_a_bar, b_bar, f_b_bar, c_bar
     cdef double div_diff_ab, div_diff_bc, div_diff_ac, alpha, beta, delta, s_delta, d1, d2, d
@@ -1465,7 +1480,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     error = math.fabs(f_c)
     if sops.isclose(0, error, ertol, etol):
         r, f_r = c, f_c
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, True, True
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, True, True)
     a_bar, b_bar, _, f_a_bar, f_b_bar, _ = _update_bracket(a, b, c, f_a, f_b, f_c)
     converged = True
     while not (sops.isclose(0, error, ertol, etol) or
@@ -1506,10 +1522,11 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
     r, f_r = c, f_c
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def wu(f: Callable[[float], float],
@@ -1557,7 +1574,7 @@ def wu(f: Callable[[float], float],
     etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(etol, ertol, ptol, prtol, max_iter)
     a, b = (a, b) if a < b else (b, a)
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -1565,14 +1582,13 @@ def wu(f: Callable[[float], float],
 
     res = wu_kernel(
         f_wrapper, a, b, f_a, f_b, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]
 
 ################################################################################
 # ITP
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, (double, double), (double, double), double, double, bint, bint) \
-        itp_kernel(
+cdef BracketingMethodsReturnType itp_kernel(
         DoubleScalarFPtr f,
         double a,
         double b,
@@ -1593,7 +1609,8 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
     cdef bint converged, optimal
     if _check_stop_cond_scalar_bracket(a, b, f_a, f_b, etol, ertol, ptol, prtol,
                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     cdef unsigned long n_1div2 = <unsigned long> math.ceil(math.log2((b - a) / ptol))
     cdef unsigned long n_max = n_1div2 + n0
@@ -1636,19 +1653,21 @@ cdef (double, double, unsigned long, (double, double), (double, double), double,
 
     if return_x_itp:
         optimal = sops.isclose(0, error, ertol, etol)
-        return x_itp, f_itp, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+        return BracketingMethodsReturnType(
+            x_itp, f_itp, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
     r = (a + b) / 2
     f_r = f.eval(r)
     error = math.fabs(f_r)
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, (a, b), (f_a, f_b), precision, error, converged, optimal
+    return BracketingMethodsReturnType(
+        r, f_r, step, f.n_f_calls, (a, b), (f_a, f_b), precision, error, converged, optimal)
 
 # upper bound for k2
 cdef double PHI = (1 + math.sqrt(5)) / 2
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.bracketing')
+@register('cyroot.scalar.bracketing')
 @dynamic_default_args()
 @cython.binding(True)
 def itp(f: Callable[[float], float],
@@ -1714,7 +1733,7 @@ def itp(f: Callable[[float], float],
     if n0 < 0:
         raise ValueError(f'n0 must be non-negative integer. Got {n0}.')
 
-    f_wrapper = PyDoubleScalarFPtr.from_f(f)
+    f_wrapper = PyDoubleScalarFPtr.from_f(f)  # type: ignore[has-type]
     if f_a is None:
         f_a = f_wrapper.eval(a)
     if f_b is None:
@@ -1722,4 +1741,4 @@ def itp(f: Callable[[float], float],
 
     res = itp_kernel(
         f_wrapper, a, b, f_a, f_b, k1, k2, n0, etol, ertol, ptol, prtol, max_iter)
-    return BracketingMethodsReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res  # type: ignore[has-type]

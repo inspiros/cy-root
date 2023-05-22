@@ -21,14 +21,12 @@ from ._check_args import (
     _check_initial_vals_uniqueness,
 )
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER, FINITE_DIFF_STEP
-from ._return_types import QuasiNewtonMethodReturnType
-from .fptr cimport (
-    NdArrayFPtr, PyNdArrayFPtr,
-)
+from ._types import VectorLike, Array2DLike
+from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
 from .ops cimport scalar_ops as sops, vector_ops as vops, matrix_ops as mops
-from .typing import *
-from .utils import warn_value
-from .utils.function_tagging import tag
+from .return_types cimport RootReturnType
+from .utils._function_registering import register
+from .utils._warnings import warn_value
 from .vector_derivative_approximation import generalized_finite_difference
 
 __all__ = [
@@ -47,8 +45,7 @@ __all__ = [
 # Wolfe-Bittner
 #------------------------
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
-cdef wolfe_bittner_kernel(
+cdef RootReturnType wolfe_bittner_kernel(
         NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=2] x0s,
         np.ndarray[np.float64_t, ndim=2] F_x0s,
@@ -64,7 +61,7 @@ cdef wolfe_bittner_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guesses(x0s, F_x0s, etol, ertol, ptol, prtol,
                                                r, F_r, &precision, &error, &converged, &optimal):
-        return r, F_r, step, precision, error, converged, optimal
+        return RootReturnType(r, F_r, step, F.n_f_calls, precision, error, converged, optimal)
 
     # sort by error of F
     cdef np.ndarray[np.int64_t, ndim=1] inds = np.abs(F_x0s).max(1).argsort()[::-1]
@@ -100,10 +97,10 @@ cdef wolfe_bittner_kernel(
         error = vops.max(vops.fabs(F_x1))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return xs[-1], F_xs[-1], step, precision, error, converged, optimal
+    return RootReturnType(xs[-1], F_xs[-1], step, F.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.quasi_newton')
+@register('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def wolfe_bittner(F: Callable[[VectorLike], VectorLike],
@@ -113,9 +110,12 @@ def wolfe_bittner(F: Callable[[VectorLike], VectorLike],
                   ertol: float = named_default(ERTOL=ERTOL),
                   ptol: float = named_default(PTOL=PTOL),
                   prtol: float = named_default(PRTOL=PRTOL),
-                  max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+                  max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Wolfe-Bittner's Secant method for vector root-finding.
+
+    References:
+        https://doi.org/10.1145/368518.368542
 
     Args:
         F (function): Function for which the root is sought.
@@ -168,14 +168,13 @@ def wolfe_bittner(F: Callable[[VectorLike], VectorLike],
 
     res = wolfe_bittner_kernel(
         F_wrapper, x0s, F_x0s, etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
+    return res
 
 #------------------------
 # Robinson
 #------------------------
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
-cdef robinson_kernel(
+cdef RootReturnType robinson_kernel(
         NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] x1,
@@ -195,7 +194,7 @@ cdef robinson_kernel(
     if _check_stop_cond_vector_initial_guesses(np.stack([x0, x1]), np.stack([F_x0, F_x1]),
                                                etol, ertol, ptol, prtol,
                                                r, F_r, &precision, &error, &converged, &optimal):
-        return r, F_r, step, precision, error, converged, optimal
+        return RootReturnType(r, F_r, step, F.n_f_calls, precision, error, converged, optimal)
 
     cdef unsigned long i
     cdef np.ndarray[np.float64_t, ndim=2] I = np.eye(x0.shape[0], dtype=np.float64)
@@ -228,7 +227,7 @@ cdef robinson_kernel(
         error = vops.max(vops.fabs(F_r))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, F_r, step, precision, error, converged, optimal
+    return RootReturnType(r, F_r, step, F.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
 cdef np.ndarray[np.float64_t, ndim=2] _efficient_H(np.ndarray[np.float64_t, ndim=1] d_x):
@@ -266,7 +265,7 @@ cdef np.ndarray[np.float64_t, ndim=2] _random_H(unsigned int d):
     return q
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.quasi_newton')
+@register('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def robinson(F: Callable[[VectorLike], VectorLike],
@@ -279,7 +278,7 @@ def robinson(F: Callable[[VectorLike], VectorLike],
              ertol: float = named_default(ERTOL=ERTOL),
              ptol: float = named_default(PTOL=PTOL),
              prtol: float = named_default(PRTOL=PRTOL),
-             max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+             max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Robinson's Secant method for vector root-finding.
 
@@ -350,14 +349,13 @@ def robinson(F: Callable[[VectorLike], VectorLike],
 
     res = robinson_kernel(
         F_wrapper, x0, x1, F_x0, F_x1, orth, etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
+    return res
 
 #------------------------
 # Barnes
 #------------------------
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
-cdef barnes_kernel(
+cdef RootReturnType barnes_kernel(
         NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
@@ -373,7 +371,7 @@ cdef barnes_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, F_x0, step, precision, error, converged, optimal
+        return RootReturnType(x0, F_x0, step, F.n_f_calls, precision, error, converged, optimal)
 
     cdef double denom
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, z
@@ -417,7 +415,7 @@ cdef barnes_kernel(
         error = vops.max(vops.fabs(F_x1))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x1, F_x1, step, precision, error, converged, optimal
+    return RootReturnType(x1, F_x1, step, F.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
 cdef np.ndarray[np.float64_t, ndim=1] _orthogonal_vector(
@@ -461,7 +459,7 @@ cdef np.ndarray[np.float64_t, ndim=1] _orthogonal_vector(
     return basis[k_final]
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.quasi_newton')
+@register('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def barnes(F: Callable[[VectorLike], VectorLike],
@@ -475,7 +473,7 @@ def barnes(F: Callable[[VectorLike], VectorLike],
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
            prtol: float = named_default(PRTOL=PRTOL),
-           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Barnes's Secant method for vector root-finding.
 
@@ -535,14 +533,13 @@ def barnes(F: Callable[[VectorLike], VectorLike],
 
     res = barnes_kernel(
         F_wrapper, x0, F_x0, J_x0, formula, etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
+    return res
 
 ################################################################################
 # Traub-Steffensen
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
-cdef traub_steffensen_kernel(
+cdef RootReturnType traub_steffensen_kernel(
         NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
@@ -556,7 +553,7 @@ cdef traub_steffensen_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, F_x0, step, precision, error, converged, optimal
+        return RootReturnType(x0, F_x0, step, F.n_f_calls, precision, error, converged, optimal)
 
     cdef unsigned long i
     cdef np.ndarray[np.float64_t, ndim=2] J = np.empty((F_x0.shape[0], x0.shape[0]), dtype=np.float64)
@@ -583,10 +580,10 @@ cdef traub_steffensen_kernel(
         error = vops.max(vops.fabs(F_x0))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, F_x0, step, precision, error, converged, optimal
+    return RootReturnType(x0, F_x0, step, F.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.quasi_newton')
+@register('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def traub_steffensen(F: Callable[[VectorLike], VectorLike],
@@ -596,7 +593,7 @@ def traub_steffensen(F: Callable[[VectorLike], VectorLike],
                      ertol: float = named_default(ERTOL=ERTOL),
                      ptol: float = named_default(PTOL=PTOL),
                      prtol: float = named_default(PRTOL=PRTOL),
-                     max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+                     max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Traub-Steffensen method for vector root-finding.
 
@@ -639,14 +636,13 @@ def traub_steffensen(F: Callable[[VectorLike], VectorLike],
 
     res = traub_steffensen_kernel(
         F_wrapper, x0, F_x0, etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
+    return res
 
 ################################################################################
 # Broyden
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
-cdef broyden1_kernel(
+cdef RootReturnType broyden1_kernel(
         NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
@@ -661,7 +657,7 @@ cdef broyden1_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, F_x0, step, precision, error, converged, optimal
+        return RootReturnType(x0, F_x0, step, F.n_f_calls, precision, error, converged, optimal)
 
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, d_F
     cdef double denom
@@ -689,11 +685,10 @@ cdef broyden1_kernel(
         error = vops.max(vops.fabs(F_x0))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, F_x0, step, precision, error, converged, optimal
+    return RootReturnType(x0, F_x0, step, F.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
-cdef broyden2_kernel(
+cdef RootReturnType broyden2_kernel(
         NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
@@ -709,7 +704,7 @@ cdef broyden2_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, F_x0, step, precision, error, converged, optimal
+        return RootReturnType(x0, F_x0, step, F.n_f_calls, precision, error, converged, optimal)
 
     cdef np.ndarray[np.float64_t, ndim=2] J_x0_inv = J_x0 if inversed else mops.inv(J_x0, None, method=3)
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, d_F, u
@@ -741,10 +736,10 @@ cdef broyden2_kernel(
         error = vops.max(vops.fabs(F_x0))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, F_x0, step, precision, error, converged, optimal
+    return RootReturnType(x0, F_x0, step, F.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.quasi_newton')
+@register('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def broyden(F: Callable[[VectorLike], VectorLike],
@@ -758,11 +753,14 @@ def broyden(F: Callable[[VectorLike], VectorLike],
             ertol: float = named_default(ERTOL=ERTOL),
             ptol: float = named_default(PTOL=PTOL),
             prtol: float = named_default(PRTOL=PRTOL),
-            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Broyden's methods for vector root-finding.
     This will use Broyden's Good method if ``algo='good'`` or Broyden's Bad
     method if ``algo='bad'``.
+
+    References:
+        https://doi.org/10.2307/2003941
 
     Args:
         F (function): Function for which the root is sought.
@@ -824,14 +822,13 @@ def broyden(F: Callable[[VectorLike], VectorLike],
     else:
         res = broyden2_kernel(
             F_wrapper, x0, F_x0, J_x0, False, etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
+    return res
 
 ################################################################################
 # Klement
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
-cdef klement_kernel(
+cdef RootReturnType klement_kernel(
         NdArrayFPtr F,
         np.ndarray[np.float64_t, ndim=1] x0,
         np.ndarray[np.float64_t, ndim=1] F_x0,
@@ -846,7 +843,7 @@ cdef klement_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, F_x0, step, precision, error, converged, optimal
+        return RootReturnType(x0, F_x0, step, F.n_f_calls, precision, error, converged, optimal)
 
     cdef np.ndarray[np.float64_t, ndim=1] x1, F_x1, d_x, d_F, denom, k
     cdef np.ndarray[np.float64_t, ndim=2] U
@@ -876,10 +873,10 @@ cdef klement_kernel(
         error = vops.max(vops.fabs(F_x0))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, F_x0, step, precision, error, converged, optimal
+    return RootReturnType(x0, F_x0, step, F.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.quasi_newton')
+@register('cyroot.vector.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def klement(F: Callable[[VectorLike], VectorLike],
@@ -892,7 +889,7 @@ def klement(F: Callable[[VectorLike], VectorLike],
             ertol: float = named_default(ERTOL=ERTOL),
             ptol: float = named_default(PTOL=PTOL),
             prtol: float = named_default(PRTOL=PRTOL),
-            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+            max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Klement's method (a modified Broyden's Good method) for vector root-finding presented
     in the paper "On Using Quasi-Newton Algorithms of the Broyden Class for Model-to-Test Correlation".
@@ -946,4 +943,4 @@ def klement(F: Callable[[VectorLike], VectorLike],
 
     res = klement_kernel(
         F_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, F_wrapper.n_f_calls)
+    return res

@@ -24,14 +24,14 @@ from ._check_args import (
     _check_initial_vals_uniqueness,
 )
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
-from ._return_types import QuasiNewtonMethodReturnType
+from ._types import VectorLike
 from .fptr cimport (
     DoubleScalarFPtr, PyDoubleScalarFPtr,
     ComplexScalarFPtr, PyComplexScalarFPtr
 )
 from .ops cimport scalar_ops as sops, vector_ops as vops
-from .typing import VectorLike
-from .utils.function_tagging import tag
+from .return_types cimport RootReturnType
+from .utils._function_registering import register
 
 __all__ = [
     'secant',
@@ -46,8 +46,7 @@ __all__ = [
 # Secant
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) \
-        secant_kernel(
+cdef RootReturnType secant_kernel(
         DoubleScalarFPtr f,
         double x0,
         double x1,
@@ -64,7 +63,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef double[2] xs = [x0, x1], f_xs = [f_x0, f_x1]
     if _check_stop_cond_scalar_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
                                                &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, precision, error, converged, optimal
+        return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
     cdef double x2, df_01
     converged = True
@@ -87,10 +86,10 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
 
     r, f_r = x1, f_x1
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, precision, error, converged, optimal
+    return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.quasi_newton')
+@register('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def secant(f: Callable[[float], float],
@@ -102,7 +101,7 @@ def secant(f: Callable[[float], float],
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
            prtol: float = named_default(PRTOL=PRTOL),
-           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Secant method for scalar root-finding.
 
@@ -142,14 +141,13 @@ def secant(f: Callable[[float], float],
 
     res = secant_kernel(f_wrapper, x0, x1, f_x0, f_x1,
                         etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res
 
 ################################################################################
 # Sidi
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) \
-        sidi_kernel(
+cdef RootReturnType sidi_kernel(
         DoubleScalarFPtr f,
         double[:] x0s,
         double[:] f_x0s,
@@ -163,7 +161,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef bint converged, optimal
     if _check_stop_cond_scalar_initial_guesses(x0s, f_x0s, etol, ertol, ptol, prtol,
                                                &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, precision, error, converged, optimal
+        return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
     # sort by error of f
     cdef unsigned long[:] inds = vops.argsort(vops.fabs(f_x0s), reverse=<bint> True)
@@ -199,7 +197,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
 
     r, f_r = xn, f_xn
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, precision, error, converged, optimal
+    return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
 cdef class NewtonPolynomial:
     cdef unsigned int n
@@ -259,7 +257,7 @@ cdef class NewtonPolynomial:
         return out[-1]
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.quasi_newton')
+@register('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def sidi(f: Callable[[float], float],
@@ -269,7 +267,7 @@ def sidi(f: Callable[[float], float],
          ertol: float = named_default(ERTOL=ERTOL),
          ptol: float = named_default(PTOL=PTOL),
          prtol: float = named_default(PRTOL=PRTOL),
-         max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+         max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Sidi's Generalized Secant method for scalar root-finding.
 
@@ -314,14 +312,13 @@ def sidi(f: Callable[[float], float],
     _check_initial_guesses_uniqueness(f_x0s)
 
     res = sidi_kernel(f_wrapper, x0s, f_x0s, etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res
 
 ################################################################################
 # Steffensen
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) \
-        steffensen_kernel(
+cdef RootReturnType steffensen_kernel(
         DoubleScalarFPtr f,
         double x0,
         double f_x0,
@@ -336,7 +333,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef bint converged, optimal
     if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, f_x0, step, precision, error, converged, optimal
+        return RootReturnType(x0, f_x0, step, f.n_f_calls, precision, error, converged, optimal)
 
     cdef double x1, x2, x3, denom
     converged = True
@@ -362,10 +359,10 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
         error = math.fabs(f_x0)
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, f_x0, step, precision, error, converged, optimal
+    return RootReturnType(x0, f_x0, step, f.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.quasi_newton')
+@register('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def steffensen(f: Callable[[float], float],
@@ -376,7 +373,7 @@ def steffensen(f: Callable[[float], float],
                ertol: float = named_default(ERTOL=ERTOL),
                ptol: float = named_default(PTOL=PTOL),
                prtol: float = named_default(PRTOL=PRTOL),
-               max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+               max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Steffensen's method for scalar root-finding.
 
@@ -412,14 +409,13 @@ def steffensen(f: Callable[[float], float],
 
     res = steffensen_kernel(f_wrapper, x0, f_x0, aitken,
                             etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res
 
 ################################################################################
 # Inverse Quadratic Interpolation
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) \
-        inverse_quadratic_interp_kernel(
+cdef RootReturnType inverse_quadratic_interp_kernel(
         DoubleScalarFPtr f,
         double x0,
         double x1,
@@ -439,7 +435,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef double[:] xs = x_arr, f_xs = f_arr
     if _check_stop_cond_scalar_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
                                                &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, precision, error, converged, optimal
+        return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
     cdef double x3, df_01, df_02, df_12
     converged = True
@@ -467,10 +463,10 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
 
     r, f_r = xs[2], f_xs[2]
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, precision, error, converged, optimal
+    return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.quasi_newton')
+@register('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def inverse_quadratic_interp(
@@ -485,7 +481,7 @@ def inverse_quadratic_interp(
         ertol: float = named_default(ERTOL=ERTOL),
         ptol: float = named_default(PTOL=PTOL),
         prtol: float = named_default(PRTOL=PRTOL),
-        max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+        max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Inverse Quadratic Interpolation method for scalar root-finding.
 
@@ -529,14 +525,13 @@ def inverse_quadratic_interp(
 
     res = inverse_quadratic_interp_kernel(f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2,
                                           etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res
 
 ################################################################################
 # Hyperbolic Interpolation
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, unsigned long, double, double, bint, bint) \
-        hyperbolic_interp_kernel(
+cdef RootReturnType hyperbolic_interp_kernel(
         DoubleScalarFPtr f,
         double x0,
         double x1,
@@ -556,7 +551,7 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
     cdef double[:] xs = x_arr, f_xs = f_arr
     if _check_stop_cond_scalar_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
                                                &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, precision, error, converged, optimal
+        return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
     cdef double x3, d_01, d_12, df_01, df_02, df_12
     converged = True
@@ -589,10 +584,10 @@ cdef (double, double, unsigned long, double, double, bint, bint) \
 
     r, f_r = xs[2], f_xs[2]
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, precision, error, converged, optimal
+    return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.quasi_newton')
+@register('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def hyperbolic_interp(
@@ -607,7 +602,7 @@ def hyperbolic_interp(
         ertol: float = named_default(ERTOL=ERTOL),
         ptol: float = named_default(PTOL=PTOL),
         prtol: float = named_default(PRTOL=PRTOL),
-        max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+        max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Hyperbolic Interpolation method for scalar root-finding.
 
@@ -651,14 +646,13 @@ def hyperbolic_interp(
 
     res = hyperbolic_interp_kernel(f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2,
                                    etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res
 
 ################################################################################
 # Muller
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double complex, double complex, unsigned long, double, double, bint, bint) \
-        muller_kernel(
+cdef RootReturnType muller_kernel(
         ComplexScalarFPtr f,
         double complex x0,
         double complex x1,
@@ -679,7 +673,7 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
     cdef double complex[:] xs = x_arr, f_xs = f_arr
     if _check_stop_cond_complex_scalar_initial_guesses(xs, f_xs, etol, ertol, ptol, prtol,
                                                        &r, &f_r, &precision, &error, &converged, &optimal):
-        return r, f_r, step, precision, error, converged, optimal
+        return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
     cdef double complex div_diff_01, div_diff_12, div_diff_02, a, b, s_delta, d1, d2, d, x3
     cdef double complex d_01, d_02, d_12
@@ -718,10 +712,10 @@ cdef (double complex, double complex, unsigned long, double, double, bint, bint)
 
     r, f_r = xs[2], f_xs[2]
     optimal = sops.isclose(0, error, ertol, etol)
-    return r, f_r, step, precision, error, converged, optimal
+    return RootReturnType(r, f_r, step, f.n_f_calls, precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.quasi_newton')
+@register('cyroot.scalar.quasi_newton')
 @dynamic_default_args()
 @cython.binding(True)
 def muller(f: Callable[[complex], complex],
@@ -735,9 +729,12 @@ def muller(f: Callable[[complex], complex],
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
            prtol: float = named_default(PRTOL=PRTOL),
-           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> QuasiNewtonMethodReturnType:
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> RootReturnType:
     """
     Muller's method for scalar root-finding.
+
+    References:
+        https://www.ams.org/journals/mcom/1956-10-056/S0025-5718-1956-0083822-0/
 
     Args:
         f (function): Function for which the root is sought.
@@ -782,4 +779,4 @@ def muller(f: Callable[[complex], complex],
 
     res = muller_kernel(f_wrapper, x0, x1, x2, f_x0, f_x1, f_x2,
                         etol, ertol, ptol, prtol, max_iter)
-    return QuasiNewtonMethodReturnType.from_results(res, f_wrapper.n_f_calls)
+    return res

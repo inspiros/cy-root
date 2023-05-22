@@ -7,19 +7,19 @@
 import array
 from typing import Callable, Optional, Union
 
-cimport numpy as np
 import numpy as np
+cimport numpy as np
 import cython
 from cpython cimport array
 from cython cimport view
 from libcpp.algorithm cimport sort
 from libcpp.vector cimport vector
 
+from ._types import VectorLike, ArrayLike
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
 from .ops cimport scalar_ops as sops, vector_ops as vops
 from .scalar_derivative_approximation import _check_finite_difference_args
-from .typing import *
-from .utils.function_tagging import tag
+from .utils._function_registering import register
 from .utils.itertools cimport product
 
 __all__ = [
@@ -245,7 +245,7 @@ cdef class GeneralizedFiniteDifference(VectorDerivativeApproximation):
             <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)
 
 # noinspection DuplicatedCode
-@tag('cyroot.da.vector')
+@register('cyroot.da.vector')
 @cython.binding(True)
 def generalized_finite_difference(F: Callable[[VectorLike], VectorLike],
                                   x: VectorLike,

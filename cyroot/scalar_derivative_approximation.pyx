@@ -8,10 +8,10 @@ from typing import Callable, Sequence, Optional, Union
 
 import cython
 
+from ._types import VectorLike
 from .fptr cimport DoubleScalarFPtr, PyDoubleScalarFPtr
 from .ops cimport scalar_ops as sops
-from .typing import VectorLike
-from .utils.function_tagging import tag
+from .utils._function_registering import register
 
 __all__ = [
     'DerivativeApproximation',
@@ -110,7 +110,7 @@ cdef class FiniteDifference(DerivativeApproximation):
             <DoubleScalarFPtr> self.f, x, f_x, self.h, self.order, self.kind)
 
 # noinspection DuplicatedCode
-@tag('cyroot.da.scalar')
+@register('cyroot.da.scalar')
 @cython.binding(True)
 def finite_difference(f: Callable[[float], float],
                       x: float,

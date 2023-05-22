@@ -19,15 +19,15 @@ from libcpp.vector cimport vector
 from ._check_args cimport _check_stop_cond_scalar_initial_guess
 from ._check_args import _check_stop_cond_args
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER, FINITE_DIFF_STEP
-from ._return_types import NewtonMethodReturnType
+from ._types import VectorLike
 from .fptr cimport (
     DoubleScalarFPtr, PyDoubleScalarFPtr,
     DoubleVectorFPtr, PyDoubleVectorFPtr,
 )
 from .scalar_derivative_approximation import DerivativeApproximation, FiniteDifference
 from .ops cimport scalar_ops as sops
-from .typing import VectorLike
-from .utils.function_tagging import tag
+from .return_types cimport NewtonMethodsReturnType
+from .utils._function_registering import register
 
 __all__ = [
     'newton',
@@ -42,8 +42,7 @@ __all__ = [
 # Newton
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, double, unsigned long, double, double, bint, bint) \
-        newton_kernel(
+cdef NewtonMethodsReturnType newton_kernel(
         DoubleScalarFPtr f,
         DoubleScalarFPtr df,
         double x0,
@@ -59,7 +58,8 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) \
     cdef bint converged, optimal
     if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, f_x0, df_x0, step, precision, error, converged, optimal
+        return NewtonMethodsReturnType(
+            x0, f_x0, df_x0, step, (f.n_f_calls, df.n_f_calls), precision, error, converged, optimal)
 
     cdef bint use_derivative_approximation = isinstance(df, DerivativeApproximation)
     cdef double d_x
@@ -80,10 +80,11 @@ cdef (double, double, double, unsigned long, double, double, bint, bint) \
         error = math.fabs(f_x0)
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, f_x0, df_x0, step, precision, error, converged, optimal
+    return NewtonMethodsReturnType(
+        x0, f_x0, df_x0, step, (f.n_f_calls, df.n_f_calls), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.newton')
+@register('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def newton(f: Callable[[float], float],
@@ -96,7 +97,7 @@ def newton(f: Callable[[float], float],
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
            prtol: float = named_default(PRTOL=PRTOL),
-           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Newton method for scalar root-finding.
 
@@ -144,15 +145,13 @@ def newton(f: Callable[[float], float],
 
     res = newton_kernel(f_wrapper, df_wrapper, x0, f_x0, df_x0,
                         etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
-                                                     df_wrapper.n_f_calls))
+    return res
 
 ################################################################################
 # Halley
 ################################################################################
 # noinspection DuplicatedCode
-cdef (double, double, (double, double), unsigned long, double, double, bint, bint) \
-        halley_kernel(
+cdef NewtonMethodsReturnType halley_kernel(
         DoubleScalarFPtr f,
         DoubleScalarFPtr df,
         DoubleScalarFPtr d2f,
@@ -170,7 +169,9 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
     cdef bint converged, optimal
     if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+        return NewtonMethodsReturnType(
+            x0, f_x0, (df_x0, d2f_x0), step, (f.n_f_calls, df.n_f_calls, d2f.n_f_calls),
+            precision, error, converged, optimal)
 
     cdef bint[2] use_derivative_approximation = [isinstance(df, DerivativeApproximation),
                                                  isinstance(d2f, DerivativeApproximation)]
@@ -201,11 +202,12 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
         error = math.fabs(f_x0)
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+    return NewtonMethodsReturnType(
+        x0, f_x0, (df_x0, d2f_x0), step, (f.n_f_calls, df.n_f_calls, d2f.n_f_calls),
+        precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-cdef (double, double, (double, double), unsigned long, double, double, bint, bint) \
-        modified_halley_kernel(
+cdef NewtonMethodsReturnType modified_halley_kernel(
         DoubleScalarFPtr f,
         DoubleScalarFPtr df,
         DoubleScalarFPtr d2f,
@@ -224,7 +226,9 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
     cdef bint converged, optimal
     if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+        return NewtonMethodsReturnType(
+            x0, f_x0, (df_x0, d2f_x0), step, (f.n_f_calls, df.n_f_calls, d2f.n_f_calls),
+            precision, error, converged, optimal)
 
     cdef bint[2] use_derivative_approximation = [isinstance(df, DerivativeApproximation),
                                                  isinstance(d2f, DerivativeApproximation)]
@@ -259,10 +263,12 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
         error = math.fabs(f_x0)
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+    return NewtonMethodsReturnType(
+        x0, f_x0, (df_x0, d2f_x0), step, (f.n_f_calls, df.n_f_calls, d2f.n_f_calls),
+        precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.newton')
+@register('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def halley(f: Callable[[float], float],
@@ -278,7 +284,7 @@ def halley(f: Callable[[float], float],
            ertol: float = named_default(ERTOL=ERTOL),
            ptol: float = named_default(PTOL=PTOL),
            prtol: float = named_default(PRTOL=PRTOL),
-           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+           max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Halley's method for scalar root-finding.
 
@@ -344,15 +350,13 @@ def halley(f: Callable[[float], float],
         res = modified_halley_kernel(
             f_wrapper, df_wrapper, d2f_wrapper,
             x0, f_x0, df_x0, d2f_x0, alpha, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
-                                                     df_wrapper.n_f_calls,
-                                                     d2f_wrapper.n_f_calls))
+    return res
 
 #------------------------
 # Super-Halley
 #------------------------
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.newton')
+@register('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def super_halley(f: Callable[[float], float],
@@ -367,7 +371,7 @@ def super_halley(f: Callable[[float], float],
                  ertol: float = named_default(ERTOL=ERTOL),
                  ptol: float = named_default(PTOL=PTOL),
                  prtol: float = named_default(PRTOL=PRTOL),
-                 max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+                 max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Super-Halley's method for scalar root-finding.
     This is equivalent to calling ``halley`` with ``alpha=1``.
@@ -414,7 +418,7 @@ def super_halley(f: Callable[[float], float],
 # Chebyshev
 #------------------------
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.newton')
+@register('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def chebyshev(f: Callable[[float], float],
@@ -429,7 +433,7 @@ def chebyshev(f: Callable[[float], float],
               ertol: float = named_default(ERTOL=ERTOL),
               ptol: float = named_default(PTOL=PTOL),
               prtol: float = named_default(PRTOL=PRTOL),
-              max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+              max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Chebyshev's method for scalar root-finding.
     This is equivalent to calling ``halley`` with ``alpha=0``.
@@ -473,8 +477,7 @@ def chebyshev(f: Callable[[float], float],
 # Tangent Hyperbolas
 #------------------------
 # noinspection DuplicatedCode
-cdef (double, double, (double, double), unsigned long, double, double, bint, bint) \
-        tangent_hyperbolas_kernel(
+cdef NewtonMethodsReturnType tangent_hyperbolas_kernel(
         DoubleScalarFPtr f,
         DoubleScalarFPtr df,
         DoubleScalarFPtr d2f,
@@ -493,7 +496,9 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
     cdef bint converged, optimal
     if _check_stop_cond_scalar_initial_guess(x0, f_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+        return NewtonMethodsReturnType(
+            x0, f_x0, (df_x0, d2f_x0), step, (f.n_f_calls, df.n_f_calls, d2f.n_f_calls),
+            precision, error, converged, optimal)
 
     cdef bint[2] use_derivative_approximation = [isinstance(df, DerivativeApproximation),
                                                  isinstance(d2f, DerivativeApproximation)]
@@ -536,10 +541,12 @@ cdef (double, double, (double, double), unsigned long, double, double, bint, bin
         error = math.fabs(f_x0)
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, f_x0, (df_x0, d2f_x0), step, precision, error, converged, optimal
+    return NewtonMethodsReturnType(
+        x0, f_x0, (df_x0, d2f_x0), step, (f.n_f_calls, df.n_f_calls, d2f.n_f_calls),
+        precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.newton')
+@register('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def tangent_hyperbolas(f: Callable[[float], float],
@@ -555,7 +562,7 @@ def tangent_hyperbolas(f: Callable[[float], float],
                        ertol: float = named_default(ERTOL=ERTOL),
                        ptol: float = named_default(PTOL=PTOL),
                        prtol: float = named_default(PRTOL=PRTOL),
-                       max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+                       max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Tangent Hyperbolas method for scalar root-finding.
 
@@ -621,9 +628,7 @@ def tangent_hyperbolas(f: Callable[[float], float],
     res = tangent_hyperbolas_kernel(
         f_wrapper, df_wrapper, d2f_wrapper, x0, f_x0, df_x0, d2f_x0, formula,
         etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
-                                                     df_wrapper.n_f_calls,
-                                                     d2f_wrapper.n_f_calls))
+    return res
 
 ################################################################################
 # Householder
@@ -632,8 +637,7 @@ def tangent_hyperbolas(f: Callable[[float], float],
 # TODO: find other methods for __pyx_vtab error
 #  https://stackoverflow.com/questions/37869945/cython-c-code-compilation-fails-with-typed-memoryviews
 #  https://stackoverflow.com/questions/31119510/cython-have-sequence-of-extension-types-as-attribute-of-another-extension-type
-cdef (double, double, vector[double], unsigned long, double, double, bint, bint) \
-        householder_kernel(
+cdef NewtonMethodsReturnType householder_kernel(
         DoubleScalarFPtr[:] fs,
         DoubleVectorFPtr nom_f,
         DoubleVectorFPtr denom_f,
@@ -654,7 +658,10 @@ cdef (double, double, vector[double], unsigned long, double, double, bint, bint)
         dfs_x0[i - 1] = fs_x0[i]
     if _check_stop_cond_scalar_initial_guess(x0_, fs_x0[0], etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0_, fs_x0[0], dfs_x0, step, precision, error, converged, optimal
+        return NewtonMethodsReturnType(
+            x0_, fs_x0[0], tuple(dfs_x0[i] for i in range(len(dfs_x0))), step,
+            tuple(fs[i].n_f_calls for i in range(len(fs))),
+            precision, error, converged, optimal)
 
     cdef bint[:] use_derivative_approximation = view.array(shape=(fs_x0.shape[0] - 1,),
                                                            itemsize=sizeof(int),
@@ -697,7 +704,10 @@ cdef (double, double, vector[double], unsigned long, double, double, bint, bint)
     optimal = sops.isclose(0, error, ertol, etol)
     for i in range(1, d + 1):
         dfs_x0[i - 1] = fs_x0[i]
-    return x0[0], fs_x0[0], dfs_x0, step, precision, error, converged, optimal
+    return NewtonMethodsReturnType(
+        x0[0], fs_x0[0], tuple(dfs_x0[i] for i in range(len(dfs_x0))), step,
+        tuple(fs[i].n_f_calls for i in range(len(fs))),
+        precision, error, converged, optimal)
 
 #########################
 # Sympy Expr Evaluators
@@ -977,7 +987,7 @@ class ReciprocalDerivativeFuncFactory:
         return cls.rd_py_funcs[d] if not c_code else cls.rd_c_funcs[d]
 
 # noinspection DuplicatedCode
-@tag('cyroot.scalar.newton')
+@register('cyroot.scalar.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def householder(f: Callable[[float], float],
@@ -992,7 +1002,7 @@ def householder(f: Callable[[float], float],
                 ptol: float = named_default(PTOL=PTOL),
                 prtol: float = named_default(PRTOL=PRTOL),
                 max_iter: int = named_default(MAX_ITER=MAX_ITER),
-                c_code: bool = True) -> NewtonMethodReturnType:
+                c_code: bool = True) -> NewtonMethodsReturnType:
     """
     Householder's method for scalar root-finding.
 
@@ -1057,6 +1067,4 @@ def householder(f: Callable[[float], float],
         <DoubleVectorFPtr> ReciprocalDerivativeFuncFactory.get(d - 1, c_code=c_code),
         <DoubleVectorFPtr> ReciprocalDerivativeFuncFactory.get(d, c_code=c_code),
         x0, fs_x0, d, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType.from_results(res, (f_wrapper.n_f_calls,
-                                                     *(_.n_f_calls for _ in dfs_wrappers)),
-                                               df_root=tuple)
+    return res

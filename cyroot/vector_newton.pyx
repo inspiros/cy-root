@@ -6,20 +6,20 @@
 
 from typing import Callable, Optional, Union
 
-cimport numpy as np
 import numpy as np
+cimport numpy as np
 import cython
 from dynamic_default_args import dynamic_default_args, named_default
 
 from ._check_args import _check_stop_cond_args
 from ._check_args cimport _check_stop_cond_vector_initial_guess
 from ._defaults import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER, FINITE_DIFF_STEP
-from ._return_types import NewtonMethodReturnType
+from ._types import VectorLike, Array2DLike, Array3DLike
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
 from .ops cimport scalar_ops as sops, vector_ops as vops, matrix_ops as mops
-from .typing import *
-from .utils import warn_value
-from .utils.function_tagging import tag
+from .return_types cimport NewtonMethodsReturnType
+from .utils._function_registering import register
+from .utils._warnings import warn_value
 from .vector_derivative_approximation import GeneralizedFiniteDifference, VectorDerivativeApproximation
 
 __all__ = [
@@ -34,8 +34,7 @@ __all__ = [
 # Generalized Newton
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, np.ndarray, cython.unsignedlong, double, double, bint, bint))
-cdef generalized_newton_kernel(
+cdef NewtonMethodsReturnType generalized_newton_kernel(
         NdArrayFPtr F,
         NdArrayFPtr J,
         np.ndarray[np.float64_t, ndim=1] x0,
@@ -51,7 +50,8 @@ cdef generalized_newton_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, F_x0, J_x0, step, precision, error, converged, optimal
+        return NewtonMethodsReturnType(
+            x0, F_x0, J_x0, step, (F.n_f_calls, J.n_f_calls), precision, error, converged, optimal)
 
     cdef bint use_derivative_approximation = isinstance(J, VectorDerivativeApproximation)
     cdef np.ndarray[np.float64_t, ndim=1] d_x
@@ -74,10 +74,11 @@ cdef generalized_newton_kernel(
         error = vops.max(vops.fabs(F_x0))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, F_x0, J_x0, step, precision, error, converged, optimal
+    return NewtonMethodsReturnType(
+        x0, F_x0, J_x0, step, (F.n_f_calls, J.n_f_calls), precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.newton')
+@register('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def generalized_newton(F: Callable[[VectorLike], VectorLike],
@@ -91,7 +92,7 @@ def generalized_newton(F: Callable[[VectorLike], VectorLike],
                        ertol: float = named_default(ERTOL=ERTOL),
                        ptol: float = named_default(PTOL=PTOL),
                        prtol: float = named_default(PRTOL=PRTOL),
-                       max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+                       max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Generalized Newton's method for vector root-finding.
 
@@ -148,14 +149,13 @@ def generalized_newton(F: Callable[[VectorLike], VectorLike],
 
     res = generalized_newton_kernel(
         F_wrapper, J_wrapper, x0, F_x0, J_x0, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType.from_results(res, (F_wrapper.n_f_calls, J_wrapper.n_f_calls))
+    return res
 
 ################################################################################
 # Generalized Halley
 ################################################################################
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, tuple[np.ndarray], cython.unsignedlong, double, double, bint, bint))
-cdef generalized_halley_kernel(
+cdef NewtonMethodsReturnType generalized_halley_kernel(
         NdArrayFPtr F,
         NdArrayFPtr J,
         NdArrayFPtr H,
@@ -174,7 +174,9 @@ cdef generalized_halley_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, F_x0, J_x0, H_x0, step, precision, error, converged, optimal
+        return NewtonMethodsReturnType(
+            x0, F_x0, J_x0, H_x0, step, (F.n_f_calls, J.n_f_calls, H.n_f_calls),
+            precision, error, converged, optimal)
 
     cdef unsigned long i
     cdef bint[2] use_derivative_approximation = [isinstance(J, VectorDerivativeApproximation),
@@ -213,11 +215,12 @@ cdef generalized_halley_kernel(
         error = vops.max(vops.fabs(F_x0))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, F_x0, (J_x0, H_x0), step, precision, error, converged, optimal
+    return NewtonMethodsReturnType(
+        x0, F_x0, (J_x0, H_x0), step, (F.n_f_calls, J.n_f_calls, H.n_f_calls),
+        precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, tuple[np.ndarray], cython.unsignedlong, double, double, bint, bint))
-cdef generalized_modified_halley_kernel(
+cdef NewtonMethodsReturnType generalized_modified_halley_kernel(
         NdArrayFPtr F,
         NdArrayFPtr J,
         NdArrayFPtr H,
@@ -236,7 +239,9 @@ cdef generalized_modified_halley_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, F_x0, J_x0, H_x0, step, precision, error, converged, optimal
+        return NewtonMethodsReturnType(
+            x0, F_x0, J_x0, H_x0, step, (F.n_f_calls, J.n_f_calls, H.n_f_calls),
+            precision, error, converged, optimal)
 
     cdef bint[2] use_derivative_approximation = [isinstance(J, VectorDerivativeApproximation),
                                                  isinstance(H, VectorDerivativeApproximation)]
@@ -267,10 +272,12 @@ cdef generalized_modified_halley_kernel(
         error = vops.max(vops.fabs(F_x0))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, F_x0, (J_x0, H_x0), step, precision, error, converged, optimal
+    return NewtonMethodsReturnType(
+        x0, F_x0, (J_x0, H_x0), step, (F.n_f_calls, J.n_f_calls, H.n_f_calls),
+        precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.newton')
+@register('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def generalized_halley(F: Callable[[VectorLike], VectorLike],
@@ -287,7 +294,7 @@ def generalized_halley(F: Callable[[VectorLike], VectorLike],
                        ertol: float = named_default(ERTOL=ERTOL),
                        ptol: float = named_default(PTOL=PTOL),
                        prtol: float = named_default(PRTOL=PRTOL),
-                       max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+                       max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Generalized Halley's method for vector root-finding as presented in the paper
     "Abstract Padé-approximants for the solution of a system of nonlinear equations".
@@ -367,15 +374,13 @@ def generalized_halley(F: Callable[[VectorLike], VectorLike],
         res = generalized_modified_halley_kernel(
             F_wrapper, J_wrapper, H_wrapper, x0, F_x0, J_x0, H_x0,
             alpha, etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType.from_results(res, (F_wrapper.n_f_calls,
-                                                     J_wrapper.n_f_calls,
-                                                     H_wrapper.n_f_calls))
+    return res
 
 #------------------------
 # Super-Halley
 #------------------------
 # noinspection DuplicatedCode
-@tag('cyroot.vector.newton')
+@register('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def generalized_super_halley(F: Callable[[VectorLike], VectorLike],
@@ -391,7 +396,7 @@ def generalized_super_halley(F: Callable[[VectorLike], VectorLike],
                              ertol: float = named_default(ERTOL=ERTOL),
                              ptol: float = named_default(PTOL=PTOL),
                              prtol: float = named_default(PRTOL=PRTOL),
-                             max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+                             max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Generalized Super-Halley's method for vector root-finding.
     This is equivalent to calling ``generalized_halley`` with ``alpha=1``.
@@ -435,7 +440,7 @@ def generalized_super_halley(F: Callable[[VectorLike], VectorLike],
 # Chebyshev
 #------------------------
 # noinspection DuplicatedCode
-@tag('cyroot.vector.newton')
+@register('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def generalized_chebyshev(F: Callable[[VectorLike], VectorLike],
@@ -451,7 +456,7 @@ def generalized_chebyshev(F: Callable[[VectorLike], VectorLike],
                           ertol: float = named_default(ERTOL=ERTOL),
                           ptol: float = named_default(PTOL=PTOL),
                           prtol: float = named_default(PRTOL=PRTOL),
-                          max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+                          max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Generalized Chebyshev's method for vector root-finding.
     This is equivalent to calling ``generalized_halley`` with ``alpha=0``.
@@ -495,8 +500,7 @@ def generalized_chebyshev(F: Callable[[VectorLike], VectorLike],
 # Tangent Hyperbolas
 #------------------------
 # noinspection DuplicatedCode
-@cython.returns((np.ndarray, np.ndarray, tuple[np.ndarray], cython.unsignedlong, double, double, bint, bint))
-cdef generalized_tangent_hyperbolas_kernel(
+cdef NewtonMethodsReturnType generalized_tangent_hyperbolas_kernel(
         NdArrayFPtr F,
         NdArrayFPtr J,
         NdArrayFPtr H,
@@ -515,7 +519,9 @@ cdef generalized_tangent_hyperbolas_kernel(
     cdef bint converged, optimal
     if _check_stop_cond_vector_initial_guess(x0, F_x0, etol, ertol, ptol, prtol,
                                              &precision, &error, &converged, &optimal):
-        return x0, F_x0, J_x0, H_x0, step, precision, error, converged, optimal
+        return NewtonMethodsReturnType(
+            x0, F_x0, J_x0, H_x0, step, (F.n_f_calls, J.n_f_calls, H.n_f_calls),
+            precision, error, converged, optimal)
 
     cdef bint[2] use_derivative_approximation = [isinstance(J, VectorDerivativeApproximation),
                                                  isinstance(H, VectorDerivativeApproximation)]
@@ -551,10 +557,12 @@ cdef generalized_tangent_hyperbolas_kernel(
         error = vops.max(vops.fabs(F_x0))
 
     optimal = sops.isclose(0, error, ertol, etol)
-    return x0, F_x0, (J_x0, H_x0), step, precision, error, converged, optimal
+    return NewtonMethodsReturnType(
+        x0, F_x0, (J_x0, H_x0), step, (F.n_f_calls, J.n_f_calls, H.n_f_calls),
+        precision, error, converged, optimal)
 
 # noinspection DuplicatedCode
-@tag('cyroot.vector.newton')
+@register('cyroot.vector.newton')
 @dynamic_default_args()
 @cython.binding(True)
 def generalized_tangent_hyperbolas(F: Callable[[VectorLike], VectorLike],
@@ -571,7 +579,7 @@ def generalized_tangent_hyperbolas(F: Callable[[VectorLike], VectorLike],
                                    ertol: float = named_default(ERTOL=ERTOL),
                                    ptol: float = named_default(PTOL=PTOL),
                                    prtol: float = named_default(PRTOL=PRTOL),
-                                   max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodReturnType:
+                                   max_iter: int = named_default(MAX_ITER=MAX_ITER)) -> NewtonMethodsReturnType:
     """
     Generalized Tangent Hyperbolas method for vector root-finding.
 
@@ -649,6 +657,4 @@ def generalized_tangent_hyperbolas(F: Callable[[VectorLike], VectorLike],
     res = generalized_tangent_hyperbolas_kernel(
         F_wrapper, J_wrapper, H_wrapper, x0, F_x0, J_x0, H_x0, formula,
         etol, ertol, ptol, prtol, max_iter)
-    return NewtonMethodReturnType.from_results(res, (F_wrapper.n_f_calls,
-                                                     J_wrapper.n_f_calls,
-                                                     H_wrapper.n_f_calls))
+    return res

@@ -1535,7 +1535,7 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose;
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
- * 
+ * cdef real min(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
   int __pyx_n;
@@ -1547,8 +1547,8 @@ struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_isclose {
  * 
  * cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
  * cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil             # <<<<<<<<<<<<<<
- * 
- * cdef extern from '<math.h>' nogil:
+ * cdef real min(real a, real b) nogil
+ * cdef real max(real a, real b) nogil
  */
 struct __pyx_opt_args_6cyroot_3ops_10scalar_ops_cisclose {
   int __pyx_n;
@@ -3483,7 +3483,6 @@ static const char __pyx_k_f_x[] = "f_x";
 static const char __pyx_k_int[] = "int";
 static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_obj[] = "obj";
-static const char __pyx_k_tag[] = "tag";
 static const char __pyx_k_args[] = "args";
 static const char __pyx_k_base[] = "base";
 static const char __pyx_k_dict[] = "__dict__";
@@ -3513,6 +3512,7 @@ static const char __pyx_k_shape[] = "shape";
 static const char __pyx_k_start[] = "start";
 static const char __pyx_k_super[] = "super";
 static const char __pyx_k_throw[] = "throw";
+static const char __pyx_k_types[] = "_types";
 static const char __pyx_k_encode[] = "encode";
 static const char __pyx_k_format[] = "format";
 static const char __pyx_k_import[] = "__import__";
@@ -3536,6 +3536,7 @@ static const char __pyx_k_backward[] = "backward";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_itemsize[] = "itemsize";
 static const char __pyx_k_pyx_type[] = "__pyx_type";
+static const char __pyx_k_register[] = "register";
 static const char __pyx_k_setstate[] = "__setstate__";
 static const char __pyx_k_TypeError[] = "TypeError";
 static const char __pyx_k_enumerate[] = "enumerate";
@@ -3571,13 +3572,13 @@ static const char __pyx_k_NotImplementedError[] = "NotImplementedError";
 static const char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static const char __pyx_k_contiguous_and_direct[] = "<contiguous and direct>";
 static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>";
-static const char __pyx_k_utils_function_tagging[] = "utils.function_tagging";
 static const char __pyx_k_DerivativeApproximation[] = "DerivativeApproximation";
 static const char __pyx_k_MemoryView_of_r_at_0x_x[] = "<MemoryView of %r at 0x%x>";
 static const char __pyx_k_contiguous_and_indirect[] = "<contiguous and indirect>";
 static const char __pyx_k_Cannot_index_with_type_s[] = "Cannot index with type '%s'";
 static const char __pyx_k_Invalid_shape_in_axis_d_d[] = "Invalid shape in axis %d: %d.";
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
+static const char __pyx_k_utils__function_registering[] = "utils._function_registering";
 static const char __pyx_k_check_finite_difference_args[] = "_check_finite_difference_args";
 static const char __pyx_k_order_must_be_positive_number[] = "order must be positive number.";
 static const char __pyx_k_pyx_unpickle_FiniteDifference[] = "__pyx_unpickle_FiniteDifference";
@@ -3720,6 +3721,7 @@ static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
+static PyObject *__pyx_n_s_register;
 static PyObject *__pyx_n_s_send;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
@@ -3734,15 +3736,15 @@ static PyObject *__pyx_kp_s_strided_and_indirect;
 static PyObject *__pyx_kp_s_stringsource;
 static PyObject *__pyx_n_s_struct;
 static PyObject *__pyx_n_s_super;
-static PyObject *__pyx_n_s_tag;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_throw;
+static PyObject *__pyx_n_s_types;
 static PyObject *__pyx_n_s_typing;
 static PyObject *__pyx_kp_s_unable_to_allocate_array_data;
 static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_n_s_unpack;
 static PyObject *__pyx_n_s_update;
-static PyObject *__pyx_n_s_utils_function_tagging;
+static PyObject *__pyx_n_s_utils__function_registering;
 static PyObject *__pyx_n_s_x;
 static int __pyx_pf_6cyroot_31scalar_derivative_approximation_23DerivativeApproximation___init__(struct __pyx_obj_6cyroot_31scalar_derivative_approximation_DerivativeApproximation *__pyx_v_self, PyObject *__pyx_v_f); /* proto */
 static PyObject *__pyx_pf_6cyroot_31scalar_derivative_approximation_23DerivativeApproximation_2eval(struct __pyx_obj_6cyroot_31scalar_derivative_approximation_DerivativeApproximation *__pyx_v_self, double __pyx_v_x); /* proto */
@@ -6888,7 +6890,7 @@ static PyObject *__pyx_pf_6cyroot_31scalar_derivative_approximation_16FiniteDiff
 }
 
 /* "cyroot/scalar_derivative_approximation.pyx":115
- * @tag('cyroot.da.scalar')
+ * @register('cyroot.da.scalar')
  * @cython.binding(True)
  * def finite_difference(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *                       x: float,
@@ -7022,7 +7024,7 @@ static PyObject *__pyx_pw_6cyroot_31scalar_derivative_approximation_3finite_diff
   __pyx_r = __pyx_pf_6cyroot_31scalar_derivative_approximation_2finite_difference(__pyx_self, __pyx_v_f, __pyx_v_x, __pyx_v_f_x, __pyx_v_h, __pyx_v_order, __pyx_v_kind);
 
   /* "cyroot/scalar_derivative_approximation.pyx":115
- * @tag('cyroot.da.scalar')
+ * @register('cyroot.da.scalar')
  * @cython.binding(True)
  * def finite_difference(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *                       x: float,
@@ -7246,7 +7248,7 @@ static PyObject *__pyx_pf_6cyroot_31scalar_derivative_approximation_2finite_diff
   goto __pyx_L0;
 
   /* "cyroot/scalar_derivative_approximation.pyx":115
- * @tag('cyroot.da.scalar')
+ * @register('cyroot.da.scalar')
  * @cython.binding(True)
  * def finite_difference(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *                       x: float,
@@ -23539,6 +23541,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
+  {&__pyx_n_s_register, __pyx_k_register, sizeof(__pyx_k_register), 0, 0, 1, 1},
   {&__pyx_n_s_send, __pyx_k_send, sizeof(__pyx_k_send), 0, 0, 1, 1},
   {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
@@ -23553,15 +23556,15 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_stringsource, __pyx_k_stringsource, sizeof(__pyx_k_stringsource), 0, 0, 1, 0},
   {&__pyx_n_s_struct, __pyx_k_struct, sizeof(__pyx_k_struct), 0, 0, 1, 1},
   {&__pyx_n_s_super, __pyx_k_super, sizeof(__pyx_k_super), 0, 0, 1, 1},
-  {&__pyx_n_s_tag, __pyx_k_tag, sizeof(__pyx_k_tag), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_throw, __pyx_k_throw, sizeof(__pyx_k_throw), 0, 0, 1, 1},
+  {&__pyx_n_s_types, __pyx_k_types, sizeof(__pyx_k_types), 0, 0, 1, 1},
   {&__pyx_n_s_typing, __pyx_k_typing, sizeof(__pyx_k_typing), 0, 0, 1, 1},
   {&__pyx_kp_s_unable_to_allocate_array_data, __pyx_k_unable_to_allocate_array_data, sizeof(__pyx_k_unable_to_allocate_array_data), 0, 0, 1, 0},
   {&__pyx_kp_s_unable_to_allocate_shape_and_str, __pyx_k_unable_to_allocate_shape_and_str, sizeof(__pyx_k_unable_to_allocate_shape_and_str), 0, 0, 1, 0},
   {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
   {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
-  {&__pyx_n_s_utils_function_tagging, __pyx_k_utils_function_tagging, sizeof(__pyx_k_utils_function_tagging), 0, 0, 1, 1},
+  {&__pyx_n_s_utils__function_registering, __pyx_k_utils__function_registering, sizeof(__pyx_k_utils__function_registering), 0, 0, 1, 1},
   {&__pyx_n_s_x, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
@@ -23854,7 +23857,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "cyroot/scalar_derivative_approximation.pyx":113
  * 
  * # noinspection DuplicatedCode
- * @tag('cyroot.da.scalar')             # <<<<<<<<<<<<<<
+ * @register('cyroot.da.scalar')             # <<<<<<<<<<<<<<
  * @cython.binding(True)
  * def finite_difference(f: Callable[[float], float],
  */
@@ -23863,7 +23866,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__29);
 
   /* "cyroot/scalar_derivative_approximation.pyx":115
- * @tag('cyroot.da.scalar')
+ * @register('cyroot.da.scalar')
  * @cython.binding(True)
  * def finite_difference(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *                       x: float,
@@ -24571,50 +24574,50 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cyroot/scalar_derivative_approximation.pyx":13
+  /* "cyroot/scalar_derivative_approximation.pyx":11
+ * import cython
+ * 
+ * from ._types import VectorLike             # <<<<<<<<<<<<<<
  * from .fptr cimport DoubleScalarFPtr, PyDoubleScalarFPtr
  * from .ops cimport scalar_ops as sops
- * from .typing import VectorLike             # <<<<<<<<<<<<<<
- * from .utils.function_tagging import tag
- * 
  */
-  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_n_s_VectorLike);
   __Pyx_GIVEREF(__pyx_n_s_VectorLike);
   PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_VectorLike);
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_typing, __pyx_t_2, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_types, __pyx_t_2, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_VectorLike); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_VectorLike); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_VectorLike, __pyx_t_2) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_VectorLike, __pyx_t_2) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "cyroot/scalar_derivative_approximation.pyx":14
+ * from .fptr cimport DoubleScalarFPtr, PyDoubleScalarFPtr
  * from .ops cimport scalar_ops as sops
- * from .typing import VectorLike
- * from .utils.function_tagging import tag             # <<<<<<<<<<<<<<
+ * from .utils._function_registering import register             # <<<<<<<<<<<<<<
  * 
  * __all__ = [
  */
   __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_n_s_tag);
-  __Pyx_GIVEREF(__pyx_n_s_tag);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_tag);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_utils_function_tagging, __pyx_t_1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __Pyx_INCREF(__pyx_n_s_register);
+  __Pyx_GIVEREF(__pyx_n_s_register);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_register);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_utils__function_registering, __pyx_t_1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_tag); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_register); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_tag, __pyx_t_1) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_register, __pyx_t_1) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "cyroot/scalar_derivative_approximation.pyx":16
- * from .utils.function_tagging import tag
+ * from .utils._function_registering import register
  * 
  * __all__ = [             # <<<<<<<<<<<<<<
  *     'DerivativeApproximation',
@@ -24649,11 +24652,11 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/scalar_derivative_approximation.pyx":113
  * 
  * # noinspection DuplicatedCode
- * @tag('cyroot.da.scalar')             # <<<<<<<<<<<<<<
+ * @register('cyroot.da.scalar')             # <<<<<<<<<<<<<<
  * @cython.binding(True)
  * def finite_difference(f: Callable[[float], float],
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_tag); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_register); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__29, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -24670,7 +24673,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_2);
 
   /* "cyroot/scalar_derivative_approximation.pyx":115
- * @tag('cyroot.da.scalar')
+ * @register('cyroot.da.scalar')
  * @cython.binding(True)
  * def finite_difference(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *                       x: float,
@@ -24757,7 +24760,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "cyroot/scalar_derivative_approximation.pyx":115
- * @tag('cyroot.da.scalar')
+ * @register('cyroot.da.scalar')
  * @cython.binding(True)
  * def finite_difference(f: Callable[[float], float],             # <<<<<<<<<<<<<<
  *                       x: float,
@@ -24773,7 +24776,7 @@ if (!__Pyx_RefNanny) {
   /* "cyroot/scalar_derivative_approximation.pyx":113
  * 
  * # noinspection DuplicatedCode
- * @tag('cyroot.da.scalar')             # <<<<<<<<<<<<<<
+ * @register('cyroot.da.scalar')             # <<<<<<<<<<<<<<
  * @cython.binding(True)
  * def finite_difference(f: Callable[[float], float],
  */
