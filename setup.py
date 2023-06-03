@@ -31,15 +31,19 @@ def get_ext_modules():
     ]
 
     ext_modules = []
-    ext = '.pyx' if use_cython else '.cpp'
+    if use_cython:
+        is_ext_file = lambda f: f.endswith('.pyx')
+    else:
+        is_ext_file = lambda f: os.path.splitext(f)[1] in ['.c', '.cpp']
+
     for root, dirs, files in os.walk(PACKAGE_ROOT):
         for d in dirs:
             dir_path = os.path.join(root, d)
-            if any(_.endswith(ext) for _ in os.listdir(dir_path)):
+            if any(is_ext_file(f) for f in os.listdir(dir_path)):
                 include_dirs.append(dir_path)
 
     for root, dirs, files in os.walk(PACKAGE_ROOT):
-        for f in filter(lambda f: f.endswith(ext), files):
+        for f in filter(lambda f: is_ext_file(f), files):
             f_path = os.path.join(root, f)
             ext_modules.append(
                 Extension(name=os.path.splitext(f_path)[0].replace(os.sep, '.'),
