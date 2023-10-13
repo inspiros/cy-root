@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/inspiros/cy-root/master/resources/logo.png) cy-root [![Build wheels](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg)](https://github.com/inspiros/cy-root/actions) [![PyPI](https://img.shields.io/pypi/v/cy-root)](https://pypi.org/project/cy-root) [![PyPI - Downloads](https://img.shields.io/pypi/dm/cy-root)](https://pypi.org/project/cy-root) [![GitHub](https://img.shields.io/github/license/inspiros/cy-root)](https://github.com/inspiros/cy-root/blob/master/LICENSE.txt)
+![logo](https://raw.githubusercontent.com/inspiros/cy-root/master/resources/logo.png) cy-root [![Build wheels](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg)](https://github.com/inspiros/cy-root/actions) [![PyPI](https://img.shields.io/pypi/v/cy-root)](https://pypi.org/project/cy-root) [![Downloads](https://static.pepy.tech/badge/cy-root)](https://pepy.tech/project/cy-root) [![GitHub](https://img.shields.io/github/license/inspiros/cy-root)](https://github.com/inspiros/cy-root/blob/master/LICENSE.txt)
 ========
 
 <p align="center">
