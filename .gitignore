@@ -348,3 +348,12 @@ wheelhouse/
 
 # secret
 develop/
+
+# Local maintainer notes and review snapshots
+/.maintainer/
+
+# Python development environments and native build output
+/.venv/
+*.so
+*.dylib
+.pytest_cache/

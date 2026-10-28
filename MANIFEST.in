@@ -1,6 +1,12 @@
-recursive-include cyroot *.cpp
-recursive-include cyroot *.pxd
-recursive-include cyroot *.pyx
-include README.md
-include LICENSE.txt
-include requirements*.txt
+include LICENSE README.md CHANGELOG.md
+include requirements.txt
+recursive-include assets *.gif *.svg *.png
+recursive-include cyroot *.py *.pyx *.pxd *.pyi *.h *.hpp py.typed
+recursive-include tests *.py *.pyx *.cpp
+recursive-include examples *.py *.pyx *.md
+recursive-include docs *.md
+recursive-exclude cyroot *.c *.cpp *.so *.pyd
+prune build
+prune develop
+prune .maintainer
+prune .venv

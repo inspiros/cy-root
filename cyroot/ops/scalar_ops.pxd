@@ -1,24 +1,9 @@
-ctypedef fused real:
-    int
-    unsigned int
-    long
-    unsigned long
-    float
-    double
+from .scalar_types cimport bool_t, real_t
 
-ctypedef fused numeric:
-    int
-    unsigned int
-    long
-    unsigned long
-    float
-    double
-    double complex
-
-cdef bint isclose(double a, double b, double rtol=*, double atol=*) nogil
-cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) nogil
-cdef real min(real a, real b) nogil
-cdef real max(real a, real b) nogil
+cdef bint isclose(double a, double b, double rtol=*, double atol=*) noexcept nogil
+cdef bint cisclose(double complex a, double complex b, double rtol=*, double atol=*) noexcept nogil
+cdef real_t min(real_t a, real_t b) noexcept nogil
+cdef real_t max(real_t a, real_t b) noexcept nogil
 
 cdef extern from '<math.h>' nogil:
     double fabs(double)
@@ -30,39 +15,44 @@ cdef extern from '<complex>' nogil:
 
 cdef extern from * nogil:
     """
-    #include <complex>
+#include <complex>
 
-    template <typename T>
-    int sign(T val) {
-        return (T(0) < val) - (val < T(0));
-    }
+template<typename T>
+CYTHON_INLINE int sign(T val) {
+    return (T(0) < val) - (val < T(0));
+}
 
-    template <typename T>
-    std::complex<T> csign(std::complex<T> val) {
-        return val / std::norm(val);
-    }
+template<typename T>
+CYTHON_INLINE std::complex<T> csign(std::complex<T> val) {
+    return val / std::norm(val);
+}
 
-    unsigned long factorial(unsigned int n) {
-        unsigned long f = 1;
-        for (unsigned int i = 1; i < n + 1; i++)
-            f *= i;
-        return f;
-    }
+template<typename T = std::size_t, typename R = T>
+CYTHON_INLINE R factorial(T n) {
+    R f = 1;
+    std::size_t i;
+#pragma unroll
+    for (i = 1; i < n + 1; i++)
+        f *= static_cast<R>(i);
+    return f;
+}
 
-    unsigned long binomial_coef(unsigned long n, unsigned long k) {
-        unsigned long bin_coef = 1;
-        unsigned int i;
-        if (k <= n / 2) {
-            for (i = 0; i < k; i++)
-                bin_coef *= n - i;
-            return bin_coef / factorial(k);
-        }
-        for (i = 0; i < n - k; i++)
-            bin_coef *= n - i;
-        return bin_coef / factorial(n - k);
+template<typename T = std::size_t>
+CYTHON_INLINE T binomial_coef(T n, T k) {
+    T bin_coef = 1;
+    std::size_t i;
+    if (k <= n / 2) {
+#pragma unroll
+        for (i = 0; i < k; i++)
+            bin_coef *= n - static_cast<T>(i);
+        return bin_coef / factorial(k);
     }
+#pragma unroll
+    for (i = 0; i < n - k; i++)
+        bin_coef *= n - static_cast<T>(i);
+    return bin_coef / factorial(n - k);
+}
     """
     int sign(double)
     double complex csign(double complex)
-    unsigned long factorial(unsigned int)
-    unsigned long binomial_coef(unsigned long, unsigned long)
+    inline T binomial_coef[T](T, T)

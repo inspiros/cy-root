@@ -43,6 +43,7 @@ def test_output(etol=1e-8, ptol=1e-10):
 
     print(f'\n{"Newton":-^50}')
     print('[Newton]', newton(f, df, -5, etol=etol, ptol=ptol))
+    print('[Homeier]', homeier(f, df, -5, etol=etol, ptol=ptol))
     print('[Halley]', halley(f, df, d2f, -5, etol=etol, ptol=ptol))
     print('[Super-Halley]', super_halley(f, df, d2f, -5, etol=etol, ptol=ptol))
     print('[Chebyshev]', chebyshev(f, df, d2f, -5, etol=etol, ptol=ptol))
@@ -105,7 +106,7 @@ def test_speed(etol=1e-8, ptol=1e-10, times=100):
            name='Chebyshev', number=times)
     timeit(tangent_hyperbolas, args=(f, df, d2f, -5), kwargs=dict(etol=etol, ptol=ptol),
            name='Tangent Hyperbolas', number=times)
-    timeit(householder, args=(f, [df, d2f, d3f], -5), kwargs=dict(etol=etol, ptol=ptol, c_code=True),
+    timeit(householder, args=(f, [df, d2f, d3f], -5), kwargs=dict(etol=etol, ptol=ptol),
            name='Householder', number=times, warmup=True)
 
 

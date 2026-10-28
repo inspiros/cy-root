@@ -1,287 +1,251 @@
 # distutils: language=c++
-# cython: cdivision = True
-# cython: initializedcheck = False
-# cython: boundscheck = False
-# cython: profile = False
-
-import array
+# cython: cdivision=True, initializedcheck=False, boundscheck=False, profile=False
+"""NumPy-facing compatibility boundary over native derivative plans."""
 from typing import Callable, Optional, Union
-
 import numpy as np
 cimport numpy as np
 import cython
-from cpython cimport array
-from cython cimport view
-from libcpp.algorithm cimport sort
-from libcpp.vector cimport vector
-
+from libc.stddef cimport size_t
 from ._types import VectorLike, ArrayLike
 from .fptr cimport NdArrayFPtr, PyNdArrayFPtr
-from .ops cimport scalar_ops as sops, vector_ops as vops
+from .native.rectangular cimport RectangularCallback, RectangularFunction, make_rectangular_callback
+from .native.vector cimport VectorCallback, VectorFunction
+from .native.derivatives import RectangularJacobianPlan
+from .native.hessians import RectangularHessianPlan
+from .native.higher_mixed import TensorDifferencePlan
+from .native.tensor_callbacks cimport HessianCallback, RectangularHessianCallback
 from .scalar_derivative_approximation import _check_finite_difference_args
 from .utils._function_registering import register
-from .utils.itertools cimport product
 
-__all__ = [
-    'VectorDerivativeApproximation',
-    'generalized_finite_difference',
-    'GeneralizedFiniteDifference',
-]
+__all__ = ['VectorDerivativeApproximation','GeneralizedFiniteDifference',
+           'generalized_finite_difference']
+_MAX_TENSOR_RANK = 32
+_MAX_STENCIL_TERMS = 1_000_000
+_MAX_WORK_BYTES = 256*1024*1024
 
-################################################################################
-# Base Class
-################################################################################
-# noinspection DuplicatedCode
-cdef class VectorDerivativeApproximation(NdArrayFPtr):
-    """
-    A class to wrap a vector function for derivative approximation.
-    """
-    def __init__(self, F: Union[NdArrayFPtr, Callable[[VectorLike], VectorLike]]):
-        if isinstance(F, NdArrayFPtr):
-            self.F = F
+
+def _point_array(x):
+    x = np.array(x, dtype=np.float64, copy=True)
+    if x.ndim != 1 or x.size == 0:
+        raise ValueError('x must be a non-empty one-dimensional array.')
+    if not np.all(np.isfinite(x)):
+        raise ValueError('x must contain only finite values.')
+    return x
+
+
+def _step_array(h, size):
+    # Also validate attributes changed after constructing a derivative wrapper.
+    h, _, _ = _check_finite_difference_args(h, 1, 0)
+    if isinstance(h, float):
+        return np.full(size, h, dtype=np.float64)
+    if len(h) != size:
+        raise ValueError(f'h must be scalar or have length {size}; got {len(h)}.')
+    return np.array(h, dtype=np.float64, copy=True)
+
+
+def _value_array(value, size=None):
+    value = np.asarray(value, dtype=np.float64)
+    if value.ndim != 1 or value.size == 0:
+        raise ValueError('F(x) and F_x must be non-empty one-dimensional arrays.')
+    if size is not None and value.size != size:
+        raise ValueError(f'F changed its output length from {size} to {value.size}.')
+    if not np.all(np.isfinite(value)):
+        raise ValueError('F(x) and F_x must contain only finite values.')
+    # Callbacks may reuse their own output array on the next evaluation.
+    return value.copy()
+
+
+cdef class _ArrayResidual:
+    """Legacy ndarray callbacks are converted only at their Python boundary."""
+    cdef NdArrayFPtr function
+    cdef Py_ssize_t output_dimension
+
+    def __call__(self, point):
+        return _value_array(self.function.eval(np.array(point,dtype=np.float64)),
+                            self.output_dimension)
+
+
+cdef struct _SquareBridge:
+    VectorFunction function
+    void* context
+
+
+cdef int _square_residual(const double* x, size_t n, size_t m, double* out,
+                         void* context) noexcept nogil:
+    cdef _SquareBridge* bridge = <_SquareBridge*>context
+    return bridge.function(x,n,out,bridge.context)
+
+
+cdef np.ndarray _difference(object function, object x, object cached,
+                            object step, object order, object kind,
+                            GeneralizedFiniteDifference owner=None):
+    cdef RectangularCallback rectangular = None
+    cdef VectorCallback square = None
+    cdef RectangularCallback proxy = None
+    cdef NdArrayFPtr legacy = None
+    cdef _ArrayResidual array_bridge
+    cdef _SquareBridge square_bridge
+    cdef bint reserved = False
+    cdef np.ndarray point, base, steps, result
+    # Reserve explicit adapters before arbitrary input/configuration conversions.
+    if isinstance(function,RectangularCallback):
+        rectangular = function
+        if rectangular._function == NULL or rectangular._constructing:
+            raise RuntimeError('Residual callback adapter is not initialized.')
+        if rectangular._jacobian:raise ValueError('F requires a residual-kind callback.')
+        rectangular._enter()
+        reserved = True
+    elif isinstance(function,VectorCallback):
+        square = function
+        if square._function == NULL or square._constructing:
+            raise RuntimeError('Residual callback adapter is not initialized.')
+        if square._jacobian:raise ValueError('F requires a residual-kind callback.')
+        if square._active:raise RuntimeError('This callback adapter is already active.')
+        square._active,square._error = True,None
+        reserved = True
+    elif isinstance(function,(HessianCallback,RectangularHessianCallback)):
+        raise TypeError('F requires a residual callback, not a Hessian provider.')
+    try:
+        step,order,kind = _check_finite_difference_args(step,order,kind)
+        if order+1 > _MAX_TENSOR_RANK:
+            raise ValueError('Dense derivative order exceeds the compatibility rank limit of 32.')
+        point = _point_array(x)
+        n = point.size
+        steps = _step_array(step,n)
+        scheme = 'forward' if kind == 1 else 'backward' if kind == -1 else 'central'
+        if rectangular is not None:
+            if rectangular._n != n:raise ValueError('Residual input dimension must match x.')
+            m = int(rectangular._m)
+            proxy = make_rectangular_callback(rectangular._function,n,m,
+                                               rectangular._context,rectangular)
+        elif square is not None:
+            if square._dimension != n:raise ValueError('Residual input dimension must match x.')
+            m = n
+            square_bridge.function,square_bridge.context = square._function,square._context
+            # The borrowed stack bridge is used only during this synchronous call.
+            proxy = make_rectangular_callback(_square_residual,n,m,&square_bridge,square)
         else:
-            self.F = PyNdArrayFPtr(F)
+            legacy = PyNdArrayFPtr.from_f(function)
+            if cached is None:base = _value_array(legacy.eval(point.copy()))
+            else:base = _value_array(cached)
+            m = base.size
+            array_bridge = _ArrayResidual()
+            array_bridge.function,array_bridge.output_dimension = legacy,m
+            proxy = RectangularCallback(array_bridge,n,m)
+            cached = base
+        if rectangular is not None or square is not None:
+            if cached is not None:cached = _value_array(cached,m)
+        key = (int(n),int(m),order,kind,tuple(steps),_MAX_WORK_BYTES,
+               _MAX_STENCIL_TERMS,_MAX_TENSOR_RANK) if owner is not None else None
+        if owner is not None and owner._plan is not None and owner._plan_key == key:
+            plan = owner._plan
+        else:
+            if order == 1:
+                plan = RectangularJacobianPlan(n,m,scheme,steps,memory_bytes=_MAX_WORK_BYTES)
+            elif order == 2:
+                plan = RectangularHessianPlan(n,m,scheme,steps,memory_bytes=_MAX_WORK_BYTES)
+            else:
+                plan = TensorDifferencePlan(n,m,order,scheme,steps,
+                    max_terms=_MAX_STENCIL_TERMS,memory_bytes=_MAX_WORK_BYTES)
+        try:
+            estimate = plan.evaluate(proxy,point,f_x=cached)
+        except BaseException:
+            # Python callbacks wrapped by the reserved original save errors there,
+            # while the proxy's native status still reaches the plan correctly.
+            if rectangular is not None and rectangular._error is not None:
+                error = rectangular._error
+                rectangular._error = None
+                raise error
+            if square is not None and square._error is not None:
+                error = square._error
+                square._error = None
+                raise error
+            raise
+        if estimate.status == 'breakdown':
+            raise ValueError('h does not produce finite, distinct sample points.')
+        if estimate.status != 'ok':
+            raise ValueError('the finite-difference derivative must be finite.')
+        values = estimate.jacobian if order == 1 else estimate.hessian if order == 2 else estimate.derivative
+        result = np.asarray(values,dtype=np.float64)
+        if owner is not None:
+            owner._plan,owner._plan_key = plan,key
+        return result
+    finally:
+        if reserved:
+            if rectangular is not None:rectangular._leave()
+            if square is not None:square._active = False
 
-    cpdef np.ndarray eval(self, np.ndarray x):
-        raise NotImplementedError
 
-    cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x):
-        raise NotImplementedError
+cdef class VectorDerivativeApproximation(NdArrayFPtr):
+    """Legacy ndarray derivative-provider base, also retaining native residuals."""
+    def __init__(self,F):
+        if isinstance(F,(RectangularCallback,VectorCallback)):
+            self._native_function = F
+            self.F = None
+        else:
+            self.F = PyNdArrayFPtr.from_f(F)
+            self._native_function = None
 
-################################################################################
-# Finite Difference
-################################################################################
-# noinspection DuplicatedCode
-cdef unsigned int[:, :] _vector_derivative_indices(unsigned int[:] ns, bint[:] unique_mask):
-    cdef unsigned int[:, :] inds = product(ns)
-    unique_mask[:] = True
-    cdef unsigned int i, j, k
-    with nogil:
-        for i in range(inds.shape[0]):
-            for j in range(inds.shape[1] - 1):
-                for k in range(j + 1, inds.shape[1]):
-                    if inds[i, j] > inds[i, k]:
-                        unique_mask[i] = False
-                        break
-                if not unique_mask[i]:
-                    break
-    return inds
+    def __call__(self,x):
+        return self.eval(_point_array(x))
 
-cdef np.ndarray[np.uint32_t, ndim=2] _vector_perturbation_steps(unsigned int dim, int order):
-    cdef unsigned int[:] ns = view.array(shape=(dim,),
-                                         itemsize=sizeof(int),
-                                         format='I')
-    ns[:] = order + 1
-    cdef unsigned int[:, :] inds = product(ns)
-    cdef array.array perturb_inds = array.array('I')
-    for i in range(inds.shape[0]):
-        steps = inds[i]
-        if sum(steps) <= order:
-            perturb_inds.append(i)
-    return np.ascontiguousarray(np.asarray(inds, dtype=np.uint32)[perturb_inds])
+    cpdef np.ndarray eval_with_f_val(self,np.ndarray x,np.ndarray F_x):
+        return self.eval2(x,F_x)
 
-cdef int[:] _finite_difference_coefs(int order, int kind):
-    cdef int[:] out = view.array(shape=(order + 1,),
-                                 itemsize=sizeof(int),
-                                 format='i')
-    cdef long i
-    if kind == 1:
-        for i in range(order + 1):
-            out[i] = (-1) ** (order - i) * sops.binomial_coef(order, i)
-    else:
-        for i in range(order + 1):
-            out[i] = (-1) ** i * sops.binomial_coef(order, i)
-    return out
 
-cdef unsigned int[:] _index_to_grad_comb(unsigned int[:] index, unsigned int dim):
-    cdef unsigned int[:] comb = view.array(shape=(dim,),
-                                           itemsize=sizeof(int),
-                                           format='I')
-    comb[:] = 0
-    cdef unsigned int i
-    for i in range(index.shape[0]):
-        comb[index[i]] += 1
-    return comb
-
-# noinspection DuplicatedCode
 cdef np.ndarray generalized_finite_difference_kernel(
         NdArrayFPtr F,
-        np.ndarray[np.float64_t, ndim=1] x,
-        np.ndarray[np.float64_t, ndim=1] F_x,
-        np.ndarray[np.float64_t, ndim=1] h,
-        int order=1,
-        int kind=0):
-    cdef unsigned int i, j, k, ii, eq_ii
-    cdef unsigned int[:] dims = view.array(shape=(order + 1,),
-                                           itemsize=sizeof(int),
-                                           format='I')
-    dims[0] = F_x.shape[0]
-    dims[1:] = x.shape[0]
-    cdef np.ndarray[np.float64_t, ndim=2] D = np.zeros(dims, dtype=np.float64).reshape(F_x.shape[0], -1)
+        np.ndarray[np.float64_t,ndim=1] x,
+        np.ndarray[np.float64_t,ndim=1] F_x,
+        np.ndarray[np.float64_t,ndim=1] h,
+        int order=1,int kind=0):
+    """Preserved compiled ndarray boundary; numerical execution uses native plans."""
+    return _difference(F,x,F_x,h,order,kind)
 
-    cdef unsigned int[:, :] indices
-    cdef unsigned int[:] index
-    cdef bint[:] unique_mask = view.array(shape=(vops.prod[np.uint32_t](dims[1:]),),
-                                          itemsize=sizeof(int),
-                                          format='i')
-    indices = _vector_derivative_indices(dims[1:], unique_mask)
 
-    cdef bint zero_step
-    cdef np.ndarray[np.uint32_t, ndim=2] perturbation_steps = _vector_perturbation_steps(x.shape[0], order)
-    cdef np.ndarray[np.float64_t, ndim=1] perturbation_step
-    cdef np.ndarray[np.float64_t, ndim=2] F_perturbations = np.empty(
-        (perturbation_steps.shape[0], F_x.shape[0]), dtype=np.float64)
-    for i in range(perturbation_steps.shape[0]):
-        if kind == 1:
-            perturbation_step = perturbation_steps[i]
-        elif kind == -1:
-            perturbation_step = -perturbation_steps[i]
-        else:
-            perturbation_step = <double> order / 2. - perturbation_steps[i]
-
-        if kind != 0:
-            if i == 0:
-                F_perturbations[0] = F_x
-            else:
-                F_perturbations[i] = F.eval(x + perturbation_step * h)
-        else:
-            zero_step = True
-            for j in range(perturbation_step.shape[0]):
-                if perturbation_step[j] != 0:
-                    zero_step = False
-                    break
-            if zero_step:
-                F_perturbations[i] = F_x
-            else:
-                F_perturbations[i] = F.eval(x + perturbation_step * h)
-
-    cdef double scale
-    cdef int coef
-    cdef int[:] coefs
-    cdef vector[vector[int]] all_coefs = vector[vector[int]](x.shape[0])
-    for j in range(all_coefs.size()):
-        all_coefs[j].reserve(order + 1)
-    cdef unsigned int[:] grad_comb, coefs_lens = view.array(shape=(x.shape[0],),
-                                                            itemsize=sizeof(int),
-                                                            format='I')
-    cdef unsigned int[:, :] perturbs
-    cdef unsigned int[:] perturb
-    for ii in range(indices.shape[0]):
-        if unique_mask[ii]:
-            index = indices[ii]
-            grad_comb = _index_to_grad_comb(index, x.shape[0])
-            scale = 1
-            for j in range(x.shape[0]):
-                scale *= h[j] ** grad_comb[j]
-                all_coefs[j].clear()
-                coefs = _finite_difference_coefs(grad_comb[j], kind)
-                for k in range(coefs.shape[0]):
-                    all_coefs[j].push_back(coefs[k])
-                coefs_lens[j] = all_coefs[j].size()
-            perturbs = product(coefs_lens)
-            for j in range(perturbs.shape[0]):
-                perturb = perturbs[j]
-                coef = 1
-                for k in range(all_coefs.size()):
-                    coef *= all_coefs[k][perturb[k]]
-                for k in range(perturbation_steps.shape[0]):
-                    if vops.equal[np.uint32_t](perturbation_steps[k], perturb):
-                        break
-                D[:, ii] += coef * F_perturbations[k] / scale
-
-    cdef unsigned int[:] eq_index = view.array(shape=(indices.shape[1],),
-                                               itemsize=sizeof(int),
-                                               format='I')
-    for ii in range(indices.shape[0]):  # repeated indices
-        if not unique_mask[ii]:
-            eq_index[:] = indices[ii]
-            sort(&eq_index[0], (&eq_index[0]) + eq_index.shape[0])
-            eq_ii = 0
-            for i in range(order - 1, -1, -1):
-                eq_ii += eq_index[i] * x.shape[0] ** (order - 1 - i)
-            D[:, ii] = D[:, eq_ii]
-    return D.reshape(dims)
-
-# noinspection DuplicatedCode
 cdef class GeneralizedFiniteDifference(VectorDerivativeApproximation):
-    def __init__(self,
-                 F: Union[NdArrayFPtr, Callable[[VectorLike], VectorLike]],
-                 h: Union[float, VectorLike] = 1.,
-                 order: int = 1,
-                 kind: Union[int, str] = 0):
+    """NumPy-facing derivative wrapper retaining one validated native plan."""
+    def __init__(self,F,h=1.,order=1,kind=0):
         super().__init__(F)
-        # check args
-        h, order, kind = _check_finite_difference_args(h, order, kind)
-        if isinstance(h, float):
-            self.h = np.full(1, h)
-        else:
-            self.h = np.asarray(h, dtype=np.float64)
-        self.order = order
-        self.kind = kind
+        h,order,kind = _check_finite_difference_args(h,order,kind)
+        self.h = h if isinstance(h,float) else np.array(h,dtype=np.float64)
+        self.order,self.kind = order,kind
 
-    cpdef np.ndarray eval(self, np.ndarray x):
+    def __call__(self,x):
         self.n_f_calls += 1
-        cdef np.ndarray[np.float64_t, ndim=1] F_x = self.F.eval(x)
-        cdef np.ndarray[np.float64_t, ndim=1] h
-        if self.h.shape[0] == x.shape[0]:
-            h = self.h
-        elif self.h.shape[0] == 1:
-            h = np.full(x.shape[0], self.h[0])
-        else:
-            raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
-        return generalized_finite_difference_kernel(
-            <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)
+        return _difference(self.F if self._native_function is None else self._native_function,
+                           x,None,self.h,self.order,self.kind,self)
 
-    cpdef np.ndarray eval_with_f_val(self, np.ndarray x, np.ndarray F_x):
+    cdef np.ndarray eval(self,np.ndarray x):
         self.n_f_calls += 1
-        cdef np.ndarray[np.float64_t, ndim=1] h
-        if self.h.shape[0] == x.shape[0]:
-            h = self.h
-        elif self.h.shape[0] == 1:
-            h = np.full(x.shape[0], self.h[0])
-        else:
-            raise ValueError(f'x.shape[0]={x.shape[0]} while h.shape[0]={self.h.shape[0]}.')
-        return generalized_finite_difference_kernel(
-            <NdArrayFPtr> self.F, x, F_x, h, self.order, self.kind)
+        return _difference(self.F if self._native_function is None else self._native_function,
+                           x,None,self.h,self.order,self.kind,self)
 
-# noinspection DuplicatedCode
+    cdef np.ndarray eval2(self,np.ndarray x,np.ndarray F_x):
+        self.n_f_calls += 1
+        return _difference(self.F if self._native_function is None else self._native_function,
+                           x,F_x,self.h,self.order,self.kind,self)
+
+
 @register('cyroot.da.vector')
 @cython.binding(True)
-def generalized_finite_difference(F: Callable[[VectorLike], VectorLike],
-                                  x: VectorLike,
-                                  F_x: Optional[ArrayLike] = None,
-                                  h: Union[float, VectorLike] = 1.,
-                                  order: int = 1,
-                                  kind: Union[int, str] = 0):
+def generalized_finite_difference(F: Callable[[VectorLike],VectorLike],
+                                  x: VectorLike,F_x: Optional[ArrayLike]=None,
+                                  h: Union[float,VectorLike]=1.,order=1,
+                                  kind: Union[int,str]=0):
+    """Estimate a dense derivative with native rounded-node finite differences.
+
+    Return a C-contiguous float64 ndarray of shape (m,)+(n,)*order. Ordinary
+    callbacks receive independent ndarray snapshots; explicit residual-kind
+    RectangularCallback/VectorCallback adapters use their native paths. Cached
+    F_x avoids the base evaluation. Mutable wrapper options are revalidated.
+
+    Central steps use x+-h rather than the legacy first-derivative half steps.
+    Orders1/2 use native Jacobian/Hessian plans; higher orders share the native
+    tensor plan's rounded-node weights and unique sample cache. Compiled native
+    callbacks execute without the GIL; Python callbacks, setup and exports use it.
+    Rank32,1m stencil-term and256MiB native logical memory limits apply; Python
+    planning/export and NumPy boundary copies use additional memory. See
+    docs/vector-derivative-migration.md for numerical changes and failure policy.
     """
-    Generalized finite difference method.
-
-    Args:
-        F (function): Function for which the derivative is sought.
-        x (np.ndarray): Point at which the derivative is sought.
-        F_x (np.ndarray, optional): Value evaluated at point ``x``.
-        h (float, np.ndarray): Finite difference step. Defaults to 1.
-        order (int): Order of derivative to be estimated.
-         Defaults to 1.
-        kind (int, str): Type of finite difference, including ``1``
-         for forward, ``-1`` for backward, and ``0`` for central.
-         Defaults to 0.
-
-    Returns:
-        diff: Estimated derivative.
-    """
-    # check args
-    h, order, kind = _check_finite_difference_args(h, order, kind)
-
-    x = np.asarray(x, dtype=np.float64)
-    if isinstance(h, float):
-        h = np.full(x.shape[0], h)
-    else:
-        h = np.asarray(h, dtype=np.float64)
-
-    F_wrapper = PyNdArrayFPtr.from_f(F)
-    if F_x is None:
-        F_x = F_wrapper.eval(x)
-    else:
-        F_x = np.asarray(F_x, dtype=np.float64)
-    return generalized_finite_difference_kernel(F_wrapper, x, F_x, h, order, kind)
+    return _difference(F,x,F_x,h,order,kind)

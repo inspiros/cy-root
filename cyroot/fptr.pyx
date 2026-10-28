@@ -13,7 +13,7 @@ __all__ = [
 ]
 
 cdef class TrackedFPtr:
-    """abstract class"""
+    r"""Base class for function pointer"""
     def __cinit__(self):
         self.n_f_calls = 0
 
@@ -21,10 +21,14 @@ cdef class TrackedFPtr:
 # Double Scalar
 # --------------------------------
 cdef class DoubleScalarFPtr(TrackedFPtr):
-    def __call__(self, double x):
+    def __call__(self, double x) -> double:
         return self.eval(x)
 
-    cdef double eval(self, double x) except *:
+    cdef double eval(self, double x) except * nogil:
+        raise NotImplementedError
+
+    cdef double eval2(self, double x1, double x2) except * nogil:
+        # TODO: workaround for derivative approximation
         raise NotImplementedError
 
 cdef class CyDoubleScalarFPtr(DoubleScalarFPtr):
@@ -37,7 +41,7 @@ cdef class CyDoubleScalarFPtr(DoubleScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef double eval(self, double x) except *:
+    cdef double eval(self, double x) except * nogil:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -53,9 +57,10 @@ cdef class PyDoubleScalarFPtr(DoubleScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef double eval(self, double x) except *:
+    cdef double eval(self, double x) except * nogil:
         self.n_f_calls += 1
-        return self.f(x)
+        with gil:
+            return self.f(x)
 
 # --------------------------------
 # Double Bi-Scalar
@@ -64,7 +69,7 @@ cdef class DoubleBiScalarFPtr(TrackedFPtr):
     def __call__(self, double a, double b):
         return self.eval(a, b)
 
-    cdef (double, double) eval(self, double a, double b) except *:
+    cdef (double, double) eval(self, double a, double b) except * nogil:
         raise NotImplementedError
 
 cdef class CyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
@@ -77,7 +82,7 @@ cdef class CyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef (double, double) eval(self, double a, double b) except *:
+    cdef (double, double) eval(self, double a, double b) except * nogil:
         self.n_f_calls += 1
         return self.f(a, b)
 
@@ -93,9 +98,10 @@ cdef class PyDoubleBiScalarFPtr(DoubleBiScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef (double, double) eval(self, double a, double b) except *:
+    cdef (double, double) eval(self, double a, double b) except * nogil:
         self.n_f_calls += 1
-        return self.f(a, b)
+        with gil:
+            return self.f(a, b)
 
 # --------------------------------
 # Complex
@@ -104,7 +110,7 @@ cdef class ComplexScalarFPtr(TrackedFPtr):
     def __call__(self, double complex x):
         return self.eval(x)
 
-    cdef double complex eval(self, double complex x) except *:
+    cdef double complex eval(self, double complex x) except * nogil:
         raise NotImplementedError
 
 cdef class CyComplexScalarFPtr(ComplexScalarFPtr):
@@ -117,7 +123,7 @@ cdef class CyComplexScalarFPtr(ComplexScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef double complex eval(self, double complex x) except *:
+    cdef double complex eval(self, double complex x) except * nogil:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -133,9 +139,10 @@ cdef class PyComplexScalarFPtr(ComplexScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef double complex eval(self, double complex x) except *:
+    cdef double complex eval(self, double complex x) except * nogil:
         self.n_f_calls += 1
-        return self.f(x)
+        with gil:
+            return self.f(x)
 
 # --------------------------------
 # Complex Bi-Scalar
@@ -144,7 +151,7 @@ cdef class ComplexBiScalarFPtr(TrackedFPtr):
     def __call__(self, double complex a, double complex b):
         return self.eval(a, b)
 
-    cdef (double complex, double complex) eval(self, double complex a, double complex b) except *:
+    cdef (double complex, double complex) eval(self, double complex a, double complex b) except * nogil:
         raise NotImplementedError
 
 cdef class CyComplexBiScalarFPtr(ComplexBiScalarFPtr):
@@ -157,7 +164,7 @@ cdef class CyComplexBiScalarFPtr(ComplexBiScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef (double complex, double complex) eval(self, double complex a, double complex b) except *:
+    cdef (double complex, double complex) eval(self, double complex a, double complex b) except * nogil:
         self.n_f_calls += 1
         return self.f(a, b)
 
@@ -173,9 +180,10 @@ cdef class PyComplexBiScalarFPtr(ComplexBiScalarFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef (double complex, double complex) eval(self, double complex a, double complex b) except *:
+    cdef (double complex, double complex) eval(self, double complex a, double complex b) except * nogil:
         self.n_f_calls += 1
-        return self.f(a, b)
+        with gil:
+            return self.f(a, b)
 
 # --------------------------------
 # Double MemoryView
@@ -185,6 +193,10 @@ cdef class DoubleVectorFPtr(TrackedFPtr):
         return self.eval(x)
 
     cdef double[:] eval(self, double[:] x) except *:
+        raise NotImplementedError
+
+    cdef double[:] eval2(self, double[:] x1, double[:] x2) except *:
+        # TODO: workaround for derivative approximation
         raise NotImplementedError
 
 cdef class CyDoubleVectorFPtr(DoubleVectorFPtr):
@@ -197,7 +209,7 @@ cdef class CyDoubleVectorFPtr(DoubleVectorFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef double[:] eval(self, double[:] x) except *:
+    cdef double[:] eval(self, double[:] x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -213,9 +225,87 @@ cdef class PyDoubleVectorFPtr(DoubleVectorFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef double[:] eval(self, double[:] x) except *:
+    cdef double[:] eval(self, double[:] x) except *:
         self.n_f_calls += 1
         return self.f(x)
+
+# out
+cdef class DoubleVectorOutFPtr(TrackedFPtr):
+    def __call__(self, double[:] x, double[:] out):
+        self.eval(x, out)
+
+    cdef void eval(self, double[:] x, double[:] out) except * nogil:
+        raise NotImplementedError
+
+cdef class CyDoubleVectorOutFPtr(DoubleVectorOutFPtr):
+    def __init__(self):
+        raise TypeError('This class cannot be instantiated directly.')
+
+    @staticmethod
+    cdef CyDoubleVectorOutFPtr from_f(dvf_out_ptr f):
+        cdef CyDoubleVectorOutFPtr wrapper = CyDoubleVectorOutFPtr.__new__(CyDoubleVectorOutFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef void eval(self, double[:] x, double[:] out) except * nogil:
+        self.n_f_calls += 1
+        self.f(x, out)
+
+cdef class PyDoubleVectorOutFPtr(DoubleVectorOutFPtr):
+    def __init__(self, f):
+        self.f = f
+
+    @staticmethod
+    cdef DoubleVectorOutFPtr from_f(object f):
+        if isinstance(f, DoubleVectorOutFPtr):
+            return f
+        cdef PyDoubleVectorOutFPtr wrapper = PyDoubleVectorOutFPtr.__new__(PyDoubleVectorOutFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef void eval(self, double[:] x, double[:] out) except * nogil:
+        self.n_f_calls += 1
+        with gil:
+            self.f(x, out)
+
+# reduction
+cdef class DoubleVectorReductionFPtr(TrackedFPtr):
+    def __call__(self, double[:] x):
+        return self.eval(x)
+
+    cdef double eval(self, double[:] x) except * nogil:
+        raise NotImplementedError
+
+cdef class CyDoubleVectorReductionFPtr(DoubleVectorReductionFPtr):
+    def __init__(self):
+        raise TypeError('This class cannot be instantiated directly.')
+
+    @staticmethod
+    cdef CyDoubleVectorReductionFPtr from_f(dvrf_ptr f):
+        cdef CyDoubleVectorReductionFPtr wrapper = CyDoubleVectorReductionFPtr.__new__(CyDoubleVectorReductionFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef double eval(self, double[:] x) except * nogil:
+        self.n_f_calls += 1
+        return self.f(x)
+
+cdef class PyDoubleVectorReductionFPtr(DoubleVectorReductionFPtr):
+    def __init__(self, f):
+        self.f = f
+
+    @staticmethod
+    cdef DoubleVectorReductionFPtr from_f(object f):
+        if isinstance(f, DoubleVectorReductionFPtr):
+            return f
+        cdef PyDoubleVectorReductionFPtr wrapper = PyDoubleVectorReductionFPtr.__new__(PyDoubleVectorReductionFPtr)
+        wrapper.f = f
+        return wrapper
+
+    cdef double eval(self, double[:] x) except * nogil:
+        self.n_f_calls += 1
+        with gil:
+            return self.f(x)
 
 # --------------------------------
 # Complex MemoryView
@@ -237,7 +327,7 @@ cdef class CyComplexVectorFPtr(ComplexVectorFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef double complex[:] eval(self, double complex[:] x) except *:
+    cdef double complex[:] eval(self, double complex[:] x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -253,7 +343,7 @@ cdef class PyComplexVectorFPtr(ComplexVectorFPtr):
         wrapper.f = f
         return wrapper
 
-    cpdef double complex[:] eval(self, double complex[:] x) except *:
+    cdef double complex[:] eval(self, double complex[:] x) except *:
         self.n_f_calls += 1
         return self.f(x)
 
@@ -265,6 +355,10 @@ cdef class NdArrayFPtr(TrackedFPtr):
         return self.eval(x)
 
     cdef np.ndarray eval(self, np.ndarray x):
+        raise NotImplementedError
+
+    cdef np.ndarray eval2(self, np.ndarray x1, np.ndarray x2):
+        # TODO: workaround for derivative approximation
         raise NotImplementedError
 
 cdef class CyNdArrayFPtr(NdArrayFPtr):

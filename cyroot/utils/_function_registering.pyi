@@ -1,11 +1,8 @@
-from typing import Any
+from typing import Any, Callable, TypeVar
 
+_F = TypeVar("_F", bound=Callable[..., Any])
 
-def _empty_decorator(f):
-    return f
-
-
-register = _empty_decorator
+def register(*tags: str, wrap: bool = ...) -> Callable[[_F], _F]: ...
 
 
 def is_tagged(f: Any) -> bool:

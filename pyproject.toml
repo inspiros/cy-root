@@ -1,21 +1,57 @@
 [build-system]
 requires = [
-    "setuptools>=42",
-    "wheel",
-    "Cython",
-    "dynamic-default-args",
-    "numpy",
-    "scipy",
-    "sympy",
+    "setuptools>=78",
+    "Cython==3.3.0",
+    "numpy>=2.0,<3",
+    "scipy>=1.13,<1.18",
 ]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cy-root"
+dynamic = ["version", "readme"]
+description = "Cython implementations of multiple root-finding methods."
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11,<3.15"
+authors = [{name = "Hoang-Nhat Tran (inspiros)", email = "hnhat.tran@gmail.com"}]
+keywords = ["root-finding"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Cython",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = ["numpy>=2.0,<3", "scipy>=1.13,<1.18"]
+
+[project.urls]
+Source = "https://github.com/inspiros/cy-root"
+Issues = "https://github.com/inspiros/cy-root/issues"
+
+[project.optional-dependencies]
+dev = ["build>=1.2", "Cython==3.3.0"]
+examples = ["tqdm", "matplotlib>=3.8,<4"]
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+include = ["cyroot", "cyroot.*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.pyx", "*.pxd", "*.pyi", "*.h", "*.hpp", "py.typed"]
 
 [tool.cibuildwheel]
-build = ["cp36-*", "cp37-*", "cp38-*", "cp39-*", "cp310-*", "cp311-*"]
+build = ["cp311-*", "cp312-*", "cp313-*", "cp314-*"]
 archs = ["auto64"]
 skip = ["*-musllinux_*", "*-win32", "*-manylinux_i686"]
-
-[tool.cibuildwheel.linux]
-before-all = [
-    "yum install -y lapack-devel",
-    "yum install -y blas-devel",
-]
+test-command = "python {project}/tests/run_tests.py --jobs 4 --installed-prefix"
+test-requires = ["Cython==3.3.0", "setuptools>=78"]

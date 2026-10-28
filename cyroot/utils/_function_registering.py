@@ -13,7 +13,7 @@ __all__ = [
 
 
 def register(*tags: str, wrap: bool = False):
-    """This decorator is used to add tag to functions."""
+    r"""This decorator is used to add tag to functions."""
 
     def decorator(f: Callable):
         if wrap:
@@ -49,8 +49,7 @@ def is_tagged_with_any_startswith(f: Any, start: str) -> bool:
 
 
 def is_tagged_with_any_startswith_any(f: Any, *starts: str) -> bool:
-    return hasattr(f, '__tags__') and any(any(tag.startswith(_ for _ in starts))
-                                          for tag in f.__tags__)
+    return hasattr(f, '__tags__') and any(tag.startswith(starts) for tag in f.__tags__)
 
 
 def is_tagged_with_any_endswith(f: Any, end: str) -> bool:
@@ -58,5 +57,4 @@ def is_tagged_with_any_endswith(f: Any, end: str) -> bool:
 
 
 def is_tagged_with_any_endswith_any(f: Any, *ends: str) -> bool:
-    return hasattr(f, '__tags__') and any(any(tag.endswith(_ for _ in ends))
-                                          for tag in f.__tags__)
+    return hasattr(f, '__tags__') and any(tag.endswith(ends) for tag in f.__tags__)

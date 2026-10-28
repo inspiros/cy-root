@@ -36,3 +36,12 @@ def find_vector_root(method: str, *args, **kwargs):
     else:
         raise ValueError(f'No implementation for {method} found. '
                          f'Supported methods are: {", ".join(VECTOR_ROOT_FINDING_METHODS.keys())}')
+
+
+from .optimization import vector_levenberg_marquardt, vector_bfgs, vector_lbfgs, vector_powell_dogleg
+VECTOR_ROOT_FINDING_METHODS.update({
+    'levenberg_marquardt': vector_levenberg_marquardt,
+    'bfgs': vector_bfgs,
+    'lbfgs': vector_lbfgs,
+    'powell_dogleg': vector_powell_dogleg,
+})

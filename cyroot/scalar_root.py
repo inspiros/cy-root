@@ -35,3 +35,12 @@ def find_scalar_root(method: str, *args, **kwargs):
     else:
         raise ValueError(f'No implementation for {str(method)} found. '
                          f'Supported methods are: {", ".join(SCALAR_ROOT_FINDING_METHODS.keys())}')
+
+
+from .optimization import scalar_levenberg_marquardt, scalar_bfgs, scalar_lbfgs, scalar_powell_dogleg
+SCALAR_ROOT_FINDING_METHODS.update({
+    'levenberg_marquardt': scalar_levenberg_marquardt,
+    'bfgs': scalar_bfgs,
+    'lbfgs': scalar_lbfgs,
+    'powell_dogleg': scalar_powell_dogleg,
+})
