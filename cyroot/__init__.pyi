@@ -1,4 +1,5 @@
 from .status import TerminationReason as TerminationReason
+from .native.damped_newton import DampedNewton as DampedNewton, VectorDampedNewton as VectorDampedNewton
 from ._version import __version__ as __version__
 from .scalar_bracketing import *
 from .scalar_derivative_approximation import *

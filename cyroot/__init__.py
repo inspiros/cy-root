@@ -22,3 +22,4 @@ from .native.differentiation import (
     AdaptiveHessian, NumericalHessianEstimate, AdaptiveSecondDerivative, ComplexStepDerivative, ComplexStepJacobian, AdaptiveDerivative, AdaptiveJacobian,
     DerivativeEstimate, NumericalJacobianEstimate, DifferentiationError,
 )
+from .native.damped_newton import DampedNewton, VectorDampedNewton

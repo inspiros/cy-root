@@ -4,7 +4,7 @@ from numpy.typing import ArrayLike
 
 from .return_types import RootReturnType, BracketingMethodsReturnType, NewtonMethodsReturnType, SplittingBracketingMethodsReturnType
 
-__all__ = ['generalized_newton', 'generalized_halley', 'generalized_super_halley', 'generalized_chebyshev', 'generalized_tangent_hyperbolas']
+__all__ = ['generalized_newton', 'generalized_damped_newton', 'generalized_halley', 'generalized_super_halley', 'generalized_chebyshev', 'generalized_tangent_hyperbolas']
 
 def generalized_newton(
     F: Any, J: Any, x0: ArrayLike, F_x0: ArrayLike | None = ..., J_x0: ArrayLike | None = ..., *,
@@ -45,4 +45,12 @@ def generalized_tangent_hyperbolas(
     ertol: SupportsFloat = ..., ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
     max_iter: SupportsIndex = ..., history: SupportsIndex = ..., history_every: SupportsIndex = ...,
     history_bytes: SupportsIndex = ..., workspace_bytes: SupportsIndex = ...
+) -> NewtonMethodsReturnType: ...
+
+
+def generalized_damped_newton(
+    F: Any, J: Any, x0: ArrayLike, F_x0: ArrayLike | None = ...,
+    J_x0: ArrayLike | None = ..., *, c1: SupportsFloat = ...,
+    contraction: SupportsFloat = ..., max_line_search: SupportsIndex = ...,
+    **options: Any
 ) -> NewtonMethodsReturnType: ...

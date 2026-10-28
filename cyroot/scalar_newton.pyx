@@ -33,6 +33,7 @@ cdef extern from 'defaults.hpp' namespace 'cyroot' nogil:
 
 __all__ = [
     'newton',
+    'damped_newton',
     'homeier',
     'halley',
     'super_halley',
@@ -95,6 +96,19 @@ def newton(f, df, x0, f_x0=None, df_x0=None, *, h=None,
     f, df, _ = _providers(f, df, None, h)
     return solve(f, df, x0, f_x0=f_x0, df_x0=df_x0,
                  etol=etol, ertol=ertol, ptol=ptol, prtol=prtol, max_iter=max_iter, **options)
+
+
+@register('cyroot.scalar.newton')
+@cython.binding(True)
+def damped_newton(f, df, x0, f_x0=None, df_x0=None, *, h=None,
+                  etol=ETOL, ertol=ERTOL, ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
+                  c1=1e-4, contraction=.5, max_line_search=32, **options):
+    """Newton with native Armijo backtracking; None selects numerical df."""
+    from .native.damped_newton import damped_newton as solve
+    f, df, _ = _providers(f, df, None, h)
+    return solve(f, df, x0, f_x0=f_x0, df_x0=df_x0, etol=etol, ertol=ertol,
+                 ptol=ptol, prtol=prtol, max_iter=max_iter, c1=c1,
+                 contraction=contraction, max_line_search=max_line_search, **options)
 
 
 @register('cyroot.scalar.newton')

@@ -29,6 +29,7 @@ EXTENSION_NAMES = (
     "cyroot.ops.vector_ops",
     "cyroot.ops.matrix_ops",
     "cyroot.native.scalar",
+    "cyroot.native.damped_newton",
     "cyroot.native._buffers",
     "cyroot.native.linalg",
     "cyroot.native.least_squares",

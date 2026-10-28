@@ -16,6 +16,7 @@ cdef enum StopReason:
     COMPLETED = 9
     UNSPECIFIED = 10
     CALLBACK_FAILURE = 11
+    LINE_SEARCH_FAILURE = 12
 
 
 cdef struct StopState:

@@ -2,6 +2,8 @@
 
 ## 2.0.0 — Unreleased
 
+- Add scalar and vector damped Newton with native Armijo backtracking, including rectangular systems and resumable accepted-step histories.
+
 A breaking overhaul of the numerical core, callback interfaces, and solver
 inspection. NumPy and SciPy remain dependencies; native solver loops use
 preallocated storage and can run without the GIL when given native callbacks.

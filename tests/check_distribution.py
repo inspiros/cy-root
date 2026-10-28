@@ -61,6 +61,8 @@ def check_distribution(path):
         assert package_root + "cyroot/native/" + name in names
     for name in ("lbfgs_math.hpp", "lbfgs_math.pxd", "dogleg_math.hpp", "dogleg_math.pxd"):
         assert package_root + "cyroot/native/" + name in names
+    for name in ("damped_newton.pyx", "damped_newton.pxd", "damped_newton.pyi", "damped_newton.hpp"):
+        assert package_root + "cyroot/native/" + name in names
     assert package_root + "cyroot/fptr.pxd" in names
     assert package_root + "cyroot/_stopping.pxd" in names
     assert package_root + "cyroot/status.py" in names

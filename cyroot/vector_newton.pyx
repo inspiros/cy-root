@@ -12,6 +12,7 @@ from .vector_derivative_approximation cimport VectorDerivativeApproximation
 
 __all__ = [
     'generalized_newton',
+    'generalized_damped_newton',
     'generalized_halley',
     'generalized_super_halley',
     'generalized_chebyshev',
@@ -45,6 +46,16 @@ def generalized_newton(F, J, x0, F_x0=None, J_x0=None, *,
         etol=etol, ertol=ertol, ptol=ptol, prtol=prtol, max_iter=max_iter,
         history=history, history_every=history_every, history_bytes=history_bytes,
         workspace_bytes=workspace_bytes).run()
+
+@register('cyroot.vector.newton')
+@cython.binding(True)
+def generalized_damped_newton(F, J, x0, F_x0=None, J_x0=None, *,
+                              c1=1e-4, contraction=.5, max_line_search=32, **options):
+    """Armijo-backtracked Newton with the same shape inference as generalized_newton."""
+    from .native.damped_newton import VectorDampedNewton
+    return VectorDampedNewton(F, J, x0, f_x0=F_x0, jac_x0=J_x0, c1=c1,
+                              contraction=contraction, max_line_search=max_line_search, **options).run()
+
 
 ################################################################################
 # Higher-order methods: established names, native shared engine

@@ -4,13 +4,22 @@ from numpy.typing import ArrayLike
 
 from .return_types import RootReturnType, BracketingMethodsReturnType, NewtonMethodsReturnType, SplittingBracketingMethodsReturnType
 
-__all__ = ['newton', 'homeier', 'halley', 'super_halley', 'chebyshev', 'tangent_hyperbolas', 'householder']
+__all__ = ['damped_newton', 'newton', 'homeier', 'halley', 'super_halley', 'chebyshev', 'tangent_hyperbolas', 'householder']
 
 def newton(
     f: Any, df: Any, x0: SupportsFloat, f_x0: SupportsFloat | None = ...,
     df_x0: SupportsFloat | None = ..., *, h: SupportsFloat | None = ..., etol: SupportsFloat = ...,
     ertol: SupportsFloat = ..., ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
     max_iter: SupportsIndex = ..., **options: Any
+) -> NewtonMethodsReturnType: ...
+
+def damped_newton(
+    f: Any, df: Any, x0: SupportsFloat, f_x0: SupportsFloat | None = ...,
+    df_x0: SupportsFloat | None = ..., *, h: SupportsFloat | None = ...,
+    etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
+    ptol: SupportsFloat = ..., prtol: SupportsFloat = ..., max_iter: SupportsIndex = ...,
+    c1: SupportsFloat = ..., contraction: SupportsFloat = ...,
+    max_line_search: SupportsIndex = ..., **options: Any
 ) -> NewtonMethodsReturnType: ...
 
 def homeier(
