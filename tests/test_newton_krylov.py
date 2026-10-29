@@ -284,6 +284,16 @@ class NativeNewtonKrylovTests(unittest.TestCase):
                 self.assertEqual(owner.gil_held,0)
                 self.assertEqual(solver.run(),solver.result)
 
+    def test_lsqr_verifies_only_when_its_estimates_converge(self):
+        # One verified A p and A^T r per converged solve, not per LSQR iteration.
+        rng=np.random.default_rng(7);a=rng.standard_normal((12,8));b=a@rng.standard_normal(8)
+        result=NewtonKrylov(lambda x:tuple(a@np.asarray(x)-b),lambda x,v:tuple(a@np.asarray(v)),np.zeros(8),
+                            vjp=lambda x,w:tuple(a.T@np.asarray(w)),linear_rtol=1e-10).run()
+        self.assertEqual((result.termination_reason,result.iters),('residual_tolerance',1))
+        self.assertEqual(result.f_calls[1],result.linear_iterations+1)
+        self.assertEqual(result.vjp_calls,result.linear_iterations+2)
+        self.assertLessEqual(result.linear_residual,1e-10)
+
     def test_direct_lsqr_matches_independent_least_squares_and_true_residuals(self):
         rng=np.random.default_rng(913)
         for m,n in ((5,3),(3,5),(4,4)):

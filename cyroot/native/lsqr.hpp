@@ -50,10 +50,14 @@ inline int lsqr_verify(std::size_t n,std::size_t m,const double* rhs,
 // 4 callback failure. Status0 does NOT imply the original problem has a root.
 // relative=||rhs-A*solution||/||rhs||, stationarity=||A^T residual||/||A^T rhs||.
 // A zero denominator has stationarity0 only for a zero normal residual.
-// Both diagnostics and applied=A*solution are refreshed after each completed
-// iteration, including the iteration limit. Each callback output is poisoned
-// before use; unwritten/nonfinite elements cause failure. iterations counts
-// completed LSQR updates, not callback calls. On failures outputs are scratch.
+// The recurrence's Paige-Saunders estimates only decide WHEN to verify: the
+// actual residual and normal residual are recomputed (two extra operator
+// applications) once an estimate meets rtol, and at every return, including
+// the iteration limit and breakdown. Status0 therefore always rests on fresh
+// products, and the returned diagnostics and applied=A*solution are verified.
+// Each callback output is poisoned before use; unwritten/nonfinite elements
+// cause failure. iterations counts completed LSQR updates, not callback calls.
+// On failures outputs are scratch.
 inline int native_lsqr(std::size_t n,std::size_t m,
     std::size_t max_iterations,double rtol,const double* rhs,double* solution,
     double* applied,double* work,KrylovOperator apply,KrylovOperator transpose,
@@ -133,11 +137,20 @@ inline int native_lsqr(std::size_t n,std::size_t m,
             if (!std::isfinite(w[j])) return 3;
         }
         ++*iterations;
-        const int status=lsqr_verify(n,m,rhs,rhs_norm,initial_alpha,
-            rtol,solution,applied,residual,normal,apply,transpose,context,
-            relative,stationarity);
-        if (status!=1) return status;
-        if (beta==0.0 || next_alpha==0.0) return 2;
+        // ||r||=phibar and ||A^T r||=phibar*alpha_next*|c| in exact arithmetic,
+        // normalized like the verified diagnostics. They may be optimistic
+        // after loss of orthogonality, which a failed verification absorbs.
+        const double estimated_relative=phibar/rhs_norm;
+        const double estimated_stationarity=
+            estimated_relative*(next_alpha/initial_alpha)*std::fabs(cosine);
+        const bool last=*iterations>=max_iterations || beta==0.0 || next_alpha==0.0;
+        if (last || !(estimated_relative>rtol) || !(estimated_stationarity>rtol)) {
+            const int status=lsqr_verify(n,m,rhs,rhs_norm,initial_alpha,
+                rtol,solution,applied,residual,normal,apply,transpose,context,
+                relative,stationarity);
+            if (status!=1) return status;
+            if (beta==0.0 || next_alpha==0.0) return 2;
+        }
         std::swap(u,next_u);std::swap(v,next_v);alpha=next_alpha;
     }
     return 1;
