@@ -5,9 +5,9 @@ title: "CyRoot: Root Finding in Cython"
 authors:
   - given-names: Hoang-Nhat
     family-names: Tran
-version: "2.0.0"
+version: "2.0.1"
 date-released: "2026-10-29"
-doi: 10.5281/zenodo.23752559
+doi: 10.5281/zenodo.23752558
 repository-code: https://github.com/inspiros/cy-root
 url: https://inspiros.github.io/cy-root/
 license: MIT
