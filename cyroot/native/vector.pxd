@@ -1,4 +1,4 @@
-"""Draft native vector Newton and preserved square callback API."""
+"""Native vector Newton and version 1 square callback ABI."""
 from libc.stddef cimport size_t
 from libcpp.vector cimport vector
 from .buffers cimport OwnedDoubleBuffer

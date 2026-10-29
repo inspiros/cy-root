@@ -1,4 +1,4 @@
-"""Draft native scalar callback interface for compiled Cython consumers."""
+"""Version 1 native scalar callback ABI for compiled Cython consumers."""
 from libc.stddef cimport size_t
 from libcpp.vector cimport vector
 from cyroot._stopping cimport StopState

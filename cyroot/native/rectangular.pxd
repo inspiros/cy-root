@@ -1,4 +1,4 @@
-"""Separate rectangular residual/Jacobian callback interface (draft v1)."""
+"""Separate version 1 rectangular residual/Jacobian callback ABI."""
 from libc.stddef cimport size_t
 
 ctypedef int (*RectangularFunction)(const double* x, size_t n, size_t m,

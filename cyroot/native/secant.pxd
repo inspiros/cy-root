@@ -1,4 +1,4 @@
-"""Draft native resumable secant solver; scalar callback ABI is shared."""
+"""Native resumable secant solver; scalar callback ABI is shared."""
 from libc.stddef cimport size_t
 from libcpp.vector cimport vector
 from cyroot._stopping cimport StopState

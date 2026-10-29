@@ -1,4 +1,4 @@
-"""Draft immutable DGELSY configuration; caller supplies disjoint native spans."""
+"""Immutable DGELSY configuration; caller supplies disjoint native spans."""
 from libc.stddef cimport size_t
 
 cdef class LeastSquaresPlan:

@@ -1,4 +1,4 @@
-"""Draft square Hessian callback API, separate from vector residual/Jacobian ABI."""
+"""Version 1 square Hessian callback ABI, separate from vector residual/Jacobian ABI."""
 from libc.stddef cimport size_t
 
 ctypedef int (*HessianFunction)(const double* x, size_t n, double* out,

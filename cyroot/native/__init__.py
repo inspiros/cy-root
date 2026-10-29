@@ -1,4 +1,4 @@
-"""Opt-in native-core preview. The callback and storage APIs are still drafts."""
+"""Native solvers, storage and derivative plans with version 1 callback ABIs."""
 from pathlib import Path
 from .scalar import (
     Bisection, Newton, NativeCallbackError, ScalarCallback, ScalarStep, NewtonStep,

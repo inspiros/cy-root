@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-/* Draft ABI: callbacks must not throw or use Python without acquiring the GIL.
+/* Version 1 callback ABI: callbacks must not throw or use Python without acquiring the GIL.
  * The producer owns context; the Python adapter pins its supplied keepalive. */
 #define CYROOT_SCALAR_CALLBACK_ABI 1u
 #define CYROOT_SCALAR_CAPSULE_NAME "cyroot.scalar_callback.v1"
@@ -33,7 +33,7 @@ typedef struct cyroot_vector_descriptor {
     void *context;
 } cyroot_vector_descriptor;
 
-/* Separate draft tensor ABI: square residual Hessian, layout
+/* Separate version 1 tensor ABI: square residual Hessian, layout
  * out[residual + dimension * (input_j + dimension * input_k)]. All dimension^3
  * entries must be written on success. No symmetry is imposed by the adapter. */
 #define CYROOT_HESSIAN_CALLBACK_ABI 1u
