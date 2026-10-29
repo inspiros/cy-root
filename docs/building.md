@@ -1,4 +1,4 @@
-# Building and testing
+# Building And Testing
 
 The development sources support CPython 3.11–3.14 and require a C++17 compiler
 and Python development headers. Linux distributions often provide those headers

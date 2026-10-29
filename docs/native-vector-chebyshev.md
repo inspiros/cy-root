@@ -1,4 +1,4 @@
-# Native vector Chebyshev
+# Native Vector Chebyshev
 
 `cyroot.native.VectorChebyshev` solves square and rectangular real systems with
 analytic or numerical Jacobians and Hessians. The
@@ -29,7 +29,7 @@ assert result.success
 assert solver.history[-1].root == result.root
 ```
 
-## Update and linear algebra
+## Update And Linear Algebra
 
 At an accepted point the solver computes
 
@@ -62,7 +62,7 @@ linear systems and final overflow remain limitations. LAPACK and candidate-step
 arithmetic can still report conservative numerical failure. No damping,
 line search, least-squares fallback or rectangular policy is provided.
 
-## Providers and cached values
+## Providers And Cached Values
 
 The constructor is
 `VectorChebyshev(function, jacobian, hessian, x0, f_x0=None, jac_x0=None,
@@ -71,7 +71,7 @@ max_iter=200, history=0, history_every=1, history_bytes=8*1024*1024,
 workspace_bytes=64*1024*1024)`.
 `vector_chebyshev(function, jacobian, hessian, x0, **options)` constructs and
 runs one solver. The default `max_iter` is 200; zero or `None` is unlimited.
-All native callback interfaces remain drafts.
+Native callback interfaces use versioned descriptors.
 
 `function` accepts a Python residual or residual-kind `VectorCallback`.
 `jacobian` accepts a Python function, Jacobian-kind `VectorCallback`, matching
@@ -98,7 +98,7 @@ their axis samples are independent because the plans can use different steps.
 See [Jacobian plans](native-jacobian.md) and [Hessian plans](native-hessian.md)
 for rounded stencils, sample counts and accuracy limits.
 
-## State, counts and failures
+## State, Counts And Failures
 
 `step()` and `run()` share one total iteration budget and the
 [shared stopping rules](stopping.md). An iteration is an attempted finite trial
@@ -119,12 +119,11 @@ failure preserves a valid Jacobian and clears the Hessian.
 `precision`, `error`, `termination_reason`, `callback_code`, `callback_stage`
 and `linear_status`, with appended `linear_stage` (`None`, `'jacobian'` or
 `'secondary'`). The shared `VectorHigherOrderStep` alias names the same tuple
-class. This extends the preview tuple length and native record layout; compiled
-consumers must rebuild against current declarations. Chebyshev uses only the
+class. Compiled consumers must rebuild against current declarations. Chebyshev uses only the
 Jacobian linear stage. The read-only `method` property returns `'chebyshev'`.
 Snapshots and history exports are immutable copies and
 survive further steps or solver destruction. History uses the
-[native initial/sampled/terminal recording rules](native-core.md#stepping-and-history).
+[native initial/sampled/terminal recording rules](native-core.md#step-inspect-resume).
 Properties `result`, `done`, `history`, `history_truncated`, `callback_code`,
 `callback_stage`, `linear_status` and `linear_stage` expose state without advancing it.
 
@@ -143,7 +142,7 @@ same active solver or adapter raises an error. Independent callbacks can share
 immutable plans with independent workspaces. Producers sharing mutable native
 contexts must synchronize those contexts themselves.
 
-## Storage budgets
+## Storage Budgets
 
 For dimension \(n\), define \(w\) as the larger of \(5n\) for a numerical
 Jacobian and \(2n^2+10n\) for a numerical Hessian; omit a term when that role
@@ -156,7 +155,7 @@ allocation. Python owners/exports and provider-internal allocations are outside
 these byte budgets. All cy-root numerical workspace/history is allocated once;
 there are no per-step cy-root allocations.
 
-## Compiled Hessian callbacks
+## Compiled Hessian Callbacks
 
 Installed `tensor_callbacks.pxd` exposes
 `make_hessian_callback(function, dimension, context, keepalive)` with signature
@@ -180,4 +179,5 @@ by numerical plans, execution stays outside the GIL. Python callbacks reacquire
 it per evaluation; setup and result/history export also use it. The
 [compiled example](../examples/native_vector_chebyshev.md) uses installed
 headers/declarations without NumPy C headers. The package still requires NumPy
-and SciPy; optional providers and remaining vector methods are later stages.
+and SciPy. Rectangular corrections are described in the
+[rectangular Chebyshev guide](native-rectangular-chebyshev.md).

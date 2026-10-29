@@ -1,0 +1,1 @@
+{{#include ../../choosing-methods.md}}

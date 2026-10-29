@@ -1,0 +1,37 @@
+[book]
+title = "CyRoot"
+description = "Where Functions Meet Zero — scalar and vector root finding in Cython."
+authors = ["CyRoot Contributors"]
+language = "en"
+src = "src"
+
+[build]
+build-dir = "/tmp/cyroot-book-preview"
+create-missing = false
+
+[preprocessor.links]
+
+[preprocessor.repository-links]
+command = "python3 preprocess.py"
+after = ["links"]
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+smart-punctuation = true
+mathjax-support = true
+additional-css = ["theme/cyroot.css"]
+additional-js = ["theme/brand.js"]
+git-repository-url = "https://github.com/inspiros/cy-root"
+site-url = "/cy-root/"
+no-section-label = true
+sidebar-header-nav = false
+
+[output.html.search]
+enable = true
+limit-results = 20
+use-boolean-and = true
+
+[output.html.fold]
+enable = true
+level = 1

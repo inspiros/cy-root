@@ -1,4 +1,4 @@
-# Native finite-difference Jacobians
+# Native Finite-Difference Jacobians
 
 `cyroot.native.JacobianPlan` supplies numerical Jacobians to native square vector
 Newton. It evaluates the existing residual callback at perturbed points using
@@ -26,10 +26,10 @@ Jacobian callback continues to select the analytic path. A plan is immutable
 configuration: it holds dimension, scheme and optional copied steps. It does
 not hold a callback or mutable sampling workspace. Independent solvers can
 share a plan, including concurrent solves with separate callback adapters and
-contexts. This preview exposes plans through Newton, without a standalone
-Python derivative evaluator.
+contexts. The square plan supplies solver derivatives; the rectangular plan below also
+provides standalone Python evaluation.
 
-## Schemes and steps
+## Schemes And Steps
 
 `JacobianPlan(dimension, scheme='central', step=None,
 workspace_bytes=64*1024*1024)` accepts the scheme strings `'forward'`,
@@ -72,7 +72,7 @@ For central differences, rounded offsets \(a=x_j^+-x_j\) and
 Weights are computed from scaled offsets to avoid overflowing their difference.
 This preserves quadratic consistency when rounding makes the stencil asymmetric.
 
-## Counts, caches and failures
+## Counts, Caches And Failures
 
 `f_calls` remains `(residual_calls, jacobian_attempts)`. Residual calls include
 base evaluations, Newton trial evaluations and every stencil sample attempt,
@@ -102,7 +102,7 @@ Failed sample attempts are counted and adapter reservations remain held through
 exception transfer. Native callbacks must obey the same no-throw, borrowed
 input and context lifetime rules as [analytic vector callbacks](native-vector.md).
 
-## Storage and limits
+## Storage And Limits
 
 Plan properties are `dimension`, `scheme`, `step` (None or a copied tuple),
 `storage_bytes` and `workspace_bytes`. Automatic plans store no step vector;
@@ -128,8 +128,9 @@ This square plan shares its numerical stencil with the rectangular plan below.
 [Native Traub–Steffensen](native-steffensen.md) reuses its forward stencil with
 signed residual components as steps, recomputed at each accepted point.
 Standalone [native Hessian plans](native-hessian.md) provide second derivatives
-separately. Higher orders, adaptive error estimates and parallel sample scheduling
-remain later work. NumPy/SciPy remain package dependencies.
+separately. [Higher mixed partials](native-higher-mixed.md) and
+[adaptive error estimates](numerical-derivatives.md) are also available. Sampling
+is serial within a plan evaluation. NumPy and SciPy remain package dependencies.
 
 ## Rectangular Jacobians
 
@@ -139,8 +140,8 @@ memory_bytes=64*1024*1024)` uses the same stencils and rounded-coordinate rules.
 Its `evaluate(function, x, f_x=None)` method accepts an ordinary Python function;
 no callback wrapper is required. A matching residual `RectangularCallback` also
 works, including compiled functions. The explicit dimensions let native callers
-allocate correctly sized buffers. A future solver can infer these dimensions
-from a Python initial point and base residual during setup.
+allocate correctly sized buffers. Vector Newton infers these dimensions from
+the initial point and base residual when no explicit plan is supplied.
 
 ```python
 from cyroot.native import RectangularJacobianPlan

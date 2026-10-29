@@ -1,4 +1,4 @@
-# Compile Python-syntax callbacks with Cython
+# Compile Python-Syntax Callbacks With Cython
 
 Yes: users can write typed numerical functions in a `.py` file, compile them
 with Cython's **pure Python mode**, and supply native callbacks to cy-root.
@@ -37,7 +37,7 @@ calls without the GIL; the solver releases it around numerical execution.
 The stateless example pins its function wrappers as owners and has null context
 pointers. Parameterized functions need a pinned native context owner.
 
-## How this differs from Numba
+## How This Differs From Numba
 
 The recommended Cython route is ahead-of-time: Cython translates the source into
 C/C++, and a compiler builds an importable extension. Type annotations identify
@@ -54,7 +54,7 @@ a drop-in `numba.njit` equivalent for our fully native solver path. A runtime
 helper could eventually automate compilation and bridge generation for a
 restricted typed subset, but this package does not currently expose one.
 
-## Native restrictions
+## Native Restrictions
 
 To stay outside the GIL, the body must use native types and operations. Arbitrary
 Python objects, Python-level NumPy calls, dynamic Python closures and most Python
@@ -74,7 +74,7 @@ For raw scalar, rectangular vector and Hessian interfaces, see the existing
 and [tensor callbacks](native-rectangular-tensors.md). The pure-Python example
 needs no NumPy array or NumPy C headers.
 
-## Vector functions and NumPy
+## Vector Functions And NumPy
 
 The same [pure-Python example](../examples/pure_python_callback.md#vector-functions-in-the-same-py-module)
 includes a compiled vector residual, analytic Jacobian and native numerical

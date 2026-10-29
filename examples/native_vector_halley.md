@@ -1,4 +1,4 @@
-# Native matrix Halley and Super-Halley
+# Native Matrix Halley And Super-Halley
 
 Install `cy-root`, Cython 3.3.0, setuptools, a C++17 compiler and matching Python
 development headers. From this examples directory:

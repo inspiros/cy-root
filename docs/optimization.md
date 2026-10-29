@@ -1,4 +1,4 @@
-# Root finding through optimization
+# Root Finding Through Optimization
 
 For a real residual function `F: R^n -> R^m`, define
 
@@ -11,7 +11,7 @@ Conversely, a zero objective gives a root. A positive local minimum or a small
 objective gradient does not establish a root. The same construction supports
 square, overdetermined and underdetermined residuals.
 
-## Value, gradient and exact Hessian
+## Value, Gradient And Exact Hessian
 
 ```python
 from scipy.optimize import minimize
@@ -69,9 +69,9 @@ inputs raise `FloatingPointError`; shape/kind/provider errors raise exceptions.
 Original Python callback exceptions are propagated; native nonzero statuses raise
 `NativeCallbackError` with callback stage/code. Partial callback output is detected.
 
-## External optimizers and root status
+## External Optimizers And Root Status
 
-`root_via_optimizer(objective, optimizer, x0, *, etol=1e-10, ertol=0.,
+`root_via_optimizer(objective, optimizer, x0, *, etol=1e-10, ertol=4*eps,
 optimizer_options=None)` calls `optimizer(objective, copied_x0, **options)`.
 The returned object must have an `x` attribute. This convention fits
 `scipy.optimize.minimize`; wrap other optimizer interfaces in an ordinary
@@ -110,7 +110,7 @@ An objective instance and its attached native adapters are reserved during each
 operation, including input conversion, error transfer and result export. Use
 separate states/adapters for concurrent evaluations.
 
-## Higher-order objective derivatives
+## Higher-Order Objective Derivatives
 
 The product rule gives, for any positive order `r`,
 
@@ -159,7 +159,7 @@ objects and provider allocations. Positive order must fit the native subset bit
 capacity. These limits make large requests explicit; native code does not remove
 the exponential cost of high derivative orders.
 
-## Compiled interface
+## Compiled Interface
 
 `objective.pxd` exposes the accumulator, value/gradient/Hessian kernels and
 `LeastSquaresObjective.evaluate_raw`. A caller pins the state, enters its
@@ -180,7 +180,65 @@ caller-owned buffers. Status `1` denotes nonfinite input/final result; `2` denot
 invalid counts/capacities/work bounds. Output is unchanged on failure. This entry
 point neither allocates nor calls Python and needs no new derivative-callback ABI.
 
-## Native least-squares solver
+## Native Optimizer Families
+
+All four optimization methods have scalar and vector conveniences. The
+positional order is `(function, derivative_or_jacobian, x0)`; pass `None` for
+native numerical differentiation. Vector dimensions are keyword-only. Input
+length can be inferred; supply `output_dimension` for an ordinary rectangular
+callback, or use a shaped native residual adapter.
+
+```python
+from cyroot import (scalar_levenberg_marquardt, scalar_bfgs, scalar_lbfgs,
+                    scalar_powell_dogleg, vector_lbfgs)
+from cyroot.optimization import OptimizationSolver
+
+for solve in (scalar_levenberg_marquardt, scalar_bfgs,
+              scalar_lbfgs, scalar_powell_dogleg):
+    answer = solve(lambda x: x*x - 2., lambda x: 2*x, 1.5)
+    assert answer.success
+    assert abs(answer.root - 2.**.5) < 1e-9
+
+f = lambda x: (x[0]-1., x[1]-2., x[0]+x[1]-3.)
+answer = vector_lbfgs(f, None, (0., 0.), input_dimension=2, output_dimension=3)
+assert answer.success
+solver = OptimizationSolver('lbfgs', lambda x: x*x-2., 1.5,
+                            jacobian=lambda x: 2*x, scalar=True, history=32)
+first = solver.step()
+answer = solver.run()
+assert answer.success
+assert solver.history[-1].root == answer.root
+```
+
+`OptimizationSolver` is a resumable convenience facade. `result`, `history`,
+`step()`, and `run()` return `OptimizationResult` with a scalar root in scalar
+mode and tuple coordinates in vector mode. Its `diagnostics` retains the full
+native record. `objective` and `native_state` expose the underlying adapter and
+method state. Direct `LevenbergMarquardt`, `PowellDogleg`, `BFGS`, and `LBFGS`
+classes accept `(objective, x0, **options)` instead.
+
+| Method | Step And Acceptance | Distinct Controls |
+| --- | --- | --- |
+| Levenberg–Marquardt | Damped Gauss–Newton with augmented least squares and a reduction ratio. | `damping=1e-3`, `max_trials=16`, `rcond=1e-12`. |
+| Powell dogleg | A scaled trust-region step between the Cauchy and Gauss–Newton directions. | `initial_radius=1`, `max_radius=1e6`, `min_radius=1e-15`. |
+| BFGS | A dense inverse-Hessian approximation and bounded strong-Wolfe line search. | `c1=1e-4`, `c2=0.9`, `max_line_search=32`. |
+| L-BFGS | BFGS-style line search with a bounded secant-pair ring. | `corrections=10`, plus BFGS line-search controls. |
+
+These methods share the [root stopping defaults](stopping.md),
+`max_evaluations=10000`, and `gtol=1e-12`. The stationarity metric is
+\(\|J^\mathsf{T}F\|_\infty/(\|F\|_\infty\max_{ij}|J_{ij}|)\),
+independent of a constant residual scaling. Stationarity with an unsatisfied
+residual is an unsuccessful root result. A vanishing scalar derivative can
+instead end in `no_acceptable_step`, `line_search_failure`, or `stagnation`.
+
+Only residual tolerance makes the optimizer-family result successful. A tiny
+step, a successful linear solve, or an optimizer stationary point is insufficient.
+BFGS/L-BFGS have no box constraints. L-BFGS bounds its correction storage but
+still uses a dense residual Jacobian. For a genuinely matrix-free solve, use
+[Newton–Krylov](native-newton-krylov.md). Native callbacks remove Python calls
+from the numerical loop; ordinary Python callbacks remain supported.
+
+## Native Least-Squares Solver
 
 [Levenberg–Marquardt](native-levenberg-marquardt.md) solves the residual objective
 using bounded damped Gauss–Newton steps, analytic/native numerical Jacobians and

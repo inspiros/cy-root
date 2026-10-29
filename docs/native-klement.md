@@ -1,4 +1,4 @@
-# Native Klement method
+# Native Klement Method
 
 `cyroot.klement` now uses the native Broyden state engine with Klement's
 row-weighted Jacobian update. Its numerical loop, initial derivative sampling
@@ -59,7 +59,7 @@ retained `step()`, `run()`, iteration and copied `.history`. The native
 and runs one state. Constructor options and result/history fields match
 [`BroydenGood`](native-broyden.md). `solver.method` is `'klement'`.
 
-## Update and failure policy
+## Update And Failure Policy
 
 Write \(s=x_{k+1}-x_k\) using the actual rounded accepted points and
 \(y=F(x_{k+1})-F(x_k)\). Each row of the old approximation \(B\) defines
@@ -101,10 +101,10 @@ compiled calls; no new descriptor or native module is required.
 It accepts disjoint column-major `matrix[n*n]`, `direction[n]`, `target[n]`,
 `out[n*n]` spans. Status zero means success, one means nonfinite input/final
 output, two means invalid dimension (no writes), and three means a zero row
-denominator. Other failures poison the whole output. The draft native solver
+denominator. Other failures poison the whole output. The native solver
 object layout gains a private flag, so compiled consumers must rebuild;
 callback descriptors and result/history record layouts are unchanged.
 
-The legacy NumPy Klement loop has been removed. Other quasi-Newton ports remain
-separate work. The original reference is [On Using Quasi-Newton Algorithms of
+The numerical engine uses native storage. Other supported quasi-Newton methods
+also use native states. The original reference is [On Using Quasi-Newton Algorithms of
 the Broyden Class for Model-to-Test Correlation](https://jatm.com.br/jatm/article/view/373).

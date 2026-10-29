@@ -1,4 +1,4 @@
-# Native higher derivatives and a Householder increment
+# Native Higher Derivatives And A Householder Increment
 
 Install cy-root, Cython 3.3.0, setuptools, matching Python development headers
 and a C++17 compiler. From this directory:

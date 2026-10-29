@@ -1,4 +1,4 @@
-# Native finite-difference Hessians
+# Native Finite-Difference Hessians
 
 Install `cy-root`, Cython 3.3.0, setuptools, a C++17 compiler and matching Python
 development headers. From this examples directory:
@@ -34,5 +34,6 @@ memory. Fully native residual evaluation releases the GIL. Python residuals
 use the same plan and reacquire the GIL for each callback.
 
 This example needs no NumPy headers. The package still depends on NumPy and
-SciPy. This stage provides standalone Hessians for square residuals; solver
-integration and rectangular residuals are separate work.
+SciPy. The square plan also supplies higher-order vector solvers.
+[Rectangular Hessians](../docs/native-rectangular-hessian.md) support independent
+input and residual dimensions.

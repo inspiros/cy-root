@@ -1,4 +1,4 @@
-# Native Robinson method
+# Native Robinson Method
 
 `cyroot.robinson` now uses the shared native Newton state with two initial points
 and a divided-difference matrix built from orthogonal probes. Native buffers,
@@ -42,7 +42,7 @@ The initial points must have matching lengths and be distinct, even at a
 cached root. A residual-kind `VectorCallback` or square `RectangularCallback`
 can wrap a compiled function.
 
-## Directions and corrected secant equations
+## Directions And Corrected Secant Equations
 
 Let the previous point be \(p\), the active point \(x\), the actual separation
 \(s=x-p\) and radius \(r=\|s\|_2\). `orth='identity'` or the exact built-in
@@ -81,7 +81,7 @@ factors, differences or final entries report `nonfinite`. No pseudoinverse,
 random retry, damping, line search or global convergence guarantee is supplied.
 Only residual convergence reports root success.
 
-## Initial pair, counts and snapshots
+## Initial Pair, Counts And Snapshots
 
 Both initial residuals are evaluated in order, `x0` then `x1`, unless their
 matching caches are supplied. Caches count zero calls. Both initial points and
@@ -119,7 +119,7 @@ LAPACK status, including a required probe-displacement factorization/row solve.
 History exports are copies; all callback reservations span setup conversions,
 probe sampling and result/error/history construction.
 
-## Memory and native helper
+## Memory And Native Helper
 
 Native workspace is \(8n+4n^2\) doubles and \(n\) C-int pivots: the square
 Newton workspace plus previous point/residual, two probe/orientation matrices
@@ -137,7 +137,7 @@ input/result, two means invalid dimension (no writes), and three means zero
 separation or a collapsed probe. Other failures poison both complete outputs.
 The solver validates the rounded orientation matrix before invoking callbacks.
 
-The draft solver object/vtable adds private setup/state fields; compiled
+The 2.0 solver object/vtable adds private setup/state fields; compiled
 consumers must rebuild. Callback descriptors, record and result layouts are
 unchanged. The legacy NumPy Robinson loop and random/efficient direction
 helpers are removed. [Wolfe–Bittner](native-wolfe-bittner.md) also uses a native state.

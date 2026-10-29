@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 — Unreleased
+## 2.0.0 — 2026-10-29
 
 A breaking overhaul of the numerical core, callback interfaces, and solver
 inspection. NumPy and SciPy remain dependencies; native solver loops use
@@ -79,8 +79,6 @@ Python callbacks still acquire the GIL.
 - Add native scalar finite-difference plans and square/rectangular Jacobian,
   Hessian, and higher mixed-partial tensor plans. Use actual rounded sample nodes,
   cache reusable samples, and bound stencil/storage requirements.
-- Migrate `GeneralizedFiniteDifference` onto the native plans while retaining its
-  NumPy-compatible Python boundaries.
 - Add `ComplexStepDerivative` and `ComplexStepJacobian` for holomorphic complex
   implementations of real residuals.
 - Add `AdaptiveDerivative`, `AdaptiveSecondDerivative`, `AdaptiveJacobian`, and

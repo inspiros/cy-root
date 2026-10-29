@@ -1,4 +1,4 @@
-# Native rank-aware least squares
+# Native Rank-Aware Least Squares
 
 `cyroot.native.LeastSquaresPlan` solves a dense real system with positive
 row and column counts up to 32767 each. It minimizes `||A*x-b||₂` and selects a minimum-norm
@@ -23,7 +23,7 @@ condition numbers of triangular factors. This threshold is not an SVD
 singular-value cutoff, so rank choices can differ from SVD-based routines.
 See the [Netlib DGELSY reference](https://netlib.org/lapack/explore-html/dc/d8b/group__gelsy_ga6d1d46ead18df76e993cd4eda6dc1bbb.html).
 
-## Python interface and results
+## Python Interface And Results
 
 `LeastSquaresPlan(rows, columns, *, rcond=1e-12, workspace_bytes=64*1024*1024)`
 is immutable. `solve(matrix, rhs)` accepts nested numeric sequences or native
@@ -52,7 +52,7 @@ Neither that status nor full rank certifies accuracy or nonlinear root
 convergence. This primitive returns no residual diagnostic; a future root
 solver must evaluate its own residual and stopping conditions.
 
-## Reusable Cython workspaces
+## Reusable Cython Workspaces
 
 The declaration in `cyroot.native.least_squares` exposes:
 
@@ -82,7 +82,7 @@ An uninitialized plan created through `__new__` returns `invalid_plan`.
 The immutable initialized plan can be shared between concurrent calls with
 distinct output and scratch allocations and synchronized input lifetimes.
 
-## Memory limits
+## Memory Limits
 
 `rows`, `columns`, `rcond`, `lwork`, `work_size`, `pivot_size` and
 `memory_bytes` are read-only properties. Construction validates positive

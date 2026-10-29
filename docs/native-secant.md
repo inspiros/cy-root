@@ -1,4 +1,4 @@
-# Native secant preview
+# Native Secant
 
 `cyroot.native.Secant` finds a scalar root using two starting function values.
 It accepts a Python callable or the same native `ScalarCallback` used by native
@@ -19,7 +19,7 @@ point/residual pairs. `run()` and the `result` property return `RootReturnType`.
 `secant(function, x0, x1, **options)` is the full-run convenience function in
 `cyroot.native`. Existing `cyroot.secant` remains the earlier API.
 
-## Evaluations and stopping
+## Evaluations And Stopping
 
 The [common stopping rules](stopping.md) apply. For two finite nonsolved starts,
 the fixed residual scale is the larger initial absolute residual. The current
@@ -49,7 +49,7 @@ nonzero callback codes raise `NativeCallbackError`, with `native_status`, a
 copied `result`, and `callback_stage='function'`. The solver exposes the same
 stage and code; numerical failures return ordinary unsuccessful results.
 
-## Inspection and ownership
+## Inspection And Ownership
 
 `history`, `history_every`, `history_bytes`, `history_truncated`, `done` and
 iteration follow [native-core conventions](native-core.md). History is bounded
@@ -65,7 +65,5 @@ and the full numerical run execute outside the GIL. Python callbacks reacquire
 the GIL for calls and result conversion. See the
 [compiled callback example](../examples/native_secant.md).
 
-This preview has no bracketing safeguard, damping or line search. Secant can
-fail or diverge for unsuitable starting pairs. The native callback ABI remains
-a draft; the package still depends on NumPy and SciPy at import/install
-boundaries.
+Secant has no bracketing safeguard, damping, or line search and can fail or
+diverge for unsuitable starting pairs. NumPy and SciPy remain package dependencies.

@@ -17,7 +17,7 @@ requires-python = ">=3.11,<3.15"
 authors = [{name = "Hoang-Nhat Tran (inspiros)", email = "hnhat.tran@gmail.com"}]
 keywords = ["root-finding"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",

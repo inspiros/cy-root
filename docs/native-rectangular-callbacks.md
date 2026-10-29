@@ -1,4 +1,4 @@
-# Rectangular callbacks
+# Rectangular Callbacks
 
 `RectangularCallback` adapts functions with `n` inputs and `m` outputs. It is
 separate from the existing square `VectorCallback`. `VectorNewton` and
@@ -32,9 +32,9 @@ The read-only properties are `input_dimension`, `output_dimension`, `jacobian`
 and `native`. Dimensions must be positive, fit the C-int ABI, and fit native
 storage capacities.
 
-## Compiled functions
+## Compiled Functions
 
-`cyroot.native.rectangular` declares the draft callback signature:
+`cyroot.native.rectangular` declares the 2.0 callback signature:
 
 ```cython
 ctypedef int (*RectangularFunction)(const double* x, size_t n, size_t m,

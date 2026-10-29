@@ -1,4 +1,4 @@
-# Native rectangular numerical Hessians
+# Native Rectangular Numerical Hessians
 
 `RectangularHessianPlan` estimates second derivatives of
 \(F:\mathbb R^n\to\mathbb R^m\), including \(m<n\), \(m>n\) and \(m=n\).
@@ -44,7 +44,7 @@ result or exception creation. Plans can be reused concurrently with independent
 callbacks and storage. Python callbacks acquire the GIL; compiled callbacks and
 the numerical stencil execute without it. NumPy and SciPy remain dependencies.
 
-## Sampling and failures
+## Sampling And Failures
 
 The schemes, signed scalar/anisotropic copied steps, automatic step heuristics,
 actual rounded-node interpolation and finite-range behavior are those of the
@@ -68,7 +68,7 @@ include failed attempts. Trial coordinates are restored after every sample and
 failure. All axis nodes and interpolation coefficients are preflighted before
 stencil callbacks; an uncached base evaluation may precede that preflight.
 
-## Native storage and Cython interface
+## Native Storage And Cython Interface
 
 Output storage is \(mn^2\) doubles. Scratch contains \(2nm+8n+2m\) doubles:
 an axis-sample cache, geometry vectors, a trial point, corner residual and
@@ -109,6 +109,6 @@ layout. The [Chebyshev path](native-rectangular-chebyshev.md) supports rectangul
 nonlinear systems; fixed [Halley/Super-Halley](native-rectangular-halley.md) also support rectangles,
 and [general modified Halley](native-rectangular-modified.md) uses its separate
 three-solve rectangular correction.
-The legacy general vector derivative API is unchanged: its central mixed-partial
-step convention differs from this plan, so the two are not interchangeable by
-merely passing the same `h`/`step` value.
+The 1.x general derivative wrappers were removed. Select an explicit
+[finite-difference plan](finite-differences.md); old `h` values should be
+rechecked against the chosen plan's step and stencil conventions.

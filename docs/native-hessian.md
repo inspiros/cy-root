@@ -1,4 +1,4 @@
-# Native vector Hessians
+# Native Vector Hessians
 
 `cyroot.native.HessianPlan` estimates the Hessian of a square residual
 \(F:\mathbb R^n\to\mathbb R^n\) using Python or compiled residual callbacks.
@@ -20,7 +20,7 @@ assert estimate.hessian[1] == ((0., -1.), (-1., 4.))
 assert estimate.f_calls == 9
 ```
 
-## Configuration and memory
+## Configuration And Memory
 
 The immutable constructor is
 `HessianPlan(dimension, scheme='central', step=None, *, memory_bytes=64*1024*1024)`.
@@ -54,7 +54,7 @@ allocation. Checked products and native capacity limits apply even with a large
 budget. Python owners, nested-tuple exports and allocator overhead use additional
 memory. Concurrent evaluations each allocate their own evaluation storage.
 
-## Rounded stencils
+## Rounded Stencils
 
 The plan uses actual floating-point shifted coordinates and displacements.
 Central axis samples are requested at \(x_j+h_j,x_j-h_j\); forward samples
@@ -95,7 +95,7 @@ accuracy. A finite `ok` estimate certifies completion, not derivative accuracy;
 step-refinement studies remain necessary. Nonfinite intermediate arithmetic
 reports failure even when an alternative ordering could produce a finite value.
 
-## Counts, results and failures
+## Counts, Results And Failures
 
 `evaluate(function, x, f_x=None)` accepts a Python function or a residual
 `VectorCallback` of the matching dimension. Jacobian-kind and uninitialized
@@ -129,7 +129,7 @@ concurrently or reentrantly. The immutable plan can serve independent callbacks
 concurrently or in nested evaluations, with separate scratch and synchronized
 native contexts where needed.
 
-## Native consumers and scope
+## Native Consumers And Scope
 
 Installed `hessians.pxd` exposes `HessianConfig`, configuration copying,
 `compute_hessian(...) noexcept nogil` and plan `compute`. Native output offset
@@ -142,10 +142,10 @@ output and restore the scratch trial point to the original point. No allocation
 or Python/GIL helpers occur in numerical execution.
 
 The [compiled example](../examples/native_hessian.md) uses installed declarations
-and native callbacks without NumPy C headers. This first plan matches the square
-callback ABI and integrates with [native vector Chebyshev](native-vector-chebyshev.md).
-Rectangular residuals, remaining higher-order vector solvers, general rank
-tensors and parallel sample scheduling are later work. See
+and native callbacks without NumPy C headers. This square plan integrates with [vector Chebyshev](native-vector-chebyshev.md)
+and the Halley family. [Rectangular Hessians](native-rectangular-hessian.md) and
+[higher mixed partials](native-higher-mixed.md) provide independent dimensions and
+higher orders. Sampling is serial within an evaluation. See
 [finite differences](finite-differences.md) for every derivative plan. Hessian
 sampling needs no BLAS; the package still requires NumPy and SciPy for existing
 algorithms and the initial native linear algebra provider.

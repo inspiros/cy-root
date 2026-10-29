@@ -1,4 +1,4 @@
-# Native least squares
+# Native Least Squares
 
 Install cy-root, Cython 3.3.0, setuptools and a C++17 compiler with matching
 Python development headers. Build against the installed package:

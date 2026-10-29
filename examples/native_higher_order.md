@@ -1,4 +1,4 @@
-# Native Halley family callbacks
+# Native Halley Family Callbacks
 
 Install `cy-root`, Cython 3.3.0, setuptools, a C++17 compiler, and matching Python
 development headers. From this examples directory:
@@ -39,6 +39,6 @@ failure keeps the accepted point/residual and identifies the failing stage.
 
 Halley, Super-Halley and modified Halley can stop with `breakdown` when their
 correction denominator vanishes. All methods return explicit failures for
-nonfinite arithmetic. These previews add no damping, line search or fallback
+nonfinite arithmetic. These methods add no damping, line search or fallback
 Newton steps. The example
 needs no NumPy arrays or C headers, although package dependencies remain.

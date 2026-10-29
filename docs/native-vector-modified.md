@@ -1,4 +1,4 @@
-# Parameterized native matrix modified Halley
+# Parameterized Native Matrix Modified Halley
 
 `cyroot.native.VectorModifiedHalley` extends the shared vector engine
 with a finite real parameter `alpha`. It accepts the same analytic or numerical
@@ -27,7 +27,7 @@ assert result.success
 assert solver.history[-1].root == result.root
 ```
 
-## Coupled update and exact special paths
+## Coupled Update And Exact Special Paths
 
 For general parameter values, the method computes
 
@@ -59,10 +59,10 @@ parameter auto-selection, damping or automatic fallback. All finite alpha values
 discontinuous near `.5` and `1`, as explained in that manual.
 The established square higher-order entry points now use this engine and the
 old componentwise default is removed; see the
-[breaking migration guide](vector-higher-order-migration.md). Unrelated legacy
-rectangular methods retain their existing interfaces.
+[breaking migration guide](vector-higher-order-migration.md). Rectangular
+corrections are described in the [rectangular guide](native-rectangular-modified.md).
 
-## Configuration and providers
+## Configuration And Providers
 
 The constructor is
 `VectorModifiedHalley(function, jacobian, hessian, x0, f_x0=None, jac_x0=None,
@@ -103,16 +103,15 @@ and every residual sample in \(F\), including failed attempts. Cached values
 count zero new calls. Python callback inputs are copied tuples; native contexts
 are pinned by their adapters. No new tensor callback ABI is introduced here.
 
-## Diagnostics, failure state and range
+## Diagnostics, Failure State And Range
 
 The common result remains `NewtonMethodsReturnType`, with tuple root/residual,
 `df_root=(jacobian,hessian)`, counts and termination reason. Immutable snapshots
 remain `VectorHigherOrderStep`, also named `VectorChebyshevStep`. `linear_stage`
 adds the value `'correction'` for the final matrix-vector contraction and retained
 Jacobian solve. The earlier values remain `None`, `'jacobian'` and `'secondary'`.
-The common tuple field set and history record layout do not change in this stage;
-the native solver object gains fields, so compiled consumers must rebuild against
-current installed declarations.
+Compiled consumers must rebuild against the installed 2.0 declarations; copied
+result and history records share the higher-order vector schema.
 
 Each new phase resets `linear_status` to zero before work, then preserves the
 exact latest LAPACK status from that phase. Nonzero factor/solve status reports
@@ -136,7 +135,7 @@ callback errors retain exact code/stage; Python exceptions retain identity and
 traceback. After an error is delivered, terminal `step()`/`run()` are passive.
 `step()` and `run()` share a total budget; the default is 200, and zero or `None` is unlimited.
 
-## Workspace and compiled use
+## Workspace And Compiled Use
 
 Let \(B=8n+2n^2+n^3+w\) doubles, where \(w\) is the largest selected numerical
 Jacobian/Hessian scratch requirement. `alpha=0` needs \(B\) doubles and \(n\)
@@ -157,5 +156,5 @@ writes; other contraction failures poison the whole output.
 
 Fully native callbacks and plans execute outside the GIL. Python callbacks,
 setup and result/history export use it. NumPy/SciPy remain package dependencies;
-callback/storage APIs remain previews. Remaining native solvers, shape policies
-and optional linear algebra providers are later work.
+the callback and storage contracts are described in the [native core guide](native-core.md).
+SciPy supplies the native linear-algebra backend.

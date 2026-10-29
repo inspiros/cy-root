@@ -1,4 +1,4 @@
-# Square higher-order vector methods
+# Square Higher-Order Vector Methods
 
 The established `cyroot.generalized_halley`, `generalized_super_halley`,
 `generalized_chebyshev` and `generalized_tangent_hyperbolas` use
@@ -13,9 +13,10 @@ square systems use strict LU and do not fall back to a pseudoinverse.
 `generalized_newton` also supports independent point/residual lengths; see
 [its contract](native-vector.md). All established vector quasi-Newton routes
 now use native states; their individual shape policies are documented separately.
-Legacy standalone derivative approximations retain their existing interfaces.
+The 1.x standalone derivative wrappers were removed; use the explicit
+[finite-difference plans](finite-differences.md) instead.
 
-## Methods and matrix semantics
+## Methods And Matrix Semantics
 
 | Entry point | Native method |
 | --- | --- |
@@ -47,7 +48,7 @@ and the original Jacobian factors/pivots for its final correction. Explicit
 arithmetic paths. Other finite parameters use the general correction equation.
 No automatic parameter choice, damping or alternate solve is applied on failure.
 
-## Callback inputs, results and derivatives
+## Callback Inputs, Results And Derivatives
 
 Python callbacks receive immutable tuple snapshots. Return numeric sequences or
 supported double buffers; NumPy arrays are still accepted at the boundary.
@@ -100,7 +101,7 @@ unevaluated derivatives at the returned point. `f_calls=(F,J,H)` counts native
 plan calls in their derivative roles and every sampled residual in `F`.
 Stopping, cached-value reuse and failure behavior follow the native engine.
 
-## Options, shapes and failure policy
+## Options, Shapes And Failure Policy
 
 The shared signature is
 `(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, *, etol=1e-10,
@@ -141,5 +142,6 @@ assert solver.history[-1].root == result.root
 passed directly through the established entry points. With native callbacks in
 all evaluated roles, the numerical engine executes outside the GIL; Python
 callbacks, setup and result/history export use it. NumPy and SciPy remain package
-dependencies, and the callback ABI remains a preview. This migration makes no
-performance claim or change to rectangular algorithms outside these four methods.
+dependencies. Compiled consumers must rebuild for the 2.0 callback and solver
+declarations. This migration makes no performance claim or change to rectangular
+algorithms outside these four methods.

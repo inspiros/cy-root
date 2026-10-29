@@ -1,4 +1,4 @@
-# Native scalar finite differences
+# Native Scalar Finite Differences
 
 `cyroot.native.ScalarDerivativePlan` provides forward, backward and central
 first derivatives for native Newton. Pass a plan as the second argument, or
@@ -21,10 +21,10 @@ Python residuals reacquire it for each callback and output conversion.
 configuration. Its read-only properties are `scheme`, `step` and `sample_count`.
 It owns no callback or sampling workspace and can serve independent concurrent
 solves. Native computation uses stack variables; the scalar solver needs no
-additional heap workspace for finite differences. This preview provides no
+additional heap workspace for finite differences. This solver-specific plan has no
 standalone Python derivative evaluator.
 
-## Steps and arithmetic
+## Steps And Arithmetic
 
 Schemes are the strings `'forward'`, `'backward'` and `'central'`; integer codes
 are rejected. An explicit step must be a finite nonzero signed scalar. It is
@@ -50,7 +50,7 @@ report `nonfinite`. The engine does not repair the stencil, retry steps or
 switch schemes. Subtraction/division overflow is a numerical failure, even
 where an alternative algebraic arrangement could remain finite.
 
-## Counts and failures
+## Counts And Failures
 
 Newton's `f_calls` is `(residual_attempts, derivative_attempts)`. Residual counts
 include every base, Newton trial and stencil call, including failed attempts.

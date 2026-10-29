@@ -1,4 +1,4 @@
-# Finite differences
+# Finite Differences
 
 Numerical derivatives are native plans. A plan fixes the shape, scheme and
 step once; `evaluate(function, x, f_x=None)` samples an ordinary Python
@@ -11,10 +11,10 @@ from cyroot.native import (ScalarFiniteDifferencePlan, RectangularJacobianPlan,
                            RectangularHessianPlan, TensorDifferencePlan)
 
 first = ScalarFiniteDifferencePlan(1, 'central', .01).evaluate(lambda x: x*x, 2.)
-# first.derivative is approximately 4
+assert abs(first.derivative - 4.) < 1e-9
 jacobian = RectangularJacobianPlan(2, 1, 'central', .01).evaluate(
     lambda x: (x[0]*x[1],), (2., 3.))
-# jacobian.jacobian is approximately ((3, 2),)
+assert max(abs(a-b) for a, b in zip(jacobian.jacobian[0], (3., 2.))) < 1e-9
 hessian = RectangularHessianPlan(2, 1).evaluate(lambda x: (x[0]*x[0]*x[1],), (2., 3.))
 third = TensorDifferencePlan(2, 1, 3).evaluate(lambda x: (x[0]*x[0]*x[1],), (2., 3.))
 ```
@@ -31,7 +31,8 @@ third = TensorDifferencePlan(2, 1, 3).evaluate(lambda x: (x[0]*x[0]*x[1],), (2.,
 
 The first tensor axis identifies the output component. Schemes are
 `'forward'`, `'backward'` and `'central'`. `step=None` chooses a relative
-automatic step; an explicit step must be finite and nonzero. Samples use the
+automatic step; an explicit step must be finite and nonzero (strictly positive for directional
+`JacobianVectorPlan`, which normalizes its direction). Samples use the
 actual rounded nodes, so steps that collapse in floating point report a
 breakdown instead of a silently wrong estimate. Plans bound their scratch
 storage and stencil size before allocating.
@@ -41,7 +42,7 @@ For estimates with an error estimate, use the adaptive Richardson providers
 `AdaptiveHessian`, or the complex-step `ComplexStepDerivative` and
 `ComplexStepJacobian` when the residual has a holomorphic complex extension.
 
-## Migrating from 1.x
+## Migrating From 1.X
 
 The 1.x `finite_difference`, `FiniteDifference`, `generalized_finite_difference`
 and `GeneralizedFiniteDifference` wrappers, their `DerivativeApproximation`

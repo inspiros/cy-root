@@ -1,4 +1,4 @@
-# Native Newton preview
+# Native Newton
 
 `cyroot.native.Newton` uses the same scalar callback interface and stepping,
 budget and history conventions as [native bisection](native-core.md). The
@@ -21,7 +21,7 @@ return `NewtonMethodsReturnType`. `newton(function, derivative, x0, **options)`
 is the convenience full-run function in `cyroot.native`. Existing
 `cyroot.newton` remains the older API.
 
-## Evaluation and termination
+## Evaluation And Termination
 
 The tolerance arguments and formulas are in [stopping rules](stopping.md).
 The residual scale is fixed at the initial absolute residual. Step size uses
@@ -59,7 +59,7 @@ the failure. The solver exposes the same stage through `callback_stage` and
 the code through `callback_code`. Its result reason is `callback_failure`.
 Numerical failures return ordinary unsuccessful results.
 
-## History and callback lifetimes
+## History And Callback Lifetimes
 
 `history`, `history_every`, `history_bytes`, `history_truncated`, `done` and
 iteration over the solver behave as in native bisection. Each record includes
@@ -85,10 +85,8 @@ run to remain outside the GIL. A Python callback reacquires the GIL for its
 call and conversion. See the [compiled example](../examples/native_scalar.md)
 and its `solve_newton()` function for the installed-package build workflow.
 
-The preview has no damping, line search or native cancellation. Higher-order
-Newton methods [Halley and Chebyshev](native-higher-order.md) now accept
-analytic first and second derivatives. General vector algorithms remain
-subsequent ports.
-[Native vector Newton](native-vector.md) supports square systems with analytic
-or numerical Jacobians. The callback ABI remains a draft, and the
-package still requires NumPy/SciPy at installation/import boundaries.
+Plain Newton takes a full step. For Armijo backtracking use
+[Damped Newton](native-damped-newton.md). [Halley and Chebyshev](native-higher-order.md)
+accept analytic or numerical first and second derivatives.
+[Vector Newton](native-vector.md) supports square and rectangular systems.
+NumPy and SciPy remain package dependencies; native cancellation is not provided.

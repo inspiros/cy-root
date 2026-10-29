@@ -40,7 +40,7 @@ Jacobian role or Jacobian cache. The native `traub_steffensen(function, x0,
 systems: point and residual both have length \(n\). An explicit
 `RectangularCallback` is accepted when its input and output dimensions match.
 
-## Residual-dependent differences
+## Residual-Dependent Differences
 
 At an accepted point \(x\), take the signed coordinate step \(h_j=F_j(x)\).
 For each axis, evaluate \(F\) at the floating-point point obtained by adding
@@ -74,7 +74,7 @@ square LU policy. There is no pseudoinverse, rectangular extension, damping,
 line search or global convergence guarantee. Only residual convergence reports
 root success; a small step with a nonzero residual is unsuccessful stagnation.
 
-## Results and counts
+## Results And Counts
 
 Python callbacks now receive immutable tuples, so replace NumPy-specific point
 arithmetic with indexed sequence operations or explicit conversion inside the
@@ -111,7 +111,7 @@ native residual function/context and call/status pointers. The caller validates
 positive dimensions/products and pins all buffers and callback lifetime. Failed
 computations poison the whole output and restore the scratch point. No new
 callback descriptor or extension module is needed. Compiled consumers must
-rebuild for the draft solver's added private flag; callback, record and result
+rebuild for the 2.0 solver's added private flag; callback, record and result
 layouts are otherwise unchanged.
 
 The legacy NumPy Traub–Steffensen loop is removed. [Barnes](native-barnes.md), [Robinson](native-robinson.md) and

@@ -1,4 +1,4 @@
-# Native vector modified Halley
+# Native Vector Modified Halley
 
 Install `cy-root`, Cython 3.3.0, setuptools, a C++17 compiler and matching Python
 development headers. From this examples directory:
@@ -36,7 +36,8 @@ latest LAPACK status. Failed pretrial work preserves the last accepted point.
 
 Fully native callbacks and kernels run without the GIL. The compiled example
 needs no NumPy headers. The package retains NumPy and SciPy, and this native
-solver currently supports square residuals.
+engine supports square and rectangular residuals; this example uses the square
+callback ABI.
 
 The established square higher-order API accepts the same native callbacks:
 
@@ -52,4 +53,4 @@ assert modified.success
 
 These public names now use matrix semantics, tuple snapshots and native plans.
 See the [migration guide](../docs/vector-higher-order-migration.md) for the
-removed options and square-only failure policy.
+removed options and the square versus rectangular linear-solve policies.

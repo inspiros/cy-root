@@ -1,4 +1,4 @@
-# Native vector Newton and established API
+# Native Vector Newton And Established API
 
 `cyroot.native.VectorNewton` solves nonempty real systems with an analytic
 Jacobian or a [native finite-difference plan](native-jacobian.md). Pass `None`
@@ -103,7 +103,7 @@ Supplied `F_x0` and `J_x0` skip their initial evaluations and contribute zero
 calls. Counts, terminal Jacobian placeholders and failure behavior follow the
 native engine described below.
 
-## Python boundary
+## Python Boundary
 
 Inputs and callback outputs accept sized, indexable sequences or direct
 native-format double buffers. `x0` has length `n`, residuals length `m`; Jacobians
@@ -129,7 +129,7 @@ The solver exposes `input_dimension`, `output_dimension`, `linear_status` and
 when unavailable, after a failed rectangular solve and for square LU. It describes that
 linear step, not necessarily the Jacobian at a subsequently accepted point.
 
-## Numerical behavior
+## Numerical Behavior
 
 For square systems, the step solves `J delta = -F` with pivoted LU (`dgesv`),
 then evaluates the candidate point. A singular LU factorization
@@ -185,7 +185,7 @@ identity and callback traceback. Native nonzero codes raise `NativeCallbackError
 with `native_status`, copied `result` and `callback_stage` (`'function'` or
 `'jacobian'`). Numerical failures return ordinary unsuccessful results.
 
-## Native callbacks
+## Native Callbacks
 
 `vector.pxd` declares:
 
@@ -212,9 +212,8 @@ the descriptor. Pointer provenance and actual context/code lifetime remain
 the producer's responsibility. For rectangular systems, use
 [`RectangularCallback`](native-rectangular-callbacks.md) and its distinct native
 factory/capsule with explicit `n` and `m`; Jacobian layout is `row + column*m`.
-These adapters also work for square systems. Both callback ABIs are unchanged;
-the draft `VectorNewton` Cython object/record layout has changed, so compiled
-consumers must rebuild. The Cython/C ABI is still a draft.
+These adapters also work for square systems. Compiled consumers must rebuild
+against the installed 2.0 object/record declarations and versioned callback headers.
 
 Selected explicit adapters are reserved together before setup performs arbitrary
 argument conversion, including point/cache packing, tolerances, budgets and
@@ -227,7 +226,7 @@ it cannot be paired with a rectangular shape. Other native callback types and
 uninitialized or mismatched plans are rejected, including at an initial root. Distinct adapters sharing native state require
 producer synchronization. See the [compiled example](../examples/native_vector.md).
 
-## Workspace and history limits
+## Workspace And History Limits
 
 `workspace_bytes` defaults to 64 MiB. Before native allocation, the solver
 checks dimension/products, LAPACK's C `int` limit and the workspace budget.

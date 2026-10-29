@@ -1,4 +1,4 @@
-# Native Barnes method
+# Native Barnes Method
 
 `cyroot.barnes` now uses the native direct quasi-Newton engine with a deterministic
 Barnes secant update. Initialization, square LU, stopping, callback guards and
@@ -51,7 +51,7 @@ match `BroydenGood`. `solver.method` is `'barnes'` and
 `solver.secant_history_size` is the number of private retained step directions.
 This direction memory is separate from the optional exported result history.
 
-## Deterministic retained-secant update
+## Deterministic Retained-Secant Update
 
 Write \(s=x_{k+1}-x_k\), using actual rounded accepted points, and
 \(y=F(x_{k+1})-F(x_k)\). Retain the most recent \(n-1\) step directions from
@@ -104,7 +104,7 @@ are unsuccessful stagnation. Only residual convergence reports root success.
 Native callback codes, original Python exceptions and last-accepted-state
 semantics follow the shared [Broyden engine](native-broyden.md).
 
-## Memory and native use
+## Memory And Native Use
 
 Persistent native storage is \(6n+5n^2\) doubles and \(n\) C-int pivots. Relative
 to direct good Broyden, it adds \(n(n-1)\) historical directions, \(n(n-1)\)
@@ -124,7 +124,7 @@ shape/count (no writes), and three means a dependent/zero direction or zero
 update denominator. Other failures poison the whole output. Producers are
 responsible for valid pointers and callback code/context lifetime.
 
-Compiled consumers must rebuild for the draft solver's added private fields.
+Compiled consumers must rebuild for the 2.0 solver's added private fields.
 Callback descriptors, native history records and result layouts are unchanged.
 The legacy Barnes NumPy loop and random orthogonal helper are removed. [Robinson](native-robinson.md)
 and [Wolfe–Bittner](native-wolfe-bittner.md) also use native states. The original reference is

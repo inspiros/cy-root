@@ -1,4 +1,4 @@
-# Compile Python syntax into a native callback with Cython
+# Compile Python Syntax Into A Native Callback With Cython
 
 Cython's pure Python mode lets a `.py` source file describe C functions using
 annotations and decorators. This example compiles `x*x - 2` and its derivative,
@@ -63,12 +63,14 @@ No package-level JIT decorator or runtime compilation dependency is introduced
 by this example. The same ahead-of-time approach can wrap the vector and tensor
 callback ABIs with typed output pointers.
 
-## Vector functions in the same `.py` module
+## Vector Functions In The Same `.py` Module
 
 The example also exports `vector_callback()` and `vector_jacobian_callback()`.
 They describe three equations in two variables, with root `(1, 2)`:
 
 ```python
+import numpy as np
+
 def numpy_style(x):
     return np.array([x[0]**2 + x[1] - 3,
                      2*x[0] + x[1]**2 - 6,
@@ -78,7 +80,7 @@ def numpy_style(x):
 That ordinary Python implementation remains supported. For GIL-free execution,
 the compiled version uses the native callback signature and fills `out` directly:
 
-```python
+```cython
 @cython.cfunc
 @cython.nogil
 @cython.exceptval(check=False)

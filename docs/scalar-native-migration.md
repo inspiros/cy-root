@@ -1,4 +1,4 @@
-# Scalar solver migration
+# Scalar Solver Migration
 
 All 26 supported scalar solver entry points now dispatch to native state machines.
 Their familiar names remain available from `cyroot` and `find_scalar_root`.
@@ -7,7 +7,7 @@ methods. Python callbacks acquire the GIL for their calls; native callbacks allo
 the numerical run to remain outside the GIL. Validation, ownership setup and
 result/history export still happen with the GIL.
 
-## Supported methods
+## Supported Methods
 
 | Family | Methods | Native inspection interface |
 | --- | --- | --- |
@@ -60,7 +60,7 @@ an extra iteration near a width threshold. The solver always respects the
 caller's `max_iter` and never relaxes the requested width tolerance to claim
 success. Native TOMS748 accepts `k` from 1 to 100.
 
-## Newton derivatives and breaking changes
+## Newton Derivatives And Breaking Changes
 
 The familiar Newton-family APIs now use native derivative plans when an analytic
 derivative is omitted. `h=None` selects automatic steps; explicit `h` selects
@@ -80,7 +80,7 @@ point paths, failed-state contents and numerical derivative steps. Rebuild any
 compiled consumers of changed declarations. Removed private kernel functions
 and `NewtonPolynomial` are not compatibility APIs.
 
-## Compiled real and complex callbacks
+## Compiled Real And Complex Callbacks
 
 Real methods accept `ScalarCallback`, constructed from Python or exported by
 `make_scalar_callback` in `cyroot.native.scalar`. Typed `.py` and `.pyx` functions
@@ -114,7 +114,7 @@ version 1, and capsule name `cyroot.complex_scalar_callback.v1`.
 the descriptor. The producer must keep its context alive and synchronize shared
 mutable state. Reentrant/concurrent use of one adapter is rejected.
 
-## Hybisect interval search
+## Hybisect Interval Search
 
 Hybisect needs both a residual and an interval-enclosure callback. The latter is
 called as `interval_function(a,b)` and returns `(lower,upper)` containing **all**
@@ -171,9 +171,9 @@ capsule `cyroot.interval_callback.v1`. Producer context/keepalive and native
 exception rules match the other callbacks. Both residual and enclosure must be
 native to keep the full search outside the GIL.
 
-## Remaining project work
+## Removed Experimental Methods
 
-The unverified experimental Ahmadi method was removed in 2.0. Vector Vrahatis/polygon code still needs
-migration. Native scalar coverage does not mean the full overhaul or supported
-platform matrix has completed release qualification. SciPy remains the initial
-native linear-algebra provider.
+The unverified experimental Ahmadi and Mishchenko methods were removed in 2.0.
+Supported scalar and vector methods use native engines, including
+[Vrahatis and polygon discovery](native-vrahatis.md). SciPy remains the native
+linear-algebra provider.

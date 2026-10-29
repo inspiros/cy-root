@@ -1,4 +1,4 @@
-# Levenberg–Marquardt root finding
+# Levenberg–Marquardt Root Finding
 
 `LevenbergMarquardt` minimizes the residual objective \(\phi(x)=\frac12\|F(x)\|_2^2\).
 Only meeting the original residual tolerance establishes root success. A minimum
@@ -21,7 +21,7 @@ steps = solver.history
 
 `levenberg_marquardt(objective, x0, **options)` returns the same result without
 retaining an inspectable solver. Both names are available in `cyroot.optimization`
-and `cyroot.native`. The new API accepts a `LeastSquaresObjective` rather than
+and `cyroot.native`. The API accepts a `LeastSquaresObjective` rather than
 repeating its callback configuration. Scalar residuals use a one-element vector.
 Square, overdetermined and underdetermined systems use the same interface.
 User callbacks return a residual vector of length `m` and an optional Jacobian
@@ -56,11 +56,11 @@ within `[1e-15,1e15]`. An outer iteration samples one Jacobian and makes at most
 the accepted state. A nonfinite trial is rejected; a callback exception or native
 callback error stops immediately and preserves the last accepted state.
 
-## Options and diagnostics
+## Options And Diagnostics
 
 Defaults:
 
-```python
+```text
 LevenbergMarquardt(objective, x0, *,
     etol=1e-10, ertol=4*eps, ptol=1e-12, prtol=4*eps, gtol=1e-12,
     max_iter=200, max_evaluations=10000, max_trials=16,
@@ -118,7 +118,7 @@ reports this native allocation. The augmented row count `m+n` is limited to32767
 by the current LAPACK-plan policy. No Jacobian rank or unique-root guarantee is
 implied for rectangular or deficient systems.
 
-## Compiled use and the GIL
+## Compiled Use And The GIL
 
 Native callbacks through the objective run without the GIL. Python callbacks
 acquire it for each call. Solver construction, result/history export and `step()`/

@@ -1,4 +1,4 @@
-# Native Halley family preview
+# Native Halley Family
 
 `cyroot.native.Halley`, `Chebyshev`, `ModifiedHalley`, `SuperHalley` and
 `TangentHyperbolas` share a scalar native solver interface using first and
@@ -31,14 +31,15 @@ assert result.success
 
 The convenience functions `halley(function, derivative, second_derivative, x0,
 **options)`, `chebyshev(...)`, `super_halley(...)`, `tangent_hyperbolas(...)`
-and `modified_halley(..., alpha=0.5, **options)` perform a complete run. Existing top-level
-legacy functions keep their previous interfaces. For numerical first derivatives,
+and `modified_halley(..., alpha=0.5, **options)` perform a complete run.
+Top-level functions use the same native engines, with keyword-only controls.
+For numerical first derivatives,
 pass a [ScalarDerivativePlan](native-scalar-derivative.md); for numerical second
 derivatives, pass a [ScalarSecondDerivativePlan](native-second-derivative.md).
 The plan types are specific to their derivative order. Derivative arguments
 remain positional: pass `None` explicitly when selecting a default plan.
 
-## Steps and numerical failures
+## Steps And Numerical Failures
 
 For residual \(f\), first derivative \(f'\) and second derivative \(f''\)
 at the current point, define
@@ -100,7 +101,7 @@ actual finite step magnitude, consecutive point scale, and `max_iter` shared
 across stepping and full runs. Each attempted finite candidate residual is one
 iteration. Arithmetic failure before that call consumes no iteration or call.
 
-## Results, caches and lazy derivatives
+## Results, Caches And Lazy Derivatives
 
 `run()` and `result` return `NewtonMethodsReturnType`. Its `df_root` is the
 tuple `(first_derivative, second_derivative)` at the returned point.
@@ -134,7 +135,7 @@ second is NaN. A newly evaluated zero first derivative is retained as zero with
 an unevaluated second derivative of NaN. No stale derivative from another point
 is labelled as a derivative at the returned point.
 
-## Callbacks, history and ownership
+## Callbacks, History And Ownership
 
 Native producers use the same scalar signature and keepalive interface as
 [native Newton](native-newton.md):
@@ -174,5 +175,5 @@ is reported. Same-iteration terminal failures update the last matching record.
 Copied snapshots remain valid and unchanged after resumption or destruction.
 No new native history or workspace allocations occur per iteration.
 
-The callback ABI remains a draft. NumPy/SciPy are still package
+The callbacks use versioned native descriptors. NumPy and SciPy remain package
 dependencies, and native cancellation/signal checks are not implemented.

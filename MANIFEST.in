@@ -5,6 +5,7 @@ recursive-include cyroot *.py *.pyx *.pxd *.pyi *.h *.hpp py.typed
 recursive-include tests *.py *.pyx *.cpp
 recursive-include examples *.py *.pyx *.md
 recursive-include docs *.md
+recursive-include docs/site *.toml *.py *.css *.js *.svg
 recursive-exclude cyroot *.c *.cpp *.so *.pyd
 prune build
 prune develop

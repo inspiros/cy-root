@@ -35,7 +35,7 @@ assert solver.history[-1].root == result.root
 assert (solver.input_dimension, solver.output_dimension) == (1, 2)
 ```
 
-## Equations and rank policy
+## Equations And Rank Policy
 
 With \(J\) of shape \((m,n)\) and \(H\) of shape \((m,n,n)\), the
 rectangular extension is explicitly defined by
@@ -74,7 +74,7 @@ this same Chebyshev path and accept rectangles. Fixed [Halley and Super-Halley](
 uses its specified [rectangular correction](native-rectangular-modified.md),
 with exact alpha values selecting the fixed methods.
 
-## Shapes, callbacks and derivative plans
+## Shapes, Callbacks And Derivative Plans
 
 The familiar signatures remain:
 
@@ -106,7 +106,7 @@ Construction leaves an inspectable terminal state before delivering callback
 errors; inspection afterward performs no further evaluations. A cached initial
 root skips unused derivative evaluations and linear solves.
 
-## Results, history and storage
+## Results, History And Storage
 
 Results remain `NewtonMethodsReturnType` with copied tuple point/residual and
 `df_root=(Jacobian, Hessian)`. Call counts are `(residual, Jacobian, Hessian)`;
@@ -138,7 +138,6 @@ History has a separate checked budget: one native record plus
 provider-internal memory are additional; plan-level budget guards can be
 conservative. There is no per-iteration native allocation.
 
-The draft solver object and record layout gain fields, and copied step records
-append rank. Rebuild compiled consumers. Callback descriptors and the established
-result schema are unchanged. This increment does not change legacy general
-finite-difference step conventions or introduce a generic solver framework.
+The result and history expose the latest rectangular rank explicitly. Rebuild
+compiled consumers against the installed 2.0 declarations. Configure numerical
+derivatives through the [supported plans](finite-differences.md).

@@ -1,4 +1,4 @@
-# Stopping rules and result status
+# Stopping Rules And Result Status
 
 Each solver result has a `termination_reason`, a string-valued
 `TerminationReason` enum. `success` and `converged` are true for residual or
@@ -55,13 +55,21 @@ unsuccessful stagnation; residual convergence is required for success.
 Rectangular systems may use least-squares steps, but their success criterion
 still concerns the residual, rather than least-squares stationarity alone.
 
-Every solver family and root-acceptance wrapper shares the defaults
+Every solver family shares the defaults
 `etol=1e-10`, `ertol=4*eps`, `ptol=1e-12`, `prtol=4*eps` and `max_iter=200`
-(binary64 `eps`), defined once in `cyroot/defaults.hpp`. Method-specific controls,
+(binary64 `eps`), defined once in `cyroot/defaults.hpp`. The external-optimizer
+bridge uses the same residual defaults; the external optimizer keeps its own
+iteration and convergence controls. Method-specific controls,
 such as optimizer `gtol` or evaluation budgets, keep their own defaults. These
 controls are keyword-only in every public function and native solver class;
 only the function, derivative providers, starting values and cached initial
 values are positional.
+
+The relative residual term uses the initial residual magnitude, not an estimate
+of derivative accuracy. For example, with a starting residual of `1e20`, `4*eps`
+contributes about `8.9e4` to the acceptance threshold. Set `ertol=0` when the
+application requires an absolute residual target. Relative step tolerance also
+scales with coordinate magnitude; rescale poorly balanced problems deliberately.
 
 Tolerances must be finite and nonnegative. Relative tolerances must be smaller
 than one. `max_iter` is a nonnegative integer; zero or `None` removes the
@@ -87,7 +95,14 @@ they are not exact derivatives at the returned point.
 | `zero_derivative` | A required scalar derivative is zero. |
 | `breakdown` | A denominator, factorization or other numerical precondition failed. |
 | `nonfinite` | A required point, value or arithmetic result is not finite. |
-| `callback_failure` | A native callback returned a nonzero status in the native core preview. |
+| `callback_failure` | A native callback returned a nonzero status in the native core. |
+| `line_search_failure` | No acceptable descent step was found by the bounded line search. |
+| `linear_failure` | The required inner linear solve did not meet its acceptance criterion. |
+| `max_evaluations` | The residual evaluation budget was exhausted. |
+| `derivative_breakdown` | A numerical derivative/product could not form a valid estimate. |
+| `stationary_nonroot` | The optimizer's stationarity test was met while the residual remained nonzero. |
+| `no_acceptable_step` | A bounded optimizer trial search found no acceptable step. |
+| `optimizer_stopped_without_root` | An external optimizer returned a point that failed the root tolerance. |
 
 Interval splitting results contain `termination_reasons` per returned root and
 `search_termination_reason` for the overall search. A completed search can

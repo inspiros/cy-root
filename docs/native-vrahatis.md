@@ -1,4 +1,4 @@
-# Native Vrahatis generalized bisection
+# Native Vrahatis Generalized Bisection
 
 `cyroot.vrahatis` now runs a native state machine. The input is either a matrix
 of sign-polygon vertices or one point from which a bounded heuristic attempts to
@@ -19,14 +19,14 @@ def residual(x):
 answer = vrahatis(residual, vertices)
 assert answer.success
 
-solver = Vrahatis(residual, vertices, history=32)
+solver = Vrahatis(residual, vertices, history=64)  # Keep the terminal sweep too.
 first = solver.step()
 answer = solver.run()
 assert answer.success
 assert solver.history[-1].root == answer.root
 ```
 
-## Sign and stopping contracts
+## Sign And Stopping Contracts
 
 For a residual with `m` components and points with `n` coordinates, an ordinary
 starting polygon must have exactly `2**m` vertices, one for every strict output
@@ -64,7 +64,7 @@ still needs `2**m` output patterns. Extra input coordinates remain ordinary
 coordinates in its geometry; this is not a uniqueness or existence theorem for
 rectangular systems.
 
-## Python and compiled callbacks
+## Python And Compiled Callbacks
 
 Pass an ordinary Python callable, a residual `VectorCallback` for square systems,
 or a residual `RectangularCallback` for different input/output lengths. Native
@@ -83,7 +83,7 @@ GIL without NumPy calls or per-sample array/view creation. Python callbacks acqu
 the GIL only through their bridge. See [compiling callbacks](compiling-callbacks.md)
 for typed Python-syntax and Cython examples.
 
-## Single-point polygon discovery
+## Single-Point Polygon Discovery
 
 ```python
 from cyroot import vrahatis
@@ -125,7 +125,7 @@ available from `cyroot.vector_bracketing`. Their NumPy arrays are compatibility
 boundary outputs. The solver and native polygon builder do not call those array
 helpers or NumPy numerical operations internally.
 
-## Inspection and resources
+## Inspection And Resources
 
 `Vrahatis` exposes `step()`, `run()`, `result`, `done`, iteration, `history` and
 `history_truncated`. A step is one edge sweep. History stores copied root,
@@ -139,13 +139,13 @@ native history storage. Python conversion objects, tuple exports, allocator
 metadata and callback-owned allocations are additional memory. These are not
 process peak-memory guarantees. Inputs are copied; caller arrays are not mutated.
 
-## Migration and remaining work
+## Callback Inputs And Scope
 
 NumPy callbacks such as `lambda x: x-target` must use explicit elementwise Python
 expressions or convert their tuple input when needed; such conversion still uses
 Python. Return types now contain tuples, and counters/iteration paths may differ
 from the legacy implementation. Rebuild compiled consumers against the current
-draft declarations. Private `vrahatis_kernel` is removed.
+2.0 declarations. Private `vrahatis_kernel` is removed.
 
 Vrahatis completes the native migration of currently supported vector solvers.
 The unverified experimental Mishchenko and Ahmadi methods were removed. This

@@ -1,4 +1,4 @@
-# Rectangular parameterized modified Halley
+# Rectangular Parameterized Modified Halley
 
 `VectorModifiedHalley` and `generalized_halley(..., alpha=...)` accept rectangular
 systems for every finite real `alpha`. Their signatures, callback shapes and
@@ -29,7 +29,7 @@ assert solver.run().success
 assert solver.history[-1].root == solver.result.root
 ```
 
-## General correction
+## General Correction
 
 For \(n\) inputs, \(m\) residuals and \(\alpha\notin\{0,1/2,1\}\), the
 specified rectangular update is
@@ -52,7 +52,7 @@ No general convergence order is promised for rectangular or rank-changing system
 Square systems retain their existing strict LU factors and correction solve,
 including `breakdown` on a required singular matrix and no least-squares fallback.
 
-## Exact special parameters
+## Exact Special Parameters
 
 Exactly `alpha=0`, `.5` and `1` select Chebyshev, Halley and Super-Halley,
 respectively, preserving the [fixed update formulas](native-rectangular-halley.md)
@@ -68,7 +68,7 @@ general formula takes \(\Delta x=-1\). Exactly `.5` selects Halley and takes
 `alpha` as a continuous interpolation across these method selectors.
 The `alpha=0` general formula does agree with Chebyshev by linearity.
 
-## Diagnostics and storage
+## Diagnostics And Storage
 
 The existing `'correction'` linear stage now covers rectangular multiplication
 \(Av\) and its Jacobian solve. `linear_rank` always describes the latest solve,

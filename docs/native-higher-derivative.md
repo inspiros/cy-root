@@ -1,4 +1,4 @@
-# Native runtime-order scalar derivatives
+# Native Runtime-Order Scalar Derivatives
 
 `cyroot.native.ScalarFiniteDifferencePlan` estimates a selected scalar derivative
 order without symbolic algebra, NumPy operations or a table of explicit formulas.
@@ -33,7 +33,7 @@ required scratch in doubles and bytes, rather than the configured ceiling.
 Plans store no callback, mutable scratch or sampled values and can be reused
 concurrently with independent callbacks and workspaces.
 
-## Rounded stencils and accuracy
+## Rounded Stencils And Accuracy
 
 For order \(m\), forward/backward stencils include the base and \(m\) other
 points at signed integer multiples of the step. Central stencils include the
@@ -62,7 +62,7 @@ finite computation completed, not that a requested accuracy was achieved.
 High-order polynomial fixtures can pass while a smooth nonpolynomial at the
 same order is inaccurate. Step-refinement studies remain necessary.
 
-## Estimates, counters and native callers
+## Estimates, Counters And Native Callers
 
 `evaluate(function, x, f_x=None)` returns immutable
 `ScalarDerivativeEstimate(derivative, f_calls, status, callback_code)`. Status is
@@ -92,7 +92,7 @@ as matching derivative roles. Existing Newton and Halley-family dispatch still
 uses the specialized first/second plans.
 See the [compiled example](../examples/native_higher_derivative.md).
 
-## Householder without symbolic formulas
+## Householder Without Symbolic Formulas
 
 For derivatives through order \(d\), write
 \(a_k=f^{(k)}(x)/k!\). Reciprocal Taylor coefficients satisfy

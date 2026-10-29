@@ -1,4 +1,4 @@
-# Native scalar second derivatives
+# Native Scalar Second Derivatives
 
 `cyroot.native.ScalarSecondDerivativePlan(scheme='central', step=None)`
 approximates a scalar residual's second derivative for native
@@ -23,7 +23,7 @@ the plan. A compiled residual makes the complete sampling and arithmetic path
 GIL-free. Python callbacks reacquire the GIL. The plan differentiates the
 residual directly, including when an analytic first derivative is supplied.
 
-## Stencil and accuracy
+## Stencil And Accuracy
 
 All schemes use the cached residual at the current point and two additional
 samples, so `sample_count` is always two. Central samples at `x+h`, then `x-h`;
@@ -61,7 +61,7 @@ subtraction, each is divided by the separation first. Other unrepresentable
 intermediates remain conservative failures even if another arrangement could
 succeed.
 
-## Counts and failures
+## Counts And Failures
 
 Each invoked plan adds one second derivative attempt and up to two residual
 attempts to the solver's `(residual, first_derivative, second_derivative)`
@@ -88,6 +88,5 @@ Python evaluation method. See the [compiled example](../examples/native_higher_o
 
 [Runtime-order scalar derivative plans](native-higher-derivative.md) are available
 separately, with generic-plan integration in [Householder](native-householder.md).
-[Native vector Hessian plans](native-hessian.md) provide square-vector second
-derivatives; higher-order vector solver integration and parallel sampling remain
-future work. NumPy/SciPy remain package dependencies.
+[Native vector Hessian plans](native-hessian.md) provide square and rectangular residual derivatives for higher-order vector
+solvers. Sampling is serial within each evaluation. NumPy/SciPy remain package dependencies.

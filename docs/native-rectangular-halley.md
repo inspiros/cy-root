@@ -1,4 +1,4 @@
-# Rectangular matrix Halley and Super-Halley
+# Rectangular Matrix Halley And Super-Halley
 
 `VectorHalley` and `VectorSuperHalley` now accept independent input and residual
 lengths through the [shared higher-order engine](native-rectangular-chebyshev.md).
@@ -36,7 +36,7 @@ assert first.linear_rank == 1
 assert solver.history[-1].root == answer.root
 ```
 
-## Specified rectangular equations
+## Specified Rectangular Equations
 
 For \(J\in\mathbb R^{m\times n}\) and \(H\) of shape \((m,n,n)\), first
 compute the minimum-norm least-squares correction and directional tensor matrix:
@@ -84,7 +84,7 @@ A required singular square primary or secondary matrix reports `breakdown`,
 with no least-squares fallback. Rectangular least-squares behavior does not alter
 that square policy.
 
-## Routes, diagnostics and storage
+## Routes, Diagnostics And Storage
 
 These routes share the same state and equations:
 
@@ -118,6 +118,6 @@ rectangular Chebyshev, the persistent workspace adds one \(mn\)-double
 secondary matrix. Provider-plan steps and scratch remain included in the
 workspace budget, and copied history uses its separate checked budget.
 
-No callback ABI, native record or result layout changes in this increment.
-SciPy and NumPy remain package dependencies. Native mixed partial derivatives
-above order two and other rectangular method policies are separate work.
+SciPy and NumPy remain package dependencies. [Higher mixed partials](native-higher-mixed.md)
+are available through separate tensor plans; these second-order solvers consume
+Jacobian and Hessian providers.

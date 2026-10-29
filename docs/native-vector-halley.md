@@ -1,4 +1,4 @@
-# Native matrix Halley and Super-Halley
+# Native Matrix Halley And Super-Halley
 
 `cyroot.native.VectorHalley` and `VectorSuperHalley` solve square and rectangular real systems
 with analytic or numerical Jacobians and Hessians. They share the existing
@@ -27,7 +27,7 @@ for method in (VectorHalley, VectorSuperHalley):
     assert solver.history[-1].root == result.root
 ```
 
-## Coupled matrix updates
+## Coupled Matrix Updates
 
 The formulas and LU policy in this section describe square systems. For
 rectangular systems, see the [least-squares extension](native-rectangular-halley.md).
@@ -77,7 +77,7 @@ and intermediate binary64 matrix range remain limitations. There is no damping,
 line search or automatic fallback. Rectangular systems use the separately
 documented [least-squares extension](native-rectangular-halley.md).
 
-## Providers, caches and execution
+## Providers, Caches And Execution
 
 Both constructors have the same signature as `VectorChebyshev`:
 
@@ -115,14 +115,13 @@ invocation counts one attempt in its role and adds all stencil attempts to the
 residual count. `step()` and `run()` share one total iteration budget;
 The default `max_iter` is 200; zero or `None` is unlimited.
 
-## Diagnostics and retained state
+## Diagnostics And Retained State
 
 `result` remains `NewtonMethodsReturnType`, with tuple root/residual,
 `df_root=(jacobian,hessian)` and `f_calls=(F,J,H)`. The shared immutable step type
 is available as both `VectorChebyshevStep` and `VectorHigherOrderStep` (aliases
-of the same class). It contains all previous fields plus appended `linear_stage`.
-This extends the preview tuple length; compiled consumers must rebuild against
-the current installed declarations after the native record layout change.
+of the same class). It includes `linear_stage` for the most recent linear operation. Compiled
+consumers must rebuild against the installed 2.0 declarations.
 
 `linear_stage` is `None`, `'jacobian'` or `'secondary'`. It reports the current
 or most recent linear-system phase, including directional contraction and
@@ -144,11 +143,11 @@ Finite unchanged candidates are evaluated before residual success or stagnation.
 Callback failures retain stage `'function'`, `'jacobian'` or `'hessian'`, exact
 native status or original Python exception identity/traceback. After the failing
 call delivers the error, terminal `step()` and `run()` are passive. Immutable
-history follows the [native recording rules](native-core.md#stepping-and-history)
+history follows the [native recording rules](native-core.md#step-inspect-resume)
 and survives resumption/destruction. Adapter reservations cover setup conversions,
 execution, exports and error transfer; active solver/adapter reentry is rejected.
 
-## Workspace and native consumers
+## Workspace And Native Consumers
 
 The following workspace formulas describe square systems. Rectangular matrix
 methods add one \(mn\)-double secondary matrix to rectangular Chebyshev workspace.
@@ -174,7 +173,7 @@ failures poison the entire directional matrix.
 Fully native callbacks and numerical plans execute outside the GIL. Python
 callbacks, setup and result/history exports still use it. The package retains
 NumPy/SciPy dependencies. Parameterized rectangular updates use the [general correction](native-rectangular-modified.md);
-exact alpha selectors retain the fixed formulas. Optional providers are later work.
+exact alpha selectors retain the fixed formulas. SciPy remains the native linear-algebra provider.
 
 The established square higher-order entry points now forward to this engine;
 see the [breaking migration guide](vector-higher-order-migration.md).

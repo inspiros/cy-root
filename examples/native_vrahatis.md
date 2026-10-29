@@ -1,4 +1,4 @@
-# Compiled Vrahatis callback
+# Compiled Vrahatis Callback
 
 Copy `native_vrahatis.pyx` and `native_vrahatis_setup.py` into a working directory
 with cyroot, Cython 3, setuptools and a C++17 compiler available. Build and run:

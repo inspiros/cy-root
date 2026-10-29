@@ -1,4 +1,4 @@
-# Analytic rectangular Hessians and native contractions
+# Analytic Rectangular Hessians And Native Contractions
 
 `RectangularHessianCallback` adapts a supplied Hessian of
 \(F:\mathbb R^n\to\mathbb R^m\). Its copied tensor shape is \((m,n,n)\),
@@ -53,7 +53,7 @@ zero is passed through even when entries remain NaN or are nonfinite: numerical
 consumers must check the complete tensor, as they do for residual/Jacobian
 adapters. The adapter does not invent error codes for partial native output.
 
-## Compiled callbacks and capsules
+## Compiled Callbacks And Capsules
 
 Cython consumers import from `cyroot.native.tensor_callbacks`:
 
@@ -69,7 +69,7 @@ one of the \(mn^2\) tensor entries at offset `o + m*(j + n*k)` on success.
 The producer owns the context and supplies a keepalive owner. Callbacks must
 not throw or use Python without explicitly acquiring the GIL.
 
-The separate draft capsule name is `cyroot.rectangular_hessian_callback.v1`.
+The separate capsule name is `cyroot.rectangular_hessian_callback.v1`.
 The descriptor contains `struct_size`, `abi_version`, `input_dimension`,
 `output_dimension`, `function` and `context`. Macros
 `CYROOT_RECTANGULAR_HESSIAN_CALLBACK_ABI` and
@@ -85,10 +85,10 @@ transfer any saved original `_error` before `_leave()` in a `finally` block.
 Reservation and Python exception transfer require the GIL; `evaluate_raw` is
 `noexcept nogil`, allocates nothing and preserves native statuses. Native loops
 can reuse fixed caller-owned buffers. See the installed consumer test for the
-complete reservation/error-transfer pattern. Rebuild consumers using these draft
+complete reservation/error-transfer pattern. Rebuild consumers using these 2.0
 declarations.
 
-## Tensor contractions
+## Tensor Contractions
 
 Allocation-free helpers in `tensor_ops.hpp` and `tensor_ops.pxd` take separate
 input/output dimensions:

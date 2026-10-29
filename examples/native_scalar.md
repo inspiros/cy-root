@@ -1,4 +1,4 @@
-# Native scalar callbacks
+# Native Scalar Callbacks
 
 Install `cy-root`, Cython 3.3.0, setuptools, a C++ compiler, and the development
 headers matching your Python interpreter. From this examples directory:

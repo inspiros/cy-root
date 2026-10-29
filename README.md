@@ -3,6 +3,7 @@
 [![Tests](https://github.com/inspiros/cy-root/actions/workflows/tests.yml/badge.svg)](https://github.com/inspiros/cy-root/actions/workflows/tests.yml)
 [![Build wheels](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg)](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml)
 [![PyPI](https://img.shields.io/pypi/v/cy-root)](https://pypi.org/project/cy-root/)
+[![Downloads](https://static.pepy.tech/badge/cy-root)](https://pepy.tech/project/cy-root)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 <p align="center">
@@ -74,19 +75,9 @@ The figures have sliders. Their rendering helpers live in
 copied histories and plot callables. You can reuse them in a notebook or replace
 them with your own plots. Jupyter is not required.
 
-To regenerate the hero and gallery, or export a still image:
-
-```bash
-python examples/generate_hero.py
-python examples/scalar_steps.py --save assets/scalar_steps.gif
-python examples/vector_steps.py --save assets/vector_steps.gif
-python examples/vector_steps.py --view surface --save assets/vector_surface.gif
-python examples/vector_steps.py --save vector_steps.svg --step 10
-```
-
 ## Install
 
-For the published release:
+Install the 2.x release:
 
 ```bash
 python -m pip install 'cy-root>=2,<3'
@@ -104,6 +95,12 @@ The source targets Python 3.11–3.14 and requires NumPy and SciPy. Building fro
 source also requires Cython 3.3.0, a C++17 compiler, and Python development
 headers. SciPy supplies native BLAS/LAPACK; the numerical core can call these
 without the GIL. See [building and testing](docs/building.md) for local checks.
+
+## Documentation
+
+Read the [manual](docs/README.md), [choose a method](docs/choosing-methods.md),
+or build the [documentation website](docs/site/README.md). The manual covers
+native callbacks, numerical derivatives, and the shared stopping rules.
 
 ## Quick Start
 
@@ -149,6 +146,32 @@ Here the Jacobian has three rows and two columns: three residuals, two unknowns.
 Newton uses a rank-aware least-squares step for rectangular systems. Shape
 support depends on the method; Broyden and several other quasi-Newton methods
 expect square systems.
+
+### Native Callbacks
+
+From a source checkout, compile the [typed Python example](examples/pure_python_callback.md):
+
+```bash
+python -m pip install Cython==3.3.0 setuptools
+cd examples
+python pure_python_callback_setup.py build_ext --inplace
+```
+
+Then pass its native callback descriptors to the same Newton interface:
+
+```python
+from cyroot import newton
+import pure_python_callback as native
+
+result = newton(native.callback(), native.derivative_callback(), 1.5)
+assert result.success
+assert abs(result.root - 2.**.5) < 1e-10
+```
+
+The example compiles `x*x - 2` and `2*x` into native functions. Its small ABI
+bridges let the solver call them without the GIL. Passing the compiled Python
+wrapper `native.residual` directly still uses Python's call machinery. This is
+ahead-of-time compilation; CyRoot does not JIT-compile arbitrary Python functions.
 
 ### Higher-Order And Optimization-Based Methods
 
@@ -211,27 +234,15 @@ Derivative plans support scalar derivatives and dense vector tensors of shape
 numerical providers can be combined. Higher tensor orders have substantial
 storage and sampling costs.
 
-For first derivatives and rectangular Jacobians, `ComplexStepDerivative` /
-`ComplexStepJacobian` and `AdaptiveDerivative` / `AdaptiveJacobian` are explicit
-alternatives to the default differences. Pass the provider as the solver's
-ordinary derivative or Jacobian argument. Complex-step requires a holomorphic
-complex implementation of the real residual; adaptive Richardson refinement
-reports an estimated error and refuses unconverged estimates during solver use.
-`AdaptiveSecondDerivative` supplies scalar second derivatives for Halley-family
-methods; `AdaptiveHessian` supplies residual Hessians, including mixed partials,
-for square and rectangular higher-order solvers and exact objective Hessians.
-Its output has shape `(m, n, n)` for `n` inputs and `m` residuals.
-See the [numerical derivative example](examples/numerical_derivatives.py).
+[Numerical derivative providers](docs/numerical-derivatives.md) include fixed
+finite differences, adaptive Richardson refinement, and complex-step for
+holomorphic residuals. Plans cover scalar derivatives, rectangular Jacobians,
+full mixed Hessians, and higher tensors. See the
+[numerical derivative example](examples/numerical_derivatives.py).
 
 `SCALAR_ROOT_FINDING_METHODS` and `VECTOR_ROOT_FINDING_METHODS` expose supported
 method names. Use direct functions or the `find_scalar_root` / `find_vector_root`
 dispatchers.
-
-For compiled callbacks, start with the
-[pure Python syntax Cython example](examples/pure_python_callback.py) or the
-[native scalar consumer](examples/native_scalar.pyx). Selecting the native
-callback ABI is what removes Python calls from the loop; compiling an ordinary
-Python-callable function alone does not make it GIL-free.
 
 ## License
 

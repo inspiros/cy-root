@@ -26,9 +26,9 @@ step=None, etol=1e-10, ertol=4*eps, ptol=1e-12, prtol=4*eps, max_iter=200,
 history=0, history_every=1, history_bytes=8*1024*1024,
 workspace_bytes=8*1024*1024, max_nodes=65)`.
 `householder(function, derivatives, x0, **options)` constructs and runs one solve.
-The callback interface remains a draft.
+Native callback ownership follows the [native core contract](native-core.md).
 
-## Derivative providers and caches
+## Derivative Providers And Caches
 
 `derivatives` is an exact list or tuple of positive length, in increasing
 order. Each entry accepts a Python function, a native `ScalarCallback`, `None`
@@ -54,7 +54,7 @@ finite checks and preserves the supplied caches. Otherwise, derivatives are
 evaluated in increasing order. A zero first derivative is valid for the generic
 recurrence; a zero reciprocal-series denominator reports `breakdown`.
 
-## Native execution and budgets
+## Native Execution And Budgets
 
 The [reciprocal recurrence](native-higher-derivative.md#householder-without-symbolic-formulas)
 costs \(O(d^2)\) arithmetic and \(O(d)\) workspace per step. Binary64 mantissas
@@ -79,7 +79,7 @@ Adapters stay reserved through conversion, execution, boxing and exception
 transfer. Separate adapters sharing a native context require synchronization
 by the context owner. See the [compiled example](../examples/native_householder.md).
 
-## Results, history and failure state
+## Results, History And Failure State
 
 `step()` and `run()` share one total iteration budget. `max_iter=0` is unlimited.
 The [shared stopping rules](stopping.md) apply. A finite unchanged candidate is
@@ -97,7 +97,7 @@ Unavailable derivatives are NaN.
 `f_calls`, `precision`, `error`, `termination_reason`, `callback_code`,
 `callback_stage` and `callback_order`. `history` returns copied immutable steps;
 `history_truncated` reports exhausted capacity. The initial, sampled and terminal
-states follow the [native history rules](native-core.md#stepping-and-history).
+states follow the [native history rules](native-core.md#step-inspect-resume).
 
 A failed trial residual preserves the preceding finite point, derivatives and
 metrics, while updating attempt counts and diagnostics. Failure in derivative
@@ -108,7 +108,7 @@ for the residual or \(k\) for a derivative/stencil failure. Original Python
 exceptions retain identity and traceback. Delivered errors are not raised again
 by terminal `step()` or `run()` calls.
 
-## Established entry point
+## Established Entry Point
 
 `cyroot.householder` and `cyroot.scalar_newton.householder` now forward to this
 native engine. Their existing `dfs`, `d` and `h` names map to `derivatives`,

@@ -1,4 +1,4 @@
-# Native Wolfe–Bittner method
+# Native Wolfe–Bittner Method
 
 `cyroot.wolfe_bittner` now uses native multipoint buffers and SciPy's Cython
 LAPACK DGELSY solver. Its numerical loop performs no NumPy operations and runs
@@ -37,7 +37,7 @@ Options after the residual cache are now keyword-only. The module export and
 iteration, copied `.result` and bounded copied `.history`. Native one-shot
 `wolfe_bittner(function, x0s, **options)` runs that state.
 
-## Shapes and initialization
+## Shapes And Initialization
 
 Supply a nonempty matrix of \(k\) points of length \(n\), with residuals of
 length \(m\). The cache, when supplied, must have shape \((k,m)\). Neither
@@ -50,7 +50,7 @@ zero. No shape warning or automatic point generation is used.
 Python functions infer the residual dimension from the first evaluation and
 reuse it. A residual-kind `VectorCallback` declares a square shape;
 `RectangularCallback` declares independent input/output dimensions. Both can
-wrap compiled callbacks. Native LAPACK preview limits are \(1\le k\le32767\),
+wrap compiled callbacks. Native LAPACK limits are \(1\le k\le32767\),
 \(1\le m\le32766\), and a positive input dimension fitting C `int`.
 
 All initial point coordinates are packed and checked before any evaluation.
@@ -69,7 +69,7 @@ stably ordered from largest to smallest initial residual; ties retain input
 order. After every accepted trial, the oldest pool point is discarded and the
 trial is appended. There is no repeated residual sorting.
 
-## Affine step and root checks
+## Affine Step And Root Checks
 
 For the current pool, form columns \(A_{:,j}=(1,F(x_j))\) and solve
 \(Ap=b\), with \(b=(1,0,\ldots,0)\), for the minimum-norm least-squares
@@ -101,7 +101,7 @@ residual and current pool width, then the iteration budget. No next affine
 solve occurs until another step is requested. There is no damping, random
 restart, line search or global convergence guarantee.
 
-## Results, history and memory
+## Results, History And Memory
 
 The new `WolfeBittnerResult` replaces the legacy ndarray `RootReturnType`.
 It contains copied tuples `root`, `f_root`, `active_root`, `active_f_root`,
@@ -137,6 +137,6 @@ when the full finite residual was computed, otherwise NaN.
 
 The class is added to the existing native vector extension. Existing callback,
 record and result layouts are unchanged. Rebuild compiled consumers using the
-draft declarations. All established vector quasi-Newton routes now delegate to
+2.0 declarations. All established vector quasi-Newton routes now delegate to
 native states; the legacy Wolfe–Bittner NumPy loop is removed.
 Original reference: [Wolfe–Bittner](https://doi.org/10.1145/368518.368542).

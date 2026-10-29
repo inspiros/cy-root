@@ -1,4 +1,4 @@
-# Native higher mixed partial derivatives
+# Native Higher Mixed Partial Derivatives
 
 `TensorDifferencePlan` estimates dense derivatives of order three and above for
 functions with independent input and output dimensions. It uses native C++
@@ -33,16 +33,16 @@ assert cached.f_calls == answer.f_calls-1
 assert cached.derivative == answer.derivative
 ```
 
-## Shapes and usage
+## Shapes And Usage
 
 The constructor is
 `TensorDifferencePlan(input_dimension, output_dimension, order, scheme='central',
 step=None, *, max_nodes=65, max_terms=1_000_000, memory_bytes=64*1024*1024)`.
 Dimensions are positive C integers; order is at least three. Use `JacobianPlan`
 or `RectangularJacobianPlan` for order one, and `HessianPlan` or
-`RectangularHessianPlan` for order two. The [established vector derivative entry points](vector-derivative-migration.md)
-now use these plans for higher orders while retaining ndarray results. Solver
-provider contracts remain unchanged.
+`RectangularHessianPlan` for order two. The 1.x derivative wrappers were removed. Use these native plans directly;
+see [Finite Differences](finite-differences.md) for the replacement mapping.
+Standalone estimates return copied nested tuples.
 
 For \(n\) inputs and \(m\) outputs, the copied nested tuple has shape
 \((m,n,\ldots,n)\), with `order` input axes. For instance,
@@ -71,7 +71,7 @@ Python callback exceptions are re-raised; native callback failures raise
 or `'derivative'` for a stencil sample. Adapter reservations include conversion,
 execution, error delivery and result boxing.
 
-## Stencil and numerical limits
+## Stencil And Numerical Limits
 
 A component with multiplicity \(r\) on one axis uses `r+1` nodes for forward or
 backward differences. Central differences use `r+1+(r%2)` nodes, including the
@@ -95,7 +95,7 @@ fail explicitly. Very high orders, noisy functions, cancellation and
 ill-conditioned stencils can produce inaccurate finite results. Raising a
 resource cap does not improve numerical precision.
 
-## Budgets and native consumers
+## Budgets And Native Consumers
 
 Dense output contains \(mn^k\) doubles, so cost grows exponentially with order.
 `max_nodes` limits the largest per-axis stencil; the default allows order 64.

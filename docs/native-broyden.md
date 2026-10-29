@@ -1,4 +1,4 @@
-# Native square Broyden
+# Native Square Broyden
 
 `cyroot.native.BroydenGood` and `BroydenBad` are resumable square-system solvers
 with a shared native state engine. Good Broyden takes a Jacobian matrix, native
@@ -33,7 +33,7 @@ bad = BroydenBad(residual, inverse0, (1.4, .7))
 assert bad.run().success
 ```
 
-## Established entry point migration
+## Established Entry Point Migration
 
 The public signature is:
 
@@ -96,7 +96,7 @@ state engine with its own row-weighted update and established API migration.
 deterministic retained-secant projection update.
 The remaining quasi-Newton methods retain their existing interfaces.
 
-## Distinct updates
+## Distinct Updates
 
 Write \(s=x_{k+1}-x_k\), using the actual rounded accepted points, and
 \(y=F(x_{k+1})-F(x_k)\). Direct good Broyden solves \(B_k d=-F(x_k)\),
@@ -126,7 +126,7 @@ secant quotient directly, avoiding subtraction of the previous approximation. Th
 pseudoinverse or rectangular fallback. Local convergence requires suitable
 smoothness, initial approximations and a nonsingular root Jacobian.
 
-## Interface and boundaries
+## Interface And Boundaries
 
 `BroydenGood(function, jacobian0, x0, f_x0=None, *, etol=1e-10, ertol=4*eps,
 ptol=1e-12, prtol=4*eps, max_iter=200, history=0, history_every=1,
@@ -152,7 +152,7 @@ All point, matrix, cache and option conversions occur while explicit adapters
 are reserved. Setup and Python result/history exports use the GIL. NumPy and
 SciPy remain package dependencies.
 
-## Native initial Jacobian and inverse setup
+## Native Initial Jacobian And Inverse Setup
 
 ```python
 from cyroot.native import JacobianPlan
@@ -189,7 +189,7 @@ finite explicit approximation stays valid; an unused nonfinite one is marked
 invalid. Validity indicates a completely available finite approximation, not
 accuracy or nonsingularity. The initial inversion has no pseudoinverse fallback.
 
-## Results, history and failures
+## Results, History And Failures
 
 `BroydenResult` is an immutable tuple with named fields: `root`, `f_root`,
 `approximation`, `approximation_kind`, `approximation_iteration`, `iters`,
@@ -232,7 +232,7 @@ fails later in the same iteration replaces that iteration's earlier record.
 Once capacity is full, later snapshots are dropped and `history_truncated` is
 true. Existing copied records remain independent of future steps/destruction.
 
-## Memory and compiled use
+## Memory And Compiled Use
 
 Good Broyden reserves \(6n+3n^2\) doubles and \(n\) C-int pivots; bad
 Broyden with an explicit inverse reserves \(6n+2n^2\) doubles and no pivots.
@@ -251,4 +251,4 @@ declarations, headers and pinned native callbacks without NumPy C headers.
 It accepts disjoint packed column-major matrix and output spans, direction and
 target vectors, with checked-dimension status before writes. Nonfinite or zero-
 direction failures poison all output; invalid dimensions leave spans untouched.
-The numerical kernel and its native callback/storage interfaces are previews.
+The numerical kernel uses the [native callback and storage contracts](native-core.md).
