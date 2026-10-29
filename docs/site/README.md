@@ -15,8 +15,16 @@ mdbook serve docs/site --hostname 127.0.0.1 --port 3000
 ```
 
 Output defaults to `/tmp/cyroot-book-preview`; use `--dest-dir PATH` elsewhere.
-The site targets GitHub Pages at `/cy-root/`. Deployment is a separate step.
+The site targets GitHub Pages at `/cy-root/`.
 MathJax needs network access to render equations.
+
+## Deploy To GitHub Pages
+
+Set the repository's Pages source to **GitHub Actions**, then open
+[Actions → Documentation](https://github.com/inspiros/cy-root/actions/workflows/docs.yml)
+and choose **Run workflow** on `master`. It checks documentation links, builds
+the site and deploys to <https://inspiros.github.io/cy-root/>. Deployment runs
+only when manually requested; pushes and tags do not trigger it.
 
 ## Check And Extend
 

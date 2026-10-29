@@ -1,0 +1,52 @@
+name: Documentation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/configure-pages@v5
+      - name: Install mdBook
+        env:
+          MDBOOK_VERSION: '0.5.4'
+        run: |
+          curl --fail --location --retry 3 \
+            "https://github.com/rust-lang/mdBook/releases/download/v${MDBOOK_VERSION}/mdbook-v${MDBOOK_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
+            --output "${RUNNER_TEMP}/mdbook.tar.gz"
+          mkdir -p "${RUNNER_TEMP}/mdbook-bin"
+          tar -xzf "${RUNNER_TEMP}/mdbook.tar.gz" -C "${RUNNER_TEMP}/mdbook-bin" mdbook
+          echo "${RUNNER_TEMP}/mdbook-bin" >> "${GITHUB_PATH}"
+      - name: Check documentation links
+        run: python docs/site/check_docs.py
+      - name: Build documentation
+        run: mdbook build docs/site --dest-dir "${RUNNER_TEMP}/cyroot-site"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/cyroot-site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
