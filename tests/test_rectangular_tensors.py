@@ -73,7 +73,7 @@ class RectangularTensorTests(unittest.TestCase):
             for name in ('input_dimension','output_dimension','shape','native'):
                 with self.assertRaises((AttributeError,TypeError)):setattr(callback,name,None)
             with self.assertRaises(ValueError):callback.evaluate(point,workspace_bytes=8*(n+m*n*n)-1)
-            for bad in ((1.,),((1.,),(2.,)),'12',np.ones(n,dtype='f4')):
+            for bad in ((1.,),((1.,),(2.,)),'12',np.ones(n,dtype='c16')):
                 with self.assertRaises((ValueError,TypeError)):callback.evaluate(bad)
             for bad in ((),tensor(n,m)[:-1],tuple(((1.,),)*n for _ in range(m)),
                         tuple(('bad',)*n for _ in range(m)),np.ones((m,n,n),dtype=complex)):

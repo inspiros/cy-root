@@ -139,7 +139,7 @@ cdef class Bisection:
                  etol=1e-10, ertol=8.881784197001252e-16,
                  ptol=1e-12, prtol=8.881784197001252e-16,
                  max_iter=200, history=0, history_every=1,
-                 history_bytes=8 * 1024 * 1024, algo=1):
+                 history_bytes=8 * 1024 * 1024):
         cdef double first, second, value0, value1, fa, fr, xa, xr
         cdef bint cached_a, cached_b
         if self._constructing or self._callback is not None or self._initialized:
@@ -149,11 +149,6 @@ cdef class Bisection:
             self._callback = function if isinstance(function, ScalarCallback) else ScalarCallback(function)
             self._enter()
             try:
-                if isinstance(algo,str):
-                    if algo not in ('default','modified','vrahatis'):
-                        raise ValueError('Unknown bisection algorithm.')
-                elif _nonnegative_integer(algo,'algo') not in (1,2):
-                    raise ValueError('Unknown bisection algorithm.')
                 etol, ertol, ptol, prtol, max_iter = _check_stop_cond_args(
                     etol, ertol, ptol, prtol, max_iter)
                 history_limit = _nonnegative_integer(history, 'history')

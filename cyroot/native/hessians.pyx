@@ -3,14 +3,13 @@
 """Native Hessians for square and rectangular vector residuals on actual rounded nodes."""
 from typing import NamedTuple
 from numbers import Complex, Real
-from cpython.buffer cimport PyObject_CheckBuffer
 from libc.float cimport DBL_EPSILON
 from libc.limits cimport INT_MAX
 from libc.math cimport cbrt, fabs, fmax, frexp, isfinite, ldexp, NAN
 from libc.string cimport memcpy
 
 from .buffers cimport VectorView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .derivatives cimport (
     DIFF_OK, DIFF_NONFINITE, DIFF_BREAKDOWN, DIFF_CALLBACK_FAILURE,
 )
@@ -400,7 +399,7 @@ cdef void _pack_vector(object source, double* out, size_t n) except *:
     cdef size_t i
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.vector_view()
         if view.size() != n:
@@ -468,7 +467,7 @@ cdef OwnedDoubleBuffer* _copy_steps(size_t n, object step) except? NULL:
                 (isinstance(step, Complex) and not isinstance(step, Real)) or
                 getattr(getattr(step, 'dtype', None), 'kind', None) in ('b', 'c')):
             raise TypeError('step must be a real scalar or length-dimension vector.')
-        if PyObject_CheckBuffer(step) and not isinstance(step, Real):
+        if is_native_double_buffer(step) and not isinstance(step, Real):
             guard = DoubleBuffer(step)
             view = guard.vector_view()
             if view.size() != n:raise ValueError('Step vector length must match dimension.')

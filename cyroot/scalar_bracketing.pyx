@@ -9,12 +9,12 @@ __all__ = ['bisect','hybisect','regula_falsi','illinois','pegasus','anderson_bjo
 
 @register('cyroot.scalar.bracketing')
 @cython.binding(True)
-def bisect(f,a,b,f_a=None,f_b=None,*, algo=1,
+def bisect(f,a,b,f_a=None,f_b=None,*,
            etol=1e-10,ertol=8.881784197001252e-16,
            ptol=1e-12,prtol=8.881784197001252e-16,max_iter=200,**options):
-    """Native bisection; existing aliases select the same midpoint recurrence."""
+    """Native sign-only bisection of a valid bracket."""
     from .native.scalar import bisect as solve
-    return solve(f,a,b,f_a=f_a,f_b=f_b,algo=algo,etol=etol,ertol=ertol,ptol=ptol,
+    return solve(f,a,b,f_a=f_a,f_b=f_b,etol=etol,ertol=ertol,ptol=ptol,
                  prtol=prtol,max_iter=max_iter,**options)
 
 

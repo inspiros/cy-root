@@ -15,6 +15,11 @@ Python callbacks still acquire the GIL.
 - Numerical controls are keyword-only. Legacy `h`, `formula`, and `c_code`
   options are removed where replaced by explicit native derivative plans or
   method selectors. Compiled consumers must rebuild against the new declarations.
+  A step `h` that no numerical derivative would use is rejected. The redundant
+  `bisect(algo=...)` selector is removed; native bisection is sign-only.
+- Every dispatcher entry takes `(function, derivative_or_jacobian, x0)`, including
+  the scalar and vector Levenberg–Marquardt, BFGS, L-BFGS and Powell dogleg
+  conveniences; pass `None` for numerical derivatives.
 - Vector Halley-family methods use coupled matrix corrections instead of the
   old componentwise formulas. Generalized Newton and the higher-order vector
   methods support rectangular systems through rank-aware least-squares steps;
@@ -36,7 +41,13 @@ Python callbacks still acquire the GIL.
   based on reciprocal Taylor coefficients; remove the SymPy dependency.
 - Add scalar and vector Levenberg–Marquardt, BFGS, L-BFGS, and Powell dogleg.
   Optimization-based methods check the original residual before reporting a root;
-  a stationary point with a nonzero residual is not root convergence.
+  a stationary point with a nonzero residual is not root convergence. BFGS and
+  L-BFGS measure stationarity relative to the current residual and Jacobian, so
+  residual scaling and multiple roots do not stop them early. `max_iter=0` or
+  `None` removes their iteration limit, as for the root solvers.
+- Point, residual and Jacobian inputs that are real buffers other than native
+  float64 (for example integer or float32 NumPy arrays) are converted element by
+  element; complex and boolean buffers are rejected.
 - Accept Python functions and native Cython/C/C++ callbacks with pinned owners,
   explicit native statuses, and propagation of the original Python exception.
 - Add owned native buffers, borrowed signed-stride views, reusable solver scratch,

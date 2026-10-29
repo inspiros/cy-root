@@ -10,7 +10,7 @@ import tempfile
 import unittest
 import weakref
 import numpy as np
-from cyroot.optimization import BFGS, LeastSquaresObjective, bfgs
+from cyroot.optimization import BFGS, LBFGS, LeastSquaresObjective, bfgs
 from cyroot.native import NativeCallbackError
 
 class NativeBFGSTests(unittest.TestCase):
@@ -109,7 +109,15 @@ class NativeBFGSTests(unittest.TestCase):
             jacobian=lambda x:self.fail('Initial root evaluated J')),(3.,)).run()
         self.assertEqual((initial.iters,initial.f_calls,initial.jac_calls),(0,1,0))
         self.assertTrue(initial.success)
-        self.assertEqual(make(max_iter=0).run().termination_reason,'max_iterations')
+        self.assertEqual(make(max_iter=1).run().termination_reason,'max_iterations')
+        # As for root solvers, zero/None removes the iteration limit.
+        for unlimited in (0,None):self.assertTrue(make(max_iter=unlimited).run().success)
+        # Stationarity is residual-relative: large scales and multiple roots converge.
+        for residual,derivative,start in ((lambda x:1e9*(x**3-2.),lambda x:3e9*x*x,3.),
+                                          (lambda x:(x-1.)**3,lambda x:3*(x-1.)**2,2.)):
+            for state in (BFGS,LBFGS):
+                result=state(LeastSquaresObjective.from_scalar(residual,derivative=derivative),(start,)).run()
+                self.assertEqual(result.termination_reason,'residual_tolerance',result)
         no_progress=BFGS(LeastSquaresObjective(lambda x:(1.,),1,
             jacobian=lambda x:((1.,),)),(0.,),max_line_search=3).run()
         self.assertEqual((no_progress.termination_reason,no_progress.root,no_progress.f_root,

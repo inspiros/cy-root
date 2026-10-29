@@ -4,11 +4,10 @@
 from typing import NamedTuple
 from libc.math cimport NAN, INFINITY, fabs, fmax, fmin, isfinite
 from libc.string cimport memcpy
-from cpython.buffer cimport PyObject_CheckBuffer
 from numbers import Complex, Real
 from cyroot._stopping cimport within_tolerance
 from .buffers cimport VectorView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .higher_derivatives import _checked_integer
 from .dogleg_math cimport dogleg_prepare,dogleg_step
 from .lm_math cimport lm_prepare, lm_trial, lm_reductions
@@ -89,7 +88,7 @@ cdef void _pack(object point, double* out, size_t n) except *:
     cdef size_t i
     if isinstance(point,(str,bytes,bytearray)):
         raise TypeError('Expected a numeric point vector.')
-    if PyObject_CheckBuffer(point):
+    if is_native_double_buffer(point):
         guard=DoubleBuffer(point)
         view=guard.vector_view()
         if view.size()!=n:raise ValueError('Point length must match input_dimension.')
@@ -148,7 +147,9 @@ cdef class LevenbergMarquardt:
             if self._rows>32767:
                 raise ValueError('Augmented rows (input_dimension+output_dimension) must not exceed 32767.')
             limit=_checked_integer(workspace_bytes,'workspace_bytes')
-            max_iter=_checked_integer(max_iter,'max_iter')
+            # As for every root solver, zero or None removes the iteration limit;
+            # the positive evaluation budget still bounds the run.
+            max_iter=0 if max_iter is None else _checked_integer(max_iter,'max_iter')
             max_evaluations=_checked_integer(max_evaluations,'max_evaluations')
             max_trials=_checked_integer(max_trials,'max_trials')
             history=_checked_integer(history,'history')
@@ -220,7 +221,6 @@ cdef class LevenbergMarquardt:
                     self._initial_error=self._state.error
                     if within_tolerance(self._state.error,self._etol,self._ertol,self._initial_error):
                         self._state.reason=LM_ROOT
-                    elif self._max_iter==0:self._state.reason=LM_ITERATIONS
                 self._record()
             self._raise_callback_error()
         finally:
@@ -288,7 +288,7 @@ cdef class LevenbergMarquardt:
         if self._dogleg:
             self._step_dogleg()
             return
-        if self._state.iters>=self._max_iter:
+        if self._max_iter and self._state.iters>=self._max_iter:
             self._state.reason=LM_ITERATIONS
         elif self._state.f_calls>=self._max_evaluations:
             self._state.reason=LM_EVALUATIONS
@@ -360,7 +360,7 @@ cdef class LevenbergMarquardt:
             self._state.damping=fmin(1e15,self._state.damping*10.)
         if self._state.reason==LM_RUNNING:
             if not accepted:self._state.reason=LM_NO_STEP
-            elif self._state.iters>=self._max_iter:self._state.reason=LM_ITERATIONS
+            elif self._max_iter and self._state.iters>=self._max_iter:self._state.reason=LM_ITERATIONS
             elif self._state.f_calls>=self._max_evaluations:self._state.reason=LM_EVALUATIONS
         self._record()
 
@@ -370,7 +370,7 @@ cdef class LevenbergMarquardt:
         cdef double scale=1.,gradient=0.,actual=0.,predicted=0.,ratio=-1.
         cdef double precision=0.,xscale=0.,radius=0.
         cdef bint accepted=False
-        if self._state.iters>=self._max_iter:self._state.reason=LM_ITERATIONS
+        if self._max_iter and self._state.iters>=self._max_iter:self._state.reason=LM_ITERATIONS
         elif self._state.f_calls>=self._max_evaluations:self._state.reason=LM_EVALUATIONS
         elif self._difference is not None and self._max_evaluations-self._state.f_calls<2*self._n:
             self._state.reason=LM_EVALUATIONS
@@ -444,7 +444,7 @@ cdef class LevenbergMarquardt:
                 break
         if self._state.reason==LM_RUNNING:
             if not accepted:self._state.reason=LM_NO_STEP
-            elif self._state.iters>=self._max_iter:self._state.reason=LM_ITERATIONS
+            elif self._max_iter and self._state.iters>=self._max_iter:self._state.reason=LM_ITERATIONS
             elif self._state.f_calls>=self._max_evaluations:self._state.reason=LM_EVALUATIONS
         self._record()
 

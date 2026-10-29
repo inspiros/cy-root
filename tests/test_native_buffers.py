@@ -95,6 +95,20 @@ class DoubleBufferTests(unittest.TestCase):
         gc.collect()
         source.append(4.)
 
+    def test_solver_boundaries_convert_other_real_buffers_elementwise(self):
+        residual = lambda p: (p[0]-1., p[1]-2.)
+        self.assertTrue(cyroot.generalized_newton(residual, None, np.array([0, 0])).success)
+        self.assertTrue(cyroot.generalized_newton(
+            lambda p: np.array(residual(p), dtype=np.float32), None, (0., 0.)).success)
+        self.assertEqual(cyroot.generalized_newton(
+            residual, lambda p: np.eye(2, dtype=np.int64), array.array('i', [0, 0])).root, (1., 2.))
+        self.assertTrue(cyroot.vector_levenberg_marquardt(residual, None, np.array([0, 0])).success)
+        for complex_input in (lambda: cyroot.generalized_newton(residual, None, np.zeros(2, complex)),
+                              lambda: cyroot.generalized_newton(
+                                  lambda p: np.array(residual(p), dtype=complex), None, (0., 0.))):
+            with self.assertRaisesRegex(TypeError, 'complex'):
+                complex_input()
+
     def test_negative_and_zero_strides(self):
         source = np.arange(20., dtype=np.float64).reshape(4, 5)
         for values in (source[::-1, ::-2], source.T,

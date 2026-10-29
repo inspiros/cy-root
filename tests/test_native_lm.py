@@ -121,8 +121,10 @@ class NativeLMTests(unittest.TestCase):
     def test_budgets_rejected_trials_and_exception_identity(self):
         function = lambda x:(x[0]*x[0]-2.,)
         objective = LeastSquaresObjective(function,1,jacobian=lambda x:((2*x[0],),))
-        result = LevenbergMarquardt(objective,(1.5,),max_iter=0).run()
-        self.assertEqual((result.termination_reason,result.iters),('max_iterations',0))
+        result = LevenbergMarquardt(objective,(1.5,),max_iter=1,etol=0.).run()
+        self.assertEqual((result.termination_reason,result.iters),('max_iterations',1))
+        for unlimited in (0,None):
+            self.assertTrue(LevenbergMarquardt(objective,(1.5,),max_iter=unlimited).run().success)
         for analytic in (False,True):
             samples = []
             def counted(x):

@@ -68,13 +68,18 @@ def get_version():
 
 
 def get_readme(version):
-    """Pin README images (including single-URL picture sources) to the release tag."""
+    """Pin README images (including single-URL picture sources) and relative
+    links to the release tag, so the PyPI description does not depend on a branch."""
     base = f"https://raw.githubusercontent.com/inspiros/cy-root/v{version}/"
+    page = f"https://github.com/inspiros/cy-root/blob/v{version}/"
 
-    def image_url(url):
+    def pinned(url, prefix):
         if not url or url.startswith(("/", "#")) or urlsplit(url).scheme:
             return url
-        return base + url.removeprefix("./")
+        return prefix + url.removeprefix("./")
+
+    def image_url(url):
+        return pinned(url, base)
 
     text = Path("README.md").read_text(encoding="utf-8")
     text = re.sub(
@@ -82,10 +87,18 @@ def get_readme(version):
         lambda match: match[1] + match[2] + image_url(match[3]) + match[2],
         text, flags=re.IGNORECASE,
     )
-    return re.sub(
+    text = re.sub(
         r"(!\[[^\]]*\]\(\s*)(<[^>]+>|[^\s)]+)(?=[\s)])",
         lambda match: match[1] + ("<" + image_url(match[2][1:-1]) + ">"
                                  if match[2].startswith("<") else image_url(match[2])),
+        text,
+    )
+    # Images are absolute now; every remaining relative target is a page link,
+    # including the outer target of a linked badge.
+    return re.sub(
+        r"(\]\(\s*)(<[^>]+>|[^\s)]+)(?=[\s)])",
+        lambda match: match[1] + ("<" + pinned(match[2][1:-1], page) + ">"
+                                 if match[2].startswith("<") else pinned(match[2], page)),
         text,
     )
 

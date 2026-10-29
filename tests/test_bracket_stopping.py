@@ -11,7 +11,6 @@ METHODS = [(name, getattr(brackets, name)) for name in (
     'bisect', 'regula_falsi', 'illinois', 'pegasus', 'anderson_bjorck',
     'dekker', 'brent', 'chandrupatla', 'ridders', 'toms748', 'wu', 'itp',
 )] + [
-    ('vrahatis_bisect', partial(brackets.bisect, algo='modified')),
     ('brent_quadratic', partial(brackets.brent, interp_method='quadratic')),
 ]
 
@@ -187,16 +186,13 @@ class BracketStoppingTests(unittest.TestCase):
                                                  if key not in cached])
                     self.assert_consistent(result, lambda x: x - 2.)
 
-    def test_bisection_aliases_honor_both_cached_endpoint_values(self):
+    def test_bisection_honors_both_cached_endpoint_values(self):
         def unexpected_evaluation(x):
             raise AssertionError('cached endpoints must not be evaluated')
 
-        for alias in (1, 2, 'default', 'modified', 'vrahatis'):
-            with self.subTest(alias=alias):
-                result = brackets.bisect(unexpected_evaluation, 0., 2.,
-                                         f_a=-2., f_b=0., algo=alias)
-                self.assertEqual(result.root, 2.)
-                self.assertEqual(result.f_calls, 0)
+        result = brackets.bisect(unexpected_evaluation, 0., 2., f_a=-2., f_b=0.)
+        self.assertEqual(result.root, 2.)
+        self.assertEqual(result.f_calls, 0)
 
     def test_wu_fits_quadratic_at_current_iterate(self):
         evaluated = []

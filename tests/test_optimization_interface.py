@@ -47,7 +47,7 @@ class OptimizationInterfaceTests(unittest.TestCase):
                 calls.append(x)
                 return x*x-2.
             for derivative in (None,lambda x:2*x):
-                result=cyroot.find_scalar_root(method,f,1.5,derivative=derivative,gtol=0.)
+                result=cyroot.find_scalar_root(method,f,derivative,1.5,gtol=0.)
                 self.assertIsInstance(result,OptimizationResult)
                 self.assertIsInstance(result.root,float)
                 self.assertIsInstance(result.f_root,float)
@@ -63,7 +63,12 @@ class OptimizationInterfaceTests(unittest.TestCase):
             self.assertIs(OPTIMIZATION_ROOT_FINDING_METHODS[method],getattr(cyroot,'vector_'+method))
             vf=lambda x:(x[0]-1.,x[0]+x[1]-3.,x[1]-2.)
             vj=lambda x:((1.,0.),(1.,1.),(0.,1.))
-            result=cyroot.find_vector_root(method,vf,(0.,0.),jacobian=vj,output_dimension=3,gtol=0.)
+            result=cyroot.find_vector_root(method,vf,vj,(0.,0.),output_dimension=3,gtol=0.)
+            # Every dispatcher entry shares the Newton-type (F, J, x0) order.
+            square=lambda x:(x[0]*x[0]-2.,x[1]-1.)
+            for name in (method,'newton'):
+                self.assertTrue(cyroot.find_scalar_root(name,f,None,1.5).success)
+                self.assertTrue(cyroot.find_vector_root(name,square,None,(1.5,0.)).success)
             self.assertTrue(result.success,result)
             self.assertIsInstance(result.root,tuple)
             self.assertEqual(result.f_root,vf(result.root))
@@ -177,7 +182,7 @@ class OptimizationInterfaceTests(unittest.TestCase):
 
     def test_validation_stationarity_existing_objectives_and_reason_coverage(self):
         for method in METHODS:
-            stationary=cyroot.find_scalar_root(method,lambda x:x*x+1.,0.,derivative=lambda x:2*x)
+            stationary=cyroot.find_scalar_root(method,lambda x:x*x+1.,lambda x:2*x,0.)
             self.assertEqual(stationary.termination_reason,Reason.STATIONARY_NONROOT)
             self.assertFalse(stationary.success)
             objective=LeastSquaresObjective.from_scalar(lambda x:x-1.,derivative=lambda x:1.)

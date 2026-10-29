@@ -5,9 +5,8 @@ from libc.limits cimport INT_MAX
 from libc.math cimport NAN, isfinite
 from libc.string cimport memcpy
 from numbers import Complex, Real
-from cpython.buffer cimport PyObject_CheckBuffer
 from .buffers cimport VectorView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .higher_derivatives import _checked_integer
 from .scalar import NativeCallbackError
 
@@ -30,7 +29,7 @@ cdef void _pack(object point, double* out, size_t n) except *:
     cdef size_t i
     if isinstance(point, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric point vector.')
-    if PyObject_CheckBuffer(point):
+    if is_native_double_buffer(point):
         guard = DoubleBuffer(point)
         view = guard.vector_view()
         if view.size() != n:raise ValueError('Point length must match input_dimension.')

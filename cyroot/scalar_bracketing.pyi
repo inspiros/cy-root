@@ -8,7 +8,7 @@ __all__ = ['bisect', 'hybisect', 'regula_falsi', 'illinois', 'pegasus', 'anderso
 
 def bisect(
     f: Any, a: SupportsFloat, b: SupportsFloat, f_a: SupportsFloat | None = ...,
-    f_b: SupportsFloat | None = ..., *, algo: SupportsIndex = ..., etol: SupportsFloat = ...,
+    f_b: SupportsFloat | None = ..., *, etol: SupportsFloat = ...,
     ertol: SupportsFloat = ..., ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
     max_iter: SupportsIndex = ..., **options: Any
 ) -> BracketingMethodsReturnType: ...

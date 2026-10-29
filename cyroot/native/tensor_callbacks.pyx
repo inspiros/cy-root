@@ -4,9 +4,8 @@
 from numbers import Complex, Real
 from libc.limits cimport INT_MAX
 from libc.math cimport NAN
-from cpython.buffer cimport PyObject_CheckBuffer
 from .buffers cimport VectorView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .scalar import NativeCallbackError
 from cpython.pycapsule cimport PyCapsule_GetPointer, PyCapsule_IsValid
 from .buffers cimport OwnedDoubleBuffer
@@ -142,7 +141,7 @@ cdef void _pack_point(object value, double* out, size_t n) except *:
     cdef DoubleBuffer guard
     cdef VectorView view
     if isinstance(value, (str, bytes, bytearray)):raise TypeError('Expected a numeric input vector.')
-    if PyObject_CheckBuffer(value):
+    if is_native_double_buffer(value):
         guard = DoubleBuffer(value)
         view = guard.vector_view()
         if view.size() != n:raise ValueError('Input length must match input_dimension.')

@@ -17,3 +17,6 @@ cdef class DoubleBuffer:
     # The calling Cython code must retain this guard while using these copies.
     cdef VectorView vector_view(self) except *
     cdef MatrixView matrix_view(self) except *
+
+# Callers use this to borrow native doubles and convert other exporters element-wise.
+cdef bint is_native_double_buffer(object source) except -1

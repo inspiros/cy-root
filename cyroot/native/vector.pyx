@@ -5,11 +5,10 @@ from typing import NamedTuple
 from libc.limits cimport INT_MAX
 from libc.math cimport fabs, fmax, isfinite, NAN, INFINITY
 from libc.string cimport memcpy, memmove, memset
-from cpython.buffer cimport PyObject_CheckBuffer
 from cpython.pycapsule cimport PyCapsule_GetPointer, PyCapsule_IsValid
 
 from .buffers cimport OwnedDoubleBuffer, VectorView, MatrixView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .linalg cimport square_solve, square_factor, square_solve_factored
 from .robinson_ops cimport robinson_nodes
 from .wolfe_bittner_ops cimport wolfe_bittner_candidate
@@ -68,7 +67,7 @@ cdef void _pack_vector(object source, double* out, size_t n) except *:
     cdef size_t i
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric vector or matrix.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.vector_view()
         if view.size() != n:
@@ -88,7 +87,7 @@ cdef void _pack_matrix(object source, double* out, size_t m, size_t n) except *:
     cdef size_t i, j
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric vector or matrix.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.matrix_view()
         if view.rows() != m or view.columns() != n:
@@ -119,7 +118,7 @@ cdef object _vector_length(object source):
     cdef DoubleBuffer guard
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         return int(guard.vector_view().size())
     return len(source)

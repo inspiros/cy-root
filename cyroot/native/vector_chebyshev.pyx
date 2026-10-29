@@ -3,13 +3,12 @@
 """Shared vector Chebyshev and square matrix modified-Halley state engine."""
 from typing import NamedTuple
 from numbers import Complex, Real
-from cpython.buffer cimport PyObject_CheckBuffer
 from libc.limits cimport INT_MAX
 from libc.math cimport fabs, fma, fmax, isfinite, NAN, INFINITY
 from libc.string cimport memcpy, memset
 
 from .buffers cimport VectorView, MatrixView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .derivatives cimport DIFF_NONFINITE, DIFF_BREAKDOWN, DIFF_CALLBACK_FAILURE
 from .hessians cimport compute_hessian, compute_rectangular_hessian
 from .linalg cimport square_factor, square_solve_factored
@@ -105,7 +104,7 @@ cdef void _pack_vector(object source, double* out, size_t n) except *:
     cdef size_t i
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.vector_view()
         if view.size() != n:
@@ -125,7 +124,7 @@ cdef void _pack_matrix(object source, double* out, size_t n, size_t m) except *:
     cdef size_t i, j
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric Jacobian matrix.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.matrix_view()
         if view.rows() != m or view.columns() != n:
@@ -160,7 +159,7 @@ cdef object _tensor_tuple(const double* data, size_t n, size_t m):
 cdef object _vector_length(object source):
     cdef DoubleBuffer guard
     if isinstance(source, (str, bytes, bytearray)):raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         return int(guard.vector_view().size())
     return len(source)

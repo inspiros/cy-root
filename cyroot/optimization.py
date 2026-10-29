@@ -280,46 +280,46 @@ def find_optimization_root(method: str, function, x0, *, jacobian=None, scalar=F
         input_dimension=input_dimension, output_dimension=output_dimension, **options).run()
 
 
-def scalar_levenberg_marquardt(function, x0, *, derivative=None, **options) -> OptimizationResult:
+def scalar_levenberg_marquardt(function, derivative, x0, **options) -> OptimizationResult:
     return find_optimization_root('levenberg_marquardt', function, x0, jacobian=derivative,
                                   scalar=True, **options)
 
 
-def vector_levenberg_marquardt(function, x0, *, jacobian=None, input_dimension=None,
-                   output_dimension=None, **options) -> OptimizationResult:
+def vector_levenberg_marquardt(function, jacobian, x0, *, input_dimension=None,
+                               output_dimension=None, **options) -> OptimizationResult:
     return find_optimization_root('levenberg_marquardt', function, x0, jacobian=jacobian,
         input_dimension=input_dimension, output_dimension=output_dimension, **options)
 
 
-def scalar_bfgs(function, x0, *, derivative=None, **options) -> OptimizationResult:
+def scalar_bfgs(function, derivative, x0, **options) -> OptimizationResult:
     return find_optimization_root('bfgs', function, x0, jacobian=derivative,
                                   scalar=True, **options)
 
 
-def vector_bfgs(function, x0, *, jacobian=None, input_dimension=None,
-                   output_dimension=None, **options) -> OptimizationResult:
+def vector_bfgs(function, jacobian, x0, *, input_dimension=None,
+                output_dimension=None, **options) -> OptimizationResult:
     return find_optimization_root('bfgs', function, x0, jacobian=jacobian,
         input_dimension=input_dimension, output_dimension=output_dimension, **options)
 
 
-def scalar_lbfgs(function, x0, *, derivative=None, **options) -> OptimizationResult:
+def scalar_lbfgs(function, derivative, x0, **options) -> OptimizationResult:
     return find_optimization_root('lbfgs', function, x0, jacobian=derivative,
                                   scalar=True, **options)
 
 
-def vector_lbfgs(function, x0, *, jacobian=None, input_dimension=None,
-                   output_dimension=None, **options) -> OptimizationResult:
+def vector_lbfgs(function, jacobian, x0, *, input_dimension=None,
+                 output_dimension=None, **options) -> OptimizationResult:
     return find_optimization_root('lbfgs', function, x0, jacobian=jacobian,
         input_dimension=input_dimension, output_dimension=output_dimension, **options)
 
 
-def scalar_powell_dogleg(function, x0, *, derivative=None, **options) -> OptimizationResult:
+def scalar_powell_dogleg(function, derivative, x0, **options) -> OptimizationResult:
     return find_optimization_root('powell_dogleg', function, x0, jacobian=derivative,
                                   scalar=True, **options)
 
 
-def vector_powell_dogleg(function, x0, *, jacobian=None, input_dimension=None,
-                   output_dimension=None, **options) -> OptimizationResult:
+def vector_powell_dogleg(function, jacobian, x0, *, input_dimension=None,
+                         output_dimension=None, **options) -> OptimizationResult:
     return find_optimization_root('powell_dogleg', function, x0, jacobian=jacobian,
         input_dimension=input_dimension, output_dimension=output_dimension, **options)
 

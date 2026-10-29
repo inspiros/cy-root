@@ -1,14 +1,13 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Immutable finite-difference plans with caller-owned native scratch space."""
-from cpython.buffer cimport PyObject_CheckBuffer
 from libc.float cimport DBL_EPSILON
 from libc.limits cimport INT_MAX
 from libc.math cimport cbrt, fabs, fmax, isfinite, NAN
 from libc.string cimport memcpy
 
 from .buffers cimport VectorView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .scalar import _nonnegative_integer, NativeCallbackError
 from .rectangular cimport RectangularCallback, RectangularFunction
 from typing import NamedTuple
@@ -234,7 +233,7 @@ cdef class JacobianPlan:
                 else:
                     if length != dimension:
                         raise ValueError('Step vector length must match dimension.')
-                    if PyObject_CheckBuffer(step):
+                    if is_native_double_buffer(step):
                         guard = DoubleBuffer(step)
                         view = guard.vector_view()
                         if view.size() != n:
@@ -319,7 +318,7 @@ cdef void _pack_point(object source, double* out, size_t count) except *:
     cdef size_t i
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.vector_view()
         if view.size() != count:raise ValueError('Vector length must match the plan dimension.')

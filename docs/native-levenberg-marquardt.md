@@ -90,7 +90,8 @@ initial sample, finite-difference samples and evaluated trials. `jac_calls` coun
 attempted analytic or numerical Jacobian evaluations. `max_evaluations` bounds
 residual calls only; a numerical Jacobian requires room for its complete `2*n`
 sample stencil. A finite residual evaluation budget and finite inner trial count
-ensure rejection cannot loop indefinitely.
+ensure rejection cannot loop indefinitely. As for the root solvers, `max_iter=0`
+or `None` removes the iteration limit; the positive evaluation budget remains.
 
 `termination_reason` is `None` while running, then one of:
 `residual_tolerance`, `stationary_nonroot`, `stagnation`, `max_iterations`,

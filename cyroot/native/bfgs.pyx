@@ -4,14 +4,13 @@
 from typing import NamedTuple
 from libc.math cimport NAN, INFINITY, fabs, fmax, isfinite
 from libc.string cimport memcpy
-from cpython.buffer cimport PyObject_CheckBuffer
 from numbers import Complex, Real
 from cyroot._stopping cimport within_tolerance
 from .buffers cimport VectorView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .higher_derivatives import _checked_integer
 from .lbfgs_math cimport lbfgs_direction,lbfgs_store
-from .bfgs_math cimport (bfgs_value,bfgs_gradient,bfgs_change,bfgs_dot,bfgs_identity,
+from .bfgs_math cimport (bfgs_value,bfgs_gradient,bfgs_stationarity,bfgs_change,bfgs_dot,bfgs_identity,
                          bfgs_direction,bfgs_trial,bfgs_update)
 
 cdef enum:
@@ -73,7 +72,7 @@ cdef void _pack(object point, double* out, size_t n) except *:
     cdef size_t i
     if isinstance(point,(str,bytes,bytearray)):
         raise TypeError('Expected a numeric point vector.')
-    if PyObject_CheckBuffer(point):
+    if is_native_double_buffer(point):
         guard=DoubleBuffer(point)
         view=guard.vector_view()
         if view.size()!=n:raise ValueError('Point length must match input_dimension.')
@@ -96,6 +95,8 @@ cdef class BFGS:
     Only residual tolerance means root success. Native callbacks run without
     GIL; absent Jacobians use native central differences. value/gradient refer
     to the scaled objective; objective_scale is fixed throughout the solve.
+    gtol bounds the residual-relative stationarity ||J^T F||/(||F|| max|J_ij|),
+    so it does not depend on the residual scale or on how close F is to zero.
     Strong-Wolfe search uses bounded doubling/bisection. Root candidates may
     terminate before sampling their Jacobian; their gradient is None.
     """
@@ -126,7 +127,9 @@ cdef class BFGS:
             self._objective._callback_code,self._objective._callback_stage=0,0
             self._n,self._m=self._objective._n,self._objective._m
             limit=_checked_integer(workspace_bytes,'workspace_bytes')
-            max_iter=_checked_integer(max_iter,'max_iter')
+            # As for every root solver, zero or None removes the iteration limit;
+            # the positive evaluation budget still bounds the run.
+            max_iter=0 if max_iter is None else _checked_integer(max_iter,'max_iter')
             max_evaluations=_checked_integer(max_evaluations,'max_evaluations')
             max_line_search=_checked_integer(max_line_search,'max_line_search')
             history=_checked_integer(history,'history')
@@ -206,13 +209,12 @@ cdef class BFGS:
                     if status!=0:self._fail(status)
                     elif within_tolerance(self._state.error,self._etol,self._ertol,self._scale):
                         self._state.reason=B_ROOT
-                    elif self._max_iter==0:self._state.reason=B_ITERATIONS
                     else:
                         status=self._gradient(self._x,self._f,self._g)
                         if status!=0:self._fail(status)
                         else:
                             self._state.gradient=_norm(self._g,self._n)
-                            if self._state.gradient<=self._gtol:self._state.reason=B_STATIONARY
+                            if self._stationary():self._state.reason=B_STATIONARY
                 self._record()
             self._raise_callback_error()
         finally:
@@ -285,6 +287,12 @@ cdef class BFGS:
         if status!=0:return status
         return bfgs_gradient(f,self._j,self._n,self._m,self._scale,out)
 
+    cdef bint _stationary(self) noexcept nogil:
+        # _j holds the Jacobian sampled with the latest accepted gradient.
+        cdef double measure=INFINITY
+        if bfgs_stationarity(self._f,self._j,self._n,self._m,&measure)!=0:return False
+        return measure<=self._gtol
+
     cdef void _fail(self,int status) noexcept nogil:
         if status==3:
             self._state.reason=B_CALLBACK
@@ -313,7 +321,7 @@ cdef class BFGS:
         cdef double lo_value=self._state.value,value=0.,change=0.,precision=0.,xscale=0.,next_alpha=0.
         cdef bint accepted=False,root=False
         if self._state.reason!=B_RUNNING:return
-        if self._state.iters>=self._max_iter:self._state.reason=B_ITERATIONS
+        if self._max_iter and self._state.iters>=self._max_iter:self._state.reason=B_ITERATIONS
         elif self._state.f_calls>=self._max_evaluations:self._state.reason=B_EVALUATIONS
         if self._state.reason!=B_RUNNING:
             self._record()
@@ -392,9 +400,9 @@ cdef class BFGS:
             self._state.precision=precision
             self._state.step_size=alpha
             if root:self._state.reason=B_ROOT
-            elif self._state.gradient<=self._gtol:self._state.reason=B_STATIONARY
+            elif self._stationary():self._state.reason=B_STATIONARY
             elif within_tolerance(precision,self._ptol,self._prtol,xscale):self._state.reason=B_STAGNATION
-            elif self._state.iters>=self._max_iter:self._state.reason=B_ITERATIONS
+            elif self._max_iter and self._state.iters>=self._max_iter:self._state.reason=B_ITERATIONS
             elif self._state.f_calls>=self._max_evaluations:self._state.reason=B_EVALUATIONS
         elif self._state.reason==B_RUNNING:self._state.reason=B_LINE_SEARCH
         self._record()

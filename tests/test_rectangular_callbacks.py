@@ -69,9 +69,10 @@ class RectangularCallbackTests(unittest.TestCase):
         callback=RectangularCallback(lambda x:output,2,3,jacobian=True)
         self.assertEqual(callback.evaluate(memoryview(point)),tuple(map(tuple,output)))
         self.assertEqual(callback.evaluate(point[::-1]),tuple(map(tuple,output)))
-        for bad in ((1.,),((1.,),(2.,)),'12',np.array([1.,2.],dtype='f4')):
+        for bad in ((1.,),((1.,),(2.,)),'12',np.array([1.,2.],dtype='c16')):
             with self.assertRaises((ValueError,TypeError)):callback.evaluate(bad)
-        for bad in (((1.,2.),),((1.,2.),(3.,),(4.,5.)),np.ones((2,3)),np.ones((3,2),dtype='f4')):
+        self.assertEqual(callback.evaluate(np.array([1,2])),callback.evaluate((1.,2.)))
+        for bad in (((1.,2.),),((1.,2.),(3.,),(4.,5.)),np.ones((2,3)),np.ones((3,2),dtype='c16')):
             wrong=RectangularCallback(lambda x:bad,2,3,jacobian=True)
             with self.assertRaises((ValueError,TypeError)):wrong.evaluate(point)
         with self.assertRaises((ValueError,TypeError)):

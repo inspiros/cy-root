@@ -100,7 +100,7 @@ class RectangularHessianTests(unittest.TestCase):
                     RectangularHessianPlan(a,b)
         with self.assertRaises((ValueError,OverflowError)):
             RectangularHessianPlan(2**31-1,2**31-1,memory_bytes=64)
-        for step in (True,0.,math.nan,math.inf,(.1,),(.1,0.),(.1,True),np.ones(2,dtype=np.int64)):
+        for step in (True,0.,math.nan,math.inf,(.1,),(.1,0.),(.1,True),np.ones(2,dtype=np.complex128)):
             with self.subTest(step=step),self.assertRaises((ValueError,TypeError)):
                 RectangularHessianPlan(2,3,step=step)
         automatic = RectangularHessianPlan(2,3)

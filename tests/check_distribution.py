@@ -32,6 +32,10 @@ def check_distribution(path):
     assert 'media="(prefers-color-scheme: dark)"' in readme
     assert not re.search(r'<(?:img|source)\b[^>]*\s(?:src|srcset)=[\"\'](?:\./)?assets/', readme)
     assert '/master/assets/' not in readme
+    relative = [target for target in re.findall(r'\]\(\s*<?([^\s)>]+)', readme)
+                if not target.startswith(('http://', 'https://', '#'))]
+    assert not relative, relative
+    assert f'https://github.com/inspiros/cy-root/blob/v{message["Version"]}/LICENSE' in readme
     assert not any('sympy' in line.lower() for line in text.splitlines()
                    if line.startswith('Requires-Dist:'))
     for name in ('py.typed', 'results.py', '__init__.pyi', 'return_types.pyi',
@@ -40,6 +44,13 @@ def check_distribution(path):
                  'scalar_derivative_approximation.pyi', 'vector_derivative_approximation.pyi',
                  'native/broyden.pyi', 'native/vector.pyi'):
         assert package_root + 'cyroot/' + name in names
+    for name in ('scalar', 'bracketing', 'secant', 'interpolation', 'homeier', 'hybisect',
+                 'higher_order', 'householder_solver', 'scalar_derivatives',
+                 'higher_derivatives', 'higher_mixed', 'derivatives', 'hessians',
+                 'tensor_callbacks', 'rectangular', 'least_squares', 'vrahatis',
+                 'vector_chebyshev', 'objective', 'objective_derivatives',
+                 'levenberg_marquardt', 'bfgs', '_buffers', 'complex_callbacks'):
+        assert package_root + 'cyroot/native/' + name + '.pyi' in names, name
     for name in ("higher_mixed.pyx", "higher_mixed.pxd", "higher_mixed_ops.pxd", "higher_mixed.hpp"):
         assert package_root + "cyroot/native/" + name in names
     for name in ('differentiation.pyx', 'differentiation.pxd', 'differentiation.pyi', 'differentiation.hpp'):

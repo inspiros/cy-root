@@ -11,13 +11,46 @@ copying and supplies private writable contiguous storage.
 from operator import index as integer_index
 
 from cpython.buffer cimport (
-    PyObject_GetBuffer, PyBuffer_Release, PyBuffer_FillInfo, PyBuffer_IsContiguous,
+    PyObject_CheckBuffer, PyObject_GetBuffer, PyBuffer_Release, PyBuffer_FillInfo,
+    PyBuffer_IsContiguous,
     PyBUF_FORMAT, PyBUF_STRIDES, PyBUF_ND, PyBUF_WRITABLE,
     PyBUF_C_CONTIGUOUS, PyBUF_F_CONTIGUOUS, PyBUF_ANY_CONTIGUOUS,
 )
 from libc.stddef cimport ptrdiff_t
 from libc.string cimport strcmp
 from libcpp.limits cimport numeric_limits
+
+
+cdef bint _native_double_format(const char* format) noexcept:
+    return (format != NULL and (strcmp(format, 'd') == 0 or strcmp(format, '@d') == 0 or
+                                strcmp(format, '=d') == 0))
+
+
+cdef bint is_native_double_buffer(object source) except -1:
+    """True for a buffer exporter whose elements DoubleBuffer can borrow.
+
+    Other exporters, such as integer or float32 arrays, are left to the
+    callers' element-wise sequence conversion instead of being rejected here.
+    """
+    cdef Py_buffer view
+    cdef bint result
+    if not PyObject_CheckBuffer(source):
+        return False
+    try:
+        # Request strides as DoubleBuffer does, so strided exporters qualify.
+        PyObject_GetBuffer(source, &view, PyBUF_FORMAT | PyBUF_STRIDES)
+    except BufferError:
+        return False
+    try:
+        result = view.itemsize == sizeof(double) and _native_double_format(view.format)
+        # Element-wise conversion of NumPy complex scalars would silently
+        # discard imaginary parts; booleans are not numeric coordinates.
+        if not result and view.format != NULL and (
+                b'Z' in <bytes>view.format or b'?' in <bytes>view.format):
+            raise TypeError('Expected real numeric values, not complex or bool.')
+    finally:
+        PyBuffer_Release(&view)
+    return result
 
 
 cdef class DoubleBuffer:
@@ -56,10 +89,8 @@ cdef class DoubleBuffer:
             self._has_buffer = True
             if self._buffer.ndim not in (1, 2):
                 raise ValueError('DoubleBuffer requires a one- or two-dimensional buffer.')
-            if (self._buffer.itemsize != sizeof(double) or self._buffer.format == NULL or
-                    (strcmp(self._buffer.format, 'd') != 0 and
-                     strcmp(self._buffer.format, '@d') != 0 and
-                     strcmp(self._buffer.format, '=d') != 0)):
+            if (self._buffer.itemsize != sizeof(double) or
+                    not _native_double_format(self._buffer.format)):
                 raise ValueError('DoubleBuffer requires native-format double elements.')
             if self._buffer.shape == NULL or self._buffer.strides == NULL:
                 raise ValueError('Buffer exporter omitted shape or stride metadata.')

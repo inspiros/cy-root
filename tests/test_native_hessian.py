@@ -114,10 +114,12 @@ class HessianConfigurationTests(unittest.TestCase):
     def test_invalid_steps_include_bool_complex_text_shapes_and_formats(self):
         for step in (True, np.bool_(True), '1', b'1', 1j, 0., -0., math.nan, math.inf,
                      (), (.1,), (.1,.2,.3), (.1,0.), (.1,math.inf), (.1,True), (.1,np.bool_(True)),
-                     (.1,1j), (.1,'1'), np.ones((2,1)), np.ones(2, dtype=np.int64),
+                     (.1,1j), (.1,'1'), np.ones((2,1)),
                      np.ones(2, dtype=np.complex128), np.array([True,True])):
             with self.subTest(step=step), self.assertRaises((ValueError, TypeError)):
                 HessianPlan(2, step=step)
+        # Real non-float64 buffers convert element by element, like sequences.
+        self.assertEqual(HessianPlan(2, step=np.ones(2, dtype=np.int64)).step, (1., 1.))
 
     def test_readonly_strided_zero_stride_and_unaligned_buffers_are_copied(self):
         readonly = np.array([.125, -.25]); readonly.flags.writeable = False

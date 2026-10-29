@@ -1,0 +1,59 @@
+from collections.abc import Iterator
+from typing import Any, NamedTuple, SupportsFloat, SupportsIndex
+from numpy.typing import ArrayLike
+from ..status import TerminationReason
+from ..return_types import BracketingMethodsReturnType
+
+class VrahatisStep(NamedTuple):
+    root: tuple[float, ...]
+    f_root: tuple[float, ...]
+    bracket: tuple[tuple[float, ...], ...]
+    f_bracket: tuple[tuple[float, ...], ...]
+    iters: int
+    f_calls: int
+    precision: float
+    error: float
+    termination_reason: TerminationReason | None
+    callback_code: int
+    @property
+    def success(self) -> bool: ...
+    @property
+    def converged(self) -> bool: ...
+    @property
+    def optimal(self) -> bool: ...
+
+class Vrahatis:
+    def __init__(self, function: Any, x0s: ArrayLike, F_x0s: ArrayLike | None = ..., *,
+                 h: SupportsFloat | ArrayLike | None = ...,
+                 etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
+                 ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
+                 max_iter: SupportsIndex = ..., history: SupportsIndex = ...,
+                 history_every: SupportsIndex = ..., history_bytes: SupportsIndex = ...,
+                 workspace_bytes: SupportsIndex = ..., polygon_eps: SupportsFloat = ...,
+                 max_evaluations: SupportsIndex = ..., max_visits: SupportsIndex = ...,
+                 max_bisections: SupportsIndex = ...) -> None: ...
+    def step(self) -> VrahatisStep: ...
+    def run(self) -> BracketingMethodsReturnType: ...
+    @property
+    def result(self) -> BracketingMethodsReturnType: ...
+    @property
+    def history(self) -> tuple[VrahatisStep, ...]: ...
+    @property
+    def done(self) -> bool: ...
+    @property
+    def history_truncated(self) -> bool: ...
+    @property
+    def callback_code(self) -> int: ...
+    @property
+    def callback_stage(self) -> str | None: ...
+    @property
+    def input_dimension(self) -> int: ...
+    @property
+    def output_dimension(self) -> int: ...
+    def __iter__(self) -> Iterator[VrahatisStep]: ...
+    def __next__(self) -> VrahatisStep: ...
+
+def vrahatis(function: Any, x0s: ArrayLike, **options: Any) -> BracketingMethodsReturnType: ...
+def compute_admissible_n_polygon(function: Any, x: ArrayLike, h: SupportsFloat | ArrayLike | None = ...,
+                                 eps: SupportsFloat = ..., **options: Any
+                                 ) -> tuple[tuple[tuple[float, ...], ...], tuple[tuple[float, ...], ...]]: ...

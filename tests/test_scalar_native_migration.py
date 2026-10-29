@@ -32,8 +32,8 @@ class ScalarNativeMigrationTests(unittest.TestCase):
                     'interp_method', 'sigma', 'k', 'mu', 'k1', 'k2', 'n0',
                     'rcond', 'etol', 'ertol', 'ptol', 'prtol', 'max_iter',
                     'max_split_iter', 'history', 'history_every', 'history_bytes',
-                    'workspace_bytes', 'derivative', 'jacobian',
-                    'input_dimension', 'output_dimension'}
+                    'workspace_bytes', 'input_dimension', 'output_dimension'}
+        # Derivative providers are positional, after the function, in every family.
         for registry in (cyroot.SCALAR_ROOT_FINDING_METHODS,
                          cyroot.VECTOR_ROOT_FINDING_METHODS):
             for name, solve in registry.items():
@@ -124,6 +124,12 @@ class ScalarNativeMigrationTests(unittest.TestCase):
                     result = method(*args, h=h)
                     self.assertTrue(result.success)
                     self.assertAlmostEqual(result.root, math.sqrt(2.), places=9)
+        # A step that no numerical derivative would use is rejected, not ignored.
+        for call in (lambda: cyroot.newton(function, derivative, 1.5, h=.1),
+                     lambda: cyroot.halley(function, derivative, second, 1.5, h=.1),
+                     lambda: cyroot.householder(function, (derivative, second), 1.5, h=.1)):
+            with self.assertRaisesRegex(ValueError, 'applies only'):
+                call()
         for scale in (1e-200, 1., 1e200):
             solver = Homeier(lambda x: scale*function(x), lambda x: scale*derivative(x),
                              1.5, max_iter=1, history=2, **disabled())

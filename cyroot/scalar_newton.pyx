@@ -68,6 +68,10 @@ def _providers(f, df, d2f, h, second=False, formula=None, validate_formula=False
     try:
         if validate_formula and formula not in (1, 2):
             raise ValueError(f'Unknown formula {formula}.')
+        if h is not None and derivative is not None and not (second and second_derivative is None):
+            # A silently unused step usually means a misplaced provider.
+            raise ValueError('h applies only to numerical derivatives; '
+                             'configure an explicit derivative plan directly.')
         if derivative is None:
             derivative = ScalarDerivativePlan(step=h)
         if second and second_derivative is None:
@@ -172,6 +176,11 @@ def householder(f, dfs, x0, f_x0=None, dfs_x0=None, *, d=None, h=None,
     All arguments remain untyped so native callback guards cover conversion.
     """
     from .native.householder_solver import householder as native_householder
+    if h is not None and isinstance(dfs, (list, tuple)) and all(df is not None for df in dfs):
+        # Native Householder ignores an unused step; this entry point matches
+        # the other Newton-type wrappers and rejects it.
+        raise ValueError('h applies only to numerical derivatives; '
+                         'configure an explicit derivative plan directly.')
     return native_householder(
         f, dfs, x0, f_x0=f_x0, dfs_x0=dfs_x0, order=d, step=h,
         etol=etol, ertol=ertol, ptol=ptol, prtol=prtol, max_iter=max_iter, **options)

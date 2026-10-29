@@ -3,10 +3,9 @@
 """Python/native callback adapters with separate input and output dimensions."""
 from libc.limits cimport INT_MAX
 from libc.math cimport NAN
-from cpython.buffer cimport PyObject_CheckBuffer
 from cpython.pycapsule cimport PyCapsule_GetPointer, PyCapsule_IsValid
 from .buffers cimport OwnedDoubleBuffer, VectorView, MatrixView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .higher_derivatives import _checked_integer
 from .scalar import NativeCallbackError
 
@@ -25,7 +24,7 @@ cdef void _pack_vector(object source, double* out, size_t count) except *:
     cdef size_t i
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.vector_view()
         if view.size() != count:raise ValueError('Vector length must match the callback dimension.')
@@ -42,7 +41,7 @@ cdef void _pack_matrix(object source, double* out, size_t m, size_t n) except *:
     cdef size_t i, j
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric Jacobian matrix.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.matrix_view()
         if view.rows() != m or view.columns() != n:

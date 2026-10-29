@@ -35,6 +35,31 @@ inline int bfgs_gradient(const double* f,const double* j,std::size_t n,
     }
     return 0;
 }
+// Residual-relative stationarity ||J^T F||inf / (||F||inf * max|J_ij|), which
+// is invariant to residual scaling and stays O(1) near a simple or multiple
+// root, unlike the objective gradient. A zero Jacobian is exactly stationary.
+inline int bfgs_stationarity(const double* f,const double* j,std::size_t n,
+                             std::size_t m,double* out) noexcept {
+    double fs=0.,js=0.;
+    for (std::size_t i=0;i<m;++i) {
+        if (!std::isfinite(f[i])) return 1;
+        fs=std::max(fs,std::fabs(f[i]));
+    }
+    for (std::size_t k=0;k<n*m;++k) {
+        if (!std::isfinite(j[k])) return 1;
+        js=std::max(js,std::fabs(j[k]));
+    }
+    if (fs==0. || js==0.) {*out=0.;return 0;}
+    double norm=0.;
+    for (std::size_t k=0;k<n;++k) {
+        ObjectiveAccumulator sum;
+        for (std::size_t i=0;i<m;++i) sum.add_product(j[i+m*k]/js,f[i]/fs);
+        double value;
+        if (sum.value(&value)!=0) return 1;
+        norm=std::max(norm,std::fabs(value));
+    }
+    *out=norm;return 0;
+}
 inline int bfgs_change(const double* f,const double* trial,std::size_t m,
                        double scale,double* out) noexcept {
     int es=0; const double ms=std::frexp(scale,&es);

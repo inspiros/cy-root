@@ -19,7 +19,6 @@ def test_output(etol=1e-8, ptol=1e-10):
 
     print(f'\n{"Bracketing":-^50}')
     print('[Bisect]', bisect(f, -10, 10, etol=etol, ptol=ptol))
-    print('[Modified Bisect]', bisect(f, -10, 10, algo='modified', etol=etol, ptol=ptol))
     print('[HyBisect]', hybisect(f, interval_f, -10, 10, etol=etol, ptol=ptol))
     print('[Regula Falsi]', regula_falsi(f, -10, 10, etol=etol, ptol=ptol))
     print('[Illinois]', illinois(f, -10, 10, etol=etol, ptol=ptol))

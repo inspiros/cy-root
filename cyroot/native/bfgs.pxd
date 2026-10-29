@@ -39,6 +39,7 @@ cdef class BFGS:
     cdef int _evaluate(self,const double* point,double* out) noexcept nogil
     cdef int _difference_sample(self,const double* point,double* out) noexcept nogil
     cdef int _gradient(self,const double* point,const double* f,double* out) noexcept nogil
+    cdef bint _stationary(self) noexcept nogil
     cdef void _fail(self,int status) noexcept nogil
     cdef void _record(self) noexcept nogil
     # Trusted callers pin state/owners and hold _enter across native execution

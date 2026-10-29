@@ -224,7 +224,7 @@ class BroydenBoundaryTests(unittest.TestCase):
                 with self.assertRaises(TypeError):cls(provider,((1.,),),(0.,),f_x0=(0.,))
             with self.assertRaises(ValueError):cls(VectorCallback(lambda x:((1.,),),1,jacobian=True),((1.,),),(0.,))
             with self.assertRaises(RuntimeError):cls(VectorCallback.__new__(VectorCallback),((1.,),),(0.,))
-            with self.assertRaises((TypeError,ValueError)):cls(lambda x:(0.,),np.eye(1,dtype=np.float32),(0.,))
+            with self.assertRaises(TypeError):cls(lambda x:(0.,),np.eye(1,dtype=np.complex128),(0.,))
 
     def test_partial_objects_and_reinitialization_are_safe(self):
         for cls in (BroydenGood,BroydenBad):

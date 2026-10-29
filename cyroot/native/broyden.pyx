@@ -5,9 +5,8 @@ from typing import NamedTuple
 from libc.limits cimport INT_MAX
 from libc.math cimport fabs, fmax, isfinite, NAN, INFINITY
 from libc.string cimport memcpy, memmove, memset
-from cpython.buffer cimport PyObject_CheckBuffer
 from .buffers cimport OwnedDoubleBuffer, VectorView, MatrixView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .vector cimport VectorCallback
 from .derivatives cimport (
     JacobianPlan, ResidualFunction, DIFF_CALLBACK_FAILURE, DIFF_NONFINITE, DIFF_BREAKDOWN,
@@ -83,7 +82,7 @@ cdef void _pack_vector(object source, double* out, size_t n) except *:
     cdef size_t i
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.vector_view()
         if view.size() != n:raise ValueError('Vector length must match the solver dimension.')
@@ -99,7 +98,7 @@ cdef void _pack_matrix(object source, double* out, size_t n) except *:
     cdef size_t i, j
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a square numeric initial approximation.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.matrix_view()
         if view.rows() != n or view.columns() != n:
@@ -199,7 +198,7 @@ cdef class BroydenGood:
                 byte_limit = _checked_integer(history_bytes, 'history_bytes')
                 workspace_limit = _checked_integer(workspace_bytes, 'workspace_bytes')
                 if every == 0:raise ValueError('history_every must be positive.')
-                if PyObject_CheckBuffer(x0):
+                if is_native_double_buffer(x0):
                     guard = DoubleBuffer(x0)
                     dimension = int(guard.vector_view().size())
                 else:

@@ -125,9 +125,9 @@ assert bracketed.success and analytic.success and numerical.success
 print(analytic.root)  # Approximately 1.414213562373095.
 ```
 
-Algorithm controls and stopping tolerances are keyword-only. Newton-type entry
-points keep the function, derivative providers, and starting point in that order;
-use `None` for a numerical derivative.
+Algorithm controls and stopping tolerances are keyword-only. Newton-type and
+optimization-based entry points keep the function, derivative providers, and
+starting point in that order; use `None` for a numerical derivative.
 
 ### A Vector Root, Including Rectangular Systems
 
@@ -159,7 +159,7 @@ f = lambda x: x*x - 2.
 
 third_order = halley(f, lambda x: 2*x, lambda x: 2., 1.5)
 higher_order = householder(f, None, 1.5, d=4)
-optimized = scalar_lbfgs(f, 1.5, derivative=lambda x: 2*x)
+optimized = scalar_lbfgs(f, lambda x: 2*x, 1.5)
 
 assert third_order.success and higher_order.success and optimized.success
 ```

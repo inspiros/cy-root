@@ -7,10 +7,9 @@ from libc.math cimport isfinite, NAN
 from libc.stddef cimport size_t
 from libc.string cimport memcpy, memset
 from libcpp.vector cimport vector
-from cpython.buffer cimport PyObject_CheckBuffer
 from scipy.linalg.cython_lapack cimport dgelsy
 from .buffers cimport OwnedDoubleBuffer, VectorView, MatrixView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .higher_derivatives import _checked_integer
 
 # Bound the supported domain before entering LP64 LAPACK workspace heuristics.
@@ -62,7 +61,7 @@ cdef void _pack_matrix(object source, double* out, size_t m, size_t n) except *:
     cdef size_t i, j
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric matrix.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.matrix_view()
         if view.rows() != m or view.columns() != n:
@@ -85,7 +84,7 @@ cdef void _pack_rhs(object source, double* out, size_t m) except *:
     cdef size_t i
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric right-hand side vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         view = guard.vector_view()
         if view.size() != m:

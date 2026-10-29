@@ -97,12 +97,14 @@ class BisectionStateTests(unittest.TestCase):
                     Bisection(callback,0.,3.)
                 return 0.
         self.assertTrue(Bisection(callback,Endpoint(),3.).run().success)
-        class Algorithm:
+        class Steps:
             def __index__(self):
                 with case.assertRaisesRegex(RuntimeError,'active'):
                     Bisection(callback,0.,3.)
-                return 1
-        self.assertTrue(Bisection(callback,0.,3.,algo=Algorithm()).run().success)
+                return 4
+        self.assertTrue(Bisection(callback,0.,3.,history=Steps()).run().success)
+        with self.assertRaises(TypeError):
+            Bisection(callback,0.,3.,algo=2)
 
     def test_cached_values_are_not_callback_lifetime_counters(self):
         callback = ScalarCallback(self.function)

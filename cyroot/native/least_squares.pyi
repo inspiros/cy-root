@@ -1,0 +1,29 @@
+from typing import NamedTuple, SupportsFloat, SupportsIndex
+from numpy.typing import ArrayLike
+
+MAX_DIMENSION: int
+
+class LeastSquaresResult(NamedTuple):
+    solution: tuple[float, ...]
+    rank: int | None
+    linear_status: int
+    status: str
+
+class LeastSquaresPlan:
+    def __init__(self, rows: SupportsIndex, columns: SupportsIndex, *,
+                 rcond: SupportsFloat = ..., workspace_bytes: SupportsIndex = ...) -> None: ...
+    def solve(self, matrix: ArrayLike, rhs: ArrayLike) -> LeastSquaresResult: ...
+    @property
+    def rows(self) -> int: ...
+    @property
+    def columns(self) -> int: ...
+    @property
+    def rcond(self) -> float: ...
+    @property
+    def lwork(self) -> int: ...
+    @property
+    def work_size(self) -> int: ...
+    @property
+    def pivot_size(self) -> int: ...
+    @property
+    def memory_bytes(self) -> int: ...

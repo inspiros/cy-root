@@ -5,8 +5,7 @@ from typing import NamedTuple
 from libc.limits cimport INT_MAX
 from libc.math cimport fabs, fmax, isfinite, INFINITY, NAN
 from libc.string cimport memcpy, memset
-from cpython.buffer cimport PyObject_CheckBuffer
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .buffers cimport OwnedDoubleBuffer, MatrixView, VectorView
 from .vector cimport VectorCallback
 from .rectangular cimport RectangularCallback
@@ -75,7 +74,7 @@ cdef object _copy_rows(object source, object workspace_limit):
     cdef size_t i, j
     if isinstance(source, (str, bytes, bytearray)):
         raise TypeError('Expected a numeric point or matrix of points.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard = DoubleBuffer(source)
         if guard._ndim == 1:
             v = guard.vector_view()

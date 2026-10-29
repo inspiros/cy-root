@@ -123,11 +123,15 @@ class LeastSquaresTests(unittest.TestCase):
             with self.subTest(matrix=matrix,rhs=rhs):
                 with self.assertRaises((ValueError,TypeError)):plan.solve(matrix,rhs)
 
-    def test_buffer_dtypes_are_not_silently_cast(self):
+    def test_real_buffer_dtypes_convert_and_complex_is_rejected(self):
         plan=LeastSquaresPlan(3,2)
-        for dtype in ('f4','i8','c16','>f8'):
-            with self.assertRaises((TypeError,ValueError)):plan.solve(np.array(TALL,dtype=dtype),[1.]*3)
-            with self.assertRaises((TypeError,ValueError)):plan.solve(TALL,np.array([1.]*3,dtype=dtype))
+        expected=plan.solve(TALL,[1.]*3)
+        for dtype in ('f4','i8','>f8'):
+            self.assertEqual(plan.solve(np.array(TALL,dtype=dtype),[1.]*3),expected)
+            self.assertEqual(plan.solve(TALL,np.array([1.]*3,dtype=dtype)),expected)
+        for dtype in ('c16','?'):
+            with self.assertRaises(TypeError):plan.solve(np.array(TALL,dtype=dtype),[1.]*3)
+            with self.assertRaises(TypeError):plan.solve(TALL,np.array([1.]*3,dtype=dtype))
 
     def test_nonfinite_inputs_have_atomic_nan_result_and_no_rank(self):
         plan=LeastSquaresPlan(3,2)

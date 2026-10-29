@@ -3,6 +3,7 @@ from libc.stddef cimport size_t
 cdef extern from "bfgs_math.hpp" namespace "cyroot::native" nogil:
     int bfgs_value(const double* f,size_t m,double scale,double* out) noexcept
     int bfgs_gradient(const double* f,const double* j,size_t n,size_t m,double scale,double* out) noexcept
+    int bfgs_stationarity(const double* f,const double* j,size_t n,size_t m,double* out) noexcept
     int bfgs_change(const double* f,const double* trial,size_t m,double scale,double* out) noexcept
     int bfgs_dot(const double* a,const double* b,size_t n,double* out) noexcept
     void bfgs_identity(double* h,size_t n) noexcept
