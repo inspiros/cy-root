@@ -3,10 +3,9 @@
 """Matrix-free Jacobian-transpose products for Python and compiled consumers."""
 from libc.limits cimport INT_MAX
 from libc.math cimport isfinite, NAN
-from cpython.buffer cimport PyObject_CheckBuffer
 from cpython.pycapsule cimport PyCapsule_IsValid, PyCapsule_GetPointer
 from .buffers cimport OwnedDoubleBuffer, VectorView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .scalar import _nonnegative_integer, NativeCallbackError
 
 __all__=['JacobianTransposeCallback']
@@ -20,7 +19,7 @@ cdef void _pack(object source,double* out,size_t count) except *:
     cdef VectorView view
     cdef size_t i
     if isinstance(source,(str,bytes,bytearray)):raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard=DoubleBuffer(source);view=guard.vector_view()
         if view.size()!=count:raise ValueError('Vector length must match the declared dimension.')
         for i in range(count):out[i]=view.get(i)

@@ -103,6 +103,8 @@ class DoubleBufferTests(unittest.TestCase):
         self.assertEqual(cyroot.generalized_newton(
             residual, lambda p: np.eye(2, dtype=np.int64), array.array('i', [0, 0])).root, (1., 2.))
         self.assertTrue(cyroot.vector_levenberg_marquardt(residual, None, np.array([0, 0])).success)
+        for solve in (cyroot.newton_krylov, cyroot.generalized_damped_newton):
+            self.assertTrue(solve(residual, None, np.array([0, 0])).success)
         for complex_input in (lambda: cyroot.generalized_newton(residual, None, np.zeros(2, complex)),
                               lambda: cyroot.generalized_newton(
                                   lambda p: np.array(residual(p), dtype=complex), None, (0., 0.))):

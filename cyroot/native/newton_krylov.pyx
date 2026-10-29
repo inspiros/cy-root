@@ -5,9 +5,8 @@ from typing import NamedTuple
 from libc.limits cimport INT_MAX
 from libc.math cimport fabs,fmax,isfinite,NAN,INFINITY
 from libc.string cimport memcpy,memset
-from cpython.buffer cimport PyObject_CheckBuffer
 from .buffers cimport VectorView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .rectangular cimport RectangularFunction
 from .scalar import _nonnegative_integer,NativeCallbackError
 from .derivatives cimport DIFF_OK,DIFF_NONFINITE,DIFF_BREAKDOWN
@@ -81,7 +80,7 @@ cdef void _pack(object source,double* out,size_t n) except *:
     cdef VectorView view
     cdef size_t i
     if isinstance(source,(str,bytes,bytearray)):raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard=DoubleBuffer(source);view=guard.vector_view()
         if view.size()!=n:raise ValueError('NewtonKrylov vector length must match its dimension.')
         for i in range(n):out[i]=view.get(i)
@@ -119,7 +118,7 @@ cdef class NewtonKrylov:
     (infinity for GMRES). Both use a fixed forcing tolerance. History stores
     accepted states and terminal diagnostics. Native loops allocate no storage.
     """
-    def __init__(self,function,x0,*,jvp=None,vjp=None,f_x0=None,restart=20,max_linear_iter=100,
+    def __init__(self,function,jvp,x0,f_x0=None,*,vjp=None,restart=20,max_linear_iter=100,
                  linear_rtol=1e-3,c1=1e-4,contraction=.5,max_line_search=32,
                  etol=1e-10,ertol=8.881784197001252e-16,
                  ptol=1e-12,prtol=8.881784197001252e-16,max_iter=200,
@@ -158,7 +157,7 @@ cdef class NewtonKrylov:
                 if not isfinite(self._c1) or not 0.<self._c1<1. or not isfinite(self._contraction) or not 0.<self._contraction<1.:
                     raise ValueError('c1 and contraction must be finite and strictly between zero and one.')
                 if isinstance(x0,(str,bytes,bytearray)):raise TypeError('Expected a numeric point vector.')
-                if PyObject_CheckBuffer(x0):
+                if is_native_double_buffer(x0):
                     guard=DoubleBuffer(x0);dimension=int(guard.vector_view().size())
                 else:dimension=len(x0)
                 if dimension<=0 or dimension>INT_MAX:raise ValueError('Point dimension must be positive and fit C int.')
@@ -182,7 +181,7 @@ cdef class NewtonKrylov:
                         initial=function(point);sampled=True
                         if initial is None:raise TypeError("Residual must be a nonempty numeric vector.")
                     if initial is None:output=dimension
-                    elif PyObject_CheckBuffer(initial):
+                    elif is_native_double_buffer(initial):
                         initial_guard=DoubleBuffer(initial);output=int(initial_guard.vector_view().size())
                     else:output=len(initial)
                     if output<=0 or output>INT_MAX:raise ValueError('Residual dimension must be positive and fit C int.')
@@ -513,6 +512,10 @@ cdef class NewtonKrylov:
         return self.step()
 
 
-def newton_krylov(function,x0,*,jvp=None,vjp=None,**options):
-    """Solve a square or rectangular system through the resumable NewtonKrylov engine."""
-    return NewtonKrylov(function,x0,jvp=jvp,vjp=vjp,**options).run()
+def newton_krylov(function,jvp,x0,f_x0=None,*,vjp=None,**options):
+    """Solve a square or rectangular system through the resumable NewtonKrylov engine.
+
+    Like every vector dispatcher entry, the product provider follows the
+    residual: pass None for numerical Jacobian-vector products.
+    """
+    return NewtonKrylov(function,jvp,x0,f_x0,vjp=vjp,**options).run()

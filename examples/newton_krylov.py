@@ -16,7 +16,7 @@ def main():
         return tuple((2+.1*math.cos(x[i]))*v[i]-(v[i-1] if i else 0.)
                      -(v[i+1] if i+1<n else 0.) for i in range(n))
     # Omit jvp=product to use directional finite differences instead.
-    solver = NewtonKrylov(residual, (0.,)*n, jvp=product, history=20)
+    solver = NewtonKrylov(residual,product, (0.,)*n, history=20)
     for state in solver:
         print(f"Step {state.iters}: residual={state.error:.3g}, "
               f"linear residual={state.linear_residual:.3g}, alpha={state.step_scale:.3g}")

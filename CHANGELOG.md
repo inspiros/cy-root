@@ -2,12 +2,6 @@
 
 ## 2.0.0 — Unreleased
 
-- Add square matrix-free Newton-Krylov with restarted GMRES, verified linear residuals, and Armijo backtracking.
-
-- Add supplied Python/native Jacobian-vector callbacks and matrix-free directional finite-difference plans.
-
-- Add scalar and vector damped Newton with native Armijo backtracking, including rectangular systems and resumable accepted-step histories.
-
 A breaking overhaul of the numerical core, callback interfaces, and solver
 inspection. NumPy and SciPy remain dependencies; native solver loops use
 preallocated storage and can run without the GIL when given native callbacks.
@@ -40,6 +34,14 @@ Python callbacks still acquire the GIL.
 
 ### Native Solvers And Callbacks
 
+- Add scalar and vector damped Newton with native Armijo backtracking, including
+  rectangular systems and resumable accepted-step histories.
+- Add matrix-free Newton–Krylov for square, tall and wide systems: restarted GMRES
+  for square systems and LSQR for rectangular ones, both with verified linear
+  residuals (and verified least-squares stationarity for LSQR) and Armijo
+  backtracking. Only the nonlinear residual tolerance is root success.
+- Add Python/native Jacobian-vector and Jacobian-transpose product callbacks and
+  matrix-free finite-difference product plans.
 - Route all 26 supported scalar methods and the supported vector methods through
   native numerical loops, including bracketing, interpolation, Vrahatis, and the
   quasi-Newton family.

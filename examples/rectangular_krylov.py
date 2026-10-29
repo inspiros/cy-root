@@ -23,7 +23,7 @@ def vjp(x,w):
 
 
 if __name__=='__main__':
-    tall=newton_krylov(residual,(.1,.2),jvp=jvp,vjp=vjp)
-    wide=newton_krylov(lambda x:(x[0]+x[1]-3.,),(0.,0.))
+    tall=newton_krylov(residual,jvp,(.1,.2),vjp=vjp)
+    wide=newton_krylov(lambda x:(x[0]+x[1]-3.,),None,(0.,0.))
     for name,result in (('Tall',tall),('Wide',wide)):
         print(f'{name}: root={result.root}, error={result.error:.3g}, success={result.success}')

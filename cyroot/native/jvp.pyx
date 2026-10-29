@@ -4,10 +4,9 @@
 from typing import NamedTuple
 from libc.limits cimport INT_MAX
 from libc.math cimport isfinite, NAN
-from cpython.buffer cimport PyObject_CheckBuffer
 from cpython.pycapsule cimport PyCapsule_IsValid, PyCapsule_GetPointer
 from .buffers cimport OwnedDoubleBuffer, VectorView
-from ._buffers cimport DoubleBuffer
+from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .vector cimport VectorCallback
 from .rectangular cimport RectangularCallback
 from .scalar import _nonnegative_integer, NativeCallbackError
@@ -34,7 +33,7 @@ cdef void _pack(object source,double* out,size_t count) except *:
     cdef VectorView view
     cdef size_t i
     if isinstance(source,(str,bytes,bytearray)):raise TypeError('Expected a numeric vector.')
-    if PyObject_CheckBuffer(source):
+    if is_native_double_buffer(source):
         guard=DoubleBuffer(source);view=guard.vector_view()
         if view.size()!=count:raise ValueError('Vector length must match the declared dimension.')
         for i in range(count):out[i]=view.get(i)
@@ -171,6 +170,9 @@ cdef class JacobianVectorPlan:
             if not _shape(n,m):raise ValueError('Positive dimensions must fit native capacities and C int.')
             if scheme not in ('forward','backward','central'):raise ValueError('Unknown difference scheme.')
             code=0 if scheme=='forward' else 1 if scheme=='backward' else 2
+            if step is not None and (isinstance(step,(bool,str,bytes,bytearray)) or
+                    getattr(getattr(step,'dtype',None),'kind',None) in ('b','c')):
+                raise TypeError('step must be a finite positive real scalar.')
             value=0. if step is None else float(step)
             if not isfinite(value) or (step is not None and value<=0.):raise ValueError('step must be finite and positive.')
             work=2*n+3*m;evaluation=2*n+2*m+work

@@ -30,8 +30,8 @@ class NewtonKrylovResult(NamedTuple):
     def optimal(self) -> bool: ...
 
 class NewtonKrylov(Iterator[NewtonKrylovResult]):
-    def __init__(self, function: Any, x0: ArrayLike, *, jvp: Any = ..., vjp: Any = ...,
-                 f_x0: ArrayLike | None = ..., restart: SupportsIndex = ...,
+    def __init__(self, function: Any, jvp: Any, x0: ArrayLike,
+                 f_x0: ArrayLike | None = ..., *, vjp: Any = ..., restart: SupportsIndex = ...,
                  max_linear_iter: SupportsIndex = ..., linear_rtol: SupportsFloat = ...,
                  c1: SupportsFloat = ..., contraction: SupportsFloat = ...,
                  max_line_search: SupportsIndex = ..., etol: SupportsFloat = ...,
@@ -63,5 +63,5 @@ class NewtonKrylov(Iterator[NewtonKrylovResult]):
     @property
     def linear_solver(self) -> str: ...
 
-def newton_krylov(function: Any, x0: ArrayLike, *, jvp: Any = ..., vjp: Any = ...,
-                  **options: Any) -> NewtonKrylovResult: ...
+def newton_krylov(function: Any, jvp: Any, x0: ArrayLike, f_x0: ArrayLike | None = ...,
+                  *, vjp: Any = ..., **options: Any) -> NewtonKrylovResult: ...
