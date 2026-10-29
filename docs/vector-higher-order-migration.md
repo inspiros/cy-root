@@ -89,11 +89,9 @@ result = generalized_halley(residual, JacobianPlan(2, step=1e-4),
 assert result.success
 ```
 
-The `h` option is removed from these four entry points. Legacy
-`VectorDerivativeApproximation`/`GeneralizedFiniteDifference` objects are rejected
-in their derivative roles. Use `JacobianPlan` and `HessianPlan` instead; the old
-objects own a different residual/counter/state contract and are not converted.
-Their standalone APIs remain available; `generalized_newton` now also requires
+The `h` option is removed from these four entry points. Use `JacobianPlan` and
+`HessianPlan` for numerical derivatives; the 1.x derivative approximation classes
+were removed. `generalized_newton` now also requires
 an analytic provider or a native `JacobianPlan`.
 
 The common `NewtonMethodsReturnType` now contains tuple snapshots for the point,
@@ -109,8 +107,8 @@ The shared signature is
 ertol=4*eps, ptol=1e-12, prtol=4*eps, max_iter=200, history=0,
 history_every=1, history_bytes=8*1024*1024, workspace_bytes=64*1024*1024)`.
 `generalized_halley` additionally accepts keyword-only `alpha=None`.
-Options after the three cache arguments are keyword-only. `max_iter=None` uses
-200; zero is unlimited. Removed options raise `TypeError` before callbacks run.
+Options after the three cache arguments are keyword-only. The default `max_iter`
+is 200; zero or `None` is unlimited. Removed options raise `TypeError` before callbacks run.
 Caches and options pass unchanged into the guarded native constructor.
 
 With n inputs and m residuals, Jacobians have shape \((m,n)\) and Hessians

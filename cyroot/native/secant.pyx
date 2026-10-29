@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Native secant state machine with shared scalar callbacks and copied history."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.math cimport fabs, fmax, isfinite, NAN, INFINITY
 from libc.string cimport memset
@@ -37,10 +38,10 @@ cdef class Secant:
     Python callbacks acquire the GIL only for their calls; native callbacks
     permit initialization and complete numerical runs outside the GIL.
     """
-    def __init__(self, function, x0, x1, f_x0=None, f_x1=None,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
+    def __init__(self, function, x0, x1, f_x0=None, f_x1=None, *,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
                  history_bytes=8 * 1024 * 1024):
         cdef double first, second, value0, value1
         cdef double f_atol, f_rtol, x_atol, x_rtol

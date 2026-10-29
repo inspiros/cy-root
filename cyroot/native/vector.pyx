@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Native vector Newton, with Python conversion only at its boundaries."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.limits cimport INT_MAX
 from libc.math cimport fabs, fmax, isfinite, NAN, INFINITY
@@ -20,7 +21,6 @@ from .hessians cimport HessianPlan
 from .tensor_callbacks cimport HessianCallback
 from .scalar import NativeCallbackError, _nonnegative_integer
 from cyroot._check_args import _check_stop_cond_args
-from cyroot.vector_derivative_approximation cimport VectorDerivativeApproximation
 from cyroot.return_types cimport NewtonMethodsReturnType
 from cyroot.return_types import _normalize_reason
 from cyroot._stopping cimport (
@@ -213,10 +213,10 @@ cdef VectorCallback make_vector_callback(VectorFunction function, size_t dimensi
 
 cdef class VectorNewton:
     """Newton with square LU or rectangular rank-aware least-squares steps."""
-    def __init__(self, function, jacobian, x0, f_x0=None, jac_x0=None,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
+    def __init__(self, function, jacobian, x0, f_x0=None, jac_x0=None, *,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
                  history_bytes=8 * 1024 * 1024, workspace_bytes=64 * 1024 * 1024):
         self._setup(function, jacobian, x0, f_x0, jac_x0, etol, ertol, ptol,
             prtol, max_iter, history, history_every, history_bytes, workspace_bytes,
@@ -249,8 +249,6 @@ cdef class VectorNewton:
             # Native extension-type checks do not inspect Python metadata.
             if isinstance(function, (JacobianPlan, RectangularJacobianPlan, HessianPlan, HessianCallback)):
                 raise TypeError('function requires a residual callback.')
-            if isinstance(jacobian, VectorDerivativeApproximation):
-                raise TypeError('Use JacobianPlan instead of a legacy derivative approximation.')
             if isinstance(jacobian, (HessianPlan, HessianCallback)):
                 raise TypeError('jacobian requires a Jacobian provider.')
             if isinstance(function, VectorCallback):
@@ -932,8 +930,8 @@ cdef class VectorNewton:
 cdef class Robinson(VectorNewton):
     """Square two-point Robinson with deterministic identity/Householder probes."""
     def __init__(self, function, x0, x1, f_x0=None, f_x1=None, *, orth='efficient',
-                 etol=1e-10, ertol=8.881784197001252e-16, ptol=1e-12,
-                 prtol=8.881784197001252e-16, max_iter=200, history=0,
+                 etol=ETOL, ertol=ERTOL, ptol=PTOL,
+                 prtol=PRTOL, max_iter=MAX_ITER, history=0,
                  history_every=1, history_bytes=8*1024*1024,
                  workspace_bytes=64*1024*1024):
         self._setup(function, None, x1, f_x1, None, etol, ertol, ptol, prtol,
@@ -952,9 +950,9 @@ cdef class TraubSteffensen(VectorNewton):
     Uses the native Newton state/history and strict LU. Zero or collapsed
     perturbations report breakdown; there is no automatic-step fallback.
     """
-    def __init__(self, function, x0, f_x0=None, *, etol=1e-10,
-                 ertol=8.881784197001252e-16, ptol=1e-12,
-                 prtol=8.881784197001252e-16, max_iter=200, history=0,
+    def __init__(self, function, x0, f_x0=None, *, etol=ETOL,
+                 ertol=ERTOL, ptol=PTOL,
+                 prtol=PRTOL, max_iter=MAX_ITER, history=0,
                  history_every=1, history_bytes=8*1024*1024,
                  workspace_bytes=64*1024*1024):
         VectorNewton.__init__(self, function, None, x0, f_x0=f_x0,
@@ -1004,8 +1002,8 @@ WolfeBittnerStep = WolfeBittnerResult
 cdef class WolfeBittner:
     """Bounded multipoint affine interpolation with rank-aware native solves."""
     def __init__(self, function, x0s, f_x0s=None, *, rcond=1e-12,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
                  history=0, history_every=1, history_bytes=8*1024*1024,
                  workspace_bytes=64*1024*1024):
         cdef OwnedDoubleBuffer* bootstrap = NULL
@@ -1029,7 +1027,7 @@ cdef class WolfeBittner:
                     raise RuntimeError('Residual callback is not initialized.')
                 if self._rect_function._jacobian:raise ValueError('function requires a residual-kind callback.')
             elif isinstance(function, (JacobianPlan, RectangularJacobianPlan, HessianPlan,
-                                      HessianCallback, VectorDerivativeApproximation)):
+                                      HessianCallback)):
                 raise TypeError('function requires a residual callback.')
             elif not callable(function):raise TypeError('function must be callable.')
             self._enter()

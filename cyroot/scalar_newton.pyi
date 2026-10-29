@@ -67,14 +67,3 @@ def householder(
     etol: SupportsFloat = ..., ertol: SupportsFloat = ..., ptol: SupportsFloat = ...,
     prtol: SupportsFloat = ..., max_iter: SupportsIndex = ..., **options: Any
 ) -> NewtonMethodsReturnType: ...
-
-def ahmadi(
-    f: Any, dfs: Any, x0: SupportsFloat, f_x0: SupportsFloat | None = ...,
-    dfs_x0: ArrayLike | None = ..., d: SupportsIndex = ..., h: SupportsFloat = ...,
-    etol: SupportsFloat = ..., ertol: SupportsFloat = ..., ptol: SupportsFloat = ...,
-    prtol: SupportsFloat = ..., max_iter: SupportsIndex = ...
-) -> NewtonMethodsReturnType: ...
-
-AD3DFPtr: Any
-
-AhmadiDeltaFuncFactory: Any

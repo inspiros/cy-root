@@ -11,7 +11,7 @@ import unittest
 import weakref
 
 from cyroot.native import LeastSquaresObjective, NativeCallbackError
-from cyroot.native.levenberg_marquardt import LevenbergMarquardt
+from cyroot.native.levenberg_marquardt import LevenbergMarquardt, PowellDogleg
 
 
 def affine(matrix,target):
@@ -117,6 +117,15 @@ class NativeLMTests(unittest.TestCase):
             jacobian=lambda x:self.fail('initial root evaluated Jacobian')),(2.,)).run()
         self.assertTrue(initial_root.success)
         self.assertEqual((initial_root.iters,initial_root.f_calls,initial_root.jac_calls),(0,1,0))
+
+    def test_relative_stationarity_sees_a_vanishing_jacobian_column(self):
+        # Column scaling makes the first model column O(1) at x=1e-13; the
+        # residual-relative test still sees ||J^T F|| ~ 1e-13 against max|J| = 1.
+        objective = LeastSquaresObjective(lambda x:(x[0]**2+1., x[1]-1.), 2,
+            jacobian=lambda x:((2*x[0],0.),(0.,1.)))
+        for state in (LevenbergMarquardt, PowellDogleg):
+            result = state(objective,(1e-13,1.)).run()
+            self.assertEqual((result.termination_reason,result.success),('stationary_nonroot',False))
 
     def test_budgets_rejected_trials_and_exception_identity(self):
         function = lambda x:(x[0]*x[0]-2.,)

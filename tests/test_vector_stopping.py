@@ -12,7 +12,6 @@ from cyroot.vector_newton import (
     generalized_newton, generalized_halley, generalized_super_halley,
     generalized_chebyshev, generalized_tangent_hyperbolas,
 )
-from cyroot.vector_opt import generalized_mishchenko
 from cyroot.vector_quasi_newton import (
     barnes, broyden, klement, robinson, traub_steffensen, wolfe_bittner,
 )
@@ -354,31 +353,6 @@ class VectorBracketingStoppingTests(unittest.TestCase):
     def test_width_success_requires_complete_sign_patterns(self):
         with self.assertRaises(ValueError):
             vrahatis(lambda x: np.ones(1), [[0.], [1.]], ptol=10.)
-
-
-class ExperimentalOptimizerStoppingTests(unittest.TestCase):
-    def test_initial_root_skips_derivatives(self):
-        result = generalized_mishchenko(lambda x: x - 1., unexpected_derivative,
-                                       None, [1.], hess_lip=1.)
-        self.assertEqual(result.termination_reason, Reason.RESIDUAL_TOLERANCE)
-        self.assertEqual(result.f_calls, (1, 0))
-        self.assertEqual(result.iters, 0)
-
-    def test_stationary_nonroot_is_stagnation(self):
-        result = generalized_mishchenko(lambda x: np.ones(2), lambda x: np.zeros((2, 1)),
-                                       None, [0.], hess_lip=1.)
-        self.assertEqual(result.termination_reason, Reason.STAGNATION)
-        self.assertFalse(result.success)
-        assert_array_equal(result.f_root, [1., 1.])
-        self.assertEqual(result.error, 1.)
-
-    def test_zero_adaptive_seed_does_not_read_uninitialized_derivatives(self):
-        result = generalized_mishchenko(lambda x: x - 1., lambda x: np.ones((1, 1)),
-                                       None, [0.], adaptive=True, d_x0=[0.],
-                                       hess_lip=1., max_iter=1, **NO_TOLERANCE)
-        self.assertEqual(result.termination_reason, Reason.MAX_ITERATIONS)
-        self.assertEqual(result.iters, 1)
-        self.assertTrue(np.isfinite(result.root).all())
 
 
 if __name__ == '__main__':

@@ -43,7 +43,7 @@ class Sidi(_Interpolation):
                  f_x0s: Iterable[SupportsFloat | None] | None = ..., **options: Any) -> None: ...
 
 class Steffensen(_Interpolation):
-    def __init__(self, function: Any, x0: SupportsFloat, f_x0: SupportsFloat | None = ...,
+    def __init__(self, function: Any, x0: SupportsFloat, f_x0: SupportsFloat | None = ..., *,
                  aitken: bool = ..., **options: Any) -> None: ...
 
 class InverseQuadraticInterpolation(_Interpolation):

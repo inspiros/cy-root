@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Resumable Halley family with analytic or native numerical derivatives."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from numbers import Complex, Real
 from libc.math cimport fabs, isfinite, NAN, INFINITY
@@ -480,10 +481,10 @@ cdef class _ThirdOrderNewton:
 cdef class Halley(_ThirdOrderNewton):
     """Resumable Halley method; None selects native numerical derivatives."""
     def __init__(self, function, derivative, second_derivative, x0,
-                 f_x0=None, df_x0=None, d2f_x0=None,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
+                 f_x0=None, df_x0=None, d2f_x0=None, *,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
                  history_bytes=8 * 1024 * 1024):
         self._setup(function, derivative, second_derivative, x0,
                     f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol,
@@ -493,10 +494,10 @@ cdef class Halley(_ThirdOrderNewton):
 cdef class Chebyshev(_ThirdOrderNewton):
     """Resumable Chebyshev method; None selects native numerical derivatives."""
     def __init__(self, function, derivative, second_derivative, x0,
-                 f_x0=None, df_x0=None, d2f_x0=None,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
+                 f_x0=None, df_x0=None, d2f_x0=None, *,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
                  history_bytes=8 * 1024 * 1024):
         self._setup(function, derivative, second_derivative, x0,
                     f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol,
@@ -506,11 +507,11 @@ cdef class Chebyshev(_ThirdOrderNewton):
 cdef class ModifiedHalley(_ThirdOrderNewton):
     """Parameterized Halley family with a finite real alpha (default 0.5)."""
     def __init__(self, function, derivative, second_derivative, x0,
-                 f_x0=None, df_x0=None, d2f_x0=None,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
-                 history_bytes=8 * 1024 * 1024, *, alpha=0.5):
+                 f_x0=None, df_x0=None, d2f_x0=None, *, alpha=0.5,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
+                 history_bytes=8 * 1024 * 1024):
         self._setup(function, derivative, second_derivative, x0,
                     f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol,
                     max_iter, history, history_every, history_bytes,
@@ -520,10 +521,10 @@ cdef class ModifiedHalley(_ThirdOrderNewton):
 cdef class SuperHalley(_ThirdOrderNewton):
     """Super-Halley, the alpha=1 member of the modified Halley family."""
     def __init__(self, function, derivative, second_derivative, x0,
-                 f_x0=None, df_x0=None, d2f_x0=None,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
+                 f_x0=None, df_x0=None, d2f_x0=None, *,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
                  history_bytes=8 * 1024 * 1024):
         self._setup(function, derivative, second_derivative, x0,
                     f_x0, df_x0, d2f_x0, etol, ertol, ptol, prtol,

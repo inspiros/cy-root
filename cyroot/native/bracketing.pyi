@@ -16,8 +16,8 @@ class BracketStep(NamedTuple):
     callback_code: int
 
 class BracketSolver:
-    def __init__(self, function: Any, a: SupportsFloat, b: SupportsFloat, method: str = ...,
-                 f_a: SupportsFloat | None = ..., f_b: SupportsFloat | None = ...,
+    def __init__(self, function: Any, a: SupportsFloat, b: SupportsFloat,
+                 f_a: SupportsFloat | None = ..., f_b: SupportsFloat | None = ..., *, method: str = ...,
                  etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
                  ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
                  max_iter: SupportsIndex = ..., history: SupportsIndex = ...,

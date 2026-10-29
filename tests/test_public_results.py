@@ -127,7 +127,6 @@ class PublicResultTests(unittest.TestCase):
         self.assertTrue((root/'py.typed').is_file())
         for name in ('scalar_bracketing', 'scalar_quasi_newton', 'scalar_newton',
                      'vector_bracketing', 'vector_quasi_newton', 'vector_newton',
-                     'scalar_derivative_approximation', 'vector_derivative_approximation',
                      'return_types'):
             module = importlib.import_module('cyroot.'+name)
             tree = ast.parse((root/(name+'.pyi')).read_text())

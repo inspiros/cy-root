@@ -48,8 +48,6 @@ class ScalarNativeMigrationTests(unittest.TestCase):
                                      for p in parameters)
                     with self.assertRaises(TypeError):
                         solve(*([object()] * (positional + 1)))
-        self.assertNotIn('ahmadi', cyroot.SCALAR_ROOT_FINDING_METHODS)
-        self.assertNotIn('mishchenko', cyroot.VECTOR_ROOT_FINDING_METHODS)
 
     def test_newton_options_reach_guarded_native_constructors(self):
         callback = ScalarCallback(function)

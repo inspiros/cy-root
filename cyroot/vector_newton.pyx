@@ -5,10 +5,10 @@
 # cython: profile = False
 
 
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 cimport cython
 
 from .utils._function_registering import register
-from .vector_derivative_approximation cimport VectorDerivativeApproximation
 
 __all__ = [
     'generalized_newton',
@@ -25,8 +25,8 @@ __all__ = [
 @register('cyroot.vector.newton')
 @cython.binding(True)
 def generalized_newton(F, J, x0, F_x0=None, J_x0=None, *,
-                       etol=1e-10, ertol=8.881784197001252e-16,
-                       ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+                       etol=ETOL, ertol=ERTOL,
+                       ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
                        history=0, history_every=1, history_bytes=8*1024*1024,
                        workspace_bytes=64*1024*1024):
     """Run native Newton with an analytic or numerical Jacobian.
@@ -39,8 +39,6 @@ def generalized_newton(F, J, x0, F_x0=None, J_x0=None, *,
     after J_x0 are keyword-only; h and legacy providers are removed.
     Use VectorNewton for step/run/history/rank; see docs/native-vector.md.
     """
-    if isinstance(J, VectorDerivativeApproximation):
-        raise TypeError('Use JacobianPlan instead of a legacy derivative approximation.')
     from .native.vector import VectorNewton
     return VectorNewton(F, J, x0, f_x0=F_x0, jac_x0=J_x0,
         etol=etol, ertol=ertol, ptol=ptol, prtol=prtol, max_iter=max_iter,
@@ -63,12 +61,6 @@ def generalized_damped_newton(F, J, x0, F_x0=None, J_x0=None, *,
 cdef object _higher_order_solver(object F, object J, object H, object x0,
                                  object F_x0, object J_x0, object H_x0,
                                  int method, object alpha, object options):
-    # These cimported extension-type checks never inspect user __class__ or
-    # metadata before the native constructor reserves explicit adapters.
-    if isinstance(J, VectorDerivativeApproximation):
-        raise TypeError('Use JacobianPlan instead of a legacy derivative approximation.')
-    if isinstance(H, VectorDerivativeApproximation):
-        raise TypeError('Use HessianPlan instead of a legacy derivative approximation.')
     from .native.vector_chebyshev import (
         VectorHalley, VectorModifiedHalley, VectorSuperHalley, VectorChebyshev,
     )
@@ -89,8 +81,8 @@ cdef object _higher_order_solver(object F, object J, object H, object x0,
 @register('cyroot.vector.newton')
 @cython.binding(True)
 def generalized_halley(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, *,
-                       alpha=None, etol=1e-10, ertol=8.881784197001252e-16,
-                       ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+                       alpha=None, etol=ETOL, ertol=ERTOL,
+                       ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
                        history=0, history_every=1, history_bytes=8*1024*1024,
                        workspace_bytes=64*1024*1024):
     """Run native matrix Halley, or modified Halley with an explicit alpha.
@@ -113,8 +105,8 @@ def generalized_halley(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, *,
 @register('cyroot.vector.newton')
 @cython.binding(True)
 def generalized_super_halley(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, *,
-                             etol=1e-10, ertol=8.881784197001252e-16,
-                             ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+                             etol=ETOL, ertol=ERTOL,
+                             ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
                              history=0, history_every=1, history_bytes=8*1024*1024,
                              workspace_bytes=64*1024*1024):
     """Run native matrix Super-Halley with square LU or rectangular least squares.
@@ -132,8 +124,8 @@ def generalized_super_halley(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, *,
 @register('cyroot.vector.newton')
 @cython.binding(True)
 def generalized_chebyshev(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, *,
-                         etol=1e-10, ertol=8.881784197001252e-16,
-                         ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+                         etol=ETOL, ertol=ERTOL,
+                         ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
                          history=0, history_every=1, history_bytes=8*1024*1024,
                          workspace_bytes=64*1024*1024):
     """Run native Chebyshev with square LU or rectangular least-squares steps.
@@ -152,8 +144,8 @@ def generalized_chebyshev(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, *,
 @register('cyroot.vector.newton')
 @cython.binding(True)
 def generalized_tangent_hyperbolas(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, *,
-                                  etol=1e-10, ertol=8.881784197001252e-16,
-                                  ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+                                  etol=ETOL, ertol=ERTOL,
+                                  ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
                                   history=0, history_every=1, history_bytes=8*1024*1024,
                                   workspace_bytes=64*1024*1024):
     """Run native matrix Halley, including rectangular least-squares corrections.

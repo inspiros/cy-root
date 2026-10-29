@@ -55,7 +55,7 @@ class VectorCallback:
 
 class VectorNewton:
     def __init__(self, function: Any, jacobian: Any, x0: ArrayLike,
-                 f_x0: ArrayLike | None = ..., jac_x0: ArrayLike | None = ...,
+                 f_x0: ArrayLike | None = ..., jac_x0: ArrayLike | None = ..., *,
                  etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
                  ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
                  max_iter: SupportsIndex = ..., history: SupportsIndex = ...,

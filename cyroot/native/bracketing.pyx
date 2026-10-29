@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Native bracketing state machine with shared scalar callbacks and copied history."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.math cimport fabs, fmax, fmin, isfinite, copysign, sqrt, pow, ceil, log2, ldexp, nextafter, NAN, INFINITY
 from libc.string cimport memset
@@ -141,10 +142,10 @@ cdef class BracketSolver:
     TOMS748 may sample k+2 times. History contains copied iteration states;
     neither callback samples nor unbounded workspaces are retained.
     """
-    def __init__(self, function, a, b, method='brent', f_a=None, f_b=None,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
+    def __init__(self, function, a, b, f_a=None, f_b=None, *, method='brent',
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
                  history_bytes=8 * 1024 * 1024, interp_method=1, sigma=1e-12,
                  k=2, mu=.5, k1=None, k2=2., n0=1):
         cdef double first, second, value0, value1, tol, nmax

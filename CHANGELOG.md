@@ -17,6 +17,15 @@ Python callbacks still acquire the GIL.
   method selectors. Compiled consumers must rebuild against the new declarations.
   A step `h` that no numerical derivative would use is rejected. The redundant
   `bisect(algo=...)` selector is removed; native bisection is sign-only.
+- Native solver classes take tolerances and other controls as keyword-only
+  arguments, like the public functions. `BracketSolver(function, a, b, f_a,
+  f_b, *, method=...)` moves `method` after the cached endpoint values.
+- All solver families and root-acceptance wrappers share the defaults
+  `etol=1e-10`, `ertol=4*eps`, `ptol=1e-12`, `prtol=4*eps`, `max_iter=200`
+  from `cyroot/defaults.hpp`; optimizers previously used `ertol=prtol=0` and,
+  for Levenberg–Marquardt and dogleg, `max_iter=100`.
+- Optimizer `gtol` bounds the residual-relative stationarity
+  ||J^T F|| / (||F|| max|J_ij|) in Levenberg–Marquardt, dogleg, BFGS and L-BFGS.
 - Every dispatcher entry takes `(function, derivative_or_jacobian, x0)`, including
   the scalar and vector Levenberg–Marquardt, BFGS, L-BFGS and Powell dogleg
   conveniences; pass `None` for numerical derivatives.
@@ -29,8 +38,12 @@ Python callbacks still acquire the GIL.
   Bracket convergence and residual convergence have distinct stopping reasons.
 - Finite-difference evaluation counts change because duplicate and unused samples
   are removed and numerical derivative samples are accounted for.
-- Unverified Ahmadi and experimental Mishchenko remain outside ordinary exports
-  and method discovery.
+- Remove the 1.x derivative approximation API (`finite_difference`,
+  `FiniteDifference`, `generalized_finite_difference`, `GeneralizedFiniteDifference`
+  and their base classes), the `cyroot.fptr` callback layer, the dense
+  `ops.vector_ops`/`ops.matrix_ops` helpers, and the unverified experimental
+  Ahmadi and Mishchenko methods built on them. Native derivative plans replace
+  the approximation API.
 
 ### Native Solvers And Callbacks
 
@@ -42,7 +55,7 @@ Python callbacks still acquire the GIL.
   backtracking. Only the nonlinear residual tolerance is root success.
 - Add Python/native Jacobian-vector and Jacobian-transpose product callbacks and
   matrix-free finite-difference product plans.
-- Route all 26 supported scalar methods and the supported vector methods through
+- Route all supported scalar methods and the supported vector methods through
   native numerical loops, including bracketing, interpolation, Vrahatis, and the
   quasi-Newton family.
 - Replace symbolic Householder formulas with a runtime-order scalar recurrence

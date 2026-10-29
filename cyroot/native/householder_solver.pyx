@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Resumable Householder with runtime-order native reciprocal recurrence."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.math cimport fabs, isfinite, NAN, INFINITY
 from libc.string cimport memset
@@ -63,9 +64,9 @@ cdef class Householder:
     """
 
     def __init__(self, function, derivatives, x0, f_x0=None, dfs_x0=None, *,
-                 order=None, step=None, etol=1e-10,
-                 ertol=8.881784197001252e-16, ptol=1e-12,
-                 prtol=8.881784197001252e-16, max_iter=200,
+                 order=None, step=None, etol=ETOL,
+                 ertol=ERTOL, ptol=PTOL,
+                 prtol=PRTOL, max_iter=MAX_ITER,
                  history=0, history_every=1, history_bytes=8 * 1024 * 1024,
                  workspace_bytes=8 * 1024 * 1024, max_nodes=65):
         cdef ScalarCallback adapter, residual

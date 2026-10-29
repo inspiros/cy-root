@@ -17,7 +17,7 @@ class SecantStep(NamedTuple):
 
 class Secant:
     def __init__(self, function: Any, x0: SupportsFloat, x1: SupportsFloat,
-                 f_x0: SupportsFloat | None = ..., f_x1: SupportsFloat | None = ...,
+                 f_x0: SupportsFloat | None = ..., f_x1: SupportsFloat | None = ..., *,
                  etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
                  ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
                  max_iter: SupportsIndex = ..., history: SupportsIndex = ...,

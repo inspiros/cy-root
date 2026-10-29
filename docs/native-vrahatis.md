@@ -148,7 +148,7 @@ from the legacy implementation. Rebuild compiled consumers against the current
 draft declarations. Private `vrahatis_kernel` is removed.
 
 Vrahatis completes the native migration of currently supported vector solvers.
-Experimental Mishchenko and Ahmadi remain outside ordinary exports. This coverage
-does not complete cross-platform or release qualification. A future
+The unverified experimental Mishchenko and Ahmadi methods were removed. This
+coverage does not complete cross-platform or release qualification. A future
 Eiger–Sikorski–Stenger solver needs separate degree and simplex-search machinery;
 it is not implemented by this sign-polygon method.

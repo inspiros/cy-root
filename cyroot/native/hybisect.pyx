@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Interval-enclosure splitting bisection with fixed native workspace."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.math cimport fabs, fmax, isfinite, NAN
 from libc.string cimport memset
@@ -92,9 +93,9 @@ cdef class Hybisect:
     this algorithm is not an isolation/completeness certificate for all roots.
     """
     def __init__(self,function,interval_function,a,b,*,
-                 etol=1e-10,ertol=8.881784197001252e-16,
-                 ptol=1e-12,prtol=8.881784197001252e-16,
-                 max_iter=200,max_split_iter=200,max_pending=4096,max_roots=4096,
+                 etol=ETOL,ertol=ERTOL,
+                 ptol=PTOL,prtol=PRTOL,
+                 max_iter=MAX_ITER,max_split_iter=200,max_pending=4096,max_roots=4096,
                  workspace_bytes=8*1024*1024,history=0,history_every=1,
                  history_bytes=8*1024*1024):
         cdef double first,second,fa,fr,xa,xr

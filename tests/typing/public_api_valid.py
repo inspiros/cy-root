@@ -5,7 +5,6 @@ import numpy as np
 from numpy.typing import NDArray
 import cyroot
 from cyroot.utils._function_registering import register
-from cyroot.scalar_newton import ahmadi, AhmadiDeltaFuncFactory
 from cyroot.vector_bracketing import compute_admissible_n_polygon, get_M, sorted_by_vertices
 from cyroot import (
 status as public_status,
@@ -25,13 +24,7 @@ status as public_status,
     toms748 as public_toms748,
     wu as public_wu,
     itp as public_itp,
-    fptr as public_fptr,
-    scalar_derivative_approximation as public_scalar_derivative_approximation,
-    DerivativeApproximation as public_DerivativeApproximation,
-    finite_difference as public_finite_difference,
-    FiniteDifference as public_FiniteDifference,
     return_types as public_return_types,
-    vector_derivative_approximation as public_vector_derivative_approximation,
     native as public_native,
     scalar_newton as public_scalar_newton,
     newton as public_newton,
@@ -54,9 +47,6 @@ status as public_status,
     find_scalar_root as public_find_scalar_root,
     vector_bracketing as public_vector_bracketing,
     vrahatis as public_vrahatis,
-    VectorDerivativeApproximation as public_VectorDerivativeApproximation,
-    GeneralizedFiniteDifference as public_GeneralizedFiniteDifference,
-    generalized_finite_difference as public_generalized_finite_difference,
     vector_newton as public_vector_newton,
     generalized_newton as public_generalized_newton,
     generalized_halley as public_generalized_halley,
@@ -275,11 +265,7 @@ analytic = cyroot.newton(scalar, lambda x: 2*x, Initial(), max_iter=Budget())
 assert_type(analytic.success, bool)
 assert_type(analytic.iters, int)
 assert_type(analytic.error, float)
-cyroot.bisect(scalar, 1., 2., algo=1).bracket
-assert_type(cyroot.finite_difference(scalar, 1.5, kind='central'), float)
-assert_type(cyroot.FiniteDifference(scalar)(1.5), float)
-assert_type(cyroot.generalized_finite_difference(vector, (0.,)), NDArray[np.float64])
-assert_type(cyroot.GeneralizedFiniteDifference(vector)((0.,)), NDArray[np.float64])
+cyroot.bisect(scalar, 1., 2.).bracket
 cyroot.sidi(scalar, (1., 1.5, 2.), f_x0s=(-1., .25, 2.))
 cyroot.muller(lambda z: z*z+1., -1+0j, 0j, 1+0j, f_x0=2+0j)
 cyroot.vrahatis(vector, (0.,), h=(1.,))

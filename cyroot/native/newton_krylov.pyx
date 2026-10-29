@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Matrix-free Newton with GMRES/LSQR and Armijo backtracking."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.limits cimport INT_MAX
 from libc.math cimport fabs,fmax,isfinite,NAN,INFINITY
@@ -120,8 +121,8 @@ cdef class NewtonKrylov:
     """
     def __init__(self,function,jvp,x0,f_x0=None,*,vjp=None,restart=20,max_linear_iter=100,
                  linear_rtol=1e-3,c1=1e-4,contraction=.5,max_line_search=32,
-                 etol=1e-10,ertol=8.881784197001252e-16,
-                 ptol=1e-12,prtol=8.881784197001252e-16,max_iter=200,
+                 etol=ETOL,ertol=ERTOL,
+                 ptol=PTOL,prtol=PRTOL,max_iter=MAX_ITER,
                  max_evaluations=10000,history=0,history_every=1,
                  history_bytes=8*1024*1024,workspace_bytes=64*1024*1024):
         cdef DoubleBuffer guard=None

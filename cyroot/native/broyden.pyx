@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Shared residual-only state engine for Broyden and Klement updates."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.limits cimport INT_MAX
 from libc.math cimport fabs, fmax, isfinite, NAN, INFINITY
@@ -126,9 +127,9 @@ cdef object _phase(int value):
 
 cdef class BroydenGood:
     """Direct good Broyden, with an initial Jacobian matrix or native plan."""
-    def __init__(self, function, jacobian0, x0, f_x0=None, *, etol=1e-10,
-                 ertol=8.881784197001252e-16, ptol=1e-12,
-                 prtol=8.881784197001252e-16, max_iter=200, history=0,
+    def __init__(self, function, jacobian0, x0, f_x0=None, *, etol=ETOL,
+                 ertol=ERTOL, ptol=PTOL,
+                 prtol=PRTOL, max_iter=MAX_ITER, history=0,
                  history_every=1, history_bytes=8*1024*1024,
                  workspace_bytes=64*1024*1024):
         self._setup(function, jacobian0, x0, f_x0, etol, ertol, ptol, prtol,
@@ -598,9 +599,9 @@ cdef class BroydenGood:
 cdef class BroydenBad(BroydenGood):
     """Inverse bad Broyden; inverse0 must already be an inverse approximation."""
     @classmethod
-    def from_jacobian(cls, function, jacobian0, x0, f_x0=None, *, etol=1e-10,
-                      ertol=8.881784197001252e-16, ptol=1e-12,
-                      prtol=8.881784197001252e-16, max_iter=200, history=0,
+    def from_jacobian(cls, function, jacobian0, x0, f_x0=None, *, etol=ETOL,
+                      ertol=ERTOL, ptol=PTOL,
+                      prtol=PRTOL, max_iter=MAX_ITER, history=0,
                       history_every=1, history_bytes=8*1024*1024,
                       workspace_bytes=64*1024*1024):
         """Initialize an inverse from a matrix or native numerical Jacobian plan."""
@@ -609,9 +610,9 @@ cdef class BroydenBad(BroydenGood):
                       max_iter, history, history_every, history_bytes, workspace_bytes, True, None, False)
         return solver
 
-    def __init__(self, function, inverse0, x0, f_x0=None, *, etol=1e-10,
-                 ertol=8.881784197001252e-16, ptol=1e-12,
-                 prtol=8.881784197001252e-16, max_iter=200, history=0,
+    def __init__(self, function, inverse0, x0, f_x0=None, *, etol=ETOL,
+                 ertol=ERTOL, ptol=PTOL,
+                 prtol=PRTOL, max_iter=MAX_ITER, history=0,
                  history_every=1, history_bytes=8*1024*1024,
                  workspace_bytes=64*1024*1024):
         self._setup(function, inverse0, x0, f_x0, etol, ertol, ptol, prtol,

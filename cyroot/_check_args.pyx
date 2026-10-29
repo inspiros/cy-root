@@ -7,10 +7,14 @@
 import math
 import operator
 
+from .defaults cimport ETOL as _ETOL, ERTOL as _ERTOL, PTOL as _PTOL, PRTOL as _PRTOL, MAX_ITER as _MAX_ITER
 
 __all__ = [
     '_check_stop_cond_args',
 ]
+
+# Python-visible copies of defaults.hpp, for pure-Python wrappers.
+ETOL, ERTOL, PTOL, PRTOL, MAX_ITER = _ETOL, _ERTOL, _PTOL, _PRTOL, _MAX_ITER
 
 ################################################################################
 # Python-side checks

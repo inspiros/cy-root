@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False
 """Vector bisection compatibility boundaries over the native Vrahatis engine."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 import cython
 import numpy as np
 from .utils._function_registering import register
@@ -11,8 +12,8 @@ __all__ = ['vrahatis']
 
 @register('cyroot.vector.bracketing')
 @cython.binding(True)
-def vrahatis(F,x0s,F_x0s=None,*, h=None,etol=1e-10,ertol=8.881784197001252e-16,
-             ptol=1e-12,prtol=8.881784197001252e-16,max_iter=200,**options):
+def vrahatis(F,x0s,F_x0s=None,*, h=None,etol=ETOL,ertol=ERTOL,
+             ptol=PTOL,prtol=PRTOL,max_iter=MAX_ITER,**options):
     """Native sign-polygon bisection; use native.Vrahatis for step/history.
 
     Python residuals receive copied tuples. Explicit VectorCallback and

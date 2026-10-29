@@ -61,9 +61,9 @@ callback error stops immediately and preserves the last accepted state.
 Defaults:
 
 ```python
-LevenbergMarquardt(objective, x0,
-    etol=1e-10, ertol=0., ptol=1e-12, prtol=0., gtol=1e-12,
-    max_iter=100, max_evaluations=10000, max_trials=16,
+LevenbergMarquardt(objective, x0, *,
+    etol=1e-10, ertol=4*eps, ptol=1e-12, prtol=4*eps, gtol=1e-12,
+    max_iter=200, max_evaluations=10000, max_trials=16,
     damping=1e-3, rcond=1e-12, history=0, history_every=1,
     workspace_bytes=64*1024*1024)
 ```
@@ -72,9 +72,15 @@ Root convergence means \(\|F\|_\infty\le\mathrm{etol}+
 \mathrm{ertol}\|F(x_0)\|_\infty\), with a fixed initial relative scale.
 `ertol` must be smaller than one. An accepted step within the absolute/relative
 coordinate tolerances stops with `stagnation` when root tolerance is unmet.
-`gtol` bounds the dimensionless model metric
-\(\|A^T(F/s)\|_\infty\); it does not bound the raw objective gradient.
-A small metric returns `stationary_nonroot`, an unsuccessful root result.
+`gtol` bounds the residual-relative stationarity
+\(\|J^TF\|_\infty/(\|F\|_\infty\max_{ij}|J_{ij}|)\), shared with BFGS and
+L-BFGS. It is invariant to residual scaling and stays of order one near simple
+and multiple roots, so it does not stop a solve near a root. A small value
+returns `stationary_nonroot`, an unsuccessful root result. A minimum where the
+whole Jacobian vanishes (for example a scalar \(f'(x)=0\)) keeps this ratio near
+one; such solves usually end as `no_acceptable_step`, `line_search_failure` or
+`stagnation`, which are also unsuccessful. The `gradient` field still reports
+the scaled model metric \(\|A^T(F/s)\|_\infty\).
 
 `result` and `history` are properties returning copied immutable tuple snapshots.
 `step()` performs one outer iteration; `run()` finishes the solve. Both return

@@ -267,4 +267,4 @@ solver, Homeier, interpolation, complex Muller and interval Hybisect contracts.
 bounded sign-polygon discovery and copied sweep history. It accepts square and
 rectangular residual descriptors; multidimensional vertex signs alone do not
 certify root existence. This completes native routes for supported vector solvers;
-experimental optimizers and release/platform qualification remain separate work.
+release/platform qualification remains separate work.

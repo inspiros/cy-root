@@ -202,7 +202,7 @@ optimizer stationarity do not by themselves establish a residual root.
 | Family | Scalar equations | Vector systems |
 | --- | --- | --- |
 | Bracketing | Bisection, Hybisect, regula falsi, Illinois, Pegasus, Anderson–Björck, Dekker, Brent, Chandrupatla, Ridders, TOMS748, Wu, ITP | Vrahatis sign-polygon bisection |
-| Newton-type | Newton, Homeier, Halley, Super-Halley, Chebyshev, tangent hyperbolas, runtime-order Householder | Generalized Newton, Halley, Super-Halley, Chebyshev, tangent hyperbolas |
+| Newton-type | Newton, damped Newton, Homeier, Halley, Super-Halley, Chebyshev, tangent hyperbolas, runtime-order Householder | Generalized Newton, damped Newton, matrix-free Newton–Krylov (GMRES/LSQR), Halley, Super-Halley, Chebyshev, tangent hyperbolas |
 | Quasi-Newton / interpolation | Secant, Sidi, Steffensen, inverse quadratic interpolation, hyperbolic interpolation, complex Muller | Wolfe–Bittner, Robinson, Barnes, Traub–Steffensen, good/bad Broyden, Klement |
 | Optimization-based | Levenberg–Marquardt, BFGS, L-BFGS, Powell dogleg | Levenberg–Marquardt, BFGS, L-BFGS, Powell dogleg |
 
@@ -225,7 +225,7 @@ See the [numerical derivative example](examples/numerical_derivatives.py).
 
 `SCALAR_ROOT_FINDING_METHODS` and `VECTOR_ROOT_FINDING_METHODS` expose supported
 method names. Use direct functions or the `find_scalar_root` / `find_vector_root`
-dispatchers. Experimental, unverified methods are outside ordinary discovery.
+dispatchers.
 
 For compiled callbacks, start with the
 [pure Python syntax Cython example](examples/pure_python_callback.py) or the

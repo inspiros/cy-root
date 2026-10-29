@@ -113,7 +113,7 @@ apply, including pinned contexts, native field validation, copied Python callbac
 boundaries and derivative-prefix failure handling. Every numerical derivative
 invocation counts one attempt in its role and adds all stencil attempts to the
 residual count. `step()` and `run()` share one total iteration budget;
-`max_iter=0` is unlimited, and `None` uses the default 200.
+The default `max_iter` is 200; zero or `None` is unlimited.
 
 ## Diagnostics and retained state
 

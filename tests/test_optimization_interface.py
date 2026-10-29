@@ -86,8 +86,6 @@ class OptimizationInterfaceTests(unittest.TestCase):
             self.assertEqual(state.history[-1].termination_reason,Reason.RESIDUAL_TOLERANCE)
             with self.assertRaises(AttributeError):final.root=0.
             with self.assertRaises(RuntimeError):state.__init__(method,f,1.5,scalar=True)
-        self.assertNotIn('ahmadi',cyroot.SCALAR_ROOT_FINDING_METHODS)
-        self.assertNotIn('generalized_mishchenko',cyroot.VECTOR_ROOT_FINDING_METHODS)
 
     def test_native_scalar_direct_sampling_counts_lifetime_and_exact_derivatives(self):
         for method in METHODS:

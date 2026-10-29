@@ -303,20 +303,6 @@ class ScalarStoppingTests(unittest.TestCase):
         self.assertTrue(math.isnan(result.df_root[1]))
         self.assertEqual(result.f_calls, (1, 0, 0))
 
-    def test_experimental_ahmadi_safe_initial_paths(self):
-        with warnings.catch_warnings():
-            warnings.simplefilter('ignore')
-            result = newton_methods.ahmadi(lambda x: x - 1.,
-                                           [lambda x: 1., lambda x: 1., lambda x: 0.],
-                                           1.)
-            self.assert_reason(result, TerminationReason.RESIDUAL_TOLERANCE)
-            self.assertEqual(result.iters, 0)
-            result = newton_methods.ahmadi(lambda x: 1.,
-                                           [lambda x: math.nan, lambda x: 1., lambda x: 0.],
-                                           1.)
-            self.assert_reason(result, TerminationReason.NONFINITE)
-            self.assertEqual(result.iters, 0)
-
 
 if __name__ == '__main__':
     unittest.main()

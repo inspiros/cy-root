@@ -1,21 +1,19 @@
 # distutils: language=c++
 # cython: binding=True
 """Established quasi-Newton routes backed by native solver states."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 import cython
 from .utils._function_registering import register
 from .native.broyden import _broyden as _native_broyden
 
-cdef extern from 'defaults.hpp' namespace 'cyroot' nogil:
-    double ETOL, ERTOL, PTOL, PRTOL
-    size_t MAX_ITER
 
 __all__ = ['wolfe_bittner', 'robinson', 'barnes', 'traub_steffensen', 'broyden', 'klement']
 
 @register('cyroot.vector.quasi_newton')
 @cython.binding(True)
 def wolfe_bittner(F, x0s, F_x0s=None, *, rcond=1e-12,
-                  etol=1e-10, ertol=8.881784197001252e-16,
-                  ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+                  etol=ETOL, ertol=ERTOL,
+                  ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
                   history=0, history_every=1, history_bytes=8*1024*1024,
                   workspace_bytes=64*1024*1024):
     """Native multipoint affine root finding; see docs/native-wolfe-bittner.md."""
@@ -31,8 +29,8 @@ def wolfe_bittner(F, x0s, F_x0s=None, *, rcond=1e-12,
 @register('cyroot.vector.quasi_newton')
 @cython.binding(True)
 def robinson(F, x0, x1, F_x0=None, F_x1=None, *, orth='efficient',
-             etol=1e-10, ertol=8.881784197001252e-16,
-             ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+             etol=ETOL, ertol=ERTOL,
+             ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
              history=0, history_every=1, history_bytes=8*1024*1024,
              workspace_bytes=64*1024*1024):
     """Run native square Robinson with identity or deterministic Householder probes.
@@ -55,8 +53,8 @@ def robinson(F, x0, x1, F_x0=None, F_x1=None, *, orth='efficient',
 @register('cyroot.vector.quasi_newton')
 @cython.binding(True)
 def barnes(F, x0, F_x0=None, J_x0=None, *,
-           etol=1e-10, ertol=8.881784197001252e-16,
-           ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+           etol=ETOL, ertol=ERTOL,
+           ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
            history=0, history_every=1, history_bytes=8*1024*1024,
            workspace_bytes=64*1024*1024):
     """Run native square Barnes with deterministic retained-secant projection.
@@ -79,8 +77,8 @@ def barnes(F, x0, F_x0=None, J_x0=None, *,
 @register('cyroot.vector.quasi_newton')
 @cython.binding(True)
 def traub_steffensen(F, x0, F_x0=None, *,
-                     etol=1e-10, ertol=8.881784197001252e-16,
-                     ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+                     etol=ETOL, ertol=ERTOL,
+                     ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
                      history=0, history_every=1, history_bytes=8*1024*1024,
                      workspace_bytes=64*1024*1024):
     """Run native square Traub-Steffensen with residual-dependent differences.
@@ -126,8 +124,8 @@ def broyden(F, x0, F_x0=None, J_x0=None, *, algo=2,
 @register('cyroot.vector.quasi_newton')
 @cython.binding(True)
 def klement(F, x0, F_x0=None, J_x0=None, *,
-            etol=1e-10, ertol=8.881784197001252e-16,
-            ptol=1e-12, prtol=8.881784197001252e-16, max_iter=200,
+            etol=ETOL, ertol=ERTOL,
+            ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER,
             history=0, history_every=1, history_bytes=8*1024*1024,
             workspace_bytes=64*1024*1024):
     """Run native square Klement with row-weighted secant Jacobian updates.

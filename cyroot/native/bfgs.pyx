@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Inverse-BFGS for residual objectives, with bounded strong-Wolfe search."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.math cimport NAN, INFINITY, fabs, fmax, isfinite
 from libc.string cimport memcpy
@@ -100,8 +101,8 @@ cdef class BFGS:
     Strong-Wolfe search uses bounded doubling/bisection. Root candidates may
     terminate before sampling their Jacobian; their gradient is None.
     """
-    def __init__(self,objective,x0,*,etol=1e-10,ertol=0.,ptol=1e-12,prtol=0.,
-                 gtol=1e-12,max_iter=200,max_evaluations=10000,max_line_search=32,
+    def __init__(self,objective,x0,*,etol=ETOL,ertol=ERTOL,ptol=PTOL,prtol=PRTOL,
+                 gtol=1e-12,max_iter=MAX_ITER,max_evaluations=10000,max_line_search=32,
                  c1=1e-4,c2=.9,history=0,history_every=1,
                  workspace_bytes=64*1024*1024):
         self._setup(objective,x0,etol,ertol,ptol,prtol,gtol,max_iter,max_evaluations,
@@ -479,8 +480,8 @@ cdef class LBFGS(BFGS):
     corrections limits retained pairs; inverse-Hessian storage is O(n*corrections).
     The residual Jacobian is still dense. No box bounds are imposed.
     """
-    def __init__(self,objective,x0,*,corrections=10,etol=1e-10,ertol=0.,ptol=1e-12,
-                 prtol=0.,gtol=1e-12,max_iter=200,max_evaluations=10000,
+    def __init__(self,objective,x0,*,corrections=10,etol=ETOL,ertol=ERTOL,ptol=PTOL,
+                 prtol=PRTOL,gtol=1e-12,max_iter=MAX_ITER,max_evaluations=10000,
                  max_line_search=32,c1=1e-4,c2=.9,history=0,history_every=1,
                  workspace_bytes=64*1024*1024):
         self._setup(objective,x0,etol,ertol,ptol,prtol,gtol,max_iter,max_evaluations,

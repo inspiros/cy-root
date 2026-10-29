@@ -23,7 +23,6 @@ from cyroot.native import (
     BroydenGood, BroydenResult, HessianPlan, JacobianPlan,
     NativeCallbackError, VectorCallback,
 )
-from cyroot.vector_derivative_approximation import GeneralizedFiniteDifference
 
 
 DISABLED = dict(etol=0., ertol=0., ptol=0., prtol=0.)
@@ -173,11 +172,9 @@ class BroydenMigrationTests(unittest.TestCase):
                             cyroot.broyden(lambda x: (0.,)*m, (0.,)*n,
                                            algo=selector, **cache)
 
-    def test_legacy_and_wrong_kind_providers_reject_even_at_root(self):
-        class Legacy(GeneralizedFiniteDifference):
-            def __call__(self, x):raise AssertionError('legacy derivative evaluated')
+    def test_wrong_kind_providers_reject_even_at_root(self):
         for selector, _ in SELECTORS:
-            for provider in (Legacy(lambda x: x, order=1), HessianPlan(1),
+            for provider in (HessianPlan(1),
                              VectorCallback(lambda x: ((1.,),), 1, jacobian=True)):
                 with self.assertRaises(TypeError):
                     cyroot.broyden(lambda x: (0.,), (0.,), (0.,), provider, algo=selector)

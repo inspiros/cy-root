@@ -70,7 +70,7 @@ hess_x0=None, *, etol=1e-10, ertol=4*eps, ptol=1e-12, prtol=4*eps,
 max_iter=200, history=0, history_every=1, history_bytes=8*1024*1024,
 workspace_bytes=64*1024*1024)`.
 `vector_chebyshev(function, jacobian, hessian, x0, **options)` constructs and
-runs one solver. `max_iter=0` is unlimited; `None` uses the default 200.
+runs one solver. The default `max_iter` is 200; zero or `None` is unlimited.
 All native callback interfaces remain drafts.
 
 `function` accepts a Python residual or residual-kind `VectorCallback`.

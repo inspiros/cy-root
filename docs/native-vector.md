@@ -60,10 +60,9 @@ assert max(abs(a-b) for a, b in zip(result.root, (1.5, .75))) < 1e-9
 
 The top-level export, `cyroot.vector_newton.generalized_newton` and
 `find_vector_root('generalized_newton', ...)` share this behavior. Options after
-`J_x0` are keyword-only. `max_iter=None` uses 200; zero is unlimited. The old `h`
-option is removed: configure a native plan's `step` instead. Legacy
-`VectorDerivativeApproximation`/`GeneralizedFiniteDifference` providers are
-rejected; their standalone derivative APIs remain available.
+`J_x0` are keyword-only. The default `max_iter` is 200; zero or `None` is unlimited. The old `h`
+option is removed: configure a native plan's `step` instead. The 1.x derivative
+approximation classes were removed; see [finite differences](finite-differences.md).
 
 Python residual and Jacobian callbacks now receive immutable tuples. Replace
 array expressions such as `point - 1.` with indexed sequence arithmetic or an

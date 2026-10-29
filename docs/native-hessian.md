@@ -145,7 +145,7 @@ The [compiled example](../examples/native_hessian.md) uses installed declaration
 and native callbacks without NumPy C headers. This first plan matches the square
 callback ABI and integrates with [native vector Chebyshev](native-vector-chebyshev.md).
 Rectangular residuals, remaining higher-order vector solvers, general rank
-tensors and parallel sample scheduling are later work. The established
-rectangular `generalized_finite_difference` API remains available. Hessian
+tensors and parallel sample scheduling are later work. See
+[finite differences](finite-differences.md) for every derivative plan. Hessian
 sampling needs no BLAS; the package still requires NumPy and SciPy for existing
 algorithms and the initial native linear algebra provider.

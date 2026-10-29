@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Resumable interpolation methods with native callback and workspace paths."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.math cimport fabs, fmax, isfinite, NAN, INFINITY
 from cyroot._check_args import _check_stop_cond_args
@@ -36,9 +37,9 @@ class InterpolationStep(NamedTuple):
 
 cdef class _Interpolation:
     def __init__(self, function, points, values, int method, aitken=True,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
                  history_bytes=8 * 1024 * 1024,
                  workspace_bytes=8 * 1024 * 1024):
         cdef Py_ssize_t i, j, n
@@ -489,7 +490,7 @@ class Sidi(_Interpolation):
 
 class Steffensen(_Interpolation):
     """Steffensen iteration, optionally using Aitken's delta-squared form."""
-    def __init__(self, function, x0, f_x0=None, aitken=True, **options):
+    def __init__(self, function, x0, f_x0=None, *, aitken=True, **options):
         super().__init__(function, (x0,), (f_x0,), STEFFENSEN, aitken=aitken, **options)
 
 

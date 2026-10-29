@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Native scalar state machines and callback bridges (opt-in preview)."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from operator import index
 from libc.math cimport fabs, fmax, isfinite, NAN, INFINITY
@@ -135,10 +136,10 @@ cdef class Bisection:
     every history_every-th iteration and terminal states are sampled until
     the capacity is full. A full history never stops the numerical solve.
     """
-    def __init__(self, function, a, b, f_a=None, f_b=None,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
+    def __init__(self, function, a, b, f_a=None, f_b=None, *,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
                  history_bytes=8 * 1024 * 1024):
         cdef double first, second, value0, value1, fa, fr, xa, xr
         cdef bint cached_a, cached_b
@@ -402,10 +403,10 @@ cdef class Newton:
     roles. Pass None or a ScalarDerivativePlan for numerical derivatives. Stopping,
     history and total iteration limits match the native Bisection interface.
     """
-    def __init__(self, function, derivative, x0, f_x0=None, df_x0=None,
-                 etol=1e-10, ertol=8.881784197001252e-16,
-                 ptol=1e-12, prtol=8.881784197001252e-16,
-                 max_iter=200, history=0, history_every=1,
+    def __init__(self, function, derivative, x0, f_x0=None, df_x0=None, *,
+                 etol=ETOL, ertol=ERTOL,
+                 ptol=PTOL, prtol=PRTOL,
+                 max_iter=MAX_ITER, history=0, history_every=1,
                  history_bytes=8 * 1024 * 1024):
         if self._constructing or self._function is not None or self._initialized:
             raise RuntimeError('Solvers cannot be reinitialized.')

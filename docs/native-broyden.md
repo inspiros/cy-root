@@ -66,8 +66,7 @@ assert planned_result.success
 `J_x0` accepts a matrix, an initialized matching native `JacobianPlan`, or
 `None` for an automatic central plan. It never means an inverse in this public
 entry point. For an existing inverse guess, use `BroydenBad` directly. There is
-no callable analytic Jacobian role. Legacy `GeneralizedFiniteDifference` and
-`VectorDerivativeApproximation` objects are not converted to native plans.
+no callable analytic Jacobian role.
 
 This migration changes the following behavior:
 
@@ -135,7 +134,7 @@ history_bytes=8*1024*1024, workspace_bytes=64*1024*1024)`.
 `BroydenBad` has the same options, replacing `jacobian0` with `inverse0`.
 `broyden_good(function, jacobian0, x0, **options)` and
 `broyden_bad(function, inverse0, x0, **options)` construct and run one solver.
-`max_iter=None` means 200; zero is unlimited. The total budget is shared by
+The default `max_iter` is 200; zero or `None` is unlimited. The total budget is shared by
 `step()` and `run()`. Iterating over a solver yields its remaining steps.
 
 Points and residuals must have matching nonzero length \(n\), and initial

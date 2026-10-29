@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Scaled Levenberg-Marquardt with augmented rank-aware least-squares steps."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.math cimport NAN, INFINITY, fabs, fmax, fmin, isfinite
 from libc.string cimport memcpy
@@ -11,6 +12,7 @@ from ._buffers cimport DoubleBuffer, is_native_double_buffer
 from .higher_derivatives import _checked_integer
 from .dogleg_math cimport dogleg_prepare,dogleg_step
 from .lm_math cimport lm_prepare, lm_trial, lm_reductions
+from .bfgs_math cimport bfgs_stationarity
 
 cdef enum:
     LM_RUNNING=0
@@ -113,8 +115,8 @@ cdef class LevenbergMarquardt:
     point may have a nonzero residual. The existing objective supplies native
     or Python callbacks; absent Jacobians use native central differences.
     """
-    def __init__(self, objective, x0, *, etol=1e-10, ertol=0., ptol=1e-12,
-                 prtol=0., gtol=1e-12, max_iter=100, max_evaluations=10000,
+    def __init__(self, objective, x0, *, etol=ETOL, ertol=ERTOL, ptol=PTOL,
+                 prtol=PRTOL, gtol=1e-12, max_iter=MAX_ITER, max_evaluations=10000,
                  max_trials=16, damping=1e-3, rcond=1e-12, history=0,
                  history_every=1, workspace_bytes=64*1024*1024):
         self._setup(objective,x0,etol,ertol,ptol,prtol,gtol,max_iter,max_evaluations,
@@ -259,6 +261,15 @@ cdef class LevenbergMarquardt:
         cdef int status=self._objective._sample(1,point,out)
         return self._objective._callback_code if status==3 else 0
 
+    cdef bint _stationary(self) noexcept nogil:
+        # Residual-relative stationarity, shared with BFGS: column scaling of
+        # the model would hide a vanishing Jacobian column at a nonroot minimum.
+        cdef double measure=INFINITY
+        if bfgs_stationarity(self._f,self._j,self._n,self._m,&measure)!=0:
+            self._state.reason=LM_NONFINITE
+        elif measure<=self._gtol:self._state.reason=LM_STATIONARY
+        return self._state.reason!=LM_RUNNING
+
     cdef void _fail(self, int status) noexcept nogil:
         if status==3:
             self._state.reason=LM_CALLBACK
@@ -315,9 +326,7 @@ cdef class LevenbergMarquardt:
                 self._state.reason=LM_NONFINITE
                 break
             self._state.gradient=gradient
-            if gradient<=self._gtol:
-                self._state.reason=LM_STATIONARY
-                break
+            if self._stationary():break
             if self._state.f_calls>=self._max_evaluations:
                 self._state.reason=LM_EVALUATIONS
                 break
@@ -391,7 +400,7 @@ cdef class LevenbergMarquardt:
             self._augmented,self._rhs,self._dogleg_g,&scale,&gradient)
         self._state.gradient=gradient
         if status!=0:self._state.reason=LM_NONFINITE
-        elif gradient<=self._gtol:self._state.reason=LM_STATIONARY
+        elif self._stationary():pass
         else:
             self._state.linear_status=self._linear.compute(self._augmented,self._rhs,
                 self._z,self._work,self._pivots.data(),&self._state.linear_rank,&info)
@@ -523,7 +532,7 @@ cdef class PowellDogleg(LevenbergMarquardt):
     are refreshed at each accepted point. Rank describes the undamped scaled J.
     """
     def __init__(self,objective,x0,*,initial_radius=1.,max_radius=1e6,min_radius=1e-15,
-                 etol=1e-10,ertol=0.,ptol=1e-12,prtol=0.,gtol=1e-12,max_iter=100,
+                 etol=ETOL,ertol=ERTOL,ptol=PTOL,prtol=PRTOL,gtol=1e-12,max_iter=MAX_ITER,
                  max_evaluations=10000,max_trials=16,rcond=1e-12,history=0,
                  history_every=1,workspace_bytes=64*1024*1024):
         self._setup(objective,x0,etol,ertol,ptol,prtol,gtol,max_iter,max_evaluations,

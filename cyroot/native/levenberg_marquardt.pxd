@@ -39,6 +39,7 @@ cdef class LevenbergMarquardt:
     cdef void _leave(self) noexcept
     cdef int _evaluate(self, const double* point, double* out) noexcept nogil
     cdef int _difference_sample(self, const double* point, double* out) noexcept nogil
+    cdef bint _stationary(self) noexcept nogil
     cdef void _fail(self, int status) noexcept nogil
     cdef void _record(self) noexcept nogil
     # Caller pins state and holds _enter reservation through native execution

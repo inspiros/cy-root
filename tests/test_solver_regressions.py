@@ -4,7 +4,6 @@ import unittest
 import numpy as np
 from numpy.testing import assert_allclose, assert_array_equal
 
-from cyroot.scalar_newton import AhmadiDeltaFuncFactory
 from cyroot.vector_newton import (
     generalized_halley,
     generalized_super_halley,
@@ -187,15 +186,6 @@ class WolfeBittnerTests(unittest.TestCase):
         self.assertFalse(result.converged)
         self.assertFalse(result.optimal)
         self.assertEqual(result.iters, 0)
-
-
-class AhmadiFactoryTests(unittest.TestCase):
-    def test_python_adapter_uses_derivative_order_key(self):
-        derivatives = np.array([1., 2., 3., 0.])
-        compiled = AhmadiDeltaFuncFactory.get(3, c_code=True)
-        python_adapter = AhmadiDeltaFuncFactory.get(3, c_code=False)
-        self.assertAlmostEqual(python_adapter(derivatives), -2. / 3.)
-        self.assertAlmostEqual(python_adapter(derivatives), compiled(derivatives))
 
 
 if __name__ == '__main__':

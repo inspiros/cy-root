@@ -55,6 +55,14 @@ unsuccessful stagnation; residual convergence is required for success.
 Rectangular systems may use least-squares steps, but their success criterion
 still concerns the residual, rather than least-squares stationarity alone.
 
+Every solver family and root-acceptance wrapper shares the defaults
+`etol=1e-10`, `ertol=4*eps`, `ptol=1e-12`, `prtol=4*eps` and `max_iter=200`
+(binary64 `eps`), defined once in `cyroot/defaults.hpp`. Method-specific controls,
+such as optimizer `gtol` or evaluation budgets, keep their own defaults. These
+controls are keyword-only in every public function and native solver class;
+only the function, derivative providers, starting values and cached initial
+values are positional.
+
 Tolerances must be finite and nonnegative. Relative tolerances must be smaller
 than one. `max_iter` is a nonnegative integer; zero or `None` removes the
 iteration limit. Disabling both the limit and every tolerance is rejected.

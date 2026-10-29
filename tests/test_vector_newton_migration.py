@@ -20,7 +20,6 @@ from cyroot.native import (
     HessianCallback, JacobianPlan, NativeCallbackError, VectorCallback, VectorNewton,
 )
 from cyroot.return_types import NewtonMethodsReturnType
-from cyroot.vector_derivative_approximation import GeneralizedFiniteDifference
 
 
 DISABLED = dict(etol=0., ertol=0., ptol=0., prtol=0.)
@@ -123,15 +122,6 @@ class GeneralizedNewtonMigrationTests(unittest.TestCase):
                                                etol=1e-12, ertol=0., **cache)
             assert_allclose(answer.root, (1., -2.), atol=2e-14, rtol=0.)
             self.assertEqual(answer.f_calls, counts)
-
-    def test_legacy_plan_rejected_even_at_cached_root_and_under_subclass(self):
-        class Legacy(GeneralizedFiniteDifference):
-            def __call__(self, point):raise AssertionError('legacy provider called')
-        for provider in (GeneralizedFiniteDifference(residual), Legacy(residual)):
-            for constructor in (cyroot.generalized_newton, VectorNewton):
-                cache = {'F_x0': (0., 0.)} if constructor is cyroot.generalized_newton else {'f_x0': (0., 0.)}
-                with self.assertRaisesRegex(TypeError, 'JacobianPlan'):
-                    constructor(residual, provider, START, **cache)
 
     def test_provider_kinds_dimensions_and_initialization_checked_at_cached_root(self):
         function = VectorCallback(residual, 2)

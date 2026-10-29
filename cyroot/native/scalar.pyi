@@ -42,7 +42,7 @@ class ScalarCallback:
 
 class Bisection:
     def __init__(self, function: Any, a: SupportsFloat, b: SupportsFloat,
-                 f_a: SupportsFloat | None = ..., f_b: SupportsFloat | None = ...,
+                 f_a: SupportsFloat | None = ..., f_b: SupportsFloat | None = ..., *,
                  etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
                  ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
                  max_iter: SupportsIndex = ..., history: SupportsIndex = ...,
@@ -64,7 +64,7 @@ class Bisection:
 
 class Newton:
     def __init__(self, function: Any, derivative: Any, x0: SupportsFloat,
-                 f_x0: SupportsFloat | None = ..., df_x0: SupportsFloat | None = ...,
+                 f_x0: SupportsFloat | None = ..., df_x0: SupportsFloat | None = ..., *,
                  etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
                  ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
                  max_iter: SupportsIndex = ..., history: SupportsIndex = ...,

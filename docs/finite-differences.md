@@ -1,53 +1,50 @@
 # Finite differences
 
-`finite_difference` approximates a scalar derivative; `generalized_finite_difference`
-approximates a dense derivative tensor of a vector function. `order` specifies
-the derivative order, not an independently selected accuracy order.
+Numerical derivatives are native plans. A plan fixes the shape, scheme and
+step once; `evaluate(function, x, f_x=None)` samples an ordinary Python
+callable or a native callback adapter and returns a copied estimate with its
+status and residual-call count. Solvers accept the same plans as derivative
+providers, and use them automatically when a derivative argument is `None`.
 
 ```python
-import numpy as np
-from cyroot import finite_difference, generalized_finite_difference
+from cyroot.native import (ScalarFiniteDifferencePlan, RectangularJacobianPlan,
+                           RectangularHessianPlan, TensorDifferencePlan)
 
-first = finite_difference(lambda x: x * x, 2., h=.01, kind='central')
-# approximately 4
-jacobian = generalized_finite_difference(
-    lambda x: np.array([x[0] * x[1]]), [2., 3.], h=.01,
-)
-# approximately [[3, 2]]
+first = ScalarFiniteDifferencePlan(1, 'central', .01).evaluate(lambda x: x*x, 2.)
+# first.derivative is approximately 4
+jacobian = RectangularJacobianPlan(2, 1, 'central', .01).evaluate(
+    lambda x: (x[0]*x[1],), (2., 3.))
+# jacobian.jacobian is approximately ((3, 2),)
+hessian = RectangularHessianPlan(2, 1).evaluate(lambda x: (x[0]*x[0]*x[1],), (2., 3.))
+third = TensorDifferencePlan(2, 1, 3).evaluate(lambda x: (x[0]*x[0]*x[1],), (2., 3.))
 ```
 
-Schemes accept `1`/`'forward'`, `-1`/`'backward'`, or `0`/`'central'`.
-The scalar step must be finite and nonzero. Vector steps may be a scalar or a
-one-dimensional sequence with exactly one finite, nonzero step per input
-coordinate. Negative steps are supported. Inputs and callback outputs must be
-finite; vector callbacks must return a fixed-length, nonempty vector.
+| Derivative | Plan | Result shape |
+| --- | --- | --- |
+| scalar, any order | `ScalarFiniteDifferencePlan(order, scheme, step)` | float |
+| square Jacobian | `JacobianPlan(n, scheme, step)` | `(n, n)` |
+| rectangular Jacobian | `RectangularJacobianPlan(n, m, scheme, step)` | `(m, n)` |
+| square Hessian | `HessianPlan(n, scheme, step)` | `(n, n, n)` |
+| rectangular Hessian | `RectangularHessianPlan(n, m, scheme, step)` | `(m, n, n)` |
+| order three and above | `TensorDifferencePlan(n, m, order, ...)` | `(m,) + (n,) * order` |
+| Jacobian-vector product | `JacobianVectorPlan(n, m, scheme, step)` | `(m,)` |
 
-For `n` inputs, `m` outputs and derivative order `p`, the tensor shape is
-`(m,) + (n,) * p`. The first axis identifies the output component. A Jacobian
-has shape `(m, n)` and a Hessian tensor has shape `(m, n, n)`.
+The first tensor axis identifies the output component. Schemes are
+`'forward'`, `'backward'` and `'central'`. `step=None` chooses a relative
+automatic step; an explicit step must be finite and nonzero. Samples use the
+actual rounded nodes, so steps that collapse in floating point report a
+breakdown instead of a silently wrong estimate. Plans bound their scratch
+storage and stencil size before allocating.
 
-For a partial derivative that differentiates coordinate `j` exactly `a[j]`
-times, central samples in that coordinate are at
-`x[j] + (a[j]/2 - i) * h[j]` for `i` from zero through `a[j]`.
-Other coordinates stay fixed. Thus the first central derivative samples at
-`x ± h/2`, while the second samples at `x-h`, `x`, and `x+h`.
-Forward/backward schemes have one-sided truncation error; reducing the step
-too far increases floating-point cancellation. Check accuracy against an
-analytic derivative or a range of step sizes when the derivative is sensitive.
+For estimates with an error estimate, use the adaptive Richardson providers
+`AdaptiveDerivative`, `AdaptiveSecondDerivative`, `AdaptiveJacobian` and
+`AdaptiveHessian`, or the complex-step `ComplexStepDerivative` and
+`ComplexStepJacobian` when the residual has a holomorphic complex extension.
 
-`FiniteDifference` and `GeneralizedFiniteDifference` are reusable callback
-wrappers. `eval_with_f_val(x, value)` reuses a supplied function value, and the
-functional APIs accept `f_x`/`F_x`. Shared stencil samples are evaluated once.
-An uncached vector derivative first evaluates the function at the base point
-to establish output size. An odd-order central scalar derivative does not need
-that base evaluation. Function-call counts reflect actual callback evaluations.
+## Migrating from 1.x
 
-Vector callbacks receive independent point snapshots and may retain or mutate
-them, or reuse their own output arrays. Mutating those snapshots does not
-change the original point or previously cached sample values.
-
-Dense high-order tensors grow rapidly. The generic vector implementation
-currently rejects tensor rank above 32, more than 1,000,000 stencil terms, or
-an output/workspace estimate above 256 MiB. These are provisional guardrails,
-not a process-wide memory guarantee. Unrepresentable sample points or arithmetic
-are errors rather than valid derivative estimates.
+The 1.x `finite_difference`, `FiniteDifference`, `generalized_finite_difference`
+and `GeneralizedFiniteDifference` wrappers, their `DerivativeApproximation`
+base classes, and the `cyroot.fptr` callback layer were removed in 2.0. Use the
+plan for the derivative's order and shape from the table above. The removed
+`kind=1/-1/0` selectors correspond to `'forward'`, `'backward'` and `'central'`.

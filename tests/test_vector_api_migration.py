@@ -21,7 +21,6 @@ from cyroot.native import (
     VectorCallback, HessianCallback, VectorHalley, JacobianPlan, HessianPlan,
     NativeCallbackError,
 )
-from cyroot.vector_derivative_approximation import GeneralizedFiniteDifference
 
 
 DISABLED = dict(etol=0., ertol=0., ptol=0., prtol=0., max_iter=1)
@@ -103,18 +102,6 @@ class SquareVectorMigrationTests(unittest.TestCase):
             with self.assertRaises(TypeError):
                 entry(no_derivative, no_derivative, no_derivative, (0., 0.),
                       None, None, None, .5)
-
-    def test_legacy_derivative_providers_reject_even_at_cached_root(self):
-        class Legacy(GeneralizedFiniteDifference):
-            def __call__(self, point):
-                raise AssertionError('legacy approximation was called')
-        for entry, options, _ in cases():
-            for legacy in (GeneralizedFiniteDifference(lambda x: x, order=1),
-                           Legacy(lambda x: x, order=2)):
-                with self.assertRaisesRegex(TypeError, 'JacobianPlan'):
-                    entry(residual, legacy, hessian, (0., 0.), F_x0=(0., 0.), **options)
-                with self.assertRaisesRegex(TypeError, 'HessianPlan'):
-                    entry(residual, jacobian, legacy, (0., 0.), F_x0=(0., 0.), **options)
 
     def test_tuple_inputs_retained_without_aliasing_and_numpy_user_bridge(self):
         for entry, options, _ in cases():

@@ -65,10 +65,9 @@ success. Native TOMS748 accepts `k` from 1 to 100.
 The familiar Newton-family APIs now use native derivative plans when an analytic
 derivative is omitted. `h=None` selects automatic steps; explicit `h` selects
 central differences with that step. Native `ScalarDerivativePlan` and
-`ScalarSecondDerivativePlan` configure schemes directly. Legacy `FiniteDifference`
-objects are no longer native solver providers; pass a native plan or an ordinary
-Python callable instead. The standalone legacy scalar finite-difference API
-remains separate.
+`ScalarSecondDerivativePlan` configure schemes directly. The 1.x
+`FiniteDifference` API was removed; pass a native plan or an ordinary Python
+callable instead (see [finite differences](finite-differences.md)).
 
 The `alpha` argument of familiar `halley` selects native modified Halley.
 Super-Halley and Chebyshev select alpha 1 and 0. Scalar tangent-hyperbolas formulas
@@ -174,8 +173,7 @@ native to keep the full search outside the GIL.
 
 ## Remaining project work
 
-Experimental Ahmadi remains excluded from normal exports and discovery pending
-independent mathematical validation. Vector Vrahatis/polygon code still needs
+The unverified experimental Ahmadi method was removed in 2.0. Vector Vrahatis/polygon code still needs
 migration. Native scalar coverage does not mean the full overhaul or supported
 platform matrix has completed release qualification. SciPy remains the initial
 native linear-algebra provider.

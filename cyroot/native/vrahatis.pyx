@@ -1,6 +1,7 @@
 # distutils: language=c++
 # cython: language_level=3, boundscheck=False, wraparound=False, initializedcheck=False, cdivision=True
 """Generalized bisection without Python operations in the native solver loop."""
+from cyroot.defaults cimport ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
 from typing import NamedTuple
 from libc.limits cimport INT_MAX
 from libc.math cimport fabs, fmax, isfinite, INFINITY, NAN
@@ -121,9 +122,9 @@ cdef class Vrahatis:
     For multiple residual components it does not certify a root, so a narrow
     polygon reports stagnation unless the residual tolerance is satisfied.
     """
-    def __init__(self, function, x0s, F_x0s=None, *, h=None, etol=1e-10,
-                 ertol=8.881784197001252e-16, ptol=1e-12,
-                 prtol=8.881784197001252e-16, max_iter=200, history=0,
+    def __init__(self, function, x0s, F_x0s=None, *, h=None, etol=ETOL,
+                 ertol=ERTOL, ptol=PTOL,
+                 prtol=PRTOL, max_iter=MAX_ITER, history=0,
                  history_every=1, history_bytes=8*1024*1024,
                  workspace_bytes=64*1024*1024, polygon_eps=1e-5,
                  max_evaluations=100000, max_visits=1000000, max_bisections=256):

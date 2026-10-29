@@ -37,7 +37,7 @@ class _ThirdOrderNewton:
 class Halley(_ThirdOrderNewton):
     def __init__(self, function: Any, derivative: Any, second_derivative: Any, x0: SupportsFloat,
                  f_x0: SupportsFloat | None = ..., df_x0: SupportsFloat | None = ...,
-                 d2f_x0: SupportsFloat | None = ...,
+                 d2f_x0: SupportsFloat | None = ..., *,
                  etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
                  ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
                  max_iter: SupportsIndex = ..., history: SupportsIndex = ...,
@@ -46,7 +46,7 @@ class Halley(_ThirdOrderNewton):
 class Chebyshev(_ThirdOrderNewton):
     def __init__(self, function: Any, derivative: Any, second_derivative: Any, x0: SupportsFloat,
                  f_x0: SupportsFloat | None = ..., df_x0: SupportsFloat | None = ...,
-                 d2f_x0: SupportsFloat | None = ...,
+                 d2f_x0: SupportsFloat | None = ..., *,
                  etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
                  ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
                  max_iter: SupportsIndex = ..., history: SupportsIndex = ...,
@@ -55,17 +55,16 @@ class Chebyshev(_ThirdOrderNewton):
 class ModifiedHalley(_ThirdOrderNewton):
     def __init__(self, function: Any, derivative: Any, second_derivative: Any, x0: SupportsFloat,
                  f_x0: SupportsFloat | None = ..., df_x0: SupportsFloat | None = ...,
-                 d2f_x0: SupportsFloat | None = ...,
+                 d2f_x0: SupportsFloat | None = ..., *,
                  etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
                  ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
                  max_iter: SupportsIndex = ..., history: SupportsIndex = ...,
-                 history_every: SupportsIndex = ..., history_bytes: SupportsIndex = ..., *,
-                 alpha: SupportsFloat = ...) -> None: ...
+                 history_every: SupportsIndex = ..., history_bytes: SupportsIndex = ..., alpha: SupportsFloat = ...) -> None: ...
 
 class SuperHalley(_ThirdOrderNewton):
     def __init__(self, function: Any, derivative: Any, second_derivative: Any, x0: SupportsFloat,
                  f_x0: SupportsFloat | None = ..., df_x0: SupportsFloat | None = ...,
-                 d2f_x0: SupportsFloat | None = ...,
+                 d2f_x0: SupportsFloat | None = ..., *,
                  etol: SupportsFloat = ..., ertol: SupportsFloat = ...,
                  ptol: SupportsFloat = ..., prtol: SupportsFloat = ...,
                  max_iter: SupportsIndex = ..., history: SupportsIndex = ...,

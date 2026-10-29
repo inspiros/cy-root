@@ -134,7 +134,7 @@ check stopping/budget before further derivative work. Jacobian failure clears
 both derivative roles, while Hessian failure preserves a valid Jacobian. Native
 callback errors retain exact code/stage; Python exceptions retain identity and
 traceback. After an error is delivered, terminal `step()`/`run()` are passive.
-`step()` and `run()` share a total budget; zero is unlimited and `None` uses 200.
+`step()` and `run()` share a total budget; the default is 200, and zero or `None` is unlimited.
 
 ## Workspace and compiled use
 

@@ -36,12 +36,15 @@ def check_distribution(path):
                 if not target.startswith(('http://', 'https://', '#'))]
     assert not relative, relative
     assert f'https://github.com/inspiros/cy-root/blob/v{message["Version"]}/LICENSE' in readme
+    # Removed 1.x modules must not be shipped.
+    for removed in ('fptr', 'vector_opt', 'scalar_derivative_approximation',
+                    'vector_derivative_approximation', 'ops/matrix_ops', 'ops/vector_ops'):
+        assert not any(name.startswith(package_root + 'cyroot/' + removed + '.') for name in names), removed
     assert not any('sympy' in line.lower() for line in text.splitlines()
                    if line.startswith('Requires-Dist:'))
     for name in ('py.typed', 'results.py', '__init__.pyi', 'return_types.pyi',
                  'scalar_bracketing.pyi', 'scalar_quasi_newton.pyi', 'scalar_newton.pyi',
                  'vector_bracketing.pyi', 'vector_quasi_newton.pyi', 'vector_newton.pyi',
-                 'scalar_derivative_approximation.pyi', 'vector_derivative_approximation.pyi',
                  'native/broyden.pyi', 'native/vector.pyi'):
         assert package_root + 'cyroot/' + name in names
     for name in ('scalar', 'bracketing', 'secant', 'interpolation', 'homeier', 'hybisect',
@@ -69,7 +72,7 @@ def check_distribution(path):
         assert package_root + "cyroot/native/" + name in names
     for name in ("vjp.pyx", "vjp.pxd", "vjp.pyi", "vjp_callbacks.h"):
         assert package_root + "cyroot/native/" + name in names
-    assert package_root + "cyroot/fptr.pxd" in names
+    assert package_root + "cyroot/defaults.pxd" in names
     assert package_root + "cyroot/_stopping.pxd" in names
     assert package_root + "cyroot/status.py" in names
     assert package_root + "cyroot/native/broyden.pxd" in names
@@ -153,9 +156,6 @@ def check_distribution(path):
         for name in ("examples/pure_python_callback.py", "examples/pure_python_callback_setup.py",
                      "examples/pure_python_callback.md", "docs/compiling-callbacks.md"):
             assert package_root + name in names
-        for name in ("tests/test_vector_difference_migration.py", "tests/vector_difference_consumer.pyx",
-                     "docs/vector-derivative-migration.md"):
-            assert package_root + name in names
         for name in ("tests/test_native_higher_mixed.py", "tests/native_higher_mixed_consumer.pyx",
                      "docs/native-higher-mixed.md", "examples/native_mixed_partials.py"):
             assert package_root + name in names
@@ -196,7 +196,6 @@ def check_distribution(path):
                      "examples/native_least_squares_setup.py", "examples/native_least_squares.md"):
             assert package_root + name in names
         assert package_root + "cyroot/scalar_bracketing.pyx" in names
-        assert package_root + "tests/test_matrix_ops.py" in names
         assert package_root + "tests/native/test_buffers.cpp" in names
         assert package_root + "examples/native_scalar.pyx" in names
         assert package_root + "examples/native_vector.pyx" in names

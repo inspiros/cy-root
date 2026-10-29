@@ -1,3 +1,4 @@
+import importlib
 import unittest
 
 import numpy as np
@@ -55,6 +56,35 @@ class ArgumentValidationTests(unittest.TestCase):
                 self.assertTrue(solver(budget).optimal)
 
 
+    def test_public_entry_points_share_the_global_defaults(self):
+        import inspect
+        from cyroot._check_args import ETOL, ERTOL, PTOL, PRTOL, MAX_ITER
+        self.assertEqual((ETOL, PTOL, MAX_ITER), (1e-10, 1e-12, 200))
+        self.assertEqual((ERTOL, PRTOL), (4*np.finfo(float).eps,)*2)
+        shared = dict(etol=ETOL, ertol=ERTOL, ptol=PTOL, prtol=PRTOL, max_iter=MAX_ITER)
+        entries = dict(cyroot.SCALAR_ROOT_FINDING_METHODS, **cyroot.VECTOR_ROOT_FINDING_METHODS)
+        entries['root_via_optimizer'] = cyroot.root_via_optimizer
+        for name, entry in entries.items():
+            for parameter in inspect.signature(entry).parameters.values():
+                if parameter.name in shared:
+                    with self.subTest(entry=name, parameter=parameter.name):
+                        self.assertEqual(parameter.default, shared[parameter.name])
+
+    def test_native_solver_controls_are_keyword_only(self):
+        from cyroot import native
+        f, df, d2f = (lambda x: x*x-2.), (lambda x: 2*x), (lambda x: 2.)
+        for make in (lambda: native.Bisection(f, 1., 2., None, None, 1e-10),
+                     lambda: native.Newton(f, df, 1.5, None, None, 1e-10),
+                     lambda: native.BracketSolver(f, 1., 2., None, None, 'brent'),
+                     lambda: native.Secant(f, 1., 2., None, None, 1e-10),
+                     lambda: native.Steffensen(f, 1.5, None, False),
+                     lambda: native.Halley(f, df, d2f, 1.5, None, None, None, 1e-10),
+                     lambda: native.VectorNewton(lambda x: (x[0]-1.,), None, (0.,), None, None, 1e-10),
+                     lambda: native.NewtonKrylov(lambda x: (x[0]-1.,), None, (0.,), None, 1e-3)):
+            with self.assertRaises(TypeError):
+                make()
+
+
 class ResultTests(unittest.TestCase):
     def test_empty_multi_root_results_have_valid_defaults(self):
         for cls in (MultiRootsReturnType, SplittingBracketingMethodsReturnType,
@@ -81,14 +111,13 @@ class ResultTests(unittest.TestCase):
         self.assertEqual(result.optimal, [False])
         self.assertIn("split_iters=3", repr(result))
 
-    def test_experimental_optimizer_requires_explicit_import(self):
-        self.assertFalse(hasattr(cyroot, "generalized_mishchenko"))
-        self.assertNotIn("generalized_mishchenko", cyroot.VECTOR_ROOT_FINDING_METHODS)
-        from cyroot.vector_opt import generalized_mishchenko
-        self.assertTrue(callable(generalized_mishchenko))
-
-    def test_unverified_ahmadi_requires_explicit_import(self):
-        self.assertFalse(hasattr(cyroot, "ahmadi"))
-        self.assertNotIn("ahmadi", cyroot.SCALAR_ROOT_FINDING_METHODS)
-        from cyroot.scalar_newton import ahmadi
-        self.assertTrue(callable(ahmadi))
+    def test_removed_legacy_modules_and_experiments_stay_removed(self):
+        # The native derivative plans replace the 1.x approximation wrappers.
+        for module in ("cyroot.fptr", "cyroot.vector_opt", "cyroot.ops.matrix_ops",
+                       "cyroot.scalar_derivative_approximation",
+                       "cyroot.vector_derivative_approximation"):
+            with self.subTest(module=module), self.assertRaises(ImportError):
+                importlib.import_module(module)
+        for name in ("ahmadi", "generalized_mishchenko", "FiniteDifference",
+                     "GeneralizedFiniteDifference", "finite_difference"):
+            self.assertFalse(hasattr(cyroot, name))

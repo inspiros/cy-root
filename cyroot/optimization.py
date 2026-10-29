@@ -7,6 +7,7 @@ without it when called by a compiled consumer with native residual providers.
 from math import isfinite
 from typing import NamedTuple
 
+from ._check_args import ETOL, ERTOL
 from .native.rectangular import RectangularCallback
 from .native.scalar import NativeCallbackError
 from .status import TerminationReason
@@ -60,7 +61,7 @@ class OptimizationRootResult(NamedTuple):
     optimizer_result: object
 
 
-def root_via_optimizer(objective, optimizer, x0, *, etol=1e-10, ertol=0.,
+def root_via_optimizer(objective, optimizer, x0, *, etol=ETOL, ertol=ERTOL,
                        optimizer_options=None):
     """Call optimizer(objective, copied_x0, **options), then check its root.
 
