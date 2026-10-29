@@ -349,7 +349,7 @@ class VectorModifiedAlphaGuardTests(unittest.TestCase):
 class InstalledVectorModifiedConsumerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-vector-modified-consumer-')
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-vector-modified-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup);directory=Path(cls.workspace.name)
         shutil.copyfile(Path(__file__).with_name('native_vector_modified_consumer.pyx'),directory/'native_vector_modified_consumer.pyx')
         (directory/'setup.py').write_text(

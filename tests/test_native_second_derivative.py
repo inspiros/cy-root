@@ -394,7 +394,7 @@ class HigherOrderNumericalIntegrationTests(unittest.TestCase):
 class InstalledSecondDerivativeConsumerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-second-derivative-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-second-derivative-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         shutil.copyfile(Path(__file__).with_name('native_second_derivative_consumer.pyx'),

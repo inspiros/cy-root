@@ -35,7 +35,7 @@ def raw_polynomial_derivatives(coefficients, point, order):
 class NativeHouseholderRecurrenceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-householder-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-householder-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         shutil.copyfile(Path(__file__).with_name('native_householder_recurrence_consumer.pyx'),

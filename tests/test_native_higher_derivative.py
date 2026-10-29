@@ -324,7 +324,7 @@ class RuntimeDerivativeBoundaryTests(unittest.TestCase):
 class InstalledHigherDerivativeConsumerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-higher-derivative-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-higher-derivative-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         shutil.copyfile(Path(__file__).with_name('native_higher_derivative_consumer.pyx'),

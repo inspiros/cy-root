@@ -8,7 +8,7 @@ from cyroot.native import NativeCallbackError
 class OptimizationExtensionsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-optimization-extensions-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-optimization-extensions-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         name = 'native_optimization_extensions_consumer'

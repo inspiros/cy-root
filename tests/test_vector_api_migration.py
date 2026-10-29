@@ -287,7 +287,7 @@ class MigrationReservationTests(unittest.TestCase):
 class InstalledMigrationConsumerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-vector-api-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-vector-api-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         # Reuse the maintained native callback fixture; the public forwarders

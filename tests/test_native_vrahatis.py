@@ -24,7 +24,7 @@ class NativeVrahatisTests(unittest.TestCase):
     def setUpClass(cls):
         from cyroot.native.vrahatis import Vrahatis
         cls.Solver=Vrahatis
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-vrahatis-consumer-')
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-vrahatis-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory=Path(cls.workspace.name)
         shutil.copyfile(Path(__file__).with_name('native_vrahatis_consumer.pyx'),directory/'native_vrahatis_consumer.pyx')

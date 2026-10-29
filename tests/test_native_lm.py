@@ -22,7 +22,7 @@ def affine(matrix,target):
 class NativeLMTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-lm-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-lm-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         name = 'native_lm_consumer'

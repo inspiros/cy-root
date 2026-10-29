@@ -22,7 +22,7 @@ METHODS = ('regula_falsi', 'illinois', 'pegasus', 'anderson_bjorck', 'dekker',
 class NativeBracketingTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-bracket-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-bracket-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         shutil.copyfile(Path(__file__).with_name('native_secant_consumer.pyx'),

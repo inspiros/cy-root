@@ -241,7 +241,7 @@ class LeastSquaresPlanValidationTests(unittest.TestCase):
 class NativeLeastSquaresConsumerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-least-squares-consumer-')
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-least-squares-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup);temp=Path(cls.workspace.name)
         shutil.copy2(Path(__file__).with_name('native_least_squares_consumer.pyx'),temp/'native_least_squares_consumer.pyx')
         (temp/'setup.py').write_text(

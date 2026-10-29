@@ -16,7 +16,7 @@ from cyroot.native import NativeCallbackError
 class NativeBFGSTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-bfgs-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-bfgs-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         name = 'native_bfgs_consumer'

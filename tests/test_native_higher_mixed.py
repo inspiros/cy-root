@@ -100,7 +100,7 @@ def exact_stencil(function,point,steps,powers,scheme):
 class HigherMixedDifferenceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-higher-mixed-consumer-')
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-higher-mixed-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory=Path(cls.workspace.name)
         name='native_higher_mixed_consumer'

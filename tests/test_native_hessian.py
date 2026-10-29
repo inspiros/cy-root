@@ -435,7 +435,7 @@ class HessianBoundaryTests(unittest.TestCase):
 class InstalledHessianConsumerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-hessian-consumer-')
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-hessian-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory=Path(cls.workspace.name)
         shutil.copyfile(Path(__file__).with_name('native_hessian_consumer.pyx'),directory/'native_hessian_consumer.pyx')

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Clean test build directories after their worker processes exit, avoiding
+  Windows cleanup errors from locked extension modules.
 - Use native path separators for Cython's build directory so Windows source
   archives exclude generated C++ files as intended.
 - Fix Windows compilation by renaming the internal Cython `_leave` methods,

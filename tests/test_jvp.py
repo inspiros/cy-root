@@ -175,7 +175,7 @@ class JacobianVectorTests(unittest.TestCase):
 class NativeJacobianVectorTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-jvp-consumer-');cls.addClassCleanup(cls.workspace.cleanup)
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-jvp-consumer-', ignore_cleanup_errors=(os.name == 'nt'));cls.addClassCleanup(cls.workspace.cleanup)
         directory=Path(cls.workspace.name)
         (directory/'jvp_consumer.pyx').write_bytes(Path(__file__).with_name('jvp_consumer.pyx').read_bytes())
         (directory/'setup.py').write_text('from setuptools import setup,Extension\nfrom Cython.Build import cythonize\nfrom cyroot.native import get_include,get_cython_include\nimport sys\nflags=["/std:c++17"] if sys.platform=="win32" else ["-std=c++17"]\nsetup(name="jvp-consumer",ext_modules=cythonize([Extension("jvp_consumer",["jvp_consumer.pyx"],language="c++",include_dirs=[get_include()],extra_compile_args=flags)],include_path=[get_cython_include()],language_level=3))\n')

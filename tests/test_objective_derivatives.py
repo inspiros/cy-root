@@ -27,7 +27,7 @@ def nested_derivative(polynomial, x, n, order, indices=()):
 class ObjectiveDerivativeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.directory=tempfile.TemporaryDirectory(prefix='cyroot-objective-tensors-')
+        cls.directory=tempfile.TemporaryDirectory(prefix='cyroot-objective-tensors-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.directory.cleanup)
         directory=Path(cls.directory.name)
         (directory/'objective_derivatives_consumer.pyx').write_bytes(Path(__file__).with_name('objective_derivatives_consumer.pyx').read_bytes())

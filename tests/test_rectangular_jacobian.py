@@ -33,7 +33,7 @@ def all_nan(matrix):
 class RectangularJacobianTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-rectangular-jacobian-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-rectangular-jacobian-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         shutil.copy2(Path(__file__).with_name('rectangular_jacobian_consumer.pyx'),

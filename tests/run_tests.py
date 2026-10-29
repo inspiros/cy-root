@@ -4,6 +4,7 @@
 Use an installed editable package for source work. For wheel checks, invoke this
 file by absolute path from outside the checkout and pass --installed-prefix.
 Only the selected test directory is added for discovery, never its parent repo.
+Each worker's temporary build directory is removed after that process exits.
 """
 from __future__ import annotations
 
@@ -186,8 +187,13 @@ def run_module(item: tuple[str, Path], args: argparse.Namespace, environment: di
         command += ['--installed-prefix', str(args.installed_prefix)]
     report = empty_report(name)
     try:
-        with log_path.open('w', encoding='utf-8') as log:
-            process = subprocess.run(command, env=environment, stdout=log, stderr=subprocess.STDOUT)
+        # Windows keeps imported .pyd files locked for the worker's lifetime.
+        # Fixtures may leave those files behind; remove them after process exit.
+        with tempfile.TemporaryDirectory(prefix='cyroot-test-worker-') as temporary:
+            worker_environment = dict(environment, TMPDIR=temporary, TMP=temporary, TEMP=temporary)
+            with log_path.open('w', encoding='utf-8') as log:
+                process = subprocess.run(command, env=worker_environment,
+                                         stdout=log, stderr=subprocess.STDOUT)
         if not result_path.is_file():
             raise RuntimeError(f'worker exited with code {process.returncode} without writing a result')
         report = json.loads(result_path.read_text(encoding='utf-8'))
@@ -263,8 +269,12 @@ def self_check() -> int:
         root = Path(temporary)
         good = root / 'good'; good.mkdir()
         (good / 'test_one.py').write_text(
-            'import unittest\nclass One(unittest.TestCase):\n'
-            ' def test_first(self): self.assertTrue(True)\n'
+            'import unittest,tempfile\nfrom pathlib import Path\nclass One(unittest.TestCase):\n'
+            ' def test_first(self):\n'
+            '  temporary=Path(tempfile.gettempdir())\n'
+            '  (temporary/"leftover.txt").write_text("worker-owned artifact")\n'
+            '  print("Worker temporary directory:",temporary)\n'
+            '  self.assertTrue(True)\n'
             ' def test_second(self): self.assertEqual(2,2)\n', encoding='utf-8')
         (good / 'test_two.py').write_text(
             'import unittest\nclass Two(unittest.TestCase):\n'
@@ -286,6 +296,11 @@ def self_check() -> int:
             return summary
         serial = invoke('serial', good, jobs=1, extra=('--expected-tests', '5'))
         parallel = invoke('parallel', good, jobs=2, extra=('--expected-tests', '5'))
+        for label in ('serial', 'parallel'):
+            output = (root / label / 'test_one.log').read_text(encoding='utf-8')
+            temporary = next(line.split(': ', 1)[1] for line in output.splitlines()
+                             if line.startswith('Worker temporary directory: '))
+            assert not Path(temporary).exists(), f'worker artifacts were not removed: {temporary}'
         for key in (*COUNT_FIELDS, 'modules', 'worker_errors', 'successful'):
             assert serial[key] == parallel[key], key
         assert [report['test_ids'] for report in serial['reports']] == [report['test_ids'] for report in parallel['reports']]
@@ -337,7 +352,7 @@ def self_check() -> int:
                           environment=environment, expected=1)
         assert rejected['worker_errors'] == 1 and rejected['tests_run'] == 1
         print('Runner self-check passed: serial/parallel coverage, counts, skips, failures, imports, '
-              'discovery, process crashes and installed provenance before/after tests.')
+              'discovery, process crashes, worker temporary cleanup and installed provenance before/after tests.')
     return 0
 
 

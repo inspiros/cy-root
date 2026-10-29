@@ -105,7 +105,7 @@ class HybisectTests(unittest.TestCase):
         self.assertTrue(solver.run().success)
 
     def test_installed_native_callbacks_no_gil_lifetimes_and_statuses(self):
-        with tempfile.TemporaryDirectory(prefix='cyroot-hybisect-consumer-') as name:
+        with tempfile.TemporaryDirectory(prefix='cyroot-hybisect-consumer-', ignore_cleanup_errors=(os.name == 'nt')) as name:
             directory=Path(name)
             shutil.copyfile(Path(__file__).with_name('native_hybisect_consumer.pyx'),directory/'native_hybisect_consumer.pyx')
             (directory/'setup.py').write_text(

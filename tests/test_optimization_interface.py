@@ -12,7 +12,7 @@ METHODS=tuple(OPTIMIZATION_ROOT_FINDING_METHODS)
 class OptimizationInterfaceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-interface-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-interface-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         name = 'optimization_interface_consumer'

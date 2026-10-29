@@ -66,7 +66,7 @@ def fixture(n, m):
 class NativeObjectiveTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-objective-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-objective-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         name = 'native_objective_consumer'

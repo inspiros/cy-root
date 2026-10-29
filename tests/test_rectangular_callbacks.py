@@ -27,7 +27,7 @@ def residual(point, m):
 class RectangularCallbackTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-rectangular-consumer-')
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-rectangular-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup);temp=Path(cls.workspace.name)
         shutil.copy2(Path(__file__).with_name('rectangular_callbacks_consumer.pyx'),
                      temp/'rectangular_callbacks_consumer.pyx')

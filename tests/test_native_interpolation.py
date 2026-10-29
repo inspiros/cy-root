@@ -162,7 +162,7 @@ class NativeInterpolationTests(unittest.TestCase):
 class NativeInterpolationConsumerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-interpolation-consumer-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-interpolation-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         for name in ('native_interpolation_consumer.pyx', 'native_secant_consumer.pyx'):

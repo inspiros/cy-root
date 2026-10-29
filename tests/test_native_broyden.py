@@ -347,7 +347,7 @@ class BroydenBoundaryTests(unittest.TestCase):
 class NativeBroydenConsumerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-broyden-consumer-')
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-broyden-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup);temp=Path(cls.workspace.name)
         shutil.copy2(Path(__file__).with_name('native_broyden_consumer.pyx'),temp/'native_broyden_consumer.pyx')
         (temp/'setup.py').write_text(

@@ -34,7 +34,7 @@ def assert_matrix(case, actual, expected, tolerance=2e-10):
 class DifferentiationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-differentiation-')
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-differentiation-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory=Path(cls.workspace.name)
         shutil.copy2(Path(__file__).with_name('differentiation_consumer.pyx'),directory/'differentiation_consumer.pyx')

@@ -305,7 +305,7 @@ class BroydenMigrationReservationTests(unittest.TestCase):
 class InstalledBroydenMigrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-public-broyden-')
+        cls.workspace = tempfile.TemporaryDirectory(prefix='cyroot-public-broyden-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory = Path(cls.workspace.name)
         shutil.copyfile(Path(__file__).with_name('native_broyden_consumer.pyx'),

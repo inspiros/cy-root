@@ -214,7 +214,7 @@ class DampedNewtonTests(unittest.TestCase):
 class NativeDampedNewtonTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-damped-consumer-')
+        cls.workspace=tempfile.TemporaryDirectory(prefix='cyroot-damped-consumer-', ignore_cleanup_errors=(os.name == 'nt'))
         cls.addClassCleanup(cls.workspace.cleanup)
         directory=Path(cls.workspace.name)
         (directory/'native_damped_consumer.pyx').write_bytes(Path(__file__).with_name('native_damped_consumer.pyx').read_bytes())
