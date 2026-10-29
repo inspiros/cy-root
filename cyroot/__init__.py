@@ -23,3 +23,4 @@ from .native.differentiation import (
     DerivativeEstimate, NumericalJacobianEstimate, DifferentiationError,
 )
 from .native.damped_newton import DampedNewton, VectorDampedNewton
+from .native.jvp import JacobianVectorCallback, JacobianVectorPlan, JacobianVectorEstimate

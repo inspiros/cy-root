@@ -39,3 +39,7 @@ from .native.differentiation import (
     DerivativeEstimate as DerivativeEstimate, NumericalJacobianEstimate as NumericalJacobianEstimate,
     DifferentiationError as DifferentiationError,
 )
+
+from .native.jvp import (JacobianVectorCallback as JacobianVectorCallback,
+                         JacobianVectorPlan as JacobianVectorPlan,
+                         JacobianVectorEstimate as JacobianVectorEstimate)

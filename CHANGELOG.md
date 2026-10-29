@@ -2,6 +2,8 @@
 
 ## 2.0.0 — Unreleased
 
+- Add supplied Python/native Jacobian-vector callbacks and matrix-free directional finite-difference plans.
+
 - Add scalar and vector damped Newton with native Armijo backtracking, including rectangular systems and resumable accepted-step histories.
 
 A breaking overhaul of the numerical core, callback interfaces, and solver

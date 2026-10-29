@@ -5,6 +5,7 @@ from .scalar import (
     bisect, newton,
 )
 from .damped_newton import DampedNewton, VectorDampedNewton, damped_newton, vector_damped_newton
+from .jvp import JacobianVectorCallback, JacobianVectorPlan, JacobianVectorEstimate
 from ._buffers import DoubleBuffer
 from .scalar_derivatives import ScalarDerivativePlan, ScalarSecondDerivativePlan
 from .higher_derivatives import ScalarFiniteDifferencePlan, ScalarDerivativeEstimate
@@ -62,7 +63,7 @@ def get_cython_include():
     return str(Path(__file__).resolve().parents[2])
 
 
-__all__ = ['DampedNewton', 'VectorDampedNewton', 'damped_newton', 'vector_damped_newton', 'AdaptiveHessian', 'NumericalHessianEstimate', 'AdaptiveSecondDerivative', 'ComplexStepDerivative', 'ComplexStepJacobian', 'AdaptiveDerivative', 'AdaptiveJacobian',
+__all__ = ['JacobianVectorCallback', 'JacobianVectorPlan', 'JacobianVectorEstimate', 'DampedNewton', 'VectorDampedNewton', 'damped_newton', 'vector_damped_newton', 'AdaptiveHessian', 'NumericalHessianEstimate', 'AdaptiveSecondDerivative', 'ComplexStepDerivative', 'ComplexStepJacobian', 'AdaptiveDerivative', 'AdaptiveJacobian',
            'ComplexVectorCallback', 'DerivativeEstimate', 'NumericalJacobianEstimate', 'DifferentiationError', 'PowellDogleg', 'PowellDoglegResult', 'powell_dogleg', 'LBFGS', 'lbfgs', 'BFGS', 'BFGSResult', 'bfgs', 'LevenbergMarquardt', 'LevenbergMarquardtResult', 'levenberg_marquardt', 'LeastSquaresObjective','ObjectiveDerivativePlan','Vrahatis','VrahatisStep','vrahatis','Homeier','homeier','BracketSolver','BracketStep','regula_falsi',
            'illinois','pegasus','anderson_bjorck','dekker','brent','chandrupatla',
            'ridders','toms748','wu','itp','Hybisect','HybisectStep','IntervalCallback',
