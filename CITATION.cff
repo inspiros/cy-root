@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use CyRoot in your research, please cite this software."
+type: software
+title: "CyRoot: Root Finding in Cython"
+authors:
+  - given-names: Hoang-Nhat
+    family-names: Tran
+version: "2.0.0"
+date-released: "2026-10-29"
+doi: 10.5281/zenodo.23752559
+repository-code: https://github.com/inspiros/cy-root
+url: https://inspiros.github.io/cy-root/
+license: MIT

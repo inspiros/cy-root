@@ -4,6 +4,7 @@
 [![Build wheels](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg)](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml)
 [![PyPI](https://img.shields.io/pypi/v/cy-root)](https://pypi.org/project/cy-root/)
 [![Downloads](https://static.pepy.tech/badge/cy-root)](https://pepy.tech/project/cy-root)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23752558.svg)](https://doi.org/10.5281/zenodo.23752558)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 <p align="center">
@@ -243,6 +244,13 @@ full mixed Hessians, and higher tensors. See the
 `SCALAR_ROOT_FINDING_METHODS` and `VECTOR_ROOT_FINDING_METHODS` expose supported
 method names. Use direct functions or the `find_scalar_root` / `find_vector_root`
 dispatchers.
+
+## Citation
+
+If CyRoot supports your research, please cite the software. Use the
+[all-versions DOI](https://doi.org/10.5281/zenodo.23752558) for the project,
+or the [v2.0.0 DOI](https://doi.org/10.5281/zenodo.23752559) for this release.
+GitHub's **Cite this repository** button provides BibTeX and APA citations.
 
 ## License
 

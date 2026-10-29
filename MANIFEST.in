@@ -1,4 +1,4 @@
-include LICENSE README.md CHANGELOG.md
+include LICENSE README.md CHANGELOG.md CITATION.cff
 include requirements.txt
 recursive-include assets *.gif *.svg *.png
 recursive-include cyroot *.py *.pyx *.pxd *.pyi *.h *.hpp py.typed
