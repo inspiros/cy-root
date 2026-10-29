@@ -24,3 +24,4 @@ from .native.differentiation import (
 )
 from .native.damped_newton import DampedNewton, VectorDampedNewton
 from .native.jvp import JacobianVectorCallback, JacobianVectorPlan, JacobianVectorEstimate
+from .native.newton_krylov import NewtonKrylov, NewtonKrylovResult, newton_krylov

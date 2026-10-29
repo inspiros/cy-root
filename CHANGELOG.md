@@ -2,6 +2,8 @@
 
 ## 2.0.0 — Unreleased
 
+- Add square matrix-free Newton-Krylov with restarted GMRES, verified linear residuals, and Armijo backtracking.
+
 - Add supplied Python/native Jacobian-vector callbacks and matrix-free directional finite-difference plans.
 
 - Add scalar and vector damped Newton with native Armijo backtracking, including rectangular systems and resumable accepted-step histories.

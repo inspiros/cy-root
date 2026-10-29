@@ -45,3 +45,6 @@ VECTOR_ROOT_FINDING_METHODS.update({
     'lbfgs': vector_lbfgs,
     'powell_dogleg': vector_powell_dogleg,
 })
+
+from .native.newton_krylov import newton_krylov
+VECTOR_ROOT_FINDING_METHODS['newton_krylov'] = newton_krylov
