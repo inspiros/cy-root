@@ -21,7 +21,7 @@ cdef class RectangularCallback:
     cdef size_t _n, _m, _output_size
     cdef bint _jacobian, _active, _native, _constructing
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     # Caller reserves this adapter and pins its lifetime. Trusted disjoint
     # x[n], out[m or m*n] spans; input is borrowed and must not be mutated.
     # Native nonzero status poisons all output. Python bridge saves _error.

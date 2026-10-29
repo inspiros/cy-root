@@ -188,7 +188,11 @@ class VectorModifiedFailureAndStateTests(unittest.TestCase):
 
     def test_correction_matvec_and_retained_j_solve_overflow_have_correction_stage(self):
         cases=((2.,1.,2.**1022,2.**-1024),
-               (2.**-1023,2.**-1023,1.,2.**-1024))
+               (1.,2.**-1000,2.**-1001,2.**-1000))
+        # In the second case, both pivots and their reciprocals are normal:
+        # s=2**1000, B=1/2, secondary pivot=2**-1001, t=2**1001.
+        # B*t is finite; the retained-J solve overflows in the correction stage.
+        # Subnormal pivots can instead overflow earlier in some LAPACK builds.
         for f,j,h,alpha in cases:
             solver=VectorModifiedHalley(lambda x:(f,),lambda x:((j,),),lambda x:(((h,),),),
                 (0.,),alpha=alpha,history=4,**disabled(max_iter=1))

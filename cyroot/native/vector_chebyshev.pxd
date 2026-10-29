@@ -85,7 +85,7 @@ cdef class VectorChebyshev:
                       object alpha_option) except *
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, int stage, const double* x, double* out) noexcept nogil
     cdef void _derivatives(self, bint cached_jac, bint cached_hess) noexcept nogil
     cdef void _initialize(self, bint cached_f, bint cached_jac,

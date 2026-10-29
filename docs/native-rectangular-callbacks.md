@@ -51,7 +51,7 @@ across the ABI, and acquire the GIL before using Python.
 
 For a native loop, reserve with `_enter()` while holding the GIL, call
 `evaluate_raw(x, out)` without the GIL, transfer any saved Python `_error`, then
-release with `_leave()` in a `finally` block. The caller pins the adapter and
+release with `_release()` in a `finally` block. The caller pins the adapter and
 supplies valid disjoint input/output spans of the declared sizes. This raw path
 allocates nothing; Python-backed callbacks explicitly acquire the GIL inside
 the bridge. Context lifetime and synchronization across distinct adapters sharing

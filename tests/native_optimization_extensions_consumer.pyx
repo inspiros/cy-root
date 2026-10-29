@@ -82,20 +82,20 @@ def run_raw(state):
             with nogil:quasi._run()
             quasi._raise_callback_error()
             return quasi._snapshot(quasi._state,quasi._x,quasi._f)
-        finally:quasi._leave()
+        finally:quasi._release()
     else:
         trust=state;trust._enter()
         try:
             with nogil:trust._run()
             trust._raise_callback_error()
             return trust._snapshot(trust._state,trust._x,trust._f)
-        finally:trust._leave()
+        finally:trust._release()
 
 
 def pair_state(LBFGS state):
     state._enter()
     try:return state._pair_count,state._corrections,state._h==NULL,state._candidate==NULL
-    finally:state._leave()
+    finally:state._release()
 
 
 def ring_direction(pairs,gradient,capacity):

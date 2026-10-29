@@ -219,7 +219,7 @@ cdef class BFGS:
                 self._record()
             self._raise_callback_error()
         finally:
-            if reserved:self._objective._leave()
+            if reserved:self._objective._release()
             self._busy=False
             self._constructing=False
 
@@ -263,8 +263,8 @@ cdef class BFGS:
         self._objective._callback_code=self._state.callback_code
         self._objective._callback_stage=self._state.callback_stage
 
-    cdef void _leave(self) noexcept:
-        self._objective._leave()
+    cdef void _release(self) noexcept:
+        self._objective._release()
         self._busy=False
 
     cdef int _evaluate(self,const double* point,double* out) noexcept nogil:
@@ -431,7 +431,7 @@ cdef class BFGS:
             with nogil:self._step()
             if active:self._raise_callback_error()
             return self._snapshot(self._state,self._x,self._f)
-        finally:self._leave()
+        finally:self._release()
 
     def run(self):
         self._enter()
@@ -440,13 +440,13 @@ cdef class BFGS:
             with nogil:self._run()
             if active:self._raise_callback_error()
             return self._snapshot(self._state,self._x,self._f)
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def result(self):
         self._enter()
         try:return self._snapshot(self._state,self._x,self._f)
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def history(self):
@@ -459,7 +459,7 @@ cdef class BFGS:
                 data=self._history_data.data()+i*(self._n+self._m)
                 records.append(self._snapshot(self._records[i],data,data+self._n))
             return tuple(records)
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def done(self):self._ready();return self._state.reason!=B_RUNNING

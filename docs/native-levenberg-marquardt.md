@@ -128,7 +128,7 @@ No internal NumPy arrays or NumPy operations are used.
 Compiled consumers can `cimport LevenbergMarquardt` from
 `cyroot.native.levenberg_marquardt`, enter `_enter()` while holding the GIL,
 call `_step()` or `_run()` in `nogil`, then transfer callback errors through
-`_raise_callback_error()` before `_leave()` in a `finally` block with the GIL.
+`_raise_callback_error()` before `_release()` in a `finally` block with the GIL.
 The initialized state, objective and callback owners must remain alive and reserved
 through all execution and exports. These trusted methods allocate no native
 workspace. A state/objective/shared callback adapter cannot be used reentrantly

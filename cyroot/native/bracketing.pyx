@@ -227,7 +227,7 @@ cdef class BracketSolver:
                 self._initialized = True
                 self._raise_callback_error()
             finally:
-                self._leave()
+                self._release()
         finally:
             self._constructing = False
 
@@ -248,7 +248,7 @@ cdef class BracketSolver:
         self._callback._active = True
         self._callback._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         self._callback._active = False
         self._busy = False
 
@@ -530,7 +530,7 @@ cdef class BracketSolver:
                 self._raise_callback_error()
             return self._snapshot(self._state)
         finally:
-            self._leave()
+            self._release()
 
     def run(self):
         """Use the remaining total iteration budget through the same step engine."""
@@ -544,7 +544,7 @@ cdef class BracketSolver:
                 self._raise_callback_error()
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def result(self):
@@ -553,7 +553,7 @@ cdef class BracketSolver:
         try:
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def history(self):
@@ -562,7 +562,7 @@ cdef class BracketSolver:
         try:
             return tuple([self._snapshot(self._records[i]) for i in range(self._record_count)])
         finally:
-            self._leave()
+            self._release()
 
     @property
     def done(self):

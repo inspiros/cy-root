@@ -65,7 +65,7 @@ cdef class VectorNewton:
         object history_bytes, object workspace_bytes, object previous,
         object previous_f, object orth) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef void _ready(self) except *
     cdef int _evaluate(self, bint jacobian, const double* x, double* out) noexcept nogil
     cdef int _residual(self, const double* x, double* out) noexcept nogil
@@ -103,7 +103,7 @@ cdef class WolfeBittner:
     cdef bint _busy, _initialized, _constructing, _history_truncated
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, const double* point, double* out) noexcept nogil
     cdef double _geometry(self) noexcept nogil
     cdef void _initialize(self, bint cached, bint discovered) noexcept nogil

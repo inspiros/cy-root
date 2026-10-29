@@ -170,7 +170,7 @@ cdef class LeastSquaresObjective:
             if hessian is not None:self._h = self._result+self._capacity+(self._matrix if jacobian is not None else 0)
             self._initialized = True
         finally:
-            if reserved:self._leave()
+            if reserved:self._release()
             self._constructing = False
 
     @classmethod
@@ -239,7 +239,7 @@ cdef class LeastSquaresObjective:
         if self._hessian is not None:self._hessian._error = None
         if self._rect_hessian is not None:self._rect_hessian._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         if self._scalar_function is not None:self._scalar_function._active=False
         if self._scalar_jacobian is not None:self._scalar_jacobian._active=False
         if self._scalar_hessian is not None:self._scalar_hessian._active=False
@@ -370,7 +370,7 @@ cdef class LeastSquaresObjective:
             if status != 0:raise RuntimeError('Invalid native objective evaluation.')
             return (tuple([self._x[i] for i in range(self._n)]),result) if copy_point else result
         finally:
-            self._leave()
+            self._release()
 
     def value(self, point):return self._evaluate(point, 0)
     def __call__(self, point):return self._evaluate(point, 0)

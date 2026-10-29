@@ -495,8 +495,10 @@ class InstalledNativeNewtonTests(unittest.TestCase):
         result = Newton(callback, first, 1.5, **options).run()
         python = Newton(lambda x: 7 * (x * x - 3.), lambda x: 14 * x,
                         1.5, **options).run()
-        self.assertEqual(result.root, python.root)
-        self.assertEqual(result.f_root, python.f_root)
+        # Fused native evaluation can differ at the rounding scale of 7*x*x.
+        self.assertAlmostEqual(result.root, python.root, delta=4*math.ulp(python.root))
+        self.assertAlmostEqual(result.f_root, python.f_root, delta=8*math.ulp(21.))
+        self.assertTrue(result.success and python.success)
         self.assertEqual(result.f_calls, python.f_calls)
         self.assertEqual(owner.calls, result.f_calls[0])
         self.assertEqual(first_owner.calls, result.f_calls[1])
@@ -591,7 +593,8 @@ class InstalledNativeNewtonTests(unittest.TestCase):
         self.assertEqual(solver.callback_stage, 'derivative')
         self.assertEqual(caught.exception.callback_stage, 'derivative')
         self.assertAlmostEqual(solver.result.root, 17 / 12)
-        self.assertEqual(solver.result.f_root, solver.result.root ** 2 - 2.)
+        square = solver.result.root ** 2
+        self.assertAlmostEqual(solver.result.f_root, square - 2., delta=2*math.ulp(square))
         self.assertEqual(solver.result.f_calls, (2, 2))
         self.assertTrue(math.isnan(solver.result.df_root))
 

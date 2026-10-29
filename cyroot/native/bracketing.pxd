@@ -18,7 +18,7 @@ cdef class BracketSolver:
     cdef double _last_x, _last_f
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, double x, double* out) noexcept nogil
     cdef void _initialize(self, bint cached_a, bint cached_b) noexcept nogil
     cdef void _best(self) noexcept nogil

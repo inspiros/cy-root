@@ -152,7 +152,7 @@ def guarded_hessian(fail_after=-1,partial_after=-1):
     provider._enter()
     try:
         with nogil:code=provider.evaluate_raw(x,&output[1])
-    finally:provider._leave()
+    finally:provider._release()
     return dict(code=code,output=tuple([output[i] for i in range(1,13)]),
         guards=(output[0],output[13]),point=(x[0],x[1]),
         estimate=provider.last_estimate,counters=owner.counters)

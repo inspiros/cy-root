@@ -51,7 +51,7 @@ cdef class Bisection:
     cdef bint _initialized
     cdef bint _constructing
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, double x, double* out) noexcept nogil
     cdef void _initialize(self, bint cached_a, bint cached_b) noexcept nogil
     cdef void _check(self) noexcept nogil
@@ -89,7 +89,7 @@ cdef class Newton:
     cdef bint _initialized
     cdef bint _constructing
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, bint derivative, double x, double* out) noexcept nogil
     cdef void _initialize(self, bint cached_f, bint cached_df) noexcept nogil
     cdef void _check(self) noexcept nogil

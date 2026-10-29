@@ -81,7 +81,7 @@ residual/Jacobian capsule names and layouts are unchanged.
 
 Trusted Cython loops reserve the adapter with `_enter()`, pin its lifetime and
 call `evaluate_raw(x, out)` on disjoint valid `x[n]`, `out[m*n*n]` spans, then
-transfer any saved original `_error` before `_leave()` in a `finally` block.
+transfer any saved original `_error` before `_release()` in a `finally` block.
 Reservation and Python exception transfer require the GIL; `evaluate_raw` is
 `noexcept nogil`, allocates nothing and preserves native statuses. Native loops
 can reuse fixed caller-owned buffers. See the installed consumer test for the

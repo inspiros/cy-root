@@ -41,7 +41,7 @@ cdef class _ThirdOrderNewton:
                       object alpha) except *
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, int stage, double x, double* out) noexcept nogil
     cdef void _initialize(self, bint cached_f, bint cached_df,
                            bint cached_d2f) noexcept nogil

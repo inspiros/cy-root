@@ -143,7 +143,9 @@ class BroydenArithmeticTests(unittest.TestCase):
         solver=BroydenGood(lambda x:(huge if x[0]==0 else -huge,),((huge,),),(0.,),**DISABLED)
         answer=solver.step()
         self.assertEqual(answer.termination_reason,'nonfinite');self.assertEqual(answer.phase,'update')
-        self.assertEqual(answer.root,(-1.,));self.assertEqual(answer.approximation,((huge,),))
+        # The LAPACK solve may round huge/huge by one representable step.
+        assert_allclose(answer.root,(-1.,),rtol=0.,atol=math.ulp(1.))
+        self.assertEqual(answer.approximation,((huge,),))
 
     def test_nonfinite_update_matrix_is_transactional_after_accepted_trial(self):
         huge=sys.float_info.max;minimum=math.ulp(0.)

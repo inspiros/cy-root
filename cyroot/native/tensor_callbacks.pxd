@@ -46,7 +46,7 @@ cdef class RectangularHessianCallback:
     cdef size_t _n, _m, _tensor_size
     cdef bint _active, _native, _constructing
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     # Trusted disjoint x[n],out[m*n*n]; caller reserves and pins lifetime.
     # Output starts NaN; nonzero status clears entire output; caller validates
     # numerical finiteness on code0. Python bridge stores original _error.

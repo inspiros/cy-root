@@ -44,7 +44,7 @@ cdef class Householder:
     cdef vector[HouseholderRecord] _records
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, size_t role, double x, double* out) noexcept nogil
     cdef void _clear_derivatives(self, size_t start) noexcept nogil
     cdef void _derivatives(self) noexcept nogil

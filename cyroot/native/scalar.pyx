@@ -183,7 +183,7 @@ cdef class Bisection:
                 self._initialized = True
                 self._raise_callback_error()
             finally:
-                self._leave()
+                self._release()
         finally:
             self._constructing = False
 
@@ -198,7 +198,7 @@ cdef class Bisection:
         self._callback._active = True
         self._callback._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         self._callback._active = False
         self._busy = False
 
@@ -310,7 +310,7 @@ cdef class Bisection:
                     self._step()
                 self._raise_callback_error()
         finally:
-            self._leave()
+            self._release()
         return self._snapshot(self._state)
 
     def run(self):
@@ -325,7 +325,7 @@ cdef class Bisection:
                         self._step()
                 self._raise_callback_error()
         finally:
-            self._leave()
+            self._release()
         return self.result
 
     @property
@@ -454,7 +454,7 @@ cdef class Newton:
                 self._initialized = True
                 self._raise_callback_error()
             finally:
-                self._leave()
+                self._release()
         finally:
             self._constructing = False
 
@@ -476,7 +476,7 @@ cdef class Newton:
             self._derivative._active = True
             self._derivative._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         self._function._active = False
         if self._derivative is not None:
             self._derivative._active = False
@@ -624,7 +624,7 @@ cdef class Newton:
                 self._raise_callback_error()
             return self._snapshot(self._state)
         finally:
-            self._leave()
+            self._release()
 
     def run(self):
         """Use the remaining total iteration budget through the step engine."""
@@ -639,7 +639,7 @@ cdef class Newton:
                 self._raise_callback_error()
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def result(self):

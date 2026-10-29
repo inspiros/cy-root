@@ -147,7 +147,7 @@ cdef class _ThirdOrderNewton:
                 self._initialized = True
                 self._raise_callback_error()
             finally:
-                self._leave()
+                self._release()
         finally:
             self._constructing = False
 
@@ -182,7 +182,7 @@ cdef class _ThirdOrderNewton:
             self._second_derivative._active = True
             self._second_derivative._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         self._function._active = False
         if self._derivative is not None:
             self._derivative._active = False
@@ -415,7 +415,7 @@ cdef class _ThirdOrderNewton:
                 self._raise_callback_error()
             return self._snapshot(self._state)
         finally:
-            self._leave()
+            self._release()
 
     def run(self):
         """Use the remaining total budget through the common native step loop."""
@@ -429,7 +429,7 @@ cdef class _ThirdOrderNewton:
                 self._raise_callback_error()
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def result(self):
@@ -438,7 +438,7 @@ cdef class _ThirdOrderNewton:
         try:
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def history(self):
@@ -447,7 +447,7 @@ cdef class _ThirdOrderNewton:
         try:
             return tuple([self._snapshot(self._records[i]) for i in range(self._record_count)])
         finally:
-            self._leave()
+            self._release()
 
     @property
     def done(self):

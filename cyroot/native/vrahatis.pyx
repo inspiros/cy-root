@@ -278,7 +278,7 @@ cdef class Vrahatis:
                     raise ValueError('Initial bounds do not form an admissible n-polygon; use every strict output sign combination exactly once.')
                 self._initialized = True
                 self._raise_callback_error()
-            finally:self._leave()
+            finally:self._release()
         finally:self._constructing = False
 
     def __dealloc__(self):
@@ -300,7 +300,7 @@ cdef class Vrahatis:
         if self._rect_function is not None:
             self._rect_function._active, self._rect_function._error = True, None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         if self._function is not None:self._function._active = False
         if self._rect_function is not None:self._rect_function._active = False
         self._busy = False
@@ -560,7 +560,7 @@ cdef class Vrahatis:
                 with nogil:self._step()
                 self._raise_callback_error()
             return self._snapshot(self._state,self._x)
-        finally:self._leave()
+        finally:self._release()
 
     def run(self):
         self._ready()
@@ -571,14 +571,14 @@ cdef class Vrahatis:
                     while self._stop.reason==RUNNING:self._step()
                 self._raise_callback_error()
             return self._copy_result()
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def result(self):
         self._ready()
         self._enter()
         try:return self._copy_result()
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def history(self):
@@ -586,7 +586,7 @@ cdef class Vrahatis:
         self._ready()
         self._enter()
         try:return tuple([self._snapshot(self._records[i],self._history_data.data()+i*self._stride) for i in range(self._record_count)])
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def done(self):
@@ -655,4 +655,4 @@ def compute_admissible_n_polygon(function,x,h=None,eps=1e-5,**options):
         return (_rows_tuple(solver._points,solver._count,solver._n),
                 tuple([tuple([1. if (i>>(solver._m-1-j))&1 else -1. for j in range(solver._m)])
                        for i in range(solver._k)]))
-    finally:solver._leave()
+    finally:solver._release()

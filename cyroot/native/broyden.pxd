@@ -52,7 +52,7 @@ cdef class BroydenGood:
                      object algo, bint dispatch) except *
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, const double* point, double* out) noexcept nogil
     cdef void _initialize(self, bint cached) noexcept nogil
     cdef void _initial_approximation(self) noexcept nogil

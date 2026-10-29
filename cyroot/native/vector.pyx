@@ -494,7 +494,7 @@ cdef class VectorNewton:
                 self._raise_callback_error()
             finally:
                 if point_storage != NULL:del point_storage
-                self._leave()
+                self._release()
         finally:
             self._constructing = False
 
@@ -533,7 +533,7 @@ cdef class VectorNewton:
             self._rect_jacobian._active = True
             self._rect_jacobian._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         if self._function is not None:
             self._function._active = False
         if self._jacobian is not None:
@@ -843,7 +843,7 @@ cdef class VectorNewton:
                 self._raise_callback_error()
             return self._snapshot(self._state, self._x)
         finally:
-            self._leave()
+            self._release()
 
     def run(self):
         self._ready()
@@ -856,7 +856,7 @@ cdef class VectorNewton:
                 self._raise_callback_error()
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def result(self):
@@ -865,7 +865,7 @@ cdef class VectorNewton:
         try:
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def history(self):
@@ -875,7 +875,7 @@ cdef class VectorNewton:
             return tuple([self._snapshot(self._records[i], self._history_data.data() + i * self._record_stride)
                           for i in range(self._record_count)])
         finally:
-            self._leave()
+            self._release()
 
     @property
     def done(self):
@@ -1179,7 +1179,7 @@ cdef class WolfeBittner:
                 self._raise_callback_error()
             finally:
                 if bootstrap != NULL:del bootstrap
-                self._leave()
+                self._release()
         finally:self._constructing = False
 
     def __dealloc__(self):
@@ -1201,7 +1201,7 @@ cdef class WolfeBittner:
         if self._rect_function is not None:
             self._rect_function._active, self._rect_function._error = True, None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         if self._function is not None:self._function._active = False
         if self._rect_function is not None:self._rect_function._active = False
         self._busy = False
@@ -1354,7 +1354,7 @@ cdef class WolfeBittner:
                 with nogil:self._step()
                 self._raise_callback_error()
             return self._copy_result()
-        finally:self._leave()
+        finally:self._release()
 
     def run(self):
         self._ready()
@@ -1365,14 +1365,14 @@ cdef class WolfeBittner:
                     while self._stop.reason == RUNNING:self._step()
                 self._raise_callback_error()
             return self._copy_result()
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def result(self):
         self._ready()
         self._enter()
         try:return self._copy_result()
-        finally:self._leave()
+        finally:self._release()
     @property
     def history(self):
         self._ready()
@@ -1380,7 +1380,7 @@ cdef class WolfeBittner:
         try:
             return tuple([self._snapshot(self._records[i], self._history_data.data()+i*self._stride,
                                         self._affine_records[i]) for i in range(self._record_count)])
-        finally:self._leave()
+        finally:self._release()
     @property
     def done(self):self._ready();return self._stop.reason != RUNNING
     @property

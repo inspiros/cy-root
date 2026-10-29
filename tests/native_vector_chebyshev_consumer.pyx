@@ -303,13 +303,13 @@ def rectangular_hessian_raw(RectangularHessianCallback callback, point):
         return dict(status=code,value=tuple(out[i+1] for i in range(count)),
                     guards=(out[0],out[count+1]))
     finally:
-        callback._leave()
+        callback._release()
 
 
 def rectangular_hessian_reserved(RectangularHessianCallback callback, action):
     callback._enter()
     try:return action()
-    finally:callback._leave()
+    finally:callback._release()
 
 
 def rectangular_contract(tensor,direction,kind='quadratic',n_override=None,m_override=None):

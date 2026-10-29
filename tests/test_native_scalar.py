@@ -440,7 +440,15 @@ class InstalledCythonConsumerTests(unittest.TestCase):
         python = Bisection(lambda x: 7 * (x * x - 3.), 0., 2.,
                            f_a=-21., f_b=7., etol=1e-12, ertol=0.,
                            ptol=0., prtol=0.).run()
-        self.assertEqual(BisectionStateTests.signature(result), BisectionStateTests.signature(python))
+        # Native callbacks may fuse x*x-target; Python rounds the product first.
+        self.assertEqual((result.root, result.iters, result.f_calls, result.bracket,
+                          result.precision, result.termination_reason),
+                         (python.root, python.iters, python.f_calls, python.bracket,
+                          python.precision, python.termination_reason))
+        for actual, expected in zip((result.f_root, result.error, *result.f_bracket),
+                                    (python.f_root, python.error, *python.f_bracket)):
+            self.assertAlmostEqual(actual, expected, delta=8*math.ulp(21.))
+        self.assertTrue(result.success and python.success)
         self.assertGreater(owner.calls, 0)
         self.assertEqual(owner.calls, result.f_calls)
         self.assertEqual(owner.gil_held, 0)

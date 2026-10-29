@@ -245,7 +245,7 @@ cdef class NewtonKrylov:
                     self._record()
                 self._initialized=True
                 self._raise_callback_error()
-            finally:self._leave()
+            finally:self._release()
         finally:self._constructing=False
 
     def __dealloc__(self):
@@ -274,7 +274,7 @@ cdef class NewtonKrylov:
         if self._function is not None:self._function._active=True;self._function._error=None
         if self._product_callback is not None:self._product_callback._active=True;self._product_callback._error=None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         if self._square_function is not None:self._square_function._active=False
         if self._function is not None:self._function._active=False
         if self._product_callback is not None:self._product_callback._active=False
@@ -470,7 +470,7 @@ cdef class NewtonKrylov:
                 with nogil:self._step()
                 self._raise_callback_error()
             return self._snapshot(self._state,self._x,self._f)
-        finally:self._leave()
+        finally:self._release()
 
     def run(self):
         self._ready();self._enter()
@@ -479,7 +479,7 @@ cdef class NewtonKrylov:
                 with nogil:self._run()
                 self._raise_callback_error()
             return self._snapshot(self._state,self._x,self._f)
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def result(self):

@@ -245,6 +245,9 @@ def run(args: argparse.Namespace) -> int:
               f"errors={report['errors']}, skips={report['skipped']}; {report['log']}")
         if 'worker_error' in report:
             print(f"  Worker error: {report['worker_error'].strip()}")
+        if status == 'FAIL':
+            print(f"Failure output for {report['module']}:")
+            print(Path(report['log']).read_text(encoding='utf-8', errors='replace'))
     print(f"TOTAL: modules={summary['modules']}, tests={summary['tests_run']}, failures={summary['failures']}, "
           f"errors={summary['errors']}, skips={summary['skipped']}, expected_failures={summary['expected_failures']}, "
           f"unexpected_successes={summary['unexpected_successes']}, discovery_errors={summary['discovery_errors']}, "
@@ -268,7 +271,8 @@ def self_check() -> int:
             ' def test_pass(self): pass\n'
             ' @unittest.skip("fixture")\n def test_skip(self): pass\n'
             ' @unittest.expectedFailure\n def test_expected(self): self.fail("fixture")\n', encoding='utf-8')
-        def invoke(label, directory, jobs=2, extra=(), expected=0, environment=None):
+        def invoke(label, directory, jobs=2, extra=(), expected=0, environment=None,
+                   output_contains=()):
             logs = root / label
             command = [sys.executable, str(Path(__file__).resolve()), '--start-directory', str(directory),
                        '--jobs', str(jobs), '--log-directory', str(logs), *extra]
@@ -276,6 +280,8 @@ def self_check() -> int:
                                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             if result.returncode != expected:
                 raise AssertionError(f'{label}: exit {result.returncode}, expected {expected}\n{result.stdout}')
+            for text in output_contains:
+                assert text in result.stdout, f'{label}: missing diagnostic {text!r}\n{result.stdout}'
             summary = json.loads((logs / 'summary.json').read_text()) if (logs / 'summary.json').is_file() else None
             return summary
         serial = invoke('serial', good, jobs=1, extra=('--expected-tests', '5'))
@@ -293,7 +299,10 @@ def self_check() -> int:
             ' def test_fail(self): self.fail("fixture")\n'
             ' def test_error(self): raise RuntimeError("fixture")\n'
             ' @unittest.expectedFailure\n def test_unexpected(self): pass\n', encoding='utf-8')
-        failure = invoke('failures', bad, expected=1)
+        failure = invoke('failures', bad, expected=1,
+                         output_contains=('Failure output for test_fail:',
+                                          'FAIL: test_fail', 'ERROR: test_error',
+                                          'RuntimeError: fixture'))
         assert (failure['tests_run'], failure['failures'], failure['errors'], failure['unexpected_successes']) == (3, 1, 1, 1)
         broken = root / 'broken'; broken.mkdir()
         (broken / 'test_import.py').write_text('raise RuntimeError("fixture import failure")\n', encoding='utf-8')

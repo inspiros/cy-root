@@ -168,7 +168,7 @@ cdef class ComplexVectorCallback:
         if self._active:raise RuntimeError('This callback adapter is already active.')
         self._active, self._error = True, None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         self._active = False
 
     def evaluate(self, point, *, workspace_bytes=64*1024*1024):
@@ -199,7 +199,7 @@ cdef class ComplexVectorCallback:
             return tuple([complex(fr[i],fi[i]) for i in range(self._m)])
         finally:
             if storage != NULL:del storage
-            self._leave()
+            self._release()
 
     @property
     def native(self):return bool(self._native)
@@ -535,7 +535,7 @@ cdef class _JacobianDifferentiation:
                 raise NativeCallbackError(self._report.callback_code,estimate,'function')
             return estimate
         finally:
-            self._leave()
+            self._release()
 
     def __call__(self,x):
         estimate=self.evaluate(x)
@@ -744,7 +744,7 @@ cdef class AdaptiveHessian:
                 raise NativeCallbackError(self._report.callback_code,estimate,'function')
             return estimate
         finally:
-            self._leave()
+            self._release()
 
     def __call__(self,x):
         estimate=self.evaluate(x)

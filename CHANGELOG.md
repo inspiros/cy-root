@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Fix Windows compilation by renaming the internal Cython `_leave` methods,
+  which collide with an MSVC reserved keyword macro, to `_release`.
+- Print failed test-module logs in the runner output and allow the Tests
+  workflow to run manually before creating a release tag.
+- Make callback comparisons tolerate floating-point contraction and LAPACK
+  rounding, and keep the correction-overflow fixture independent of subnormal
+  pivot handling. State, callback-count and failure-stage checks remain exact.
+
 ## 2.0.0 — 2026-10-29
 
 A breaking overhaul of the numerical core, callback interfaces, and solver

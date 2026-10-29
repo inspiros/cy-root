@@ -74,7 +74,7 @@ cdef class DampedNewton:
                 self._c1, self._contraction, self._max_line_search = _line_controls(self._line_options)
                 self._line_options = ()
         except BaseException:
-            Newton._leave(self)
+            Newton._release(self)
             raise
 
     cdef void _step(self) noexcept nogil:
@@ -167,7 +167,7 @@ cdef class VectorDampedNewton:
                 self._c1, self._contraction, self._max_line_search = _line_controls(self._line_options)
                 self._line_options = ()
         except BaseException:
-            VectorNewton._leave(self)
+            VectorNewton._release(self)
             raise
 
     cdef void _step(self) noexcept nogil:

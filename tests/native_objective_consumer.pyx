@@ -93,7 +93,7 @@ def raw(LeastSquaresObjective objective, int order, point=(.5,.25), *,
                 status=objective.evaluate_raw(x.data(),order,out.data()+1,supplied)
         code,stage=objective._callback_code,objective._callback_stage
     finally:
-        if reserve:objective._leave()
+        if reserve:objective._release()
     return (status,tuple(out[i+1] for i in range(needed)),code,stage,
             (out[0],out[out.size()-1]))
 
@@ -103,4 +103,4 @@ def shared_callback_reserved(LeastSquaresObjective objective, callback, point=(.
     other = LeastSquaresObjective(callback, objective._n, objective._m)
     objective._enter()
     try:return other.value(point)
-    finally:objective._leave()
+    finally:objective._release()

@@ -79,7 +79,7 @@ cdef class JacobianTransposeCallback:
         if self._active:raise RuntimeError('This callback adapter is already active.')
         self._active=True;self._error=None
 
-    cdef void _leave(self) noexcept:self._active=False
+    cdef void _release(self) noexcept:self._active=False
 
     cdef int evaluate_raw(self,const double* x,const double* direction,double* out) noexcept nogil:
         cdef int code
@@ -117,7 +117,7 @@ cdef class JacobianTransposeCallback:
             return result
         finally:
             if storage!=NULL:del storage
-            self._leave()
+            self._release()
 
     @property
     def input_dimension(self):return self._n

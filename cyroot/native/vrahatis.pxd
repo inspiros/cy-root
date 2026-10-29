@@ -31,7 +31,7 @@ cdef class Vrahatis:
     cdef bint _busy, _constructing, _initialized, _single, _history_truncated, _invalid_polygon, _polygon_root
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, const double* point, double* out) noexcept nogil
     cdef int _polygon_evaluate(self,const double* x,double* out) noexcept nogil
     cdef void _initialize(self, bint cached, bint discovered) noexcept nogil

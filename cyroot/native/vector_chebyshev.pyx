@@ -476,7 +476,7 @@ cdef class VectorChebyshev:
                 self._raise_callback_error()
             finally:
                 if bootstrap != NULL:del bootstrap
-                self._leave()
+                self._release()
         finally:self._constructing = False
 
     def __dealloc__(self):
@@ -520,7 +520,7 @@ cdef class VectorChebyshev:
         if self._rect_jacobian is not None:self._rect_jacobian._active, self._rect_jacobian._error = True, None
         if self._rect_hessian is not None:self._rect_hessian._active, self._rect_hessian._error = True, None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         if self._function is not None:self._function._active = False
         if self._jacobian is not None:self._jacobian._active = False
         if self._hessian is not None:self._hessian._active = False
@@ -877,7 +877,7 @@ cdef class VectorChebyshev:
                 self._raise_callback_error()
             return self._snapshot(self._state, self._x)
         finally:
-            self._leave()
+            self._release()
 
     def run(self):
         """Use the remaining total iteration budget through the native loop."""
@@ -891,7 +891,7 @@ cdef class VectorChebyshev:
                 self._raise_callback_error()
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def result(self):
@@ -900,7 +900,7 @@ cdef class VectorChebyshev:
         try:
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def history(self):
@@ -912,7 +912,7 @@ cdef class VectorChebyshev:
                 self._history_data.data()+i*self._record_stride)
                 for i in range(self._record_count)])
         finally:
-            self._leave()
+            self._release()
 
     @property
     def done(self):

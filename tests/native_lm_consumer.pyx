@@ -75,7 +75,7 @@ def run_raw(LevenbergMarquardt state):
         with nogil:state._run()
         state._raise_callback_error()
         return state._snapshot(state._state,state._x,state._f)
-    finally:state._leave()
+    finally:state._release()
 
 
 def reserved_probes(LevenbergMarquardt state, objective, callback, point):
@@ -89,4 +89,4 @@ def reserved_probes(LevenbergMarquardt state, objective, callback, point):
             except RuntimeError:results.append(True)
             else:results.append(False)
         return tuple(results)
-    finally:state._leave()
+    finally:state._release()

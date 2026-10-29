@@ -37,7 +37,7 @@ cdef class LeastSquaresObjective:
     # hold reservation through raw evaluation, exception and result exports.
     cdef void _reserve(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef void _raise_callback_error(self, object result) except *
     cdef int _sample(self, int stage, const double* x, double* out) noexcept nogil
     cdef object _evaluate(self, object point, int order)
@@ -47,6 +47,6 @@ cdef class LeastSquaresObjective:
     # Status0 ok,1 nonfinite,2 invalid/uninitialized/not reserved/missing
     # derivative provider,3 callback failure. No output writes on failure.
     # capacity is checked before sampling. No native heap allocation; Python
-    # providers acquire GIL. _leave must run with GIL even after failure.
+    # providers acquire GIL. _release must run with GIL even after failure.
     cdef int evaluate_raw(self, const double* x, int order, double* out,
                           size_t capacity) noexcept nogil

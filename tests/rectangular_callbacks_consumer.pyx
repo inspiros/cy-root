@@ -80,13 +80,13 @@ def raw(RectangularCallback callback, point):
             raise error
         return code, tuple(out[i] for i in range(count))
     finally:
-        callback._leave()
+        callback._release()
 
 
 def reserved(RectangularCallback callback, action):
     callback._enter()
     try: return action()
-    finally: callback._leave()
+    finally: callback._release()
 
 
 def null_factory():

@@ -88,7 +88,7 @@ cdef class JacobianVectorCallback:
         if self._active:raise RuntimeError('This callback adapter is already active.')
         self._active=True;self._error=None
 
-    cdef void _leave(self) noexcept:self._active=False
+    cdef void _release(self) noexcept:self._active=False
 
     cdef int evaluate_raw(self,const double* x,const double* direction,double* out) noexcept nogil:
         cdef int code
@@ -126,7 +126,7 @@ cdef class JacobianVectorCallback:
             return result
         finally:
             if storage!=NULL:del storage
-            self._leave()
+            self._release()
 
     @property
     def input_dimension(self):return self._n
@@ -241,7 +241,7 @@ cdef class JacobianVectorPlan:
         finally:
             if storage!=NULL:del storage
             if square is not None:square._active=False
-            else:rectangular._leave()
+            else:rectangular._release()
 
     @property
     def input_dimension(self):return self._n

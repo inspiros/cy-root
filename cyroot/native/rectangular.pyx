@@ -120,7 +120,7 @@ cdef class RectangularCallback:
         self._active = True
         self._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         self._active = False
 
     cdef int evaluate_raw(self, const double* x, double* out) noexcept nogil:
@@ -159,7 +159,7 @@ cdef class RectangularCallback:
             return result
         finally:
             if storage != NULL:del storage
-            self._leave()
+            self._release()
 
     @property
     def input_dimension(self):return self._n

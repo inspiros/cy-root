@@ -262,7 +262,7 @@ cdef class Householder:
                 self._initialized = True
                 self._raise_callback_error()
             finally:
-                self._leave()
+                self._release()
         finally:
             self._constructing = False
 
@@ -291,7 +291,7 @@ cdef class Householder:
             adapter._active = True
             adapter._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         cdef ScalarCallback adapter
         for candidate in self._adapters:
             adapter = candidate
@@ -469,7 +469,7 @@ cdef class Householder:
                 self._raise_callback_error()
             return self._snapshot(self._state, self._values.data()+1, self._calls.data())
         finally:
-            self._leave()
+            self._release()
 
     def run(self):
         """Use the remaining total budget through the native step loop."""
@@ -483,7 +483,7 @@ cdef class Householder:
                 self._raise_callback_error()
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def result(self):
@@ -492,7 +492,7 @@ cdef class Householder:
         try:
             return self._copy_result()
         finally:
-            self._leave()
+            self._release()
 
     @property
     def history(self):
@@ -505,7 +505,7 @@ cdef class Householder:
                 self._history_calls.data()+i*(self._order+1))
                 for i in range(self._record_count)])
         finally:
-            self._leave()
+            self._release()
 
     @property
     def done(self):

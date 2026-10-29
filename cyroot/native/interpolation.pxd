@@ -28,7 +28,7 @@ cdef class _Interpolation:
     cdef bint _aitken, _initialized, _constructing, _busy, _history_truncated
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, double complex x, double complex* out) noexcept nogil
     cdef void _initialize(self) noexcept nogil
     cdef void _check(self) noexcept nogil

@@ -39,4 +39,4 @@ def evaluate(point=(1.,.4)):
         objective._raise_callback_error(None)
         if status!=0:raise ArithmeticError('Native objective evaluation failed.')
         return ((out[0],out[2]),(out[1],out[3]))
-    finally:objective._leave()
+    finally:objective._release()

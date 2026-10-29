@@ -20,7 +20,7 @@ cdef class JacobianTransposeCallback:
     cdef size_t _n, _m
     cdef bint _active, _native, _constructing
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     # Caller reserves adapter, pins context, and supplies disjoint x[n],w[m],out[n].
     # Nonzero status poisons the entire output; no allocation occurs here.
     cdef int evaluate_raw(self, const double* x, const double* direction,

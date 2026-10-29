@@ -294,7 +294,7 @@ cdef class TensorDifferencePlan:
         finally:
             if storage != NULL:del storage
             if square is not None:square._active = False
-            if rectangular is not None:rectangular._leave()
+            if rectangular is not None:rectangular._release()
 
     @property
     def input_dimension(self):return self._n

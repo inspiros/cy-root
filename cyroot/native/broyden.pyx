@@ -283,7 +283,7 @@ cdef class BroydenGood:
                 self._initialized = True
                 self._raise_callback_error()
             finally:
-                self._leave()
+                self._release()
         finally:
             self._constructing = False
 
@@ -303,7 +303,7 @@ cdef class BroydenGood:
         self._busy = True
         if self._function is not None:self._function._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         if self._function is not None:self._function._active = False
         self._busy = False
 
@@ -542,7 +542,7 @@ cdef class BroydenGood:
                 with nogil:self._step()
                 self._raise_callback_error()
             return self._snapshot(self._state, self._x)
-        finally:self._leave()
+        finally:self._release()
 
     def run(self):
         self._ready()
@@ -553,14 +553,14 @@ cdef class BroydenGood:
                     while self._stop.reason == RUNNING:self._step()
                 self._raise_callback_error()
             return self._snapshot(self._state, self._x)
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def result(self):
         self._ready()
         self._enter()
         try:return self._snapshot(self._state, self._x)
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def history(self):
@@ -570,7 +570,7 @@ cdef class BroydenGood:
         try:
             return tuple([self._snapshot(self._records[i], self._history_data.data()+i*self._stride)
                           for i in range(self._record_count)])
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def done(self):

@@ -27,7 +27,7 @@ cdef class Secant:
     cdef bint _initialized, _constructing, _busy, _history_truncated
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, double x, double* out) noexcept nogil
     cdef void _initialize(self, double x1, double f_x1,
                           bint cached_f0, bint cached_f1) noexcept nogil

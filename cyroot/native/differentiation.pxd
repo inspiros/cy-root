@@ -30,7 +30,7 @@ cdef class ComplexVectorCallback:
     cdef object _keepalive, _python_function, _error
     cdef bint _active, _native, _constructing
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
 
 cdef ComplexVectorCallback make_complex_vector_callback(ComplexVectorFunction function,
     size_t n, size_t m, void* context, object keepalive=*)

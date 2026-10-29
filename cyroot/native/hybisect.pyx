@@ -145,7 +145,7 @@ cdef class Hybisect:
                 self._initialized = True
                 self._record()
             finally:
-                self._leave()
+                self._release()
         finally:
             self._constructing = False
 
@@ -164,7 +164,7 @@ cdef class Hybisect:
         self._busy = self._function._active = self._interval_function._active = True
         self._function._error = self._interval_function._error = None
 
-    cdef void _leave(self) noexcept:
+    cdef void _release(self) noexcept:
         self._function._active = self._interval_function._active = self._busy = False
 
     cdef int _evaluate(self,double point,double* out) noexcept nogil:
@@ -361,7 +361,7 @@ cdef class Hybisect:
             with nogil:self._step()
             self._raise_callback_error()
             return self._snapshot(self._current())
-        finally:self._leave()
+        finally:self._release()
 
     def run(self):
         self._ready();self._enter()
@@ -370,14 +370,14 @@ cdef class Hybisect:
                 while self._search_reason == RUNNING:self._step()
             self._raise_callback_error()
             return self._copy_result()
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def result(self):
         self._ready()
         self._enter()
         try:return self._copy_result()
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def done(self):
@@ -389,7 +389,7 @@ cdef class Hybisect:
         self._ready()
         self._enter()
         try:return tuple(self._snapshot(self._records[i]) for i in range(self._record_count))
-        finally:self._leave()
+        finally:self._release()
 
     @property
     def history_truncated(self):

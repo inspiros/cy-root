@@ -35,7 +35,7 @@ cdef class BFGS:
     cdef int _update_model(self) noexcept nogil
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self,const double* point,double* out) noexcept nogil
     cdef int _difference_sample(self,const double* point,double* out) noexcept nogil
     cdef int _gradient(self,const double* point,const double* f,double* out) noexcept nogil
@@ -43,7 +43,7 @@ cdef class BFGS:
     cdef void _fail(self,int status) noexcept nogil
     cdef void _record(self) noexcept nogil
     # Trusted callers pin state/owners and hold _enter across native execution
-    # and exports, then _leave with GIL. Numerical loops allocate no workspace;
+    # and exports, then _release with GIL. Numerical loops allocate no workspace;
     # Python providers acquire GIL. Terminated states are no-ops.
     cdef void _step(self) noexcept nogil
     cdef void _run(self) noexcept nogil

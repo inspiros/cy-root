@@ -47,7 +47,7 @@ cdef class NewtonKrylov:
     cdef vector[KrylovRecord] _records
     cdef bint _initialized,_constructing,_busy,_history_truncated,_numerical_pair
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef void _ready(self) except *
     cdef int _evaluate(self,const double* point,double* out) noexcept nogil
     cdef int _product(self,const double* direction,double* out) noexcept nogil

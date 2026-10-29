@@ -36,7 +36,7 @@ cdef class LevenbergMarquardt:
     cdef void _step_dogleg(self) noexcept nogil
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, const double* point, double* out) noexcept nogil
     cdef int _difference_sample(self, const double* point, double* out) noexcept nogil
     cdef bint _stationary(self) noexcept nogil

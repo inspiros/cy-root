@@ -52,7 +52,7 @@ cdef class Hybisect:
     cdef bint _history_truncated, _workspace_exhausted
     cdef void _ready(self) except *
     cdef void _enter(self) except *
-    cdef void _leave(self) noexcept
+    cdef void _release(self) noexcept
     cdef int _evaluate(self, double point, double* out) noexcept nogil
     cdef void _check(self) noexcept nogil
     cdef void _finish_branch(self) noexcept nogil

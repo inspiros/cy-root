@@ -62,7 +62,7 @@ def raw_objective(LeastSquaresObjective objective,int order,point=1.5):
         with nogil:status=objective.evaluate_raw(&x,order,&out,1)
         objective._raise_callback_error(out)
         return status,out
-    finally:objective._leave()
+    finally:objective._release()
 
 
 def run_raw(state):
@@ -73,11 +73,11 @@ def run_raw(state):
         try:
             with nogil:quasi._run()
             quasi._raise_callback_error()
-        finally:quasi._leave()
+        finally:quasi._release()
     else:
         trust=state;trust._enter()
         try:
             with nogil:trust._run()
             trust._raise_callback_error()
-        finally:trust._leave()
+        finally:trust._release()
     return state.result

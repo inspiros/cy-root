@@ -429,7 +429,7 @@ cdef class RectangularJacobianPlan:
             return estimate
         finally:
             if storage != NULL:del storage
-            adapter._leave()
+            adapter._release()
 
     @property
     def input_dimension(self):return self._axes._dimension if self._initialized else 0
