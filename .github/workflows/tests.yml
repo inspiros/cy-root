@@ -48,7 +48,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install 'setuptools==78.0.1' 'Cython==3.3.0' 'numpy==2.0.0' 'scipy==1.13.0' wheel build
           python -m build --no-isolation
-      - name: Verify wheel contents
+      - name: Verify distribution contents
         run: python tests/check_distribution.py dist
       - name: Install and test wheel outside checkout
         working-directory: ${{ runner.temp }}

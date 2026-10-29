@@ -118,8 +118,9 @@ def check_distribution(path):
     assert package_root + "cyroot/defaults.hpp" in names
     assert any(name.endswith("/LICENSE") or name == "LICENSE" for name in names)
     assert not any(".maintainer/" in name or "/develop/" in name or "/.venv/" in name for name in names)
-    assert not any(name.endswith((".c", ".cpp"))
-                   and not name.startswith(package_root + "tests/native/") for name in names)
+    generated_sources = sorted(name for name in names if name.endswith((".c", ".cpp"))
+                               and not name.startswith(package_root + "tests/native/"))
+    assert not generated_sources, f"Unexpected C/C++ sources in {path.name}: {generated_sources}"
     if path.suffix != ".whl":
         for name in ('tests/test_differentiation.py', 'tests/differentiation_consumer.pyx',
                      'examples/numerical_derivatives.py'):

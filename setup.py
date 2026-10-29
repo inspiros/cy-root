@@ -115,7 +115,9 @@ def get_ext_modules():
         )
         for name in EXTENSION_NAMES
     ]
-    return cythonize(extensions, language_level=3, build_dir="build/cython")
+    # MANIFEST.in's "prune build" must match these paths on Windows too.
+    return cythonize(extensions, language_level=3,
+                     build_dir=str(Path("build") / "cython"))
 
 
 if __name__ == "__main__":

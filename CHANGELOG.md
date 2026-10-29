@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Use native path separators for Cython's build directory so Windows source
+  archives exclude generated C++ files as intended.
 - Fix Windows compilation by renaming the internal Cython `_leave` methods,
   which collide with an MSVC reserved keyword macro, to `_release`.
 - Print failed test-module logs in the runner output and allow the Tests
