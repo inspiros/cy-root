@@ -249,7 +249,7 @@ dispatchers.
 
 If CyRoot supports your research, please cite the software. Use the
 [all-versions DOI](https://doi.org/10.5281/zenodo.23752558) for the project,
-or the [v2.0.0 DOI](https://doi.org/10.5281/zenodo.23752559) for this release.
+or the [v2.0.0 DOI](https://doi.org/10.5281/zenodo.23752559) for that release.
 GitHub's **Cite this repository** button provides BibTeX and APA citations.
 
 ## License

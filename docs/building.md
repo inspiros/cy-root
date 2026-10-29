@@ -1,8 +1,8 @@
 # Building And Testing
 
-The development sources support CPython 3.11–3.14 and require a C++17 compiler
-and Python development headers. Linux distributions often provide those headers
-in a separate `python3-dev` or version-specific development package.
+CyRoot supports CPython 3.11–3.14. Building from source needs a C++17 compiler
+and the Python development headers, which Linux distributions often ship in a
+separate `python3-dev` (or version-specific) package.
 
 Create an isolated environment, then build the package in editable mode:
 
@@ -17,11 +17,11 @@ python tests/run_tests.py
 On Windows, activate with `.venv\Scripts\activate` and use an MSVC toolchain with
 C++17 support. On macOS, install the Xcode command line tools.
 
-The test runner defaults to at most four concurrent processes, or the CPU count
-if smaller. It discovers test modules without importing them in the coordinator,
-then runs each module once in a fresh process using the current Python
-interpreter. External Cython consumer builds keep their separate temporary
-directories. `--jobs 1` retains process isolation while running serially:
+The test runner uses up to four worker processes, or fewer on machines with
+fewer CPUs. It discovers test modules without importing them, then runs each
+module once in a fresh process of the current interpreter. External Cython
+consumer builds use their own temporary directories. `--jobs 1` runs the
+modules one at a time, still in separate processes:
 
 ```sh
 python tests/run_tests.py --jobs 1
@@ -29,40 +29,37 @@ python tests/run_tests.py --jobs 4 --pattern test_native_broyden.py
 python tests/run_tests.py --self-check
 ```
 
-The default discovery directory is the runner's own `tests` directory, so an
-absolute invocation also works outside the checkout. `--start-directory` and
-`--pattern` select another suite. Verbose per-module logs and machine-readable
-results are written to `test-logs/` in the current directory; use
-`--log-directory` to choose another location. `summary.json` contains aggregate
-counts and the executed test IDs for every module. Test failures, import or
-discovery errors, unexpected successes and worker crashes produce a nonzero
-exit status. Optional `--expected-tests N` checks the aggregate count;
-`--require-no-skips` rejects skips when the environment supplies every compiler
-and optional test dependency.
+By default the runner discovers tests in its own `tests` directory, so it also
+works when invoked by absolute path from outside the checkout.
+`--start-directory` and `--pattern` select a different set. Per-module logs and
+machine-readable results go to `test-logs/` in the current directory, or to
+`--log-directory`; `summary.json` holds the totals and the test IDs run in each
+module. Test failures, import or discovery errors, unexpected successes and
+worker crashes give a nonzero exit status. `--expected-tests N` also checks the
+total count, and `--require-no-skips` fails on skips, for environments that
+provide every compiler and optional test dependency.
 
-Keep new tests focused on distinct behavior. Test numerical identities, failure
-states and buffer safety in the native engine's suite. Wrapper tests should
+When adding tests, cover distinct behavior. Numerical identities, failure
+states and buffer safety belong in the native engine's suite. Wrapper tests
 check argument forwarding, dispatch and the Python interface, without repeating
-the engine's numerical cases for every alias. Keep regressions for bugs found
-in practice and compiled-consumer checks for the native API. For a local change,
-run the affected module first; run the full suite once after integration.
+the engine's numerical cases for every alias. Keep regression tests for bugs
+found in practice, and compiled-consumer checks for the native API. For a local
+change, run the affected module first and the full suite before merging.
 
-The runner preserves `CC`, `CXX` and other caller environment settings. It sets
-unset OpenMP, OpenBLAS, MKL, Accelerate, NumExpr and BLIS thread limits to one to
-avoid multiplying numerical backend threads across test workers. Explicit
-thread settings remain in effect.
+The runner passes `CC`, `CXX` and the rest of your environment through. Thread
+limits for OpenMP, OpenBLAS, MKL, Accelerate, NumExpr and BLIS that you have
+not set are set to one, so parallel workers do not multiply backend threads;
+limits you set yourself are kept.
 
-NumPy and SciPy remain runtime dependencies. SciPy supplies the Cython
-LAPACK interface; no separate system BLAS/LAPACK installation is required by
-this backend. SciPy is currently restricted to versions below 1.18 because the
-newer Cython BLAS/LAPACK integer ABI has not been validated by this package.
+NumPy and SciPy are runtime dependencies. SciPy provides the Cython LAPACK
+interface, so no separate system BLAS or LAPACK is needed. SciPy is limited to
+versions below 1.18, whose new Cython BLAS/LAPACK integer ABI has not yet been
+validated with CyRoot.
 
-Source builds use Cython 3.3.0, declared in `pyproject.toml`. Authored `.pyx` and
-`.pxd` files are authoritative. Generated C++ is placed in `build/cython/`;
-stale generated files next to `.pyx` files have been removed. Source archives
-require Cython to build and do not bundle generated C++.
-Installed packages include Cython declarations and native headers for compiled
-consumers.
+Source builds use Cython 3.3.0, as declared in `pyproject.toml`. Generated C++
+goes to `build/cython/`. Source archives do not bundle generated C++, so
+installing from one needs Cython. Installed packages include the Cython
+declarations and native headers for compiled consumers.
 
 Build distribution artifacts with:
 
@@ -82,22 +79,21 @@ cd /tmp
   --log-directory /tmp/cyroot-wheel-test-logs
 ```
 
-Use the same process for the source archive. Source installation needs Cython,
-Python development headers, and the compiler. Test discovery is limited to
-`tests/`; `develop/` contains private or disposable experiments and `examples/`
-contains demonstrations.
+Test the source archive the same way; installing it needs Cython, the Python
+development headers and a compiler. Only `tests/` is searched for tests;
+`examples/` holds demonstrations.
 
-`--installed-prefix` checks the imported `cyroot` package and every loaded
-`cyroot` module in each worker before and after its tests. A source import
-outside that prefix fails the run. The runner adds the test discovery directory
-for sibling test helpers; it never adds the checkout root. Source testing
-therefore requires the editable installation shown above. For installed-wheel
-verification, keep the working directory outside the checkout and supply the
-fresh environment's prefix.
+With `--installed-prefix`, each worker checks before and after its tests that
+`cyroot` and every loaded `cyroot` module come from that prefix, and fails the
+run otherwise. The runner adds the test directory to the path for its helper
+modules but never the checkout root, so testing the sources needs the editable
+installation above. To verify an installed wheel, run from outside the checkout
+and pass the fresh environment's prefix.
 
 The native callback tests compile a small external Cython extension against
-the installed package, so their test environment needs Cython and a compiler.
-The standalone native header check uses `g++` when available. On Linux, run
+the installed package, so they need Cython and a compiler. The standalone
+native header check uses `g++` when it is available. On Linux, run
 `CYROOT_NATIVE_SANITIZERS=1 python tests/run_tests.py --pattern test_native_buffers.py --jobs 1`
-for address/undefined-behavior checks. The dedicated CI job additionally enables
-leak detection; traced local environments may not support LeakSanitizer.
+for AddressSanitizer and UndefinedBehaviorSanitizer checks. The dedicated CI
+job also enables leak detection; LeakSanitizer may not work in some sandboxed
+or traced local environments.

@@ -1,9 +1,9 @@
 # Quick Start
 
-CyRoot solves \(f(x)=0\) and \(F(x)=0\) with the same progression: choose a
-method, provide the derivatives you have, and check the stopping reason.
-Python callbacks are enough to begin. Native callbacks are an optional next step
-when Python call overhead matters.
+CyRoot solves \(f(x)=0\) and \(F(x)=0\) the same way: choose a method, supply
+the derivatives you have, and check why the solver stopped. Python callbacks are
+enough to start. Native callbacks are an optional next step when Python call
+overhead matters.
 
 ## Install
 
@@ -27,9 +27,9 @@ See [Building And Testing](building.md) for the full environment setup.
 
 ## Solve A Scalar Equation
 
-A bracket is a good starting point for a continuous scalar function with
-opposite endpoint signs. Newton is useful when a starting estimate and derivative
-are available. Pass `None` to approximate the derivative numerically.
+A bracket is a good starting point for a continuous scalar function whose values
+at the two endpoints have opposite signs. Newton suits a good starting estimate
+with a derivative; pass `None` to approximate the derivative numerically.
 
 ```python
 from cyroot import bisect, newton
@@ -42,14 +42,15 @@ assert bracketed.success and analytic.success and numerical.success
 assert abs(analytic.root - 2.**.5) < 1e-10
 ```
 
-Controls are keyword-only: `newton(f, None, 1.5, etol=1e-12, max_iter=50)`.
-Cached initial function and derivative values must match the starting point.
+Tolerances and other controls are keyword-only:
+`newton(f, None, 1.5, etol=1e-12, max_iter=50)`. Cached values such as `f_x0`
+and `df_x0` are optional and must be the values at the starting point.
 
 ## Solve A Nonlinear System
 
-Vector callbacks receive a tuple. Return a sequence of residuals, and if
-supplying a Jacobian, return rows indexed by residual and columns by input.
-Tall systems have more residuals than unknowns; wide systems have fewer.
+Vector callbacks receive a tuple and return a sequence of residuals. A Jacobian
+callback returns one row per residual and one column per unknown. Tall systems
+have more residuals than unknowns; wide systems have fewer.
 
 ```python
 from cyroot import generalized_newton, vector_lbfgs
@@ -84,17 +85,19 @@ assert solver.history[-1].root == final.root
 assert first.iters == 1
 ```
 
-`history=0` disables recording. Positive capacities bound the number of copied
-snapshots; `history_truncated` reports a full buffer. `RootSnapshot` normalizes
-single-root scalar and vector records and keeps the original diagnostics.
+`history=0`, the default, records nothing. A positive `history` is the maximum
+number of copied snapshots; once it is full, later steps are not recorded and
+`history_truncated` is set. `as_root_snapshot` gives scalar and vector results
+the same fields and keeps the original record in `diagnostics`.
 Read [Stopping And Results](stopping.md) before interpreting `success`: a narrow
-scalar bracket and a small nonlinear residual are distinct outcomes.
+scalar bracket and a small nonlinear residual are different outcomes.
 
 ## Take The Next Step
 
-- [Choose A Method](choosing-methods.md) by shape, derivatives, and storage.
+- [Choose A Method](choosing-methods.md) by system shape, available derivatives
+  and storage.
 - [Numerical Derivatives](numerical-derivatives.md) compares fixed differences,
-  Richardson refinement, and complex-step.
-- [Compile Callbacks](compiling-callbacks.md) explains the Cython route to a
+  Richardson refinement and complex-step derivatives.
+- [Compile Python Callbacks](compiling-callbacks.md) shows how to run the
   numerical loop without the GIL.
 - [Native Core](native-core.md) documents ownership, storage, and callback errors.

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 2.0.1 — 2026-10-29
 
 - Clean test build directories after their worker processes exit, avoiding
   Windows cleanup errors from locked extension modules.
@@ -13,6 +13,11 @@
 - Make callback comparisons tolerate floating-point contraction and LAPACK
   rounding, and keep the correction-overflow fixture independent of subnormal
   pivot handling. State, callback-count and failure-stage checks remain exact.
+- Reword the documentation as the 2.0 reference instead of a migration log, and
+  correct pages that called the public functions an older API, described the
+  higher-order vector methods as square-only or `RectangularCallback` as
+  accepted only by Newton. Remove the page for the deleted `ops.matrix_ops`.
+  The website pins source links to the tag of the documented version.
 
 ## 2.0.0 — 2026-10-29
 

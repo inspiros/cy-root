@@ -1,10 +1,9 @@
-# Native Vector Newton And Established API
+# Native Vector Newton
 
 `cyroot.native.VectorNewton` solves nonempty real systems with an analytic
-Jacobian or a [native finite-difference plan](native-jacobian.md). Pass `None`
-for a default central plan. It uses private native workspaces and SciPy's Cython LAPACK
-provider. Neither its numerical loop nor its storage uses NumPy operations.
-The package still requires NumPy and SciPy; the backend is not yet optional.
+Jacobian or a [native finite-difference plan](native-jacobian.md); pass `None`
+for a default central plan. It uses private native workspaces and SciPy's
+Cython LAPACK interface. Neither its numerical loop nor its storage uses NumPy.
 
 ```python
 from cyroot.native import VectorNewton
@@ -23,26 +22,25 @@ assert solver.history[-1].root == result.root
 ```
 
 The solution near this starting point is `(1.5, .75)`.
-`vector_newton(function, jacobian, x0, **options)` runs a complete solve.
-The established `cyroot.generalized_newton` entry point also uses this engine.
-The square higher-order methods have their own
-[breaking migration guide](vector-higher-order-migration.md).
-[Traub–Steffensen](native-steffensen.md) also reuses this state and square LU,
-with residual-dependent divided differences instead of an analytic Jacobian or
-ordinary finite-difference plan.
-[Robinson](native-robinson.md) reuses the same state with two initial points,
-deterministic probe directions and reconstruction from actual rounded secants.
+`vector_newton(function, jacobian, x0, **options)` runs a solver to completion,
+and the public `cyroot.generalized_newton` runs the same engine. The
+higher-order vector methods have their own
+[migration guide](vector-higher-order-migration.md).
+[Traub–Steffensen](native-steffensen.md) reuses this state and the square LU
+solve, with residual-based divided differences in place of a Jacobian.
+[Robinson](native-robinson.md) also reuses it, with two starting points,
+fixed probe directions and secants built from the actual rounded points.
 
-## Migrating `generalized_newton`
+## Public Entry Point: `generalized_newton`
 
 The public signature is
 `generalized_newton(F, J, x0, F_x0=None, J_x0=None, *, etol=1e-10,
 ertol=4*eps, ptol=1e-12, prtol=4*eps, max_iter=200, history=0,
 history_every=1, history_bytes=8*1024*1024, workspace_bytes=64*1024*1024)`,
-where `eps` is binary64 machine epsilon. `J` remains a required argument; pass
-`None` for automatic central differences, an initialized matching `JacobianPlan`
-(square) or `RectangularJacobianPlan` for configured differences, or an analytic
-Python/native Jacobian callback.
+where `eps` is the binary64 machine epsilon. `J` is required: pass `None` for
+automatic central differences, a `JacobianPlan` (square) or
+`RectangularJacobianPlan` of matching shape for configured differences, or an
+analytic Python or native Jacobian callback.
 
 ```python
 from cyroot import generalized_newton
@@ -58,23 +56,25 @@ assert result.success
 assert max(abs(a-b) for a, b in zip(result.root, (1.5, .75))) < 1e-9
 ```
 
-The top-level export, `cyroot.vector_newton.generalized_newton` and
-`find_vector_root('generalized_newton', ...)` share this behavior. Options after
-`J_x0` are keyword-only. The default `max_iter` is 200; zero or `None` is unlimited. The old `h`
-option is removed: configure a native plan's `step` instead. The 1.x derivative
-approximation classes were removed; see [finite differences](finite-differences.md).
+`cyroot.vector_newton.generalized_newton` and
+`find_vector_root('generalized_newton', ...)` are the same function. Options
+after `J_x0` are keyword-only. The default `max_iter` is 200; zero or `None` is
+unlimited. There is no `h` option: set the `step` of a native plan instead. The
+1.x derivative approximation classes are gone; see
+[Finite Differences](finite-differences.md).
 
-Python residual and Jacobian callbacks now receive immutable tuples. Replace
-array expressions such as `point - 1.` with indexed sequence arithmetic or an
-explicit conversion inside your callback. Inputs, cache shapes and providers
-are validated even at an initially converged root. Square linear systems use LU;
-singular square systems return unsuccessful `breakdown`, with no implicit
-pseudoinverse fallback. Rectangular systems use rank-aware least-squares steps.
+Python residual and Jacobian callbacks receive immutable tuples, not NumPy
+arrays. Replace array expressions such as `point - 1.` with indexed arithmetic,
+or convert explicitly inside the callback. Inputs, cache shapes and providers
+are validated even when the starting point is already a root. Square linear
+systems use LU, and a singular one returns an unsuccessful `breakdown` rather
+than falling back to a pseudoinverse. Rectangular systems take rank-aware
+least-squares steps.
 
 For \(F:\mathbb R^n\to\mathbb R^m\), the Jacobian has \(m\) rows and
-\(n\) columns. Ordinary Python functions need no dimension arguments: the
-point determines \(n\), and the cached or first residual determines \(m\).
-The first residual is reused rather than evaluated twice. For example:
+\(n\) columns. Python functions need no dimension arguments: the point gives
+\(n\), and the cached or first residual gives \(m\). That first residual is
+reused, not evaluated twice. For example:
 
 ```python
 from cyroot import generalized_newton
@@ -88,102 +88,108 @@ assert result.success
 assert max(abs(a-b) for a, b in zip(result.root, (1., 2.))) < 1e-9
 ```
 
-An initial nonfinite point skips callbacks. With no cached residual or explicit
-provider dimensions, its unsuccessful result uses \(m=n\) placeholders because
-the output shape cannot be discovered. A failed first callback also retains an
-inspectable terminal state with these placeholders if its shape is unknown.
-Explicit adapters/plans constrain the
-shape even at an initial root. Arbitrary higher-dimensional residual tensors
-are not accepted: points and residuals are vectors, Jacobians are matrices.
+A nonfinite starting point calls no callbacks. Without a cached residual or
+explicit provider dimensions, the output shape cannot be discovered, so the
+unsuccessful result uses \(m=n\) placeholders. The same placeholders appear in
+the terminal state when the first callback fails before the shape is known.
+Explicit adapters and plans fix the shape even when the starting point is a
+root. Points and residuals must be vectors and Jacobians matrices; higher
+dimensional arrays are rejected.
 
-The result remains `NewtonMethodsReturnType`, with tuple `root`, `f_root` and
-Jacobian rows in `df_root`. The one-shot function returns the final result;
-retain a `VectorNewton` state for `step()` and copied intermediate history.
-Supplied `F_x0` and `J_x0` skip their initial evaluations and contribute zero
-calls. Counts, terminal Jacobian placeholders and failure behavior follow the
-native engine described below.
+The result is a `NewtonMethodsReturnType`, with tuple `root` and `f_root` and
+the Jacobian rows in `df_root`. The function returns only the final result;
+keep a `VectorNewton` to call `step()` and read intermediate history. Supplied
+`F_x0` and `J_x0` skip their initial evaluations and count as zero calls.
+Counts, terminal Jacobian placeholders and failures behave as described for the
+native engine below.
 
 ## Python Boundary
 
-Inputs and callback outputs accept sized, indexable sequences or direct
-native-format double buffers. `x0` has length `n`, residuals length `m`; Jacobians
-have shape `(m, n)`, with rows expressed as nested sequences. NumPy arrays,
-`array.array`, memoryviews and `DoubleBuffer` work where their dimensions and
-native double format match. Other buffer dtypes, indirect buffers and empty
+Inputs and callback outputs can be sized, indexable sequences or buffers.
+`x0` has length `n` and residuals length `m`; Jacobians have shape `(m, n)`,
+given as a sequence of rows. NumPy arrays, `array.array`, memoryviews and
+`DoubleBuffer` work when their dimensions match. Native float64 buffers are
+read directly; other real dtypes, such as integers or float32, are converted
+element by element. Complex and boolean buffers, indirect buffers and empty
 systems are rejected. Read-only, negative-stride, zero-stride and unaligned
-buffers are copied using their logical indices. User data is never overwritten.
-Generators are not a supported substitute for a sized sequence.
+buffers are copied by logical index. User data is never overwritten. Generators
+are not accepted in place of a sized sequence.
 
-Each Python callback receives an immutable copied tuple of the current point.
-It can retain that tuple safely. It returns a fresh or reused residual/Jacobian
-sequence or buffer; the bridge immediately packs the values into private native
-storage. Python execution, conversion and buffer acquisition acquire the GIL.
-Use native callbacks below for a numerical run that does not reacquire it.
+Each Python callback receives an immutable tuple copy of the current point,
+which it may keep. It returns a new or reused residual or Jacobian sequence or
+buffer, whose values are packed into private native storage at once. Python
+execution, conversion and buffer access hold the GIL; use the native callbacks
+below for a numerical run that never takes it.
 
 `run()` and `result` return `NewtonMethodsReturnType`. Point and residual are
 immutable tuples, and `df_root` is a tuple of Jacobian rows. `step()` and
 `history` return immutable `VectorNewtonStep` records with the same numerical
 fields plus callback stage/code, LAPACK `linear_status` and `linear_rank`.
 The solver exposes `input_dimension`, `output_dimension`, `linear_status` and
-`linear_rank`. Rank is the last rectangular solve's effective rank, or `None`
-when unavailable, after a failed rectangular solve and for square LU. It describes that
-linear step, not necessarily the Jacobian at a subsequently accepted point.
+`linear_rank`. The rank is the effective rank of the last rectangular solve,
+or `None` for square LU and after a failed rectangular solve. It describes that
+linear step, not necessarily the Jacobian at the next accepted point.
 
 ## Numerical Behavior
 
-For square systems, the step solves `J delta = -F` with pivoted LU (`dgesv`),
-then evaluates the candidate point. A singular LU factorization
-returns unsuccessful `breakdown`; the solver's `linear_status` and terminal
-history retain LAPACK's nonzero `info`. This failure attempts no residual or
-iteration and preserves the previous point, residual and Jacobian. Negative
-`info` is also a backend failure. Zero means LAPACK reported success or no
-factorization was needed. The solver additionally checks that all LU entries
-are finite: elimination can overflow despite zero `info`, yielding a finite
-incorrect direction. Such factors report `nonfinite` before any trial.
+For square systems, each step solves `J delta = -F` with pivoted LU (`dgesv`)
+and then evaluates the candidate point. A singular factorization returns an
+unsuccessful `breakdown`, and the solver's `linear_status` and terminal history
+keep LAPACK's nonzero `info`. No residual is evaluated, no iteration is used,
+and the previous point, residual and Jacobian are kept. A negative `info` is
+also a backend failure; zero means success or that no factorization was needed.
+The solver also checks that every LU entry is finite, because elimination can
+overflow while LAPACK still reports success and then give a finite but wrong
+direction. Such factors report `nonfinite` before any trial.
 
-For rectangular systems, the same iteration uses native LAPACK `dgelsy` through
-the [least-squares plan](native-least-squares.md), with `rcond=1e-12` and its
-conservative maximum dimension of 32767. It minimizes the linear residual and
-selects a minimum Euclidean norm correction when the linear solution is not
-unique. Rank-deficient rectangular systems are allowed; square LU does not
-switch backend when singular. A minimum-norm correction does not guarantee a
-globally minimum-norm nonlinear root. LAPACK `info` and effective rank are
-reported separately; failed solves do not attempt a candidate.
+For rectangular systems, the same iteration uses LAPACK `dgelsy` through the
+[least-squares plan](native-least-squares.md), with `rcond=1e-12` and a
+conservative maximum dimension of 32767. It minimizes the linear residual and,
+when the linear solution is not unique, takes the correction of smallest
+Euclidean norm. Rank-deficient rectangular systems are allowed, but a singular
+square system never switches to this solver. A minimum-norm correction does not
+make the nonlinear root found the one of minimum norm. LAPACK `info` and the
+effective rank are reported separately, and a failed solve evaluates no
+candidate.
 
-Only residual convergence reports root success. An inconsistent overdetermined
-system may reach a least-squares stationary point with a nonzero residual;
-that is unsuccessful stagnation or an iteration limit, not a root. No damping,
-line search, regularization or global convergence guarantee is supplied.
+Only residual convergence counts as finding a root. An inconsistent
+overdetermined system can reach a least-squares stationary point with a nonzero
+residual; that ends in unsuccessful stagnation or the iteration limit, not a
+root. There is no damping, line search or regularization, and no global
+convergence guarantee.
 
-Tolerance and total-budget arguments follow [native scalar Newton](native-newton.md)
-and [stopping rules](stopping.md). Norms use maximum absolute components.
-Relative residual tolerance uses the fixed initial residual norm; relative
-step tolerance uses the maximum of consecutive iterate norms. A small step
+Tolerances and the iteration budget work as for
+[native scalar Newton](native-newton.md) and as described in
+[Stopping And Results](stopping.md). Norms are maximum absolute components. The
+relative residual tolerance uses the initial residual norm, and the relative
+step tolerance the larger of two consecutive iterate norms. A small step
 without a small residual is unsuccessful stagnation. `max_iter=0` is unlimited.
 
-`f_calls` is `(residual_calls, jacobian_calls)` for this solve. With a numerical
-plan, residual counts include stencil samples and Jacobian counts include
-approximation attempts. A complete central approximation samples `2*n`
-residuals; forward/backward approximations sample `n`, reusing the current base
-residual. The uncached initial base evaluation adds one residual call. Supplying
-`f_x0` or `jac_x0` skips the corresponding initial callback; supplied values
-must match their callbacks. Initial residual convergence skips an unused
-Jacobian evaluation and finite-value check. Supplied cache shapes and formats
-are still validated. Each attempted finite candidate residual is one iteration.
-Nonfinite arithmetic or a failed factorization before that call adds no
-iteration or residual call.
+`f_calls` is `(residual_calls, jacobian_calls)` for this solve. With a
+numerical plan, stencil samples count as residual calls and each approximation
+as a Jacobian call. A central approximation samples `2*n` residuals; forward
+and backward approximations sample `n` and reuse the current residual. An
+uncached initial residual adds one call. Supplying `f_x0` or `jac_x0` skips
+that initial callback, so the value must be what the callback would return. If
+the starting point is already a root, the Jacobian is neither evaluated nor
+checked for finiteness, though the shapes and formats of supplied caches are
+still validated. Each attempt to evaluate the residual at a finite candidate is
+one iteration; nonfinite arithmetic or a failed factorization before that call
+uses no iteration and no residual call.
 
-Failed/nonfinite candidate residuals preserve the previous finite point,
-residual, Jacobian and metrics, with updated attempt counts. A finite candidate
-residual is accepted before checking convergence, stagnation and budget. The
-new Jacobian is evaluated only if another step is needed; otherwise `df_root`
-contains NaNs. A failed/nonfinite Jacobian leaves the newly accepted point and
-residual with an entirely NaN Jacobian. No partial or stale matrix is reported.
+A failed or nonfinite candidate residual keeps the previous finite point,
+residual, Jacobian and metrics, and updates only the counts. A finite candidate
+residual is accepted before convergence, stagnation and the budget are checked.
+The new Jacobian is evaluated only if another step is needed; otherwise
+`df_root` contains NaNs. If the Jacobian at a newly accepted point fails or is
+nonfinite, the point and residual stand and the Jacobian is entirely NaN; a
+partial or stale matrix is never reported.
 
-Python exceptions, including output shape/conversion errors, preserve their
-identity and callback traceback. Native nonzero codes raise `NativeCallbackError`
-with `native_status`, copied `result` and `callback_stage` (`'function'` or
-`'jacobian'`). Numerical failures return ordinary unsuccessful results.
+Python exceptions, including output shape and conversion errors, propagate as
+the original instance with the callback's traceback. A nonzero native status
+raises `NativeCallbackError` with `native_status`, a copied `result` and
+`callback_stage` (`'function'` or `'jacobian'`). Numerical failures return
+ordinary unsuccessful results.
 
 ## Native Callbacks
 
@@ -194,72 +200,75 @@ ctypedef int (*VectorFunction)(const double* x, size_t n,
                               double* out, void* context) noexcept nogil
 ```
 
-The square callback ABI is preserved. Use `make_vector_callback(function, dimension, context, keepalive,
-jacobian=False)` for residuals, and `jacobian=True` for Jacobians. Residuals
-write `n` doubles. Jacobians write `n*n` doubles in **column-major** order:
-element `(row, column)` is `out[row + column*n]`. Success must write every
-element and return zero; output is seeded with NaNs to catch omitted writes.
-Nonzero status stops without consuming partial output. Callbacks must not
-throw Python/C++ exceptions across the ABI or mutate/retain the borrowed
-input pointer. All dimensions/products must be represented safely by the producer.
+This is the square callback ABI. Use `make_vector_callback(function,
+dimension, context, keepalive, jacobian=False)` for residuals and
+`jacobian=True` for Jacobians. Residuals write `n` doubles. Jacobians write
+`n*n` doubles in **column-major** order: element `(row, column)` is
+`out[row + column*n]`. A successful call writes every element and returns zero;
+outputs are filled with NaN beforehand to expose missed writes. A nonzero
+status stops the solve without using the partial output. Callbacks must not
+let Python or C++ exceptions cross the ABI, and must neither modify nor keep
+the borrowed input pointer. The producer must make sure its dimensions and
+their products are representable.
 
 `VectorCallback(function, dimension, jacobian=False)` creates a Python adapter.
 Native capsules use `cyroot.vector_callback.v1` and the
-`cyroot_vector_descriptor` in `callbacks.h`: version/size, dimension, kind
-(`CYROOT_VECTOR_RESIDUAL` or `CYROOT_VECTOR_JACOBIAN`), function and context.
-`VectorCallback.from_capsule(capsule, keepalive=owner)` validates and copies
-the descriptor. Pointer provenance and actual context/code lifetime remain
-the producer's responsibility. For rectangular systems, use
-[`RectangularCallback`](native-rectangular-callbacks.md) and its distinct native
-factory/capsule with explicit `n` and `m`; Jacobian layout is `row + column*m`.
-These adapters also work for square systems. Compiled consumers must rebuild
-against the installed 2.0 object/record declarations and versioned callback headers.
+`cyroot_vector_descriptor` in `callbacks.h`: version and size, dimension,
+kind (`CYROOT_VECTOR_RESIDUAL` or `CYROOT_VECTOR_JACOBIAN`), function and
+context. `VectorCallback.from_capsule(capsule, keepalive=owner)` validates and
+copies the descriptor; the producer remains responsible for the pointers and
+for keeping the context and code alive. For rectangular systems, use
+[`RectangularCallback`](native-rectangular-callbacks.md), with its own factory
+and capsule and explicit `n` and `m`; its Jacobian layout is `row + column*m`.
+It also works for square systems. Compiled consumers built against 1.x must be
+rebuilt against the 2.0 declarations and versioned callback headers.
 
-Selected explicit adapters are reserved together before setup performs arbitrary
-argument conversion, including point/cache packing, tolerances, budgets and
-history options. Reservations also cover step/run result construction, history
-export, output conversion and exception transfer. Active adapter reuse and
-concurrent/reentrant solver access are rejected. Adapter kind and dimension must
-match their role; residuals require a residual adapter, and analytic
-Jacobians require a Jacobian adapter. Square `VectorCallback` declares `m=n`;
-it cannot be paired with a rectangular shape. Other native callback types and
-uninitialized or mismatched plans are rejected, including at an initial root. Distinct adapters sharing native state require
-producer synchronization. See the [compiled example](../examples/native_vector.md).
+All explicit adapters are reserved together before setup converts any
+argument, including the point, caches, tolerances, budgets and history
+options. The reservation also covers result construction, history export,
+output conversion and exception transfer. Reusing an active adapter, or
+concurrent or reentrant use of the solver, is rejected. Each adapter's kind and
+dimension must match its role: the residual needs a residual adapter and an
+analytic Jacobian a Jacobian adapter. A square `VectorCallback` declares `m=n`
+and cannot be used with a rectangular shape. Other native callback types and
+uninitialized or mismatched plans are rejected, even when the starting point is
+a root. Distinct adapters that share native state need synchronization by
+their owner. See the [compiled example](../examples/native_vector.md).
 
 ## Workspace And History Limits
 
-`workspace_bytes` defaults to 64 MiB. Before native allocation, the solver
-checks dimension/products, LAPACK's C `int` limit and the workspace budget.
-For analytic Jacobians, the workspace contains five vectors, two square matrices and `n` C-int pivots:
-`8*(5*n + 2*n*n) + sizeof(int)*n` bytes. LAPACK gets private packed storage.
-cy-root allocates no new native workspaces or history entries during the loop;
-the backend library controls its own internal allocation/threading behavior.
-The workspace budget does not include memory allocated inside that provider.
-Numerical plans add `3*n+2*m` scratch doubles and their explicit step storage to
-this budget, as detailed in [native Jacobians](native-jacobian.md).
+`workspace_bytes` defaults to 64 MiB. Before allocating, the solver checks
+the dimensions and their products, LAPACK's C `int` limit and the workspace
+budget. With an analytic Jacobian, a square workspace holds five vectors, two
+square matrices and `n` C-int pivots: `8*(5*n + 2*n*n) + sizeof(int)*n` bytes.
+LAPACK works on private packed copies. CyRoot allocates no native workspace or
+history during the loop; the LAPACK library manages its own internal memory
+and threads, which the budget does not include. Numerical plans add `3*n+2*m`
+scratch doubles plus their explicit steps, as detailed in
+[native Jacobians](native-jacobian.md).
 
-For rectangles, native storage contains `3*n+3*m+m*n` doubles plus the
-least-squares plan's scratch (`m*n + max(m,n) + lwork` doubles), and `n` C-int
-pivots. Numerical differences add the scratch and steps above. The allocation-
-free LAPACK query determines `lwork` before final budget validation. A temporary
-`n`-double point buffer is freed before persistent workspace allocation. Python
-boundary copies, callback/provider allocations and Python object overhead are
-excluded from this native budget. When shape discovery is needed, the initial
-callback runs after preliminary bounds checks but before full shape-dependent
-workspace/history validation.
+For rectangular systems, native storage holds `3*n+3*m+m*n` doubles, the
+least-squares plan's scratch (`m*n + max(m,n) + lwork` doubles) and `n` C-int
+pivots, plus any numerical-difference scratch and steps as above. `lwork` comes
+from a LAPACK workspace query, which allocates nothing, before the final budget
+check. A temporary `n`-double point buffer is freed before the persistent
+workspace is allocated. Copies at the Python boundary, allocations inside
+callbacks and Python object overhead are not counted. When the output shape has
+to be discovered, the first callback runs after preliminary bounds checks but
+before the full workspace and history checks.
 
-`history=0` disables recording. Otherwise history is preallocated and bounded
-by `history_bytes` (default 8 MiB), including native metrics and copies of
-the point, residual and entire Jacobian for each entry. `history_every` samples
-iterations; initial and terminal states are eligible regardless of sampling.
-A terminal failure at the same iteration updates its existing record. Full
-storage sets `history_truncated` and drops later entries. Exported tuples
-remain valid and unchanged after resuming or deleting the solver.
+`history=0` disables recording. Otherwise history is allocated up front and
+bounded by `history_bytes` (default 8 MiB), counting the metrics and copies of
+the point, residual and whole Jacobian for every entry. `history_every` samples
+iterations; initial and terminal states are always eligible. A terminal failure
+in the same iteration updates its existing record. When storage is full,
+`history_truncated` is set and later entries are dropped. Exported tuples stay
+valid and unchanged after the solver resumes or is deleted.
 
-There is no native cancellation/signal check per iteration. Native callbacks
-allow independent solves without the GIL; shared callback state needs producer
-synchronization. Higher-order vector methods still require square systems.
+Native solves cannot be cancelled and do not check for signals. With native
+callbacks, independent solves can run without the GIL; shared callback state
+needs synchronization by its owner.
 
-[Native Wolfe–Bittner](native-wolfe-bittner.md) supports arbitrary nonempty
+[Native Wolfe–Bittner](native-wolfe-bittner.md) accepts arbitrary nonempty
 point pools and rectangular residuals through rank-aware affine interpolation,
-with separately inspectable best and active states.
+and reports its best and active states separately.

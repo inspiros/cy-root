@@ -1,10 +1,10 @@
 # Newton–Krylov
 
-Newton–Krylov computes Newton steps using products with the Jacobian. It avoids
-storing a dense matrix, making it useful when the residual has a large input
-space and efficient directional products. Square systems use restarted GMRES;
-tall and wide systems use LSQR. All accepted nonlinear steps pass an Armijo
-line search.
+Newton–Krylov computes Newton steps from products with the Jacobian instead of
+the Jacobian itself. Since no dense matrix is stored, it suits problems with
+many unknowns and cheap directional products. Square systems use restarted
+GMRES and tall and wide systems LSQR. Every accepted nonlinear step passes an
+Armijo line search.
 
 ## Interface
 
@@ -41,12 +41,13 @@ numerical = newton_krylov(f, None, (1.5, 1.8))
 assert numerical.success
 ```
 
-`jvp` accepts a Python `(x,v)` function, `JacobianVectorCallback`,
-`JacobianVectorPlan`, or `None`. For a square problem `None` selects a forward
-directional finite difference that reuses the current `F(x)` cache. The residual
-accepts an ordinary callable, `VectorCallback`, or `RectangularCallback`.
-Dimensions are inferred from the adapter, cached `f_x0`, or one counted Python
-residual sample. Vector inputs are copied; callbacks receive tuples.
+`jvp` is a Python function of `(x, v)`, a `JacobianVectorCallback`, a
+`JacobianVectorPlan`, or `None`. For a square problem, `None` selects a forward
+directional finite difference that reuses the current `F(x)`. The residual is a
+Python callable, a `VectorCallback` or a `RectangularCallback`. The dimensions
+come from the adapter, from a cached `f_x0`, or from one Python residual
+evaluation, which is counted. Vector inputs are copied, and callbacks receive
+tuples.
 
 ## Tall And Wide Systems
 
@@ -66,35 +67,38 @@ assert wide.success
 assert max(abs(value - 1.5) for value in wide.root) < 1e-9
 ```
 
-For an `m`-by-`n` rectangular Jacobian, LSQR uses both `Jv` and `J.Tw`. Supply
-both matching products or pass `jvp=None` and omit `vjp`. The numerical fallback
-regenerates matching finite-difference coordinate columns for both operations;
-a `JacobianVectorPlan(n,m,...)` controls its scheme and step. Each product costs
-`n` shifted samples for forward/backward differences, or `2*n` for central
-ones. It stores no dense Jacobian, but can be expensive. Large problems should
-supply products that exploit their structure.
+For an `m`-by-`n` rectangular Jacobian, LSQR needs both `Jv` and `J^T w`.
+Supply both products, or pass `jvp=None` and omit `vjp`. Without supplied
+products, each operation recomputes the same finite-difference columns, so the
+two stay consistent; a `JacobianVectorPlan(n, m, ...)` sets the scheme and step.
+Each product then costs `n` shifted samples for forward or backward
+differences and `2*n` for central ones. No dense Jacobian is stored, but this
+can be expensive, so large problems should supply products that exploit their
+structure.
 
-An independently supplied transpose cannot be combined with a numerical JVP in
-a rectangular solve. Supplied products must be linear in their direction and
-represent the same Jacobian/transpose at the current point; the solver does not
-prove this identity. The finite-difference fallback assumes a deterministic
-residual. A supplied transpose is allowed but unused for square GMRES solves.
-See [Jacobian Products](jacobian-vector-products.md) for adapter and native ABIs.
+A supplied transpose cannot be combined with a numerical JVP in a rectangular
+solve. Supplied products must be linear in the direction and describe the same
+Jacobian and its transpose at the current point; the solver cannot verify this.
+Numerical products assume the residual is deterministic. A transpose supplied
+for a square problem is accepted but GMRES does not use it. See
+[Jacobian Products](jacobian-vector-products.md) for the adapters and native
+ABIs.
 
-LSQR solves a least-squares step without forming `J.T @ J`. Starting the inner
-iteration from zero selects a minimum-norm step in exact arithmetic. This is
-not a guarantee of a globally minimum-norm nonlinear root, nor a replacement
-for a dense rank-revealing solve on severely ill-conditioned systems.
+LSQR solves for a least-squares step without forming `J^T J`. Because the inner
+iteration starts from zero, the step has minimum norm in exact arithmetic. That
+does not make the nonlinear root found the one of minimum norm, and LSQR is no
+substitute for a dense rank-revealing solve on severely ill-conditioned
+systems.
 
 ## Verification And Globalization
 
 The inner system is \((J/s)p=-F/s\), where \(s=\|F\|_\infty\). GMRES uses
 twice-modified Gram–Schmidt and Givens rotations. LSQR uses Golub–Kahan
-bidiagonalization. Recurrence estimates decide when to check convergence;
-fresh operator products determine whether the proposed inner solution is
-actually acceptable. Normal exits, including a linear iteration cap or
-breakdown, refresh the returned diagnostics. Callback and nonfinite failures
-may stop earlier with unavailable diagnostics.
+bidiagonalization. The recurrences' own estimates decide when convergence is
+worth checking, and freshly computed operator products decide whether the inner
+solution is actually acceptable. Every normal exit, including the linear
+iteration limit and breakdown, recomputes the reported diagnostics. Callback
+and nonfinite failures can stop earlier, without them.
 
 Let \(A=J/s\), \(b=-F/s\), and \(r=b-Ap\). `linear_residual` is
 \(\|r\|_2/\|b\|_2\). For LSQR, `linear_stationarity` is
@@ -103,11 +107,12 @@ zero only when the normal residual is zero. Either verified quantity meeting
 `linear_rtol` is sufficient for an LSQR step. GMRES requires the verified
 linear residual criterion. `linear_stationarity` is infinity for GMRES.
 
-An acceptable linear step still needs nonlinear decrease. Armijo uses the
-actual slope \(F^\mathsf{T}Jp\), starts with the full step, and contracts by
-`contraction`. Nonfinite trials are rejected. A callback exception/nonzero
-status terminates immediately. Only accepted point/residual pairs replace the
-current state. There is no preconditioning, adaptive forcing, or dense fallback.
+An acceptable linear step must still decrease the nonlinear residual. The
+Armijo search uses the actual slope \(F^\mathsf{T}Jp\), starts with the full
+step and shrinks it by `contraction`. Nonfinite trials are rejected, and a
+callback exception or nonzero status ends the solve at once. Only accepted
+point/residual pairs replace the current state. There is no preconditioning,
+adaptive forcing or dense fallback.
 
 ## Diagnostics And Termination
 
@@ -131,13 +136,14 @@ establishes a root. Other reasons are `stagnation`, `max_iterations`,
 `max_evaluations`, `line_search_failure`, `linear_failure`, `nonfinite`,
 `callback_failure`, and `derivative_breakdown`.
 
-`max_linear_iter` limits each inner solve. `max_evaluations` includes the initial
-residual, finite-difference samples, and rejected line-search trials. A budget
-failure preserves the accepted state without inventing a callback error code.
-Callback stages are `function`, `jacobian_vector_product`, and
-`jacobian_transpose_product`. Python exceptions preserve their identity;
-native nonzero codes raise `NativeCallbackError` with a snapshot. Repeated
-terminal `step()` or `run()` calls return the frozen state without raising it again.
+`max_linear_iter` limits each inner solve. `max_evaluations` counts the
+initial residual, finite-difference samples and rejected line-search trials;
+running out keeps the accepted state and reports no callback error code.
+Callback stages are `function`, `jacobian_vector_product` and
+`jacobian_transpose_product`. Python exceptions propagate as the original
+instance, and nonzero native codes raise `NativeCallbackError` with a snapshot.
+Further `step()` or `run()` calls on a finished solver return its final state
+without raising again.
 
 ## Storage And Native Execution
 
@@ -149,10 +155,11 @@ Analytic LSQR storage is `7*(n+m)` doubles. Its numerical fallback adds
 `O(n*restart + restart**2)`; none of these paths stores a dense Jacobian.
 Native budgets exclude Python objects and callback-owned allocations.
 
-`step()`, `run()`, iteration, `result`, and bounded `history` share one engine.
-History stores the initial/accepted states and terminal diagnostics, not inner
-Krylov vectors or rejected trial points. Exported tuples remain independent.
-Setup, export, and ordinary Python callbacks use the GIL; numerical loops with
-native callbacks run without it and allocate no solver workspace while stepping.
-Each active solver and its explicit adapters stay reserved against reentry;
-independent states with independent contexts can run concurrently.
+`step()`, `run()`, iteration, `result` and the bounded `history` share one
+engine. History stores the initial and accepted states and the terminal
+diagnostics, not inner Krylov vectors or rejected trial points, and exported
+tuples are independent copies. Setup, export and Python callbacks hold the
+GIL; with native callbacks the numerical loop runs without it and allocates no
+workspace while stepping. An active solver and its explicit adapters are
+protected against reentry, and independent solvers with independent contexts
+can run concurrently.

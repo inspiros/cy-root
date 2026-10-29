@@ -1,9 +1,9 @@
 # Analytic Rectangular Hessians And Native Contractions
 
-`RectangularHessianCallback` adapts a supplied Hessian of
-\(F:\mathbb R^n\to\mathbb R^m\). Its copied tensor shape is \((m,n,n)\),
-matching the [rectangular numerical plan](native-rectangular-hessian.md).
-Analytic entries are preserved without imposing symmetry on either input axis.
+`RectangularHessianCallback` adapts an analytic Hessian of
+\(F:\mathbb R^n\to\mathbb R^m\). It returns a copied tensor of shape
+\((m,n,n)\), like the [rectangular numerical plan](native-rectangular-hessian.md),
+and keeps every entry as given, without imposing symmetry.
 
 ```python
 from cyroot.native import RectangularHessianCallback
@@ -24,34 +24,36 @@ Construct with `RectangularHessianCallback(function, input_dimension,
 output_dimension)`. Both dimensions must be positive integers fitting C `int`;
 the complete input and tensor storage must fit native capacities. The read-only
 properties are `input_dimension`, `output_dimension`, `shape` and `native`.
-The adapter has a distinct Hessian role; it is not a callable residual/Jacobian
-provider. The [Chebyshev path](native-rectangular-chebyshev.md) now supports rectangles;
-fixed [Halley/Super-Halley](native-rectangular-halley.md) also support rectangles,
-and [general modified Halley](native-rectangular-modified.md) uses its separate
+The adapter serves only as a Hessian, never as a residual or Jacobian. The
+[Chebyshev](native-rectangular-chebyshev.md) and fixed
+[Halley and Super-Halley](native-rectangular-halley.md) methods use it for
+rectangular systems, and the
+[general modified Halley](native-rectangular-modified.md) method uses it in its
 three-solve rectangular correction.
 
-`evaluate(point, *, workspace_bytes=64*1024*1024)` copies the point, invokes the
-callback and returns a nested tuple tensor. Python callbacks receive a tuple of
-length \(n\) and return an indexable real tensor with shape \((m,n,n)\).
-Negative-stride arrays and read-only native double point buffers are supported.
-The result owns its values independently of the input tensor. Complex entries,
-text and malformed tensor shapes fail conversion. This is a callback adapter,
-not a numerical approximation or convergence check.
+`evaluate(point, *, workspace_bytes=64*1024*1024)` copies the point, calls the
+callback and returns the tensor as nested tuples. Python callbacks receive a
+tuple of length \(n\) and return an indexable real tensor of shape \((m,n,n)\).
+Points can be negative-stride arrays or read-only float64 buffers. The result is
+independent of the tensor the callback returned. Complex entries, text and
+malformed shapes fail conversion. The adapter only evaluates the callback; it
+neither approximates nor checks anything numerically.
 
-Evaluation requires \(n+mn^2\) native doubles, checked against `workspace_bytes`
-before allocation. Python owners, copied tuples and allocator overhead are
-additional. The callback is reserved across budget/point conversions, invocation,
-result export and exception creation. Reentry and reinitialization are rejected;
-independent adapters can execute concurrently. Python callbacks use the GIL;
-compiled callbacks execute without it.
+Evaluation needs \(n+mn^2\) native doubles, checked against `workspace_bytes`
+before allocation; Python owners, copied tuples and allocator overhead come on
+top. The callback is reserved through the budget and point conversions, the
+call, result export and exception creation. Reentry and reinitialization are
+rejected, and independent adapters can run concurrently. Python callbacks take
+the GIL; compiled callbacks run without it.
 
-Native outputs start as NaN. A nonzero callback status clears the entire tensor
-and raises `NativeCallbackError` with the original integer code, stage `'hessian'`
-and copied all-NaN tuple tensor as `.result`. Original Python exceptions preserve
-identity and traceback and are cleared from the adapter when transferred. Code
-zero is passed through even when entries remain NaN or are nonfinite: numerical
-consumers must check the complete tensor, as they do for residual/Jacobian
-adapters. The adapter does not invent error codes for partial native output.
+Native outputs start as NaN. A nonzero status makes the whole tensor NaN and
+raises `NativeCallbackError` with the original integer code, the stage
+`'hessian'` and the all-NaN tensor as `.result`. Python exceptions propagate as
+the original instance with its traceback, and are cleared from the adapter once
+raised. A zero status is passed through even if entries are still NaN or are
+otherwise nonfinite: as with residual and Jacobian adapters, the consumer must
+check the whole tensor. The adapter never invents error codes for partial
+native output.
 
 ## Compiled Callbacks And Capsules
 
@@ -64,29 +66,27 @@ Cython consumers import from `cyroot.native.tensor_callbacks`:
 
 The callback signature is
 `int function(const double* x, size_t n, size_t m, double* out,
-void* context) noexcept nogil`. Input is borrowed and read-only. Write every
-one of the \(mn^2\) tensor entries at offset `o + m*(j + n*k)` on success.
-The producer owns the context and supplies a keepalive owner. Callbacks must
-not throw or use Python without explicitly acquiring the GIL.
+void* context) noexcept nogil`. The input is borrowed and read-only. On success,
+write all \(mn^2\) entries, entry \((o,j,k)\) at offset `o + m*(j + n*k)`. The
+producer owns the context and supplies an owner object to keep it alive.
+Callbacks must not throw, and must acquire the GIL before using Python.
 
-The separate capsule name is `cyroot.rectangular_hessian_callback.v1`.
-The descriptor contains `struct_size`, `abi_version`, `input_dimension`,
-`output_dimension`, `function` and `context`. Macros
+The capsule name is `cyroot.rectangular_hessian_callback.v1`. The descriptor
+contains `struct_size`, `abi_version`, `input_dimension`, `output_dimension`,
+`function` and `context`, and the macros
 `CYROOT_RECTANGULAR_HESSIAN_CALLBACK_ABI` and
-`CYROOT_RECTANGULAR_HESSIAN_CAPSULE_NAME` identify it in `callbacks.h`.
-`RectangularHessianCallback.from_capsule(capsule, keepalive=None)` validates the
-name, descriptor size, version, dimensions and nonnull function. Both the capsule
-and supplied owner are pinned. Existing square Hessian and rectangular
-residual/Jacobian capsule names and layouts are unchanged.
+`CYROOT_RECTANGULAR_HESSIAN_CAPSULE_NAME` in `callbacks.h` identify it.
+`RectangularHessianCallback.from_capsule(capsule, keepalive=None)` checks the
+name, descriptor size, version, dimensions and that the function is not null,
+and keeps both the capsule and the owner alive.
 
-Trusted Cython loops reserve the adapter with `_enter()`, pin its lifetime and
-call `evaluate_raw(x, out)` on disjoint valid `x[n]`, `out[m*n*n]` spans, then
-transfer any saved original `_error` before `_release()` in a `finally` block.
-Reservation and Python exception transfer require the GIL; `evaluate_raw` is
-`noexcept nogil`, allocates nothing and preserves native statuses. Native loops
-can reuse fixed caller-owned buffers. See the installed consumer test for the
-complete reservation/error-transfer pattern. Rebuild consumers using these 2.0
-declarations.
+A Cython loop reserves the adapter with `_enter()`, keeps it alive, and calls
+`evaluate_raw(x, out)` on valid, non-overlapping `x[n]` and `out[m*n*n]` spans;
+it then raises any saved `_error` before calling `_release()` in a `finally`
+block. Reserving and raising need the GIL; `evaluate_raw` is `noexcept nogil`,
+allocates nothing and returns the native status, so a loop can reuse fixed
+buffers. The installed consumer test shows the complete reserve and
+error-transfer pattern.
 
 ## Tensor Contractions
 
@@ -100,19 +100,20 @@ input/output dimensions:
 | `rectangular_matrix_vector(A,s,n,m,out)` | \(\sum_jA_{o,j}s_j\) | `out[m]` |
 
 Tensor spans are `H[m*n*n]`, direction spans `s[n]`, and matrices are
-column-major `A[m*n]`. All spans must be valid, disjoint and live for the call;
-the caller owns synchronization and storage. All ordered input pairs are used,
-without a symmetry assumption. Old square helper names/signatures remain thin
-wrappers using \(m=n\).
+column-major `A[m*n]`. All spans must be valid, non-overlapping and alive for
+the call, and the caller is responsible for storage and synchronization. Every
+ordered pair of inputs is used, with no symmetry assumed. The square helpers
+are thin wrappers with \(m=n\).
 
-Return status zero means success; one means nonfinite input or final result and
-poisons the complete output; two means invalid dimensions or span-size overflow
-and leaves spans untouched. Every supplied tensor/matrix entry is validated even
-when its direction weight is zero. Exponent-scaled compensated arithmetic
-preserves the existing square range handling; it extends range, not precision,
-and gives no guarantee against derivative noise or cancellation. No allocation,
-Python or GIL operation occurs in these helpers.
+Status zero is success. One is a nonfinite input or result and makes the whole
+output NaN. Two is an invalid dimension or span-size overflow and leaves the
+spans untouched. Every tensor or matrix entry is validated, even where its
+direction weight is zero. Exponent-scaled compensated arithmetic extends the
+range, as for square systems, but not the precision, and does not protect
+against derivative noise or cancellation. The helpers never allocate, call
+Python or touch the GIL.
 
-These interfaces provide tensor plumbing. The [rectangular Chebyshev extension](native-rectangular-chebyshev.md) specifies
-its least-squares policy explicitly. The fixed [Halley/Super-Halley extensions](native-rectangular-halley.md) are
-also specified; other rectangular methods still need separate mathematical review. SciPy and NumPy remain package dependencies.
+These helpers are building blocks. The solvers that use them are described in
+[rectangular Chebyshev](native-rectangular-chebyshev.md),
+[rectangular Halley and Super-Halley](native-rectangular-halley.md) and
+[rectangular modified Halley](native-rectangular-modified.md).

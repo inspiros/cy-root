@@ -29,20 +29,20 @@ third = TensorDifferencePlan(2, 1, 3).evaluate(lambda x: (x[0]*x[0]*x[1],), (2.,
 | order three and above | `TensorDifferencePlan(n, m, order, ...)` | `(m,) + (n,) * order` |
 | Jacobian-vector product | `JacobianVectorPlan(n, m, scheme, step)` | `(m,)` |
 
-The first tensor axis identifies the output component. Schemes are
-`'forward'`, `'backward'` and `'central'`. `step=None` chooses a relative
-automatic step; an explicit step must be finite and nonzero (strictly positive for directional
-`JacobianVectorPlan`, which normalizes its direction). Samples use the
-actual rounded nodes, so steps that collapse in floating point report a
-breakdown instead of a silently wrong estimate. Plans bound their scratch
-storage and stencil size before allocating.
+The first tensor axis is the output component. Schemes are `'forward'`,
+`'backward'` and `'central'`. `step=None` chooses an automatic step relative to
+the point; an explicit step must be finite and nonzero, and strictly positive
+for `JacobianVectorPlan`, which normalizes its direction. Weights use the
+actual rounded sample points, so a step that collapses in floating point
+reports a breakdown rather than a silently wrong estimate. Plans check their
+scratch storage and stencil size before allocating.
 
-For estimates with an error estimate, use the adaptive Richardson providers
+For a derivative with an error estimate, use the adaptive Richardson providers
 `AdaptiveDerivative`, `AdaptiveSecondDerivative`, `AdaptiveJacobian` and
 `AdaptiveHessian`, or the complex-step `ComplexStepDerivative` and
 `ComplexStepJacobian` when the residual has a holomorphic complex extension.
 
-## Migrating From 1.X
+## Migrating From 1.x
 
 The 1.x `finite_difference`, `FiniteDifference`, `generalized_finite_difference`
 and `GeneralizedFiniteDifference` wrappers, their `DerivativeApproximation`

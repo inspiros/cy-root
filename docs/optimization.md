@@ -6,10 +6,10 @@ For a real residual function `F: R^n -> R^m`, define
 \phi(x)=\tfrac12\sum_{i=1}^m F_i(x)^2.
 \]
 
-Every zero of `F` gives a zero global minimum of this nonnegative objective.
-Conversely, a zero objective gives a root. A positive local minimum or a small
-objective gradient does not establish a root. The same construction supports
-square, overdetermined and underdetermined residuals.
+Every root of `F` is a global minimum of this nonnegative objective, with value
+zero, and every point where the objective is zero is a root. A positive local
+minimum or a small objective gradient is not a root. The construction works
+for square, overdetermined and underdetermined residuals alike.
 
 ## Value, Gradient And Exact Hessian
 
@@ -37,12 +37,12 @@ assert result.success
 
 `LeastSquaresObjective(F, input_dimension, output_dimension=None, *,
 jacobian=None, hessian=None, workspace_bytes=64*1024*1024)` is also available
-from `cyroot.native`. Omitting `output_dimension` means a square residual.
-Ordinary Python providers receive a copied tuple and return indexable real
-values with shapes `(m,)`, `(m,n)` and `(m,n,n)` respectively. Compatible native
-`VectorCallback`, `RectangularCallback`, `HessianCallback`, and
-`RectangularHessianCallback` providers are accepted with their appropriate kinds
-and dimensions. Native context owners stay pinned for the adapter's lifetime.
+from `cyroot.native`. Without `output_dimension`, the residual is square.
+Python providers receive a copied tuple and return indexable real values of
+shape `(m,)`, `(m,n)` and `(m,n,n)` respectively. Native `VectorCallback`,
+`RectangularCallback`, `HessianCallback` and `RectangularHessianCallback`
+providers of the right kind and dimensions are also accepted, and their context
+owners are kept alive as long as the adapter.
 
 The methods `value(x)` (also `objective(x)`), `residual(x)`, `gradient(x)` and
 `hessian(x)` return a float or copied immutable tuples. They compute
@@ -53,31 +53,33 @@ The methods `value(x)` (also `objective(x)`), `residual(x)`, `gradient(x)` and
 \]
 
 The Hessian includes the residual-Hessian term. A Hessian provider requires a
-Jacobian provider; missing providers raise an error before sampling. There is
-no implicit Gauss–Newton approximation or finite-difference fallback. A user
-who wants numerical derivatives can supply explicit derivative callables.
-Every call takes fresh samples: value/residual calls `F` once; gradient calls
-`F,J` once each; exact Hessian calls `F,J,H` once each. There is no sample cache
-between optimizer calls and no hidden forwarding of optimizer-specific options.
+Jacobian provider, and a missing provider raises an error before any sampling.
+There is no implicit Gauss–Newton approximation or finite-difference fallback;
+for numerical derivatives, pass derivative callables that compute them. Every
+call samples afresh: `value` and `residual` call `F` once, `gradient` calls `F`
+and `J` once each, and `hessian` calls `F`, `J` and `H` once each. Nothing is
+cached between optimizer calls, and no optimizer options are forwarded behind
+your back.
 
-The adapter checks dimensions/storage and allocates native scratch once.
-`memory_bytes` reports that allocation; Python boundary objects and provider
-allocations are additional. Exponent-scaled compensated accumulation avoids
-unnecessary intermediate overflow/underflow but does not provide extra accuracy
-for ill-conditioned cancellation. Unrepresentable final results or nonfinite
-inputs raise `FloatingPointError`; shape/kind/provider errors raise exceptions.
-Original Python callback exceptions are propagated; native nonzero statuses raise
-`NativeCallbackError` with callback stage/code. Partial callback output is detected.
+The adapter checks dimensions and storage and allocates its native scratch
+once; `memory_bytes` reports that allocation, not counting Python boundary
+objects or allocations made by providers. Exponent-scaled compensated
+accumulation avoids needless intermediate overflow and underflow, but gives no
+extra accuracy under ill-conditioned cancellation. Unrepresentable results or
+nonfinite inputs raise `FloatingPointError`, and shape, kind and provider errors
+raise exceptions too. Python callback exceptions propagate as they are; nonzero
+native statuses raise `NativeCallbackError` with the callback stage and code.
+Partially written callback output is detected.
 
 ## External Optimizers And Root Status
 
 `root_via_optimizer(objective, optimizer, x0, *, etol=1e-10, ertol=4*eps,
 optimizer_options=None)` calls `optimizer(objective, copied_x0, **options)`.
-The returned object must have an `x` attribute. This convention fits
-`scipy.optimize.minimize`; wrap other optimizer interfaces in an ordinary
-callable. Pass `jac=objective.gradient`, `hess=objective.hessian`, method,
-bounds and algorithm tolerances through the optimizer's own options. Explicit
-optimizer derivative requests must match the providers installed on the adapter.
+The returned object must have an `x` attribute, which fits
+`scipy.optimize.minimize`; wrap other optimizers in a small function. Pass
+`jac=objective.gradient`, `hess=objective.hessian`, the method, bounds and
+tolerances through the optimizer's own options. Derivatives you ask the
+optimizer to use must be backed by providers installed on the objective.
 
 The result contains copied `root`, `f_root`, infinity-norm `error`, root
 `success`, and `termination_reason`, plus `optimizer_success`, `optimizer_status`
@@ -88,27 +90,28 @@ Root success requires
 \|F(x)\|_\infty\le \text{etol}+\text{ertol}\,\|F(x_0)\|_\infty.
 \]
 
-The initial scale is fixed. A root at the initial point skips optimization and
-returns `None` optimizer metadata. Otherwise the returned optimizer point is
-independently sampled and checked. Optimizer success with an unsatisfied root
-tolerance gives `optimizer_stopped_without_root`. Conversely, a returned point
-meeting the root tolerance is a successful root even when the optimizer reports
-failure; its original status remains visible. Invalid/nonfinite optimizer points
-raise the corresponding objective exception. A no-root result is inconclusive
-about other points or global root existence.
+The scale uses the starting point. If the starting point is already a root,
+the optimizer is not called and the optimizer fields are `None`. Otherwise the
+residual at the returned point is evaluated and checked independently. If the
+optimizer reports success but the root tolerance is not met, the reason is
+`optimizer_stopped_without_root`. Conversely, a returned point that meets the
+root tolerance is a successful root even when the optimizer reports failure,
+whose status stays visible. An invalid or nonfinite returned point raises the
+objective's exception. A result without a root says nothing about other points
+or whether a root exists at all.
 
 For example, `F(x,y)=(x^3-2*x+2,y)` has a strict positive local minimum of `phi`
-at `(sqrt(2/3),0)`, despite a root existing at negative `x`. A convex optimizer's
-convergence theorem does not automatically apply: squared nonlinear residuals
-are generally nonconvex. A stationary point implies a root if its Jacobian has
-full **row** rank; full column rank in an overdetermined system is insufficient.
+at `(sqrt(2/3),0)`, although a root exists at negative `x`. Convergence results
+for convex optimization do not apply, since squared nonlinear residuals are
+generally not convex. A stationary point is a root if the Jacobian there has
+full **row** rank; full column rank in an overdetermined system is not enough.
 
-External Python optimizers use Python and the GIL. The objective's numerical
-kernel can be called without the GIL by compiled code using native callbacks;
-this does not turn external optimizer orchestration into a GIL-free solve loop.
-An objective instance and its attached native adapters are reserved during each
-operation, including input conversion, error transfer and result export. Use
-separate states/adapters for concurrent evaluations.
+External Python optimizers run in Python under the GIL. Compiled code can call
+the objective's numerical kernel without the GIL when the callbacks are native,
+but that does not make an external optimizer's loop GIL-free. An objective and
+its native adapters are reserved during each operation, including input
+conversion, error transfer and result export; use separate objectives and
+adapters for concurrent evaluations.
 
 ## Higher-Order Objective Derivatives
 
@@ -142,9 +145,9 @@ assert third == (((480.,),),)  # third derivative of x**6/2
 
 `ObjectiveDerivativePlan(n,m,r, *, max_terms=1_000_000,
 memory_bytes=64*1024*1024)` is immutable. `evaluate(F, derivatives, x)` requires
-exactly `r` ordinary Python-callable providers for `DF` through `D^rF`; it calls
-each provider once and packs each output before calling the next. Providers may
-reuse their own scratch arrays. These convenience calls use Python/GIL.
+exactly `r` Python callables, for `DF` through `D^rF`. It calls each one once
+and packs its output before calling the next, so providers may reuse their own
+scratch arrays. These calls run in Python, under the GIL.
 
 Alternatively `transform([F_x, DF_x, ..., D^rF_x])` accepts already evaluated
 tensors. Order-`k` residual derivatives have shape `(m,)+(n,)*k`; the output has
@@ -182,11 +185,12 @@ point neither allocates nor calls Python and needs no new derivative-callback AB
 
 ## Native Optimizer Families
 
-All four optimization methods have scalar and vector conveniences. The
-positional order is `(function, derivative_or_jacobian, x0)`; pass `None` for
-native numerical differentiation. Vector dimensions are keyword-only. Input
-length can be inferred; supply `output_dimension` for an ordinary rectangular
-callback, or use a shaped native residual adapter.
+Each of the four optimization methods has a scalar and a vector function,
+taking `(function, derivative_or_jacobian, x0)` positionally; pass `None` for a
+native numerical derivative. Vector dimensions are keyword-only. The input
+length can be inferred, but a rectangular Python residual needs
+`output_dimension`, unless you pass a native residual adapter that declares its
+shape.
 
 ```python
 from cyroot import (scalar_levenberg_marquardt, scalar_bfgs, scalar_lbfgs,
@@ -210,12 +214,12 @@ assert answer.success
 assert solver.history[-1].root == answer.root
 ```
 
-`OptimizationSolver` is a resumable convenience facade. `result`, `history`,
-`step()`, and `run()` return `OptimizationResult` with a scalar root in scalar
-mode and tuple coordinates in vector mode. Its `diagnostics` retains the full
-native record. `objective` and `native_state` expose the underlying adapter and
-method state. Direct `LevenbergMarquardt`, `PowellDogleg`, `BFGS`, and `LBFGS`
-classes accept `(objective, x0, **options)` instead.
+`OptimizationSolver` is a resumable front end for these methods. `result`,
+`history`, `step()` and `run()` return `OptimizationResult`, with a scalar root
+in scalar mode and tuple coordinates in vector mode; its `diagnostics` keep the
+full native record. `objective` and `native_state` expose the underlying
+objective and method state. The `LevenbergMarquardt`, `PowellDogleg`, `BFGS`
+and `LBFGS` classes take `(objective, x0, **options)` directly.
 
 | Method | Step And Acceptance | Distinct Controls |
 | --- | --- | --- |
@@ -225,22 +229,23 @@ classes accept `(objective, x0, **options)` instead.
 | L-BFGS | BFGS-style line search with a bounded secant-pair ring. | `corrections=10`, plus BFGS line-search controls. |
 
 These methods share the [root stopping defaults](stopping.md),
-`max_evaluations=10000`, and `gtol=1e-12`. The stationarity metric is
-\(\|J^\mathsf{T}F\|_\infty/(\|F\|_\infty\max_{ij}|J_{ij}|)\),
-independent of a constant residual scaling. Stationarity with an unsatisfied
-residual is an unsuccessful root result. A vanishing scalar derivative can
-instead end in `no_acceptable_step`, `line_search_failure`, or `stagnation`.
+`max_evaluations=10000` and `gtol=1e-12`. `gtol` bounds the stationarity
+measure \(\|J^\mathsf{T}F\|_\infty/(\|F\|_\infty\max_{ij}|J_{ij}|)\), which
+does not change when the residual is multiplied by a constant. Stationarity
+with an unsatisfied residual is an unsuccessful result. Where a scalar
+derivative vanishes, the solve can instead end with `no_acceptable_step`,
+`line_search_failure` or `stagnation`.
 
-Only residual tolerance makes the optimizer-family result successful. A tiny
-step, a successful linear solve, or an optimizer stationary point is insufficient.
-BFGS/L-BFGS have no box constraints. L-BFGS bounds its correction storage but
-still uses a dense residual Jacobian. For a genuinely matrix-free solve, use
+Only the residual tolerance makes these results successful; a tiny step, a
+successful linear solve or a stationary point is not enough. BFGS and L-BFGS
+have no bound constraints. L-BFGS limits its correction storage but still uses
+a dense residual Jacobian; for a truly matrix-free solve, use
 [Newton–Krylov](native-newton-krylov.md). Native callbacks remove Python calls
-from the numerical loop; ordinary Python callbacks remain supported.
+from the numerical loop, and Python callbacks work as well.
 
 ## Native Least-Squares Solver
 
-[Levenberg–Marquardt](native-levenberg-marquardt.md) solves the residual objective
-using bounded damped Gauss–Newton steps, analytic/native numerical Jacobians and
-inspectable history. It accepts the objective adapter described above and checks
-root convergence independently of stationarity.
+[Levenberg–Marquardt](native-levenberg-marquardt.md) minimizes the residual
+objective with bounded, damped Gauss–Newton steps, using analytic or native
+numerical Jacobians, and keeps an inspectable history. It accepts the objective
+described above and checks root convergence separately from stationarity.

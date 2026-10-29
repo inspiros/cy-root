@@ -1,12 +1,12 @@
 # Rectangular Chebyshev
 
-`VectorChebyshev` and the established `generalized_chebyshev` now accept
-\(F:\mathbb R^n\to\mathbb R^m\), including \(m<n\) and \(m>n\), through
-the existing higher-order state engine. Shape-dependent buffers, callbacks,
-derivative plans and linear algebra are shared; there is no separate rectangular
-iteration loop. Python callbacks use tuples and acquire the GIL. Compiled
-callbacks and the numerical loop run without it, with workspace reused between
-steps. NumPy and SciPy remain dependencies.
+`VectorChebyshev` and `generalized_chebyshev` accept
+\(F:\mathbb R^n\to\mathbb R^m\) with \(m<n\) or \(m>n\), using the same
+higher-order state engine as square systems: buffers, callbacks, derivative
+plans and linear algebra adapt to the shape, and there is no separate
+rectangular loop. Python callbacks receive tuples and take the GIL. Compiled
+callbacks and the numerical loop run without it, reusing the workspace between
+steps.
 
 ```python
 from cyroot import generalized_chebyshev
@@ -38,106 +38,101 @@ assert (solver.input_dimension, solver.output_dimension) == (1, 2)
 ## Equations And Rank Policy
 
 With \(J\) of shape \((m,n)\) and \(H\) of shape \((m,n,n)\), the
-rectangular extension is explicitly defined by
+rectangular step is defined as
 
 \[
 s=J^+F,\qquad q=H[s,s],\qquad t=J^+q,\qquad
 \Delta x=-s-\tfrac12t.
 \]
 
-Each solve uses the minimum-norm least-squares solution returned by the existing
-DGELSY `LeastSquaresPlan`, with its default `rcond=1e-12`. Numerical rank
-deficiency is allowed, matching rectangular Newton's policy. The two solves
-reuse the same native scratch and pivots; the current implementation invokes
-DGELSY twice, without introducing a separate factorization API. All ordered
-Hessian input pairs contribute; analytic tensors need not be symmetric.
+Each solve takes the minimum-norm least-squares solution from the DGELSY
+`LeastSquaresPlan`, with its default `rcond=1e-12`. As for rectangular Newton,
+numerical rank deficiency is allowed. The two solves share native scratch and
+pivots, but each calls DGELSY; the factorization is not reused. Every ordered
+pair of Hessian inputs contributes, so analytic tensors need not be symmetric.
 
-A rectangular linear solve may have a nonzero least-squares residual. That does
-not by itself reject the correction or establish a root. Only nonlinear residual
-convergence reports success. An inconsistent stationary point can stop with
-unsuccessful `stagnation`; a zero-rank Jacobian can similarly produce a zero
-correction. `rcond` is a numerical rank threshold, not a root tolerance.
-This extension does not assert cubic convergence for general rectangular or
-rank-deficient problems. Its behavior depends on rank, conditioning, derivative
-accuracy and the residual map. There is no damping, line search or automatic
-alternative method.
+A rectangular linear solve can leave a nonzero least-squares residual. That
+alone neither rejects the correction nor makes the point a root; only nonlinear
+residual convergence counts as success. At an inconsistent stationary point the
+solve can stop with an unsuccessful `stagnation`, and a Jacobian of rank zero
+gives a zero correction with the same outcome. `rcond` is a numerical rank
+threshold, not a root tolerance. Cubic convergence is not claimed for
+rectangular or rank-deficient problems in general: the behavior depends on the
+rank, conditioning, derivative accuracy and the residual map. There is no
+damping, line search or automatic switch to another method.
 
-Square systems retain strict LU: one factorization and two triangular solves.
-A required singular square system reports `breakdown`; it does not fall back to
-least squares. Nonfinite native intermediates report `nonfinite`. The existing
-square update arithmetic, matrix Halley branches, stopping and history logic
-are retained.
+Square systems still use LU, with one factorization and two triangular solves.
+A singular square system reports `breakdown` instead of falling back to least
+squares, and nonfinite intermediates report `nonfinite`.
 
-`VectorModifiedHalley(alpha=0)` and `generalized_halley(..., alpha=0)` select
-this same Chebyshev path and accept rectangles. Fixed [Halley and Super-Halley](native-rectangular-halley.md), including
-`alpha=.5/1` aliases, also support rectangles. The general modified-Halley path
-uses its specified [rectangular correction](native-rectangular-modified.md),
-with exact alpha values selecting the fixed methods.
+`VectorModifiedHalley(alpha=0)` and `generalized_halley(..., alpha=0)` take this
+same Chebyshev path, rectangular systems included. Fixed
+[Halley and Super-Halley](native-rectangular-halley.md), also reached with
+`alpha=.5` and `alpha=1`, handle rectangular systems too. Other values of
+`alpha` use the [general rectangular correction](native-rectangular-modified.md).
 
 ## Shapes, Callbacks And Derivative Plans
 
-The familiar signatures remain:
+The signatures are the same as for square systems:
 
 - `generalized_chebyshev(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, **options)`.
 - `VectorChebyshev(function, jacobian, hessian, x0, f_x0=None, jac_x0=None,
   hess_x0=None, **options)` for `step()`, `run()`, iteration and copied history.
 
-Options remain keyword-only as documented in the [square manual](native-vector-chebyshev.md).
-Input length determines \(n\). Declared providers and the residual cache constrain
-\(m\). If no provider/cache declares it, one Python residual evaluation infers
-\(m\) and is reused as the base. Every provider must agree with the point and
-residual dimensions. Matching caches have shapes \((m)\), \((m,n)\) and
-\((m,n,n)\); a supplied residual cache now defines its own output length rather
-than implying a square system. Inputs are never silently reshaped.
+Options are keyword-only, as described in the
+[square manual](native-vector-chebyshev.md). The length of the point gives \(n\).
+Declared providers and the residual cache fix \(m\); if none of them does, one
+Python residual evaluation determines it and is reused as the first residual.
+Every provider must agree with the point and residual dimensions. Caches have
+shapes \((m)\), \((m,n)\) and \((m,n,n)\), and a residual cache sets the
+output length rather than implying a square system. Inputs are never reshaped
+silently.
 
-Use ordinary Python callables directly. Explicit compiled/native providers are
-`RectangularCallback` for residuals/Jacobians, `RectangularHessianCallback` for
-analytic Hessians, `RectangularJacobianPlan` and `RectangularHessianPlan` for
-numerical derivatives. `None` selects automatic native central plans.
-Square callback/plan types constrain \(m=n\); square-shaped rectangular adapters
-also work. Native role checks reject Hessian providers used as residuals or
-Jacobians before input conversion. Explicit callback reservations span option,
+Python callables can be passed directly. The native providers are
+`RectangularCallback` for residuals and Jacobians, `RectangularHessianCallback`
+for analytic Hessians, and `RectangularJacobianPlan` and `RectangularHessianPlan`
+for numerical derivatives; `None` selects automatic central plans. Square
+callback and plan types require \(m=n\), and rectangular adapters with a square
+shape also work. A Hessian provider passed as the residual or Jacobian is
+rejected before any input is converted. Callback reservations cover option,
 point and cache conversion, evaluation, snapshots and exception construction.
 
-An invalid initial point skips residual callbacks. If no output shape was
-available, the terminal diagnostic uses \(m=n\) as a fallback. Original exceptions
-from first-call dimension discovery or subsequent callbacks retain identity.
-Construction leaves an inspectable terminal state before delivering callback
-errors; inspection afterward performs no further evaluations. A cached initial
-root skips unused derivative evaluations and linear solves.
+An invalid starting point calls no residual callback; if the output shape is
+unknown, the terminal state uses \(m=n\) placeholders. Exceptions from the
+first call, which discovers the shape, or from later callbacks propagate as the
+original instance. Construction records an inspectable terminal state before
+raising a callback error, and inspecting it afterwards makes no further
+evaluations. If the cached starting point is a root, no derivatives are
+evaluated and no linear solve is made.
 
 ## Results, History And Storage
 
-Results remain `NewtonMethodsReturnType` with copied tuple point/residual and
-`df_root=(Jacobian, Hessian)`. Call counts are `(residual, Jacobian, Hessian)`;
-numerical derivative sampling increments residual calls. Native base/Jacobian/
-Hessian failures retain their respective callback stages and codes. Failed trial
-callbacks preserve the last accepted point/residual. A finite accepted trial
-clears stale derivatives before stopping checks and rebuilds them only if another
-iteration is needed.
+Results are `NewtonMethodsReturnType` with copied tuple point and residual and
+`df_root=(Jacobian, Hessian)`. Call counts are `(residual, Jacobian, Hessian)`,
+and numerical derivative samples count as residual calls. Native failures in
+the residual, Jacobian or Hessian report their own callback stage and code. A
+failed trial callback keeps the last accepted point and residual. An accepted
+finite trial clears the old derivatives before the stopping checks and
+recomputes them only if another iteration is needed.
 
-`input_dimension`, `output_dimension` and `linear_rank` are available on the
-solver. `VectorChebyshevStep`/`VectorHigherOrderStep` append `linear_rank` to their
-existing fields. It is `None` before a rectangular solve and for square LU;
-otherwise it is the latest DGELSY rank. `linear_status` is the backend status;
-Chebyshev's existing `linear_stage='jacobian'` labels both solves. Rank and linear
-success do not imply root success. Result/history tensor shapes reflect the
-independent dimensions, and exported snapshots remain immutable copies.
+The solver exposes `input_dimension`, `output_dimension` and `linear_rank`, and
+`VectorChebyshevStep` (or `VectorHigherOrderStep`) records include
+`linear_rank`. It is `None` for square LU and before the first rectangular
+solve, and otherwise the latest DGELSY rank. `linear_status` is the LAPACK
+status, and Chebyshev labels both solves `linear_stage='jacobian'`. Neither the
+rank nor a successful solve implies a root. Result and history shapes follow
+the two dimensions, and exported snapshots are immutable copies.
 
-For rectangles, persistent storage contains
-\(5n+3m+mn+mn^2+w+d\) doubles and \(n\) C-int pivots, where \(w\) is the
-least-squares plan's `work_size` and \(d\) is the largest active numerical
-Jacobian/Hessian scratch requirement. The contraction vector doubles as the
-first solve's right-hand side. There is no square LU buffer or secondary matrix.
-Explicit derivative-plan steps are included in the solver's workspace budget.
-Square native buffer accounting remains unchanged.
+For rectangular systems, persistent storage holds \(5n+3m+mn+mn^2+w+d\)
+doubles and \(n\) C-int pivots, where \(w\) is the least-squares plan's
+`work_size` and \(d\) the largest numerical Jacobian or Hessian scratch in use.
+The contraction vector doubles as the first solve's right-hand side, and there
+is no LU buffer or secondary matrix. The plans' explicit steps count against
+the workspace budget.
 
-A bounded bootstrap point copy is released before persistent allocation.
-History has a separate checked budget: one native record plus
-\(n+m+mn+mn^2\) doubles per stored snapshot. Python boundary copies and
-provider-internal memory are additional; plan-level budget guards can be
-conservative. There is no per-iteration native allocation.
-
-The result and history expose the latest rectangular rank explicitly. Rebuild
-compiled consumers against the installed 2.0 declarations. Configure numerical
-derivatives through the [supported plans](finite-differences.md).
+A temporary copy of the starting point is released before the persistent
+storage is allocated. History has its own checked budget: one record plus
+\(n+m+mn+mn^2\) doubles per snapshot. Python boundary copies and memory used
+inside LAPACK come on top, and the plans' own budget checks can be
+conservative. Nothing is allocated per iteration. Numerical derivatives are
+configured through the [derivative plans](finite-differences.md).

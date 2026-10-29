@@ -1,20 +1,21 @@
-# Square Higher-Order Vector Methods
+# Migrating Higher-Order Vector Methods
 
-The established `cyroot.generalized_halley`, `generalized_super_halley`,
-`generalized_chebyshev` and `generalized_tangent_hyperbolas` use
-[the shared native engine](native-vector-chebyshev.md). Python callbacks receive
-tuples. The Chebyshev path, including explicit `alpha=0`, now supports
-[rectangular systems](native-rectangular-chebyshev.md) with rank-aware
-least-squares corrections. Fixed [matrix Halley and Super-Halley](native-rectangular-halley.md) also
-support rectangles. Other modified-Halley alpha values use a specified
-[three-solve rectangular correction](native-rectangular-modified.md). Exact alpha
-method selectors can produce discontinuous rectangular steps. Singular
-square systems use strict LU and do not fall back to a pseudoinverse.
-`generalized_newton` also supports independent point/residual lengths; see
-[its contract](native-vector.md). All established vector quasi-Newton routes
-now use native states; their individual shape policies are documented separately.
-The 1.x standalone derivative wrappers were removed; use the explicit
-[finite-difference plans](finite-differences.md) instead.
+In 2.0, `cyroot.generalized_halley`, `generalized_super_halley`,
+`generalized_chebyshev` and `generalized_tangent_hyperbolas` run on
+[a shared native engine](native-vector-chebyshev.md), and Python callbacks
+receive tuples. Besides square systems, they handle rectangular ones: the
+Chebyshev path, including `alpha=0`, with
+[rank-aware least-squares corrections](native-rectangular-chebyshev.md),
+[matrix Halley and Super-Halley](native-rectangular-halley.md) likewise, and
+other values of `alpha` with a
+[three-solve rectangular correction](native-rectangular-modified.md), so
+rectangular steps can jump at the exact values `.5` and `1`. Singular square
+systems use LU and never fall back to a pseudoinverse. `generalized_newton`
+also handles different point and residual lengths; see
+[Vector Newton](native-vector.md). The vector quasi-Newton methods run on
+native states too, each with its own shape rules. The 1.x derivative wrappers
+were removed; use the [finite-difference plans](finite-differences.md)
+instead.
 
 ## Methods And Matrix Semantics
 
@@ -28,31 +29,31 @@ The 1.x standalone derivative wrappers were removed; use the explicit
 
 For a square residual map, let \(Js=F\) and
 \(A_{o,k}=\sum_j H_{o,j,k}s_j\). Matrix Halley solves
-\((J-A/2)v=F\), then takes \(\Delta x=-v\). The previous default applied
-componentwise division after a different contraction. These vector extensions
-agree in one dimension but can give different steps in coupled systems.
+\((J-A/2)v=F\), then takes \(\Delta x=-v\). The 1.x default divided
+componentwise after a different contraction. The two agree in one dimension but
+can give different steps for coupled systems.
 
 For example, at \((0,0)\),
 \[
 F(x,y)=(1+x+xy,\;2+y+x^2)
 \]
 has \(J=I\) and \(A=\begin{pmatrix}2&1\\2&0\end{pmatrix}\).
-The new matrix Halley step is \((4,2)\); the old componentwise step was
-\((1,-4)\). This illustrates a numerical change, not a convergence guarantee.
-The old componentwise implementation is removed. Tangent hyperbolas now uses
-matrix Halley directly; its redundant `formula` option is removed.
+The matrix Halley step is \((4,2)\), while the 1.x componentwise step was
+\((1,-4)\). This shows a numerical difference, not which converges. The
+componentwise implementation is gone. Vector tangent hyperbolas uses matrix
+Halley directly, and its redundant `formula` option is gone.
 
-[Modified Halley](native-vector-modified.md) retains matrix multiplication order
-and the original Jacobian factors/pivots for its final correction. Explicit
-`alpha=0`, `.5` and `1` select the existing Chebyshev, Halley and Super-Halley
-arithmetic paths. Other finite parameters use the general correction equation.
-No automatic parameter choice, damping or alternate solve is applied on failure.
+[Modified Halley](native-vector-modified.md) keeps the order of matrix products
+and reuses the Jacobian's factors and pivots for its final correction. `alpha`
+exactly `0`, `.5` and `1` uses the Chebyshev, Halley and Super-Halley
+arithmetic, and other finite values the general correction. There is no
+automatic parameter choice, damping or alternative solve on failure.
 
 ## Callback Inputs, Results And Derivatives
 
-Python callbacks receive immutable tuple snapshots. Return numeric sequences or
-supported double buffers; NumPy arrays are still accepted at the boundary.
-Index-based expressions work directly:
+Python callbacks receive immutable tuples and can return numeric sequences or
+buffers, NumPy arrays included. Expressions that index the point work
+unchanged:
 
 ```python
 from cyroot import generalized_halley
@@ -73,14 +74,14 @@ assert result.success
 assert max(abs(a-b) for a, b in zip(result.root, (1., 2.))) < 1e-9
 ```
 
-Expressions such as `point - 1.` or floating-point `scale * point` need sequence
-arithmetic or an explicit conversion inside the callback. For existing NumPy
-code, an explicit user bridge can call `old_residual(np.asarray(point))`.
-That bridge uses Python and the GIL. The solver does not insert a NumPy allocation
-around every callback.
+Expressions such as `point - 1.` or `scale * point` need elementwise
+arithmetic or an explicit conversion inside the callback. Existing NumPy code
+can be wrapped, as in `lambda point: old_residual(np.asarray(point))`; the
+wrapper runs in Python under the GIL. The solver itself never creates a NumPy
+array around a callback.
 
-`J=None` and `H=None` select independent automatic central finite-difference
-plans. Configure them explicitly with the native plan classes:
+`J=None` and `H=None` select independent automatic central-difference plans.
+To configure them, pass the native plan classes:
 
 ```python
 from cyroot.native import JacobianPlan, HessianPlan
@@ -90,16 +91,16 @@ result = generalized_halley(residual, JacobianPlan(2, step=1e-4),
 assert result.success
 ```
 
-The `h` option is removed from these four entry points. Use `JacobianPlan` and
-`HessianPlan` for numerical derivatives; the 1.x derivative approximation classes
-were removed. `generalized_newton` now also requires
-an analytic provider or a native `JacobianPlan`.
+These four functions no longer take `h`; use `JacobianPlan` and `HessianPlan`
+for numerical derivatives, since the 1.x derivative approximation classes are
+gone. `generalized_newton` likewise takes `None`, an analytic provider or a
+native plan for its Jacobian.
 
-The common `NewtonMethodsReturnType` now contains tuple snapshots for the point,
-residual, Jacobian and Hessian. `df_root=(jacobian,hessian)` uses NaNs for
-unevaluated derivatives at the returned point. `f_calls=(F,J,H)` counts native
-plan calls in their derivative roles and every sampled residual in `F`.
-Stopping, cached-value reuse and failure behavior follow the native engine.
+`NewtonMethodsReturnType` holds tuple copies of the point, residual, Jacobian
+and Hessian. `df_root=(jacobian, hessian)` has NaNs for derivatives that were not
+evaluated at the returned point. `f_calls=(F, J, H)` counts each plan
+evaluation for its derivative and every sampled residual in `F`. Stopping,
+cached values and failures work as in the native engine.
 
 ## Options, Shapes And Failure Policy
 
@@ -107,26 +108,26 @@ The shared signature is
 `(F, J, H, x0, F_x0=None, J_x0=None, H_x0=None, *, etol=1e-10,
 ertol=4*eps, ptol=1e-12, prtol=4*eps, max_iter=200, history=0,
 history_every=1, history_bytes=8*1024*1024, workspace_bytes=64*1024*1024)`.
-`generalized_halley` additionally accepts keyword-only `alpha=None`.
-Options after the three cache arguments are keyword-only. The default `max_iter`
-is 200; zero or `None` is unlimited. Removed options raise `TypeError` before callbacks run.
-Caches and options pass unchanged into the guarded native constructor.
+`generalized_halley` also takes a keyword-only `alpha=None`. Everything after
+the three cache arguments is keyword-only. The default `max_iter` is 200; zero
+or `None` is unlimited. Removed options raise `TypeError` before any callback
+runs. Caches and options are passed unchanged to the native constructor.
 
 With n inputs and m residuals, Jacobians have shape \((m,n)\) and Hessians
-\((m,n,n)\), indexed `[residual][input][input]`. Ordinary Python residuals,
-matching native providers or cached residuals determine m; default numerical
-plans follow those dimensions. Inputs are never silently reshaped. All finite
-alpha paths accept rectangles, with equations and exact special dispatch
-specified in the rectangular manuals. Only residual convergence reports success.
-Required singular square Jacobian/secondary systems report `breakdown`, with no
-least-squares fallback. Rectangular solves allow rank deficiency and use
-minimum-norm least-squares corrections. Nonfinite data or intermediates report
-`nonfinite`; small steps with unsatisfied residuals report unsuccessful stagnation.
+\((m,n,n)\), indexed `[residual][input][input]`. The Python residual, native
+providers of matching shape or cached residuals determine m, and the default
+numerical plans follow. Inputs are never reshaped silently. Every finite
+`alpha` works for rectangular systems, as the rectangular pages specify. Only
+residual convergence counts as success. A singular square Jacobian or
+secondary system reports `breakdown`, with no least-squares fallback, while
+rectangular solves allow rank deficiency and take minimum-norm least-squares
+corrections. Nonfinite data or intermediates report `nonfinite`, and small
+steps with an unsatisfied residual report unsuccessful stagnation.
 
-To inspect intermediate steps or native linear-stage/status diagnostics, use
+To inspect intermediate steps or the linear stage and status, use
 `VectorHalley`, `VectorSuperHalley`, `VectorChebyshev` or `VectorModifiedHalley`
-from `cyroot.native`. These classes share `step()`/`run()` and bounded copied
-history; the established functions remain one-shot calls. For example:
+from `cyroot.native`. They provide `step()`, `run()` and bounded copied
+history, while the functions only return the final result. For example:
 
 ```python
 from cyroot.native import VectorHalley
@@ -138,10 +139,8 @@ assert result.success
 assert solver.history[-1].root == result.root
 ```
 
-[Native vector/Hessian callbacks](../examples/native_vector_modified.md) can be
-passed directly through the established entry points. With native callbacks in
-all evaluated roles, the numerical engine executes outside the GIL; Python
-callbacks, setup and result/history export use it. NumPy and SciPy remain package
-dependencies. Compiled consumers must rebuild for the 2.0 callback and solver
-declarations. This migration makes no performance claim or change to rectangular
-algorithms outside these four methods.
+[Native vector and Hessian callbacks](../examples/native_vector_modified.md)
+can be passed straight to these functions. With native callbacks for every
+evaluated role, the numerical engine runs without the GIL; Python callbacks,
+setup and result and history export take it. Compiled consumers must be
+rebuilt against the 2.0 callback and solver declarations.

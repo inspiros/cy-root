@@ -1,9 +1,9 @@
 # Stopping Rules And Result Status
 
-Each solver result has a `termination_reason`, a string-valued
-`TerminationReason` enum. `success` and `converged` are true for residual or
-bracket tolerance. `optimal` is true only when the residual tolerance is met.
-A small step with an unsatisfied residual is stagnation and is not success.
+Every solver result has a `termination_reason`, a string-valued
+`TerminationReason` enum. `success` and `converged` are true when the residual
+or bracket tolerance is met, and `optimal` only when the residual tolerance is
+met. A small step with an unsatisfied residual is stagnation, not success.
 
 ```python
 from cyroot import newton, TerminationReason
@@ -13,7 +13,7 @@ assert result.termination_reason == TerminationReason.RESIDUAL_TOLERANCE
 assert result.success
 ```
 
-The existing tolerance names have these meanings:
+The tolerances are:
 
 | Argument | Meaning |
 | --- | --- |
@@ -28,10 +28,10 @@ Residual convergence uses
 \|F(x_k)\|_\infty \le \mathrm{etol} + \mathrm{ertol}\,s_F.
 \]
 
-For one starting point, `s_F` is its residual norm. For multiple starting
-guesses or a scalar bracket, it is the largest starting residual norm. This
-reference remains fixed throughout that solve. A starting exact root is
-accepted even if both residual tolerances are zero.
+For one starting point, `s_F` is its residual norm; for several starting
+points or a scalar bracket, it is the largest starting residual norm. It stays
+fixed for the whole solve. A starting point that is an exact root is accepted
+even when both residual tolerances are zero.
 
 Open methods test step size using
 
@@ -40,51 +40,50 @@ Open methods test step size using
 \max(\|x_k\|_\infty,\|x_{k-1}\|_\infty).
 \]
 
-Methods that retain several iterates use the diameter of that set. A scalar
-bracket uses its width and the largest endpoint magnitude. Complex methods
-use complex magnitudes and geometric distances, not differences of magnitudes.
-The raw step/width and residual metrics remain available as `precision` and
-`error`.
+Methods that keep several iterates use the diameter of that set. A scalar
+bracket uses its width and the larger endpoint magnitude. Complex methods use
+complex magnitudes and distances, not differences of magnitudes. The step or
+width and the residual norm are reported as `precision` and `error`.
 
-A narrow valid bracket can satisfy the bracket criterion with a large residual.
-Its interpretation depends on the method's assumptions, including continuity
-and a valid bracket; numerical sign changes alone do not prove continuity.
-Vrahatis accepts width convergence for a scalar output. For multiple outputs,
-its vertex sign patterns do not certify a root, so width-only termination is
-unsuccessful stagnation; residual convergence is required for success.
-Rectangular systems may use least-squares steps, but their success criterion
-still concerns the residual, rather than least-squares stationarity alone.
+A narrow valid bracket can meet the bracket criterion while the residual is
+still large. Whether it encloses a root depends on the method's assumptions,
+such as continuity; sign changes observed numerically do not prove continuity.
+Vrahatis accepts width convergence when there is one output. With several
+outputs, its vertex signs do not certify a root, so stopping on width alone is
+unsuccessful stagnation and success requires residual convergence. Rectangular
+systems can take least-squares steps, but success still depends on the
+residual, not on least-squares stationarity.
 
-Every solver family shares the defaults
+All solver families share the defaults
 `etol=1e-10`, `ertol=4*eps`, `ptol=1e-12`, `prtol=4*eps` and `max_iter=200`
-(binary64 `eps`), defined once in `cyroot/defaults.hpp`. The external-optimizer
-bridge uses the same residual defaults; the external optimizer keeps its own
-iteration and convergence controls. Method-specific controls,
-such as optimizer `gtol` or evaluation budgets, keep their own defaults. These
-controls are keyword-only in every public function and native solver class;
-only the function, derivative providers, starting values and cached initial
-values are positional.
+(with the binary64 `eps`), defined once in `cyroot/defaults.hpp`.
+`root_via_optimizer` uses the same residual defaults, while the external
+optimizer keeps its own iteration and convergence controls. Method-specific
+controls, such as the optimizers' `gtol` or evaluation budgets, have their own
+defaults. All of these controls are keyword-only in every public function and
+native solver class; only the function, derivative providers, starting values
+and cached starting values are positional.
 
-The relative residual term uses the initial residual magnitude, not an estimate
-of derivative accuracy. For example, with a starting residual of `1e20`, `4*eps`
-contributes about `8.9e4` to the acceptance threshold. Set `ertol=0` when the
-application requires an absolute residual target. Relative step tolerance also
-scales with coordinate magnitude; rescale poorly balanced problems deliberately.
+The relative residual term scales with the starting residual, not with the
+accuracy of the derivatives. For example, with a starting residual of `1e20`,
+`4*eps` adds about `8.9e4` to the threshold. Set `ertol=0` when the application
+needs an absolute residual target. The relative step tolerance also scales with
+the size of the coordinates, so rescale badly balanced problems on purpose.
 
-Tolerances must be finite and nonnegative. Relative tolerances must be smaller
-than one. `max_iter` is a nonnegative integer; zero or `None` removes the
-iteration limit. Disabling both the limit and every tolerance is rejected.
-All methods still stop on detected nonfinite arithmetic, breakdown or a
-collapsed step. Python callback exceptions propagate with their traceback.
+Tolerances must be finite and nonnegative, and relative tolerances less than
+one. `max_iter` is a nonnegative integer; zero or `None` removes the iteration
+limit. Disabling both the limit and every tolerance is rejected. Every method
+still stops on nonfinite arithmetic, breakdown or a collapsed step. Python
+callback exceptions propagate with their traceback.
 
-Derivative methods evaluate only derivatives needed for another step. They
-skip derivative callbacks at an already accepted starting root, and after a
-step meets a stopping rule or exhausts the iteration budget. `df_root` uses
-NaN placeholders, with the usual scalar or tensor shape, when a derivative
-at the returned point was not evaluated. Explicitly supplied initial
-derivatives are retained on an initial return. Evaluation counts reflect
-these skipped calls. Quasi-Newton matrices are evolving approximations;
-they are not exact derivatives at the returned point.
+Derivative methods evaluate only the derivatives needed for another step. They
+make no derivative calls when the starting point is already a root, or after a
+step that meets a stopping rule or uses up the iteration budget. When the
+derivative at the returned point was not evaluated, `df_root` holds NaN
+placeholders of the usual scalar or tensor shape, except that supplied initial
+derivatives are kept when the starting point is returned. Evaluation counts
+reflect the skipped calls. Quasi-Newton matrices are evolving approximations,
+not the derivatives at the returned point.
 
 | Reason | Meaning |
 | --- | --- |
@@ -95,7 +94,7 @@ they are not exact derivatives at the returned point.
 | `zero_derivative` | A required scalar derivative is zero. |
 | `breakdown` | A denominator, factorization or other numerical precondition failed. |
 | `nonfinite` | A required point, value or arithmetic result is not finite. |
-| `callback_failure` | A native callback returned a nonzero status in the native core. |
+| `callback_failure` | A callback raised a Python exception or returned a nonzero native status; the error is also raised. |
 | `line_search_failure` | No acceptable descent step was found by the bounded line search. |
 | `linear_failure` | The required inner linear solve did not meet its acceptance criterion. |
 | `max_evaluations` | The residual evaluation budget was exhausted. |
@@ -104,11 +103,11 @@ they are not exact derivatives at the returned point.
 | `no_acceptable_step` | A bounded optimizer trial search found no acceptable step. |
 | `optimizer_stopped_without_root` | An external optimizer returned a point that failed the root tolerance. |
 
-Interval splitting results contain `termination_reasons` per returned root and
-`search_termination_reason` for the overall search. A completed search can
-return no roots when interval bounds exclude them. `max_split_iterations`
-means the search was incomplete, even when some returned roots converged.
-Their `success` requires a completed search and successful returned roots.
+Interval-splitting results have `termination_reasons`, one per returned root,
+and a `search_termination_reason` for the whole search. A completed search can
+return no roots when the interval bounds exclude them. `max_split_iterations`
+means the search did not complete, even if some returned roots converged.
+`success` requires a completed search and successful returned roots.
 
-Results constructed manually without explicit status use `unspecified`.
-Supplying a known reason determines the corresponding success flags.
+A result constructed by hand without a reason reports `unspecified`; passing a
+known reason sets the matching success flags.

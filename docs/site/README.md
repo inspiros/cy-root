@@ -33,7 +33,8 @@ only when manually requested; pushes and tags do not trigger it.
 ```
 
 Add chapters to `src/SUMMARY.md` with includes of the canonical manual pages.
-The preprocessor preserves equations and pins source/example links to `v2.0.0`.
+The preprocessor preserves equations and pins source and example links to the
+release tag of the version in `cyroot/_version.py`.
 Colors and layout live in `theme/cyroot.css`; the existing logos are reused.
 
 The checker also supports `--snippets --compiled-example-dir PATH` after building

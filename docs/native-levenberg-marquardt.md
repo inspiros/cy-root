@@ -1,8 +1,8 @@
 # Levenberg–Marquardt Root Finding
 
 `LevenbergMarquardt` minimizes the residual objective \(\phi(x)=\frac12\|F(x)\|_2^2\).
-Only meeting the original residual tolerance establishes root success. A minimum
-of this objective can have a nonzero residual, for example \(F(x)=x^2+1\) at zero.
+Only meeting the residual tolerance counts as finding a root: a minimum of this
+objective can have a nonzero residual, as \(F(x)=x^2+1\) does at zero.
 
 ```python
 from cyroot.optimization import LeastSquaresObjective, LevenbergMarquardt
@@ -19,15 +19,17 @@ assert result.error <= 1e-10
 steps = solver.history
 ```
 
-`levenberg_marquardt(objective, x0, **options)` returns the same result without
-retaining an inspectable solver. Both names are available in `cyroot.optimization`
-and `cyroot.native`. The API accepts a `LeastSquaresObjective` rather than
-repeating its callback configuration. Scalar residuals use a one-element vector.
-Square, overdetermined and underdetermined systems use the same interface.
-User callbacks return a residual vector of length `m` and an optional Jacobian
-of shape `(m,n)`. If the objective has no Jacobian, the solver uses native central
-finite differences and reuses the accepted residual as its base sample. Supplied
-residual Hessians are unused by this first-order model.
+`levenberg_marquardt(objective, x0, **options)` returns the same result
+without keeping a solver to inspect. Both names are available from
+`cyroot.optimization` and `cyroot.native`. The solver takes a
+`LeastSquaresObjective`, which holds the callbacks; a scalar residual is a
+one-element vector. Square, overdetermined and underdetermined systems share
+the same interface. Callbacks return a residual vector of length `m` and,
+optionally, a Jacobian of shape `(m,n)`. Without a Jacobian, the solver uses
+native central differences around the accepted residual. Residual Hessians are
+not used by this first-order model. (`scalar_levenberg_marquardt` and
+`vector_levenberg_marquardt` wrap all this in the usual
+`(function, jacobian, x0)` form; see [Optimization](optimization.md).)
 
 ## Algorithm
 
@@ -40,21 +42,23 @@ Set \(A_{ij}=J_{ij}/d_j\). Each trial solves the augmented least-squares problem
 \qquad \Delta x_j=s z_j/d_j.
 \]
 
-SciPy's native DGELSY supplies a rank-aware solve without forming \(J^TJ\).
-Scaling products and objective reductions avoids several avoidable overflow and
-underflow cases. Arithmetic remains binary64; extreme conditioning and rounding
-can still prevent progress. Positive damping regularizes the augmented matrix;
-its reported rank describes that matrix, **not** the undamped Jacobian.
+SciPy's DGELSY gives a rank-aware solve without forming \(J^TJ\). Scaling the
+products and the objective reductions avoids several overflow and underflow
+cases, but the arithmetic is still binary64, and extreme conditioning or
+rounding can still prevent progress. Positive damping regularizes the
+augmented matrix, so the reported rank describes that matrix, **not** the
+undamped Jacobian.
 
-Acceptance compares actual objective reduction to the undamped linear model's
-predicted reduction, using the displacement after coordinate rounding. A trial
-must decrease the objective and have reduction ratio at least `1e-4`. Rejected
-trials multiply damping by ten. Accepted trials multiply damping by `.3` for a
-ratio above `.75`, by two below `.25`, otherwise leave it unchanged. Damping stays
-within `[1e-15,1e15]`. An outer iteration samples one Jacobian and makes at most
-`max_trials` trial solves. Unaccepted trial coordinates/residuals never replace
-the accepted state. A nonfinite trial is rejected; a callback exception or native
-callback error stops immediately and preserves the last accepted state.
+A trial is accepted by comparing the actual reduction of the objective with
+the reduction predicted by the undamped linear model, using the displacement
+after rounding. It must decrease the objective with a reduction ratio of at
+least `1e-4`. A rejected trial multiplies the damping by ten. An accepted trial
+multiplies it by `.3` when the ratio is above `.75` and by two when it is below
+`.25`, and otherwise leaves it unchanged. Damping stays within `[1e-15,1e15]`.
+Each outer iteration evaluates one Jacobian and tries at most `max_trials`
+solves. Rejected trials never replace the accepted state. A nonfinite trial is
+rejected; a callback exception or native callback error stops the solve at once
+and keeps the last accepted state.
 
 ## Options And Diagnostics
 
@@ -70,8 +74,9 @@ LevenbergMarquardt(objective, x0, *,
 
 Root convergence means \(\|F\|_\infty\le\mathrm{etol}+
 \mathrm{ertol}\|F(x_0)\|_\infty\), with a fixed initial relative scale.
-`ertol` must be smaller than one. An accepted step within the absolute/relative
-coordinate tolerances stops with `stagnation` when root tolerance is unmet.
+`ertol` must be less than one. An accepted step within the absolute and
+relative step tolerances stops with `stagnation` when the root tolerance is
+not met.
 `gtol` bounds the residual-relative stationarity
 \(\|J^TF\|_\infty/(\|F\|_\infty\max_{ij}|J_{ij}|)\), shared with BFGS and
 L-BFGS. It is invariant to residual scaling and stays of order one near simple
@@ -114,16 +119,16 @@ recording. Once full, history keeps its existing entries and sets
 `history_truncated`. `workspace_bytes` covers solver-owned native arrays, LAPACK
 scratch, pivots and requested history. It excludes the separately reusable
 objective adapter, Python snapshots and callback allocations. `memory_bytes`
-reports this native allocation. The augmented row count `m+n` is limited to32767
-by the current LAPACK-plan policy. No Jacobian rank or unique-root guarantee is
-implied for rectangular or deficient systems.
+reports this native allocation. The augmented row count `m+n` is limited to
+32767 by the least-squares plan. Nothing is implied about the Jacobian's rank
+or the uniqueness of a root for rectangular or rank-deficient systems.
 
 ## Compiled Use And The GIL
 
-Native callbacks through the objective run without the GIL. Python callbacks
-acquire it for each call. Solver construction, result/history export and `step()`/
-`run()` orchestration are Python boundaries; their numerical loops release it.
-No internal NumPy arrays or NumPy operations are used.
+Native callbacks in the objective run without the GIL; Python callbacks take
+it for each call. Construction, result and history export and the Python side of
+`step()` and `run()` hold the GIL, and their numerical loops release it. No
+NumPy arrays or operations are used internally.
 
 Compiled consumers can `cimport LevenbergMarquardt` from
 `cyroot.native.levenberg_marquardt`, enter `_enter()` while holding the GIL,

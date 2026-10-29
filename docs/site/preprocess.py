@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
 """Keep docs canonical and adapt repository-only links for the rendered manual."""
 import json
+from pathlib import Path
 import re
 import sys
 
-REPOSITORY = 'https://github.com/inspiros/cy-root/blob/v2.0.0/'
+
+def release_tag():
+    # Pin links to the version being documented, as setup.py does for PyPI.
+    source = (Path(__file__).resolve().parents[2] / 'cyroot' / '_version.py').read_text()
+    parts = [re.search(rf'^VERSION_{name}\s*=\s*(\d+)', source, re.M).group(1)
+             for name in ('MAJOR', 'MINOR', 'PATCH')]
+    return 'v' + '.'.join(parts)
+
+
+REPOSITORY = f'https://github.com/inspiros/cy-root/blob/{release_tag()}/'
 
 
 def destination(target):

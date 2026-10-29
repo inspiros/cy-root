@@ -1,9 +1,9 @@
 # Native Wolfe–Bittner Method
 
-`cyroot.wolfe_bittner` now uses native multipoint buffers and SciPy's Cython
-LAPACK DGELSY solver. Its numerical loop performs no NumPy operations and runs
-without the GIL for compiled residual callbacks. Python callbacks receive tuple
-points and acquire the GIL. NumPy and SciPy remain package dependencies.
+`cyroot.wolfe_bittner` uses native multipoint buffers and SciPy's Cython
+LAPACK DGELSY solver. Its numerical loop does no NumPy operations and, with
+compiled residual callbacks, runs without the GIL. Python callbacks receive
+tuple points and take the GIL.
 
 ```python
 from cyroot import wolfe_bittner
@@ -21,62 +21,62 @@ result = solver.run()
 assert abs(result.root[0]-.8) < 1e-12
 assert solver.history[-1].root == result.root
 
-# Rectangular systems and different pool sizes remain supported.
+# Rectangular systems and pools of any size are supported.
 answer = wolfe_bittner(lambda p: (p[0]-1., 2*(p[0]-1.)), ((0.,), (2.,)))
 assert answer.success
 ```
 
-The established signature is
+The public signature is
 `wolfe_bittner(F, x0s, F_x0s=None, *, rcond=1e-12,
 etol=1e-10, ertol=4*eps, ptol=1e-12, prtol=4*eps, max_iter=200,
 history=0, history_every=1, history_bytes=8*1024*1024,
-workspace_bytes=64*1024*1024)`.
-Options after the residual cache are now keyword-only. The module export and
-`find_vector_root('wolfe_bittner', ...)` share this behavior. Native
-`WolfeBittner(function, x0s, f_x0s=None, **options)` provides `step()`, `run()`,
-iteration, copied `.result` and bounded copied `.history`. Native one-shot
-`wolfe_bittner(function, x0s, **options)` runs that state.
+workspace_bytes=64*1024*1024)`, also available as
+`find_vector_root('wolfe_bittner', ...)`. Options after the residual cache are
+keyword-only. `cyroot.native.WolfeBittner(function, x0s, f_x0s=None,
+**options)` provides `step()`, `run()`, iteration, a copied `.result` and a
+bounded, copied `.history`, and `cyroot.native.wolfe_bittner(function, x0s,
+**options)` runs one solver to completion.
 
 ## Shapes And Initialization
 
 Supply a nonempty matrix of \(k\) points of length \(n\), with residuals of
-length \(m\). The cache, when supplied, must have shape \((k,m)\). Neither
-\(m=n\) nor \(k=n+1\) is required. Duplicate points and smaller/larger point
-pools are accepted; the affine consistency check below determines whether a
-useful step exists. A single nonroot point has zero pool width and stops with
-unsuccessful `stagnation`, including when absolute and relative tolerances are
-zero. No shape warning or automatic point generation is used.
+length \(m\). A cache, if supplied, must have shape \((k,m)\). Neither \(m=n\)
+nor \(k=n+1\) is required; duplicate points and smaller or larger pools are
+accepted, and the affine consistency check below decides whether a useful step
+exists. A single point that is not a root has zero pool width and stops with an
+unsuccessful `stagnation`, even when all tolerances are zero. No warning is
+issued about the shape and no extra points are generated.
 
-Python functions infer the residual dimension from the first evaluation and
-reuse it. A residual-kind `VectorCallback` declares a square shape;
-`RectangularCallback` declares independent input/output dimensions. Both can
-wrap compiled callbacks. Native LAPACK limits are \(1\le k\le32767\),
-\(1\le m\le32766\), and a positive input dimension fitting C `int`.
+Python functions get the residual dimension from their first evaluation, which
+is reused. A residual `VectorCallback` declares a square shape and a
+`RectangularCallback` separate input and output dimensions; both can wrap
+compiled callbacks. LAPACK limits the sizes to \(1\le k\le32767\) and
+\(1\le m\le32766\), and the input dimension must fit a C `int`.
 
-All initial point coordinates are packed and checked before any evaluation.
-Caches are packed before evaluations, and all initial residuals must be finite
-before convergence can be reported. Uncached initial evaluations follow input
-order and count once each. Caches count zero calls. The first point attaining
-the smallest residual norm wins ties. On an initial evaluation failure, the
-best previously evaluated finite point is retained, or the first point with a
-NaN residual if no finite evaluation is available.
+All starting coordinates and caches are packed and checked before any
+evaluation, and every initial residual must be finite before convergence can be
+reported. Uncached initial residuals are evaluated in input order and count
+once each; cached ones count as zero. On ties, the first point with the
+smallest residual norm wins. If an initial evaluation fails, the result reports
+the best finite point evaluated so far, or the first point with a NaN residual
+if there is none.
 
-The fixed residual scale is the largest initial residual infinity norm.
-Initial coordinate scale includes every point. Pool width `precision` is the
-maximum coordinate range, independent of residual spread. Initial residual or
-width stopping occurs before an unused linear solve. Otherwise the pool is
-stably ordered from largest to smallest initial residual; ties retain input
-order. After every accepted trial, the oldest pool point is discarded and the
-trial is appended. There is no repeated residual sorting.
+The residual scale is the largest initial residual infinity norm, and the
+coordinate scale includes every point. The pool width `precision` is the
+largest coordinate range, regardless of the residuals. Initial residual or
+width tolerances are checked before any linear solve. Otherwise the pool is
+ordered from largest to smallest initial residual, keeping input order on ties.
+After each accepted trial, the oldest point is dropped and the trial appended;
+the pool is not re-sorted.
 
 ## Affine Step And Root Checks
 
 For the current pool, form columns \(A_{:,j}=(1,F(x_j))\) and solve
 \(Ap=b\), with \(b=(1,0,\ldots,0)\), for the minimum-norm least-squares
-weights using DGELSY and `rcond`. The immutable plan and caller-owned scratch
-support arbitrary rectangular affine systems. Rank deficiency alone does not
-reject a consistent solution. `rcond` must be finite and strictly between zero
-and one; it controls numerical rank, not root tolerance.
+weights using DGELSY and `rcond`. Any rectangular affine system is supported,
+and rank deficiency alone does not reject a consistent solution. `rcond` must
+be finite and strictly between zero and one; it sets the numerical rank cutoff,
+not a root tolerance.
 
 Before sampling the candidate \(x=\sum_jp_jx_j\), require
 
@@ -87,56 +87,57 @@ Before sampling the candidate \(x=\sum_jp_jx_j\), require
 
 An inconsistent affine system reports `breakdown` without a trial callback or
 iteration. Nonfinite coefficients, arithmetic, candidates or samples report
-`nonfinite`. The helper checks every point, including points with zero weights.
-Intermediate sums that overflow also report `nonfinite`; cancellation does not
-rescue those calculations. This is a backward consistency check, not a bound
-on candidate or root accuracy. A successful LAPACK call alone is insufficient.
-Only nonlinear residual convergence reports root success.
+`nonfinite`. Every point is checked, including those with zero weight, and an
+intermediate sum that overflows reports `nonfinite` even if later cancellation
+would have brought it back into range. The test checks backward consistency;
+it does not bound the error of the candidate or the root. A successful LAPACK
+call alone is not enough, and only nonlinear residual convergence counts as a
+root.
 
-A trial iteration is counted when its residual is invoked. Failed callbacks
-and nonfinite samples preserve the pool, active accepted state and best point.
-A finite trial becomes the active state even if it worsens the residual; it
-replaces the best point only on strict improvement. Stop checks use the best
-residual and current pool width, then the iteration budget. No next affine
-solve occurs until another step is requested. There is no damping, random
-restart, line search or global convergence guarantee.
+An iteration is counted when the trial residual is evaluated. A failed callback
+or nonfinite sample leaves the pool, the active state and the best point
+unchanged. A finite trial becomes the active state even if its residual is
+worse, and replaces the best point only if it is strictly better. The stopping
+checks use the best residual and the current pool width, then the iteration
+budget. The next affine solve happens only when another step is requested.
+There is no damping, random restart or line search, and no global convergence
+guarantee.
 
 ## Results, History And Memory
 
-The new `WolfeBittnerResult` replaces the legacy ndarray `RootReturnType`.
-It contains copied tuples `root`, `f_root`, `active_root`, `active_f_root`,
-plus `iters`, scalar `f_calls`, `precision`, `error`, `termination_reason`,
-`callback_code`, `callback_stage`, `linear_status`, `linear_rank` and
-`affine_error`. `root`/`f_root`/`error` always refer to the best point; active
-fields identify the latest accepted trial, initially the best initial point.
-`success`, `converged` and `optimal` all mean residual convergence.
+Results are `WolfeBittnerResult` tuples, replacing the ndarray-based
+`RootReturnType` of 1.x. They contain the copied tuples `root`, `f_root`,
+`active_root` and `active_f_root`, plus `iters`, the integer `f_calls`,
+`precision`, `error`, `termination_reason`, `callback_code`, `callback_stage`,
+`linear_status`, `linear_rank` and `affine_error`. `root`, `f_root` and `error`
+always describe the best point; the active fields describe the latest accepted
+trial, which starts as the best initial point. `success`, `converged` and
+`optimal` all mean residual convergence.
 
-`WolfeBittnerStep` aliases the same immutable result type. Latest linear rank,
-backend status and affine error may describe a failed attempted step while
-coordinates remain at accepted states. Before any solve, rank is `None` and
-affine error is NaN. Native callback failures carry stage `'function'` and their
-original integer code; Python exceptions preserve identity and are delivered
-once. Terminal inspection performs no further evaluations. Explicit callback
-reservations cover conversions, evaluations and result/error/history creation.
+`WolfeBittnerStep` is the same immutable type. The latest rank, LAPACK status
+and affine error can describe a failed step while the coordinates stay at the
+accepted states. Before the first solve, the rank is `None` and the affine error
+NaN. Native callback failures report the stage `'function'` and the original
+integer code; Python exceptions propagate as the original instance, once.
+Inspecting a finished solver makes no further evaluations. Callback
+reservations cover conversions, evaluations and result, error and history
+creation.
 
-The native workspace contains
+The native workspace holds
 \(k(n+m)+3(n+m)+(m+1)k+(m+1)+k+w\) doubles and \(k\) C-int pivots,
-where \(w\) is the least-squares plan's `work_size`. The bounded initial point
-copy is released before allocating persistent storage. History has separate
-checked storage for two point/residual pairs, diagnostics and affine error per
-record. Python boundary copies and provider-internal storage are excluded from
-the native budget. All loop buffers are allocated before iteration.
+where \(w\) is the least-squares plan's `work_size`. The temporary copy of the
+starting points is released before the persistent storage is allocated.
+History has its own checked storage for two point/residual pairs, diagnostics
+and the affine error per record. Python boundary copies and memory used inside
+LAPACK are not counted. All loop buffers are allocated before the iteration.
 
-`wolfe_bittner_ops.pxd` exposes the allocation-free `noexcept`
-`wolfe_bittner_candidate` from `wolfe_bittner.hpp`. Trusted callers supply
-disjoint column-major `matrix[rows*k]`, `weights[k]`, row-major `points[k*n]`,
-`candidate[n]` and `affine_error[1]` spans. Invalid dimensions return two without
-writes; nonfinite inputs/arithmetic return one; inconsistent systems return
-three. Valid-dimension failures poison the candidate. Affine error is retained
-when the full finite residual was computed, otherwise NaN.
+`wolfe_bittner_ops.pxd` exposes the allocation-free, `noexcept`
+`wolfe_bittner_candidate` from `wolfe_bittner.hpp`. Callers pass valid,
+non-overlapping column-major `matrix[rows*k]`, `weights[k]`, row-major
+`points[k*n]`, `candidate[n]` and `affine_error[1]` spans. It returns two for
+invalid dimensions (nothing is written), one for nonfinite inputs or arithmetic
+and three for an inconsistent system. With valid dimensions, any failure fills
+the candidate with NaN. The affine error is kept when the full finite residual
+was computed, and is NaN otherwise.
 
-The class is added to the existing native vector extension. Existing callback,
-record and result layouts are unchanged. Rebuild compiled consumers using the
-2.0 declarations. All established vector quasi-Newton routes now delegate to
-native states; the legacy Wolfe–Bittner NumPy loop is removed.
 Original reference: [Wolfe–Bittner](https://doi.org/10.1145/368518.368542).

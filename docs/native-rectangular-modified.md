@@ -1,9 +1,11 @@
 # Rectangular Parameterized Modified Halley
 
-`VectorModifiedHalley` and `generalized_halley(..., alpha=...)` accept rectangular
-systems for every finite real `alpha`. Their signatures, callback shapes and
-numerical plans follow the [shared rectangular higher-order engine](native-rectangular-chebyshev.md).
-Native callbacks and numerical loops run without the GIL; Python callbacks use it.
+`VectorModifiedHalley` and `generalized_halley(..., alpha=...)` accept
+rectangular systems for every finite real `alpha`. Signatures, callback shapes
+and numerical plans are those of the
+[shared rectangular higher-order engine](native-rectangular-chebyshev.md).
+Native callbacks and the numerical loop run without the GIL; Python callbacks
+take it.
 
 ```python
 from cyroot import generalized_halley
@@ -32,7 +34,7 @@ assert solver.history[-1].root == solver.result.root
 ## General Correction
 
 For \(n\) inputs, \(m\) residuals and \(\alpha\notin\{0,1/2,1\}\), the
-specified rectangular update is
+rectangular update is
 
 \[
 s=J^+F,\qquad A_{o,k}=\sum_j H_{o,j,k}s_j,\qquad
@@ -40,49 +42,49 @@ v=(J-\alpha A)^+F,\qquad t=J^+(Av),\qquad
 \Delta x=-s-\tfrac12t.
 \]
 
-Each pseudoinverse action is a minimum-norm least-squares solve using DGELSY,
-with the same fixed `rcond=1e-12` as rectangular Newton and Chebyshev. No inverse
-is constructed. Rank deficiency is allowed, and the Jacobian and secondary
-matrix can have different numerical ranks. A rank-zero solve returns a zero
-minimum-norm solution. Neither rank nor backend status certifies a root;
-**only nonlinear residual convergence reports success**. Inconsistent stationary
-points can stop unsuccessfully. There is no damping, restart or automatic fallback.
-No general convergence order is promised for rectangular or rank-changing systems.
+Each pseudoinverse is a minimum-norm least-squares solve with DGELSY, using
+the same fixed `rcond=1e-12` as rectangular Newton and Chebyshev; no inverse is
+formed. Rank deficiency is allowed, and the Jacobian and the secondary matrix
+can have different numerical ranks. A solve of rank zero returns zero. Neither
+the rank nor the LAPACK status implies a root: **only nonlinear residual
+convergence counts as success**, and an inconsistent stationary point can stop
+unsuccessfully. There is no damping, restart or automatic fallback, and no
+convergence order is promised for rectangular or rank-changing systems.
 
-Square systems retain their existing strict LU factors and correction solve,
-including `breakdown` on a required singular matrix and no least-squares fallback.
+Square systems still use LU factors for the correction solve, report
+`breakdown` on a singular matrix and have no least-squares fallback.
 
 ## Exact Special Parameters
 
-Exactly `alpha=0`, `.5` and `1` select Chebyshev, Halley and Super-Halley,
-respectively, preserving the [fixed update formulas](native-rectangular-halley.md)
-and their smaller workspace. This is deliberate method selection. The general
-pseudoinverse correction need not simplify to the fixed Halley or Super-Halley
-formula. Consequently, rectangular steps can be discontinuous as `alpha`
-approaches `.5` or `1`, even when both matrices have full rank.
+`alpha` exactly `0`, `.5` and `1` selects Chebyshev, Halley and Super-Halley,
+with their [fixed update formulas](native-rectangular-halley.md) and smaller
+workspace. This is a deliberate choice of method: the general pseudoinverse
+correction does not reduce to the fixed Halley or Super-Halley formula, so
+rectangular steps can jump as `alpha` approaches `.5` or `1`, even when both
+matrices have full rank.
 
 For example, at \(x=0\), take
 \(F(x)=(1+x,1+x^2/2)\). Then \(J=(1,0)^T\), \(A=(0,1)^T\), and the
 general formula takes \(\Delta x=-1\). Exactly `.5` selects Halley and takes
-\(-2/5\); exactly `1` selects Super-Halley and takes \(-1/2\). Do not treat
-`alpha` as a continuous interpolation across these method selectors.
-The `alpha=0` general formula does agree with Chebyshev by linearity.
+\(-2/5\); exactly `1` selects Super-Halley and takes \(-1/2\). So do not treat
+`alpha` as interpolating continuously across these values. At `alpha=0` the
+general formula does agree with Chebyshev, by linearity.
 
 ## Diagnostics And Storage
 
-The existing `'correction'` linear stage now covers rectangular multiplication
-\(Av\) and its Jacobian solve. `linear_rank` always describes the latest solve,
-so a successful correction reports the Jacobian rank, which may differ from the
-secondary rank. A contraction failure before that solve can retain the secondary
-rank. `linear_status` is reset before each phase and then retains its backend
-status. Existing callback errors, finite checks, accepted-state retention,
-iteration counts and copied history rules apply unchanged.
+The `'correction'` linear stage covers the product \(Av\) and its Jacobian
+solve, for rectangular systems too. `linear_rank` always describes the latest
+solve, so a successful correction reports the Jacobian's rank, which can differ
+from the secondary rank; a contraction failure before that solve leaves the
+secondary rank. `linear_status` is reset at the start of each phase and then
+keeps the LAPACK status. Callback errors, finiteness checks, the kept accepted
+state, iteration counts and copied history work as for the other higher-order
+methods.
 
-The general rectangular path uses three solves with the same plan, scratch and
-\(n\) pivots. It adds one \(mn\)-double directional matrix to fixed rectangular
-Halley workspace, keeping \(A\) alive while solving with the secondary matrix.
-With \(w\) backend scratch and \(d\) the largest numerical derivative scratch,
-total native storage is \(5n+3m+3mn+mn^2+w+d\) doubles and \(n\) C-int pivots,
-plus explicit derivative-plan steps. History has its separate checked byte budget.
-There is no per-step native workspace allocation, new callback ABI or result schema.
-SciPy and NumPy remain package dependencies.
+The general rectangular path makes three solves with the same plan, scratch and
+\(n\) pivots. It adds an \(mn\)-double directional matrix to the fixed
+rectangular Halley workspace, to keep \(A\) while solving with the secondary
+matrix. With \(w\) the LAPACK scratch and \(d\) the largest numerical
+derivative scratch, native storage is \(5n+3m+3mn+mn^2+w+d\) doubles and \(n\)
+C-int pivots, plus the plans' explicit steps. History has its own checked byte
+budget, and nothing is allocated per step.

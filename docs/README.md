@@ -24,15 +24,15 @@ assert answer.success
 assert abs(answer.root - 2.**.5) < 1e-10
 ```
 
-Pass an analytic derivative or use `None` for native finite differences. Vector
-methods also accept tuples and NumPy outputs at the Python boundary. Native
-callbacks keep the numerical loop outside the GIL; ordinary Python callbacks
-acquire it. NumPy and SciPy remain dependencies.
+Pass an analytic derivative, or `None` for a native finite difference. Vector
+callbacks may return tuples, lists or NumPy arrays. With native callbacks the
+whole numerical loop runs without the GIL; Python callbacks take it for each
+call. NumPy and SciPy are required.
 
-Version 2.0 introduces breaking changes. The [Quick Start](quick-start.md)
-includes source-install instructions. Read
-[Stopping And Results](stopping.md) to distinguish a residual root, a narrow
-scalar bracket, and a stationary point with nonzero residual.
+Version 2.0 is not backward compatible with 1.x; the
+[migration guides](scalar-native-migration.md) map the old API to the new one.
+[Stopping And Results](stopping.md) explains how to tell a residual root from a
+narrow scalar bracket or a stationary point with a nonzero residual.
 
 ## Explore The Manual
 

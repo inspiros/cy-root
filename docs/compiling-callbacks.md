@@ -1,10 +1,10 @@
-# Compile Python-Syntax Callbacks With Cython
+# Compile Python Callbacks With Cython
 
-Yes: users can write typed numerical functions in a `.py` file, compile them
-with Cython's **pure Python mode**, and supply native callbacks to cy-root.
-The [complete working example](../examples/pure_python_callback.md) includes the
-source and build command. It uses existing callback interfaces; no package JIT
-or new runtime dependency is required.
+You can write typed numerical functions in an ordinary `.py` file, compile them
+with Cython's **pure Python mode**, and pass them to CyRoot as native
+callbacks. The [complete working example](../examples/pure_python_callback.md)
+includes the source and the build command. It uses the standard callback
+interfaces and needs no JIT or extra runtime dependency.
 
 The numerical part looks like Python with explicit C types:
 
@@ -18,9 +18,10 @@ def residual(x: cython.double) -> cython.double:
     return x*x - 2.0
 ```
 
-Cython generates both a Python-callable wrapper and a C entry point. The example
-adds a small native bridge from that C entry point to cy-root's status/output
-callback signature, then exports `callback()` and `derivative_callback()`:
+Cython generates both a Python-callable wrapper and a C entry point. The
+example adds a small native bridge from that C entry point to CyRoot's
+status-and-output callback signature, and exports `callback()` and
+`derivative_callback()`:
 
 ```python
 from cyroot.native import Newton
@@ -30,49 +31,49 @@ answer = Newton(example.callback(), example.derivative_callback(), 1.5).run()
 assert answer.success
 ```
 
-Passing `example.residual` directly is also valid as a Python callback, but
-re-enters Python's call machinery and requires the GIL. The descriptor from
-`example.callback()` selects the native C entry point. `nogil` permits native
-calls without the GIL; the solver releases it around numerical execution.
-The stateless example pins its function wrappers as owners and has null context
-pointers. Parameterized functions need a pinned native context owner.
+Passing `example.residual` itself also works, but as a Python callback: every
+call goes through Python's call machinery and needs the GIL. The descriptor
+returned by `example.callback()` points at the native C entry point instead.
+`nogil` allows calls without the GIL, and the solver releases it around the
+numerical work. The example functions have no state, so their contexts are null
+and their function wrappers serve as owners; functions with parameters need a
+native context and an owner that keeps it alive.
 
 ## How This Differs From Numba
 
-The recommended Cython route is ahead-of-time: Cython translates the source into
-C/C++, and a compiler builds an importable extension. Type annotations identify
-C arithmetic. A `.py` file alone, imported as ordinary Python, does not become
-native code. The example's `cython.cimports` also requires compilation before
-import. Neither a `.py` nor a `.pyx` suffix alone determines GIL behavior.
+The recommended Cython route is ahead of time: Cython translates the source to
+C or C++, and a compiler builds an importable extension. Type annotations mark
+the C arithmetic. Imported as ordinary Python, the same `.py` file does not
+become native code, and the example's `cython.cimports` must be compiled before
+it can be imported at all. Neither the `.py` nor the `.pyx` suffix decides
+whether the GIL is needed.
 
-Cython also supplies runtime compilation facilities such as `cython.inline`
-and `@cython.compile`. These can compile suitable source/specializations, but
-require a build toolchain and have source, typing and Python-state constraints.
-They produce Python-callable functions; they do not automatically export
-cy-root's callback ABI or establish a no-GIL contract. They are therefore not
-a drop-in `numba.njit` equivalent for our fully native solver path. A runtime
-helper could eventually automate compilation and bridge generation for a
-restricted typed subset, but this package does not currently expose one.
+Cython also has runtime compilation, such as `cython.inline` and
+`@cython.compile`. These need a build toolchain, come with constraints on the
+source, typing and Python state, and produce Python-callable functions. They do
+not export CyRoot's callback ABI or guarantee GIL-free execution, so they are
+not a drop-in equivalent of `numba.njit` for a fully native solve. CyRoot has
+no runtime helper that automates this.
 
 ## Native Restrictions
 
-To stay outside the GIL, the body must use native types and operations. Arbitrary
-Python objects, Python-level NumPy calls, dynamic Python closures and most Python
-library calls require it. Native C math imports can replace many scalar `math`
-operations; vector functions can write into the existing callback's output span
-using typed pointers. Numerical derivatives can then sample the native residual
-without returning to Python.
+To run without the GIL, the body must use native types and operations only.
+Python objects, Python-level NumPy calls, dynamic closures and most Python
+library calls need the GIL. C math functions can replace many scalar `math`
+calls, and vector functions can write directly into the callback's output span
+through typed pointers. Numerical derivatives can then sample the native
+residual without returning to Python.
 
-`exceptval(check=False)` is suitable only when exceptions cannot escape.
-A fallible bridge should validate its own conditions and return a nonzero status,
-which cy-root reports through `NativeCallbackError`. Shared mutable native
-context must support the intended concurrency. Compilation does not prove
-thread safety, accuracy or speed.
+`exceptval(check=False)` is safe only when no exception can escape. A bridge
+that can fail should check its own conditions and return a nonzero status,
+which CyRoot reports as `NativeCallbackError`. Shared mutable native context must
+support the concurrency you intend. Compiling a function does not make it
+thread-safe, accurate or fast.
 
-For raw scalar, rectangular vector and Hessian interfaces, see the existing
+For the raw scalar, rectangular vector and Hessian interfaces, see the
 [native core guide](native-core.md), [rectangular callbacks](native-rectangular-callbacks.md)
-and [tensor callbacks](native-rectangular-tensors.md). The pure-Python example
-needs no NumPy array or NumPy C headers.
+and [tensor callbacks](native-rectangular-tensors.md). The pure Python example
+needs neither NumPy arrays nor NumPy C headers.
 
 ## Vector Functions And NumPy
 
@@ -81,11 +82,11 @@ includes a compiled vector residual, analytic Jacobian and native numerical
 Jacobian solve. It accepts two variables and writes three residuals directly
 into solver-owned output storage. No ndarray is created per sample.
 
-Compiling an existing NumPy function does not generally remove its Python calls.
-For the native path, translate elementwise expressions into typed operations or
-loops, use C math functions, and call native BLAS/LAPACK for applicable matrix
-operations. NumPy arrays remain useful at setup/export boundaries. Typed
-memoryviews can also be acquired once at a boundary and accessed without the GIL;
-creating a Python view on each callback invocation is unnecessary with our raw
-pointer interface. Arbitrary NumPy/SciPy routines still require their own native
-implementation or a Python callback bridge.
+Compiling an existing NumPy function generally does not remove its Python
+calls. For the native path, rewrite elementwise expressions as typed operations
+or loops, use C math functions, and call native BLAS or LAPACK for matrix
+operations. NumPy arrays remain useful for setup and for the results. Typed
+memoryviews can be acquired once, outside the callback, and then used without
+the GIL; with CyRoot's raw pointer interface there is no need to create a view
+on every call. Other NumPy or SciPy routines need a native implementation of
+their own, or a Python callback.

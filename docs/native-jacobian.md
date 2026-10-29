@@ -1,10 +1,10 @@
 # Native Finite-Difference Jacobians
 
-`cyroot.native.JacobianPlan` supplies numerical Jacobians to native square vector
-Newton. It evaluates the existing residual callback at perturbed points using
+`cyroot.native.JacobianPlan` supplies numerical Jacobians to the square vector
+solvers. It evaluates the residual callback at perturbed points, using
 reusable native scratch storage. With a compiled residual, stencil generation,
-sampling, differentiation and the Newton loop run without acquiring the GIL.
-Ordinary Python residuals use the existing Python bridge.
+sampling, differencing and the Newton loop all run without the GIL; Python
+residuals go through the usual Python bridge.
 
 ```python
 from cyroot.native import JacobianPlan, VectorNewton
@@ -21,27 +21,27 @@ assert abs(result.root[0] - 1.) < 1e-8
 assert abs(result.root[1] - 2.) < 1e-8
 ```
 
-`VectorNewton(function, None, x0)` creates a default central plan. An analytic
-Jacobian callback continues to select the analytic path. A plan is immutable
-configuration: it holds dimension, scheme and optional copied steps. It does
-not hold a callback or mutable sampling workspace. Independent solvers can
-share a plan, including concurrent solves with separate callback adapters and
-contexts. The square plan supplies solver derivatives; the rectangular plan below also
-provides standalone Python evaluation.
+`VectorNewton(function, None, x0)` creates a default central plan, and an
+analytic Jacobian callback takes the analytic path instead. A plan is immutable
+configuration: the dimension, the scheme and, optionally, copied steps. It holds
+no callback or mutable sampling workspace, so independent solvers can share it,
+also concurrently with separate callback adapters and contexts. The square plan
+only serves solvers; the rectangular plan below can also be evaluated directly
+from Python.
 
 ## Schemes And Steps
 
 `JacobianPlan(dimension, scheme='central', step=None,
 workspace_bytes=64*1024*1024)` accepts the scheme strings `'forward'`,
-`'backward'` and `'central'`. Dimension must be a positive C `int` and match
-the square residual/solver. Integer scheme codes are not accepted.
+`'backward'` and `'central'`; integer scheme codes are not accepted. The
+dimension must be a positive C `int` matching the square residual and solver.
 
-Explicit `step` is a finite nonzero signed scalar or a length-dimension vector
-of finite nonzero signed values. A scalar is copied to every axis. Step vectors
-accept sized indexable sequences or native double buffers, including read-only,
-negative-stride, zero-stride and unaligned inputs. The plan copies their logical
-values; later input mutation cannot change it. Negative steps reverse sampling
-direction. `step` is an absolute displacement, without additional scaling.
+An explicit `step` is a finite, nonzero number, used for every axis, or a
+vector of such numbers, one per axis. Step vectors can be sized sequences or
+buffers, including read-only, negative-stride, zero-stride and unaligned ones;
+the plan copies their values, so later changes to the input do not affect it.
+Steps are absolute displacements, not scaled further, and a negative step
+reverses the sampling direction.
 
 With `step=None`, the requested displacement at each new point is
 
@@ -53,95 +53,95 @@ h_j = \eta\max(1, |x_j|),\qquad
 \end{cases}
 \]
 
-where \(\epsilon\) is binary64 machine epsilon. These are initial scale-aware
-choices, not an adaptive accuracy guarantee. Poor scaling, nonsmooth functions,
-noise or cancellation can require explicit steps or an analytic Jacobian.
+where \(\epsilon\) is the binary64 machine epsilon. These steps scale with the
+point but do not adapt to the function; poor scaling, nonsmooth functions,
+noise or cancellation may call for explicit steps or an analytic Jacobian.
 
-Forward and backward schemes use one residual sample per axis plus the cached
-base residual, with first-order truncation error for smooth functions. Central
-uses two samples per axis plus the cached base residual, with second-order
-truncation error. The engine divides by actual representable displacements.
-For central differences, rounded offsets \(a=x_j^+-x_j\) and
-\(b=x_j^--x_j\) can have unequal magnitudes. It uses weighted secants
+Forward and backward schemes take one residual sample per axis plus the cached
+base residual, with first-order truncation error for smooth functions. The
+central scheme takes two samples per axis plus the base, with second-order
+truncation error. The engine divides by the actual representable
+displacements. For central differences, the rounded offsets \(a=x_j^+-x_j\)
+and \(b=x_j^--x_j\) can differ in magnitude, so it uses weighted secants
 
 \[
 \frac{b}{b-a}\frac{F(x^+)-F(x)}{a}
 +\frac{a}{a-b}\frac{F(x^-)-F(x)}{b}.
 \]
 
-Weights are computed from scaled offsets to avoid overflowing their difference.
-This preserves quadratic consistency when rounding makes the stencil asymmetric.
+The weights are computed from scaled offsets so that their difference cannot
+overflow. The formula stays exact for quadratics when rounding makes the
+stencil asymmetric.
 
 ## Counts, Caches And Failures
 
-`f_calls` remains `(residual_calls, jacobian_attempts)`. Residual calls include
-base evaluations, Newton trial evaluations and every stencil sample attempt,
-including callbacks that fail. A finite-difference Jacobian adds one Jacobian
-attempt. Sampling never adds solver iterations. Each uncached forward/backward
-Jacobian costs `n` residual samples; central costs `2*n`. The current base
-residual is reused, so it is not evaluated again for each plan.
+`f_calls` is `(residual_calls, jacobian_attempts)`. Residual calls include
+base and trial evaluations and every stencil sample, failed ones too; each
+numerical Jacobian adds one Jacobian attempt, and sampling adds no iterations.
+A forward or backward Jacobian costs `n` residual samples and a central one
+`2*n`, reusing the current residual as the base.
 
-`f_x0` can supply the initial base residual. `jac_x0` skips the initial Jacobian
-approximation. At an initial root, or after convergence/stagnation/budget at a
-new point, unused Jacobian sampling is skipped. The ordinary Newton result and
-history rules apply: an unevaluated Jacobian contains NaNs.
+`f_x0` can supply the initial base residual, and `jac_x0` skips the initial
+approximation. Nothing is sampled when the starting point is a root, or when a
+new point ends the solve. As for any Newton result or history, a Jacobian that
+was not evaluated contains NaNs.
 
-All axes are validated before sampling. A requested step that rounds back to
-the original coordinate produces unsuccessful `breakdown` with no sample
-calls. Nonfinite points, displacements, samples or derivative arithmetic produce
-`nonfinite`. There is no `nextafter` repair, automatic one-sided fallback,
-step-size retry or regularization. Overflow of a subtraction or division is a
-numerical failure even if a differently arranged formula could remain finite.
+All axes are validated before sampling. A step that rounds back to the original
+coordinate gives an unsuccessful `breakdown` with no sample calls, and
+nonfinite points, displacements, samples or arithmetic give `nonfinite`. Steps
+are never nudged, swapped for a one-sided scheme, retried or regularized.
+Overflow in a subtraction or division is a numerical failure, even if another
+arrangement might stay finite.
 
-A failed sample retains the accepted Newton point/residual and clears the
-entire Jacobian, including columns already computed. Python exceptions retain
-their original identity and callback traceback. Native nonzero codes raise
-`NativeCallbackError` with the original code and `callback_stage='jacobian'`;
-the solver exposes that stage too. This identifies where the residual was used.
-Failed sample attempts are counted and adapter reservations remain held through
-exception transfer. Native callbacks must obey the same no-throw, borrowed
-input and context lifetime rules as [analytic vector callbacks](native-vector.md).
+A failed sample keeps the accepted point and residual and clears the whole
+Jacobian, including columns already computed. Python exceptions propagate as
+the original instance with the callback's traceback. Nonzero native codes
+raise `NativeCallbackError` with the original code and
+`callback_stage='jacobian'`, which the solver also exposes, showing that the
+residual failed while building the Jacobian. Failed samples are counted, and
+adapters stay reserved through exception transfer. Native callbacks follow the
+same no-throw, borrowed-input and context-lifetime rules as
+[analytic vector callbacks](native-vector.md).
 
 ## Storage And Limits
 
-Plan properties are `dimension`, `scheme`, `step` (None or a copied tuple),
-`storage_bytes` and `workspace_bytes`. Automatic plans store no step vector;
-explicit plans store `8*n` step bytes. The constructor's `workspace_bytes`
-argument limits this persistent step storage. The property of the same name
-reports the separate scratch requirement, `5*n*8` bytes.
+The plan's properties are `dimension`, `scheme`, `step` (`None` or a copied
+tuple), `storage_bytes` and `workspace_bytes`. Automatic plans store no steps,
+and explicit plans store `8*n` bytes of them; the constructor's
+`workspace_bytes` argument limits that storage, while the property of the same
+name reports the separate scratch requirement of `5*n*8` bytes.
 
-Each planned Newton solve adds five vectors for perturbations, two samples and
-prevalidated stencil coordinates. Its workspace budget includes
-`8*(10*n + 2*n*n) + sizeof(int)*n + plan.storage_bytes`, including plan storage
-even when that plan is shared. History has its existing separate byte budget.
-These limits cover cy-root storage; LAPACK/provider internals manage their own
-memory. Dimension/products are checked before native narrowing or allocation.
+A Newton solve with a plan adds five vectors, for the perturbations, two
+samples and the prevalidated stencil coordinates. Its workspace budget is
+`8*(10*n + 2*n*n) + sizeof(int)*n + plan.storage_bytes`, counting the plan's
+storage even when the plan is shared, and history has its own byte budget.
+These limits cover CyRoot's storage; LAPACK manages its own memory. Dimensions
+and their products are checked before any narrowing conversion or allocation.
 
-`derivatives.pxd` exposes `JacobianPlan.compute` for trusted compiled consumers.
-It accepts disjoint caller-owned buffers and returns `DiffStatus`, writes a
-column-major Jacobian, updates an attempted residual-call counter, and preserves
-native callback status separately. Its pointer/span/no-throw preconditions are
-documented in the declaration. It allocates no storage and performs no Python
+`derivatives.pxd` exposes the low-level `JacobianPlan.compute` for compiled
+code. It takes non-overlapping caller-owned buffers, returns a `DiffStatus`,
+writes a column-major Jacobian, updates a residual-call counter and reports the
+native callback status separately. Its pointer, span and no-throw requirements
+are documented in the declaration. It allocates nothing and does no Python
 work. See the [compiled example](../examples/native_jacobian.md).
 
-This square plan shares its numerical stencil with the rectangular plan below.
-[Native Traub–Steffensen](native-steffensen.md) reuses its forward stencil with
-signed residual components as steps, recomputed at each accepted point.
-Standalone [native Hessian plans](native-hessian.md) provide second derivatives
-separately. [Higher mixed partials](native-higher-mixed.md) and
-[adaptive error estimates](numerical-derivatives.md) are also available. Sampling
-is serial within a plan evaluation. NumPy and SciPy remain package dependencies.
+This square plan shares its stencil with the rectangular plan below.
+[Traub–Steffensen](native-steffensen.md) reuses the forward stencil, with the
+residual components as steps. [Hessian plans](native-hessian.md) provide
+second derivatives, and [higher mixed partials](native-higher-mixed.md) and
+[adaptive error estimates](numerical-derivatives.md) are also available.
+Samples within one evaluation are taken one after another.
 
 ## Rectangular Jacobians
 
 A residual with `n` inputs and `m` outputs has a Jacobian of shape `(m, n)`.
 `RectangularJacobianPlan(n, m, scheme='central', step=None, *,
-memory_bytes=64*1024*1024)` uses the same stencils and rounded-coordinate rules.
-Its `evaluate(function, x, f_x=None)` method accepts an ordinary Python function;
-no callback wrapper is required. A matching residual `RectangularCallback` also
-works, including compiled functions. The explicit dimensions let native callers
-allocate correctly sized buffers. Vector Newton infers these dimensions from
-the initial point and base residual when no explicit plan is supplied.
+memory_bytes=64*1024*1024)` uses the same stencils and rounding rules. Its
+`evaluate(function, x, f_x=None)` method accepts a plain Python function, or a
+matching residual `RectangularCallback`, compiled or not. The explicit
+dimensions let native callers allocate buffers of the right size. Without an
+explicit plan, Vector Newton infers the dimensions from the starting point and
+residual.
 
 ```python
 from cyroot.native import RectangularJacobianPlan
@@ -158,26 +158,28 @@ assert all(len(row) == 2 for row in estimate.jacobian)
 
 `JacobianEstimate` contains copied `jacobian` rows, integer `f_calls`, `status`
 (`ok`, `nonfinite`, `breakdown` or `callback_failure`) and `callback_code`.
-Forward/backward schemes take `n` samples; central takes `2*n`. An uncached
-base adds one call; `f_x` skips it. Sample failures clear the whole Jacobian.
-Python exceptions keep their identity; native nonzero status raises
-`NativeCallbackError` with the estimate and `function` or `jacobian` stage.
-The adapter stays reserved through conversion, sampling and exception transfer.
+Forward and backward schemes take `n` samples and the central scheme `2*n`,
+plus one call for the base unless `f_x` is given. A failed sample clears the
+whole Jacobian. Python exceptions propagate as the original instance; a
+nonzero native status raises `NativeCallbackError` with the estimate and the
+stage `function` or `jacobian`. The adapter stays reserved through conversion,
+sampling and exception transfer.
 
 The read-only properties are `input_dimension`, `output_dimension`, `scheme`,
-`step`, `storage_bytes`, `workspace_bytes` and `memory_bytes`. Scratch needs
-`3*n+2*m` doubles. The total memory budget includes copied input/base, output,
-scratch and persistent steps: `(4*n+3*m+n*m+step_count)*sizeof(double)`, where
-`step_count` is zero for automatic steps and `n` otherwise. Python objects and
-callback-owned allocations are excluded.
+`step`, `storage_bytes`, `workspace_bytes` and `memory_bytes`. The scratch
+takes `3*n+2*m` doubles. The memory budget covers the copied input and base,
+the output, the scratch and the stored steps:
+`(4*n+3*m+n*m+step_count)*sizeof(double)`, where `step_count` is zero for
+automatic steps and `n` otherwise. Python objects and allocations made by
+callbacks are not counted.
 
-The compiled `compute` interface in `derivatives.pxd` accepts disjoint caller-owned
-`x[n]`, base `[m]`, output `[m*n]` and scratch `[3*n+2*m]` buffers plus the
-rectangular native function/context and counters. Output is column-major at
-`row + column*m`. Calls perform no cy-root allocation or Python work; Python
-callbacks explicitly enter their bridge. The caller reserves the callback and
-owns pointer lifetimes. Existing square plans and solvers keep their interfaces.
-`VectorNewton` and `generalized_newton` now accept this plan. Their `J=None`
-setup infers dimensions and creates a matching central plan automatically;
-ordinary Python callers need no explicit dimensions. Linear least-squares
-stationarity alone will not count as root convergence.
+The compiled `compute` interface in `derivatives.pxd` takes non-overlapping,
+caller-owned `x[n]`, base `[m]`, output `[m*n]` and scratch `[3*n+2*m]`
+buffers, the rectangular native function and context, and the counters. The
+output is column-major, at `row + column*m`. A call allocates nothing and does
+no Python work, except that Python callbacks enter their own bridge. The caller
+reserves the callback and keeps the pointers valid. `VectorNewton` and
+`generalized_newton` accept this plan, and with `J=None` they infer the
+dimensions and create a central plan, so Python callers need no explicit
+dimensions. Least-squares stationarity alone never counts as root
+convergence.

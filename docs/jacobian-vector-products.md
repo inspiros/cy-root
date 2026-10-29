@@ -5,8 +5,8 @@ A Jacobian need not be stored to apply it to a direction. For a residual
 \(v\in\mathbb{R}^n\) to \(J(x)v\in\mathbb{R}^m\). Its transpose product
 maps \(w\in\mathbb{R}^m\) to \(J(x)^\mathsf{T}w\in\mathbb{R}^n\).
 [Newton–Krylov](native-newton-krylov.md) uses these operations instead of a dense
-Jacobian. An analytic sparse or structured implementation can avoid both its
-storage and much of its computational cost.
+Jacobian. A product that exploits sparsity or structure can avoid both the
+Jacobian's storage and much of its computational cost.
 
 ## Supplied Products
 
@@ -19,8 +19,8 @@ callback.evaluate(point, direction, *, workspace_bytes=64*1024*1024)
 Both adapters are exported from `cyroot` and `cyroot.native`.
 `input_dimension=n` and `output_dimension=m` describe the original residual in
 both classes, even though the transpose maps a direction of length `m` to a
-result of length `n`. Ordinary Python callbacks receive copied tuples and may
-return numeric sequences or arrays. Adapter evaluation returns a copied tuple.
+result of length `n`. Python callbacks receive copied tuples and may return
+numeric sequences or arrays; `evaluate` returns a tuple.
 
 ```python
 from cyroot import JacobianVectorCallback, JacobianTransposeCallback
@@ -42,11 +42,12 @@ assert sum(a*b for a, b in zip(jvp.evaluate(x, v), w)) == sum(
 )
 ```
 
-Dimensions must be positive and fit native capacities. Inputs must be finite.
-Real numeric buffers are converted at the boundary; complex and boolean buffers
-are rejected. Output shape is checked. A standalone adapter preserves nonfinite
-callback output for its consumer to interpret; a solver treats it as failure.
-Reentrant use of an active adapter is rejected.
+Dimensions must be positive and fit native capacities, and inputs must be
+finite. Real numeric buffers are converted at the boundary; complex and boolean
+buffers are rejected. The output shape is checked. Called directly, an adapter
+returns nonfinite callback output as it is, for the caller to interpret; a
+solver treats it as a failure. Reentrant use of an active adapter is
+rejected.
 
 ## Numerical Directional Products
 
@@ -56,11 +57,11 @@ JacobianVectorPlan(n, m, scheme='central', step=None, *,
 plan.evaluate(function, x, direction, f_x=None)
 ```
 
-The plan is immutable and holds no residual callback or mutable sampling
-workspace. Its standalone estimate has `product`, `f_calls`, `status`, and
-`callback_code`. Status is `ok`, `nonfinite`, `breakdown`, or `callback_failure`.
-Python callback exceptions propagate; a native nonzero status raises
-`NativeCallbackError` with the estimate attached.
+The plan is immutable and holds neither a residual callback nor any mutable
+sampling workspace. `evaluate` returns an estimate with `product`, `f_calls`,
+`status` and `callback_code`, where the status is `ok`, `nonfinite`,
+`breakdown` or `callback_failure`. Python callback exceptions propagate; a
+nonzero native status raises `NativeCallbackError` with the estimate attached.
 
 ```python
 from cyroot import JacobianVectorPlan
@@ -75,22 +76,25 @@ zero = plan.evaluate(f, (1., 2.), (0., 0.))
 assert zero.product == (0., 0., 0.) and zero.f_calls == 0
 ```
 
-A forward/backward product needs one shifted residual; central needs two.
-An uncached base adds one call. Zero directions require no samples. `step` is a
-positive absolute displacement along \(v/\|v\|_\infty\); automatic steps scale
-with the point magnitude and binary64 precision. Rounded sample displacements
-are used in the weights. Lost active coordinates or collapsed geometry cause
-`breakdown` before sampling; numerical failures poison the product with NaNs.
+A forward or backward product needs one shifted residual and a central
+product two, plus one call for the base residual unless `f_x` is given. A zero
+direction needs no samples. `step` is a positive absolute displacement along
+\(v/\|v\|_\infty\); automatic steps scale with the point's magnitude and the
+binary64 precision. The weights use the actual rounded displacements. If a
+coordinate of the direction is lost to rounding or the sample geometry
+collapses, the result is `breakdown` before any sampling; numerical failures
+fill the product with NaN.
 
-Scratch uses `2*n+3*m` doubles; standalone native evaluation uses `4*n+5*m`
-doubles. `workspace_bytes` reports scratch and `memory_bytes` the standalone
-allocation budget, excluding Python objects and callback-owned storage.
+Scratch takes `2*n+3*m` doubles, and a standalone native evaluation `4*n+5*m`.
+`workspace_bytes` reports the scratch and `memory_bytes` the standalone
+allocation budget, neither counting Python objects or storage owned by
+callbacks.
 
-There is no separate public numerical transpose plan. In rectangular
-Newton–Krylov, selecting a numerical JVP plan creates a matching internal
-transpose operation from the same coordinate columns. This costs `O(n)` residual
-samples per product, unlike a standalone directional JVP. The distinction keeps
-LSQR's operator and transpose consistent; see the solver guide.
+There is no public numerical transpose plan. In rectangular Newton–Krylov, a
+numerical JVP plan comes with a matching internal transpose built from the same
+coordinate columns. Each product then costs `O(n)` residual samples, unlike a
+directional JVP, but keeps LSQR's operator and its transpose consistent; see
+[Newton–Krylov](native-newton-krylov.md).
 
 ## Cython And C/C++ Producers
 
@@ -104,18 +108,20 @@ cdef int product(const double* x, const double* direction,
                  size_t n, size_t m, double* out, void* context) noexcept nogil
 ```
 
-The forward callback reads `x[n]`, `direction[n]`, and writes all `out[m]`.
-The transpose callback reads `x[n]`, `direction[m]`, and writes all `out[n]`.
-Inputs are borrowed, const, and valid only during the call. Return zero only
-after writing every output; return a nonzero status for failure. No exception
-may cross the ABI. Acquire the GIL explicitly if accessing Python.
+The forward callback reads `x[n]` and `direction[n]` and writes all of
+`out[m]`; the transpose callback reads `x[n]` and `direction[m]` and writes all
+of `out[n]`. The inputs are borrowed, read-only and valid only during the call.
+Return zero only after writing every output, and a nonzero status on failure.
+No exception may cross the ABI; acquire the GIL explicitly before touching
+Python objects.
 
-The C headers `jvp_callbacks.h` and `vjp_callbacks.h` define version-1 descriptors.
-Capsule names are `cyroot.jacobian_vector_callback.v1` and
-`cyroot.jacobian_transpose_callback.v1`; use the corresponding adapter's
-`from_capsule(capsule, keepalive=None)`. Cython factories take
-`(function, n, m, context, keepalive=None)` and pin that owner. Raw contexts
-remain producer-owned. Separate adapters sharing mutable context require their
-own synchronization. Callback outputs are poisoned before use, and a nonzero
-status poisons the whole output. The [native ownership rules](native-core.md)
-also apply to direct `evaluate_raw` callers.
+The C headers `jvp_callbacks.h` and `vjp_callbacks.h` define version-1
+descriptors, with capsule names `cyroot.jacobian_vector_callback.v1` and
+`cyroot.jacobian_transpose_callback.v1`; pass them to the matching adapter's
+`from_capsule(capsule, keepalive=None)`. The Cython factories take
+`(function, n, m, context, keepalive=None)` and keep that owner alive. Raw
+contexts stay owned by their producer, and separate adapters that share a
+mutable context need their own synchronization. Outputs are filled with NaN
+before each call, and a nonzero status makes the whole output NaN. The
+[native ownership rules](native-core.md) also apply to direct `evaluate_raw`
+callers.

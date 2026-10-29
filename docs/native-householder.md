@@ -1,10 +1,11 @@
 # Native Householder
 
-`cyroot.native.Householder` implements runtime-order scalar Householder with
-Python or compiled callbacks, resumable execution and copied history. Given
-derivatives through order \(d\), the method has local order \(d+1\) under the
-usual smoothness and simple-root assumptions. It uses a native reciprocal-series
-recurrence, without a symbolic formula generator or a cutoff at order ten.
+`cyroot.native.Householder` is the scalar Householder method for any
+derivative order chosen at run time, with Python or compiled callbacks,
+resumable execution and copied history. Given derivatives up to order \(d\),
+it converges with local order \(d+1\) near a smooth simple root. It uses a
+native reciprocal-series recurrence, so there is no symbolic formula generator
+and no upper limit on the order.
 
 ```python
 from cyroot.native import Householder
@@ -25,95 +26,99 @@ The constructor is
 step=None, etol=1e-10, ertol=4*eps, ptol=1e-12, prtol=4*eps, max_iter=200,
 history=0, history_every=1, history_bytes=8*1024*1024,
 workspace_bytes=8*1024*1024, max_nodes=65)`.
-`householder(function, derivatives, x0, **options)` constructs and runs one solve.
-Native callback ownership follows the [native core contract](native-core.md).
+`householder(function, derivatives, x0, **options)` constructs a solver and
+runs it to completion. Callback ownership follows the
+[native core contract](native-core.md).
 
 ## Derivative Providers And Caches
 
-`derivatives` is an exact list or tuple of positive length, in increasing
-order. Each entry accepts a Python function, a native `ScalarCallback`, `None`
-for numerical approximation, or a `ScalarFiniteDifferencePlan` of the matching
-order. Specialized `ScalarDerivativePlan` and `ScalarSecondDerivativePlan` are
-accepted in roles one and two. Native initialization and order checks apply
-also to callable plan subclasses and already converged initial points.
+`derivatives` is a non-empty list or tuple, starting with the first
+derivative. Each entry can be a Python function, a native `ScalarCallback`,
+`None` for a numerical approximation, or a `ScalarFiniteDifferencePlan` of the
+matching order; `ScalarDerivativePlan` and `ScalarSecondDerivativePlan` are
+also accepted for orders one and two. Order checks apply to plan subclasses
+too, and are made even when the starting point is already a root.
 
-`derivatives=None` requires a positive integer `order` and selects numerical
-plans for every role. With an explicit sequence, `order`, if supplied, must
-match its length. `step` sets the default numerical plans' step and is ignored
-when there are no default plans; explicit plans retain their own steps.
-The default is an automatic central stencil. See
-[runtime-order derivatives](native-higher-derivative.md) for rounded nodes,
-resource limits and accuracy limitations. No samples are shared between
-separate derivative roles except the cached base residual.
+`derivatives=None` requires a positive integer `order` and uses numerical plans
+for every order. With an explicit sequence, `order` is optional and must match
+its length. `step` sets the step of the default numerical plans; the native
+class ignores it when there are none, while the public `cyroot.householder`
+rejects it. Explicit plans keep their own steps. The default is an automatic
+central stencil; see [runtime-order derivatives](native-higher-derivative.md)
+for rounded nodes, resource limits and accuracy. Different derivative orders
+share no samples except the cached residual at the current point.
 
-`f_x0` caches the initial residual. `dfs_x0` has exactly one entry per derivative;
-`None` means unevaluated. Caches must describe the supplied initial point and
-functions. Cached values count as zero calls. All supplied values are converted
-during guarded setup; an initially converged residual skips unused derivative
-finite checks and preserves the supplied caches. Otherwise, derivatives are
-evaluated in increasing order. A zero first derivative is valid for the generic
-recurrence; a zero reciprocal-series denominator reports `breakdown`.
+`f_x0` caches the initial residual. `dfs_x0` has exactly one entry per
+derivative, with `None` for one that has not been evaluated. Cached values must
+belong to the starting point and functions, and count as zero calls. All
+supplied values are converted during setup. If the starting point is already a
+root, unused derivatives are not checked for finiteness and the supplied
+caches are kept. Otherwise derivatives are evaluated in increasing order. A
+zero first derivative is valid for the general recurrence; a zero
+reciprocal-series denominator reports `breakdown`.
 
 ## Native Execution And Budgets
 
 The [reciprocal recurrence](native-higher-derivative.md#householder-without-symbolic-formulas)
-costs \(O(d^2)\) arithmetic and \(O(d)\) workspace per step. Binary64 mantissas
-and checked 64-bit binary exponents prevent many intermediate overflows; they
-do not increase precision or guarantee stable high-order derivatives.
-Analytic orders have no formula-table limit. Numerical orders are constrained
-by `max_nodes`, scratch requirements and representable finite arithmetic.
-Increasing a resource budget does not ensure accuracy.
+costs \(O(d^2)\) arithmetic and \(O(d)\) workspace per step. Intermediate
+values are stored as binary64 mantissas with separately checked 64-bit binary
+exponents, which avoids many overflows but neither increases precision nor
+makes high-order derivatives stable. Analytic derivatives have no order limit.
+Numerical orders are limited by `max_nodes`, scratch memory and representable
+finite arithmetic; a larger budget does not make them more accurate.
 
-Setup pins all callback and plan owners, copies native dispatch descriptors,
-and allocates workspace and history once. `workspace_bytes` includes values,
-counters, roles, cache flags, recurrence and the largest numerical scratch.
-`history_bytes` separately includes metadata, all derivatives and all counters
-for every requested record. Limits are checked before native allocation. Python
-owners and exported Python result objects use additional memory.
+Setup keeps every callback and plan owner alive, copies the native dispatch
+descriptors, and allocates workspace and history once. `workspace_bytes` covers
+values, counters, roles, cache flags, the recurrence and the largest numerical
+scratch. `history_bytes` separately covers the metadata, all derivatives and
+all counters of every requested record. Both limits are checked before native
+allocation; Python owners and exported result objects use additional memory.
 
-The numerical loop creates no Python objects or memoryviews, performs no NumPy
-operations and makes no per-step allocation. Compiled `noexcept nogil`
-callbacks allow continuous native execution. Python callbacks reacquire the GIL
-for calls and scalar conversion; setup and result/history export also use it.
-Adapters stay reserved through conversion, execution, boxing and exception
-transfer. Separate adapters sharing a native context require synchronization
-by the context owner. See the [compiled example](../examples/native_householder.md).
+The numerical loop creates no Python objects or memoryviews, does no NumPy
+operations and allocates nothing per step. With compiled `noexcept nogil`
+callbacks, it runs entirely in native code. Python callbacks take the GIL for
+their calls and scalar conversion, as do setup and result and history export.
+Adapters stay reserved through conversion, execution, result conversion and
+exception transfer. Separate adapters that share a native context need
+synchronization by the context's owner. See the
+[compiled example](../examples/native_householder.md).
 
 ## Results, History And Failure State
 
-`step()` and `run()` share one total iteration budget. `max_iter=0` is unlimited.
-The [shared stopping rules](stopping.md) apply. A finite unchanged candidate is
-evaluated before deciding residual success or stagnation. No fallback, damping
-or symbolic recovery is attempted.
+`step()` and `run()` share one iteration budget; `max_iter=0` or `None` is
+unlimited. The [shared stopping rules](stopping.md) apply. A candidate equal to
+the current point is still evaluated before success or stagnation is decided.
+There is no fallback, damping or symbolic recovery.
 
-`result` is `NewtonMethodsReturnType`: `df_root` has \(d\) entries and `f_calls`
-has \(d+1\), residual first. Each derivative plan invocation counts one
-attempt in its role and adds every stencil residual attempt to the residual
-count. Failed attempts count. Finite accepted candidates clear derivatives;
-stopping and iteration limits are checked before evaluating more derivatives.
-Unavailable derivatives are NaN.
+`result` is a `NewtonMethodsReturnType`: `df_root` has \(d\) entries and
+`f_calls` has \(d+1\), residual first. Each plan evaluation counts as one
+attempt for its derivative order and adds every stencil sample to the residual
+count; failed attempts count too. Accepting a finite candidate clears the
+derivatives, and the stopping rules and iteration limit are checked before more
+derivatives are evaluated. Derivatives that are not available are NaN.
 
 `HouseholderStep` is immutable and contains `root`, `f_root`, `df_root`, `iters`,
 `f_calls`, `precision`, `error`, `termination_reason`, `callback_code`,
-`callback_stage` and `callback_order`. `history` returns copied immutable steps;
-`history_truncated` reports exhausted capacity. The initial, sampled and terminal
-states follow the [native history rules](native-core.md#step-inspect-resume).
+`callback_stage` and `callback_order`. `history` returns copied immutable
+steps, and `history_truncated` reports that the capacity ran out. Initial,
+sampled and terminal states follow the
+[native history rules](native-core.md#step-inspect-resume).
 
-A failed trial residual preserves the preceding finite point, derivatives and
-metrics, while updating attempt counts and diagnostics. Failure in derivative
-role \(k\) preserves earlier derivatives and clears roles \(k\) through \(d\).
-Native nonzero callback codes raise `NativeCallbackError`, with exact status,
-copied result, stage `'function'` or `'derivative'`, and `callback_order` zero
-for the residual or \(k\) for a derivative/stencil failure. Original Python
-exceptions retain identity and traceback. Delivered errors are not raised again
-by terminal `step()` or `run()` calls.
+A failed trial residual keeps the previous finite point, derivatives and
+metrics, and updates only the counts and diagnostics. A failure in derivative
+order \(k\) keeps the lower-order derivatives and clears orders \(k\) to \(d\).
+A nonzero native status raises `NativeCallbackError` with the exact status, a
+copied result, the stage `'function'` or `'derivative'`, and `callback_order`:
+zero for the residual, or \(k\) for a failure in derivative \(k\) or its
+stencil. Python exceptions propagate as the original instance, with its
+traceback. Once raised, an error is not raised again by later `step()` or
+`run()` calls on the finished solver.
 
-## Established Entry Point
+## Public Entry Point
 
-`cyroot.householder` and `cyroot.scalar_newton.householder` now forward to this
-native engine. Their existing `dfs`, `d` and `h` names map to `derivatives`,
-`order` and `step`. `h=None` now selects automatic numerical steps; a supplied
-`d` must match `dfs`. The obsolete `c_code` option, explicit reciprocal formulas,
-expression evaluator and symbolic factory have been removed. SymPy is no longer
-a package dependency. Use `cyroot.native.Householder` for stepping and history.
-Other established solvers still use their existing implementations.
+`cyroot.householder(f, dfs, x0, ...)` runs this engine. Its `dfs`, `d` and `h`
+arguments correspond to `derivatives`, `order` and `step`. `h=None` selects an
+automatic step, and a supplied `d` must match the length of `dfs`. The 1.x
+`c_code` option, explicit reciprocal formulas, expression evaluator and
+symbolic factory are gone, and SymPy is no longer a dependency. Use
+`cyroot.native.Householder` for stepping and history.
