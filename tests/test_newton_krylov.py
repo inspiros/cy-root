@@ -14,7 +14,7 @@ import weakref
 import numpy as np
 from numpy.testing import assert_allclose
 from scipy.sparse.linalg import gmres
-from cyroot import NewtonKrylov,JacobianVectorPlan,JacobianVectorCallback,as_root_snapshot,find_vector_root
+from cyroot import NewtonKrylov,JacobianVectorPlan,JacobianVectorCallback,JacobianTransposeCallback,as_root_snapshot,find_vector_root
 from cyroot.native import RectangularCallback,NativeCallbackError
 
 DISABLED=dict(etol=0.,ertol=0.,ptol=0.,prtol=0.)
@@ -174,8 +174,8 @@ class NewtonKrylovTests(unittest.TestCase):
             with self.subTest(options=options),self.assertRaises(ValueError):NewtonKrylov(f,(1.,),**options)
         for x in ((),[[1.]],'bad'):
             with self.assertRaises((ValueError,TypeError)):NewtonKrylov(f,x)
-        with self.assertRaises(ValueError):NewtonKrylov(RectangularCallback(lambda x:(1.,2.),1,2),(0.,))
-        with self.assertRaises(ValueError):NewtonKrylov(lambda x:(1.,2.),(0.,))
+        with self.assertRaises(ValueError):NewtonKrylov(RectangularCallback(lambda x:(1.,2.),2,2),(0.,))
+        with self.assertRaises(ValueError):NewtonKrylov(lambda x:(),(0.,))
         with self.assertRaises(ValueError):NewtonKrylov(f,(1.,),jvp=JacobianVectorPlan(2,2))
         with self.assertRaises(ValueError):NewtonKrylov(f,(1.,),jvp=JacobianVectorCallback(lambda x,v:v,2,2))
         empty=NewtonKrylov.__new__(NewtonKrylov)
@@ -253,3 +253,179 @@ class NativeNewtonKrylovTests(unittest.TestCase):
 
         status,_,_,_=self.consumer.linear_solve(np.eye(2),np.ones(2),2,10,1e-6,partial=True)
         self.assertEqual(status,3)
+
+
+    def test_rectangular_native_callbacks_counts_keepalive_failures_and_gil(self):
+        for wide in (False,True):
+            for numerical in (False,True):
+                with self.subTest(wide=wide,numerical=numerical):
+                    owner=self.consumer.RectangularOwner(wide=wide)
+                    reference=weakref.ref(owner)
+                    x0=(.1,.2,0.) if wide else (.1,.2)
+                    products={} if numerical else dict(jvp=owner.product(),vjp=owner.transpose())
+                    solver=NewtonKrylov(owner.residual(),x0,**products)
+                    result=solver.run();self.assertTrue(result.success,result)
+                    self.assertEqual(result.f_calls[0],owner.f_calls)
+                    if not numerical:
+                        self.assertEqual(result.f_calls[1],owner.jvp_calls)
+                        self.assertEqual(result.vjp_calls,owner.vjp_calls)
+                    self.assertEqual(owner.gil_held,0)
+                    del owner,products;gc.collect();self.assertIsNotNone(reference())
+                    del solver;gc.collect();self.assertIsNone(reference())
+            for options in ({'fail_vjp':0},{'partial_vjp':True}):
+                owner=self.consumer.RectangularOwner(wide=wide,**options)
+                solver=NewtonKrylov(owner.residual(),x0,jvp=owner.product(),vjp=owner.transpose())
+                if 'fail_vjp' in options:
+                    with self.assertRaises(NativeCallbackError) as caught:solver.run()
+                    self.assertEqual(caught.exception.native_status,43)
+                    self.assertEqual(solver.result.callback_stage,'jacobian_transpose_product')
+                else:self.assertEqual(solver.run().termination_reason,'nonfinite')
+                self.assertEqual(solver.result.root,x0)
+                self.assertEqual(owner.gil_held,0)
+                self.assertEqual(solver.run(),solver.result)
+
+    def test_direct_lsqr_matches_independent_least_squares_and_true_residuals(self):
+        rng=np.random.default_rng(913)
+        for m,n in ((5,3),(3,5),(4,4)):
+            for deficient in (False,True):
+                a=rng.normal(size=(m,n))
+                if deficient:a[:,-1]=a[:,0]*2
+                for consistent in (False,True):
+                    b=a@rng.normal(size=n) if consistent else rng.normal(size=m)
+                    with self.subTest(shape=(m,n),deficient=deficient,consistent=consistent):
+                        status,step,relative,stationarity,iterations=self.consumer.direct_lsqr(a,b,100,1e-10)
+                        self.assertEqual(status,0)
+                        expected=np.linalg.lstsq(a,b,rcond=None)[0]
+                        assert_allclose(step,expected,rtol=1e-8,atol=1e-9)
+                        r=b-a@step
+                        self.assertAlmostEqual(relative,np.linalg.norm(r)/np.linalg.norm(b),places=12)
+                        normal=np.linalg.norm(a.T@r)/np.linalg.norm(a.T@b)
+                        self.assertAlmostEqual(stationarity,normal,places=12)
+                        self.assertTrue(relative<=1e-10 or stationarity<=1e-10)
+                        self.assertGreater(iterations,0)
+        self.assertEqual(self.consumer.direct_lsqr([[1.,0.],[0.,1.],[1.,1.]],[1.,2.,3.],10,1e-8,partial=True)[0],3)
+
+
+class RectangularKrylovTests(unittest.TestCase):
+    def test_tall_wide_and_rank_deficient_steps_match_lstsq(self):
+        matrices=(np.array([[1.,2.],[3.,4.],[5.,-1.]]),
+                  np.array([[1.,2.,3.],[2.,-1.,1.]]),
+                  np.array([[1.,2.],[2.,4.],[3.,6.]]),
+                  np.array([[1.,2.,3.],[2.,4.,6.]]))
+        for a in matrices:
+            n=a.shape[1];b=a@np.arange(1.,n+1);x0=np.linspace(.2,.5,n)
+            expected=x0+np.linalg.lstsq(a,b-a@x0,rcond=None)[0]
+            for numerical in (False,True):
+                with self.subTest(shape=a.shape,rank=np.linalg.matrix_rank(a),numerical=numerical):
+                    f=lambda x:a@x-b
+                    products={} if numerical else dict(jvp=lambda x,v:a@v,vjp=lambda x,w:a.T@w)
+                    solver=NewtonKrylov(f,x0,linear_rtol=1e-9,etol=1e-8,history=4,**products)
+                    result=solver.run()
+                    self.assertTrue(result.success,result)
+                    assert_allclose(result.root,expected,rtol=2e-7,atol=2e-7)
+                    self.assertEqual((solver.dimension,solver.output_dimension),(n,a.shape[0]))
+                    self.assertEqual((solver.linear_solver,solver.restart),('lsqr',0))
+                    self.assertGreater(result.vjp_calls,0)
+                    self.assertEqual(result.f_root,tuple(f(result.root)))
+                    self.assertEqual(len(solver.history[-1].root),n)
+                    self.assertEqual(len(solver.history[-1].f_root),a.shape[0])
+                    self.assertEqual(solver.run(),solver.step())
+
+    def test_nonlinear_products_and_automatic_public_route(self):
+        f=lambda x:(x[0]*x[0]-2.,x[1]*x[1]-3.,x[0]*x[0]+x[1]*x[1]-5.)
+        j=lambda x,v:(2*x[0]*v[0],2*x[1]*v[1],2*x[0]*v[0]+2*x[1]*v[1])
+        t=lambda x,w:(2*x[0]*(w[0]+w[2]),2*x[1]*(w[1]+w[2]))
+        for products in ({'jvp':j,'vjp':t},{},{'jvp':JacobianVectorPlan(2,3)}):
+            with self.subTest(products=products):
+                solver=NewtonKrylov(f,(.1,.2),history=20,**products)
+                first=solver.step();self.assertGreater(first.backtracks,0)
+                final=solver.run();self.assertTrue(final.success,final)
+                assert_allclose(final.root,(math.sqrt(2.),math.sqrt(3.)),atol=1e-9)
+                self.assertTrue(as_root_snapshot(final).residual_converged)
+                self.assertEqual(len(solver.history),final.iters+1)
+        result=find_vector_root('newton_krylov',lambda x:(x[0]+x[1]-3.,),(0.,0.))
+        self.assertTrue(result.success,result)
+        assert_allclose(result.root,(1.5,1.5),atol=1e-10)
+
+    def test_inconsistent_and_stationary_nonroots_are_never_success(self):
+        for x0 in ((0.,),(2.,)):
+            for numerical in (False,True):
+                with self.subTest(x0=x0,numerical=numerical):
+                    products={} if numerical else dict(jvp=lambda x,v:(v[0],v[0]),vjp=lambda x,w:(sum(w),))
+                    result=NewtonKrylov(lambda x:(x[0]-1.,x[0]-3.),x0,**products).run()
+                    self.assertFalse(result.success,result)
+                    self.assertAlmostEqual(result.root[0],2.,places=8)
+                    self.assertAlmostEqual(result.error,1.,places=8)
+                    self.assertEqual(result.linear_status,0)
+                    self.assertGreater(result.linear_residual,.9)
+                    self.assertLess(result.linear_stationarity,1e-3)
+                    self.assertIn(result.termination_reason,('line_search_failure','stagnation'))
+
+    def test_numerical_pair_counts_budgets_and_cached_initial_shapes(self):
+        a=np.array([[1.,2.],[3.,4.],[5.,-1.]]);b=a@np.array([1.,2.])
+        for scheme,factor in (('forward',1),('central',2)):
+            seen=[];f=lambda x:seen.append(x) or a@x-b
+            solver=NewtonKrylov(f,(0.,0.),jvp=JacobianVectorPlan(2,3,scheme=scheme))
+            result=solver.run();self.assertTrue(result.success,result)
+            self.assertEqual(result.f_calls[0],len(seen))
+            self.assertEqual(result.f_calls[0],1+factor*2*(result.f_calls[1]+result.vjp_calls)+result.iters+result.backtracks)
+        for budget in (1,2,5):
+            points=[]
+            solver=NewtonKrylov(lambda x:points.append(x) or a@x-b,(0.,0.),max_evaluations=budget)
+            result=solver.run()
+            self.assertEqual((result.termination_reason,result.f_calls[0]),('max_evaluations',budget))
+            self.assertEqual(len(points),budget)
+            self.assertEqual(result.root,(0.,0.));self.assertEqual(result.callback_code,0)
+            self.assertIsNone(result.callback_stage)
+        cached=NewtonKrylov(lambda x:self.fail('cached root needs no samples'),(1.,2.),f_x0=(0.,0.,0.))
+        self.assertEqual((cached.output_dimension,cached.run().f_calls),(3,(0,0)))
+        adapted=NewtonKrylov(RectangularCallback(lambda x:a@x-b,2,3),(0.,0.))
+        self.assertTrue(adapted.run().success)
+
+    def test_product_pair_validation_failures_and_reservations(self):
+        f=lambda x:(x[0]-1.,2*x[0]-2.)
+        for options in ({'jvp':lambda x,v:(v[0],2*v[0])},
+                        {'vjp':lambda x,w:(w[0]+2*w[1],)},
+                        {'jvp':JacobianVectorPlan(1,2),'vjp':lambda x,w:(sum(w),)},
+                        {'jvp':JacobianVectorPlan(2,1)},
+                        {'jvp':lambda x,v:(v[0],2*v[0]),'vjp':JacobianTransposeCallback(lambda x,w:w,2,1)}):
+            with self.subTest(options=options),self.assertRaises(ValueError):NewtonKrylov(f,(0.,),**options)
+        square=NewtonKrylov(lambda x:(x[0]-1.,),(0.,),jvp=lambda x,v:v,vjp=lambda x,w:w)
+        self.assertTrue(square.run().success)
+        self.assertEqual((square.linear_solver,square.result.vjp_calls),('gmres',0))
+        failure=LookupError('transpose failed')
+        def broken(x,w):raise failure
+        solver=NewtonKrylov(f,(0.,),jvp=lambda x,v:(v[0],2*v[0]),vjp=broken)
+        with self.assertRaises(LookupError) as caught:solver.run()
+        self.assertIs(caught.exception,failure)
+        self.assertEqual(solver.result.callback_stage,'jacobian_transpose_product')
+        self.assertEqual(solver.result.root,(0.,));self.assertEqual(solver.run(),solver.result)
+        r=RectangularCallback(f,1,2);j=JacobianVectorCallback(lambda x,v:(v[0],2*v[0]),1,2)
+        t=JacobianTransposeCallback(lambda x,w:(w[0]+2*w[1],),1,2);test=self
+        class Reenter:
+            def __float__(self):
+                for op in (lambda:r.evaluate((0.,)),lambda:j.evaluate((0.,),(1.,)),lambda:t.evaluate((0.,),(1.,2.))):
+                    with test.assertRaises(RuntimeError):op()
+                return 1e-3
+        self.assertTrue(NewtonKrylov(r,(0.,),jvp=j,vjp=t,linear_rtol=Reenter()).run().success)
+        # The Python residual used for shape inference also runs with adapters reserved.
+        def infer(x):
+            with test.assertRaises(RuntimeError):t.evaluate(x,(1.,2.))
+            return f(x)
+        self.assertTrue(NewtonKrylov(infer,(0.,),jvp=j,vjp=t).run().success)
+        self.assertEqual(t.evaluate((0.,),(1.,2.)),(5.,))
+
+    def test_large_rectangular_native_workspace_and_inner_iteration_limit(self):
+        n=2000
+        f=lambda x:tuple(v-1. for v in x)+(0.,)
+        j=lambda x,v:tuple(v)+(0.,)
+        t=lambda x,w:tuple(w[:-1])
+        solver=NewtonKrylov(f,(0.,)*n,jvp=j,vjp=t,workspace_bytes=250000)
+        self.assertTrue(solver.run().success,solver.result)
+        self.assertLess(solver.workspace_bytes,250000)
+        self.assertLess(solver.workspace_bytes,n*(n+1)*8//100)
+        a=np.array([[1.,0.],[0.,3.],[1.,1.]])
+        result=NewtonKrylov(lambda x:a@x-1.,(0.,0.),jvp=lambda x,v:a@v,vjp=lambda x,w:a.T@w,
+                            max_linear_iter=1,linear_rtol=1e-12).run()
+        self.assertEqual((result.termination_reason,result.linear_status,result.linear_iterations),('linear_failure',1,1))
+        self.assertEqual(result.root,(0.,0.));self.assertFalse(result.success)

@@ -44,4 +44,5 @@ from .native.jvp import (JacobianVectorCallback as JacobianVectorCallback,
                          JacobianVectorPlan as JacobianVectorPlan,
                          JacobianVectorEstimate as JacobianVectorEstimate)
 
+from .native.vjp import JacobianTransposeCallback as JacobianTransposeCallback
 from .native.newton_krylov import (NewtonKrylov as NewtonKrylov, NewtonKrylovResult as NewtonKrylovResult, newton_krylov as newton_krylov)

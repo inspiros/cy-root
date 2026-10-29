@@ -65,7 +65,9 @@ def check_distribution(path):
         assert package_root + "cyroot/native/" + name in names
     for name in ("jvp.pyx", "jvp.pxd", "jvp.pyi", "jvp.hpp", "jvp_callbacks.h"):
         assert package_root + "cyroot/native/" + name in names
-    for name in ("newton_krylov.pyx", "newton_krylov.pxd", "newton_krylov.pyi", "gmres.hpp"):
+    for name in ("newton_krylov.pyx", "newton_krylov.pxd", "newton_krylov.pyi", "gmres.hpp", "lsqr.hpp"):
+        assert package_root + "cyroot/native/" + name in names
+    for name in ("vjp.pyx", "vjp.pxd", "vjp.pyi", "vjp_callbacks.h"):
         assert package_root + "cyroot/native/" + name in names
     assert package_root + "cyroot/fptr.pxd" in names
     assert package_root + "cyroot/_stopping.pxd" in names
@@ -180,6 +182,8 @@ def check_distribution(path):
             assert package_root + name in names
         for name in ('tests/test_native_klement.py', 'tests/native/test_klement.cpp',
                      'docs/native-klement.md'):
+            assert package_root + name in names
+        for name in ('tests/test_vjp.py', 'tests/vjp_consumer.pyx', 'examples/rectangular_krylov.py'):
             assert package_root + name in names
         assert package_root + "tests/test_rectangular_newton.py" in names
         assert package_root + "tests/test_rectangular_jacobian.py" in names

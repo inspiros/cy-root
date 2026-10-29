@@ -31,6 +31,7 @@ EXTENSION_NAMES = (
     "cyroot.native.scalar",
     "cyroot.native.damped_newton",
     "cyroot.native.jvp",
+    "cyroot.native.vjp",
     "cyroot.native.newton_krylov",
     "cyroot.native._buffers",
     "cyroot.native.linalg",

@@ -16,6 +16,8 @@ class NewtonKrylovResult(NamedTuple):
     linear_iterations: int
     linear_residual: float
     linear_status: int
+    linear_stationarity: float
+    vjp_calls: int
     step_scale: float
     backtracks: int
     callback_code: int
@@ -28,7 +30,7 @@ class NewtonKrylovResult(NamedTuple):
     def optimal(self) -> bool: ...
 
 class NewtonKrylov(Iterator[NewtonKrylovResult]):
-    def __init__(self, function: Any, x0: ArrayLike, *, jvp: Any = ...,
+    def __init__(self, function: Any, x0: ArrayLike, *, jvp: Any = ..., vjp: Any = ...,
                  f_x0: ArrayLike | None = ..., restart: SupportsIndex = ...,
                  max_linear_iter: SupportsIndex = ..., linear_rtol: SupportsFloat = ...,
                  c1: SupportsFloat = ..., contraction: SupportsFloat = ...,
@@ -56,6 +58,10 @@ class NewtonKrylov(Iterator[NewtonKrylovResult]):
     def dimension(self) -> int: ...
     @property
     def restart(self) -> int: ...
+    @property
+    def output_dimension(self) -> int: ...
+    @property
+    def linear_solver(self) -> str: ...
 
-def newton_krylov(function: Any, x0: ArrayLike, *, jvp: Any = ...,
+def newton_krylov(function: Any, x0: ArrayLike, *, jvp: Any = ..., vjp: Any = ...,
                   **options: Any) -> NewtonKrylovResult: ...
