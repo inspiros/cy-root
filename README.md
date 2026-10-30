@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/inspiros/cy-root/actions/workflows/tests.yml/badge.svg)](https://github.com/inspiros/cy-root/actions/workflows/tests.yml)
 [![Build wheels](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml/badge.svg)](https://github.com/inspiros/cy-root/actions/workflows/build_wheels.yml)
+[![Documentation](https://img.shields.io/badge/docs-website-orange?logo=mdbook&logoColor=white)](https://inspiros.github.io/cy-root/)
 [![PyPI](https://img.shields.io/pypi/v/cy-root)](https://pypi.org/project/cy-root/)
 [![Downloads](https://static.pepy.tech/badge/cy-root)](https://pepy.tech/project/cy-root)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23752558.svg)](https://doi.org/10.5281/zenodo.23752558)
@@ -12,6 +13,11 @@
 </p>
 
 **Root finding in Cython. Python callbacks when convenient, native callbacks when speed matters.**
+
+<p align="center">
+  <a href="https://inspiros.github.io/cy-root/"><img src="https://img.shields.io/badge/Read_the_docs-fe7d37?style=for-the-badge&logo=mdbook&logoColor=white" alt="Read the documentation" /></a>
+  <a href="https://pypi.org/project/cy-root/"><img src="https://img.shields.io/badge/Install_from_PyPI-3775a9?style=for-the-badge&logo=pypi&logoColor=white" alt="Install from PyPI" /></a>
+</p>
 
 `cy-root` solves scalar equations and nonlinear systems with bracketing,
 Newton-type, quasi-Newton, and optimization-based methods. It combines a broad
@@ -99,8 +105,9 @@ without the GIL. See [building and testing](docs/building.md) for local checks.
 
 ## Documentation
 
-Read the [manual](docs/README.md), [choose a method](docs/choosing-methods.md),
-or build the [documentation website](docs/site/README.md). The manual covers
+Browse the [documentation website](https://inspiros.github.io/cy-root/), or read
+the [manual](docs/README.md) and [choose a method](docs/choosing-methods.md) on
+GitHub. To build the website locally, see [docs/site](docs/site/README.md). The manual covers
 native callbacks, numerical derivatives, and the shared stopping rules.
 
 ## Quick Start
